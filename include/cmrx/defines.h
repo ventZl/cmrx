@@ -7,6 +7,8 @@
 #define E_INVALID_ADDRESS		4
 #define E_MISALIGNED			5
 #define E_WRONG_SIZE			6
+#define E_BUSY					7
+#define E_DEADLK				8
 
 #define NULL					((void *) 0)
 

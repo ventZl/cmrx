@@ -2,50 +2,112 @@
 #include <cmrx/sched.h>
 #include <cmrx/intrinsics.h>
 #include <cmrx/pendsv.h>
+#include <string.h>
 
 #include <libopencm3/cm3/systick.h>
 
-struct OS_thread_t os_threads[OS_TASKS];
+struct OS_thread_t os_threads[OS_THREADS];
 
-static uint8_t task_current;
-static uint8_t task_next;
+static uint8_t thread_current;
+static uint8_t thread_next;
 static struct OS_stack_t os_stacks;
+
+extern const struct OS_process_t __applications_start;
+const struct OS_process_t * const processes = &__applications_start;
+
+extern const struct OS_thread_create_t __thread_create_start;
+extern const struct OS_thread_create_t __thread_create_end;
+
+const struct OS_thread_create_t * const autostart_threads = &__thread_create_start;
+
+static int __os_thread_create(const struct OS_process_t * process, entrypoint_t * entrypoint, void * data);
+static int os_thread_alloc(const struct OS_process_t * process);
+
+int os_sched_yield()
+{
+	uint8_t thread = thread_current;
+
+	do {
+		if (os_threads[thread].state == TASK_STATE_READY)
+		{
+			thread_next = thread;
+			schedule_context_switch(thread_current, thread_next);
+			thread_current = thread_next;
+			return 0;
+		}
+
+		thread = (thread + 1) % OS_THREADS;
+	} while (thread != thread_current);
+
+	return 0;
+}
 
 void sys_tick_handler(void)
 {
-	uint8_t task = task_current;
-
-	do {
-		if (os_threads[task].state == TASK_STATE_READY)
-		{
-			task_next = task;
-			schedule_context_switch(task_current, task_next);
-			task_current = task_next;
-			return;
-		}
-
-		task = (task + 1) % OS_TASKS;
-	} while (task != task_current);
+	os_sched_yield();
 }
 
-static void os_task_dispose(void)
+uint8_t os_get_current_thread(void)
 {
-	// this should be called when task returns
+	return thread_current;
 }
 
-void os_start(uint32_t tid)
+uint8_t os_get_current_process(void)
 {
-	if (os_threads[tid].state != TASK_STATE_READY)
+	return os_threads[thread_current].process - &__applications_start;
+}
+
+static void os_thread_dispose(void)
+{
+	// this should be called when thread returns
+}
+
+void os_start()
+{
+	unsigned threads = &__thread_create_end - &__thread_create_start;
+
+	memset(&os_threads, 0, sizeof(os_threads));
+
+	for (unsigned q = 0; q < threads; ++q)
 	{
-		task_current = tid;
-		os_threads[tid].state = TASK_STATE_RUNNING;
-		uint32_t * task_sp = os_threads[tid].sp;
+		__os_thread_create(autostart_threads[q].process, autostart_threads[q].entrypoint, autostart_threads[q].data);
+	}
 
-		__set_PSP(task_sp);
-		__set_CONTROL(0x03); 	// SPSEL = 1 | nPRIV = 1: use PSP and unpriveldged thread mode
-		__ISB();
+	// Find first thread which is runnable and simply start executing it
+	for (unsigned q = 0; q < OS_THREADS; ++q)
+	{
+		if (os_threads[q].state == TASK_STATE_READY)
+		{
+			thread_current = q;
+			os_threads[q].state = TASK_STATE_RUNNING;
+			// Alter thread's SP to so that it's stack is completely 
+			// empty. Other threads have stack prepared for "return from
+			// interrupt handler scenario".
+			os_threads[q].sp = &os_stacks.stacks[os_threads[q].stack_id][OS_STACK_DWORD];
 
-		os_threads[tid].task->entrypoint();
+			/* These two variables are marked as register, because
+			 * call to __set_CONTROL() below will switch to 
+			 * process SP being used. Yet if this is being built
+			 * with -O0, entrypoint and data would end up on stack
+			 * being referenced by SP. After SP changes, those
+			 * references would be messed up. By forcing these to be
+			 * register variables, we can avoid this problem.
+			 */
+			register entrypoint_t * entrypoint = (entrypoint_t*) os_stacks.stacks[os_threads[q].stack_id][OS_STACK_DWORD - 2];
+			register void * data = (void *) os_stacks.stacks[os_threads[q].stack_id][OS_STACK_DWORD - 8];
+
+			// Start this thread
+			uint32_t * thread_sp = os_threads[q].sp;
+			__set_PSP(thread_sp);
+			__set_CONTROL(0x03); 	// SPSEL = 1 | nPRIV = 1: use PSP and unpriveldged thread mode
+			__ISB();
+
+			entrypoint(data);
+
+			// if thread we started here returns,
+			// it returns here. 
+			while (1);
+		}
 	}
 }
 
@@ -65,32 +127,9 @@ int os_stack_create()
 	return 0xFFFFFFF;
 }
 
-/** Organize for init task.
- * This is a special version of os_task_start()
- * which does not prepare stack for jump-in from
- * PendSV handler. In this case the stack is 
- * completely empty and it is expected to jump in
- * here from os_start().
- */
-int os_task_init(int tid)
+int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
 {
-	if (os_threads[tid].state == TASK_STATE_CREATED)
-	{
-		uint32_t stack_id = os_stack_create();
-		if (stack_id != ~0)
-		{
-			os_threads[tid].stack_id = stack_id;
-			os_threads[tid].sp = &os_stacks.stacks[stack_id][OS_STACK_DWORD];
-			return E_OK;
-		}
-		return E_OUT_OF_STACKS;
-	}
-	return E_TASK_RUNNING;
-}
-
-int os_task_start(int tid)
-{
-	if (tid < OS_TASKS)
+	if (tid < OS_THREADS)
 	{
 		if (os_threads[tid].state == TASK_STATE_CREATED)
 		{
@@ -100,8 +139,9 @@ int os_task_start(int tid)
 				os_threads[tid].stack_id = stack_id;
 				os_threads[tid].sp = &os_stacks.stacks[stack_id][OS_STACK_DWORD - 16];
 
-				os_stacks.stacks[stack_id][OS_STACK_DWORD - 3] = (uint32_t) os_task_dispose; // LR
-				os_stacks.stacks[stack_id][OS_STACK_DWORD - 2] = (uint32_t) os_threads[tid].task->entrypoint; // PC
+				os_stacks.stacks[stack_id][OS_STACK_DWORD - 8] = (uint32_t) data; // R0
+				os_stacks.stacks[stack_id][OS_STACK_DWORD - 3] = (uint32_t) os_thread_dispose; // LR
+				os_stacks.stacks[stack_id][OS_STACK_DWORD - 2] = (uint32_t) entrypoint; // PC
 				os_stacks.stacks[stack_id][OS_STACK_DWORD - 1] = 0x01000000; // xPSR
 
 				os_threads[tid].state = TASK_STATE_READY;
@@ -134,14 +174,30 @@ void systick_setup(int xms)
 	systick_interrupt_enable();
 }
 
-int os_task_create(const struct OS_task_t * task)
+static int __os_thread_create(const struct OS_process_t * process, entrypoint_t * entrypoint, void * data)
 {
-	for (int q = 0; q < OS_TASKS; ++q)
+	uint8_t thread_id = os_thread_alloc(process);
+	os_thread_construct(thread_id, entrypoint, NULL);
+	return thread_id;
+}
+/** Syscall handling thread_create()
+ * Creates new thread inside current process using specified entrypoint.
+ */
+int os_thread_create(entrypoint_t * entrypoint, void * data)
+{
+	uint8_t process_id = os_get_current_process();
+	return __os_thread_create(&processes[process_id], entrypoint, data);
+}
+
+	
+static int os_thread_alloc(const struct OS_process_t * process)
+{
+	for (int q = 0; q < OS_THREADS; ++q)
 	{
 		if (os_threads[q].state == TASK_STATE_EMPTY)
 		{
 			os_threads[q].stack_id = OS_TASK_NO_STACK;
-			os_threads[q].task = task;
+			os_threads[q].process = process;
 			os_threads[q].sp = (uint32_t *) ~0;
 			os_threads[q].state = TASK_STATE_CREATED;
 			return q;

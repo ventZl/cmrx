@@ -1,0 +1,49 @@
+#pragma once
+
+#include <stdint.h>
+
+#define MUTEX_INITIALIZED				1
+
+/** Futex structure.
+ * This is fast userspace mutex, which avoids calling kernel.
+ * It provides basic functionality for locking, unlocking and
+ * non-blocking lock. It can be single-issue, or recursive.
+ */
+typedef struct {
+	uint8_t owner;
+	uint8_t flags;
+	uint8_t state;	
+} futex_t;
+
+/* Mutex structure.
+ * It wraps futex, which is being operated from within
+ * kernel context. Kernel is using futex internally, so
+ * there is no need to use big kernel lock.
+ */
+typedef futex_t mutex_t;
+
+/** Futexes
+ * Futex is fast userspace mutex. Advantage of futex
+ * over mutex is, that it can be locked and unlocked completely
+ * from userspace. Futexes can be shared safely between threads
+ * of single process, yet can't be normally shared between threads
+ * of multiple processes unless explicitly placed into shared
+ * memory region.
+ */
+int futex_init(futex_t * restrict futex);
+int futex_destroy(futex_t * futex);
+int futex_lock(futex_t * futex);
+int futex_unlock(futex_t * futex);
+int futex_trylock(futex_t * futex);
+
+/** Mutexes
+ * Mutexes are fully features inter-process locking primitive.
+ * They are implemented as kernel system calls, so they are 
+ * bit heavier to use than futexes. On the other hand, they can
+ * be shared accross processes.
+ */
+int mutex_init(mutex_t * restrict mutex);
+int mutex_destroy(mutex_t * mutex);
+int mutex_lock(mutex_t * mutex);
+int mutex_unlock(mutex_t * mutex);
+int mutex_trylock(mutex_t * mutex);

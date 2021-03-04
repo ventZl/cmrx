@@ -1,5 +1,38 @@
 #pragma once
 
+#include <stdint.h>
+
+__attribute__((always_inline)) static inline uint8_t __LDREXB(uint8_t * addr)
+{
+	uint8_t retval;
+	asm volatile(
+			"LDREXB %0, [%1]\n\t"
+			: "=r" (retval)
+			: "r" (addr)
+			);
+	return retval;
+}
+
+__attribute__((always_inline)) static inline int __STREXB(uint8_t * addr, uint8_t value)
+{
+	uint8_t status;
+	asm volatile(
+			"STREXB %0, %1, [%2]\n\t"
+			: "=&r" (status)
+			: "r" (value), "r" (addr)
+			: "memory"
+			);
+
+	return status;
+}
+
+__attribute__((always_inline)) static inline void __CLREX()
+{
+	asm volatile(
+			"CLREX\n\t"
+			);
+}
+
 /** Get value of process SP
  * @return top of application stack
  */
@@ -10,9 +43,7 @@ __attribute__((always_inline)) static inline void * __get_PSP(void)
 			".syntax unified\n\t"
 			"MRS %0, psp\n\t"
 			: "=r" (psp) 
-			:
-			: "sp"
-	);
+			);
 
 	return psp;
 }

@@ -6,7 +6,15 @@ file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_inst.ld "")
 file(READ ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld LD_SCRIPT)
 set(LD_SCRIPT "INCLUDE gen.appl_inst.ld\n${LD_SCRIPT}")
 string(REPLACE "*(.vectors)" "*(.vectors)\n  INCLUDE gen.appl_code.ld" LD_SCRIPT "${LD_SCRIPT}")
-string(REPLACE "*(.rodata*)" "*(.rodata*)\n  . = ALIGN(4);\n  __applications_start = .;\n  KEEP(*(.applications))\n  __applications_end = .;" LD_SCRIPT "${LD_SCRIPT}")
+string(REPLACE "*(.rodata*)" "*(.rodata*)
+  . = ALIGN(4);
+  __applications_start = .;
+  KEEP(*(.applications))
+  __applications_end = .;
+  __thread_create_start = .;
+  KEEP(*(.thread_create))
+  __thread_create_end = .;
+  " LD_SCRIPT "${LD_SCRIPT}")
 string(REPLACE "_data = .;" "_data = .;\n  INCLUDE gen.appl_data.ld" LD_SCRIPT "${LD_SCRIPT}")
 string(REPLACE ".bss : {" ".bss : {\n  INCLUDE gen.appl_bss.ld" LD_SCRIPT "${LD_SCRIPT}")
 file(WRITE ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld "${LD_SCRIPT}")

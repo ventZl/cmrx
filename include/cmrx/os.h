@@ -9,7 +9,7 @@
 #	include "mpu.h"
 #endif
 
-#define OS_TASKS				4
+#define OS_THREADS				4
 #define OS_STACKS				4
 #define OS_STACK_SIZE			0x100
 #define OS_STACK_DWORD			(OS_STACK_SIZE/4)
@@ -30,16 +30,16 @@
 
 typedef void (entrypoint_t)();
 
-struct OS_task_t;
+struct OS_process_t;
 
 struct OS_thread_t {
 	uint32_t * sp;
-	uint32_t stack_id;
-	uint32_t state;
+	uint8_t stack_id;
+	uint8_t state;
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
 	MPU_State mpu;
 #endif
-	const struct OS_task_t * task;
+	const struct OS_process_t * process;
 };
 
 struct OS_stack_t {
@@ -47,22 +47,25 @@ struct OS_stack_t {
 	uint32_t stacks[OS_STACKS][OS_STACK_DWORD];
 };
 
-extern struct OS_thread_t os_threads[OS_TASKS];
+extern struct OS_thread_t os_threads[OS_THREADS];
 
 struct OS_MPU_region {
 	void * start;
 	void * end;
 };
 
-struct OS_task_t {
-	entrypoint_t * entrypoint;
+struct OS_process_t {
 	struct OS_MPU_region mpu_regions[OS_TASK_MPU_REGIONS];
 
 	void * interface_start; /* this is not an actual MPU region */
 	void * interface_end;
 };
 
-
+struct OS_thread_create_t {
+	const struct OS_process_t * process;
+	entrypoint_t * entrypoint;
+	void * data;
+};
 
 #define OS_TASK_WORKER(entrypoint) \
 { \
