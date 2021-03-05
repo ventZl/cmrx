@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <cmrx/os/sysenter.h>
 
 #define MUTEX_INITIALIZED				1
 
@@ -42,8 +43,8 @@ int futex_trylock(futex_t * futex);
  * bit heavier to use than futexes. On the other hand, they can
  * be shared accross processes.
  */
-int mutex_init(mutex_t * restrict mutex);
-int mutex_destroy(mutex_t * mutex);
-int mutex_lock(mutex_t * mutex);
-int mutex_unlock(mutex_t * mutex);
-int mutex_trylock(mutex_t * mutex);
+__SYSCALL int mutex_init(mutex_t * restrict mutex);
+__SYSCALL int mutex_destroy(mutex_t * mutex);
+__SYSCALL int mutex_lock(mutex_t * mutex);
+__SYSCALL int mutex_unlock(mutex_t * mutex);
+__SYSCALL int mutex_trylock(mutex_t * mutex);

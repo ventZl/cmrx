@@ -1,0 +1,13 @@
+#pragma once
+
+#define SYSCALL_GET_TID						0
+#define SYSCALL_SCHED_YIELD					1
+#define SYSCALL_THREAD_START				2
+#define SYSCALL_MUTEX_INIT					3
+#define SYSCALL_MUTEX_DESTROY				4
+#define SYSCALL_MUTEX_UNLOCK				5
+#define SYSCALL_MUTEX_TRYLOCK				6
+#define SYSCALL_RPC_CALL					7
+#define SYSCALL_RPC_RETURN					8
+
+

@@ -1,4 +1,4 @@
-set(ipc_SRCS mutex.c)
+set(ipc_SRCS mutex.c rpc.c)
 set(stdlib_SRCS sysenter.c)
 
 add_library(ipc STATIC ${ipc_SRCS})

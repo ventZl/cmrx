@@ -23,7 +23,7 @@ static inline int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned
 
 			// load mutex->state and mutex->owner values, state is loaded exclusively
 			"LDREXB %[mutexState], [%[mutexStateAddr]]\n\t"
-			"LDR %[mutexOwner], [%[mutexOwnerAddr]]\n\t"
+			"LDRB %[mutexOwner], [%[mutexOwnerAddr]]\n\t"
 
 			// is mutex claimed? 
 			"CMP %[mutexOwner], #0xFF\n\t"
@@ -76,7 +76,7 @@ static inline int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 
 			// load mutex->state and mutex->owner values, state is loaded exclusively
 			"LDREXB %[mutexState], [%[mutexStateAddr]]\n\t"
-			"LDR %[mutexOwner], [%[mutexOwnerAddr]]\n\t"
+			"LDRB %[mutexOwner], [%[mutexOwnerAddr]]\n\t"
 
 			// check if mutex is suitable for locking (must be non-zero)
 			"CBZ %[mutexState], .futex_fast_unlock_not_unlockable\n\t"
@@ -223,6 +223,7 @@ int futex_lock(futex_t * futex)
 			sched_yield();
 		}
 	} while (success != 0);
+	futex->owner = thread_id;
 	return 0;
 }
 
@@ -237,5 +238,9 @@ int futex_unlock(futex_t * futex)
 {
 	uint8_t thread_id = get_tid();
 	int success = __futex_fast_unlock(futex, thread_id);
+	if (success == 0 && futex->state == 0)
+	{
+		futex->owner = 0xFF;
+	}
 	return success;
 }
