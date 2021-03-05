@@ -27,21 +27,21 @@ static inline int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned
 
 			// is mutex claimed? 
 			"CMP %[mutexOwner], #0xFF\n\t"
-			"BEQ .futex_fast_lock_not_owned\n\t"
+			"BEQ 1f\n\t" // .not_owned
 			// mutex is claimed by someone, by us?
 			"CMP %[mutexOwner], %[threadId]\n\t"
-			"BNE .futex_fast_lock_non_lockable\n"
+			"BNE 2f\n\t" // .non_lockable
 
 			// mutex is either not owned, or owned by us
 			// compare if mutex is suitable for locking
-			".futex_fast_lock_not_owned:"
+			"1:\n\t" // .not_owned:
 			"CMP %[mutexState], %[maxDepth]\n\t"
-			"BGT .futex_fast_lock_non_lockable\n\t"
+			"BGT 2f\n\t" // .non_lockable
 
 			// mutex is lockable, so lock it
 			"ADD %[mutexState], %[mutexState], #1\n\t"
 			"STREXB %[mutexSuccess], %[mutexState], [%[mutexStateAddr]]\n"
-			".futex_fast_lock_non_lockable:\n\t"
+			"2:\n\t" // .non_lockable:
 			// clear exclusivity and return
 			"CLREX\n\t"
 			: [mutexSuccess] "=&r" (success),
@@ -79,16 +79,16 @@ static inline int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 			"LDRB %[mutexOwner], [%[mutexOwnerAddr]]\n\t"
 
 			// check if mutex is suitable for locking (must be non-zero)
-			"CBZ %[mutexState], .futex_fast_unlock_not_unlockable\n\t"
+			"CBZ %[mutexState], 1f\n\t" // .not_unlockable
 
 			// check if mutex is claimed by us currently
 			"CMP %[mutexOwner], %[threadId]\n\t"
-			"BNE .futex_fast_unlock_not_unlockable\n\t"
+			"BNE 1f\n\t" // .not_unlockable
 
 			// mutex is unlockable, so unlock it
 			"SUB %[mutexState], %[mutexState], #1\n\t"
 			"STREXB %[mutexSuccess], %[mutexState], [%[mutexStateAddr]]\n"
-			".futex_fast_unlock_not_unlockable:\n\t"
+			"1:\n\t" // .not_unlockable:
 			// clear exclusivity and return
 			"CLREX\n\t"
 			: [mutexSuccess] "=&r" (success),
