@@ -1,6 +1,8 @@
 #pragma once
 
-#include "os.h"
+//#include "os.h"
+#include <cmrx/os/runtime.h>
+#include <stddef.h>
 
 #define __APPL_SYMBOL(application, symbol)	application ## _ ## symbol
 

@@ -1,9 +1,12 @@
 #include <stdint.h>
-#include <cmrx/os.h>
+#include <cmrx/os/runtime.h>
+#include <cmrx/os/sched.h>
 #include <libopencm3/cm3/scb.h>
 #include <cmrx/intrinsics.h>
 
 #include <conf/kernel.h>
+
+#include <stdbool.h>
 
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
 #	include "mpu.h"
@@ -11,6 +14,7 @@
 
 static struct OS_thread_t * old_task;
 static struct OS_thread_t * new_task;
+static bool ctxt_switch_pending;
 
 /** Opt for task switch.
  * Calling this function will prepare task switch. It will set up
@@ -21,10 +25,16 @@ static struct OS_thread_t * new_task;
  */
 void schedule_context_switch(uint32_t current_task, uint32_t next_task)
 {
+	if (ctxt_switch_pending)
+	{
+		// can this be any more robust?
+		return;
+	}
+
 	old_task = &os_threads[current_task];
-	os_threads[current_task].state = TASK_STATE_READY;
+	os_threads[current_task].state = THREAD_STATE_READY;
 	new_task = &os_threads[next_task];
-	os_threads[next_task].state = TASK_STATE_RUNNING;
+	os_threads[next_task].state = THREAD_STATE_RUNNING;
 
 	SCB_ICSR |= SCB_ICSR_PENDSVSET;
 }
@@ -52,6 +62,8 @@ __attribute__((naked)) void pend_sv_handler(void)
 #endif
 	
 	load_context(new_task->sp);
+
+	ctxt_switch_pending = false;
 
 	asm volatile(
 			"pop {pc}"

@@ -1,4 +1,5 @@
 #include <cmrx/ipc/mutex.h>
+#include <cmrx/ipc/thread.h>
 #include <cmrx/intrinsics.h>
 #include <cmrx/defines.h>
 #include <cmrx/sched.h>
@@ -101,6 +102,7 @@ static inline int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 	return success;
 }
 
+#if 0
 int mutex_init(mutex_t * restrict mutex)
 {
 	mutex->owner = 0xFF;
@@ -126,7 +128,7 @@ int mutex_lock(mutex_t * mutex)
 		tmp_state = __LDREXB(&mutex->state);
 		if (mutex->owner != thread_id && mutex->owner != 0xFF)
 		{
-			sched_yield();
+//			sched_yield();
 			continue;
 		}
 		if (tmp_state == 0)
@@ -203,6 +205,8 @@ int mutex_unlock(mutex_t * mutex)
 
 	return 0;
 }
+
+#endif
 
 int futex_init(futex_t * restrict futex)
 {

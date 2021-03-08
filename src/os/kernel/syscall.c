@@ -1,56 +1,22 @@
 #include <stdint.h>
-#include <cmrx/sched.h>
 #include <cmrx/intrinsics.h>
 #include <cmrx/os/syscall.h>
 #include <cmrx/os/sysenter.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/rpc.h>
-
-__SYSCALL int sched_yield()
-{
-	__SVC(SYSCALL_SCHED_YIELD);
-}
-
-__SYSCALL int get_tid()
-{
-	__SVC(SYSCALL_GET_TID);
-}
-
-#if 0
-__SYSCALL int mutex_init(mutex_t * restrict mutex)
-{
-	__SVC(SYSCALL_MUTEX_INIT);
-}
-
-__SYSCALL int mutex_destroy(mutex_t * mutex)
-{
-	__SVC(SYSCALL_MUTEX_DESTROY);
-}
-
-__SYSCALL int mutex_lock(mutex_t * mutex)
-{
-	__SVC(SYSCALL_MUTEX_LOCK);
-}
-
-__SYSCALL int mutex_unlock(mutex_t * mutex)
-{
-	__SVC(SYSCALL_MUTEX_UNLOCK);
-}
-
-__SYSCALL int mutex_trylock(mutex_t * mutex)
-{
-	__SVC(SYSCALL_MUTEX_TRYLOCK);
-}
-#endif
-
-extern uint8_t os_get_current_thread(void);
-extern int os_sched_yield(void);
+#include <cmrx/os/sched.h>
+#include <cmrx/os/timer.h>
 
 struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
 	{ SYSCALL_RPC_CALL, (Syscall_Handler_t) &os_rpc_call },
-	{ SYSCALL_RPC_RETURN, (Syscall_Handler_t) &os_rpc_return }
+	{ SYSCALL_RPC_RETURN, (Syscall_Handler_t) &os_rpc_return },
+	{ SYSCALL_THREAD_CREATE, (Syscall_Handler_t) &os_thread_create },
+	{ SYSCALL_THREAD_JOIN, (Syscall_Handler_t) &os_thread_join },
+	{ SYSCALL_THREAD_EXIT, (Syscall_Handler_t) &os_thread_exit },
+	{ SYSCALL_USLEEP, (Syscall_Handler_t) &os_usleep },
+	{ SYSCALL_SETITIMER, (Syscall_Handler_t) &os_setitimer }
 };
 
 /*__attribute__((naked))*/ void sv_call_handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)

@@ -9,6 +9,8 @@
 #define E_WRONG_SIZE			6
 #define E_BUSY					7
 #define E_DEADLK				8
+#define E_NOTAVAIL				9
+#define E_INVALID				10
 
 #define NULL					((void *) 0)
 

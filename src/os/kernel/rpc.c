@@ -15,34 +15,53 @@ struct RPC_Service_t_ {
 	VTable_t * vtable;
 };
 
+typedef struct {
+	uint32_t r0;
+	uint32_t r1;
+	uint32_t r2;
+	uint32_t r3;
+	uint32_t r12;
+	void * lr;
+	void * pc;
+	uint32_t xpsr;
+	uint32_t arg4;
+	uint32_t arg5;
+	uint32_t arg6;
+	uint32_t arg7;
+} ExFrame;
+
 __SYSCALL static int rpc_return()
 {
 	__SVC(SYSCALL_RPC_RETURN);
 }
 
+/* For Cortex-M3, keep this a multiple o 8 */
+#define RPC_STACK_FRAME_SIZE			10
+
 int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
 	uint32_t * psp = (uint32_t *) __get_PSP();
-	RPC_Service_t * service_id = (void *) *(psp + 8);
-	VTable_t * vtable = service_id->vtable;
+	RPC_Service_t * service = (void *) *(psp + 8);
+	VTable_t * vtable = service->vtable;
 	unsigned method_id = (unsigned) *(psp + 9); 
 	RPC_Method_t * method = vtable[method_id];
 
-	psp -= 8;
 
-	// Copy R0, R1, R2, R3, R12 from caller stack frame to callee stack frame
-	for (int q = 0; q < 5; ++q)
-	{
-		*(psp + q) = *(psp + q + 8);
-	}
-	// LR
-	*(psp + 5) = (uint32_t) &rpc_return;
+	ExFrame * local_frame = (ExFrame *) psp;
+	
+	psp -= RPC_STACK_FRAME_SIZE;
 
-	// PC
-	*(psp + 6) = (uint32_t) method;
+	ExFrame * remote_frame = (ExFrame *) psp;
 
-	// xPSR copy
-	*(psp + 7) = *(psp + 8 + 7);
+	remote_frame->r0 = (uint32_t) service;
+	remote_frame->r1 = local_frame->r0;
+	remote_frame->r2 = local_frame->r1;
+	remote_frame->r3 = local_frame->r2;
+	remote_frame->r12 = local_frame->r12;
+	remote_frame->lr = &rpc_return;
+	remote_frame->pc = method;
+	remote_frame->xpsr = local_frame->xpsr;
+	remote_frame->arg4 = local_frame->r3;
 
 	__set_PSP(psp);
 
@@ -56,7 +75,9 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
 	uint32_t * psp = (uint32_t *) __get_PSP();
 
-	psp += 8;
+	*(psp + 7 + RPC_STACK_FRAME_SIZE) = *(psp + 7);
+
+	psp += RPC_STACK_FRAME_SIZE;
 
 	__set_PSP(psp);
 
@@ -67,6 +88,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	// do it on our own.
 	
 	*(psp) = arg0;
+	__ISB();
 	
 	return arg0;
 }

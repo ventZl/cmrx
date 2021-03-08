@@ -1,8 +1,11 @@
 #include <cmrx/os.h>
 #include <cmrx/sched.h>
+#include <cmrx/os/runtime.h>
+#include <cmrx/os/sched/stack.h>
 #include <cmrx/intrinsics.h>
 #include <cmrx/pendsv.h>
 #include <string.h>
+#include <conf/kernel.h>
 
 #include <libopencm3/cm3/systick.h>
 
@@ -23,12 +26,16 @@ const struct OS_thread_create_t * const autostart_threads = &__thread_create_sta
 static int __os_thread_create(const struct OS_process_t * process, entrypoint_t * entrypoint, void * data);
 static int os_thread_alloc(const struct OS_process_t * process);
 
-int os_sched_yield()
+static uint32_t sched_tick_increment;
+
+static uint32_t sched_microtime;
+
+int os_sched_yield(void)
 {
 	uint8_t thread = thread_current;
 
 	do {
-		if (os_threads[thread].state == TASK_STATE_READY)
+		if (os_threads[thread].state == THREAD_STATE_READY)
 		{
 			thread_next = thread;
 			schedule_context_switch(thread_current, thread_next);
@@ -44,6 +51,7 @@ int os_sched_yield()
 
 void sys_tick_handler(void)
 {
+	sched_microtime += sched_tick_increment;
 	os_sched_yield();
 }
 
@@ -55,6 +63,11 @@ uint8_t os_get_current_thread(void)
 uint8_t os_get_current_process(void)
 {
 	return os_threads[thread_current].process - &__applications_start;
+}
+
+uint32_t os_get_micro_time(void)
+{
+	return sched_microtime;
 }
 
 static void os_thread_dispose(void)
@@ -76,10 +89,10 @@ void os_start()
 	// Find first thread which is runnable and simply start executing it
 	for (unsigned q = 0; q < OS_THREADS; ++q)
 	{
-		if (os_threads[q].state == TASK_STATE_READY)
+		if (os_threads[q].state == THREAD_STATE_READY)
 		{
 			thread_current = q;
-			os_threads[q].state = TASK_STATE_RUNNING;
+			os_threads[q].state = THREAD_STATE_RUNNING;
 			// Alter thread's SP to so that it's stack is completely 
 			// empty. Other threads have stack prepared for "return from
 			// interrupt handler scenario".
@@ -111,7 +124,7 @@ void os_start()
 	}
 }
 
-int os_stack_create()
+static int os_stack_create()
 {
 	uint32_t stack_mask = 1;
 	for(int q = 0; q < OS_STACKS; ++q)
@@ -127,11 +140,11 @@ int os_stack_create()
 	return 0xFFFFFFF;
 }
 
-int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
+static int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
 {
 	if (tid < OS_THREADS)
 	{
-		if (os_threads[tid].state == TASK_STATE_CREATED)
+		if (os_threads[tid].state == THREAD_STATE_CREATED)
 		{
 			uint32_t stack_id = os_stack_create();
 			if (stack_id != 0xFFFFFFFF)
@@ -144,7 +157,7 @@ int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
 				os_stacks.stacks[stack_id][OS_STACK_DWORD - 2] = (uint32_t) entrypoint; // PC
 				os_stacks.stacks[stack_id][OS_STACK_DWORD - 1] = 0x01000000; // xPSR
 
-				os_threads[tid].state = TASK_STATE_READY;
+				os_threads[tid].state = THREAD_STATE_READY;
 				return E_OK;
 			}
 			else
@@ -164,6 +177,7 @@ int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
  */
 void systick_setup(int xms)
 {
+	sched_tick_increment = xms * 1000;
 	/* div8 per ST, stays compatible with M3/M4 parts, well done ST */
 	systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);
 	/* clear counter so it starts right away */
@@ -194,16 +208,64 @@ static int os_thread_alloc(const struct OS_process_t * process)
 {
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
-		if (os_threads[q].state == TASK_STATE_EMPTY)
+		if (os_threads[q].state == THREAD_STATE_EMPTY)
 		{
 			os_threads[q].stack_id = OS_TASK_NO_STACK;
 			os_threads[q].process = process;
 			os_threads[q].sp = (uint32_t *) ~0;
-			os_threads[q].state = TASK_STATE_CREATED;
+			os_threads[q].state = THREAD_STATE_CREATED;
 			return q;
 		}
 	}
 	return ~0;
 }
 
+int os_thread_join(uint8_t thread_id)
+{
+	return 0;
+}
 
+int os_thread_exit(int status)
+{
+	return 0;
+}
+
+int os_thread_stop(uint8_t thread)
+{
+	if (thread < OS_THREADS)
+	{
+		if (os_threads[thread].state == THREAD_STATE_READY ||
+				os_threads[thread].state == THREAD_STATE_RUNNING)
+		{
+			os_threads[thread].state = THREAD_STATE_STOPPED;
+			if (thread == os_get_current_thread())
+			{
+				os_sched_yield();
+				return 0;
+			}
+		}
+		else
+		{
+			return E_NOTAVAIL;
+		}
+	}
+	return E_INVALID;
+}
+
+int os_thread_continue(uint8_t thread)
+{
+	if (thread < OS_THREADS)
+	{
+		if (os_threads[thread].state == THREAD_STATE_STOPPED)
+		{
+			os_threads[thread].state = THREAD_STATE_READY;
+			os_sched_yield();
+			return 0;
+		}
+		else
+		{
+			return E_NOTAVAIL;
+		}
+	}
+	return E_INVALID;
+}

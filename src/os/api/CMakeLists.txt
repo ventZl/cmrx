@@ -1,3 +1,3 @@
-set(pthreads_SRCS mutex.c)
+set(pthread_SRCS mutex.c thread.c)
 
-add_library(pthreads STATIC ${pthreads_SRCS})
+add_library(pthread STATIC ${pthread_SRCS})
