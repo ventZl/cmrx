@@ -8,7 +8,7 @@ uint32_t os_get_micro_time(void);
 int os_sched_yield(void);
 void os_start();
 void systick_setup(int xms);
-int os_thread_create(entrypoint_t * entrypoint, void * data);
+int os_thread_create(entrypoint_t * entrypoint, void * data, uint8_t priority);
 int os_thread_join(uint8_t thread_id);
 int os_thread_exit(int status);
 int os_thread_stop(uint8_t thread_id);

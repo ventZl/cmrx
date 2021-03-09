@@ -31,9 +31,10 @@ __attribute__((externally_visible, used, section(".applications") )) const struc
 	NULL\
 	}
 
-#define OS_THREAD_CREATE(application, entrypoint, data) \
+#define OS_THREAD_CREATE(application, entrypoint, data, priority) \
 __attribute__((externally_visible, used, section(".thread_create") )) const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\
 	&__APPL_SYMBOL(application, instance),\
 	entrypoint,\
-	data\
+	data,\
+	priority\
 }

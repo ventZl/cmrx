@@ -6,9 +6,10 @@ enum ThreadState {
 	THREAD_STATE_EMPTY = 0,
 	THREAD_STATE_READY,
 	THREAD_STATE_RUNNING,
-	THREAD_STATE_BLOCKED,
 	THREAD_STATE_CREATED,
-	THREAD_STATE_STOPPED
+	THREAD_STATE_STOPPED,
+	THREAD_STATE_FINISHED,
+	THREAD_STATE_BLOCKED_JOINING
 };
 
 typedef int (entrypoint_t)(void *);
@@ -18,9 +19,12 @@ struct OS_process_t;
 struct OS_thread_t {
 	uint32_t * sp;
 	uint8_t stack_id;
-	uint8_t state;
+	enum ThreadState state;
+	uint32_t block_object;
 	uint8_t rpc_depth;
+	uint8_t priority;
 	void (*signal_handler)(int);
+	int exit_status;
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
 	MPU_State mpu;
 #endif
@@ -43,6 +47,7 @@ struct OS_thread_create_t {
 	const struct OS_process_t * process;
 	entrypoint_t * entrypoint;
 	void * data;
+	uint8_t priority;
 };
 
 extern struct OS_thread_t os_threads[OS_THREADS];

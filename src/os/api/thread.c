@@ -11,7 +11,7 @@ __SYSCALL int get_tid()
 	__SVC(SYSCALL_GET_TID);
 }
 
-__SYSCALL int thread_create(int *entrypoint(void *), void * data)
+__SYSCALL int thread_create(int *entrypoint(void *), void * data, uint8_t priority)
 {
 	__SVC(SYSCALL_THREAD_CREATE);
 }
