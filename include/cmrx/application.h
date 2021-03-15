@@ -10,6 +10,12 @@
 	static void * const __APPL_SYMBOL(application, mmio_start) = (void *) (from);\
 	static void * const __APPL_SYMBOL(application, mmio_end) = (void *) (to)
 
+/** Declare userspace process.
+ *
+ * This will create userspace process entry in process table.
+ * Process is used to contain information on MPU configuration all threads
+ * bound to this process can use.
+ */
 #define OS_APPLICATION(application) \
 extern void * __APPL_SYMBOL(application, text_start);\
 extern void * __APPL_SYMBOL(application, text_end);\
@@ -31,6 +37,16 @@ __attribute__((externally_visible, used, section(".applications") )) const struc
 	NULL\
 	}
 
+/** Thread autostart facility.
+ *
+ * Use this to automatically create thread upon kernel start.
+ * With this you don't need to call @ref thread_create() explicitly. Kernel will create
+ * and initialize thread for you.
+ * @param application name of process/application you want to bind your thread to.
+ * @param entrypoint entrypoint function name. This function will be given control once thread starts.
+ * @param data user-defined data passed to entrypoint function.
+ * @param priority thread priority of newly created thread
+ */
 #define OS_THREAD_CREATE(application, entrypoint, data, priority) \
 __attribute__((externally_visible, used, section(".thread_create") )) const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\
 	&__APPL_SYMBOL(application, instance),\

@@ -2,6 +2,8 @@
 
 #ifndef NDEBUG
 
+/** Evaluate condition and break if it evalues to false.
+ */
 #define ASSERT(cond) \
 	if (!(cond)) \
 		{\

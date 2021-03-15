@@ -4,11 +4,22 @@
 
 typedef int (* Syscall_Handler_t)(int, int, int, int);
 
+/** Entry in syscall table.
+ *
+ * This entry pairs syscall number with syscall handler function.
+ */
 struct Syscall_Entry_t {
+	/** Syscall ID. Cortex-M supports 255 syscalls.
+	 */
 	uint8_t id;
+
+	/** Address of handler function.
+	 */
 	Syscall_Handler_t handler;
 };
 
+/** Exception frame *without* FPU context saved.
+ */
 typedef struct {
 	uint32_t r0123[4];
 /*	uint32_t r1;
@@ -24,6 +35,15 @@ typedef struct {
 	uint32_t arg7;*/
 } ExceptionFrame;
 
+/** Retrieve address of n-th argument from exception frame.
+ *
+ * This function calculates address of n-th argument of function call from exception frame.
+ * This is used whenever it is known, that exception frame was stored as an effect of
+ * __SVC() call. It will automatically handle exception frame padding.
+ * @param frame exception frame base address (usually value of SP)
+ * @param argno number of argument retrieved
+ * @returns address of argument relative to exception frame
+ */
 static inline uint32_t * get_exception_arg_addr(ExceptionFrame * frame, unsigned argno)
 {
 	if (argno < 4)
@@ -45,18 +65,39 @@ static inline uint32_t * get_exception_arg_addr(ExceptionFrame * frame, unsigned
 	}
 }
 
+/** Retrieve value of exception frame function call argument.
+ *
+ * Retrieves value of n-th argument of function call calling __SVC()
+ * @param frame exception frame base address
+ * @param argno number of argument retrieved
+ * @returns value of function argument
+ */
 static inline unsigned get_exception_argument(ExceptionFrame * frame, unsigned argno)
 {
 	uint32_t * arg_addr = get_exception_arg_addr(frame, argno);
 	return *arg_addr;
 }
 
+/** Set value of exception frame function call argument.
+ *
+ * Sets value of n-th argument in exception frame.
+ * @param frame exception frame base address
+ * @param argno number of argument retrieved
+ * @param value new value of function argument
+ */
 static inline void set_exception_argument(ExceptionFrame * frame, unsigned argno, unsigned value)
 {
 	uint32_t * arg_addr = get_exception_arg_addr(frame, argno);
 	*arg_addr = value;
 }
 
+/** Configure PC and LR register values in exception frame.
+ *
+ * This function sets values for PC and LR upon usage of given exception frame.
+ * @param frame exception frame base address
+ * @param pc new value for PC register in exception frame
+ * @param lr new value for LR register in exception frame
+ */
 static inline void set_exception_pc_lr(ExceptionFrame * frame, void * pc, void * lr)
 {
 	frame->pc = pc;
@@ -101,7 +142,14 @@ static inline ExceptionFrame * push_exception_frame(ExceptionFrame * frame, unsi
 	return outframe;
 }
 
-
+/** Remove exception frame from thread's stack.
+ *
+ * This function will revert effects of calling @ref push_exception_frame. It will handle
+ * frame padding automatically.
+ * @param frame exception frame base address
+ * @param args number of function arguments passed onto stack (function args - 4)
+ * @return new address of stack top after frame has been removed from it
+ */
 static inline ExceptionFrame * pop_exception_frame(ExceptionFrame * frame, unsigned args)
 {
 	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) + (EXCEPTION_FRAME_SIZE + args));
