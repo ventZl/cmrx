@@ -7,6 +7,10 @@
 #include <cmrx/os/sched.h>
 #include <cmrx/os/timer.h>
 
+#include <cmrx/os/sched/stack.h>
+#include <cmrx/assert.h>
+#include <cmrx/os/sanitize.h>
+
 struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
@@ -19,11 +23,16 @@ struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_SETITIMER, (Syscall_Handler_t) &os_setitimer }
 };
 
+extern struct OS_stack_t os_stacks;
+
 /*__attribute__((naked))*/ void sv_call_handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
+	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
 	uint32_t * psp = (uint32_t *) __get_PSP();
+	sanitize_psp(psp);
 	uint16_t * lra = (uint16_t *) *(psp + 6);
 	uint8_t syscall_id = *(lra - 1);
+	ASSERT(syscall_id < 16);
 	for (unsigned q = 0; q < (sizeof(syscalls) / sizeof(syscalls[0])); ++q)
 	{
 		if (syscalls[q].id == syscall_id)
@@ -35,6 +44,8 @@ struct Syscall_Entry_t syscalls[] = {
 	}
 
 	*(psp) = 0xFF;
+	__ISB();
+	__DSB();
 	return;
 }
 

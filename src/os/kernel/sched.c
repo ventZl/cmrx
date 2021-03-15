@@ -10,12 +10,16 @@
 #include <cmrx/ipc/thread.h>
 
 #include <libopencm3/cm3/systick.h>
+#include <libopencm3/stm32/rcc.h>
+
+#include <cmrx/assert.h>
 
 struct OS_thread_t os_threads[OS_THREADS];
 
+static uint8_t thread_prev;
 static uint8_t thread_current;
 static uint8_t thread_next;
-static struct OS_stack_t os_stacks;
+__attribute__((aligned(1024))) struct OS_stack_t os_stacks;
 
 extern const struct OS_process_t __applications_start;
 const struct OS_process_t * const processes = &__applications_start;
@@ -37,11 +41,13 @@ __attribute__((noreturn)) static int os_idle_thread(void * data)
 	while (1);
 }
 
-int os_sched_yield(void)
+static bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 {
-	uint8_t thread = thread_current;
 	uint16_t best_prio = 0x1FF;
-	uint8_t next_thread;
+	uint8_t candidate_thread;
+	uint8_t thread = current_thread;
+
+	uint8_t loops = OS_THREADS + 2;
 
 	do {
 		if (os_threads[thread].state == THREAD_STATE_READY)
@@ -52,35 +58,74 @@ int os_sched_yield(void)
 			 */
 			if (os_threads[thread].priority < best_prio)
 			{
-				next_thread = thread;
+				candidate_thread = thread;
 				best_prio = os_threads[thread].priority;
 			}
 		}
 
 		thread = (thread + 1) % OS_THREADS;
-	} while (thread != thread_current);
+	} while (loops-- && thread != current_thread);
 
-	/* We actually found something to run */
+	ASSERT(loops > 0);
+	ASSERT(candidate_thread != current_thread);
+
 	if (best_prio < 0x100)
 	{
-		/* TODO: better naming... */
-		thread_next = next_thread;
-		schedule_context_switch(thread_current, thread_next);
-		thread_current = thread_next;
-		return 0;
+		*next_thread = candidate_thread;
+		return true;
+	}
+
+	return false;
+}
+
+int os_sched_yield(void)
+{
+	uint8_t candidate_thread;
+
+	if (os_get_next_thread(thread_current, &candidate_thread))
+	{
+		thread_prev = thread_current;
+		thread_next = candidate_thread;
+		if (schedule_context_switch(thread_current, candidate_thread))
+		{
+			thread_current = thread_next;
+		}
 	}
 	return 0;
 }
 
 void sys_tick_handler(void)
 {
+	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
+	ASSERT(os_threads[thread_current].state == THREAD_STATE_RUNNING);
+	uint32_t * psp;
+	psp = __get_PSP();
+	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
 	sched_microtime += sched_tick_increment;
 	os_sched_yield();
+	unsigned rt = 0;
+	for (int q = 0; q < OS_THREADS; ++q)
+	{
+		if (os_threads[q].state == THREAD_STATE_RUNNING)
+			rt++;
+	}
+
+	ASSERT(rt == 1);
+	ASSERT(os_threads[thread_current].state == THREAD_STATE_RUNNING);
+	psp = __get_PSP();
+	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
+	__DSB();
+	__ISB();
 }
 
 uint8_t os_get_current_thread(void)
 {
 	return thread_current;
+}
+
+uint8_t os_get_current_stack(void)
+{
+	return os_threads[thread_current].stack_id;
 }
 
 uint8_t os_get_current_process(void)
@@ -96,7 +141,7 @@ uint32_t os_get_micro_time(void)
 static void os_thread_dispose(int arg0)
 {
 	thread_exit(arg0);
-	while(1);
+	ASSERT(0);
 	// this should be called when thread returns
 }
 
@@ -113,49 +158,54 @@ void os_start()
 
 	__os_thread_create(NULL, os_idle_thread, NULL, 0xFF);
 
-	// Find first thread which is runnable and simply start executing it
-	for (unsigned q = 0; q < OS_THREADS; ++q)
+	uint8_t startup_thread;
+
+	if (os_get_next_thread(0, &startup_thread))
 	{
-		if (os_threads[q].state == THREAD_STATE_READY)
-		{
-			thread_current = q;
-			os_threads[q].state = THREAD_STATE_RUNNING;
-			// Alter thread's SP to so that it's stack is completely 
-			// empty. Other threads have stack prepared for "return from
-			// interrupt handler scenario".
-			os_threads[q].sp = &os_stacks.stacks[os_threads[q].stack_id][OS_STACK_DWORD];
+		thread_current = startup_thread;
+		uint8_t startup_stack = os_threads[startup_thread].stack_id;
+		os_threads[startup_thread].state = THREAD_STATE_RUNNING;
+		// Alter thread's SP to so that it's stack is completely 
+		// empty. Other threads have stack prepared for "return from
+		// interrupt handler scenario".
+		os_threads[startup_thread].sp = &os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD];
 
-			/* These two variables are marked as register, because
-			 * call to __set_CONTROL() below will switch to 
-			 * process SP being used. Yet if this is being built
-			 * with -O0, entrypoint and data would end up on stack
-			 * being referenced by SP. After SP changes, those
-			 * references would be messed up. By forcing these to be
-			 * register variables, we can avoid this problem.
-			 */
-			register entrypoint_t * entrypoint = (entrypoint_t*) os_stacks.stacks[os_threads[q].stack_id][OS_STACK_DWORD - 2];
-			register void * data = (void *) os_stacks.stacks[os_threads[q].stack_id][OS_STACK_DWORD - 8];
-			register void (*dispose)(int) = os_thread_dispose;
+		/* These two variables are marked as register, because
+		 * call to __set_CONTROL() below will switch to 
+		 * process SP being used. Yet if this is being built
+		 * with -O0, entrypoint and data would end up on stack
+		 * being referenced by SP. After SP changes, those
+		 * references would be messed up. By forcing these to be
+		 * register variables, we can avoid this problem.
+		 */
+		register entrypoint_t * entrypoint = (entrypoint_t*) os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD - 2];
+		register void * data = (void *) os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD - 8];
+		register void (*dispose)(int) = os_thread_dispose;
+		mpu_set_region(4, &os_stacks.stacks[startup_stack], sizeof(os_stacks.stacks[startup_stack]), MPU_RW);
 
-			// Start this thread
-			uint32_t * thread_sp = os_threads[q].sp;
-			__set_PSP(thread_sp);
-			__set_CONTROL(0x03); 	// SPSEL = 1 | nPRIV = 1: use PSP and unpriveldged thread mode
+		thread_current = startup_thread;
+		// Start this thread
+		uint32_t * thread_sp = os_threads[startup_thread].sp;
+		__set_PSP(thread_sp);
+		__set_CONTROL(0x03); 	// SPSEL = 1 | nPRIV = 1: use PSP and unpriveldged thread mode
 
-			__ISB();
+		__ISB();
 
-			asm volatile(
-					"MOV LR, %[dispose]\n\t"
-					"MOV R0, %[data]\n\t"
-					"BX %[entrypoint]\n\t"
-					:
-					: [entrypoint] "r" (entrypoint), [dispose] "r" (dispose), [data] "r" (data)
-					);
+		asm volatile(
+				"MOV LR, %[dispose]\n\t"
+				"MOV R0, %[data]\n\t"
+				"BX %[entrypoint]\n\t"
+				:
+				: [entrypoint] "r" (entrypoint), [dispose] "r" (dispose), [data] "r" (data)
+				);
 
-			// if thread we started here returns,
-			// it returns here. 
-			while (1);
-		}
+		// if thread we started here returns,
+		// it returns here. 
+		while (1);
+	}
+	else
+	{
+		while(1);
 	}
 }
 
@@ -223,7 +273,11 @@ void systick_setup(int xms)
 	/* clear counter so it starts right away */
 	STK_CVR = 0;
 
+#if 0
 	systick_set_reload(4000000);//rcc_ahb_frequency / 8 / 1000 * xms);
+#else
+	systick_set_reload(rcc_ahb_frequency / 8 / 1000 * xms);
+#endif
 	systick_counter_enable();
 	systick_interrupt_enable();
 }

@@ -3,6 +3,7 @@
 #include <libopencm3/cm3/mpu.h>
 #include <conf/kernel.h>
 #include <cmrx/intrinsics.h>
+#include <cmrx/assert.h>
 
 static inline uint8_t log_2(uint32_t num)
 {
@@ -59,6 +60,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 
 	if ((size & ((1 << regszbits) - 1)) != 0)
 	{
+		ASSERT(0);
 		// for now simply ignore this case
 		return E_MISALIGNED;
 
@@ -87,6 +89,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 			 * This means that we are not able to correctly divide superblock
 			 * into 1/8 sub blocks to accomodate this region. Return with fault.
 			 */
+			ASSERT(0);
 			return E_WRONG_SIZE;
 		}
 
@@ -97,6 +100,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 
 		if (((uint32_t) base & ((1 << (regszbits - 3)) - 1)) != 0)
 		{
+			ASSERT(0);
 			return E_MISALIGNED;
 		}
 
@@ -114,6 +118,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 		 */
 		if ((base_misalignment + size_subregions) > 7)
 		{
+			ASSERT(0);
 			return E_MISALIGNED;
 		}
 
@@ -140,6 +145,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 		/* Just check, that address is size-aligned */
 		if (((uint32_t) base & (( 1 << regszbits) - 1)) != 0)
 		{
+			ASSERT(0);
 			return E_MISALIGNED;
 		}
 	}

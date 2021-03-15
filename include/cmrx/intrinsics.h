@@ -48,6 +48,21 @@ __attribute__((always_inline)) static inline void * __get_PSP(void)
 	return psp;
 }
 
+/** Get value of process LR
+ * @return top of application stack
+ */
+__attribute__((always_inline)) static inline void * __get_LR(void)
+{
+	void * psp;
+	asm volatile(
+			".syntax unified\n\t"
+			"MOV %0, LR\n\t"
+			: "=r" (psp) 
+			);
+
+	return psp;
+}
+
 /** Set value of process SP
  * @param stack_top new top of application stack
  */

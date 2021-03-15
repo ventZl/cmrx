@@ -1,7 +1,11 @@
 #include <cmrx/os/rpc.h>
 #include <cmrx/os/sysenter.h>
 #include <cmrx/os/syscalls.h>
+#include <cmrx/os/syscall.h>
 #include <cmrx/intrinsics.h>
+
+#include <cmrx/assert.h>
+#include <cmrx/os/sanitize.h>
 
 struct RPC_Service_t_;
 
@@ -15,55 +19,39 @@ struct RPC_Service_t_ {
 	VTable_t * vtable;
 };
 
-typedef struct {
-	uint32_t r0;
-	uint32_t r1;
-	uint32_t r2;
-	uint32_t r3;
-	uint32_t r12;
-	void * lr;
-	void * pc;
-	uint32_t xpsr;
-	uint32_t arg4;
-	uint32_t arg5;
-	uint32_t arg6;
-	uint32_t arg7;
-} ExFrame;
-
-__SYSCALL static int rpc_return()
+__SYSCALL void rpc_return()
 {
 	__SVC(SYSCALL_RPC_RETURN);
 }
 
-/* For Cortex-M3, keep this a multiple o 8 */
-#define RPC_STACK_FRAME_SIZE			10
-
 int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
-	uint32_t * psp = (uint32_t *) __get_PSP();
-	RPC_Service_t * service = (void *) *(psp + 8);
+	ExceptionFrame * local_frame = (ExceptionFrame *) __get_PSP();
+	sanitize_psp((uint32_t *) local_frame);
+	RPC_Service_t * service = (void *) get_exception_argument(local_frame, 4);
 	VTable_t * vtable = service->vtable;
-	unsigned method_id = (unsigned) *(psp + 9); 
+	unsigned method_id = get_exception_argument(local_frame, 5); 
 	RPC_Method_t * method = vtable[method_id];
+	unsigned canary = get_exception_argument(local_frame, 6);
 
+	ASSERT(canary == 0xAA55AA55);
 
-	ExFrame * local_frame = (ExFrame *) psp;
+	ExceptionFrame * remote_frame = push_exception_frame(local_frame, 2);
+	sanitize_psp((uint32_t *) remote_frame);
+
+	// remote frame arg [1 .. 4] = local frame arg [0 .. 3]
+	for (int q = 0; q < 4; ++q)
+	{
+		set_exception_argument(remote_frame, q + 1,
+				get_exception_argument(local_frame, q)
+				);
+	}
+
+	set_exception_argument(remote_frame, 0, (uint32_t) service);
+	set_exception_argument(remote_frame, 5, 0xAA55AA55);
+	set_exception_pc_lr(remote_frame, method, rpc_return);
 	
-	psp -= RPC_STACK_FRAME_SIZE;
-
-	ExFrame * remote_frame = (ExFrame *) psp;
-
-	remote_frame->r0 = (uint32_t) service;
-	remote_frame->r1 = local_frame->r0;
-	remote_frame->r2 = local_frame->r1;
-	remote_frame->r3 = local_frame->r2;
-	remote_frame->r12 = local_frame->r12;
-	remote_frame->lr = &rpc_return;
-	remote_frame->pc = method;
-	remote_frame->xpsr = local_frame->xpsr;
-	remote_frame->arg4 = local_frame->r3;
-
-	__set_PSP(psp);
+	__set_PSP((uint32_t *) remote_frame);
 
 	// we have manipulated PSP, but sv_call_handler doesn't know
 	// about it. we will let rewrite R0 position in exception
@@ -71,15 +59,26 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	return arg0;
 }
 
+int __rpc_call();
+
 int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
-	uint32_t * psp = (uint32_t *) __get_PSP();
+	ExceptionFrame * remote_frame = (ExceptionFrame *) __get_PSP();
+	sanitize_psp((uint32_t *) remote_frame);
+	uint32_t canary = get_exception_argument(remote_frame, 5);
 
-	*(psp + 7 + RPC_STACK_FRAME_SIZE) = *(psp + 7);
+	ASSERT(canary == 0xAA55AA55);
 
-	psp += RPC_STACK_FRAME_SIZE;
+	ExceptionFrame * local_frame = pop_exception_frame(remote_frame, 2);
+	
+	typeof(&__rpc_call) p_rpc_call = __rpc_call;
+	p_rpc_call++;
+	ASSERT(local_frame->pc == p_rpc_call);
+	canary = get_exception_argument(local_frame, 6);
+	ASSERT(canary == 0xAA55AA55);
 
-	__set_PSP(psp);
+	sanitize_psp((uint32_t *) local_frame);
+	__set_PSP((uint32_t *) local_frame);
 
 	// we have manipulated PSP, but sv_call_handler doesn't know
 	// about it. returning arg0 we will let it to write somewhere below
@@ -87,7 +86,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	// won't get return value written by sv_call_handler, so we have to
 	// do it on our own.
 	
-	*(psp) = arg0;
+	set_exception_argument(local_frame, 0, arg0);
 	__ISB();
 	
 	return arg0;

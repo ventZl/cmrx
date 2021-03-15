@@ -4,6 +4,7 @@
 
 uint8_t os_get_current_process(void);
 uint8_t os_get_current_thread(void);
+uint8_t os_get_current_stack(void);
 uint32_t os_get_micro_time(void);
 int os_sched_yield(void);
 void os_start();

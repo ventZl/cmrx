@@ -15,8 +15,8 @@ string(REPLACE "*(.rodata*)" "*(.rodata*)
   KEEP(*(.thread_create))
   __thread_create_end = .;
   " LD_SCRIPT "${LD_SCRIPT}")
-string(REPLACE "_data = .;" "_data = .;\n  INCLUDE gen.appl_data.ld" LD_SCRIPT "${LD_SCRIPT}")
-string(REPLACE ".bss : {" ".bss : {\n  INCLUDE gen.appl_bss.ld" LD_SCRIPT "${LD_SCRIPT}")
+  string(REPLACE "_data = .;" "_data = .;\n  INCLUDE gen.appl_data.ld;\n . = ALIGN(256);\n _e_data = .;" LD_SCRIPT "${LD_SCRIPT}")
+string(REPLACE ".bss : {" ". = ALIGN(512);\n _bss = .;\n .bss : {\n  INCLUDE gen.appl_bss.ld\n _e_bss = .;" LD_SCRIPT "${LD_SCRIPT}")
 file(WRITE ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld "${LD_SCRIPT}")
 
 function(add_application NAME)

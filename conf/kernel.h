@@ -11,13 +11,13 @@
 #define OS_TASK_MPU_REGIONS		4
 
 /** How big stack is? In bytes */
-#define OS_STACK_SIZE			0x100
+#define OS_STACK_SIZE			1024
 
 /** How many threads can exist */
-#define OS_THREADS				8
+#define OS_THREADS				5
 
 /** How many stacks can be allocated */
-#define OS_STACKS				8
+#define OS_STACKS				5
 
 /** How many sleeping threads can exist */
 #define SLEEPERS_MAX			OS_THREADS
