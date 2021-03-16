@@ -59,7 +59,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	return arg0;
 }
 
-int __rpc_call();
+int _rpc_call();
 
 int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
@@ -71,7 +71,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	ExceptionFrame * local_frame = pop_exception_frame(remote_frame, 2);
 	
-	typeof(&__rpc_call) p_rpc_call = __rpc_call;
+	typeof(&_rpc_call) p_rpc_call = _rpc_call;
 	p_rpc_call++;
 	ASSERT(local_frame->pc == p_rpc_call);
 	canary = get_exception_argument(local_frame, 6);
