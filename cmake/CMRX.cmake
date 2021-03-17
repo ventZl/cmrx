@@ -1,23 +1,25 @@
-file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_code.ld "")
-file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_data.ld "")
-file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_bss.ld "")
-file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_inst.ld "")
+if (NOT TESTING)
+	file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_code.ld "")
+	file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_data.ld "")
+	file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_bss.ld "")
+	file(WRITE ${CMAKE_BINARY_DIR}/gen.appl_inst.ld "")
 
-file(READ ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld LD_SCRIPT)
-set(LD_SCRIPT "INCLUDE gen.appl_inst.ld\n${LD_SCRIPT}")
-string(REPLACE "*(.vectors)" "*(.vectors)\n  INCLUDE gen.appl_code.ld" LD_SCRIPT "${LD_SCRIPT}")
-string(REPLACE "*(.rodata*)" "*(.rodata*)
-  . = ALIGN(4);
-  __applications_start = .;
-  KEEP(*(.applications))
-  __applications_end = .;
-  __thread_create_start = .;
-  KEEP(*(.thread_create))
-  __thread_create_end = .;
-  " LD_SCRIPT "${LD_SCRIPT}")
-  string(REPLACE "_data = .;" "_data = .;\n  INCLUDE gen.appl_data.ld;\n . = ALIGN(256);\n _e_data = .;" LD_SCRIPT "${LD_SCRIPT}")
-string(REPLACE ".bss : {" ". = ALIGN(512);\n _bss = .;\n .bss : {\n  INCLUDE gen.appl_bss.ld\n _e_bss = .;" LD_SCRIPT "${LD_SCRIPT}")
-file(WRITE ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld "${LD_SCRIPT}")
+	file(READ ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld LD_SCRIPT)
+	set(LD_SCRIPT "INCLUDE gen.appl_inst.ld\n${LD_SCRIPT}")
+	string(REPLACE "*(.vectors)" "*(.vectors)\n  INCLUDE gen.appl_code.ld" LD_SCRIPT "${LD_SCRIPT}")
+	string(REPLACE "*(.rodata*)" "*(.rodata*)
+	  . = ALIGN(4);
+	  __applications_start = .;
+	  KEEP(*(.applications))
+	  __applications_end = .;
+	  __thread_create_start = .;
+	  KEEP(*(.thread_create))
+	  __thread_create_end = .;
+	  " LD_SCRIPT "${LD_SCRIPT}")
+	  string(REPLACE "_data = .;" "_data = .;\n  INCLUDE gen.appl_data.ld;\n . = ALIGN(256);\n _e_data = .;" LD_SCRIPT "${LD_SCRIPT}")
+	string(REPLACE ".bss : {" ". = ALIGN(512);\n _bss = .;\n .bss : {\n  INCLUDE gen.appl_bss.ld\n _e_bss = .;" LD_SCRIPT "${LD_SCRIPT}")
+	file(WRITE ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld "${LD_SCRIPT}")
+endif()
 
 macro(add_application NAME)
 	if (NOT TESTING)
