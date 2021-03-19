@@ -3,4 +3,4 @@ add_definitions(-fomit-frame-pointer)
 
 set(os_SRCS mpu.c pendsv.c rpc.c sanitize.c sched.c syscall.c timer.c)
 
-add_library(os STATIC EXCLUDE_FROM_ALL ${os_SRCS})
+add_library(os OBJECT EXCLUDE_FROM_ALL ${os_SRCS})
