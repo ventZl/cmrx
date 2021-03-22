@@ -142,6 +142,52 @@ static inline ExceptionFrame * push_exception_frame(ExceptionFrame * frame, unsi
 	return outframe;
 }
 
+/** Creates space for additional arguments under exception frame.
+ *
+ * This function will move exception frame content args * 4 bytes lower. If resulting
+ * address won't be 8-byt aligned, then additional alignment is applied to it.
+ * Content of exception frame is copied automatically.
+ * @param frame address of exception frame in memory
+ * @param args amount of additional arguments for which space should be created under exception frame
+ * @returns address of shimmed exception frame.
+ */
+static inline ExceptionFrame * shim_exception_frame(ExceptionFrame * frame, unsigned args)
+{
+	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) - args * sizeof(uint32_t));
+	bool padding = false;
+
+	// Check if forged frame is 8-byte aligned, or not
+	if ((((uint32_t) outframe) % 8) != 0)
+	{
+		// Frame needs padding
+		outframe = (ExceptionFrame *) (((uint32_t *) outframe) - 1);
+		padding = true;
+	}
+
+	/* This has to be done from lowest address to highest to avoid
+	 * overwriting usable data.
+	 */
+	
+	for (int q = 0; q < sizeof(ExceptionFrame) / 4; ++q)
+	{
+		((uint32_t*) outframe)[q] = ((uint32_t*) frame)[q];
+	}
+	if (padding)
+	{
+		// we have padded the stack frame, clear STKALIGN in order to let
+		// CPU know that original SP was 4-byte aligned
+		outframe->xpsr |= 1 << 9;
+	}
+	else
+	{
+		// we didn't pad the stack frame, set STKALIGN in order to let
+		// CPU know that original SP was 8-byte aligned
+		outframe->xpsr &= ~(1 << 9);
+	}
+
+	return outframe;
+}
+
 /** Remove exception frame from thread's stack.
  *
  * This function will revert effects of calling @ref push_exception_frame. It will handle

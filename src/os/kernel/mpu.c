@@ -4,6 +4,31 @@
 #include <conf/kernel.h>
 #include <cmrx/intrinsics.h>
 #include <cmrx/assert.h>
+#include <libopencm3/cm3/scb.h>
+#include <cmrx/os/sched.h>
+#include <cmrx/os/syscall.h>
+#include <cmrx/intrinsics.h>
+
+#include <stdio.h>
+
+void hard_fault_handler(void)
+{
+	uint32_t status = SCB_CFSR;
+	if ((status & SCB_CFSR_IACCVIOL) || (status & SCB_CFSR_DACCVIOL))
+	{
+		if (status & SCB_CFSR_MMARVALID)
+		{
+			uint32_t addr = SCB_MMFAR;
+			printf("Segmentation fault at address 0x%08X in thread %d\n", (uint32_t) addr, os_get_current_thread());
+		}
+	}
+	ASSERT(0);
+}
+
+void mem_manage_handler(void)
+{
+	ASSERT(0);
+}
 
 static inline uint8_t log_2(uint32_t num)
 {

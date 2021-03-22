@@ -48,7 +48,7 @@ struct OS_thread_t {
 	 * THREAD_STATE_RUNNING. Obviously it is undefined for empty thread slots
 	 * and slots which don't have stack allocated yet.
 	 */
-	uint32_t * sp;
+	unsigned long * sp;
 	/** ID of stack, which is allocated to this thread. */
 	uint8_t stack_id;
 
@@ -60,7 +60,7 @@ struct OS_thread_t {
 	 * then this contains thread ID. If thread is blocked waiting for mutex, then
 	 * this contains mutex address.
 	 */
-	uint32_t block_object;
+	unsigned long block_object;
 
 	/** Ummmmm... */
 	uint8_t rpc_depth;
@@ -73,6 +73,12 @@ struct OS_thread_t {
 	/** Address of signal handler to use.
 	 */
 	void (*signal_handler)(int);
+
+	/** Current pending signal bitmask.
+	 * Each set bit means that one signal has been delivered.
+	 */
+
+	uint32_t signals;
 
 	/** Exit status after thread quit. */
 	int exit_status;

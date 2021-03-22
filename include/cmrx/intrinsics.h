@@ -66,7 +66,7 @@ __attribute__((always_inline)) static inline void * __get_LR(void)
 /** Set value of process SP
  * @param stack_top new top of application stack
  */
-__attribute__((always_inline)) static inline void __set_PSP(uint32_t * stack_top)
+__attribute__((always_inline)) static inline void __set_PSP(unsigned long * stack_top)
 {
 	asm volatile(
 			".syntax unified\n\t"

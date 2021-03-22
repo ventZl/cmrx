@@ -72,3 +72,12 @@ int os_thread_stop(uint8_t thread_id);
  *
  */
 int os_thread_continue(uint8_t thread_id);
+
+/** Kernel way to kill an arbitrary thread.
+ *
+ * This call terminates any thread currently existing. There is no syscall for this right now.
+ * @param thread_id ID of thread to be terminated. May even be thread currently running.
+ * @param status thread exit status
+ * @return 0 if operation succeeded, error number otherwise
+ */
+int os_thread_kill(uint8_t thread_id, int status);

@@ -3,6 +3,7 @@
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched/stack.h>
 #include <cmrx/os/sched.h>
+#include <cmrx/os/timer.h>
 #include <cmrx/intrinsics.h>
 #include <cmrx/pendsv.h>
 #include <string.h>
@@ -35,6 +36,8 @@ static int os_thread_alloc(const struct OS_process_t * process, uint8_t priority
 static uint32_t sched_tick_increment;
 
 static uint32_t sched_microtime;
+static uint32_t sched_timer_event;
+static bool sched_timer_event_enabled;
 
 __attribute__((noreturn)) static int os_idle_thread(void * data)
 {
@@ -98,11 +101,27 @@ void sys_tick_handler(void)
 {
 	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
 	ASSERT(os_threads[thread_current].state == THREAD_STATE_RUNNING);
-	uint32_t * psp;
+	unsigned long * psp;
 	psp = __get_PSP();
 	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
 	sched_microtime += sched_tick_increment;
+	if (sched_timer_event_enabled &&
+			sched_timer_event == sched_microtime)
+	{
+		os_run_timer(sched_microtime);
+	}
 	os_sched_yield();
+	unsigned delay;
+	if (os_schedule_timer(&delay))
+	{
+		sched_timer_event = sched_microtime + delay;
+		sched_timer_event_enabled = true;
+	}
+	else
+	{
+		sched_timer_event_enabled = false;
+	}
+	ASSERT(sched_timer_event_enabled || thread_current == 0);
 	unsigned rt = 0;
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
@@ -150,6 +169,7 @@ void os_start()
 	unsigned threads = &__thread_create_end - &__thread_create_start;
 
 	memset(&os_threads, 0, sizeof(os_threads));
+	os_timer_init();
 
 	for (unsigned q = 0; q < threads; ++q)
 	{
@@ -185,7 +205,7 @@ void os_start()
 
 		thread_current = startup_thread;
 		// Start this thread
-		uint32_t * thread_sp = os_threads[startup_thread].sp;
+		unsigned long * thread_sp = os_threads[startup_thread].sp;
 		__set_PSP(thread_sp);
 		__set_CONTROL(0x03); 	// SPSEL = 1 | nPRIV = 1: use PSP and unpriveldged thread mode
 
@@ -242,9 +262,9 @@ static int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
 				os_threads[tid].stack_id = stack_id;
 				os_threads[tid].sp = &os_stacks.stacks[stack_id][OS_STACK_DWORD - 16];
 
-				os_stacks.stacks[stack_id][OS_STACK_DWORD - 8] = (uint32_t) data; // R0
-				os_stacks.stacks[stack_id][OS_STACK_DWORD - 3] = (uint32_t) os_thread_dispose; // LR
-				os_stacks.stacks[stack_id][OS_STACK_DWORD - 2] = (uint32_t) entrypoint; // PC
+				os_stacks.stacks[stack_id][OS_STACK_DWORD - 8] = (unsigned long) data; // R0
+				os_stacks.stacks[stack_id][OS_STACK_DWORD - 3] = (unsigned long) os_thread_dispose; // LR
+				os_stacks.stacks[stack_id][OS_STACK_DWORD - 2] = (unsigned long) entrypoint; // PC
 				os_stacks.stacks[stack_id][OS_STACK_DWORD - 1] = 0x01000000; // xPSR
 
 				os_threads[tid].state = THREAD_STATE_READY;
@@ -306,8 +326,10 @@ static int os_thread_alloc(const struct OS_process_t * process, uint8_t priority
 		{
 			os_threads[q].stack_id = OS_TASK_NO_STACK;
 			os_threads[q].process = process;
-			os_threads[q].sp = (uint32_t *) ~0;
+			os_threads[q].sp = (unsigned long *) ~0;
 			os_threads[q].state = THREAD_STATE_CREATED;
+			os_threads[q].signals = 0;
+			os_threads[q].signal_handler = NULL;
 			os_threads[q].priority = priority;
 			return q;
 		}
@@ -338,17 +360,44 @@ int os_thread_join(uint8_t thread_id)
 int os_thread_exit(int status)
 {
 	uint8_t thread_id = os_get_current_thread();
-	if (os_threads[thread_id].state == THREAD_STATE_RUNNING)
+	return os_thread_kill(thread_id, status);
+/*	if (os_threads[thread_id].state == THREAD_STATE_RUNNING)
 	{
 		os_threads[thread_id].state = THREAD_STATE_FINISHED;
 		os_threads[thread_id].exit_status = status;
 
 		os_stack_dispose(os_threads[thread_id].stack_id);
 		os_threads[thread_id].stack_id = OS_TASK_NO_STACK;
-		os_threads[thread_id].sp = (uint32_t *) ~0;
+		os_threads[thread_id].sp = (unsigned long *) ~0;
 		os_sched_yield();
 	}
-	return 0;
+	return 0;*/
+}
+
+int os_thread_kill(uint8_t thread_id, int status)
+{
+	if (thread_id >= OS_THREADS)
+	{
+		return E_INVALID;
+	}
+
+	if (os_threads[thread_id].state != THREAD_STATE_EMPTY
+			&& os_threads[thread_id].state == THREAD_STATE_FINISHED
+			)
+	{
+		os_threads[thread_id].state = THREAD_STATE_FINISHED;
+		os_threads[thread_id].exit_status = status;
+
+		os_stack_dispose(os_threads[thread_id].stack_id);
+		os_threads[thread_id].stack_id = OS_TASK_NO_STACK;
+		os_threads[thread_id].sp = (unsigned long *) ~0;
+		if (thread_id == os_get_current_thread())
+		{
+			os_sched_yield();
+		}
+		return 0;
+	}
+	return E_INVALID;
 }
 
 int os_thread_stop(uint8_t thread)

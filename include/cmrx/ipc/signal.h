@@ -2,6 +2,13 @@
 
 #include <cmrx/os/sysenter.h>
 
+#define SIGALRM					0
+
+#define SIGKILL					32
+#define SIGSTOP					33
+#define SIGCONT					34
+#define SIGSEGV					35
+
 /** Register function as current thread signal handler.
  * @param signo number of signal
  * @param sighandler address of function which handles the signal

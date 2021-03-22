@@ -13,4 +13,5 @@
 #define SYSCALL_THREAD_EXIT					10
 #define SYSCALL_SETITIMER					11
 #define SYSCALL_USLEEP						12
-
+#define SYSCALL_SIGNAL						13
+#define SYSCALL_KILL						14

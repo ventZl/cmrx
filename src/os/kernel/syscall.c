@@ -6,6 +6,7 @@
 #include <cmrx/os/rpc.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/timer.h>
+#include <cmrx/os/signal.h>
 
 #include <cmrx/os/sched/stack.h>
 #include <cmrx/assert.h>
@@ -20,12 +21,14 @@ struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_THREAD_JOIN, (Syscall_Handler_t) &os_thread_join },
 	{ SYSCALL_THREAD_EXIT, (Syscall_Handler_t) &os_thread_exit },
 	{ SYSCALL_USLEEP, (Syscall_Handler_t) &os_usleep },
-	{ SYSCALL_SETITIMER, (Syscall_Handler_t) &os_setitimer }
+	{ SYSCALL_SETITIMER, (Syscall_Handler_t) &os_setitimer },
+	{ SYSCALL_SIGNAL, (Syscall_Handler_t) &os_signal },
+	{ SYSCALL_KILL, (Syscall_Handler_t) &os_kill }
 };
 
 extern struct OS_stack_t os_stacks;
 
-/*__attribute__((naked))*/ void sv_call_handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
+__attribute__((used)) void sv_call_handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
 	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
 	uint32_t * psp = (uint32_t *) __get_PSP();
