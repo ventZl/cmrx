@@ -37,6 +37,8 @@ bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
 		return false;
 	}
 
+	ctxt_switch_pending = true;
+
 	old_task = &os_threads[current_task];
 	if (os_threads[current_task].state == THREAD_STATE_RUNNING)
 	{
@@ -67,13 +69,14 @@ bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
  */
 __attribute__((naked)) void pend_sv_handler(void)
 {
+	/* Do NOT put anything here. You will clobber context being stored! */
 	asm volatile(
 			".syntax unified\n\t"
 			"push {lr}\n\t"
 	);
-	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
-
+	/* Do NOT put anything here. You will clobber context being stored! */
 	old_task->sp = save_context();
+	ctxt_switch_pending = false;
 	sanitize_psp(old_task->sp);
 
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
@@ -82,11 +85,10 @@ __attribute__((naked)) void pend_sv_handler(void)
 #endif
 	
 	mpu_set_region(4, &os_stacks.stacks[new_thread_id], sizeof(os_stacks.stacks[new_thread_id]), MPU_RW);
-	load_context(new_task->sp);
 	sanitize_psp(new_task->sp);
 
-	ctxt_switch_pending = false;
-
+	load_context(new_task->sp);
+	/* Do NOT put anything here. You will clobber context just restored! */
 	asm volatile(
 			"pop {pc}"
 	);
