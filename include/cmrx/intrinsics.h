@@ -77,6 +77,7 @@ __attribute__((always_inline)) static inline void __set_PSP(unsigned long * stac
 
 /** Save application context.
  * This function will grab process SP
+ * This operation will claim 32 bytes (8 registers * 4 bytes) on stack.
  * @return top of application stack after application context was saved
  */
 __attribute__((always_inline)) static inline void * save_context()
