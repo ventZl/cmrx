@@ -9,7 +9,9 @@
 #include <cmrx/os/syscall.h>
 #include <cmrx/intrinsics.h>
 
+#ifdef SEMIHOSTING
 #include <stdio.h>
+#endif
 
 void hard_fault_handler(void)
 {
@@ -18,8 +20,10 @@ void hard_fault_handler(void)
 	{
 		if (status & SCB_CFSR_MMARVALID)
 		{
+#ifdef SEMIHOSTING
 			uint32_t addr = SCB_MMFAR;
 			printf("Segmentation fault at address 0x%08X in thread %d\n", (uint32_t) addr, os_get_current_thread());
+#endif
 		}
 	}
 	ASSERT(0);
