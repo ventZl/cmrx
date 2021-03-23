@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdint.h>
 #include <cmrx/os/sysenter.h>
 
 #define SIGALRM					0
@@ -14,7 +15,7 @@
  * @param sighandler address of function which handles the signal
  * @returns 0. Mostly.
  */
-__SYSCALL int signal(int signo, void (*sighandler)(int));
+__SYSCALL int signal(int signo, void (*sighandler)(uint32_t));
 
 /** Send thread a signal.
  *
@@ -23,4 +24,4 @@ __SYSCALL int signal(int signo, void (*sighandler)(int));
  * @param signal signal number
  * @returns 0. Mostly.
  */
-__SYSCALL int kill(int thread, int signal);
+__SYSCALL int kill(int thread, uint32_t signal);
