@@ -1,3 +1,10 @@
+/** @defgroup util_intrinsics ARM intrinsics
+ *
+ * @ingroup util
+ *
+ * Various intrinsics. Mostly reimplemented CMSIS intrinsics for use in kernel code.
+ * @{
+ */
 #pragma once
 
 #include <stdint.h>
@@ -139,3 +146,4 @@ __attribute__((always_inline)) static inline void __ISB()
 }
 
 
+/** @} */

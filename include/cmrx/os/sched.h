@@ -1,3 +1,8 @@
+/** @defgroup os_sched Threads
+ *
+ * @ingroup os
+ * @{
+ */
 #pragma once
 
 #include <cmrx/os/runtime.h>
@@ -81,3 +86,5 @@ int os_thread_continue(uint8_t thread_id);
  * @return 0 if operation succeeded, error number otherwise
  */
 int os_thread_kill(uint8_t thread_id, int status);
+
+/** @} */

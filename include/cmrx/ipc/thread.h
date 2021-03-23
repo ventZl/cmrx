@@ -1,3 +1,19 @@
+/** @defgroup api_thread Threading functions
+ *
+ * @ingroup api
+ *
+ * Functions providing support for manipulation of system execution state. It is possible
+ * to create new threads, wait for other threads to finish or finish currently running thread.
+ *
+ * Threads are defined by their entry function, which treated similarly to main() function
+ * of a C program. If thread entry function returns, then it's return value is used as 
+ * thread return status. This is not interpreted by kernel in any way, but it is available 
+ * for others.
+ */
+
+/** @ingroup api_thread
+ * @{
+ */
 #pragma once
 
 #include <cmrx/os/sysenter.h>
@@ -58,4 +74,5 @@ __SYSCALL int thread_join(int thread, int * status);
  */
 __SYSCALL int thread_exit(int status);
 
+/** @} */
 

@@ -1,3 +1,14 @@
+/** @defgroup config Configuration
+ *
+ * Various aspects of kernel can be configured at build time.
+ */
+/** @defgroup util Utilities
+ */
+/** @defgroup os Kernel internals
+ *
+ *
+ */
+
 #pragma once
 
 #include <stdint.h>

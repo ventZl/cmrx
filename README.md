@@ -10,11 +10,19 @@ happen:
 
 * memory protection and isolation of processes
 * multi-threaded scheduler
-* support for fast userspace mutexes (TBD)
 
-Planned features:
+Additionally CMRX offers basic set of IPC features:
 
-* extension of basic IPC: remote procedure calls, shared memory
+* support for fast userspace mutexes
+* thread management: on demand creating, disposing and joining of other threads
+* signal delivery: threads can register signal handlers and other threads can send 
+  them signals
+* remote procedure call: kernel can dispatch call performed using interface and 
+  method ID and then provide result back to the caller.
+
+TBD:
+* shared memory support
+* registering of RPC services as syscalls
 
 In line with mikrokernel architecture, operating system itself does not offer
 any non-essential services. Instead of this, there is a mechanism, which allows

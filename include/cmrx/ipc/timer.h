@@ -1,3 +1,14 @@
+/** @defgroup api_timer Timers
+ *
+ * @ingroup api
+ *
+ * Kernel offers mechanism to interrupt, or periodically schedule execution of 
+ * thread.
+ */
+
+/** @ingroup api_timer
+ * @{
+ */
 #pragma once
 
 #include <cmrx/os/sysenter.h>
@@ -25,3 +36,5 @@ __SYSCALL int usleep(unsigned microseconds);
  * is cancelled.
  */
 __SYSCALL int setitimer(unsigned microseconds);
+
+/** @} */

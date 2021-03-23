@@ -1,3 +1,10 @@
+/** @defgroup os_timer Timers
+ *
+ * @ingroup os
+ *
+ * @{
+ */
+
 #pragma once
 
 #include <stdint.h>
@@ -19,3 +26,4 @@ bool os_schedule_timer(unsigned * delay);
 
 void os_run_timer(uint32_t microtime);
 
+/** @} */

@@ -1,3 +1,6 @@
+/** @ingroup os_syscall
+ * @{
+ */
 #pragma once
 
 #include <stdint.h>
@@ -30,3 +33,5 @@
 void __SVC(uint8_t no);
 
 #endif
+
+/** @} */

@@ -1,3 +1,6 @@
+/** @ingroup os_kernel
+ * @{
+ */
 #pragma once
 
 #include <stdint.h>
@@ -20,3 +23,4 @@ struct OS_stack_t {
 	uint32_t allocations;
 };
 
+/** @} */

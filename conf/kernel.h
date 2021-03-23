@@ -1,3 +1,6 @@
+/** @ingroup config
+ * @{
+ */
 #pragma once
 
 /** This turns on memory protection globally */
@@ -24,3 +27,5 @@
 
 /** How many periodic threads can exist */
 #define PERIODICS_MAX			OS_THREADS
+
+/** @} */

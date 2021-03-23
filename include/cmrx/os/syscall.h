@@ -1,3 +1,16 @@
+/** @defgroup os_syscall System calls
+ *
+ * @ingroup os
+ *
+ * Kernel contains mechanism of using kernel services. This mechanism (commonly
+ * known as system calls, or syscalls) can be used to call system services only
+ * from userspace code running in thread context. It is not possible to call these
+ * services from within ISR context.
+ */
+
+/** @ingroup os_syscall
+ * @{
+ */
 #pragma once
 
 #include <stdbool.h>
@@ -209,3 +222,5 @@ static inline ExceptionFrame * pop_exception_frame(ExceptionFrame * frame, unsig
 
 	return outframe;
 }
+
+/** @} */

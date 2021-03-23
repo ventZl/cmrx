@@ -1,3 +1,13 @@
+/** @defgroup os_sched Kernel scheduler
+ *
+ * @ingroup os_kernel
+ *
+ * @brief Kernel scheduler internals
+ *
+ *
+ * @ingroup os_sched
+ * @{
+ */
 #include <cmrx/os.h>
 #include <cmrx/sched.h>
 #include <cmrx/os/runtime.h>
@@ -438,3 +448,5 @@ int os_thread_continue(uint8_t thread)
 	}
 	return E_INVALID;
 }
+
+/** @} */

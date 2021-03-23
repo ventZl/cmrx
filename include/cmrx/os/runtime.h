@@ -1,3 +1,16 @@
+/** @defgroup os_kernel Kernel core
+ *
+ * @ingroup os
+ *
+ * Kernel is built around minimalistic core, which consists of prioritized thread
+ * scheduler. Scheduler can be started up after basic HW setup is done by calling 
+ * @ref os_start(). This will collect all auto-started threads, prepare them and
+ * start thread scheduler. All other mechanisms are built around thread scheduler.
+ */
+
+/** @ingroup os_kernel
+ * @{
+ */
 #pragma once
 
 #include <cmrx/mpu.h>
@@ -142,3 +155,4 @@ struct OS_thread_create_t {
 /** Scheduler notion on existing threads. */
 extern struct OS_thread_t os_threads[OS_THREADS];
 
+/** @} */

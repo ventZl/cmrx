@@ -1,15 +1,26 @@
+/** @defgroup os_mpu Memory protection
+ *
+ * @ingroup os
+ *
+ * Kernel internals in support for MPU configuration.
+ * @{
+ */
 #pragma once
 
 #include <stdint.h>
 #include <conf/kernel.h>
 #include <libopencm3/cm3/mpu.h>
 
-
+/** @defgroup os_mpu_rights MPU region access rights 
+ * @{
+ */
 #define MPU_NONE			0
 #define MPU_RX				MPU_RASR_ATTR_AP_PRW_URO
 #define MPU_RWX				MPU_RASR_ATTR_AP_PRW_URW
 #define MPU_R				MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URO
 #define MPU_RW				MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URW
+
+/** @} */
 
 #define MPU_AP_MASK			0b0111
 #define MPU_EXECUTE_SHIFT	3
@@ -70,3 +81,5 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
  * @return E_OK if region was deactivated
  */
 int mpu_clear_region(uint8_t region);
+
+/** @} */

@@ -1,3 +1,7 @@
+/** @ingroup api_mutex
+ * @{
+ */
+
 #include <cmrx/ipc/mutex.h>
 #include <cmrx/ipc/thread.h>
 #include <cmrx/intrinsics.h>
@@ -248,3 +252,5 @@ int futex_unlock(futex_t * futex)
 	}
 	return success;
 }
+
+/** @} */

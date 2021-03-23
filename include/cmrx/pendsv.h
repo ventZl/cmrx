@@ -1,3 +1,6 @@
+/** @ingroup os_kernel
+ * @{
+ */
 #pragma once
 
 #include <stdint.h>
@@ -14,3 +17,5 @@
  * @returns true if context switch will happen, false otherwise
  */
 bool schedule_context_switch(uint32_t current_task, uint32_t next_task);
+
+/** @} */

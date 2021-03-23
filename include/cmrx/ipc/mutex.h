@@ -1,3 +1,15 @@
+/** @defgroup api_mutex Mutexes / Futexes
+ *
+ * @ingroup api
+ *
+ * CMRX offers mutual exclusive access facilities for userspace processes.
+ * There is an implementation of futex (fast userspace mutex) available and
+ * supported. There is also an implementation of mutex (driven by kernel), but
+ * this might get deprecated anytime soon.
+ *
+ * @ingroup api_mutexes 
+ * @{
+ */
 #pragma once
 
 #include <stdint.h>
@@ -48,3 +60,5 @@ __SYSCALL int mutex_destroy(mutex_t * mutex);
 __SYSCALL int mutex_lock(mutex_t * mutex);
 __SYSCALL int mutex_unlock(mutex_t * mutex);
 __SYSCALL int mutex_trylock(mutex_t * mutex);
+
+/** @} */

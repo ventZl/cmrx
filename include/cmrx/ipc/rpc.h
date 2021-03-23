@@ -1,3 +1,15 @@
+/** @defgroup api_rpc Remote Procedure Calls
+ *
+ * @ingroup api
+ *
+ * Kernel offers method of calling procedures residing in foreign processes.
+ * These procedures will inherit stack of calling thread, but will retain 
+ * access privileges of called process (memory access). This mechanism allows
+ * for certain degree of abstraction, while procedures are not called using
+ * their addresses, rather than using offset into "virtual method table" bound
+ * to RPC service.
+ *
+ */
 #pragma once
 
 #include <cmrx/os/sysenter.h>
@@ -13,6 +25,11 @@
 #define RPC_CALL_2(si, mi, _0, _1)			_rpc_call((unsigned) _0, (unsigned) _1, 0, 0, si, mi, 0xAA55AA55)
 #define RPC_CALL_1(si, mi, _0)				_rpc_call((unsigned) _0, 0, 0, 0, si, mi, 0xAA55AA55)
 #define RPC_CALL_0(si, mi)					_rpc_call(0, 0, 0, 0, si, mi, 0xAA55AA55)
+
+/**
+ * @ingroup api_rpc
+ * @{
+ */
 
 /** User-visible way to perform remote procedure call.
  *
@@ -47,3 +64,5 @@ __SYSCALL int _rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned ar
  * to call it manually from RPC method. It is sufficient to return from RPC to call this.
  */
 __SYSCALL void rpc_return();
+
+/** @} */

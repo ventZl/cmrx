@@ -1,3 +1,16 @@
+/** @defgroup api_init Static initialization
+ *
+ * @ingroup api
+ *
+ * Mechanisms provided for application designer to statically initialize objects.
+ * These mechanisms are provided, so that various structures are generated into
+ * application image. These replace need to call os routines manually. Currently
+ * it is possible to statically initialize processes and threads.
+ *
+ */
+/** @ingroup api_init
+ * @{
+ */
 #pragma once
 
 //#include "os.h"
@@ -54,3 +67,5 @@ __attribute__((externally_visible, used, section(".thread_create") )) const stru
 	data,\
 	priority\
 }
+
+/** @} */

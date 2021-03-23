@@ -1,5 +1,17 @@
+/** @ingroup os_syscall
+ * @{
+ */
+
 #pragma once
 
+/** @defgroup os_syscalls List of system call IDs
+ *
+ * Due to limitations of ELF/gcc/linker, system call IDs must be known
+ * at compile time as they are not relocatable. This list contains 
+ * assigned IDs of system calls.
+ *
+ * @{
+ */
 #define SYSCALL_GET_TID						0
 #define SYSCALL_SCHED_YIELD					1
 #define SYSCALL_THREAD_CREATE				2
@@ -15,3 +27,6 @@
 #define SYSCALL_USLEEP						12
 #define SYSCALL_SIGNAL						13
 #define SYSCALL_KILL						14
+
+/** @} */
+/** @} */
