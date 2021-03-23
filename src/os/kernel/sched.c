@@ -121,7 +121,6 @@ void sys_tick_handler(void)
 	{
 		sched_timer_event_enabled = false;
 	}
-	ASSERT(sched_timer_event_enabled || thread_current == 0);
 	unsigned rt = 0;
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
@@ -382,7 +381,7 @@ int os_thread_kill(uint8_t thread_id, int status)
 	}
 
 	if (os_threads[thread_id].state != THREAD_STATE_EMPTY
-			&& os_threads[thread_id].state == THREAD_STATE_FINISHED
+			&& os_threads[thread_id].state != THREAD_STATE_FINISHED
 			)
 	{
 		os_threads[thread_id].state = THREAD_STATE_FINISHED;
