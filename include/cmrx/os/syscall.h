@@ -153,7 +153,7 @@ static inline ExceptionFrame * push_exception_frame(ExceptionFrame * frame, unsi
  */
 static inline ExceptionFrame * shim_exception_frame(ExceptionFrame * frame, unsigned args)
 {
-	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) - args * sizeof(uint32_t));
+	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) - args);
 	bool padding = false;
 
 	// Check if forged frame is 8-byte aligned, or not
