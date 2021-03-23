@@ -27,6 +27,7 @@ __attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *si
 
 	asm volatile(
 			"BLX %[sighandler]\n\t"
+			"POP { lr }\n\t"
 			"POP { r0 - r3, pc }\n\t"
 			:
 			: [sighandler] "r" (sighandler)
@@ -37,6 +38,7 @@ static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
 {
 	ASSERT(thread_id < OS_THREADS);
 	ExceptionFrame * frame;
+	uint32_t * new_sp;
 
 	/* Signal handler being NULL means, that thread ignores signals. No delivery is performed. */
 	if (os_threads[thread_id].signal_handler == NULL)
@@ -46,17 +48,32 @@ static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
 
 	if (os_threads[thread_id].state == THREAD_STATE_RUNNING)
 	{
+		/* Here it means, that PSP shows to the beginning of exception stack frame.
+		 * There is nothing above it.
+		 */
 		frame = (ExceptionFrame *) __get_PSP();
 	}
 	else
 	{
-		frame = (ExceptionFrame *) os_threads[thread_id].sp;
+		/* Here it means, that SP shows to the beginning of thread state record.
+		 * Thread state record is basically just an exception frame, which has
+		 * additional registers placed on top of it.
+		 */
+		frame = (ExceptionFrame *) (os_threads[thread_id].sp + 8);
+		uint32_t * old_sp = os_threads[thread_id].sp;
+		new_sp = old_sp - 6;
+		for (int q = 0; q < 8; ++q)
+		{
+			new_sp[q] = old_sp[q];
+		}
 	}
 
 	/* Create space for 5 values: R0 - R3, PC */
-	ExceptionFrame * signal_frame = shim_exception_frame(frame, 5);
+	ExceptionFrame * signal_frame = shim_exception_frame(frame, 6);
 
-#define STACK_BASE	4
+#define STACK_BASE	5
+
+	set_exception_argument(signal_frame, STACK_BASE - 1, (uint32_t) signal_frame->lr);
 
 	/* Save R0 - R4 */
 	for (int q = 0; q < 4; ++q)
@@ -64,7 +81,12 @@ static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
 		set_exception_argument(signal_frame, STACK_BASE + q, get_exception_argument(signal_frame, q));
 	}
 	/* Save PC */
-	set_exception_argument(signal_frame, STACK_BASE + 4, (uint32_t) signal_frame->pc);
+	/* Note that bit 0 is programmatically set to 1. Otherwise CPU will freak out during
+	 * return. Exception frame stores PC as verbatim value. If this is used for loading PC
+	 * other way than loading from exception frame, then CPU attempts to switch into ARM
+	 * mode, which makes Cortex-M sad panda.
+	 */
+	set_exception_argument(signal_frame, STACK_BASE + 4, (uint32_t) signal_frame->pc | 1);
 	/* R0 - arg[0] - signal_mask */
 	set_exception_argument(signal_frame, 0, signals);
 
@@ -76,11 +98,11 @@ static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
 
 	if (os_threads[thread_id].state == THREAD_STATE_RUNNING)
 	{
-		__set_PSP((uint32_t *) frame);
+		__set_PSP((uint32_t *) signal_frame);
 	}
 	else
 	{
-		os_threads[thread_id].sp = (uint32_t *) frame;
+		os_threads[thread_id].sp = (uint32_t *) new_sp;
 	}
 }
 
