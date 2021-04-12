@@ -220,13 +220,14 @@ void os_start()
 
 		__ISB();
 
-		asm volatile(
+		__tail_call(dispose, entrypoint, data);
+/*		asm volatile(
 				"MOV LR, %[dispose]\n\t"
 				"MOV R0, %[data]\n\t"
 				"BX %[entrypoint]\n\t"
 				:
 				: [entrypoint] "r" (entrypoint), [dispose] "r" (dispose), [data] "r" (data)
-				);
+				);*/
 
 		// if thread we started here returns,
 		// it returns here. 
@@ -296,17 +297,29 @@ static int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
  */
 void systick_setup(int xms)
 {
-	sched_tick_increment = xms * 1000;
-	/* div8 per ST, stays compatible with M3/M4 parts, well done ST */
-	systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);
-	/* clear counter so it starts right away */
-	STK_CVR = 0;
+	uint32_t ahb_freq;
 
-#if 0
-	systick_set_reload(4000000);//rcc_ahb_frequency / 8 / 1000 * xms);
+#ifdef STM32H7
+	ahb_freq = rcc_get_bus_clk_freq(RCC_AHBCLK);
+	sched_tick_increment = xms * 1000;
+
+	systick_set_frequency(1000/xms, ahb_freq);
 #else
-	systick_set_reload(rcc_ahb_frequency / 8 / 1000 * xms);
+	ahb_freq = rcc_ahb_frequency;
 #endif
+
+#ifdef STM32G4	
+	/* div8 per ST, stays compatible with M3/M4 parts, well done ST */
+/*	systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);*/
+	/* clear counter so it starts right away */
+
+#	if 0
+	systick_set_reload(4000000);//rcc_ahb_frequency / 8 / 1000 * xms);
+#	else
+	systick_set_reload(ahb_freq / 8 / 1000 * xms);
+#	endif
+#endif
+	STK_CVR = 0;
 	systick_counter_enable();
 	systick_interrupt_enable();
 }

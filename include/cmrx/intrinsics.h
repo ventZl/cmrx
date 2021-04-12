@@ -145,5 +145,15 @@ __attribute__((always_inline)) static inline void __ISB()
 	asm volatile("ISB 0xF\n" : : : "memory");	
 }
 
+__attribute__((always_inline)) static inline void __tail_call(void (*return_to)(int), int (*entrypoint)(void *), void * data)
+{
+	asm volatile(
+			"MOV LR, %[dispose]\n\t"
+			"MOV R0, %[data]\n\t"
+			"BX %[entrypoint]\n\t"
+			:
+			: [entrypoint] "r" (entrypoint), [dispose] "r" (return_to), [data] "r" (data)
+			);
+}
 
 /** @} */

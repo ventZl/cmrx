@@ -22,6 +22,8 @@ if (NOT TESTING)
 		string(REPLACE "/DISCARD/ : { *(.eh_frame) }" ".eh : { *(.eh_frame) }" LD_SCRIPT "${LD_SCRIPT}")
 	endif()
 	file(WRITE ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld "${LD_SCRIPT}")
+else()
+	include_directories(${CMAKE_SOURCE_DIR}/cmrx/include/testing)
 endif()
 
 macro(add_application NAME)
