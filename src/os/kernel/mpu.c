@@ -20,10 +20,13 @@ void hard_fault_handler(void)
 	{
 		if (status & SCB_CFSR_MMARVALID)
 		{
-#ifdef SEMIHOSTING
 			uint32_t addr = SCB_MMFAR;
+#ifdef SEMIHOSTING
 			printf("Segmentation fault at address 0x%08X in thread %d\n", (uint32_t) addr, os_get_current_thread());
 #endif
+			// fail here
+			ASSERT(addr == ~addr);
+
 		}
 	}
 	ASSERT(0);
@@ -89,9 +92,9 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 
 	if ((size & ((1 << regszbits) - 1)) != 0)
 	{
-		ASSERT(0);
+//		ASSERT(0);
 		// for now simply ignore this case
-		return E_MISALIGNED;
+//		return E_MISALIGNED;
 
 		/* Here we have the case, that size is not a power of two.
 		 * In such case, there is a possibility of using subregions.
@@ -139,7 +142,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 		 * superblock aligned.
 		 */
 
-		uint32_t base_misalignment = ((uint32_t) base & ~((1 << regszbits) - 1)) >> (regszbits - 3);
+		uint32_t base_misalignment = ((uint32_t) base & ((1 << regszbits) - 1)) >> (regszbits - 3);
 		uint32_t size_subregions = size >> (regszbits - 3);
 
 		/* Here we check if, considering the base address misalignment
@@ -165,9 +168,11 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 		/* This magic subformula will set all bits between base_migalignment-th and
 		 * (base_misalignment + size_subregion)-th bit inclusive.
 		 */
+#if 0		
 		subregions = 
 			(1 << ((size_subregions + base_misalignment + 1) - 1)) 
 			& ~((1 << base_misalignment) - 1);
+#endif
 	}
 	else
 	{
