@@ -17,10 +17,10 @@
 #define OS_STACK_SIZE			1024
 
 /** How many threads can exist */
-#define OS_THREADS				5
+#define OS_THREADS				8
 
 /** How many stacks can be allocated */
-#define OS_STACKS				5
+#define OS_STACKS				8
 
 /** How many sleeping threads can exist */
 #define SLEEPERS_MAX			OS_THREADS
