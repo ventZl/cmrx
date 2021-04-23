@@ -49,6 +49,8 @@ static uint32_t sched_microtime;
 static uint32_t sched_timer_event;
 static bool sched_timer_event_enabled;
 
+void os_sched_timed_event(void);
+
 __attribute__((noreturn)) static int os_idle_thread(void * data)
 {
 	while (1);
@@ -95,6 +97,8 @@ int os_sched_yield(void)
 {
 	uint8_t candidate_thread;
 
+	os_sched_timed_event();
+
 	if (os_get_next_thread(thread_current, &candidate_thread))
 	{
 		thread_prev = thread_current;
@@ -105,6 +109,20 @@ int os_sched_yield(void)
 		}
 	}
 	return 0;
+}
+
+void os_sched_timed_event(void)
+{
+	unsigned delay;
+	if (os_schedule_timer(&delay))
+	{
+		sched_timer_event = sched_microtime + delay;
+		sched_timer_event_enabled = true;
+	}
+	else
+	{
+		sched_timer_event_enabled = false;
+	}
 }
 
 void sys_tick_handler(void)
@@ -121,16 +139,8 @@ void sys_tick_handler(void)
 		os_run_timer(sched_microtime);
 	}
 	os_sched_yield();
-	unsigned delay;
-	if (os_schedule_timer(&delay))
-	{
-		sched_timer_event = sched_microtime + delay;
-		sched_timer_event_enabled = true;
-	}
-	else
-	{
-		sched_timer_event_enabled = false;
-	}
+
+	os_sched_timed_event();
 	unsigned rt = 0;
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
@@ -194,10 +204,11 @@ void os_start()
 		thread_current = startup_thread;
 		uint8_t startup_stack = os_threads[startup_thread].stack_id;
 		os_threads[startup_thread].state = THREAD_STATE_RUNNING;
+#if 0
 		// Alter thread's SP to so that it's stack is completely 
 		// empty. Other threads have stack prepared for "return from
 		// interrupt handler scenario".
-		os_threads[startup_thread].sp = &os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD];
+		os_threads[startup_thread].sp = &os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD - 1];
 
 		/* These two variables are marked as register, because
 		 * call to __set_CONTROL() below will switch to 
@@ -210,25 +221,23 @@ void os_start()
 		register entrypoint_t * entrypoint = (entrypoint_t*) os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD - 2];
 		register void * data = (void *) os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD - 8];
 		register void (*dispose)(int) = os_thread_dispose;
-		mpu_set_region(4, &os_stacks.stacks[startup_stack], sizeof(os_stacks.stacks[startup_stack]), MPU_RW);
+#endif
+		if (mpu_set_region(4, &os_stacks.stacks[startup_stack], sizeof(os_stacks.stacks[startup_stack]), MPU_RW) != E_OK)
+		{
+			ASSERT(0);
+		}
 
-		thread_current = startup_thread;
 		// Start this thread
-		unsigned long * thread_sp = os_threads[startup_thread].sp;
+		// We are adding 8 here, because normally pend_sv_handler would be reading 8 general 
+		// purpose registers here. But there is nothing useful there, so we simply skip it.
+		// Code belog then restores what would normally be restored by return from handler.
+		unsigned long * thread_sp = os_threads[startup_thread].sp + 8;
 		__set_PSP(thread_sp);
 		__set_CONTROL(0x03); 	// SPSEL = 1 | nPRIV = 1: use PSP and unpriveldged thread mode
 
 		__ISB();
 
-		__tail_call(dispose, entrypoint, data);
-/*		asm volatile(
-				"MOV LR, %[dispose]\n\t"
-				"MOV R0, %[data]\n\t"
-				"BX %[entrypoint]\n\t"
-				:
-				: [entrypoint] "r" (entrypoint), [dispose] "r" (dispose), [data] "r" (data)
-				);*/
-
+		__ISR_return();
 		// if thread we started here returns,
 		// it returns here. 
 		while (1);

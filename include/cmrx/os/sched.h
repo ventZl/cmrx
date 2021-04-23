@@ -87,4 +87,5 @@ int os_thread_continue(uint8_t thread_id);
  */
 int os_thread_kill(uint8_t thread_id, int status);
 
+
 /** @} */

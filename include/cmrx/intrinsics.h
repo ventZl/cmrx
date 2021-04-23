@@ -145,15 +145,13 @@ __attribute__((always_inline)) static inline void __ISB()
 	asm volatile("ISB 0xF\n" : : : "memory");	
 }
 
-__attribute__((always_inline)) static inline void __tail_call(void (*return_to)(int), int (*entrypoint)(void *), void * data)
+__attribute__((always_inline)) static inline void __ISR_return()
 {
-	asm volatile(
-			"MOV LR, %[dispose]\n\t"
-			"MOV R0, %[data]\n\t"
-			"BX %[entrypoint]\n\t"
-			:
-			: [entrypoint] "r" (entrypoint), [dispose] "r" (return_to), [data] "r" (data)
-			);
+		asm volatile(
+				"POP {R0, R1, R2, R3, R12, LR}\n\t"
+				"POP {R6, R7}\n\t"
+				"BX R6\n\t"
+				);
 }
 
 /** @} */
