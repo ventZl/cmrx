@@ -18,6 +18,9 @@
 #include <stddef.h>
 
 #define __APPL_SYMBOL(application, symbol)	application ## _ ## symbol
+#define VTABLE __attribute__((section(".vtable."))) const
+//#define __VTABLE1(app_name) __VTABLE2(application_name)
+//#define VTABLE __VTABLE1(__COUNTER__)
 
 #define OS_APPLICATION_MMIO_RANGE(application, from, to)\
 	static void * const __APPL_SYMBOL(application, mmio_start) = (void *) (from);\
@@ -30,24 +33,22 @@
  * bound to this process can use.
  */
 #define OS_APPLICATION(application) \
-extern void * __APPL_SYMBOL(application, text_start);\
-extern void * __APPL_SYMBOL(application, text_end);\
 extern void * __APPL_SYMBOL(application, data_start);\
 extern void * __APPL_SYMBOL(application, data_end);\
 extern void * __APPL_SYMBOL(application, bss_start);\
 extern void * __APPL_SYMBOL(application, bss_end);\
+extern void * __APPL_SYMBOL(application, vtable_start);\
+extern void * __APPL_SYMBOL(application, vtable_end);\
 extern void * __APPL_SYMBOL(application, __mmio_start);\
 extern void * __APPL_SYMBOL(application, __mmio_end);\
 \
-__attribute__((externally_visible, used, section(".applications") )) const struct OS_process_t __APPL_SYMBOL(application, instance) = {\
+__attribute__((externally_visible, used, section(".applications") )) const struct OS_process_definition_t __APPL_SYMBOL(application, instance) = {\
 	{\
-		{ &__APPL_SYMBOL(application, text_start), &__APPL_SYMBOL(application, text_end) },\
 		{ &__APPL_SYMBOL(application, data_start), &__APPL_SYMBOL(application, data_end) },\
 		{ &__APPL_SYMBOL(application, bss_start), &__APPL_SYMBOL(application, bss_end) },\
 		{ __APPL_SYMBOL(application, mmio_start), __APPL_SYMBOL(application, mmio_end) }\
 	},\
-	NULL,\
-	NULL\
+	{ &__APPL_SYMBOL(application, vtable_start), &__APPL_SYMBOL(application, vtable_end) }\
 	}
 
 /** Thread autostart facility.

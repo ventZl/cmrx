@@ -25,6 +25,16 @@
 #define MPU_AP_MASK			0b0111
 #define MPU_EXECUTE_SHIFT	3
 
+#define OS_MPU_REGION_DATA			0
+#define OS_MPU_REGION_BSS			1
+#define OS_MPU_REGION_MMIO			2
+#define OS_MPU_REGION_SHARED		3
+#define OS_MPU_REGION_UNUSED1		4
+#define OS_MPU_REGION_UNUSED2		5
+#define OS_MPU_REGION_STACK			6
+#define OS_MPU_REGION_EXECUTABLE	7
+
+
 struct MPU_Registers {
 	uint32_t _MPU_RBAR;
 	uint32_t _MPU_RASR;
@@ -52,14 +62,16 @@ void mpu_disable();
  * buffer. This is suitable for store-resume during task switching.
  * @param state MPU state buffer
  */
-int mpu_store(MPU_State * state);
+int mpu_store(MPU_State * hosted_state, MPU_State * parent_state);
 
 /** Load MPU settings.
  * Loads MPU settings for default amount of regions from off-CPU
  * buffer. This is suitable for store-resume during task switching.
  * @param state MPU state buffer
  */
-int mpu_restore(const MPU_State * state);
+int mpu_restore(const MPU_State * hosted_state, const MPU_State * parent_state);
+
+int mpu_load(const MPU_State * state, uint8_t base, uint8_t count);
 
 /** Configure and activate MPU region.
  * Activate given memory region with new base address and size.
@@ -73,6 +85,12 @@ int mpu_restore(const MPU_State * state);
  * @return E_OK if region was configured, otherwise error code is returned
  */
 int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags);
+
+/** Create configuration for MPU region.
+ *
+ * @TODO
+ */
+int __mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags, uint32_t * RBAR, uint32_t * RASR);
 
 /** Disable MPU region.
  * This function will disable use of MPU region. Address and size

@@ -3,9 +3,14 @@
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/syscall.h>
 #include <cmrx/intrinsics.h>
+#include <cmrx/os/runtime.h>
+#include <cmrx/os/sched.h>
+#include <conf/kernel.h>
 
 #include <cmrx/assert.h>
 #include <cmrx/os/sanitize.h>
+
+#define E_VTABLE_UNKNOWN			0xFF
 
 struct RPC_Service_t_;
 
@@ -24,12 +29,82 @@ __SYSCALL void rpc_return()
 	__SVC(SYSCALL_RPC_RETURN);
 }
 
+static Process_t get_vtable_process(VTable_t * vtable)
+{
+	for (int q = 0; q < OS_PROCESSES; ++q)
+	{
+		if (os_processes[q].definition != NULL)
+		{
+			if ((VTable_t *) os_processes[q].definition->rpc_interface.start <= vtable 
+					&& vtable < (VTable_t *) os_processes[q].definition->rpc_interface.end)
+			{
+				return q;
+			}
+		}
+	}
+
+	return E_VTABLE_UNKNOWN;
+}
+
+static bool rpc_stack_push(Process_t process_id)
+{
+	Thread_t thread_id = os_get_current_thread();
+	uint8_t depth = os_threads[thread_id].rpc_stack[0];
+	if (depth < 8)
+	{
+		os_threads[thread_id].rpc_stack[depth + 1] = process_id;
+		os_threads[thread_id].rpc_stack[0]++;
+		return true;
+	}
+
+	return false;
+}
+
+static int rpc_stack_pop()
+{
+	Thread_t thread_id = os_get_current_thread();
+	uint8_t depth = os_threads[thread_id].rpc_stack[0];
+	if (depth > 0)
+	{
+		// depth = 0 holds depth information
+		os_threads[thread_id].rpc_stack[0]--;
+		return depth - 1;
+	}
+
+	return 0;
+}
+
+static Process_t rpc_stack_top()
+{
+	Thread_t thread_id = os_get_current_thread();
+	uint8_t depth = os_threads[thread_id].rpc_stack[0];
+	if (depth > 0)
+	{
+		return os_threads[thread_id].rpc_stack[depth];
+	}
+	return E_VTABLE_UNKNOWN;
+}
+
 int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
 	ExceptionFrame * local_frame = (ExceptionFrame *) __get_PSP();
 	sanitize_psp((uint32_t *) local_frame);
 	RPC_Service_t * service = (void *) get_exception_argument(local_frame, 4);
 	VTable_t * vtable = service->vtable;
+
+	Process_t process_id = get_vtable_process(vtable);
+	if (process_id == E_VTABLE_UNKNOWN)
+	{
+		return E_INVALID_ADDRESS;
+	}
+	
+	if (!rpc_stack_push(process_id))
+	{
+		return E_IN_TOO_DEEP;
+	}
+
+	mpu_load(&os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
+
 	unsigned method_id = get_exception_argument(local_frame, 5); 
 	RPC_Method_t * method = vtable[method_id];
 	unsigned canary = get_exception_argument(local_frame, 6);
@@ -71,6 +146,32 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	ExceptionFrame * local_frame = pop_exception_frame(remote_frame, 2);
 	
+	int pstack_depth = rpc_stack_pop();
+	Process_t process_id;
+
+	if (pstack_depth > 0)
+	{
+		process_id = rpc_stack_top();
+	}
+	else
+	{
+		/* Warning for future wanderers: as of now, this returns
+		 * process_id of current thread, which stores parent process.
+		 * If I ever decide to change semantics to return current process
+		 * ID, this may fail miserably.
+		 */
+		process_id = os_get_current_process();
+	}
+
+
+	if (process_id == E_VTABLE_UNKNOWN)
+	{
+		// here the process should probably die in segfault
+		ASSERT(0);
+	}
+
+	mpu_load(&os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
+
 	typeof(&_rpc_call) p_rpc_call = _rpc_call;
 	p_rpc_call++;
 	ASSERT(local_frame->pc == p_rpc_call);

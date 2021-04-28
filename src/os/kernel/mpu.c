@@ -1,4 +1,4 @@
-#include <cmrx/mpu.h>
+#include <cmrx/os/mpu.h>
 #include <cmrx/defines.h>
 #include <libopencm3/cm3/mpu.h>
 #include <conf/kernel.h>
@@ -52,43 +52,85 @@ void mpu_disable()
 	MPU_CTRL &= ~(MPU_CTRL_PRIVDEFENA | MPU_CTRL_ENABLE);
 }
 
-int mpu_store(MPU_State * state)
+int mpu_store(MPU_State * hosted_state, MPU_State * parent_state)
 {
-	if (state == NULL)
+	if (hosted_state == NULL || parent_state == NULL)
 		return E_INVALID_ADDRESS;
 
-	for (int q = 0; q < MPU_STATE_SIZE; ++q)
+	for (int q = 0; q < MPU_HOSTED_STATE_SIZE; ++q)
 	{
 		MPU_RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		(*state)[q]._MPU_RBAR = MPU_RBAR;
-		(*state)[q]._MPU_RASR = MPU_RASR;
+		(*hosted_state)[q]._MPU_RBAR = MPU_RBAR;
+		(*hosted_state)[q]._MPU_RASR = MPU_RASR;
+	}
+	for (int q = MPU_HOSTED_STATE_SIZE; q < MPU_STATE_SIZE; ++q)
+	{
+		MPU_RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		(*parent_state)[q]._MPU_RBAR = MPU_RBAR;
+		(*parent_state)[q]._MPU_RASR = MPU_RASR;
 	}
 
 	return E_OK;
 }
 
-int mpu_restore(const MPU_State * state)
+int mpu_restore(const MPU_State * hosted_state, const MPU_State * parent_state)
+{
+	int rv;
+	if ((rv = mpu_load(hosted_state, 0, MPU_HOSTED_STATE_SIZE)) != E_OK)
+	{
+		return rv;
+	}
+	return mpu_load(parent_state, MPU_HOSTED_STATE_SIZE, MPU_STATE_SIZE - MPU_HOSTED_STATE_SIZE);
+}
+
+int mpu_load(const MPU_State * state, uint8_t base, uint8_t count)
 {
 	if (state == NULL)
 		return E_INVALID_ADDRESS;
 
-	for (int q = 0; q < MPU_STATE_SIZE; ++q)
+	for (int q = 0; q < count; ++q)
 	{
-		MPU_RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		MPU_RBAR = (*state)[q]._MPU_RBAR;
-		MPU_RASR = (*state)[q]._MPU_RASR;
+		MPU_RNR = (((base + q) << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		MPU_RBAR = (*state)[base + q]._MPU_RBAR;
+		MPU_RASR = (*state)[base + q]._MPU_RASR;
 	}
 
 	return E_OK;
 }
+
+int __mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags, uint32_t * RBAR, uint32_t * RASR);
 
 int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags)
+{
+	uint32_t RBAR, RASR;
+	int rv;
+	if ((rv = __mpu_set_region(region, base, size, flags, &RBAR, &RASR)) == E_OK)
+	{
+		MPU_RBAR = RBAR;
+		MPU_RASR = RASR;
+		__ISB();
+		__DSB();
+
+	}
+	return rv;
+}
+
+int __mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags, uint32_t * RBAR, uint32_t * RASR)
 {
 	uint8_t regszbits = ((sizeof(uint32_t)*8) - 1) - __builtin_clz(size);
 	uint32_t subregions = 0xFF;
 
 	// In below code we don't need to take special care about
 	// bits above regszbits, because we know they are all zeroes.
+	if (size == 0)
+	{
+		*RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
+		| (((uint32_t) base) & MPU_RBAR_ADDR);
+
+//		MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		*RASR = 0;
+		return E_OK;
+	}
 
 	if ((size & ((1 << regszbits) - 1)) != 0)
 	{
@@ -189,17 +231,15 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 	subregions ^= 0xFF;
 
 	/* Configure region base address */
-	MPU_RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
+	*RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
 		| (((uint32_t) base) & MPU_RBAR_ADDR) | MPU_RBAR_VALID;
 
-	MPU_RASR = ((regszbits << MPU_RASR_SIZE_LSB) & MPU_RASR_SIZE)
+	*RASR = ((regszbits << MPU_RASR_SIZE_LSB) & MPU_RASR_SIZE)
 		| ((subregions << MPU_RASR_SRD_LSB) & MPU_RASR_SRD)
 		| (flags & (MPU_RASR_ATTR_AP | MPU_RASR_ATTR_XN))
 		| MPU_RASR_ATTR_C
 		| MPU_RASR_ENABLE;
 
-	__ISB();
-	__DSB();
 	return E_OK;
 
 }

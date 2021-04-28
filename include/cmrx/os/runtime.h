@@ -13,7 +13,8 @@
  */
 #pragma once
 
-#include <cmrx/mpu.h>
+#include <cmrx/defines.h>
+#include <cmrx/os/mpu.h>
 
 /** List of states in which thread can be.
  */
@@ -49,6 +50,7 @@ enum ThreadState {
  * for whoever will call @ref thread_join() as thread exit status.
  */
 typedef int (entrypoint_t)(void *);
+typedef Process_t OS_RPC_stack[8];
 
 struct OS_process_t;
 
@@ -76,7 +78,7 @@ struct OS_thread_t {
 	unsigned long block_object;
 
 	/** Ummmmm... */
-	uint8_t rpc_depth;
+	OS_RPC_stack rpc_stack;
 
 	/** Thread priority.
 	 * This is used by scheduler to decide which thread to run.
@@ -95,14 +97,8 @@ struct OS_thread_t {
 
 	/** Exit status after thread quit. */
 	int exit_status;
-#ifdef KERNEL_HAS_MEMORY_PROTECTION
-	/** Memory protection registers dump. This is only valid in cases, when
-	 * @ref sp is valid.
-	 */
-	MPU_State mpu;
-#endif
 	/** Owning process reference. */
-	const struct OS_process_t * process;
+	Process_t process_id;
 };
 
 /** MPU region description.
@@ -114,6 +110,20 @@ struct OS_MPU_region {
 	void * end;
 };
 
+/** Static definition of process in firmware image.
+ * This defines MPU regions of interest for this process,
+ * such as data and BSS. Read-only data and code is all
+ * readable.
+ */
+struct OS_process_definition_t {
+	/** Static MPU region configuration for this process.
+	 */
+	struct OS_MPU_region mpu_regions[OS_TASK_MPU_REGIONS];
+
+	/** Ummmm */
+	struct OS_MPU_region rpc_interface; /* this is not an actual MPU region */
+};
+
 /** Process control block.
  *
  * Process is a container whose sole purpose is to drive the MPU.
@@ -122,14 +132,15 @@ struct OS_MPU_region {
  * can't access each other's memory. Use shared memory for this.
  */
 struct OS_process_t {
-	/** Static MPU region configuration for this process.
-	 */
-	struct OS_MPU_region mpu_regions[OS_TASK_MPU_REGIONS];
+	const struct OS_process_definition_t * definition;
 
-	/** Ummmm */
-	void * interface_start; /* this is not an actual MPU region */
-	/** Ummmm 2 */
-	void * interface_end;
+#ifdef KERNEL_HAS_MEMORY_PROTECTION
+	/** Memory protection registers dump. This is only valid in cases, when
+	 * @ref sp is valid.
+	 */
+	MPU_State mpu;
+#endif
+
 };
 
 /** Structure describing auto-spawned thread.
@@ -140,7 +151,7 @@ struct OS_process_t {
  */
 struct OS_thread_create_t {
 	/** Owning process */
-	const struct OS_process_t * process;
+	const struct OS_process_definition_t * process;
 
 	/** Entrypoint address */
 	entrypoint_t * entrypoint;
@@ -154,5 +165,6 @@ struct OS_thread_create_t {
 
 /** Scheduler notion on existing threads. */
 extern struct OS_thread_t os_threads[OS_THREADS];
+extern struct OS_process_t os_processes[OS_PROCESSES];
 
 /** @} */

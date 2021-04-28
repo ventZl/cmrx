@@ -8,7 +8,6 @@
  * @ingroup os_sched
  * @{
  */
-#include <cmrx/os.h>
 #include <cmrx/sched.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched/stack.h>
@@ -25,29 +24,34 @@
 
 #include <cmrx/assert.h>
 
-struct OS_thread_t os_threads[OS_THREADS];
+typedef uint8_t Thread_t;
 
-static uint8_t thread_prev;
-static uint8_t thread_current;
-static uint8_t thread_next;
+struct OS_thread_t os_threads[OS_THREADS];
+struct OS_process_t os_processes[OS_PROCESSES];
+
+static Thread_t thread_prev;
+static Thread_t thread_current;
+static Thread_t thread_next;
 __attribute__((aligned(1024))) struct OS_stack_t os_stacks;
 
-extern const struct OS_process_t __applications_start;
-const struct OS_process_t * const processes = &__applications_start;
+extern const struct OS_process_definition_t __applications_start;
+extern const struct OS_process_definition_t __applications_end;
+static const struct OS_process_definition_t * app_definition = &__applications_start;
 
 extern const struct OS_thread_create_t __thread_create_start;
 extern const struct OS_thread_create_t __thread_create_end;
 
-const struct OS_thread_create_t * const autostart_threads = &__thread_create_start;
-
-static int __os_thread_create(const struct OS_process_t * process, entrypoint_t * entrypoint, void * data, uint8_t priority);
-static int os_thread_alloc(const struct OS_process_t * process, uint8_t priority);
+static const struct OS_thread_create_t * const autostart_threads = &__thread_create_start;
 
 static uint32_t sched_tick_increment;
 
 static uint32_t sched_microtime;
 static uint32_t sched_timer_event;
 static bool sched_timer_event_enabled;
+
+static int __os_process_create(Process_t process_id, const struct OS_process_definition_t * definition);
+static int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority);
+static int os_thread_alloc(Process_t process, uint8_t priority);
 
 void os_sched_timed_event(void);
 
@@ -168,7 +172,7 @@ uint8_t os_get_current_stack(void)
 
 uint8_t os_get_current_process(void)
 {
-	return os_threads[thread_current].process - &__applications_start;
+	return os_threads[thread_current].process_id;
 }
 
 uint32_t os_get_micro_time(void)
@@ -186,43 +190,42 @@ static void os_thread_dispose(int arg0)
 void os_start()
 {
 	unsigned threads = &__thread_create_end - &__thread_create_start;
+	unsigned applications = &__applications_end - &__applications_start;
 
 	memset(&os_threads, 0, sizeof(os_threads));
 	os_timer_init();
 
+	for (unsigned q = 0; q < applications; ++q)
+	{
+		__os_process_create(q, &app_definition[q]);
+	}
+
 	for (unsigned q = 0; q < threads; ++q)
 	{
-		__os_thread_create(autostart_threads[q].process, autostart_threads[q].entrypoint, autostart_threads[q].data, autostart_threads[q].priority);
+		Process_t process_id = (autostart_threads[q].process - &__applications_start);
+		__os_thread_create(process_id, autostart_threads[q].entrypoint, autostart_threads[q].data, autostart_threads[q].priority);
 	}
 
 	__os_thread_create(NULL, os_idle_thread, NULL, 0xFF);
 
 	uint8_t startup_thread;
 
-	if (os_get_next_thread(0, &startup_thread))
+	if (os_get_next_thread(0xFF, &startup_thread))
 	{
 		thread_current = startup_thread;
 		uint8_t startup_stack = os_threads[startup_thread].stack_id;
+		Process_t startup_process = os_threads[startup_thread].process_id;
 		os_threads[startup_thread].state = THREAD_STATE_RUNNING;
-#if 0
-		// Alter thread's SP to so that it's stack is completely 
-		// empty. Other threads have stack prepared for "return from
-		// interrupt handler scenario".
-		os_threads[startup_thread].sp = &os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD - 1];
 
-		/* These two variables are marked as register, because
-		 * call to __set_CONTROL() below will switch to 
-		 * process SP being used. Yet if this is being built
-		 * with -O0, entrypoint and data would end up on stack
-		 * being referenced by SP. After SP changes, those
-		 * references would be messed up. By forcing these to be
-		 * register variables, we can avoid this problem.
-		 */
-		register entrypoint_t * entrypoint = (entrypoint_t*) os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD - 2];
-		register void * data = (void *) os_stacks.stacks[os_threads[startup_thread].stack_id][OS_STACK_DWORD - 8];
-		register void (*dispose)(int) = os_thread_dispose;
-#endif
-		if (mpu_set_region(4, &os_stacks.stacks[startup_stack], sizeof(os_stacks.stacks[startup_stack]), MPU_RW) != E_OK)
+		// Flash - RX
+		mpu_set_region(OS_MPU_REGION_EXECUTABLE, (const void *) 0x08000000, 0x80000, MPU_RX);
+		mpu_enable();
+
+		// At this state thread is not hosted anywhere
+		mpu_restore(&os_processes[startup_process].mpu, &os_processes[startup_process].mpu);
+
+		// Configure stack access for incoming thread
+		if (mpu_set_region(OS_MPU_REGION_STACK, &os_stacks.stacks[startup_stack], sizeof(os_stacks.stacks[startup_stack]), MPU_RW) != E_OK)
 		{
 			ASSERT(0);
 		}
@@ -333,7 +336,33 @@ void systick_setup(int xms)
 	systick_interrupt_enable();
 }
 
-static int __os_thread_create(const struct OS_process_t * process, entrypoint_t * entrypoint, void * data, uint8_t priority)
+static int __os_process_create(Process_t process_id, const struct OS_process_definition_t * definition)
+{
+	if (process_id >= OS_PROCESSES)
+	{
+		return E_OUT_OF_RANGE;
+	}
+	
+	if (os_processes[process_id].definition != NULL)
+	{
+		return E_INVALID;
+	}
+
+	os_processes[process_id].definition = definition;
+	for (int q = 0; q < OS_TASK_MPU_REGIONS; ++q)
+	{
+		unsigned reg_size = (uint8_t *) definition->mpu_regions[q].end - (uint8_t *) definition->mpu_regions[q].start;
+		int rv = __mpu_set_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]._MPU_RBAR, &os_processes[process_id].mpu[q]._MPU_RASR);
+		if (rv != E_OK)
+		{
+			os_processes[process_id].definition = NULL;
+			return E_INVALID;
+		}
+	}
+	return E_OK;
+}
+
+static int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority)
 {
 	uint8_t thread_id = os_thread_alloc(process, priority);
 	os_thread_construct(thread_id, entrypoint, NULL);
@@ -345,18 +374,18 @@ static int __os_thread_create(const struct OS_process_t * process, entrypoint_t 
 int os_thread_create(entrypoint_t * entrypoint, void * data, uint8_t priority)
 {
 	uint8_t process_id = os_get_current_process();
-	return __os_thread_create(&processes[process_id], entrypoint, data, priority);
+	return __os_thread_create(process_id, entrypoint, data, priority);
 }
 
 	
-static int os_thread_alloc(const struct OS_process_t * process, uint8_t priority)
+static int os_thread_alloc(Process_t process, uint8_t priority)
 {
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
 		if (os_threads[q].state == THREAD_STATE_EMPTY)
 		{
 			os_threads[q].stack_id = OS_TASK_NO_STACK;
-			os_threads[q].process = process;
+			os_threads[q].process_id = process;
 			os_threads[q].sp = (unsigned long *) ~0;
 			os_threads[q].state = THREAD_STATE_CREATED;
 			os_threads[q].signals = 0;

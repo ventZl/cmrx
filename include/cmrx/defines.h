@@ -6,6 +6,8 @@
  */
 #pragma once
 
+#include <stdint.h>
+
 /** @defgroup api_errors Named constants for errors
  * @{
  */
@@ -20,9 +22,13 @@
 #define E_DEADLK				8
 #define E_NOTAVAIL				9
 #define E_INVALID				10
+#define E_IN_TOO_DEEP			11
 /** @} */
 
 #define NULL					((void *) 0)
+
+typedef uint8_t Thread_t;
+typedef uint8_t Process_t;
 
 /** @} */
 
