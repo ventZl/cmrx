@@ -7,9 +7,19 @@ f = open(sys.argv[1])
 
 lines = f.readlines()
 
-alloc = { 'data' : {}, 'bss' : {}}
+alloc = { 'data' : {}, 'bss' : {}, 'shared' : {}}
 lib = None
 typa = None
+
+def set_lib_alloc(_lib, kind):
+    global lib
+    global typa
+    lib = _lib
+    if lib not in alloc[kind]:
+        alloc[kind][lib] = Section()
+
+    typa = kind
+    print("== %s %s:" % (lib, typa.upper()))
 
 class Section:
     def __init__(self):
@@ -39,27 +49,22 @@ class Section:
         return self.__str__()
 
 for l in lines:
-    if l[0] == ' ' and l[1] != ' ' and l[1] != '.':
+    if  l[0] != ' ':
+        lib = None
+        typa = None
+    elif l[0] == ' ' and l[1] != ' ' and l[1] != '.':
         z1 = re.match("^ lib([a-zA-Z0-0]+)\.a\(\.data", l)
         z2 = re.match("^ lib([a-zA-Z0-0]+)\.a\(\.bss", l)
         z3 = re.match(" \*fill\* +(0x[0-9a-f]{16}) +(0x[0-9a-f]+)", l)
+        z4 = re.match("^ lib([a-zA-Z0-0]+)\.a\(\.shared", l)
         if z1:
-            lib = z1.groups()[0]
-            if lib not in alloc['data']:
-                alloc['data'][lib] = Section()
-
-            typa = 'data'
-
-            print("== %s DATA:" % (lib))
+            set_lib_alloc(z1.groups()[0], 'data')
 
         elif z2:
-            lib = z2.groups()[0]
-            if lib not in alloc['bss']:
-                alloc['bss'][lib] = Section()
+            set_lib_alloc(z2.groups()[0], 'bss')
 
-            typa = 'bss'
-
-            print("== %s BSS:" % (lib))
+        elif z4:
+            set_lib_alloc(z4.groups()[0], 'shared')
 
         elif z3 and lib is not None:
             alloc[typa][lib].add_fill(int(z3.groups()[1], 16))
@@ -74,12 +79,9 @@ for l in lines:
             alloc[typa][lib].add_alloc(int(z.groups()[1], 16))
             print("Alloc: %s" % (z.groups()[1]))
 
-pprint(alloc)
-
 def sort_by_size(container):
     out = []
     for k in container.keys():
-        print("%s: %s" % (k, container[k]))
         out.append((k, container[k]))
 
     out.sort(key = lambda item : item[1].get_size(), reverse = True)
@@ -109,4 +111,6 @@ write_linker_script(data, sys.argv[2], 'data')
 bss = sort_by_size(alloc['bss'])
 write_linker_script(bss, sys.argv[3], 'bss')
 
+shared = sort_by_size(alloc['shared'])
+write_linker_script(shared, sys.argv[4], 'shared')
 

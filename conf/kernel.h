@@ -11,7 +11,7 @@
 #define MPU_STATE_SIZE			6
 
 /** How many MPU regions are always used based on in which process thread is hosted */
-#define MPU_HOSTED_STATE_SIZE	4
+#define MPU_HOSTED_STATE_SIZE	3
 
 /** How many MPU regions can process define */
 #define OS_TASK_MPU_REGIONS		4
