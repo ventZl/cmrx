@@ -52,7 +52,7 @@ bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
 
 	if (old_task->rpc_stack[0] != 0)
 	{
-		old_host_process = &os_processes[old_task->rpc_stack[old_task->rpc_stack[0] + 1]];
+		old_host_process = &os_processes[old_task->rpc_stack[old_task->rpc_stack[0]]];
 	}
 	else
 	{
@@ -70,7 +70,7 @@ bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
 	new_parent_process = &os_processes[new_task->process_id];
 	if (new_task->rpc_stack[0] != 0)
 	{
-		new_host_process = &os_processes[new_task->rpc_stack[new_task->rpc_stack[0] + 1]];
+		new_host_process = &os_processes[new_task->rpc_stack[new_task->rpc_stack[0]]];
 	}
 	else
 	{
