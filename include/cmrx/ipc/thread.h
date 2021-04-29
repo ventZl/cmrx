@@ -50,7 +50,7 @@ __SYSCALL int sched_yield();
  * @returns non-negative numbers carrying thread ID of newly created thread or 
  * negative numbers to signal error.
  */
-__SYSCALL int thread_create(int *entrypoint(void *), void * data, uint8_t priority);
+__SYSCALL int thread_create(int (*entrypoint)(void *), void * data, uint8_t priority);
 
 /** Wait for other thread to finish.
  * 
