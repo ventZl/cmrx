@@ -11,20 +11,24 @@ alloc = { 'data' : {}, 'bss' : {}, 'shared' : {}}
 lib = None
 typa = None
 
-def set_lib_alloc(_lib, kind):
+def set_lib_alloc(_lib, kind, location):
     global lib
     global typa
     lib = _lib
     if lib not in alloc[kind]:
-        alloc[kind][lib] = Section()
+        alloc[kind][lib] = Section(location)
 
     typa = kind
     print("== %s %s:" % (lib, typa.upper()))
 
 class Section:
-    def __init__(self):
+    def __init__(self, location):
+        self._location = location
         self.size = 0
         self.fill = 0
+
+    def location(self):
+        return self._location
 
     def add_alloc(self, size):
         if self.fill > 0:
@@ -52,19 +56,19 @@ for l in lines:
     if  l[0] != ' ':
         lib = None
         typa = None
-    elif l[0] == ' ' and l[1] != ' ' and l[1] != '.':
-        z1 = re.match("^ lib([a-zA-Z0-0]+)\.a\(\.data", l)
-        z2 = re.match("^ lib([a-zA-Z0-0]+)\.a\(\.bss", l)
+    elif l[0] == ' ' and l[1] != ' ':
+        z1 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.data \.data\.\*\)$", l)
+        z2 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.bss \.bss\.\*\)$", l)
         z3 = re.match(" \*fill\* +(0x[0-9a-f]{16}) +(0x[0-9a-f]+)", l)
-        z4 = re.match("^ lib([a-zA-Z0-0]+)\.a\(\.shared", l)
+        z4 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.shared \.shared\.\*\)$", l)
         if z1:
-            set_lib_alloc(z1.groups()[0], 'data')
+            set_lib_alloc(z1.groups()[1], 'data', z1.groups()[0])
 
         elif z2:
-            set_lib_alloc(z2.groups()[0], 'bss')
+            set_lib_alloc(z2.groups()[1], 'bss', z2.groups()[0])
 
         elif z4:
-            set_lib_alloc(z4.groups()[0], 'shared')
+            set_lib_alloc(z4.groups()[1], 'shared', z4.groups()[0])
 
         elif z3 and lib is not None:
             alloc[typa][lib].add_fill(int(z3.groups()[1], 16))
@@ -99,7 +103,7 @@ def write_linker_script(container, fname, sname):
         f.write("/* Application name: %s */\n" % (lib[0]))
         f.write("\t. = ALIGN(0x%X);\n" % (align))
         f.write("\t%s_%s_start = .;\n" % (lib[0], sname))
-        f.write("\tlib%s.a(.%s .%s.*)\n" % (lib[0], sname, sname))
+        f.write("\t%s(.%s .%s.*)\n" % (lib[1].location(), sname, sname))
         f.write("\t. = ALIGN(0x%X);\n" % (align))
         f.write("\t%s_%s_end = .;\n\n" % (lib[0], sname))
 
