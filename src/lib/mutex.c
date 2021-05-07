@@ -6,7 +6,6 @@
 #include <cmrx/ipc/thread.h>
 #include <cmrx/intrinsics.h>
 #include <cmrx/defines.h>
-#include <cmrx/sched.h>
 
 /** Lock futex.
  * Perform atomic futex lock. It is possible to lock futex which is either completely unlocked,

@@ -8,13 +8,12 @@
  * @ingroup os_sched
  * @{
  */
-#include <cmrx/sched.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched/stack.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/timer.h>
 #include <cmrx/intrinsics.h>
-#include <cmrx/pendsv.h>
+#include <cmrx/os/pendsv.h>
 #include <string.h>
 #include <conf/kernel.h>
 #include <cmrx/ipc/thread.h>
