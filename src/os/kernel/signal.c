@@ -34,40 +34,37 @@ __attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *si
 			);
 }
 
-static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
+//static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
+void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 {
-	ASSERT(thread_id < OS_THREADS);
 	ExceptionFrame * frame;
 	uint32_t * new_sp;
 
 	/* Signal handler being NULL means, that thread ignores signals. No delivery is performed. */
-	if (os_threads[thread_id].signal_handler == NULL)
+	if (thread->signal_handler == NULL)
 	{
 		return;
 	}
 
-	if (os_threads[thread_id].state == THREAD_STATE_RUNNING)
-	{
-		/* Here it means, that PSP shows to the beginning of exception stack frame.
-		 * There is nothing above it.
-		 */
-		frame = (ExceptionFrame *) __get_PSP();
-	}
-	else
+	if (thread->state == THREAD_STATE_RUNNING)
 	{
 		/* Here it means, that SP shows to the beginning of thread state record.
 		 * Thread state record is basically just an exception frame, which has
-		 * additional registers placed on top of it.
+		 * additional registers placed on top of it. 
 		 */
-		frame = (ExceptionFrame *) (os_threads[thread_id].sp + 8);
-		uint32_t * old_sp = os_threads[thread_id].sp;
+		frame = (ExceptionFrame *) (thread->sp + 8);
+		uint32_t * old_sp = thread->sp;
 		new_sp = old_sp - 6;
 		for (int q = 0; q < 8; ++q)
 		{
 			new_sp[q] = old_sp[q];
 		}
 	}
-
+	else
+	{
+		ASSERT(0);
+	}
+	
 	/* Create space for 5 values: R0 - R3, PC */
 	ExceptionFrame * signal_frame = shim_exception_frame(frame, 6);
 
@@ -91,18 +88,19 @@ static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
 	set_exception_argument(signal_frame, 0, signals);
 
 	/* R1 - arg[1] - sighandler */
-	set_exception_argument(signal_frame, 1, (uint32_t) os_threads[thread_id].signal_handler);
+	set_exception_argument(signal_frame, 1, (uint32_t) thread->signal_handler);
 
 	/* PC - os_fire_signal */
 	signal_frame->pc = os_fire_signal;
 
-	if (os_threads[thread_id].state == THREAD_STATE_RUNNING)
+	if (thread->state == THREAD_STATE_RUNNING)
 	{
-		__set_PSP((uint32_t *) signal_frame);
+		thread->sp = (uint32_t *) new_sp;
+//		__set_PSP((uint32_t *) signal_frame);
 	}
 	else
 	{
-		os_threads[thread_id].sp = (uint32_t *) new_sp;
+		ASSERT(0);
 	}
 }
 
@@ -117,30 +115,30 @@ int os_kill(uint8_t thread_id, uint8_t signal_id)
 		if (signal_id < 32)
 		{
 			os_threads[thread_id].signals |= 1 << signal_id;
-			os_deliver_signal(thread_id, os_threads[thread_id].signals);
 
 			if (os_threads[thread_id].state == THREAD_STATE_STOPPED)
 			{
 				os_thread_continue(thread_id);
 			}
+			return 0;
 		}
 		else
 		{
 			if (signal_id == SIGSTOP)
 			{
-				os_thread_stop(thread_id);
+				return os_thread_stop(thread_id);
 			} 
 			else if (signal_id == SIGCONT)
 			{
-				os_thread_continue(thread_id);
+				return os_thread_continue(thread_id);
 			} 
 			else if (signal_id == SIGKILL)
 			{
-				os_thread_kill(thread_id, -SIGCONT);
+				return os_thread_kill(thread_id, -SIGCONT);
 			}
 			else if (signal_id == SIGSEGV)
 			{
-				os_thread_kill(thread_id, -SIGSEGV);
+				return os_thread_kill(thread_id, -SIGSEGV);
 			}
 			else
 			{

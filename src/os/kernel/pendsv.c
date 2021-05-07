@@ -2,6 +2,7 @@
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
 #include <libopencm3/cm3/scb.h>
+#include <libopencm3/cm3/cortex.h>
 #include <cmrx/intrinsics.h>
 
 #include <conf/kernel.h>
@@ -10,6 +11,7 @@
 #include <cmrx/assert.h>
 #include <cmrx/os/sanitize.h>
 #include <cmrx/os/sched/stack.h>
+#include <cmrx/os/signal.h>
 
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
 #	include <cmrx/os/mpu.h>
@@ -105,6 +107,7 @@ __attribute__((naked)) void pend_sv_handler(void)
 			".syntax unified\n\t"
 			"push {lr}\n\t"
 	);
+	cm_disable_interrupts();
 	/* Do NOT put anything here. You will clobber context being stored! */
 	old_task->sp = save_context();
 	ctxt_switch_pending = false;
@@ -122,8 +125,14 @@ __attribute__((naked)) void pend_sv_handler(void)
 	mpu_set_region(OS_MPU_REGION_STACK, &os_stacks.stacks[new_thread_id], sizeof(os_stacks.stacks[new_thread_id]), MPU_RW);
 	sanitize_psp(new_task->sp);
 
+	if (new_task->signals != 0 && new_task->signal_handler != NULL)
+	{
+		os_deliver_signal(new_task, new_task->signals);
+		new_task->signals = 0;
+	}
 	load_context(new_task->sp);
 	/* Do NOT put anything here. You will clobber context just restored! */
+	cm_enable_interrupts();
 	asm volatile(
 			"pop {pc}"
 	);

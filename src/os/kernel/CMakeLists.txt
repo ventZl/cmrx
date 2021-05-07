@@ -2,7 +2,7 @@
 
 add_definitions(-fomit-frame-pointer)
 
-set(os_SRCS mpu.c pendsv.c rpc.c sanitize.c sched.c signal.c syscall.c timer.c)
+set(os_SRCS mpu.c pendsv.c rpc.c sanitize.c sched.c signal.c syscall.c timer.c isr.c)
 
 add_library(os OBJECT EXCLUDE_FROM_ALL ${os_SRCS})
 

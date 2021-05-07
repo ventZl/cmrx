@@ -4,6 +4,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /** Schedule context switch on next suitable moment.
  *
