@@ -317,12 +317,12 @@ void systick_setup(int xms)
 
 #ifdef STM32H7
 	ahb_freq = rcc_get_bus_clk_freq(RCC_AHBCLK);
-	sched_tick_increment = xms * 1000;
 
 	systick_set_frequency(1000/xms, ahb_freq);
 #else
 	ahb_freq = rcc_ahb_frequency;
 #endif
+	sched_tick_increment = xms * 1000;
 
 #ifdef STM32G4	
 	/* div8 per ST, stays compatible with M3/M4 parts, well done ST */
