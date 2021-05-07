@@ -1,15 +1,16 @@
 #pragma once
 
 #include <stdbool.h>
+#include <cmrx/interface.h>
 
 // Source - read end of simplex channel
 
 struct ComSource;
 
 struct ComSourceVMT {
-	int (*read)(struct ComSource * self, uint8_t * data, unsigned max_len);
-	bool (*ready)(struct ComSource * self);
-	void (*set_notify)(struct ComSource * self, uint16_t thread_id, uint32_t signal);
+	int (*read)(SELF, uint8_t * data, unsigned max_len);
+	bool (*ready)(SELF);
+	void (*set_notify)(SELF, uint16_t thread_id, uint32_t signal);
 };
 
 struct ComSource {
@@ -22,8 +23,8 @@ struct ComSource {
 struct ComSink;
 
 struct ComSinkVMT {
-	int (*write)(struct ComSink * self, const uint8_t * data, unsigned length);
-	bool (*free)(struct ComSource * self);
+	int (*write)(SELF, const uint8_t * data, unsigned length);
+	bool (*free)(SELF);
 };
 
 struct ComSink {
@@ -35,11 +36,11 @@ struct ComSink {
 struct ComChannel;
 
 struct ComChannelVMT {
-	int (*read)(struct ComSource * self, uint8_t * data, unsigned max_len);
-	bool (*ready)(struct ComSource * self);
-	void (*set_notify)(struct ComSource * self, uint16_t thread_id, uint32_t signal);
-	int (*write)(struct ComSink * self, const uint8_t * data, unsigned length);
-	bool (*free)(struct ComSource * self);
+	int (*read)(SELF, uint8_t * data, unsigned max_len);
+	bool (*ready)(SELF);
+	void (*set_notify)(SELF, uint16_t thread_id, uint32_t signal);
+	int (*write)(SELF, const uint8_t * data, unsigned length);
+	bool (*free)(SELF);
 };
 
 struct ComChannel {
