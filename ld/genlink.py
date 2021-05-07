@@ -14,11 +14,13 @@ typa = None
 def set_lib_alloc(_lib, kind, location):
     global lib
     global typa
+    global libpath
     lib = _lib
     if lib not in alloc[kind]:
         alloc[kind][lib] = Section(location)
 
     typa = kind
+    libpath = location
     print("== %s %s:" % (lib, typa.upper()))
 
 class Section:
@@ -53,14 +55,17 @@ class Section:
         return self.__str__()
 
 for l in lines:
+#    print(l)
     if  l[0] != ' ':
+ #       print("!! Dropping")
         lib = None
         typa = None
-    elif l[0] == ' ' and l[1] != ' ':
+    elif l[0] == ' ':
         z1 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.data \.data\.\*\)$", l)
         z2 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.bss \.bss\.\*\)$", l)
         z3 = re.match(" \*fill\* +(0x[0-9a-f]{16}) +(0x[0-9a-f]+)", l)
         z4 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.shared \.shared\.\*\)$", l)
+        z5 = re.search("(0x[0-9a-f]{16}) +(0x[0-9a-f]+) (.*)\(", l)
         if z1:
             set_lib_alloc(z1.groups()[1], 'data', z1.groups()[0])
 
@@ -73,15 +78,16 @@ for l in lines:
         elif z3 and lib is not None:
             alloc[typa][lib].add_fill(int(z3.groups()[1], 16))
             print("Fill: %s" % (z3.groups()[1]))
-        else:
+        elif l[1] == '*':
+  #          print("!!! Dropping")
             lib = None
             typa = None
-
-    else:
-        z = re.search(" +(0x[0-9a-f]{16}) +(0x[0-9a-f]+)", l)
-        if z and lib is not None:
-            alloc[typa][lib].add_alloc(int(z.groups()[1], 16))
-            print("Alloc: %s" % (z.groups()[1]))
+        elif z5 and lib is not None:
+            if (libpath == z5.groups()[2]):
+                alloc[typa][lib].add_alloc(int(z5.groups()[1], 16))
+                print("Alloc: %s" % (z5.groups()[1]))
+            else:
+                print("Something found, but ignored because libpath is %s but should be %s" % (z5.groups()[2], libpath))
 
 def sort_by_size(container):
     out = []
