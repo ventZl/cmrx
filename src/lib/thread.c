@@ -35,3 +35,8 @@ __SYSCALL void setitimer(uint32_t microseconds)
 {
 	__SVC(SYSCALL_SETITIMER);
 }
+
+__SYSCALL int setpriority(uint8_t priority)
+{
+	__SVC(SYSCALL_SETPRIORITY);
+}

@@ -27,6 +27,7 @@
 #define SYSCALL_USLEEP						12
 #define SYSCALL_SIGNAL						13
 #define SYSCALL_KILL						14
+#define SYSCALL_SETPRIORITY					15
 
 /** @} */
 /** @} */

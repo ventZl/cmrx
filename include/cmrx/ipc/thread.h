@@ -74,5 +74,16 @@ __SYSCALL int thread_join(int thread, int * status);
  */
 __SYSCALL int thread_exit(int status);
 
+/** Change thread priority.
+ *
+ * Allows to change thread priority. Currently it is only possible to change priority
+ * of currently running thread. Thread priorities go from highest (numeric value of 0)
+ * to idle thread priority (numeric value of 255). It is not recommended to assign priority
+ * of 255 to any thread as this priority is used by kernel's idle thread.
+ * @param priority new priority 
+ */
+
+__SYSCALL int setpriority(uint8_t priority);
+
 /** @} */
 
