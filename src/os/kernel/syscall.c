@@ -23,7 +23,8 @@ struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_USLEEP, (Syscall_Handler_t) &os_usleep },
 	{ SYSCALL_SETITIMER, (Syscall_Handler_t) &os_setitimer },
 	{ SYSCALL_SIGNAL, (Syscall_Handler_t) &os_signal },
-	{ SYSCALL_KILL, (Syscall_Handler_t) &os_kill }
+	{ SYSCALL_KILL, (Syscall_Handler_t) &os_kill },
+	{ SYSCALL_SETPRIORITY, (Syscall_Handler_t) &os_setpriority }
 };
 
 extern struct OS_stack_t os_stacks;

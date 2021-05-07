@@ -87,5 +87,9 @@ int os_thread_continue(uint8_t thread_id);
  */
 int os_thread_kill(uint8_t thread_id, int status);
 
+/** Kernel implementation of setpriority() syscall.
+ */
+
+int os_setpriority(uint8_t priority);
 
 /** @} */

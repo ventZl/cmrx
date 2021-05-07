@@ -499,4 +499,11 @@ int os_thread_continue(uint8_t thread)
 	return E_INVALID;
 }
 
+int os_setpriority(uint8_t priority)
+{
+	os_threads[os_get_current_thread()].priority = priority;
+	os_sched_yield();
+	return 0;
+}
+
 /** @} */
