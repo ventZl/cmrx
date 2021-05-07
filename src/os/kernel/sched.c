@@ -388,6 +388,7 @@ static int os_thread_alloc(Process_t process, uint8_t priority)
 	{
 		if (os_threads[q].state == THREAD_STATE_EMPTY)
 		{
+			memset(&os_threads[q], 0, sizeof(os_threads[q]));
 			os_threads[q].stack_id = OS_TASK_NO_STACK;
 			os_threads[q].process_id = process;
 			os_threads[q].sp = (unsigned long *) ~0;
