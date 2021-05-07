@@ -164,6 +164,11 @@ uint8_t os_get_current_thread(void)
 	return thread_current;
 }
 
+void os_set_current_thread(Thread_t new_thread)
+{
+	thread_current = new_thread;
+}
+
 uint8_t os_get_current_stack(void)
 {
 	return os_threads[thread_current].stack_id;

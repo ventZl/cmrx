@@ -19,6 +19,12 @@ uint8_t os_get_current_process(void);
  */
 uint8_t os_get_current_thread(void);
 
+/** Kernel internal function to *override* current thread.
+ *
+ * DANGEROUS!!!
+ */
+void os_set_current_thread(Thread_t new_thread);
+
 /** Get ID of stack used by current thread.
  *
  * @return Current active stack ID. This is actually an offset in stack table.
