@@ -29,9 +29,6 @@
 #define OS_PROCESSES 			8
 
 /** How many sleeping threads can exist */
-#define SLEEPERS_MAX			OS_THREADS
-
-/** How many periodic threads can exist */
-#define PERIODICS_MAX			OS_THREADS
+#define SLEEPERS_MAX			(2 * OS_THREADS)
 
 /** @} */

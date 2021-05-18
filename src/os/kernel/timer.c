@@ -9,52 +9,98 @@
 
 #include <stdbool.h>
 
-struct SleepEntry_t {
-	uint32_t sleep_to;
-	uint8_t thread_id;
-};
-
 struct TimerEntry_t {
+	uint32_t sleep_to;
 	uint32_t interval;
-	uint32_t offset;
 	uint8_t thread_id;
 };
 
-struct SleepEntry_t sleepers[SLEEPERS_MAX];
-struct TimerEntry_t periodics[PERIODICS_MAX];
+struct TimerEntry_t sleepers[SLEEPERS_MAX];
 
-/** Kernel implementation of usleep() syscall */
-int os_usleep(unsigned microseconds)
+static int do_set_timed_event(unsigned slot, unsigned microseconds, unsigned interval)
 {
+	Thread_t thread_id = os_get_current_thread();
+	uint32_t microtime = os_get_micro_time();
+	sleepers[slot].thread_id = thread_id;
+	ASSERT(sleepers[slot].thread_id < OS_THREADS);
+	sleepers[slot].sleep_to = microtime + microseconds;
+	sleepers[slot].interval = interval;
+	if (interval == 0)
+	{
+		os_thread_stop(thread_id);
+	}
+	return 0;
+}
+
+static int set_timed_event(unsigned microseconds, unsigned interval)
+{
+	Thread_t thread_id = os_get_current_thread();
+
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
 		if (sleepers[q].thread_id == 0xFF)
 		{
-			uint32_t microtime = os_get_micro_time();
-			sleepers[q].thread_id = os_get_current_thread();
-			ASSERT(sleepers[q].thread_id < OS_THREADS);
-			sleepers[q].sleep_to = microtime + microseconds;
-			os_thread_stop(os_get_current_thread());
-			return 0;
+			return do_set_timed_event(q, microseconds, interval);
+		}
+		else
+		{
+			if (sleepers[q].thread_id == thread_id)
+			{
+				/* We are searching for interval timer / delay for this thread
+				 * we found some entry belonging to this thread, but it is of
+				 * different kind than we are searching for. It is delay and
+				 * we are searching for interval timer or vice versa.
+				 */
+				if (
+						(interval == 0 && sleepers[q].interval == 0)
+						|| (interval != 0 && sleepers[q].interval != 0)
+				   )
+				{
+					return do_set_timed_event(q, microseconds, interval);
+				}
+			}
 		}
 	}
 	return E_NOTAVAIL;
 }
 
+static int cancel_timed_event(Thread_t owner, bool periodic)
+{
+	for (int q = 0; q < SLEEPERS_MAX; ++q)
+	{
+		if (sleepers[q].thread_id == owner)
+		{
+			if (
+					(periodic && sleepers[q].interval != 0)
+					|| (!periodic && sleepers[q].interval == 0)
+			   )
+			{
+				sleepers[q].thread_id = 0xFF;
+				return 0;
+			}
+		}
+	}
+
+	return E_NOTAVAIL;
+}
+
+/** Kernel implementation of usleep() syscall */
+int os_usleep(unsigned microseconds)
+{
+	return set_timed_event(microseconds, 0);
+}
+
 /** Kernel implementation of setitimer() syscall */
 int os_setitimer(unsigned microseconds)
 {
-	for (int q = 0; q < PERIODICS_MAX; ++q)
+	if (microseconds > 0)
 	{
-		if (periodics[q].thread_id == 0xFF)
-		{
-			periodics[q].thread_id = os_get_current_thread();
-			periodics[q].interval = microseconds;
-			periodics[q].offset = os_get_micro_time() % microseconds;
-			return 0;
-		}
+		return set_timed_event(microseconds, microseconds);
 	}
-	return E_NOTAVAIL;
+	else
+	{
+		return cancel_timed_event(os_get_current_thread(), true);
+	}
 }
 
 void os_timer_init()
@@ -62,11 +108,6 @@ void os_timer_init()
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
 		sleepers[q].thread_id = 0xFF;
-	}
-
-	for (int q = 0; q < PERIODICS_MAX; ++q)
-	{
-		periodics[q].thread_id = 0xFF;
 	}
 }
 
@@ -106,30 +147,6 @@ bool os_schedule_timer(unsigned * delay)
 			}
 		}
 	}
-
-	for (int q = 0; q < PERIODICS_MAX; ++q)
-	{
-		if (periodics[q].thread_id != 0xFF)
-		{
-			uint32_t delay;
-			uint32_t in_interval = microtime % periodics[q].interval;
-
-			if (in_interval > periodics[q].offset)
-			{
-				delay = periodics[q].interval - (in_interval - periodics[q].offset);
-			}
-			else
-			{
-				delay = periodics[q].offset - in_interval;
-			}
-			if (delay < min_delay)
-			{
-				min_delay = delay;
-				rv = true;
-			}
-		}
-	}
-	
 	if (rv)
 	{
 		*delay = min_delay;
@@ -153,20 +170,14 @@ void os_run_timer(uint32_t microtime)
 			{
 				// restart usleep-ed thread
 				os_thread_continue(sleepers[q].thread_id);
-				sleepers[q].thread_id = 0xFF;
-			}
-		}
-	}
-
-	for (int q = 0; q < PERIODICS_MAX; ++q)
-	{
-		if (periodics[q].thread_id != 0xFF)
-		{
-			uint32_t in_interval = microtime % periodics[q].interval;
-
-			if (in_interval == periodics[q].offset)
-			{
-				os_kill(periodics[q].thread_id, SIGALARM);
+				if (sleepers[q].interval == 0)
+				{
+					sleepers[q].thread_id = 0xFF;
+				}
+				else
+				{
+					sleepers[q].sleep_to = microtime + sleepers[q].interval;
+				}
 			}
 		}
 	}
