@@ -136,14 +136,15 @@ void sys_tick_handler(void)
 	psp = __get_PSP();
 	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
 	sched_microtime += sched_tick_increment;
-	if (sched_timer_event_enabled &&
+/*	if (sched_timer_event_enabled &&
 			sched_timer_event == sched_microtime)
-	{
-		os_run_timer(sched_microtime);
-	}
+	{*/
+	os_run_timer(sched_microtime);
+
+//}
 	os_sched_yield();
 
-	os_sched_timed_event();
+//	os_sched_timed_event();
 	unsigned rt = 0;
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
