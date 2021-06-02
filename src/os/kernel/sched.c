@@ -44,7 +44,7 @@ static const struct OS_thread_create_t * const autostart_threads = &__thread_cre
 
 static uint32_t sched_tick_increment;
 
-static uint32_t sched_microtime;
+static uint32_t sched_microtime = 0;
 static uint32_t sched_timer_event;
 static bool sched_timer_event_enabled;
 
@@ -68,7 +68,8 @@ static bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 	uint8_t loops = OS_THREADS + 2;
 
 	do {
-		if (os_threads[thread].state == THREAD_STATE_READY)
+		if (os_threads[thread].state == THREAD_STATE_READY 
+				|| os_threads[thread].state == THREAD_STATE_RUNNING)
 		{
 			/* Schedule different thread only if it has lower numerical value of priority
 			 * than one we've already found. This should enforce prioritized round robin
@@ -85,9 +86,9 @@ static bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 	} while (loops-- && thread != current_thread);
 
 	ASSERT(loops > 0);
-	ASSERT(candidate_thread != current_thread);
+//	ASSERT(candidate_thread != current_thread);
 
-	if (best_prio < 0x100)
+	if (best_prio < 0x100 && candidate_thread != current_thread)
 	{
 		*next_thread = candidate_thread;
 		return true;
@@ -234,6 +235,8 @@ void os_start()
 		{
 			ASSERT(0);
 		}
+	
+		systick_counter_enable();
 
 		// Start this thread
 		// We are adding 8 here, because normally pend_sv_handler would be reading 8 general 
@@ -337,7 +340,6 @@ void systick_setup(int xms)
 #	endif
 #endif
 	STK_CVR = 0;
-	systick_counter_enable();
 	systick_interrupt_enable();
 }
 
