@@ -116,7 +116,7 @@ __attribute__((naked)) void pend_sv_handler(void)
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
 	if (old_parent_process != new_parent_process || old_host_process != new_host_process)
 	{
-		mpu_store(&old_host_process->mpu, &old_parent_process->mpu);
+//		mpu_store(&old_host_process->mpu, &old_parent_process->mpu);
 		mpu_restore(&new_host_process->mpu, &new_parent_process->mpu);
 	}
 #endif
