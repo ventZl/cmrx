@@ -3,3 +3,4 @@
 #include <cmrx/intrinsics.h>
 
 #define LOG2(x)		(31 - __builtin_clz(x))
+#define LENGTH(obj)	(sizeof(obj)/sizeof(obj[0]))
