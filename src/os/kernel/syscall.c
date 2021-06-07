@@ -12,7 +12,11 @@
 #include <cmrx/assert.h>
 #include <cmrx/os/sanitize.h>
 
-struct Syscall_Entry_t syscalls[] = {
+/** List of syscalls provided by the kernel.
+ * This table lists syscall ID and syscall handler for each supported
+ * syscall.
+ */
+static struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
 	{ SYSCALL_RPC_CALL, (Syscall_Handler_t) &os_rpc_call },
@@ -27,8 +31,15 @@ struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_SETPRIORITY, (Syscall_Handler_t) &os_setpriority }
 };
 
-extern struct OS_stack_t os_stacks;
-
+/** Kernel entrypoint for system call handlers.
+ *
+ * This routine is common entrypoint for all syscall routines. It decodes
+ * the syscall ID requested by userspace application and finds it's handler.
+ * @param arg0 syscall argument
+ * @param arg1 syscall argument
+ * @param arg2 syscall argument
+ * @param arg3 syscall argument
+ */
 __attribute__((used)) void sv_call_handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
 	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);

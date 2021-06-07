@@ -9,7 +9,13 @@
 
 #include <stdint.h>
 
-__attribute__((always_inline)) static inline uint8_t __LDREXB(uint8_t * addr)
+#define ALWAYS_INLINE __attribute__((always_inline))
+
+/** Intrinsic access to ARM LDREXB instruction.
+ * @param addr address to load from
+ * @return 8-bit value read from addr
+ */
+ALWAYS_INLINE static inline uint8_t __LDREXB(uint8_t * addr)
 {
 	uint8_t retval;
 	asm volatile(
@@ -20,7 +26,12 @@ __attribute__((always_inline)) static inline uint8_t __LDREXB(uint8_t * addr)
 	return retval;
 }
 
-__attribute__((always_inline)) static inline int __STREXB(uint8_t * addr, uint8_t value)
+/** Intrinsic access to ARM STREXB instruction.
+ * @param addr address to store to
+ * @param value 8-bit value to be stored to addr
+ * @returns success flag
+ */
+ALWAYS_INLINE static inline int __STREXB(uint8_t * addr, uint8_t value)
 {
 	uint8_t status;
 	asm volatile(
@@ -33,7 +44,7 @@ __attribute__((always_inline)) static inline int __STREXB(uint8_t * addr, uint8_
 	return status;
 }
 
-__attribute__((always_inline)) static inline void __CLREX()
+ALWAYS_INLINE static inline void __CLREX()
 {
 	asm volatile(
 			"CLREX\n\t"
@@ -43,7 +54,7 @@ __attribute__((always_inline)) static inline void __CLREX()
 /** Get value of process SP
  * @return top of application stack
  */
-__attribute__((always_inline)) static inline void * __get_PSP(void)
+ALWAYS_INLINE static inline void * __get_PSP(void)
 {
 	void * psp;
 	asm volatile(
@@ -58,7 +69,7 @@ __attribute__((always_inline)) static inline void * __get_PSP(void)
 /** Get value of process LR
  * @return top of application stack
  */
-__attribute__((always_inline)) static inline void * __get_LR(void)
+ALWAYS_INLINE static inline void * __get_LR(void)
 {
 	void * psp;
 	asm volatile(
@@ -73,7 +84,7 @@ __attribute__((always_inline)) static inline void * __get_LR(void)
 /** Set value of process SP
  * @param stack_top new top of application stack
  */
-__attribute__((always_inline)) static inline void __set_PSP(unsigned long * stack_top)
+ALWAYS_INLINE static inline void __set_PSP(unsigned long * stack_top)
 {
 	asm volatile(
 			".syntax unified\n\t"
@@ -87,7 +98,7 @@ __attribute__((always_inline)) static inline void __set_PSP(unsigned long * stac
  * This operation will claim 32 bytes (8 registers * 4 bytes) on stack.
  * @return top of application stack after application context was saved
  */
-__attribute__((always_inline)) static inline void * save_context()
+ALWAYS_INLINE static inline void * save_context()
 {
 	uint32_t * scratch;
 	asm (
@@ -114,7 +125,7 @@ __attribute__((always_inline)) static inline void * save_context()
  * from address sp.
  * @param sp address where top of the stack containing application context is
  */
-__attribute__((always_inline)) static inline void load_context(uint32_t * sp)
+ALWAYS_INLINE static inline void load_context(uint32_t * sp)
 {
 	asm (
 			"LDMFD %0!, {r4 - r7}\n\t"
@@ -130,22 +141,22 @@ __attribute__((always_inline)) static inline void load_context(uint32_t * sp)
 	);
 }
 
-__attribute__((always_inline)) static inline void __set_CONTROL(uint32_t control)
+ALWAYS_INLINE static inline void __set_CONTROL(uint32_t control)
 {
 	asm volatile("MSR control, %0\n" : : "r" (control) : "memory");
 }
 
-__attribute__((always_inline)) static inline void __DSB()
+ALWAYS_INLINE static inline void __DSB()
 {
 	asm volatile("DSB 0xF\n" : : : "memory");	
 }
 
-__attribute__((always_inline)) static inline void __ISB()
+ALWAYS_INLINE static inline void __ISB()
 {
 	asm volatile("ISB 0xF\n" : : : "memory");	
 }
 
-__attribute__((always_inline)) static inline void __ISR_return()
+ALWAYS_INLINE static inline void __ISR_return()
 {
 		asm volatile(
 				"POP {R0, R1, R2, R3, R12, LR}\n\t"

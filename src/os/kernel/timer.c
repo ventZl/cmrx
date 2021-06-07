@@ -20,6 +20,15 @@ struct TimerEntry_t sleepers[SLEEPERS_MAX];
 #define IS_PERIODIC(interval) (((interval) >> 31) == 1)
 #define GET_SLEEPTIME(interval) ((interval) & (~(1 << 31)))
 
+/** Perform heavy lifting of setting timers
+ * This routine will store timed event into list of timed events. If 
+ * event is not periodic, it will also stop thread (\ref os_usleep semantics).
+ *
+ * @param slot number of slot in \ref sleepers list
+ * @param interval amount of us for which thread should sleep
+ * @param _periodic true if timer should be periodic, false otherwise
+ * @return 0 if timer was set up properly
+ */
 static int do_set_timed_event(unsigned slot, unsigned interval, bool _periodic)
 {
 	uint32_t periodic = (_periodic ? 1 : 0);
@@ -36,6 +45,15 @@ static int do_set_timed_event(unsigned slot, unsigned interval, bool _periodic)
 	return 0;
 }
 
+/** Find a slot for timed event and store it.
+ *
+ * This is actual execution core for both \ref os_usleep and \ref os_setitimer 
+ * functions. It will find free slot or slot already occupied by calling thread
+ * and will set / update timeout values.
+ * @param microseconds time for which thread should sleep / wait for event
+ * @param periodic true if this event is periodic
+ * @returns error status. 0 means no error.
+ */
 static int set_timed_event(unsigned microseconds, bool periodic)
 {
 	Thread_t thread_id = os_get_current_thread();
@@ -68,6 +86,14 @@ static int set_timed_event(unsigned microseconds, bool periodic)
 	return E_NOTAVAIL;
 }
 
+/** Cancels existing timed event.
+ *
+ * This function is only accessible for periodic timers externally. It
+ * allows cancelling of interval timers set previously.
+ * @param owner thread which shall own the interval timer
+ * @param periodic true if periodic timer of given thread should be cancelled
+ * @return 0 if operation performed succesfully.
+ */
 static int cancel_timed_event(Thread_t owner, bool periodic)
 {
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
@@ -88,13 +114,11 @@ static int cancel_timed_event(Thread_t owner, bool periodic)
 	return E_NOTAVAIL;
 }
 
-/** Kernel implementation of usleep() syscall */
 int os_usleep(unsigned microseconds)
 {
 	return set_timed_event(microseconds, false);
 }
 
-/** Kernel implementation of setitimer() syscall */
 int os_setitimer(unsigned microseconds)
 {
 	if (microseconds > 0)
@@ -127,16 +151,6 @@ static uint32_t get_sleep_time(uint32_t sleep_from, uint32_t microtime)
 	}
 }
 
-/** Provide information on next scheduled event.
- *
- * This function informs caller about delay until next scheduled event.
- * Next scheduled event may be either wake-up of sleeped thread, or
- * interval timer.
- * @param [out] delay address of buffer, where delay to next scheduled event will be written
- * @returns true if there is any scheduled event known and at address pointed to by delay
- * value was written. Returns false if there is no known scheduled event. In such case content
- * of memory pointed to by delay is undefined.
- */
 bool os_schedule_timer(unsigned * delay)
 {
 	uint32_t microtime = os_get_micro_time();
@@ -180,11 +194,6 @@ bool os_schedule_timer(unsigned * delay)
 	return rv;
 }
 
-/** Fire scheduled event.
- *
- * Will find and run scheduled event.
- * @param microtime current processor time in microseconds
- */
 void os_run_timer(uint32_t microtime)
 {
 

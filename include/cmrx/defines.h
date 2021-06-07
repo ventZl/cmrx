@@ -1,3 +1,10 @@
+/** @defgroup os Kernel internals
+ *
+ * Following documents kernel internals. You should only ever be interested in this part of
+ * CMRX if you intend to develop kernel server, extend CMRX kernel or you came accross a bug
+ * or poorly documented part of kernel API.
+ */
+
 /** @defgroup api Kernel API
  *
  * Following documents public API available for userspace threads.
@@ -27,7 +34,10 @@
 
 #define NULL					((void *) 0)
 
+/** Data type used for thread IDs */
 typedef uint8_t Thread_t;
+
+/** Data type used for process IDs */
 typedef uint8_t Process_t;
 
 /** @} */

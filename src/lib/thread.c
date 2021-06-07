@@ -1,3 +1,7 @@
+/** @ingroup api_thread
+ * @{
+ */
+
 #include <cmrx/ipc/thread.h>
 #include <cmrx/os/syscalls.h>
 
@@ -40,3 +44,5 @@ __SYSCALL int setpriority(uint8_t priority)
 {
 	__SVC(SYSCALL_SETPRIORITY);
 }
+
+/** @} */
