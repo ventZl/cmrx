@@ -277,7 +277,7 @@ static int os_stack_create()
 
 static void os_stack_dispose(uint32_t stack_id)
 {
-	os_stacks.allocations &= ~stack_id;
+	os_stacks.allocations &= ~(1 << stack_id);
 }
 
 static int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
