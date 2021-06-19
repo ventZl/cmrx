@@ -4,8 +4,9 @@
  *
  * @brief Kernel scheduler internals
  *
- *
- * @ingroup os_sched
+ */
+
+/** @ingroup os_sched
  * @{
  */
 #include <cmrx/os/runtime.h>

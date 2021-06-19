@@ -1,14 +1,6 @@
 /** @defgroup api_rpc Remote Procedure Calls
  *
  * @ingroup api
- *
- * Kernel offers method of calling procedures residing in foreign processes.
- * These procedures will inherit stack of calling thread, but will retain 
- * access privileges of called process (memory access). This mechanism allows
- * for certain degree of abstraction, while procedures are not called using
- * their addresses, rather than using offset into "virtual method table" bound
- * to RPC service.
- *
  */
 #pragma once
 
