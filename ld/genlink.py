@@ -2,6 +2,7 @@ import sys
 from pprint import pprint
 import re
 import math
+import os
 
 f = open(sys.argv[1])
 
@@ -21,7 +22,7 @@ def set_lib_alloc(_lib, kind, location):
 
     typa = kind
     libpath = location
-    print("== %s %s:" % (lib, typa.upper()))
+#    print("== %s %s:" % (lib, typa.upper()))
 
 class Section:
     def __init__(self, location):
@@ -49,7 +50,7 @@ class Section:
         return self.size
 
     def __str__(self):
-        return "0x%04X allocated" % self.get_size()
+       return "0x%04X allocated" % self.get_size()
 
     def __desc__(self):
         return self.__str__()
@@ -77,7 +78,7 @@ for l in lines:
 
         elif z3 and lib is not None:
             alloc[typa][lib].add_fill(int(z3.groups()[1], 16))
-            print("Fill: %s" % (z3.groups()[1]))
+#            print("Fill: %s" % (z3.groups()[1]))
         elif l[1] == '*':
   #          print("!!! Dropping")
             lib = None
@@ -85,7 +86,7 @@ for l in lines:
         elif z5 and lib is not None:
             if (libpath == z5.groups()[2]):
                 alloc[typa][lib].add_alloc(int(z5.groups()[1], 16))
-                print("Alloc: %s" % (z5.groups()[1]))
+#                print("Alloc: %s" % (z5.groups()[1]))
             else:
                 print("Something found, but ignored because libpath is %s but should be %s" % (z5.groups()[2], libpath))
 
@@ -99,28 +100,51 @@ def sort_by_size(container):
     return out
 
 def write_linker_script(container, fname, sname):
-    f = open(fname, "w")
+    f = open(fname, "r")
+    old_content = f.read()
+    f.close()
+
+    new_content = ""
     
     for lib in container:
         align = int(math.pow(2, lib[1].get_size().bit_length()))
         if align < 0x100:
             align = 0x100
 
-        f.write("/* Application name: %s */\n" % (lib[0]))
-        f.write("\t. = ALIGN(0x%X);\n" % (align))
-        f.write("\t%s_%s_start = .;\n" % (lib[0], sname))
-        f.write("\t%s(.%s .%s.*)\n" % (lib[1].location(), sname, sname))
-        f.write("\t. = ALIGN(0x%X);\n" % (align))
-        f.write("\t%s_%s_end = .;\n\n" % (lib[0], sname))
+        new_content += "/* Application name: %s */\n" % (lib[0])
+        new_content += "\t. = ALIGN(0x%X);\n" % (align)
+        new_content += "\t%s_%s_start = .;\n" % (lib[0], sname)
+        new_content += "\t%s(.%s .%s.*)\n" % (lib[1].location(), sname, sname)
+        new_content += "\t. = ALIGN(0x%X);\n" % (align)
+        new_content += "\t%s_%s_end = .;\n\n" % (lib[0], sname)
 
-    f.close()
+    if (new_content != old_content):
+        f = open(fname, "w")
+        f.write(new_content)
+        f.close()
+        return True
+
+    return False
+
+deleteBinary = False
 
 data = sort_by_size(alloc['data'])
-write_linker_script(data, sys.argv[2], 'data')
+if write_linker_script(data, sys.argv[2], 'data'):
+    deleteBinary = True
 
 bss = sort_by_size(alloc['bss'])
-write_linker_script(bss, sys.argv[3], 'bss')
+if write_linker_script(bss, sys.argv[3], 'bss'):
+    deleteBinary = True
 
 shared = sort_by_size(alloc['shared'])
-write_linker_script(shared, sys.argv[4], 'shared')
+if write_linker_script(shared, sys.argv[4], 'shared'):
+    deleteBinary = True
 
+if deleteBinary:
+    binary = sys.argv[1].replace(".map", ".elf")
+    os.remove(binary)
+    print("Removing... %s" % (binary))
+
+    print("Linker script updated, please rebuild target...")
+else:
+    print("Target up to date");
