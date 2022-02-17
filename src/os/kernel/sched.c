@@ -13,14 +13,26 @@
 #include <cmrx/os/sched/stack.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/timer.h>
-#include <cmrx/intrinsics.h>
+//#include <cmrx/intrinsics.h>
 #include <cmrx/os/pendsv.h>
 #include <string.h>
 #include <conf/kernel.h>
 #include <cmrx/ipc/thread.h>
+#include <cmrx/shim/systick.h>
+#include <cmrx/os/syscalls.h>
+#include <cmrx/shim/memory.h>
+#include <cmrx/shim/corelocal.h>
+#include <cmrx/shim/cortex.h>
+#include <cmrx/shim/static.h>
 
-#include <libopencm3/cm3/systick.h>
-#include <libopencm3/stm32/rcc.h>
+#ifdef TESTING
+#define STATIC
+#else
+#define STATIC static
+#endif
+
+//#include <libopencm3/cm3/systick.h>
+//#include <libopencm3/stm32/rcc.h>
 
 #include <cmrx/assert.h>
 
@@ -32,6 +44,10 @@ struct OS_thread_t os_threads[OS_THREADS];
 /** List of active processes. */
 struct OS_process_t os_processes[OS_PROCESSES];
 
+/** CPU scheduling thread IDs */
+static struct OS_core_state_t core[OS_NUM_CORES];
+
+#if 0
 /** Previous thread ID */
 static Thread_t thread_prev;
 
@@ -40,39 +56,20 @@ static Thread_t thread_current;
 
 /** Next thread ID */
 static Thread_t thread_next;
+#endif
 
 /** Thread stacks */
 __attribute__((aligned(1024))) struct OS_stack_t os_stacks;
 
-/* Pointers to process definition array in firmware image
- * Linker script defines two symbols __applications_start and
- * __applications_end. These mark boundaries for processes
- * defined at compile time (by use of OS_APPLICATION macros).
- */
-extern const struct OS_process_definition_t __applications_start;
-extern const struct OS_process_definition_t __applications_end;
-
-static const struct OS_process_definition_t * app_definition = &__applications_start;
-
-/* Pointers to thread autocreate definition array in firmware
- * image. Linker script defines two symbols __thread_create_start and
- * __thread_create_end. These mark boundaries of thread autocreate
- * list defined at compile time (by use of OS_THREAD_CREATE marco).
- */
-extern const struct OS_thread_create_t __thread_create_start;
-extern const struct OS_thread_create_t __thread_create_end;
-
-static const struct OS_thread_create_t * const autostart_threads = &__thread_create_start;
-
 /** Amount of real time advance per one scheduler tick. */
-static uint32_t sched_tick_increment;
+extern uint32_t sched_tick_increment;
 
 /** Current scheduler real time */
 static uint32_t sched_microtime = 0;
 
-static int __os_process_create(Process_t process_id, const struct OS_process_definition_t * definition);
-static int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority);
-static int os_thread_alloc(Process_t process, uint8_t priority);
+STATIC int __os_process_create(Process_t process_id, const struct OS_process_definition_t * definition);
+STATIC int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority);
+STATIC int os_thread_alloc(Process_t process, uint8_t priority);
 
 void os_sched_timed_event(void);
 
@@ -96,7 +93,7 @@ __attribute__((noreturn)) static int os_idle_thread(void * data)
  * @returns true if any runnable thread (different than current) was found, false
  * otherwise.
  */
-static bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
+STATIC bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 {
 	uint16_t best_prio = 0x1FF;
 	uint8_t candidate_thread;
@@ -140,13 +137,13 @@ int os_sched_yield(void)
 
 //	os_sched_timed_event();
 
-	if (os_get_next_thread(thread_current, &candidate_thread))
+	if (os_get_next_thread(core[coreid()].thread_current, &candidate_thread))
 	{
-		thread_prev = thread_current;
-		thread_next = candidate_thread;
-		if (schedule_context_switch(thread_current, candidate_thread))
+		core[coreid()].thread_prev = core[coreid()].thread_current;
+		core[coreid()].thread_next = candidate_thread;
+		if (schedule_context_switch(core[coreid()].thread_current, candidate_thread))
 		{
-			thread_current = thread_next;
+			core[coreid()].thread_current = core[coreid()].thread_next;
 		}
 	}
 	return 0;
@@ -176,8 +173,8 @@ void os_sched_timed_event(void)
  */
 void sys_tick_handler(void)
 {
-	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
-	ASSERT(os_threads[thread_current].state == THREAD_STATE_RUNNING);
+//	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
+	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
 	unsigned long * psp;
 	psp = __get_PSP();
 	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
@@ -199,7 +196,7 @@ void sys_tick_handler(void)
 	}
 
 	ASSERT(rt == 1);
-	ASSERT(os_threads[thread_current].state == THREAD_STATE_RUNNING);
+	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
 	psp = __get_PSP();
 	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
 	__DSB();
@@ -208,22 +205,22 @@ void sys_tick_handler(void)
 
 uint8_t os_get_current_thread(void)
 {
-	return thread_current;
+	return core[coreid()].thread_current;
 }
 
 void os_set_current_thread(Thread_t new_thread)
 {
-	thread_current = new_thread;
+	core[coreid()].thread_current = new_thread;
 }
 
 uint8_t os_get_current_stack(void)
 {
-	return os_threads[thread_current].stack_id;
+	return os_threads[core[coreid()].thread_current].stack_id;
 }
 
 uint8_t os_get_current_process(void)
 {
-	return os_threads[thread_current].process_id;
+	return os_threads[core[coreid()].thread_current].process_id;
 }
 
 uint32_t os_get_micro_time(void)
@@ -239,17 +236,25 @@ uint32_t os_get_micro_time(void)
  * entrypoint to be recorded as thread return value.
  * @param arg0 value returned by thread entrypoint
  */
-static void os_thread_dispose(int arg0)
+STATIC void os_thread_dispose(int arg0)
 {
-	thread_exit(arg0);
+	// Do not place anything here. It will clobber R0 value!
+	//
+	// Normally, call to thread_exit would be here. But as we know that the way which
+	// led to os_thread_dispose being called results into R0 holding arg0, we may call
+	// syscall directly.
+	__SVC(SYSCALL_THREAD_EXIT);
+	//thread_exit(arg0);
 	ASSERT(0);
 	// this should be called when thread returns
 }
 
 void os_start()
 {
-	unsigned threads = &__thread_create_end - &__thread_create_start;
-	unsigned applications = &__applications_end - &__applications_start;
+	unsigned threads = static_init_thread_count(); 
+	unsigned applications = static_init_process_count(); 
+	const struct OS_process_definition_t * const app_definition = static_init_process_table();
+	const struct OS_thread_create_t * const autostart_threads = static_init_thread_table();
 
 	memset(&os_threads, 0, sizeof(os_threads));
 	os_timer_init();
@@ -261,7 +266,7 @@ void os_start()
 
 	for (unsigned q = 0; q < threads; ++q)
 	{
-		Process_t process_id = (autostart_threads[q].process - &__applications_start);
+		Process_t process_id = (autostart_threads[q].process - app_definition);
 		__os_thread_create(process_id, autostart_threads[q].entrypoint, autostart_threads[q].data, autostart_threads[q].priority);
 	}
 
@@ -271,13 +276,13 @@ void os_start()
 
 	if (os_get_next_thread(0xFF, &startup_thread))
 	{
-		thread_current = startup_thread;
+		core[coreid()].thread_current = startup_thread;
 		uint8_t startup_stack = os_threads[startup_thread].stack_id;
 		Process_t startup_process = os_threads[startup_thread].process_id;
 		os_threads[startup_thread].state = THREAD_STATE_RUNNING;
 
 		// Flash - RX
-		mpu_set_region(OS_MPU_REGION_EXECUTABLE, (const void *) 0x08000000, 0x80000, MPU_RX);
+		mpu_set_region(OS_MPU_REGION_EXECUTABLE, (const void *) code_base(), code_size(), MPU_RX);
 		mpu_enable();
 
 		// At this state thread is not hosted anywhere
@@ -289,7 +294,7 @@ void os_start()
 			ASSERT(0);
 		}
 	
-		systick_counter_enable();
+		systick_enable();
 
 		// Start this thread
 		// We are adding 8 here, because normally pend_sv_handler would be reading 8 general 
@@ -304,11 +309,11 @@ void os_start()
 		__ISR_return();
 		// if thread we started here returns,
 		// it returns here. 
-		while (1);
+	//	while (1);
 	}
 	else
 	{
-		while(1);
+	//	while(1);
 	}
 }
 
@@ -316,7 +321,7 @@ void os_start()
  * @return If there is at least one free stack slot, then return it's ID. If no free stack
  * is available, return 0xFFFFFFFF.
  */
-static int os_stack_create()
+STATIC int os_stack_create()
 {
 	uint32_t stack_mask = 1;
 	for(int q = 0; q < OS_STACKS; ++q)
@@ -329,15 +334,18 @@ static int os_stack_create()
 		stack_mask *= 2;
 	}
 
-	return 0xFFFFFFF;
+	return 0xFFFFFFFF;
 }
 
 /** Release stack slot.
  * @param stack_id Stack slot which should be released.
  */
-static void os_stack_dispose(uint32_t stack_id)
+STATIC void os_stack_dispose(uint32_t stack_id)
 {
-	os_stacks.allocations &= ~(1 << stack_id);
+	if (stack_id < OS_STACKS)
+	{
+		os_stacks.allocations &= ~(1 << stack_id);
+	}
 }
 
 /** Make thread runnable.
@@ -352,7 +360,7 @@ static void os_stack_dispose(uint32_t stack_id)
  * available and E_TASK_RUNNING if thread is not in state suitable for construction
  * (either slot is free, or already constructed).
  */
-static int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
+STATIC int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
 {
 	if (tid < OS_THREADS)
 	{
@@ -382,39 +390,6 @@ static int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data)
 	return E_OUT_OF_RANGE;
 }
 
-/*
- * Set up timer to fire every x milliseconds
- * This is a unusual usage of systick, be very careful with the 24bit range
- * of the systick counter!  You can range from 1 to 2796ms with this.
- */
-void systick_setup(int xms)
-{
-	uint32_t ahb_freq;
-
-#ifdef STM32H7
-	ahb_freq = rcc_get_bus_clk_freq(RCC_AHBCLK);
-
-	systick_set_frequency(1000/xms, ahb_freq);
-#else
-	ahb_freq = rcc_ahb_frequency;
-#endif
-	sched_tick_increment = xms * 1000;
-
-#ifdef STM32G4	
-	/* div8 per ST, stays compatible with M3/M4 parts, well done ST */
-/*	systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);*/
-	/* clear counter so it starts right away */
-
-#	if 0
-	systick_set_reload(4000000);//rcc_ahb_frequency / 8 / 1000 * xms);
-#	else
-	systick_set_reload(ahb_freq / 8 / 1000 * xms);
-#	endif
-#endif
-	STK_CVR = 0;
-	systick_interrupt_enable();
-}
-
 /** Create process using process definition.
  * Takes process definition and initializes MPU regions for process out of it.
  * @param process_id ID of process to be initialized
@@ -423,7 +398,7 @@ void systick_setup(int xms)
  * if process definition contains invalid section boundaries. E_OUT_OF_RANGE is returned if process ID
  * requested is out of limits given by the size of process table.
  */
-static int __os_process_create(Process_t process_id, const struct OS_process_definition_t * definition)
+STATIC int __os_process_create(Process_t process_id, const struct OS_process_definition_t * definition)
 {
 	if (process_id >= OS_PROCESSES)
 	{
@@ -439,7 +414,7 @@ static int __os_process_create(Process_t process_id, const struct OS_process_def
 	for (int q = 0; q < OS_TASK_MPU_REGIONS; ++q)
 	{
 		unsigned reg_size = (uint8_t *) definition->mpu_regions[q].end - (uint8_t *) definition->mpu_regions[q].start;
-		int rv = __mpu_set_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]._MPU_RBAR, &os_processes[process_id].mpu[q]._MPU_RASR);
+		int rv = mpu_configure_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]._MPU_RBAR, &os_processes[process_id].mpu[q]._MPU_RASR);
 		if (rv != E_OK)
 		{
 			os_processes[process_id].definition = NULL;
@@ -459,7 +434,7 @@ static int __os_process_create(Process_t process_id, const struct OS_process_def
  * @param priority thread priority. Numerically lower values mean higher priorities
  * @return Non-negative values denote ID of thread just created, negative values mean errors.
  */
-static int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority)
+STATIC int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority)
 {
 	uint8_t thread_id = os_thread_alloc(process, priority);
 	os_thread_construct(thread_id, entrypoint, NULL);
@@ -482,7 +457,7 @@ int os_thread_create(entrypoint_t * entrypoint, void * data, uint8_t priority)
  * @return Positive values denote thread ID reserved for new thread usable in further calls. Negative
  * value means that there was no free slot in thread table to allocate new thread.
  */
-static int os_thread_alloc(Process_t process, uint8_t priority)
+STATIC int os_thread_alloc(Process_t process, uint8_t priority)
 {
 	for (int q = 0; q < OS_THREADS; ++q)
 	{

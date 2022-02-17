@@ -167,4 +167,18 @@ struct OS_thread_create_t {
 extern struct OS_thread_t os_threads[OS_THREADS];
 extern struct OS_process_t os_processes[OS_PROCESSES];
 
+
+/** Structure holding current scheduling state of CPU.
+ *
+ * This structure holds complete state required to perform thread scheduling.
+ * It is private to CPU. Kernel should allocate as many of these as there are
+ * CPUs.
+ */
+struct OS_core_state_t {
+	Thread_t thread_prev;
+	Thread_t thread_current;
+	Thread_t thread_next;
+};
+
+
 /** @} */

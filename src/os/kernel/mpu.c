@@ -1,17 +1,24 @@
 #include <cmrx/os/mpu.h>
 #include <cmrx/defines.h>
-#include <libopencm3/cm3/mpu.h>
+#include <cmrx/shim/mpu.h>
 #include <conf/kernel.h>
-#include <cmrx/intrinsics.h>
+#include <cmrx/shim/cortex.h>
 #include <cmrx/assert.h>
-#include <libopencm3/cm3/scb.h>
+#include <cmrx/shim/scb.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/intrinsics.h>
 
 #ifdef SEMIHOSTING
 #include <stdio.h>
 #endif
+
+static const uint32_t __MPU_flags[] = {
+	0,
+	MPU_RASR_ATTR_AP_PRW_URO,
+	MPU_RASR_ATTR_AP_PRW_URW,
+	MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URO,
+	MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URW,
+};
 
 void hard_fault_handler(void)
 {
@@ -98,13 +105,23 @@ int mpu_load(const MPU_State * state, uint8_t base, uint8_t count)
 	return E_OK;
 }
 
-int __mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags, uint32_t * RBAR, uint32_t * RASR);
+uint32_t __mpu_expand_class(uint8_t class)
+{
+	if (class < sizeof(__MPU_flags)/sizeof(__MPU_flags[0]))
+	{
+		return __MPU_flags[class];
+	}
+	return 0;
+}
 
-int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags)
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RASR);
+
+
+int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls)
 {
 	uint32_t RBAR, RASR;
 	int rv;
-	if ((rv = __mpu_set_region(region, base, size, flags, &RBAR, &RASR)) == E_OK)
+	if ((rv = mpu_configure_region(region, base, size, cls, &RBAR, &RASR)) == E_OK)
 	{
 		MPU_RBAR = RBAR;
 		MPU_RASR = RASR;
@@ -115,11 +132,20 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t fl
 	return rv;
 }
 
-int __mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags, uint32_t * RBAR, uint32_t * RASR)
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RASR)
 {
 	uint8_t regszbits = ((sizeof(uint32_t)*8) - 1) - __builtin_clz(size);
 	uint32_t subregions = 0xFF;
 
+	uint32_t flags;
+	if (cls < sizeof(__MPU_flags)/sizeof(__MPU_flags[0]))
+	{
+		flags = __MPU_flags[cls];
+	}
+	else
+	{
+		return E_INVALID;
+	}
 	// In below code we don't need to take special care about
 	// bits above regszbits, because we know they are all zeroes.
 	if (size == 0)

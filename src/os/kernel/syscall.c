@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <cmrx/intrinsics.h>
+#include <cmrx/shim/cortex.h>
 #include <cmrx/os/syscall.h>
 #include <cmrx/os/sysenter.h>
 #include <cmrx/os/syscalls.h>
@@ -42,7 +42,6 @@ static struct Syscall_Entry_t syscalls[] = {
  */
 __attribute__((used)) void sv_call_handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
-	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
 	uint32_t * psp = (uint32_t *) __get_PSP();
 	sanitize_psp(psp);
 	uint16_t * lra = (uint16_t *) *(psp + 6);

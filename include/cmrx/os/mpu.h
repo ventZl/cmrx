@@ -9,18 +9,21 @@
 
 #include <stdint.h>
 #include <conf/kernel.h>
-#include <libopencm3/cm3/mpu.h>
 
-/** @defgroup os_mpu_rights MPU region access rights 
- * @{
+/** MPU region access rights 
  */
-#define MPU_NONE			0
-#define MPU_RX				MPU_RASR_ATTR_AP_PRW_URO
-#define MPU_RWX				MPU_RASR_ATTR_AP_PRW_URW
-#define MPU_R				MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URO
-#define MPU_RW				MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URW
-
-/** @} */
+enum MPU_Flags {
+	/// Region cannot be accesses. Any attempt to access addresses from this region will result in hard fault
+	MPU_NONE,
+	/// Region can be read and executed. Attempt to write will result in hard fault
+	MPU_RX,
+	/// Region can be read, written and executed. No attempt to access region can result in hard fault
+	MPU_RWX,
+	/// Region can be read. Attempt to write into region, or execute out of it will result in hard fault
+	MPU_R,
+	/// Region can be read and written but cannot be executed. Attempt to execute code will result in hard fault
+	MPU_RW
+};
 
 #define MPU_AP_MASK			0b0111
 #define MPU_EXECUTE_SHIFT	3
@@ -81,16 +84,16 @@ int mpu_load(const MPU_State * state, uint8_t base, uint8_t count);
  * @param region ID of region being activated (0-7)
  * @param base base address of region
  * @param size size of region (256B and more)
- * @param flags region access flags
+ * @param cls region access class, see @ref MPU_class for available access classes
  * @return E_OK if region was configured, otherwise error code is returned
  */
-int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags);
+int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls);
 
 /** Create configuration for MPU region.
  *
  * @TODO
  */
-int __mpu_set_region(uint8_t region, const void * base, uint32_t size, uint32_t flags, uint32_t * RBAR, uint32_t * RASR);
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t flags, uint32_t * RBAR, uint32_t * RASR);
 
 /** Disable MPU region.
  * This function will disable use of MPU region. Address and size

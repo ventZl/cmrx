@@ -2,14 +2,21 @@
 
 add_definitions(-fomit-frame-pointer)
 
-set(os_SRCS mpu.c pendsv.c rpc.c sanitize.c sched.c signal.c syscall.c timer.c isr.c)
+if (NOT TESTING)
+	set(os_SRCS mpu.c pendsv.c rpc.c sanitize.c sched.c signal.c syscall.c timer.c isr.c)
+else()
+	set(os_SRCS sched.c timer.c)
+endif()
 
 add_library(os OBJECT EXCLUDE_FROM_ALL ${os_SRCS})
+
+target_link_libraries(os os_shim)
 
 if (TESTING)
 	set(test_kernel_SRCS tests/test_sched.c)
 	add_executable(test_kernel ${test_kernel_SRCS})
-	target_link_libraries(test_kernel ctest cmrx_testing)
+	target_link_libraries(test_kernel os ctest)
+	#	target_compile_definitions(os PRIVATE -Dstatic=)
 
 	add_test(NAME test_kernel COMMAND test_kernel)
 endif()

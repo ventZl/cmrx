@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#warning "cmrx/intrinsics.h is deprecated header"
+
 #define ALWAYS_INLINE __attribute__((always_inline))
 
 /** Intrinsic access to ARM LDREXB instruction.
@@ -153,13 +155,18 @@ ALWAYS_INLINE static inline void __DSB()
 
 ALWAYS_INLINE static inline void __ISB()
 {
-	asm volatile("ISB 0xF\n" : : : "memory");	
+	asm volatile("ISB\n" : : : "memory");	
+//	asm volatile("ISB 0xF\n" : : : "memory");	
 }
 
 ALWAYS_INLINE static inline void __ISR_return()
 {
 		asm volatile(
-				"POP {R0, R1, R2, R3, R12, LR}\n\t"
+				"POP {R0, R1}\n\t"
+				"MOV R12, R0\n\t"
+				"MOV LR, R1\n\t"
+// was:				"POP {R0, R1, R2, R3, R12, LR}\n\t"
+				"POP {R0, R1, R2, R3}\n\t"
 				"POP {R6, R7}\n\t"
 				"BX R6\n\t"
 				);

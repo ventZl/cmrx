@@ -5,7 +5,7 @@
 #include <cmrx/ipc/signal.h>
 #include <cmrx/defines.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/intrinsics.h>
+#include <cmrx/shim/cortex.h>
 
 int os_signal(int signo, void (*sighandler)(int))
 {
@@ -27,7 +27,9 @@ __attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *si
 
 	asm volatile(
 			"BLX %[sighandler]\n\t"
-			"POP { lr }\n\t"
+// was:		"POP { lr }\n\t"
+			"POP { r0 }\n\t"
+			"MOV lr, r0\n\t"
 			"POP { r0 - r3, pc }\n\t"
 			:
 			: [sighandler] "r" (sighandler)

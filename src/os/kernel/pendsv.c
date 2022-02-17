@@ -1,9 +1,11 @@
 #include <stdint.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
-#include <libopencm3/cm3/scb.h>
-#include <libopencm3/cm3/cortex.h>
-#include <cmrx/intrinsics.h>
+#include <cmrx/shim/scb.h>
+#include <cmrx/shim/cortex.h>
+//#include <libopencm3/cm3/scb.h>
+//#include <libopencm3/cm3/cortex.h>
+//#include <cmrx/intrinsics.h>
 
 #include <conf/kernel.h>
 
@@ -107,7 +109,7 @@ __attribute__((naked)) void pend_sv_handler(void)
 			".syntax unified\n\t"
 			"push {lr}\n\t"
 	);
-	cm_disable_interrupts();
+	cortex_disable_interrupts();
 	/* Do NOT put anything here. You will clobber context being stored! */
 	old_task->sp = save_context();
 	ctxt_switch_pending = false;

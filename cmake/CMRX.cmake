@@ -59,13 +59,17 @@ endfunction()
 
 add_event_hook(CMAKE_DONE ${CMAKE_CURRENT_LIST_DIR}/on_cmake_done.cmake)
 
-macro(add_firmware FW_NAME)
+function(add_firmware FW_NAME)
 	set_property(GLOBAL PROPERTY CMRX_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
-	add_executable(${FW_NAME} ${ARGN})
+	if (TESTING)
+		set(EXCL EXCLUDE_FROM_ALL)
+	endif()
+	add_executable(${FW_NAME} ${EXCL} ${ARGN})
 	add_custom_command(TARGET ${FW_NAME} POST_BUILD
 		COMMAND python ${CMAKE_SOURCE_DIR}/cmrx/ld/genlink.py ${CMAKE_CURRENT_BINARY_DIR}/${FW_NAME}.map ${CMAKE_BINARY_DIR}/gen.appl_data.ld ${CMAKE_BINARY_DIR}/gen.appl_bss.ld ${CMAKE_BINARY_DIR}/gen.appl_shared.ld
 
 		COMMENT "Updating linker script for correct MPU operation"
 		)
 	target_link_options(${FW_NAME} PUBLIC -Wl,-Map=${FW_NAME}.map)
-endmacro()
+endfunction()
+

@@ -2,7 +2,7 @@
 #include <cmrx/os/sysenter.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/intrinsics.h>
+#include <cmrx/shim/cortex.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
 #include <conf/kernel.h>
@@ -172,6 +172,8 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	mpu_load(&os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
 
+	// Additional sanitizing
+#if 0
 	typeof(&_rpc_call) p_rpc_call = _rpc_call;
 	p_rpc_call++;
 	ASSERT(local_frame->pc == p_rpc_call);
@@ -179,6 +181,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	ASSERT(canary == 0xAA55AA55);
 
 	sanitize_psp((uint32_t *) local_frame);
+#endif
 	__set_PSP((uint32_t *) local_frame);
 
 	// we have manipulated PSP, but sv_call_handler doesn't know
