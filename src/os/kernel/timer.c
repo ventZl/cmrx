@@ -8,6 +8,7 @@
 #include <cmrx/assert.h>
 
 #include <stdbool.h>
+#include <libopencm3/cm3/dwt.h>
 
 struct TimerEntry_t {
 	uint32_t sleep_from;
@@ -114,8 +115,37 @@ static int cancel_timed_event(Thread_t owner, bool periodic)
 	return E_NOTAVAIL;
 }
 
+static void delay_us(uint32_t period_us)
+{
+#warning "I am dirty!"
+#warning "I am ignoring shims!"
+#warning "I should not be here!"
+#warning "I do not provide correct timing!"
+	dwt_enable_cycle_counter();
+	uint32_t start = dwt_read_cycle_counter();
+	uint32_t end = start + (period_us * 64);
+	uint32_t run = 1;
+	do {
+		uint32_t curr = dwt_read_cycle_counter();
+		if (end > start)
+		{
+			if (curr >= end)
+				run = 0;
+		}
+		else
+		{
+			if (curr >= end && curr < start)
+				run = 0;
+		}
+	} while (run);
+}
 int os_usleep(unsigned microseconds)
 {
+	if (microseconds < 1000)
+	{
+		delay_us(microseconds);
+		return 0;
+	}
 	return set_timed_event(microseconds, false);
 }
 
