@@ -17,6 +17,12 @@
 
 #define MUTEX_INITIALIZED				1
 
+/** Compile time initialization of futex.
+ * If futex is initialized using this value, then it is not necessary
+ * to call futex_init() during runtime.
+ */
+#define FUTEX_STATIC_INIT		{ 0xFF, 0, 0 }
+
 /** Futex structure.
  * This is fast userspace mutex, which avoids calling kernel.
  * It provides basic functionality for locking, unlocking and
