@@ -62,10 +62,10 @@ for l in lines:
         lib = None
         typa = None
     elif l[0] == ' ':
-        z1 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.data \.data\.\*\)$", l)
-        z2 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.bss \.bss\.\*\)$", l)
+        z1 = re.match("^ (.*lib([a-zA-Z0-9_]+)\.a)\(\.data \.data\.\*\)$", l)
+        z2 = re.match("^ (.*lib([a-zA-Z0-9_]+)\.a)\(\.bss \.bss\.\*\)$", l)
         z3 = re.match(" \*fill\* +(0x[0-9a-f]{16}) +(0x[0-9a-f]+)", l)
-        z4 = re.match("^ (.*lib([a-zA-Z0-9]+)\.a)\(\.shared \.shared\.\*\)$", l)
+        z4 = re.match("^ (.*lib([a-zA-Z0-9_]+)\.a)\(\.shared \.shared\.\*\)$", l)
         z5 = re.search("(0x[0-9a-f]{16}) +(0x[0-9a-f]+) (.*)\(", l)
         if z1:
             set_lib_alloc(z1.groups()[1], 'data', z1.groups()[0])
