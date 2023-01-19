@@ -5,7 +5,7 @@
 #include <cmrx/ipc/signal.h>
 #include <cmrx/defines.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/shim/cortex.h>
+#include <arch/cortex.h>
 
 int os_signal(int signo, void (*sighandler)(int))
 {

@@ -18,12 +18,13 @@
 #include <string.h>
 #include <conf/kernel.h>
 #include <cmrx/ipc/thread.h>
-#include <cmrx/shim/systick.h>
+#include <arch/systick.h>
 #include <cmrx/os/syscalls.h>
-#include <cmrx/shim/memory.h>
-#include <cmrx/shim/corelocal.h>
-#include <cmrx/shim/cortex.h>
-#include <cmrx/shim/static.h>
+#include <arch/memory.h>
+#include <arch/corelocal.h>
+#include <arch/cortex.h>
+#include <arch/static.h>
+#include <cmrx/sys/time.h>
 
 #ifdef TESTING
 #define STATIC
@@ -165,20 +166,24 @@ void os_sched_timed_event(void)
 }
 */
 
-/** Handler of periodic systick handler.
+/* was: Handler of periodic systick handler.
  *
  * This function is called periodically based on how is systick timer set up
  * by startup code. Normally it performs execution of timed events and switches
  * currently running thread, if there is any other thread to be run.
  */
-void sys_tick_handler(void)
+long os_sched_timing_callback(long delay_us)
 {
+    const uint32_t one_second_us = 1000000;
 //	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
 	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
 	unsigned long * psp;
-	psp = __get_PSP();
+	psp = (uint32_t *) __get_PSP();
 	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
-	sched_microtime += sched_tick_increment;
+
+//	was: sched_microtime += sched_tick_increment;
+    sched_microtime += delay_us;
+
 /*	if (sched_timer_event_enabled &&
 			sched_timer_event == sched_microtime)
 	{*/
@@ -197,7 +202,7 @@ void sys_tick_handler(void)
 
 	ASSERT(rt == 1);
 	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
-	psp = __get_PSP();
+	psp = (uint32_t *) __get_PSP();
 	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
 	__DSB();
 	__ISB();
@@ -301,7 +306,7 @@ void os_start()
 		// purpose registers here. But there is nothing useful there, so we simply skip it.
 		// Code belog then restores what would normally be restored by return from handler.
 		unsigned long * thread_sp = os_threads[startup_thread].sp + 8;
-		__set_PSP(thread_sp);
+		__set_PSP((uint32_t) thread_sp);
 		__set_CONTROL(0x03); 	// SPSEL = 1 | nPRIV = 1: use PSP and unpriveldged thread mode
 
 		__ISB();

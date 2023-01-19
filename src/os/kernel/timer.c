@@ -8,7 +8,7 @@
 #include <cmrx/assert.h>
 
 #include <stdbool.h>
-#include <libopencm3/cm3/dwt.h>
+#include <arch/dwt.h>
 
 struct TimerEntry_t {
 	uint32_t sleep_from;

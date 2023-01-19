@@ -2,7 +2,7 @@
 #include <cmrx/os/sysenter.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/shim/cortex.h>
+#include <arch/cortex.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
 #include <conf/kernel.h>
@@ -126,7 +126,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	set_exception_argument(remote_frame, 5, 0xAA55AA55);
 	set_exception_pc_lr(remote_frame, method, rpc_return);
 	
-	__set_PSP((uint32_t *) remote_frame);
+	__set_PSP((uint32_t) remote_frame);
 
 	// we have manipulated PSP, but sv_call_handler doesn't know
 	// about it. we will let rewrite R0 position in exception
@@ -182,7 +182,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	sanitize_psp((uint32_t *) local_frame);
 #endif
-	__set_PSP((uint32_t *) local_frame);
+	__set_PSP((uint32_t) local_frame);
 
 	// we have manipulated PSP, but sv_call_handler doesn't know
 	// about it. returning arg0 we will let it to write somewhere below

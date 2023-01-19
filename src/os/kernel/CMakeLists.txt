@@ -10,7 +10,7 @@ endif()
 
 add_library(os OBJECT EXCLUDE_FROM_ALL ${os_SRCS})
 
-target_link_libraries(os os_shim)
+target_link_libraries(os cmsis_core_lib cmrx_arch)
 
 if (TESTING)
 	set(test_kernel_SRCS tests/test_sched.c)

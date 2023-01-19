@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <cmrx/shim/cortex.h>
+#include <arch/cortex.h>
 #include <cmrx/os/syscall.h>
 #include <cmrx/os/sysenter.h>
 #include <cmrx/os/syscalls.h>

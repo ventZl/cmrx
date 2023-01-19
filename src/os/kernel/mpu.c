@@ -1,10 +1,10 @@
 #include <cmrx/os/mpu.h>
 #include <cmrx/defines.h>
-#include <cmrx/shim/mpu.h>
+#include <arch/mpu.h>
 #include <conf/kernel.h>
-#include <cmrx/shim/cortex.h>
+#include <arch/cortex.h>
 #include <cmrx/assert.h>
-#include <cmrx/shim/scb.h>
+#include <arch/scb.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/syscall.h>
 
@@ -12,6 +12,10 @@
 #include <stdio.h>
 #endif
 
+/** MPU region access rights.
+ * This array maps CMRX access modes to ARM access modes
+ * See @ref enum MPU_Flags for meaning of individual indices.
+ */
 static const uint32_t __MPU_flags[] = {
 	0,
 	MPU_RASR_ATTR_AP_PRW_URO,
@@ -20,6 +24,8 @@ static const uint32_t __MPU_flags[] = {
 	MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URW,
 };
 
+/** Handler for hard fault.
+ */
 void hard_fault_handler(void)
 {
 	uint32_t status = SCB_CFSR;
@@ -123,8 +129,11 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls
 	int rv;
 	if ((rv = mpu_configure_region(region, base, size, cls, &RBAR, &RASR)) == E_OK)
 	{
+		__ISB();
+		__DSB();
 		MPU_RBAR = RBAR;
 		MPU_RASR = RASR;
+        /* Those should not be needed. */
 		__ISB();
 		__DSB();
 
