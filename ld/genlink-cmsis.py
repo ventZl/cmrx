@@ -92,8 +92,8 @@ class Token:
     def append(self, token):
         self.value += token.value
 
-    def __str__(self):
-        return "%d=>(%s)" % (self.type, self.value)
+    def clone(self):
+        return Token(self.type, self.value)
 
     def __desc__(self):
         return self.__str__()
@@ -386,6 +386,100 @@ class LinkerFile(TokenList):
                 section.insert(newline + 1, include_stmt)
                 return
 
+    def _process_sections_block(self, block, binary_name):
+        section_start_pattern = [ COLON ]
+        pos = 0
+        while pos is not None and pos < len(block):
+            if (block.match_pattern(pos, section_start_pattern)):
+                if (pos is None):
+                    # We haven't found anything, exit
+                    break
+                section_name = self.find_current_section_name(block, pos)
+                prev_newline = block.find_prev(pos, NEWLINE)
+                indentation = "\t"
+                if (block[prev_newline + 1].type == WHITE_SPACE):
+                    indentation = block[prev_newline + 1].value
+
+                if (section_name is not None):
+                    # Determine section boundaris and generate sub-block covering section
+                    # definition. Useful for in-section modifications
+                    section_opening = block.find_next(pos, LEFT_CURLY_BRACKET)
+                    if (section_opening is not None):
+                        section_closing = block.find_pair(section_opening)
+                        section_definition = block.sub_range(section_opening, section_closing + 1)
+                    else:
+                        # Nope? Section closing bracket not found?
+                        pos += 1
+                        continue
+
+                    # Find out the destination memory region for this section
+                    output_region_pos = self._get_section_output_region(block, section_closing)
+
+                    # Then find next newline, which is position where we append our 
+                    # newly generated stuff
+                    next_newline_pos = block.find_next(output_region_pos, NEWLINE)
+
+                    if (block[section_name].value == ".data" or block[section_name].value == ".bss"):
+                        if (block[section_name].value == ".data"):
+                            include_seq = self._gen_include("gen." + binary_name + ".data.ld")
+                        else:
+                            include_seq = self._gen_include("gen." + binary_name + ".bss.ld")
+                            
+                            # We have to do this before we extend .bss, otherwise our iterators 
+                            # would be invalid.
+
+                            output_region_pos = self._get_section_output_region(block, section_closing)
+
+                            shared_section_seq = self._gen_section(".shared", block[output_region_pos].value,
+                                    self._gen_include("gen." + binary_name + ".shared.ld"), indentation)
+
+                            block.insert(next_newline_pos + 1, shared_section_seq)
+                        
+                        self.place_include_into_section(section_definition, include_seq)
+
+                    elif (block[section_name].value == ".text"):
+                        indent = Token(WHITE_SPACE, indentation)
+                        include_seq = self._gen_include("gen." + binary_name + ".text.ld")
+                        include_seq += self._gen_comment("Compile-time process description block")
+                        include_seq += self._gen_alignment(4)
+                        include_seq += self._gen_variable_assignment("__applications_start", [Token(FULLSTOP, ".")])
+                        include_seq += self._gen_keep_deploy("*", [".applications"])
+                        include_seq += self._gen_variable_assignment("__applications_end", [Token(FULLSTOP, ".")])
+                        include_seq += self._gen_comment("Compile-time thread auto-create block")
+                        include_seq += self._gen_variable_assignment("__thread_create_start", [Token(FULLSTOP, ".")])
+                        include_seq += self._gen_keep_deploy("*", [".thread_create"])
+                        include_seq += self._gen_variable_assignment("__thread_create_end", [Token(FULLSTOP, ".")])
+                        include_seq += self._gen_comment("RPC interface VTABLEs")
+                        include_seq += self._gen_include("gen." + binary_name + ".vtable.ld")
+
+                        output_region_pos = self._get_section_output_region(block, section_closing)
+                        
+                        # Insert some symbols just after .text section definition.
+                        # Here, the position does not really matter, but putting the bloc after .text
+                        # won't invalidate our iterators.
+                        # We have to do this before we extend .text, otherwise our iterators 
+                        # would be invalid.
+
+                        flash_details_seq = [ Token(NEWLINE, "\n"), indent ] + self._gen_comment("Publish FLASH base address as a symbol accessible from C")
+                        flash_details_seq += [ indent ] + self._gen_variable_assignment("__cmrx_flash_origin",  
+                            self._gen_function_wrap("ORIGIN", [ block[output_region_pos].clone() ] )
+                            )
+                        flash_details_seq += [ indent ] + self._gen_comment("Publish FLASH size as a symbol accessible from C")
+                        flash_details_seq += [ indent ] + self._gen_variable_assignment("__cmrx_flash_length", 
+                            self._gen_function_wrap("LENGTH", [ block[output_region_pos].clone() ] )
+                            )
+
+                        block.insert(next_newline_pos + 1, flash_details_seq)
+
+                        self.place_include_into_section_end(section_definition, include_seq)
+
+                    # We have processed this section, fast forward to its end
+                    pos = section_closing
+
+
+            pos += 1
+
+
     def add_subscript_includes(self, binary_name):
         '''
         Will find .data section and augment it to include another script.
@@ -394,88 +488,44 @@ class LinkerFile(TokenList):
         '''
         sections_block_pattern = [ SYMBOL_NAME, NEWLINE, LEFT_CURLY_BRACKET ]
         entry_pattern = [ SYMBOL_NAME, LEFT_BRACKET, SYMBOL_NAME, RIGHT_BRACKET ]
-        section_start_pattern = [ COLON ]
-        for q in range(len(self)):
+        q = 0;
+        while q < len(self):
             if (self[q].type == NEWLINE):
                 if (self.match_pattern(q, sections_block_pattern) and self[q + 1].value == "SECTIONS"):
                     begin = q + 3
                     end = self.find_pair(begin)
                     block = self.sub_range(begin, end + 1)
-                    pos = 0
-                    while pos is not None and pos < len(block):
-                        if (block.match_pattern(pos, section_start_pattern)):
-                            if (pos is None):
-                                # We haven't found anything, exit
-                                break
-                            section_name = self.find_current_section_name(block, pos)
-                            prev_newline = block.find_prev(pos, NEWLINE)
-                            indentation = "\t"
-                            if (block[prev_newline + 1].type == WHITE_SPACE):
-                                indentation = block[prev_newline + 1].value
-
-                            if (section_name is not None):
-                                if (section_name == ".text"):
-                                    # Do nothing here
-                                    pass
-
-                                section_opening = block.find_next(pos, LEFT_CURLY_BRACKET)
-                                if (section_opening is not None):
-                                    section_closing = block.find_pair(section_opening)
-                                    section_definition = block.sub_range(section_opening, section_closing + 1)
-                                else:
-                                    # Nope? Section closing bracket not found?
-                                    pos += 1
-                                    continue
-
-                                if (block[section_name].value == ".data" or block[section_name].value == ".bss"):
-                                    if (block[section_name].value == ".data"):
-                                        include_seq = self._gen_include("gen." + binary_name + ".data.ld")
-                                    else:
-                                        include_seq = self._gen_include("gen." + binary_name + ".bss.ld")
-                                        
-                                        # Find first > after } which closes current section 
-                                        # then find next symbol name. This is our destination memory region
-                                        # Then find next newline, which is position where we append our 
-                                        # newly generated section.
-                                        # We have to do this before we extend .bss, otherwise our iterators 
-                                        # would be invalid.
-                                        redir_pos = block.find_next(section_closing, SYMBOL_GREATER_THAN)
-                                        segment_pos = block.find_next(redir_pos, SYMBOL_NAME)
-                                        newline_pos = block.find_next(segment_pos, NEWLINE)
-
-                                        shared_section_seq = self._gen_section(".shared", block[segment_pos].value,
-                                                self._gen_include("gen." + binary_name + ".shared.ld"), indentation)
-
-                                        block.insert(newline_pos + 1, shared_section_seq)
-                                    
-                                    self.place_include_into_section(section_definition, include_seq)
-
-                                if (block[section_name].value == ".text"):
-                                    include_seq = self._gen_include("gen." + binary_name + ".text.ld")
-                                    include_seq = include_seq + self._gen_comment("Compile-time process description block")
-                                    include_seq = include_seq + self._gen_alignment(4)
-                                    include_seq = include_seq + self._gen_variable_assignment("__applications_start", FULLSTOP, ".")
-                                    include_seq = include_seq + self._gen_keep_deploy("*", [".applications"])
-                                    include_seq = include_seq + self._gen_variable_assignment("__applications_end", FULLSTOP, ".")
-                                    include_seq = include_seq + self._gen_comment("Compile-time thread auto-create block")
-                                    include_seq = include_seq + self._gen_variable_assignment("__thread_create_start", FULLSTOP, ".")
-                                    include_seq = include_seq + self._gen_keep_deploy("*", [".thread_create"])
-                                    include_seq = include_seq + self._gen_variable_assignment("__thread_create_end", FULLSTOP, ".")
-                                    include_seq = include_seq + self._gen_comment("RPC interface VTABLEs")
-                                    include_seq = include_seq + self._gen_include("gen." + binary_name + ".vtable.ld")
-                                    self.place_include_into_section_end(section_definition, include_seq)
-
-
-                        pos += 1
+                    # We finished processing this block, fast-forward at its end
+                    self._process_sections_block(block, binary_name)
+                    q = end
                 elif (self.match_pattern(q, entry_pattern) and self[q + 1].value == "ENTRY"):
                     inst_seq = self._gen_include("gen." + binary_name + ".inst.ld")
                     self.insert(q + 6, inst_seq)
 
+            q += 1
+
+    def _get_section_output_region(self, block, section_end_pos):
+        # Find first > after } which closes current section 
+        # then find next symbol name. This is our destination memory region
+        redir_pos = block.find_next(section_end_pos, SYMBOL_GREATER_THAN)
+        if (redir_pos is None):
+            return None
+        segment_pos = block.find_next(redir_pos, SYMBOL_NAME)
+        if (segment_pos is None):
+            return None
+
+        return segment_pos
+
+    def _gen_function_wrap(self, function_name, content):
+        function_seq = [ Token(SYMBOL_NAME, function_name), Token(LEFT_BRACKET, "(") ]
+        function_seq += content + [ Token(RIGHT_BRACKET, ")") ]
+        return function_seq
+
     def _gen_section(self, name, out_region, content, indentation):
         section_seq = [ Token(NEWLINE, "\n"), Token(WHITE_SPACE, indentation), Token(SECTION_NAME, name), Token(WHITE_SPACE, " "), 
             Token(COLON, ":"), Token(WHITE_SPACE, " "), Token(LEFT_CURLY_BRACKET, "{"), Token(NEWLINE, "\n") ]
-        section_seq = section_seq + [ Token(WHITE_SPACE, indentation + indentation) ] + content
-        section_seq = section_seq + [ Token(WHITE_SPACE, indentation), Token(RIGHT_CURLY_BRACKET, "}"), 
+        section_seq += [ Token(WHITE_SPACE, indentation + indentation) ] + content
+        section_seq += [ Token(WHITE_SPACE, indentation), Token(RIGHT_CURLY_BRACKET, "}"), 
             Token(WHITE_SPACE, " "), Token(SYMBOL_GREATER_THAN, ">"), Token(WHITE_SPACE, " "), 
             Token(SYMBOL_NAME, out_region), Token(NEWLINE, "\n") ]
         return section_seq
@@ -486,10 +536,10 @@ class LinkerFile(TokenList):
         whitespace = False
         for section in sections:
             if (whitespace):
-                seq = seq + [ Token(WHITE_SPACE, " ")]
+                seq += [ Token(WHITE_SPACE, " ")]
 
             whitespace = True
-            seq = seq + [ Token(SECTION_NAME, section)]
+            seq += [ Token(SECTION_NAME, section)]
 
         seq = seq + [ Token(RIGHT_BRACKET, ")"), Token(RIGHT_BRACKET, ")"), Token(NEWLINE, "\n") ]
         return seq;
@@ -500,10 +550,14 @@ class LinkerFile(TokenList):
     def _gen_comment(self, text):
         return [ Token(COMMENT, "/* " + text + " */"), Token(NEWLINE, "\n") ]
 
-    def _gen_variable_assignment(self, variable_name, value_type, value):
+    def _gen_variable_assignment(self, variable_name, value_list):
+        ''' Will generate output in the form of <variable_name> = { <values_in_value_list>}
+        '''
         space = Token(WHITE_SPACE, " ")
-        return [ Token(SYMBOL_NAME, variable_name), space, Token(ASSIGN, "="), space, Token(FULLSTOP, "."), 
-                Token(SEMICOLON, ";"), Token(NEWLINE, "\n") ]
+        out = [ Token(SYMBOL_NAME, variable_name), space, Token(ASSIGN, "="), space ]
+        out += value_list
+        out += [ Token(SEMICOLON, ";"), Token(NEWLINE, "\n") ]
+        return out
 
     def _gen_library_inclusion(self, library_name, section_name):
         space = Token(WHITE_SPACE, " ")
@@ -525,11 +579,11 @@ class LinkerFile(TokenList):
         whitespace="\t\t"
         tab = Token(WHITE_SPACE, "\t\t")
         lib_seq = self._gen_comment("Process name: "+lib_name)
-        lib_seq = lib_seq + [ tab ] + self._gen_alignment(alignment)
-        lib_seq = lib_seq + [ tab ] + self._gen_variable_assignment(lib_name+"_"+section+"_start", FULLSTOP, ".")
-        lib_seq = lib_seq + [ tab ] + self._gen_library_inclusion(file_name, section)
-        lib_seq = lib_seq + [ tab ] + self._gen_alignment(alignment)
-        lib_seq = lib_seq + [ tab ] + self._gen_variable_assignment(lib_name+"_"+section+"_end", FULLSTOP, ".")
+        lib_seq += [ tab ] + self._gen_alignment(alignment)
+        lib_seq += [ tab ] + self._gen_variable_assignment(lib_name+"_"+section+"_start", [ Token(FULLSTOP, ".") ] )
+        lib_seq += [ tab ] + self._gen_library_inclusion(file_name, section)
+        lib_seq += [ tab ] + self._gen_alignment(alignment)
+        lib_seq += [ tab ] + self._gen_variable_assignment(lib_name+"_"+section+"_end", [ Token(FULLSTOP, ".") ] )
         self.insert(len(self), lib_seq)
 
     def add_extern_declaration(self, file_name):
