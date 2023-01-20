@@ -40,15 +40,6 @@ file(WRITE ${CMAKE_BINARY_DIR}/cmsis_conf.h
     "#define CMSIS_device_header \"${DEVICE}.h\"
 "
     )
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/arch)
-file(WRITE ${CMAKE_BINARY_DIR}/arch/memory.h
-    "#pragma once
-"
-    "#define code_base()    (0x10000000)
-"
-    "#define code_size()    (2*1024*1024)
-"
-    )
 
 file(COPY_FILE ${CMAKE_BINARY_DIR}/cmsis_conf.h ${CMAKE_BINARY_DIR}/RTE_Components.h)
 
