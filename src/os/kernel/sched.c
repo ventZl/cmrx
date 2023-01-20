@@ -18,13 +18,13 @@
 #include <string.h>
 #include <conf/kernel.h>
 #include <cmrx/ipc/thread.h>
-#include <arch/systick.h>
 #include <cmrx/os/syscalls.h>
 #include <arch/memory.h>
 #include <arch/corelocal.h>
 #include <arch/cortex.h>
 #include <arch/static.h>
 #include <cmrx/sys/time.h>
+#include <cmrx/clock.h>
 
 #ifdef TESTING
 #define STATIC
@@ -206,6 +206,7 @@ long os_sched_timing_callback(long delay_us)
 	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
 	__DSB();
 	__ISB();
+    return 1;
 }
 
 uint8_t os_get_current_thread(void)
@@ -275,7 +276,7 @@ void os_start()
 		__os_thread_create(process_id, autostart_threads[q].entrypoint, autostart_threads[q].data, autostart_threads[q].priority);
 	}
 
-	__os_thread_create(NULL, os_idle_thread, NULL, 0xFF);
+	__os_thread_create((int) NULL, os_idle_thread, NULL, 0xFF);
 
 	uint8_t startup_thread;
 
@@ -299,7 +300,8 @@ void os_start()
 			ASSERT(0);
 		}
 	
-		systick_enable();
+        // Fire up timer, which timing provider uses to tick the kernel
+        timing_provider_schedule(1);
 
 		// Start this thread
 		// We are adding 8 here, because normally pend_sv_handler would be reading 8 general 
