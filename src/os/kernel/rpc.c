@@ -12,18 +12,6 @@
 
 #define E_VTABLE_UNKNOWN			0xFF
 
-struct RPC_Service_t_;
-
-typedef struct RPC_Service_t_ RPC_Service_t;
-
-typedef int (*RPC_Method_t)(RPC_Service_t * service, unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3);
-
-typedef RPC_Method_t * VTable_t ;
-
-struct RPC_Service_t_ {
-	VTable_t * vtable;
-};
-
 __SYSCALL void rpc_return()
 {
 	__SVC(SYSCALL_RPC_RETURN);
