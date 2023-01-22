@@ -32,9 +32,6 @@
 #define STATIC static
 #endif
 
-//#include <libopencm3/cm3/systick.h>
-//#include <libopencm3/stm32/rcc.h>
-
 #include <cmrx/assert.h>
 
 typedef uint8_t Thread_t;
@@ -47,17 +44,6 @@ struct OS_process_t os_processes[OS_PROCESSES];
 
 /** CPU scheduling thread IDs */
 static struct OS_core_state_t core[OS_NUM_CORES];
-
-#if 0
-/** Previous thread ID */
-static Thread_t thread_prev;
-
-/** Current thread ID */
-static Thread_t thread_current;
-
-/** Next thread ID */
-static Thread_t thread_next;
-#endif
 
 /** Thread stacks */
 __attribute__((aligned(1024))) struct OS_stack_t os_stacks;
