@@ -39,9 +39,10 @@ void timing_provider_delay(long delay_us)
 {
     volatile uint32_t cycles_count = (SystemCoreClock / 1000000) * delay_us;
 
-    while(cycles_count > 0) {
-        cycles_count--;
-    }
+    // This usually takes 8 cycles to make one loop
+    // The cycle count may change, so it should ideally be written in assembly.
+    do {
+    } while(likely((cycles_count--) > 0));
     
     return;
 }
