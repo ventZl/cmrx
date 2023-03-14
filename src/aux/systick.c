@@ -42,7 +42,7 @@ void timing_provider_delay(long delay_us)
     // This usually takes 8 cycles to make one loop
     // The cycle count may change, so it should ideally be written in assembly.
     do {
-    } while(likely((cycles_count--) > 0));
+    } while((cycles_count--) > 0);
     
     return;
 }

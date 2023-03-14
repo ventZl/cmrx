@@ -16,7 +16,7 @@
  * This table lists syscall ID and syscall handler for each supported
  * syscall.
  */
-static struct Syscall_Entry_t syscalls[] = {
+static const struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
 	{ SYSCALL_RPC_CALL, (Syscall_Handler_t) &os_rpc_call },

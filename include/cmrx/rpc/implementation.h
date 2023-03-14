@@ -33,43 +33,49 @@
  * @{
  */
 
-/** Safety belt for incomplete interface definitions
- *
- * Typedef catching situations, when interface implementation is performed, 
- * but if wasn't declared, to which interface methods actually belong.
- *
- * Normally, it is expected that there is 
- *
- * ~~~~~~~~~~~~~~~~~~~~~~~
- * #define CLASS struct <something>
- * ~~~~~~~~~~~~~~~~~~~~~~~
- *
- * in front of interface definition block, which tells compiler, how to typecast
- * references to class instance. Existence of this typedef causes that error is
- * a bit less misleading than it would be without this typedef.
- */
-typedef void * CLASS;
+// we might have included rpc/interface.h before
+#undef INSTANCE
 
-/** Macro used to refer to interface in prototypes and virtual method tables.
- *
- * This macro is used in place of method argument to denote interface instance pointer.
- * It always must be in place of first method argument, otherwise calls to method will
- * misbehave and most probably also crash thread. It is typed as `void *` to enable
- * inheritance and virtual methods.
- *
- * @note We know that this is ugly.
+/** Begin implementation of interface for service.
+ * Use of this macro starts implementation of methods for 
+ * certain service. It enables use of the `this` term to 
+ * refer to the service instance current during the method 
+ * call.
+ * @param service name of type which describes the service whose methods are being implemented
  */
-#define SELF void * this
 
-/** Macro used to refer to interface in bodies of virtual methods.
- *
- * This macro is used whenever body of method needs to refer to the instance of
- * interface, it was called with. Note, that prototypes are always using UPCASE version,
- * while body always uses lowercase version of `self`. This macro expands to typecast to
- * type declared previously by the macro CLASS. This means, that every block of virtual
- * method implementation **must** be preceded by declaration of macro CLASS, which holds
- * **full** type name of interface, for which implementation is going to be provided.
+#define IMPLEMENTATION(service) CMRX_IMPLEMENTATION_HELPER(service, CMRX__INTERFACE__COUNTER)
+
+/** Extended version of IMPLEMENTATION macro.
+ * Use of this macro starts implementation of methods for 
+ * certain service. It enables use of the `this` term to 
+ * refer to the service instance current during the method 
+ * call. Another function of this macro is that it generates 
+ * a static assert to check, if the type of interface 
+ * implemented by the service matches the one, which is expected
+ * here
+ * @param service type of structure, which holds instances of service
+ * @param interface type describing virtual method table of the implemented interface
  */
-#define self ((CLASS *) this)
+#define IMPLEMENTATION_OF(service, interface) CMRX_IMPLEMENTATION_HELPER(service, CMRX__INTERFACE__COUNTER);\
+_Static_assert(CMRX_CHECK_INTERFACE_MATCH(service, interface), CMRX_IMPLEMENTATION_TYPE_HELPER(service, interface))
+
+/** Mark function argument as reference to current service instance.
+ * Syntactic sugar to make argument type-compatible with interface declaration.
+ * This allows to work with any specific type of service inside its implementation
+ * and use of such specialized implementations to initialize generic interface.
+ * @note As a matter of fact, the only allowed argument of this macro is `this`
+ * 
+ * @note Due to the API of RPC calls, you *HAVE* to use this macro on 1st argument
+ * of method definition.
+ */
+#define INSTANCE(a) void * a ## _
+
+/** Access current service instance.
+ * `this` provides access to the current service instance.
+ * It is always typed correctly to access members of service currently being 
+ * implemented.
+ */
+#define this CMRX_THIS_HELPER(CMRX__INTERFACE__COUNTER)
 
 /** @} */
