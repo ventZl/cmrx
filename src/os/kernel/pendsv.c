@@ -1,8 +1,8 @@
 #include <stdint.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
-#include <cmrx/shim/scb.h>
-#include <cmrx/shim/cortex.h>
+#include <arch/scb.h>
+#include <arch/cortex.h>
 //#include <libopencm3/cm3/scb.h>
 //#include <libopencm3/cm3/cortex.h>
 //#include <cmrx/intrinsics.h>
@@ -102,7 +102,7 @@ bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
  * It then sets PSP to point to incoming task's stack and resumes
  * normal operation.
  */
-__attribute__((naked)) void pend_sv_handler(void)
+__attribute__((naked)) void PendSV_Handler(void)
 {
 	/* Do NOT put anything here. You will clobber context being stored! */
 	asm volatile(
@@ -134,7 +134,7 @@ __attribute__((naked)) void pend_sv_handler(void)
 	}
 	load_context(new_task->sp);
 	/* Do NOT put anything here. You will clobber context just restored! */
-	cm_enable_interrupts();
+	cortex_enable_interrupts();
 	asm volatile(
 			"pop {pc}"
 	);

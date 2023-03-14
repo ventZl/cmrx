@@ -7,6 +7,18 @@
 
 #include <cmrx/os/runtime.h>
 
+/** Kernel callback for timing provider.
+ * 
+ * Kernel entrypoint for timed events. Kernel tells the timing provider, what is the delay 
+ * before the next call, whenever this function is called. Timing provider shall then wait
+ * for given amount of time and then call this callback again. If the delay is 0, then 
+ * timing provider can shutdown itself as there is no expected timed wakeup.
+ * @param [in] delay_us the actual amount of microseconds which happened since the last wakeup
+ * @returns amount of microseconds, which shall pass before next wakeup will happen. If this 
+ * value is zero, then no next wakeup shall happen.
+ */
+long os_sched_timing_callback(long delay_us);
+
 /** Kernel implementation of get_pid.
  *
  * @returns Current process ID. This is actually an offset in process table.

@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <cmrx/shim/cortex.h>
+#include <arch/cortex.h>
 #include <cmrx/os/syscall.h>
 #include <cmrx/os/sysenter.h>
 #include <cmrx/os/syscalls.h>
@@ -16,7 +16,7 @@
  * This table lists syscall ID and syscall handler for each supported
  * syscall.
  */
-static struct Syscall_Entry_t syscalls[] = {
+static const struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
 	{ SYSCALL_RPC_CALL, (Syscall_Handler_t) &os_rpc_call },
@@ -40,7 +40,7 @@ static struct Syscall_Entry_t syscalls[] = {
  * @param arg2 syscall argument
  * @param arg3 syscall argument
  */
-__attribute__((used)) void sv_call_handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
+__attribute__((used)) void SVC_Handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
 	uint32_t * psp = (uint32_t *) __get_PSP();
 	sanitize_psp(psp);

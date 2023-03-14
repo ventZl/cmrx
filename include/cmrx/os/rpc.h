@@ -12,6 +12,18 @@
 
 #include <stdint.h>
 
+struct RPC_Service_t_;
+
+typedef struct RPC_Service_t_ RPC_Service_t;
+
+typedef int (*RPC_Method_t)(RPC_Service_t * service, unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3);
+
+typedef RPC_Method_t * VTable_t ;
+
+struct RPC_Service_t_ {
+	VTable_t * vtable;
+};
+
 /** Kernel implementation of rpc_call syscall.
  *
  * This routine performs remote procedure call. It digs for 

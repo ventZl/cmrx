@@ -5,7 +5,7 @@
 #include <cmrx/ipc/signal.h>
 #include <cmrx/defines.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/shim/cortex.h>
+#include <arch/cortex.h>
 
 int os_signal(int signo, void (*sighandler)(int))
 {
@@ -64,6 +64,7 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 	}
 	else
 	{
+        /* TODO: Deliver signals to threads, which are not running. */
 		ASSERT(0);
 	}
 	
