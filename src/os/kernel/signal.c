@@ -9,6 +9,8 @@
 
 int os_signal(int signo, void (*sighandler)(int))
 {
+    (void) signo;
+    /* @todo: what to do with signo? */
 	uint8_t thread_id = os_get_current_thread();
 	ASSERT(thread_id < OS_THREADS);
 
@@ -24,6 +26,7 @@ int os_signal(int signo, void (*sighandler)(int))
  */
 __attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *sighandler(void))
 {
+    (void) signal_mask;
 
 	asm volatile(
 			"BLX %[sighandler]\n\t"
@@ -66,6 +69,7 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 	{
         /* TODO: Deliver signals to threads, which are not running. */
 		ASSERT(0);
+        return;
 	}
 	
 	/* Create space for 5 values: R0 - R3, PC */

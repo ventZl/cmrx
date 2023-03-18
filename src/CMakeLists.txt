@@ -1,7 +1,7 @@
 include_directories(../include)
 include_directories(..)
 include_directories(${CMAKE_BINARY_DIR})
-add_definitions(-Wall)
+add_definitions(-Wall -Wextra)
 set(CMAKE_C_STANDARD 11)
 
 if (NOT CMRX_ARCH)

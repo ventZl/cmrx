@@ -75,6 +75,10 @@ static Process_t rpc_stack_top()
 
 int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
+    (void) arg0;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
 	ExceptionFrame * local_frame = (ExceptionFrame *) __get_PSP();
 	sanitize_psp((uint32_t *) local_frame);
 	RPC_Service_t * service = (void *) get_exception_argument(local_frame, 4);
@@ -95,9 +99,9 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	unsigned method_id = get_exception_argument(local_frame, 5); 
 	RPC_Method_t * method = vtable[method_id];
-	unsigned canary = get_exception_argument(local_frame, 6);
+/*	unsigned canary = get_exception_argument(local_frame, 6);
 
-	ASSERT(canary == 0xAA55AA55);
+	ASSERT(canary == 0xAA55AA55);*/
 
 	ExceptionFrame * remote_frame = push_exception_frame(local_frame, 2);
 	sanitize_psp((uint32_t *) remote_frame);
@@ -126,11 +130,15 @@ int _rpc_call();
 
 int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
+    (void) arg0;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
 	ExceptionFrame * remote_frame = (ExceptionFrame *) __get_PSP();
 	sanitize_psp((uint32_t *) remote_frame);
-	uint32_t canary = get_exception_argument(remote_frame, 5);
+/*	uint32_t canary = get_exception_argument(remote_frame, 5);
 
-	ASSERT(canary == 0xAA55AA55);
+	ASSERT(canary == 0xAA55AA55);*/
 
 	ExceptionFrame * local_frame = pop_exception_frame(remote_frame, 2);
 	

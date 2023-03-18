@@ -33,12 +33,12 @@ void hard_fault_handler(void)
 	{
 		if (status & SCB_CFSR_MMARVALID)
 		{
-			uint32_t addr = SCB_MMFAR;
 #ifdef SEMIHOSTING
+			uint32_t addr = SCB_MMFAR;
 			printf("Segmentation fault at address 0x%08X in thread %d\n", (uint32_t) addr, os_get_current_thread());
-#endif
 			// fail here
 			ASSERT(addr == ~addr);
+#endif
 
 		}
 	}

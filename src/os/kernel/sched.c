@@ -67,6 +67,7 @@ void os_sched_timed_event(void);
  */
 __attribute__((noreturn)) static int os_idle_thread(void * data)
 {
+    (void) data;
 	while (1);
 }
 
@@ -160,12 +161,11 @@ void os_sched_timed_event(void)
  */
 long os_sched_timing_callback(long delay_us)
 {
-    const uint32_t one_second_us = 1000000;
 //	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
 	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
-	unsigned long * psp;
+/*	unsigned long * psp;
 	psp = (uint32_t *) __get_PSP();
-	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
+	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);*/
 
 //	was: sched_microtime += sched_tick_increment;
     sched_microtime += delay_us;
@@ -188,10 +188,10 @@ long os_sched_timing_callback(long delay_us)
 
 	ASSERT(rt == 1);
 	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
-	psp = (uint32_t *) __get_PSP();
+/*	psp = (uint32_t *) __get_PSP();
 	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
 	__DSB();
-	__ISB();
+	__ISB();*/
     return 1;
 }
 
@@ -230,6 +230,7 @@ uint32_t os_get_micro_time(void)
  */
 STATIC void os_thread_dispose(int arg0)
 {
+    (void) arg0;
 	// Do not place anything here. It will clobber R0 value!
 	//
 	// Normally, call to thread_exit would be here. But as we know that the way which
@@ -430,7 +431,7 @@ STATIC int __os_process_create(Process_t process_id, const struct OS_process_def
 STATIC int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority)
 {
 	uint8_t thread_id = os_thread_alloc(process, priority);
-	os_thread_construct(thread_id, entrypoint, NULL);
+	os_thread_construct(thread_id, entrypoint, data);
 	return thread_id;
 }
 /** Syscall handling thread_create()

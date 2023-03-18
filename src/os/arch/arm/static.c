@@ -12,7 +12,7 @@ unsigned static_init_thread_count()
     return &__thread_create_end - &__thread_create_start;
 }
 
-const struct OS_thread_create_t * const static_init_thread_table()
+const struct OS_thread_create_t * static_init_thread_table()
 {
     return &__thread_create_start;
 
@@ -24,7 +24,7 @@ unsigned static_init_process_count()
 
 }
 
-const struct OS_process_definition_t * const static_init_process_table()
+const struct OS_process_definition_t * static_init_process_table()
 {
     return &__applications_start;
 }

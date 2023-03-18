@@ -16,6 +16,9 @@
  * This table lists syscall ID and syscall handler for each supported
  * syscall.
  */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"
+
 static const struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
@@ -30,6 +33,7 @@ static const struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_KILL, (Syscall_Handler_t) &os_kill },
 	{ SYSCALL_SETPRIORITY, (Syscall_Handler_t) &os_setpriority }
 };
+#pragma GCC diagnostic pop
 
 /** Kernel entrypoint for system call handlers.
  *
