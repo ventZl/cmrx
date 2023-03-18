@@ -3,14 +3,14 @@
 add_definitions(-fomit-frame-pointer)
 
 if (NOT TESTING)
-	set(os_SRCS mpu.c pendsv.c rpc.c sanitize.c sched.c signal.c syscall.c timer.c isr.c)
+    set(os_SRCS isr.c rpc.c sched.c timer.c)
 else()
 	set(os_SRCS sched.c timer.c)
 endif()
 
 add_library(os OBJECT EXCLUDE_FROM_ALL ${os_SRCS})
 
-target_link_libraries(os cmsis_core_lib cmrx_arch)
+target_link_libraries(os cmrx_arch)
 
 if (TESTING)
 	set(test_kernel_SRCS tests/test_sched.c)

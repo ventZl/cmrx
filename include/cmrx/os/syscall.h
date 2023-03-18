@@ -14,6 +14,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stdint.h>
 
 typedef int (* Syscall_Handler_t)(int, int, int, int);
 

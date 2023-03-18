@@ -3,6 +3,7 @@
 #include <arch/mpu.h>
 #include <conf/kernel.h>
 #include <arch/cortex.h>
+#include <arch/memory.h>
 #include <cmrx/assert.h>
 #include <arch/scb.h>
 #include <cmrx/os/sched.h>
@@ -284,4 +285,10 @@ int mpu_clear_region(uint8_t region)
 	MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
 	MPU_RASR &= ~MPU_RASR_ENABLE;
 	return E_OK;
+}
+
+void os_memory_protection_start()
+{
+	mpu_set_region(OS_MPU_REGION_EXECUTABLE, (const void *) code_base(), code_size(), MPU_RX);
+	mpu_enable();
 }
