@@ -1,7 +1,7 @@
 message(STATUS "CMSIS CMRX CMake component loaded")
 
 function(__cmrx_get_linker_script_for_device DEVICE OUTPUT)
-    set(${OUTPUT} "${CMAKE_CURRENT_BINARY_DIR}/gen.${DEVICE}.ld" PARENT_SCOPE)
+    set(${OUTPUT} "${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld" PARENT_SCOPE)
 endfunction()
 
 function(__cmrx_get_linker_script_for_binary DEVICE FW_NAME OUTPUT)
@@ -22,11 +22,11 @@ function(add_firmware FW_NAME)
 		set(EXCL EXCLUDE_FROM_ALL)
 	endif()
 	add_executable(${FW_NAME} ${EXCL} ${ARGN})
-    	add_custom_command(TARGET ${FW_NAME} POST_BUILD
+    add_custom_command(TARGET ${FW_NAME} POST_BUILD
         COMMAND python ${CMAKE_SOURCE_DIR}/cmrx/ld/genlink-cmsis.py --realign
             ${CMAKE_CURRENT_BINARY_DIR}/$<TARGET_FILE_NAME:${FW_NAME}>.map 
             ${FW_NAME}
-            ${CMAKE_BINARY_DIR}
+            ${CMAKE_CURRENT_BINARY_DIR}
 
     	COMMENT "Updating linker script for correct MPU operation"
     	)
@@ -68,7 +68,7 @@ function(target_add_applications TGT_NAME)
                     COMMAND python ${CMAKE_SOURCE_DIR}/cmrx/ld/genlink-cmsis.py --add-application 
                         ${OUT_DIR}lib${LIBRARY}.a
                         ${TGT_NAME}
-                        ${CMAKE_BINARY_DIR} 
+                        ${CMAKE_CURRENT_BINARY_DIR} 
                     )
             endif()
         endforeach()

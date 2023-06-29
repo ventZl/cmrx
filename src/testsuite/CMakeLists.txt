@@ -1,8 +1,4 @@
-find_file(GDB_DEBUG_CONFIG NAMES debug.gdb
-	PATHS ${CMAKE_CURRENT_LIST_DIR}
-	REQUIRED
-	)
-
+set(GDB_DEBUG_CONFIG "${CMAKE_CURRENT_LIST_DIR}/debug.gdb")
 get_filename_component(GDB_CONFIG_DIR "${GDB_DEBUG_CONFIG}" DIRECTORY)
 
 function(add_hw_test binary)
@@ -17,4 +13,5 @@ function(add_hw_test binary)
 	endif()
 endfunction()
 
-add_subdirectory(os_start)
+find_tests(${CMAKE_CURRENT_SOURCE_DIR})
+#add_subdirectory(os_start)

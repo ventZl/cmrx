@@ -1,5 +1,5 @@
 #include <cmrx/application.h>
-#include "debug.h"
+#include <debug.h>
 
 int init_main(void * data)
 {
@@ -7,6 +7,6 @@ int init_main(void * data)
 	return 0;
 }
 
-OS_APPLICATION_MMIO_RANGE(test_init, 0x40000000, 0x60000000);
-OS_APPLICATION(test_init);
-OS_THREAD_CREATE(test_init, init_main, NULL, 64);
+OS_APPLICATION_MMIO_RANGE(os_start_init, 0x40000000, 0x60000000);
+OS_APPLICATION(os_start_init);
+OS_THREAD_CREATE(os_start_init, init_main, NULL, 64);
