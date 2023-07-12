@@ -5,5 +5,9 @@ int main(void)
 {
 	os_start();
     TEST_FAIL();
+    // This will never be called but it forces TEST_STEP to be 
+    // linked into binary. This enables the generic GDB script to
+    // proceed while adding breakpoint for test steps.
+    TEST_STEP(0);
 }
 

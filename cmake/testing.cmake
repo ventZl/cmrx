@@ -59,7 +59,7 @@ function(make_hw_test TEST_DIR)
         target_link_libraries(${APP_NAME} os)
         target_add_applications(${TEST_NAME} ${APP_NAME})
     endforeach()
-    target_link_libraries(${APP_NAME} os aux_systick test_platform)
+    target_link_libraries(${APP_NAME} os ipc stdlib pthread aux_systick test_platform)
     target_link_libraries(${TEST_NAME} test_platform_main)
     message(STATUS "Added test ${TEST_NAME}")
     add_test(NAME ${TEST_NAME}

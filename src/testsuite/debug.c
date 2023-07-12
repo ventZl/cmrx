@@ -8,3 +8,9 @@ void TEST_SUCCESS() {
 void TEST_FAIL() {
 	ASSERT(0);
 }
+
+void TEST_STEP(unsigned step)
+{
+    return;
+}
+
