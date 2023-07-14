@@ -1,6 +1,6 @@
 #pragma once
 
-/** @addtogroup api_rpc
+/** @addtogroup api_rpc */
 
 /** Syntactic sugar to make pointer to instance to stand out
  * Internally, the pointer to instance is just a void pointer from
