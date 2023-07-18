@@ -12,7 +12,7 @@ struct Service {
     uint32_t value;
 };
 
-extern struct Service * service_ptr;
+extern struct Service service;
 
 
 

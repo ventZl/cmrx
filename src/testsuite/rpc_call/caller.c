@@ -8,7 +8,7 @@ int caller_high_prio(void * data)
 {
     (void) data;
 
-    rpc_call(service_ptr, method, 1);
+    rpc_call(&service, method, 1);
 	TEST_FAIL();
 	return 0;
 }

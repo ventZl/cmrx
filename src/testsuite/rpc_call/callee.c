@@ -24,8 +24,6 @@ struct Service service = {
     0
 };
 
-struct Service * service_ptr = &service;
-
 OS_APPLICATION_MMIO_RANGE(rpc_call_callee, 0x40000000, 0x60000000);
 OS_APPLICATION(rpc_call_callee);
 
