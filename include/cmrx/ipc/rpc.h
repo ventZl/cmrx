@@ -7,6 +7,13 @@
 #include <cmrx/os/sysenter.h>
 #include <stddef.h>
 
+// Return 1 if type of x is pointer-to-something, 0 otherwise
+#define __is_pointer(x)     (__builtin_classify_type(x) == 5)
+// Convert x to pointer to something if it is not already
+#define __make_pointer_to(x)    __builtin_choose_expr(!__is_pointer(x), &x, x)
+// Dereference x if it is pointer. Do nothing if it is not.
+#define __strip_pointer_from(x) *(__make_pointer_to(x))
+
 /*
  * Rearrange arguments to rpc_call syscall.
  * We want to move RPC call arguments to occupy argument 1 .. 4 position.
@@ -44,30 +51,42 @@
 #define CMRX_RPC_CHECK_TYPE(object, args)				if (0) { object ## args }
 
 /*
+ * Checker to make sure that the service instance is being called by pointer.
+ */ 
+
+#define CMRX_RPC_SERVICE_FORM_CHECKER_IMPL(object) "Service `" #object "` must be of a pointer to structure type!"
+#define CMRX_RPC_SERVICE_FORM_CHECKER_AUX(object) CMRX_RPC_SERVICE_FORM_CHECKER_IMPL(object)
+#define CMRX_RPC_SERVICE_FORM_CHECKER(object)   _Static_assert(__builtin_classify_type(object) == 5, CMRX_RPC_SERVICE_FORM_CHECKER_AUX(object))
+
+/*
  * Checker to make sure that the layout of type being used to perform calls is correct.
  * The CMRX ABI requires, that the `vtable` member is the first member in the struct.
  * Otherwise kernel won't be able to locate the virtual method table during rpc_call()
  * execution.
  */
 
-#define CMRX_RPC_INTERFACE_CHECKER_IMPL(service_instance) "Service " #service_instance " has not a valid layout! VTable does not come first!"
+#define CMRX_RPC_INTERFACE_CHECKER_IMPL(service_instance) "Service `" #service_instance "` has invalid layout! VTable must be the first member!"
 #define CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance) CMRX_RPC_INTERFACE_CHECKER_IMPL(service_instance)
-#define CMRX_RPC_INTERFACE_CHECKER(service_instance) _Static_assert(offsetof(typeof(*service_instance), vtable) == 0, CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance))
+#define CMRX_RPC_INTERFACE_CHECKER(service_instance) _Static_assert(offsetof(typeof(__strip_pointer_from(service_instance)), vtable) == 0, CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance))
 
 /*
  * The master RPC call macro.
- * This macro will emit RPC syscall with reordered arguments.
- * Next types of arguments are checked against the called RPC method.
- * And last the ABI of the service is checked to be valid.
+ * This macro will emit several checks:
+ *  - check that RPC service instance is a pointer to something.
+ *  - check that va_args are actually compatible to what RPC method expects.
+ *  - check the layout of RPC service (especially the position of the VTable)
+ * If all the checks will pass then RPC call is emitted. Note that all
+ * the checking is performed in the compile time.
  */
 
 #define CMRX_RPC_CALL(service_instance, method_name, ...)\
-	RPC_EVALUATOR(RPC_GET_ARG_COUNT(__VA_ARGS__))(\
-			(service_instance), \
-			offsetof(typeof(*((service_instance)->vtable)), method_name) / sizeof(void *), \
-			##__VA_ARGS__);\
-	RPC_TYPE_CHECKER(RPC_GET_ARG_COUNT(__VA_ARGS__), (service_instance)->vtable->method_name, __VA_ARGS__) \
-    CMRX_RPC_INTERFACE_CHECKER(service_instance)
+    CMRX_RPC_SERVICE_FORM_CHECKER(service_instance); \
+	CMRX_RPC_TYPE_CHECKER(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__), __make_pointer_to(service_instance)->vtable->method_name, __VA_ARGS__) \
+    CMRX_RPC_INTERFACE_CHECKER(service_instance); \
+	CMRX_RPC_EVALUATOR(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__))(\
+			__make_pointer_to(service_instance), \
+			offsetof(typeof(*(__make_pointer_to(service_instance)->vtable)), method_name) / sizeof(void *), \
+			##__VA_ARGS__);
 
 /**
  * @ingroup api_rpc
