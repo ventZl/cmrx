@@ -610,10 +610,7 @@ class MPUAllocation:
         self.size = self.size + size
 
     def add_fill(self, fill):
-        if self.fill > 0:
-            self.size = self.size + self.fill
-        
-        self.fill = fill
+        self.fill += fill
 
     def get_size(self):
         return self.size
@@ -709,7 +706,7 @@ class MapFile(TokenList):
             print("Section %s is not a legal section!" % (section))
             os.abort()
 
-        if (file not in self._sections[section]):
+        if (lib_name not in self._sections[section]):
             self._sections[section][lib_name] = MPUAllocation(file_name)
 
         return self._sections[section][lib_name]
@@ -718,8 +715,8 @@ class MapFile(TokenList):
         if (file is None):
             return
 
-        section = self._get_file_section(file, section)
-        section.add_alloc(int(size, 16))
+        sect = self._get_file_section(file, section)
+        sect.add_alloc(int(size, 16))
         
 #        print("%s(%s) %s:%s" % (file, section, base, size))
 
@@ -727,8 +724,8 @@ class MapFile(TokenList):
         if (file is None):
             return
 
-        section = self._get_file_section(file, section)
-        section.add_fill(int(size, 16))
+        sect = self._get_file_section(file, section)
+        sect.add_fill(int(size, 16))
 
 #        print("%s(%s) %s:%s ***" % (file, section, base, size))
         pass
