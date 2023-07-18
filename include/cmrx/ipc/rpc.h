@@ -10,7 +10,7 @@
 // Return 1 if type of x is pointer-to-something, 0 otherwise
 #define __is_pointer(x)     (__builtin_classify_type(x) == 5)
 // Convert x to pointer to something if it is not already
-#define __make_pointer_to(x)    __builtin_choose_expr(!__is_pointer(x), &x, x)
+#define __make_pointer_to(x)    __builtin_choose_expr(!__is_pointer(x), &(x), (x))
 // Dereference x if it is pointer. Do nothing if it is not.
 #define __strip_pointer_from(x) *(__make_pointer_to(x))
 
@@ -30,7 +30,7 @@
 #define CMRX_RPC_CALL_4(si, mi, _0, _1, _2, _3)	_rpc_call((unsigned) _0, (unsigned) _1, (unsigned) _2, (unsigned) _3, si, mi, 0xAA55AA55)
 #define CMRX_RPC_CALL_3(si, mi, _0, _1, _2)		_rpc_call((unsigned) _0, (unsigned) _1, (unsigned) _2, 0, si, mi, 0xAA55AA55)
 #define CMRX_RPC_CALL_2(si, mi, _0, _1)			_rpc_call((unsigned) _0, (unsigned) _1, 0, 0, si, mi, 0xAA55AA55)
-#define CMRX_RPC_CALL_1(si, mi, _0)				_rpc_call((unsigned) _0, 0, 0, 0, si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_1(si, mi, _0)				_rpc_call((unsigned) _0, 0, 0, 0, (void *) si, mi, 0xAA55AA55)
 #define CMRX_RPC_CALL_0(si, mi)					_rpc_call(0, 0, 0, 0, si, mi, 0xAA55AA55)
 
 /*
@@ -67,7 +67,7 @@
 
 #define CMRX_RPC_INTERFACE_CHECKER_IMPL(service_instance) "Service `" #service_instance "` has invalid layout! VTable must be the first member!"
 #define CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance) CMRX_RPC_INTERFACE_CHECKER_IMPL(service_instance)
-#define CMRX_RPC_INTERFACE_CHECKER(service_instance) _Static_assert(offsetof(typeof(__strip_pointer_from(service_instance)), vtable) == 0, CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance))
+#define CMRX_RPC_INTERFACE_CHECKER(service_instance) _Static_assert(offsetof(typeof(*(service_instance)), vtable) == 0, CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance))
 
 /*
  * The master RPC call macro.
@@ -81,11 +81,11 @@
 
 #define CMRX_RPC_CALL(service_instance, method_name, ...)\
     CMRX_RPC_SERVICE_FORM_CHECKER(service_instance); \
-	CMRX_RPC_TYPE_CHECKER(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__), __make_pointer_to(service_instance)->vtable->method_name, __VA_ARGS__) \
+	CMRX_RPC_TYPE_CHECKER(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__), (service_instance)->vtable->method_name, __VA_ARGS__) \
     CMRX_RPC_INTERFACE_CHECKER(service_instance); \
 	CMRX_RPC_EVALUATOR(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__))(\
-			__make_pointer_to(service_instance), \
-			offsetof(typeof(*(__make_pointer_to(service_instance)->vtable)), method_name) / sizeof(void *), \
+			(service_instance), \
+			offsetof(typeof(*((service_instance)->vtable)), method_name) / sizeof(void *), \
 			##__VA_ARGS__);
 
 /**
