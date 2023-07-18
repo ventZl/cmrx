@@ -4,10 +4,6 @@
 #include <debug.h>
 #include "service.h"
 
-#define VA_COUNT(service, method, ...) RPC_GET_ARG_COUNT(__VA_ARGS__)
-
-int variable = VA_COUNT(service_ptr, method, 1);
-
 int caller_high_prio(void * data)
 {
     (void) data;

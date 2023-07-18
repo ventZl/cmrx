@@ -11,8 +11,8 @@ IMPLEMENTATION_OF(struct Service, struct ServiceVTable);
 uint32_t service_method(INSTANCE(this), uint32_t arg1)
 {
     this->value = arg1;
-    return arg1;
     TEST_SUCCESS();
+    return arg1;
 }
 
 VTABLE struct ServiceVTable service_vtable = {
