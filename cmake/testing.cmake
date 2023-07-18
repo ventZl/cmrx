@@ -65,6 +65,7 @@ function(make_hw_test TEST_DIR)
     add_test(NAME ${TEST_NAME}
         COMMAND ${GDB_COMMAND} -x ${GDB_FILE} $<TARGET_FILE:${TEST_NAME}>
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
+    set_tests_properties(${TEST_NAME} PROPERTIES TIMEOUT 15)
 endfunction()
 
 message(STATUS "TESTING ENABLED")
