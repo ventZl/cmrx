@@ -7,6 +7,8 @@
 #include <cmrx/intrinsics.h>
 #include <cmrx/defines.h>
 
+#ifdef __ARM_ARCH_7M__
+
 /** Lock futex.
  * Perform atomic futex lock. It is possible to lock futex which is either completely unlocked,
  * or a recursive futex, which has still some space left for locking. During locking, it is
@@ -104,6 +106,8 @@ static inline int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 			);
 	return success;
 }
+
+#endif
 
 #if 0
 int mutex_init(mutex_t * restrict mutex)
