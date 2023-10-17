@@ -52,7 +52,7 @@ function(target_add_applications TGT_NAME)
 
     get_target_property(IS_FIRMWARE ${TGT_NAME} CMRX_IS_FIRMWARE)
     if ("${IS_FIRMWARE}" EQUAL "1")
-        message(STATUS "${TGT_NAME} is a firmware, iterating over libraries")
+        #        message(STATUS "${TGT_NAME} is a firmware, iterating over libraries")
         __cmrx_get_linker_script_for_binary(${DEVICE} ${TGT_NAME} BINARY_LINKER_SCRIPT)
         foreach(LIBRARY ${ARGN})
             get_target_property(IS_APPLICATION ${LIBRARY} CMRX_IS_APPLICATION)
@@ -63,7 +63,7 @@ function(target_add_applications TGT_NAME)
                 set (OUT_DIR "${OUT_DIR}/")
             endif()
             if ("${IS_APPLICATION}" EQUAL "1")
-                message(STATUS "${LIBRARY} is an application, adding into linker script")
+                #       message(STATUS "${LIBRARY} is an application, adding into linker script")
                 execute_process(
                     COMMAND python ${CMAKE_SOURCE_DIR}/cmrx/ld/genlink-cmsis.py --add-application 
                         ${OUT_DIR}lib${LIBRARY}.a
