@@ -24,7 +24,17 @@
 
 #define OS_APPLICATION_MMIO_RANGE(application, from, to)\
 	static void * const __APPL_SYMBOL(application, mmio_start) = (void *) (from);\
-	static void * const __APPL_SYMBOL(application, mmio_end) = (void *) (to)
+	static void * const __APPL_SYMBOL(application, mmio_end) = (void *) (to);\
+	static void * const __APPL_SYMBOL(application, mmio_2_start) = (void *) 0;\
+	static void * const __APPL_SYMBOL(application, mmio_2_end) = (void *) 0
+
+
+#define OS_APPLICATION_MMIO_RANGES(application, from, to, from2, to2)\
+	static void * const __APPL_SYMBOL(application, mmio_start) = (void *) (from);\
+	static void * const __APPL_SYMBOL(application, mmio_end) = (void *) (to);\
+	static void * const __APPL_SYMBOL(application, mmio_2_start) = (void *) (from2);\
+	static void * const __APPL_SYMBOL(application, mmio_2_end) = (void *) (to2)
+
 
 /** Declare userspace process.
  *
@@ -49,6 +59,7 @@ __attribute__((externally_visible, used, section(".applications") )) const struc
 		{ &__APPL_SYMBOL(application, data_start), &__APPL_SYMBOL(application, data_end) },\
 		{ &__APPL_SYMBOL(application, bss_start), &__APPL_SYMBOL(application, bss_end) },\
 		{ __APPL_SYMBOL(application, mmio_start), __APPL_SYMBOL(application, mmio_end) },\
+		{ __APPL_SYMBOL(application, mmio_2_start), __APPL_SYMBOL(application, mmio_2_end) },\
 		{ &__APPL_SYMBOL(application, shared_start), &__APPL_SYMBOL(application, shared_end) }\
 	},\
 	{ &__APPL_SYMBOL(application, vtable_start), &__APPL_SYMBOL(application, vtable_end) }\

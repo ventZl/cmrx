@@ -38,9 +38,9 @@ enum MPU_Flags {
 /// Region covering memory-mapped IO devices
 #define OS_MPU_REGION_MMIO			2
 /// Region containing shared/sharable resources
-#define OS_MPU_REGION_SHARED		3
+#define OS_MPU_REGION_MMIO2 		3
 /// Currently unused region (reserved)
-#define OS_MPU_REGION_UNUSED1		4
+#define OS_MPU_REGION_SHARED		4
 /// Currently unused region (reserved)
 #define OS_MPU_REGION_UNUSED2		5
 /// Region covering thread's stack
