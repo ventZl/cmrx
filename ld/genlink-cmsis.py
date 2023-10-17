@@ -1139,7 +1139,7 @@ args.add_argument("--realign",
         metavar = ('map_file', 'binary_name', 'linker_script_directory'),
         help = "Update alignment of application segments")
 todo = args.parse_args()
-pprint(sys.argv)
+#pprint(sys.argv)
 if (todo.create is not None):
     '''
     This file will parse the main linker script, usually specific for some device.
