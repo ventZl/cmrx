@@ -134,6 +134,9 @@ __attribute__((naked)) void PendSV_Handler(void)
 	}
 	load_context(new_task->sp);
 	/* Do NOT put anything here. You will clobber context just restored! */
+	__ISB();
+	__DSB();
+
 	cortex_enable_interrupts();
 	asm volatile(
 			"pop {pc}"
