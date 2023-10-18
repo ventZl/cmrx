@@ -22,6 +22,7 @@ commands
         quit 1
     end
     set $_TEST_STEP = step
+    continue
 end
 
 run
