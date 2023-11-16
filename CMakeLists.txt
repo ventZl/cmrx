@@ -26,6 +26,7 @@ if (TESTING)
 	include_directories(include/testing)
 endif()
 
+configure_file(conf/kernel.h ${CMAKE_BINARY_DIR}/conf/kernel.h)
 add_subdirectory(src)
 add_subdirectory(testsuite)
 
