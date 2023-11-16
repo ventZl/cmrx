@@ -27,6 +27,6 @@ struct Service service = {
     0
 };
 
-OS_APPLICATION_MMIO_RANGE(rpc_call_callee, 0x40000000, 0x60000000);
-OS_APPLICATION(rpc_call_callee);
+OS_APPLICATION_MMIO_RANGE(rpc_shared_memory_callee, 0x40000000, 0x60000000);
+OS_APPLICATION(rpc_shared_memory_callee);
 
