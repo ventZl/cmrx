@@ -17,7 +17,7 @@ function(make_hw_test TEST_DIR)
     # Some defaults used if not overriden by test itself
     set(MAIN_FILE main.c)
     set(HARNESS_FILE debug.c)
-    set(GDB_FILE debug.gdb)
+    set(GDB_FILE ${CMAKE_CURRENT_LIST_DIR}/debug.gdb)
     set(TEST_APPS "")
 
     # Derive the test name := test directory name
@@ -69,7 +69,7 @@ function(make_hw_test TEST_DIR)
     message(STATUS "Added test ${TEST_NAME}")
     add_test(NAME ${TEST_NAME}
         COMMAND ${CMRX_GDB_PATH} -x ${GDB_FILE} $<TARGET_FILE:${TEST_NAME}>
-        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
     set_tests_properties(${TEST_NAME} PROPERTIES TIMEOUT 15)
 endfunction()
 

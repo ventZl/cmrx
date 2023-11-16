@@ -17,6 +17,10 @@ if (NOT EXISTS "${CMRX_GDB_PATH}")
     message(FATAL_ERROR "Debugger `${CMRX_GDB_PATH}` does not exist!")
 endif()
 
+if (NOT EXISTS "${CMAKE_SOURCE_DIR}/openocd.cfg")
+    message(FATAL_ERROR "File ${CMAKE_SOURCE_DIR}/openocd.cfg does not exist! Testing infrastructure needs it!")
+endif()
+
 message(STATUS "GDB: ${CMRX_GDB_PATH}")
 
 find_tests(${CMAKE_CURRENT_SOURCE_DIR})
