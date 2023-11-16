@@ -19,7 +19,7 @@ int init_main(void * data)
 	return 0;
 }
 
-OS_APPLICATION_MMIO_RANGE(setpriority_init, 0x40000000, 0x60000000);
-OS_APPLICATION(setpriority_init);
-OS_THREAD_CREATE(setpriority_init, init_main, NULL, 64);
+OS_APPLICATION_MMIO_RANGE(thread_join_init, 0x40000000, 0x60000000);
+OS_APPLICATION(thread_join_init);
+OS_THREAD_CREATE(thread_join_init, init_main, NULL, 64);
 
