@@ -11,8 +11,8 @@ function(find_tests DIR)
 endfunction()
 
 function(make_hw_test TEST_DIR)
-    if ("${GDB_COMMAND}" STREQUAL "")
-        message(FATAL_ERROR "variable GDB_COMMAND not set. Tests can't execute")
+    if ("${CMRX_GDB_PATH}" STREQUAL "")
+        message(FATAL_ERROR "variable CMRX_GDB_PATH not set. Tests can't execute")
     endif()
     # Some defaults used if not overriden by test itself
     set(MAIN_FILE main.c)
@@ -53,20 +53,22 @@ function(make_hw_test TEST_DIR)
     message(STATUS "Adding test ${TEST_NAME}")
     add_firmware(${TEST_NAME} ${MAIN_FILE} ${TEST_FILE} ${HARNESS_FILE})
     target_include_directories(${TEST_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+
     foreach(APP ${TEST_APPS})
         set(APP_NAME ${TEST_NAME}_${APP})
         set(APP_SRCS ${${APP}})
-        message(STATUS "${TEST_NAME} has application ${APP_NAME}")
+        message(STATUS "\t${TEST_NAME} has application ${APP_NAME}")
         add_application(${APP_NAME} ${APP_SRCS})
         target_include_directories(${APP_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
         target_link_libraries(${APP_NAME} os ipc stdlib pthread aux_systick test_platform)
         #target_link_libraries(${APP_NAME} os)
         target_add_applications(${TEST_NAME} ${APP_NAME})
     endforeach()
+
     target_link_libraries(${TEST_NAME} test_platform_main)
     message(STATUS "Added test ${TEST_NAME}")
     add_test(NAME ${TEST_NAME}
-        COMMAND ${GDB_COMMAND} -x ${GDB_FILE} $<TARGET_FILE:${TEST_NAME}>
+        COMMAND ${CMRX_GDB_PATH} -x ${GDB_FILE} $<TARGET_FILE:${TEST_NAME}>
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
     set_tests_properties(${TEST_NAME} PROPERTIES TIMEOUT 15)
 endfunction()
