@@ -70,7 +70,7 @@ function(make_hw_test TEST_DIR)
     add_test(NAME ${TEST_NAME}
         COMMAND ${CMRX_GDB_PATH} -x ${GDB_FILE} $<TARGET_FILE:${TEST_NAME}>
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-    set_tests_properties(${TEST_NAME} PROPERTIES TIMEOUT 15)
+    set_tests_properties(${TEST_NAME} PROPERTIES TIMEOUT 5)
 endfunction()
 
 message(STATUS "TESTING ENABLED")
