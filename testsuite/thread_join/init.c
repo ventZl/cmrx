@@ -4,7 +4,7 @@
 
 int new_thread_entry(void * data)
 {
-    TEST_SUCCESS();
+//    TEST_SUCCESS();
     return 0;
 }
 
@@ -13,8 +13,7 @@ int init_main(void * data)
     uint8_t thread_id = thread_create(new_thread_entry, NULL, 32);
 	TEST_STEP(1);
     sched_yield();
-    int rv;
-    thread_join(thread_id, &rv);
+    int rv = thread_join(thread_id);
     TEST_SUCCESS();
 	return 0;
 }

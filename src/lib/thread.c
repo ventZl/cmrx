@@ -20,7 +20,7 @@ __SYSCALL int thread_create(int (*entrypoint)(void *), void * data, uint8_t prio
 	__SVC(SYSCALL_THREAD_CREATE);
 }
 
-__SYSCALL int thread_join(int thread, int * status)
+__SYSCALL int thread_join(int thread)
 {
 	__SVC(SYSCALL_THREAD_JOIN);
 }
