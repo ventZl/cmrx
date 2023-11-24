@@ -11,6 +11,7 @@ end
 
 break TEST_FAIL
 commands
+    bt
     detach
 	quit 1
 end
