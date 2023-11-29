@@ -8,6 +8,7 @@
 #include <arch/scb.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/syscall.h>
+#include <cmrx/os/runtime.h>
 
 #ifdef SEMIHOSTING
 #include <stdio.h>
@@ -291,4 +292,11 @@ void os_memory_protection_start()
 {
 	mpu_set_region(OS_MPU_REGION_EXECUTABLE, (const void *) code_base(), code_size(), MPU_RX);
 	mpu_enable();
+}
+
+int mpu_init_stack(int thread_id)
+{
+	const uint8_t thread_stack = os_threads[thread_id].stack_id;
+    return mpu_set_region(OS_MPU_REGION_STACK, &os_stacks.stacks[thread_stack], sizeof(os_stacks.stacks[thread_stack]), MPU_RW);
+
 }

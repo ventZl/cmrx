@@ -4,7 +4,7 @@
  */
 #pragma once
 
-#include <cmrx/os/sysenter.h>
+#include <arch/sysenter.h>
 #include <stddef.h>
 
 // Return 1 if type of x is pointer-to-something, 0 otherwise

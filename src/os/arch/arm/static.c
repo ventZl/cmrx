@@ -1,5 +1,5 @@
 #include "cmrx/os/runtime.h"
-#include <cmrx/arch/arm/common/static.h>
+#include <cmrx/os/arch/static.h>
 
 extern const struct OS_process_definition_t __applications_start;
 extern const struct OS_process_definition_t __applications_end;

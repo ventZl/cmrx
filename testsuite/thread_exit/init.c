@@ -4,6 +4,7 @@
 
 int new_thread_entry(void * data)
 {
+    (void) data;
     thread_exit(42);
     // this should never execute
     TEST_FAIL();
@@ -12,6 +13,7 @@ int new_thread_entry(void * data)
 
 int init_main(void * data)
 {
+    (void) data;
     uint8_t thread_id = thread_create(new_thread_entry, NULL, 32);
 	TEST_STEP(1);
     sched_yield();

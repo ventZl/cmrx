@@ -11,7 +11,7 @@
  */
 #pragma once
 
-#include <cmrx/os/sysenter.h>
+#include <arch/sysenter.h>
 
 /** Suspend thread execution for short time.
  *

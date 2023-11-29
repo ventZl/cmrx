@@ -15,6 +15,7 @@
 
 #include <cmrx/defines.h>
 #include <cmrx/os/mpu.h>
+#include <conf/kernel.h>
 
 /** List of states in which thread can be.
  */
@@ -101,6 +102,23 @@ struct OS_thread_t {
 	Process_t process_id;
 };
 
+#define OS_TASK_NO_STACK		(~0)
+#define OS_STACK_DWORD			(OS_STACK_SIZE/4)
+
+/** Kernel structure for maintaining thread stacks.
+ *
+ * Kernel allocates thread stacks here. Amount and size of
+ * stacks can be configured using conf/kernel.h.
+ */
+struct OS_stack_t {
+	/** Thread stacks. */
+	unsigned long stacks[OS_STACKS][OS_STACK_DWORD];
+
+	/** Information about stack allocation. If n-th bit is set, 
+	 * then n-th stack is allocated. Otherwise it is available. */
+	uint32_t allocations;
+};
+
 /** MPU region description.
  */
 struct OS_MPU_region {
@@ -166,6 +184,7 @@ struct OS_thread_create_t {
 /** Scheduler notion on existing threads. */
 extern struct OS_thread_t os_threads[OS_THREADS];
 extern struct OS_process_t os_processes[OS_PROCESSES];
+extern struct OS_stack_t os_stacks;
 
 
 /** Structure holding current scheduling state of CPU.

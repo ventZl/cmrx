@@ -10,7 +10,7 @@ IMPLEMENTATION_OF(struct Service, struct ServiceVTable);
 
 uint32_t service_method(INSTANCE(this), uint32_t arg1, const char * buffer)
 {
-    for (int q = 0; q < arg1; ++q)
+    for (unsigned int q = 0; q < arg1; ++q)
     {
         this->value = buffer[q]; 
     }

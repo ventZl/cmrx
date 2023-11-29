@@ -13,7 +13,7 @@
 #pragma once
 
 #include <stdint.h>
-#include <cmrx/os/sysenter.h>
+#include <arch/sysenter.h>
 
 #define MUTEX_INITIALIZED				1
 

@@ -4,6 +4,7 @@
 
 int new_thread_entry(void * data)
 {
+    (void) data;
     TEST_SUCCESS();
     while (1) {
         // make infinite cycle here
@@ -13,7 +14,9 @@ int new_thread_entry(void * data)
 
 int init_main(void * data)
 {
+    (void) data;
     uint8_t thread_id = thread_create(new_thread_entry, NULL, 66);
+    (void) thread_id;
     sched_yield();
 	TEST_STEP(1);
     setpriority(128);

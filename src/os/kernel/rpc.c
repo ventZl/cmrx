@@ -1,7 +1,7 @@
 #include <cmrx/os/syscall.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/rpc.h>
-#include <cmrx/os/sysenter.h>
+#include <arch/sysenter.h>
 #include <conf/kernel.h>
 #include <cmrx/os/sched.h>
 

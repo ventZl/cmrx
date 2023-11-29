@@ -4,12 +4,14 @@
 
 int new_thread_entry(void * data)
 {
+    (void) data;
     TEST_FAIL();
     return 0;
 }
 
 int init_main(void * data)
 {
+    (void) data;
     thread_create(new_thread_entry, NULL, 128);
     sched_yield();
 	TEST_SUCCESS();

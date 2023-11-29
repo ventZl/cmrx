@@ -1,9 +1,10 @@
 #include <cmrx/application.h>
-#include <cmrx/ipc/thread.h>
+#include <cmrx/ipc/timer.h>
 #include <debug.h>
 
 int init_high_prio(void * data)
 {
+    (void) data;
     usleep(500000);
 	TEST_SUCCESS();
 	return 0;

@@ -10,10 +10,11 @@
  * @{
  */
 #include <cmrx/os/runtime.h>
-#include <cmrx/os/sched/stack.h>
+#include <cmrx/os/sched.h>
 #include <cmrx/os/timer.h>
 #include <arch/memory.h>
 #include <arch/cortex.h>
+#include <arch/mpu.h>
 #include <string.h>
 
 #ifdef TESTING

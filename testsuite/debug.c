@@ -11,6 +11,7 @@ void TEST_FAIL() {
 
 void TEST_STEP(unsigned step)
 {
+    (void) step;
     return;
 }
 

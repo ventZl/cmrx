@@ -5,6 +5,7 @@
 
 void signal_handler(uint32_t signo)
 {
+    (void) signo;
     TEST_SUCCESS();
 }
 

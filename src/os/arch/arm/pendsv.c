@@ -1,7 +1,6 @@
 #include <stdint.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
-#include <arch/scb.h>
 #include <arch/cortex.h>
 //#include <libopencm3/cm3/scb.h>
 //#include <libopencm3/cm3/cortex.h>
@@ -12,11 +11,14 @@
 #include <stdbool.h>
 #include <cmrx/assert.h>
 #include <cmrx/os/sanitize.h>
-#include <cmrx/os/sched/stack.h>
+#include <cmrx/os/sched.h>
 #include <cmrx/os/signal.h>
+
+#include <arch/scb.h>
 
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
 #	include <cmrx/os/mpu.h>
+#   include <arch/mpu.h>
 #endif
 
 static struct OS_thread_t * old_task;

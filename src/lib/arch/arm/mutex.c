@@ -4,7 +4,7 @@
 
 #include <cmrx/ipc/mutex.h>
 #include <cmrx/ipc/thread.h>
-#include <cmrx/intrinsics.h>
+#include <arch/conditional.h>
 #include <cmrx/defines.h>
 
 #ifdef __ARM_ARCH_7M__
@@ -105,6 +105,29 @@ static inline int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 			  [threadId] "r" (thread_id)
 			);
 	return success;
+}
+
+#endif
+
+#ifdef __ARM_ARCH_6M__
+
+#include <arch/sysenter.h>
+
+__SYSCALL int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
+{
+    (void) futex;
+    (void) thread_id;
+    (void) max_depth;
+    /* TODO: Kernel doesn't support LDREX emulation */
+    return E_NOTAVAIL;
+}
+
+__SYSCALL int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
+{
+    (void) futex;
+    (void) thread_id;
+    /* TODO: Kernel doesn't support LDREX emulation */
+    return E_NOTAVAIL;
 }
 
 #endif

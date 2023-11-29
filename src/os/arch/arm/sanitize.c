@@ -1,5 +1,4 @@
 #include <cmrx/os/sanitize.h>
-#include <cmrx/os/sched/stack.h>
 #include <cmrx/assert.h>
 #include <cmrx/os/sched.h>
 

@@ -1,5 +1,4 @@
 #include <cmrx/ipc/isr.h>
-#include <cmrx/os/pendsv.h>
 #include <conf/kernel.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>

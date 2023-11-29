@@ -3,6 +3,7 @@
 
 int init_main(void * data)
 {
+    (void) data;
 	TEST_SUCCESS();
 	return 0;
 }

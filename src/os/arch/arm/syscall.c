@@ -1,16 +1,17 @@
 #include <stdint.h>
-#include <arch/cortex.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/os/sysenter.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/rpc.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/timer.h>
 #include <cmrx/os/signal.h>
 
-#include <cmrx/os/sched/stack.h>
+#include <cmrx/os/sched.h>
 #include <cmrx/assert.h>
 #include <cmrx/os/sanitize.h>
+
+#include <arch/sysenter.h>
+#include <arch/cortex.h>
 
 /** List of syscalls provided by the kernel.
  * This table lists syscall ID and syscall handler for each supported

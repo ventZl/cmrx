@@ -9,8 +9,6 @@
 
 #include <stdint.h>
 
-#warning "cmrx/intrinsics.h is deprecated header"
-
 #define ALWAYS_INLINE __attribute__((always_inline))
 
 /** Intrinsic access to ARM LDREXB instruction.
@@ -95,6 +93,7 @@ ALWAYS_INLINE static inline void __set_PSP(unsigned long * stack_top)
 	);
 }
 
+#if 0
 /** Save application context.
  * This function will grab process SP
  * This operation will claim 32 bytes (8 registers * 4 bytes) on stack.
@@ -142,6 +141,7 @@ ALWAYS_INLINE static inline void load_context(uint32_t * sp)
 			: "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11"
 	);
 }
+#endif
 
 ALWAYS_INLINE static inline void __set_CONTROL(uint32_t control)
 {

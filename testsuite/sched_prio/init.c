@@ -3,13 +3,16 @@
 
 int init_high_prio(void * data)
 {
+    (void) data;
 	TEST_SUCCESS();
 	return 0;
 }
 
 int init_low_prio(void * data)
 {
+    (void) data;
     TEST_FAIL();
+    return 0;
 }
 
 OS_APPLICATION_MMIO_RANGE(sched_prio_init, 0x40000000, 0x60000000);

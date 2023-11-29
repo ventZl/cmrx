@@ -1,19 +1,17 @@
 #include <stdint.h>
 #include <conf/kernel.h>
 #include <arch/corelocal.h>
-#include <cmrx/os/sched/stack.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
 #include <stdbool.h>
 #include <cmrx/assert.h>
-#include <arch/static.h>
-#include <cmrx/os/pendsv.h>
+#include <cmrx/os/arch/static.h>
 #include <cmrx/os/timer.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/clock.h>
 #include <string.h>
-#include <cmrx/os/sysenter.h>
+#include <arch/sysenter.h>
 
 typedef uint8_t Thread_t;
 
@@ -411,7 +409,6 @@ void os_start()
 	if (os_get_next_thread(0xFF, &startup_thread))
 	{
 		core[coreid()].thread_current = startup_thread;
-		uint8_t startup_stack = os_threads[startup_thread].stack_id;
 		Process_t startup_process = os_threads[startup_thread].process_id;
 		os_threads[startup_thread].state = THREAD_STATE_RUNNING;
 
@@ -421,7 +418,7 @@ void os_start()
 		mpu_restore(&os_processes[startup_process].mpu, &os_processes[startup_process].mpu);
 
 		// Configure stack access for incoming thread
-		if (mpu_set_region(OS_MPU_REGION_STACK, &os_stacks.stacks[startup_stack], sizeof(os_stacks.stacks[startup_stack]), MPU_RW) != E_OK)
+		if (mpu_init_stack(startup_thread) != E_OK)
 		{
 			ASSERT(0);
 		}

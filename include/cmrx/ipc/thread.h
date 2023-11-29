@@ -16,7 +16,7 @@
  */
 #pragma once
 
-#include <cmrx/os/sysenter.h>
+#include <arch/sysenter.h>
 
 /** Return current thread ID.
  *
