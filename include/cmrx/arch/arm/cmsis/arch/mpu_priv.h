@@ -45,6 +45,29 @@
 #define MPU_CTRL_ENABLE (MPU_CTRL_ENABLE_Msk)
 #define MPU_CTRL_PRIVDEFENA (MPU_CTRL_PRIVDEFENA_Msk)
 
+#define MPU_AP_MASK			0b0111
+#define MPU_EXECUTE_SHIFT	3
+
+/** @defgroup mpu_region_names MPU region names 
+ * @{
+ */
+/// Region for initialized readable/writable data 
+#define OS_MPU_REGION_DATA			0
+/// Region for uninitialized readable/writable data
+#define OS_MPU_REGION_BSS			1
+/// Region covering memory-mapped IO devices
+#define OS_MPU_REGION_MMIO			2
+/// Region containing shared/sharable resources
+#define OS_MPU_REGION_MMIO2 		3
+/// Currently unused region (reserved)
+#define OS_MPU_REGION_SHARED		4
+/// Currently unused region (reserved)
+#define OS_MPU_REGION_UNUSED2		5
+/// Region covering thread's stack
+#define OS_MPU_REGION_STACK			6
+/// Region covering executable RAM (?)
+#define OS_MPU_REGION_EXECUTABLE	7
+
 /** Configure and activate MPU region.
  * Activate given memory region with new base address and size.
  * For now, caller is responsible for providing base address, which is aligned
