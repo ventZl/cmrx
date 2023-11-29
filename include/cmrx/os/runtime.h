@@ -14,8 +14,8 @@
 #pragma once
 
 #include <cmrx/defines.h>
-#include <cmrx/os/mpu.h>
 #include <conf/kernel.h>
+#include <arch/mpu.h>
 
 /** List of states in which thread can be.
  */

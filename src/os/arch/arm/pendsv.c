@@ -18,7 +18,7 @@
 
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
 #	include <cmrx/os/mpu.h>
-#   include <arch/mpu.h>
+#   include <arch/mpu_priv.h>
 #endif
 
 static struct OS_thread_t * old_task;

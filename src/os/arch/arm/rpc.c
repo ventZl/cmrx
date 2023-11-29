@@ -1,8 +1,9 @@
 #include <cmrx/os/rpc.h>
-#include <arch/sysenter.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/syscall.h>
 #include <arch/cortex.h>
+#include <arch/mpu.h>
+#include <arch/mpu_priv.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
 #include <conf/kernel.h>
@@ -12,7 +13,7 @@
 
 #define E_VTABLE_UNKNOWN			0xFF
 
-__SYSCALL void rpc_return();
+void rpc_return();
 
 Process_t get_vtable_process(VTable_t * vtable);
 bool rpc_stack_push(Process_t process_id);

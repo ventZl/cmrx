@@ -111,18 +111,36 @@ int os_thread_kill(uint8_t thread_id, int status);
 
 int os_setpriority(uint8_t priority);
 
-/** Schedule context switch on next suitable moment.
- *
- * This function will tell scheduler, that we want to switch running tasks.
- * Switch itself will be performed on next suitable moment by asynchronous
- * routine. This mechanism is used to avoid context switch in the middle of
- * interrupt routine, or otherwise complicated situation.
- *
- * @param current_task ID of thread which is currently being executed
- * @param next_task ID of thread which should start being executed
- * @returns true if context switch will happen, false otherwise
+/** Get address of stack.
+ * @param stack_id ID of stack
+ * @returns base address of stack
  */
-bool schedule_context_switch(uint32_t current_task, uint32_t next_task);
+unsigned long * os_stack_get(int stack_id);
 
+/** Get thread descriptor.
+ * @param thread_id ID of thread
+ * @returns address of thread description strcture or NULL pointer if thread_id out of range.
+ */
+struct OS_thread_t * os_thread_get(Thread_t thread_id);
+
+/** Make thread runnable.
+ *
+ * This function will take previously allocated thread and will construct it's
+ * internal state, so that it is runnable. This includes stack allocation and
+ * filling in values, so that thread can be scheduled and run.
+ * @param tid Thread ID of thread to be constructed
+ * @param entrypoint pointer to thread entrypoint function
+ * @param data pointer to thread data. pass NULL pointer if no thread data is used
+ * @returns E_OK if thread was constructed, E_OUT_OF_STACKS if there is no free stack
+ * available and E_TASK_RUNNING if thread is not in state suitable for construction
+ * (either slot is free, or already constructed).
+ */
+int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data);
+
+/** Alias to thread_exit.
+ * This is in fact the same function as @ref thread_exit. The only difference is 
+ * that if for whatever reason syscall to os_thread_exit() will fail, this asserts.
+ */
+void os_thread_dispose(void);
 
 /** @} */

@@ -1,6 +1,6 @@
 #include <cmrx/os/mpu.h>
 #include <cmrx/defines.h>
-#include <arch/mpu.h>
+#include <arch/mpu_priv.h>
 #include <conf/kernel.h>
 #include <arch/cortex.h>
 #include <arch/memory.h>
@@ -8,7 +8,6 @@
 #include <arch/scb.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/os/runtime.h>
 
 #ifdef SEMIHOSTING
 #include <stdio.h>
@@ -57,16 +56,32 @@ static inline uint8_t log_2(uint32_t num)
 	return __builtin_ctz(num);
 }
 
+/** Enable memory protection.
+ * This routine enables memory protection with standard memory setup
+ * for kernel purposes. This means that any privileged code has full
+ * access to memory as if no memory protection was turned on.
+ * @note It is safe to call this routine in kernel context even if no
+ * memory regions are set.
+ */
 void mpu_enable()
 {
 	MPU_CTRL |= MPU_CTRL_PRIVDEFENA | MPU_CTRL_ENABLE;
 }
 
+/** Disable memory protection.
+ * This routine will disable memory protection even for unprivileged
+ * code.
+ */
 void mpu_disable()
 {
 	MPU_CTRL &= ~(MPU_CTRL_PRIVDEFENA | MPU_CTRL_ENABLE);
 }
 
+/** Store MPU settings.
+ * Stores MPU settings for default amount of regions into off-CPU
+ * buffer. This is suitable for store-resume during task switching.
+ * @param state MPU state buffer
+ */
 int mpu_store(MPU_State * hosted_state, MPU_State * parent_state)
 {
 	if (hosted_state == NULL || parent_state == NULL)

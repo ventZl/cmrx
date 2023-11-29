@@ -7,11 +7,12 @@
 #include <stdbool.h>
 #include <cmrx/assert.h>
 #include <cmrx/os/arch/static.h>
+#include <cmrx/os/arch/sched.h>
+#include <cmrx/os/arch/mpu.h>
 #include <cmrx/os/timer.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/clock.h>
 #include <string.h>
-#include <arch/sysenter.h>
 
 typedef uint8_t Thread_t;
 
@@ -34,11 +35,6 @@ extern uint32_t sched_tick_increment;
 static uint32_t sched_microtime = 0;
 
 int os_thread_alloc(Process_t process, uint8_t priority);
-void os_memory_protection_start();
-int os_thread_construct(int tid, entrypoint_t * entrypoint, void * data);
-int __os_process_create(Process_t process_id, const struct OS_process_definition_t * definition);
-__attribute__((naked,noreturn)) void __os_boot_thread(Thread_t boot_thread);
-
 /** Obtain next thread to run.
  *
  * This function performs thread list lookup. It searches for thread, which 
@@ -186,28 +182,6 @@ uint8_t os_get_current_process(void)
 uint32_t os_get_micro_time(void)
 {
 	return sched_microtime;
-}
-
-/** Internal function, which disposes of thread which called it.
- *
- * This function is injected into stack (value of LR of thread entrypoint)
- * of each thread, so if thread entry function returns, the thread is disposed
- * automatically. It causes thread to exit with value returned by thread
- * entrypoint to be recorded as thread return value.
- * @param arg0 value returned by thread entrypoint
- */
-void os_thread_dispose(int arg0)
-{
-    (void) arg0;
-	// Do not place anything here. It will clobber R0 value!
-	//
-	// Normally, call to thread_exit would be here. But as we know that the way which
-	// led to os_thread_dispose being called results into R0 holding arg0, we may call
-	// syscall directly.
-	__SVC(SYSCALL_THREAD_EXIT);
-	//thread_exit(arg0);
-	ASSERT(0);
-	// this should be called when thread returns
 }
 
 /** CMRX idle thread.
@@ -372,6 +346,73 @@ int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data
 	os_thread_construct(thread_id, entrypoint, data);
 	return thread_id;
 }
+
+/** Make thread runnable.
+ *
+ * This function will take previously allocated thread and will construct it's
+ * internal state, so that it is runnable. This includes stack allocation and
+ * filling in values, so that thread can be scheduled and run.
+ * @param tid Thread ID of thread to be constructed
+ * @param entrypoint pointer to thread entrypoint function
+ * @param data pointer to thread data. pass NULL pointer if no thread data is used
+ * @returns E_OK if thread was constructed, E_OUT_OF_STACKS if there is no free stack
+ * available and E_TASK_RUNNING if thread is not in state suitable for construction
+ * (either slot is free, or already constructed).
+ */
+int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data)
+{
+	if (tid < OS_THREADS)
+	{
+		if (os_threads[tid].state == THREAD_STATE_CREATED)
+		{
+			uint32_t stack_id = os_stack_create();
+			if (stack_id != 0xFFFFFFFF)
+			{
+				os_threads[tid].stack_id = stack_id;
+//				os_threads[tid].sp = &os_stacks.stacks[stack_id][OS_STACK_DWORD - 16];
+                os_threads[tid].sp = os_thread_populate_stack(stack_id, OS_STACK_DWORD, entrypoint, data);
+
+				os_threads[tid].state = THREAD_STATE_READY;
+				return E_OK;
+			}
+			else
+			{
+				return E_OUT_OF_STACKS;
+			}
+		}
+		return E_TASK_RUNNING;
+	}
+	return E_OUT_OF_RANGE;
+}
+
+/** Allocate thread entry in thread table.
+ * Will allocate entry in thread table. Thread won't be runnable after
+ * allocation, but thread ID will be reserved for it.
+ * @param process ID of process owning the thread. Process must be existing already.
+ * @param priority tread priority
+ * @return Positive values denote thread ID reserved for new thread usable in further calls. Negative
+ * value means that there was no free slot in thread table to allocate new thread.
+ */
+int os_thread_alloc(Process_t process, uint8_t priority)
+{
+	for (int q = 0; q < OS_THREADS; ++q)
+	{
+		if (os_threads[q].state == THREAD_STATE_EMPTY)
+		{
+			memset(&os_threads[q], 0, sizeof(os_threads[q]));
+			os_threads[q].stack_id = OS_TASK_NO_STACK;
+			os_threads[q].process_id = process;
+			os_threads[q].sp = (unsigned long *) ~0;
+			os_threads[q].state = THREAD_STATE_CREATED;
+			os_threads[q].signals = 0;
+			os_threads[q].signal_handler = NULL;
+			os_threads[q].priority = priority;
+			return q;
+		}
+	}
+	return ~0;
+}
+
 /** Syscall handling thread_create()
  * Creates new thread inside current process using specified entrypoint.
  */
@@ -393,7 +434,7 @@ void os_start()
 
 	for (unsigned q = 0; q < applications; ++q)
 	{
-		__os_process_create(q, &app_definition[q]);
+		os_process_create(q, &app_definition[q]);
 	}
 
 	for (unsigned q = 0; q < threads; ++q)
@@ -426,7 +467,7 @@ void os_start()
         // Fire up timer, which timing provider uses to tick the kernel
         timing_provider_schedule(1);
 
-        __os_boot_thread(startup_thread);
+        os_boot_thread(startup_thread);
 		// if thread we started here returns,
 		// it returns here. 
 	//	while (1);

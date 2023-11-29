@@ -4,6 +4,7 @@
 
 #include <cmrx/ipc/thread.h>
 #include <cmrx/os/syscalls.h>
+#include <cmrx/assert.h>
 
 __SYSCALL int sched_yield()
 {
@@ -35,22 +36,32 @@ __SYSCALL int thread_exit(int status)
 	__SVC(SYSCALL_THREAD_EXIT);
 }
 
-__SYSCALL void usleep(uint32_t microseconds)
-{
-    (void) microseconds;
-	__SVC(SYSCALL_USLEEP);
-}
-
-__SYSCALL void setitimer(uint32_t microseconds)
-{
-    (void) microseconds;
-	__SVC(SYSCALL_SETITIMER);
-}
-
 __SYSCALL int setpriority(uint8_t priority)
 {
     (void) priority;
 	__SVC(SYSCALL_SETPRIORITY);
+}
+
+/** Internal function, which disposes of thread which called it.
+ *
+ * This function is injected into stack (value of LR of thread entrypoint)
+ * of each thread, so if thread entry function returns, the thread is disposed
+ * automatically. It causes thread to exit with value returned by thread
+ * entrypoint to be recorded as thread return value.
+ * @param arg0 value returned by thread entrypoint
+ */
+void os_thread_dispose(int arg0)
+{
+    (void) arg0;
+	// Do not place anything here. It will clobber R0 value!
+	//
+	// Normally, call to thread_exit would be here. But as we know that the way which
+	// led to os_thread_dispose being called results into R0 holding arg0, we may call
+	// syscall directly.
+	__SVC(SYSCALL_THREAD_EXIT);
+	//thread_exit(arg0);
+	ASSERT(0);
+	// this should be called when thread returns
 }
 
 /** @} */
