@@ -31,12 +31,13 @@ void SysTick_Handler()
 
 void timing_provider_schedule(long delay_us)
 {
+    (void) delay_us;
     SysTick_Enable();
 
 }
 
 void timing_provider_delay(long delay_us)
-{
+{ 
     volatile uint32_t cycles_count = (SystemCoreClock / 1000000) * delay_us;
 
     // This usually takes 8 cycles to make one loop

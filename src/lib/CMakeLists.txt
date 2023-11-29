@@ -1,9 +1,5 @@
-set(ipc_SRCS mutex.c rpc.c signal.c)
-set(stdlib_SRCS sysenter.c timer.c)
-set(pthread_SRCS thread.c)
+set(stdlib_SRCS rpc.c signal.c timer.c thread.c arch/${CMRX_ARCH}/mutex.c)
 
-add_library(ipc STATIC EXCLUDE_FROM_ALL ${ipc_SRCS})
+add_library(stdlib STATIC ${stdlib_SRCS})
+target_include_directories(stdlib PUBLIC ${HAL_PATH})
 
-add_library(stdlib STATIC EXCLUDE_FROM_ALL ${stdlib_SRCS})
-
-add_library(pthread STATIC EXCLUDE_FROM_ALL ${pthread_SRCS})

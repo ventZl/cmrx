@@ -14,6 +14,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stdint.h>
 
 typedef int (* Syscall_Handler_t)(int, int, int, int);
 
@@ -181,7 +182,7 @@ static inline ExceptionFrame * shim_exception_frame(ExceptionFrame * frame, unsi
 	 * overwriting usable data.
 	 */
 	
-	for (int q = 0; q < sizeof(ExceptionFrame) / 4; ++q)
+	for (unsigned int q = 0; q < sizeof(ExceptionFrame) / 4; ++q)
 	{
 		((uint32_t*) outframe)[q] = ((uint32_t*) frame)[q];
 	}

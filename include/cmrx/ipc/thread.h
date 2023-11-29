@@ -16,7 +16,7 @@
  */
 #pragma once
 
-#include <cmrx/os/sysenter.h>
+#include <arch/sysenter.h>
 
 /** Return current thread ID.
  *
@@ -60,7 +60,7 @@ __SYSCALL int thread_create(int (*entrypoint)(void *), void * data, uint8_t prio
  * @returns 0 on success (other thread quit and status value is written), error
  * code otherwise.
  */
-__SYSCALL int thread_join(int thread, int * status);
+__SYSCALL int thread_join(int thread);
 
 /** Terminate currently running thread.
  *

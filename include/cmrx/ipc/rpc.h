@@ -4,64 +4,89 @@
  */
 #pragma once
 
-#include <cmrx/os/sysenter.h>
+#include <arch/sysenter.h>
 #include <stddef.h>
 
-#define RPC_GET_ARG_COUNT_HELPER(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, N, ...)	N
-#define RPC_GET_ARG_COUNT(...)			RPC_GET_ARG_COUNT_HELPER(__VA_ARGS__ __VA_OPT__(,) 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+// Return 1 if type of x is pointer-to-something, 0 otherwise
+#define __is_pointer(x)     (__builtin_classify_type(x) == 5)
+// Convert x to pointer to something if it is not already
+#define __make_pointer_to(x)    __builtin_choose_expr(!__is_pointer(x), &(x), (x))
+// Dereference x if it is pointer. Do nothing if it is not.
+#define __strip_pointer_from(x) *(__make_pointer_to(x))
 
-#define RPC_PASTER(argcount)	            RPC_CALL_ ## argcount
-#define RPC_EVALUATOR(argcount)	            RPC_PASTER(argcount)
-#define RPC_CALL_4(si, mi, _0, _1, _2, _3)	_rpc_call((unsigned) _0, (unsigned) _1, (unsigned) _2, (unsigned) _3, si, mi, 0xAA55AA55)
-#define RPC_CALL_3(si, mi, _0, _1, _2)		_rpc_call((unsigned) _0, (unsigned) _1, (unsigned) _2, 0, si, mi, 0xAA55AA55)
-#define RPC_CALL_2(si, mi, _0, _1)			_rpc_call((unsigned) _0, (unsigned) _1, 0, 0, si, mi, 0xAA55AA55)
-#define RPC_CALL_1(si, mi, _0)				_rpc_call((unsigned) _0, 0, 0, 0, si, mi, 0xAA55AA55)
-#define RPC_CALL_0(si, mi)					_rpc_call(0, 0, 0, 0, si, mi, 0xAA55AA55)
+/*
+ * Rearrange arguments to rpc_call syscall.
+ * We want to move RPC call arguments to occupy argument 1 .. 4 position.
+ * service and method goes next. The macro magic below deals with varying amount
+ * of arguments so that all calls to rpc_call() with less than 4 RPC arguments are
+ * padded to actual 4 arguments.
+ */
 
-#if 0
-/** Prototype implementation of typechecker requiring C11 support.
- * It works, but is too strict in most cases. Left here as a curious
- * piece of preprocessor magic. 
- **/
-#define RPC_CHECK_PASTER(argcount, object, ...)     RPC_CHECK_TYPE_ ## argcount(object, __VA_ARGS__)
-#define RPC_TYPECHECKER(argcount, object, ...)      RPC_CHECK_PASTER(argcount, object, __VA_ARGS__)
-#define RPC_CHECK_TYPE_4(object, _0, _1, _2, _3)    RPC_CHECK_TYPE(object, (void *, __typeof__(_0), __typeof__(_1), __typeof__(_2), __typeof__(_3)))
-#define RPC_CHECK_TYPE_3(object, _0, _1, _2)        RPC_CHECK_TYPE(object, (void *, __typeof__(_0), __typeof__(_1), __typeof__(_2)))
-#define RPC_CHECK_TYPE_2(object, _0, _1)            RPC_CHECK_TYPE(object, (void *, __typeof__(_0), __typeof__(_1)))
-#define RPC_CHECK_TYPE_1(object, _0)                RPC_CHECK_TYPE(object, (void *, __typeof__(_0)))
-#define RPC_CHECK_TYPE_0(object, foo)               RPC_CHECK_TYPE(object, (void *))
+#define CMRX_RPC_GET_ARG_COUNT_HELPER(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, N, ...)	N
+#define CMRX_RPC_GET_ARG_COUNT(...)			CMRX_RPC_GET_ARG_COUNT_HELPER(__VA_ARGS__ __VA_OPT__(,) 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
 
-#define RPC_CHECK_TYPE(object, typeinfo)    _Static_assert(_Generic((object),\
-											void (*)typeinfo : 1,\
-											int (*)typeinfo : 1,\
-											int * (*)typeinfo : 1,\
-											default : 0), "Type mismatch performing RPC call!");
-#else
+#define CMRX_RPC_PASTER(argcount)	            CMRX_RPC_CALL_ ## argcount
+#define CMRX_RPC_EVALUATOR(argcount)	        CMRX_RPC_PASTER(argcount)
+#define CMRX_RPC_CALL_4(si, mi, _0, _1, _2, _3)	_rpc_call((unsigned) _0, (unsigned) _1, (unsigned) _2, (unsigned) _3, si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_3(si, mi, _0, _1, _2)		_rpc_call((unsigned) _0, (unsigned) _1, (unsigned) _2, 0, si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_2(si, mi, _0, _1)			_rpc_call((unsigned) _0, (unsigned) _1, 0, 0, si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_1(si, mi, _0)				_rpc_call((unsigned) _0, 0, 0, 0, (void *) si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_0(si, mi)					_rpc_call(0, 0, 0, 0, si, mi, 0xAA55AA55)
 
-#define RPC_TYPE_CHECKER(argcount, object, ...)      if (0) { object((void *) 0 __VA_OPT__(,) __VA_ARGS__); }
+/*
+ * Perform compile time type checking of the RPC call arguments.
+ * This will emit code which apparently calls the rpc method directly. This call
+ * is never made in the runtime (and is optimized out as dead code anyway) but it will
+ * emit a fairly readable error if types of arguments to the RPC call don't match.
+ */ 
 
-#define RPC_CHECK_TYPE_4(object, _0, _1, _2, _3)	RPC_CHECK_TYPE(object, (_0, _1, _2, _3))
-#define RPC_CHECK_TYPE_3(object, _0, _1, _2)		RPC_CHECK_TYPE(object, (_0, _1, _2))
-#define RPC_CHECK_TYPE_2(object, _0, _1)			RPC_CHECK_TYPE(object, (_0, _1))
-#define RPC_CHECK_TYPE_1(object, _0)				RPC_CHECK_TYPE(object, (_0))
-#define RPC_CHECK_TYPE_0(object, foo)				RPC_CHECK_TYPE(object, ())
+#define CMRX_RPC_TYPE_CHECKER(argcount, object, ...)      if (0) { object((void *) 0 __VA_OPT__(,) __VA_ARGS__); }
 
-#define RPC_CHECK_TYPE(object, args)				if (0) { object ## args }
+#define CMRX_RPC_CHECK_TYPE_4(object, _0, _1, _2, _3)	CMRX_RPC_CHECK_TYPE(object, (_0, _1, _2, _3))
+#define CMRX_RPC_CHECK_TYPE_3(object, _0, _1, _2)		CMRX_RPC_CHECK_TYPE(object, (_0, _1, _2))
+#define CMRX_RPC_CHECK_TYPE_2(object, _0, _1)			CMRX_RPC_CHECK_TYPE(object, (_0, _1))
+#define CMRX_RPC_CHECK_TYPE_1(object, _0)				CMRX_RPC_CHECK_TYPE(object, (_0))
+#define CMRX_RPC_CHECK_TYPE_0(object, foo)				CMRX_RPC_CHECK_TYPE(object, ())
 
-#endif
+#define CMRX_RPC_CHECK_TYPE(object, args)				if (0) { object ## args }
 
-#define CMRX_RPC_INTERFACE_CHECKER_IMPL(service_instance) "Service " #service_instance " has not a valid layout! VTable does not come first!"
+/*
+ * Checker to make sure that the service instance is being called by pointer.
+ */ 
+
+#define CMRX_RPC_SERVICE_FORM_CHECKER_IMPL(object) "Service `" #object "` must be of a pointer to structure type!"
+#define CMRX_RPC_SERVICE_FORM_CHECKER_AUX(object) CMRX_RPC_SERVICE_FORM_CHECKER_IMPL(object)
+#define CMRX_RPC_SERVICE_FORM_CHECKER(object)   _Static_assert(__builtin_classify_type(object) == 5, CMRX_RPC_SERVICE_FORM_CHECKER_AUX(object))
+
+/*
+ * Checker to make sure that the layout of type being used to perform calls is correct.
+ * The CMRX ABI requires, that the `vtable` member is the first member in the struct.
+ * Otherwise kernel won't be able to locate the virtual method table during rpc_call()
+ * execution.
+ */
+
+#define CMRX_RPC_INTERFACE_CHECKER_IMPL(service_instance) "Service `" #service_instance "` has invalid layout! VTable must be the first member!"
 #define CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance) CMRX_RPC_INTERFACE_CHECKER_IMPL(service_instance)
-#define CMRX_RPC_INTERFACE_CHECKER(service_instance) _Static_assert(offsetof(service_instance, vtable) == 0, CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance))
+#define CMRX_RPC_INTERFACE_CHECKER(service_instance) _Static_assert(offsetof(typeof(*(service_instance)), vtable) == 0, CMRX_RPC_INTERFACE_CHECKER_AUX(service_instance))
 
+/*
+ * The master RPC call macro.
+ * This macro will emit several checks:
+ *  - check that RPC service instance is a pointer to something.
+ *  - check that va_args are actually compatible to what RPC method expects.
+ *  - check the layout of RPC service (especially the position of the VTable)
+ * If all the checks will pass then RPC call is emitted. Note that all
+ * the checking is performed in the compile time.
+ */
 
 #define CMRX_RPC_CALL(service_instance, method_name, ...)\
-	RPC_EVALUATOR(RPC_GET_ARG_COUNT(__VA_ARGS__))(\
+    CMRX_RPC_SERVICE_FORM_CHECKER(service_instance); \
+	CMRX_RPC_TYPE_CHECKER(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__), (service_instance)->vtable->method_name, __VA_ARGS__) \
+    CMRX_RPC_INTERFACE_CHECKER(service_instance); \
+	CMRX_RPC_EVALUATOR(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__))(\
 			(service_instance), \
 			offsetof(typeof(*((service_instance)->vtable)), method_name) / sizeof(void *), \
-			##__VA_ARGS__);\
-	RPC_TYPE_CHECKER(RPC_GET_ARG_COUNT(__VA_ARGS__), (service_instance)->vtable->method_name, __VA_ARGS__) \
-    RPC_INTERFACE_CHECKER(service_instance)
+			##__VA_ARGS__);
 
 /**
  * @ingroup api_rpc
@@ -83,7 +108,7 @@
  * @param method_name name of method within service, which has to be called
  * @returns whatever value service returned
  */
-#define rpc_call(service_instance, method_name, ...) CMRX_RPC_CALL(service_instance, method_name, ...)
+#define rpc_call(service_instance, method_name, ...) CMRX_RPC_CALL(service_instance, method_name __VA_OPT__(,) __VA_ARGS__)
 
 /** Internal implementation of remote procedure call in userspace.
  *
