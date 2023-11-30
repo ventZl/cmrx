@@ -1,3 +1,6 @@
+message(STATUS "CMRX root dir: ${CMAKE_CURRENT_SOURCE_DIR}")
+set_property(GLOBAL PROPERTY CMRX_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+
 include_directories(include)
 include_directories(.)
 include_directories(${CMAKE_BINARY_DIR})
