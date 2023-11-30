@@ -18,12 +18,14 @@ function(add_firmware FW_NAME)
     __cmrx_get_linker_script_for_device(${DEVICE} DEVICE_LINKER_SCRIPT)
     __cmrx_get_linker_script_for_binary(${DEVICE} ${FW_NAME} BINARY_LINKER_SCRIPT)
 
+    get_property(CMRX_ROOT_DIR GLOBAL PROPERTY CMRX_ROOT_DIR)
+
 	if (TESTING)
 		set(EXCL EXCLUDE_FROM_ALL)
 	endif()
 	add_executable(${FW_NAME} ${EXCL} ${ARGN})
     add_custom_command(TARGET ${FW_NAME} POST_BUILD
-        COMMAND python ${CMAKE_SOURCE_DIR}/cmrx/ld/genlink-cmsis.py --realign
+        COMMAND python ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --realign
             ${CMAKE_CURRENT_BINARY_DIR}/$<TARGET_FILE_NAME:${FW_NAME}>.map 
             ${FW_NAME}
             ${CMAKE_CURRENT_BINARY_DIR}
@@ -36,7 +38,7 @@ function(add_firmware FW_NAME)
     # callouts to different included sub-linker scripts.
     # file(COPY_FILE ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld ${CMAKE_BINARY_DIR}/gen.${FW_NAME}.${DEVICE}.ld)
     execute_process(
-        COMMAND python ${CMAKE_SOURCE_DIR}/cmrx/ld/genlink-cmsis.py --create 
+        COMMAND python ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --create 
         ${DEVICE_LINKER_SCRIPT}
         ${BINARY_LINKER_SCRIPT}
         ${FW_NAME}
@@ -52,6 +54,7 @@ function(target_add_applications TGT_NAME)
 
     get_target_property(IS_FIRMWARE ${TGT_NAME} CMRX_IS_FIRMWARE)
     if ("${IS_FIRMWARE}" EQUAL "1")
+        get_property(CMRX_ROOT_DIR GLOBAL PROPERTY CMRX_ROOT_DIR)
         #        message(STATUS "${TGT_NAME} is a firmware, iterating over libraries")
         __cmrx_get_linker_script_for_binary(${DEVICE} ${TGT_NAME} BINARY_LINKER_SCRIPT)
         foreach(LIBRARY ${ARGN})
@@ -65,7 +68,7 @@ function(target_add_applications TGT_NAME)
             if ("${IS_APPLICATION}" EQUAL "1")
                 #       message(STATUS "${LIBRARY} is an application, adding into linker script")
                 execute_process(
-                    COMMAND python ${CMAKE_SOURCE_DIR}/cmrx/ld/genlink-cmsis.py --add-application 
+                    COMMAND python ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --add-application 
                         ${OUT_DIR}lib${LIBRARY}.a
                         ${TGT_NAME}
                         ${CMAKE_CURRENT_BINARY_DIR} 
