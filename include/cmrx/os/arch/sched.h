@@ -1,4 +1,7 @@
 #pragma once
+/** @ingroup arch_arch
+ * @{
+ */
 
 #include <cmrx/os/runtime.h>
 #include <stdint.h>
@@ -48,4 +51,4 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
  */
 __attribute__((naked,noreturn)) void os_boot_thread(Thread_t boot_thread);
 
-
+/** @} */

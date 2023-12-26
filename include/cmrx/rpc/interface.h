@@ -2,6 +2,7 @@
 
 /** @addtogroup api_rpc */
 
+#ifndef INSTANCE
 /** Syntactic sugar to make pointer to instance to stand out
  * Internally, the pointer to instance is just a void pointer from
  * the caller's perspective. This has to be shadowed during the 
@@ -11,6 +12,5 @@
  * pointer.
  */
 
-#ifndef INSTANCE
 #define INSTANCE(var) void * var
 #endif

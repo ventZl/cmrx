@@ -1,6 +1,5 @@
 message(STATUS "CMSIS root is: ${CMSIS_ROOT}")
 message(STATUS "DEVICE is: ${DEVICE}")
-message(STATUS "LIST dir is: ${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Find CMSIS components one by one
 file(GLOB_RECURSE DEVICE_INCLUDE ${CMSIS_ROOT}/*/${DEVICE}.h)

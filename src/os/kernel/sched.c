@@ -1,3 +1,7 @@
+/** @defgroup os_sched Thread scheduling 
+ * @ingroup os 
+ * @{
+ */
 #include <stdint.h>
 #include <conf/kernel.h>
 #include <arch/corelocal.h>
@@ -482,3 +486,5 @@ struct OS_thread_t * os_thread_get(Thread_t thread_id)
 {
     return &os_threads[thread_id];
 }
+
+/** @} */

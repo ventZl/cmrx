@@ -4,14 +4,15 @@
  * 
  * @ingroup api
  *
- * Often, it is necessary to notify thread of events from interrupt service
- * routine. It is not possible to call operating system services from interrupt
- * service routines, as ISRs run at higher priority than CMRX kernel.
- * CMRX offers way how to send a signal to thread (potentially waking it up) from
- * ISR safely.
- */
-
-/** @ingroup api_isr
+ * Kernel services accessible from interrupt service handlers.
+ *
+ * Kernel interface is not accessible from the realm of interrupt service routines.
+ * Normally, interrupt service routines can't call the kernel syscalls. This behavior is
+ * by design. The idea is to do as little of work in the context of the ISR handler and 
+ * then either pass the CPU to the interrupted thread, or wake up some specific thread to
+ * finish the work.
+ * Calls present in this section are not system calls, can only be called from interrupt
+ * handler context.
  * @{
  */
 

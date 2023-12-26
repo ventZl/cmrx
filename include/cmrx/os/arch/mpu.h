@@ -1,5 +1,9 @@
 #pragma once
 
+/** @ingroup arch_arch
+ * @{ 
+ */
+
 #include <stdint.h>
 #include <arch/mpu.h>
 
@@ -30,5 +34,5 @@ int mpu_init_stack(int thread_id);
  */
 int mpu_restore(const MPU_State * hosted_state, const MPU_State * parent_state);
 
-
+/** @} */
 

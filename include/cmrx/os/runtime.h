@@ -6,9 +6,6 @@
  * scheduler. Scheduler can be started up after basic HW setup is done by calling 
  * @ref os_start(). This will collect all auto-started threads, prepare them and
  * start thread scheduler. All other mechanisms are built around thread scheduler.
- */
-
-/** @ingroup os_kernel
  * @{
  */
 #pragma once

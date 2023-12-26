@@ -1,3 +1,7 @@
+/** @defgroup arch_arm_syscall System calls implementation
+ * @ingroup arch_arm
+ * @{
+ */
 #include <stdint.h>
 #include <cmrx/os/syscall.h>
 #include <cmrx/os/syscalls.h>
@@ -68,4 +72,4 @@ __attribute__((used)) void SVC_Handler(uint32_t arg0, uint32_t arg1, uint32_t ar
 	return;
 }
 
-
+/** @} */

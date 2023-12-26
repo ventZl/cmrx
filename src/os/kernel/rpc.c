@@ -1,3 +1,7 @@
+/** @defgroup os_rpc RPC implementation
+ * @ingroup os
+ * @{
+ */
 #include <cmrx/os/syscall.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/rpc.h>
@@ -68,4 +72,4 @@ Process_t rpc_stack_top()
 	return E_VTABLE_UNKNOWN;
 }
 
-
+/** @} */

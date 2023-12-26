@@ -1,11 +1,11 @@
+/** @defgroup arch_arm_os OS services implementation
+ * @ingroup arch_arm
+ * @{
+ */
 #include <stdint.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
 #include <arch/cortex.h>
-//#include <libopencm3/cm3/scb.h>
-//#include <libopencm3/cm3/cortex.h>
-//#include <cmrx/intrinsics.h>
-
 #include <conf/kernel.h>
 
 #include <stdbool.h>
@@ -145,3 +145,4 @@ __attribute__((naked)) void PendSV_Handler(void)
 	);
 }
 
+/** @} */

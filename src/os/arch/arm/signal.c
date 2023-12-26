@@ -1,3 +1,8 @@
+/** @defgroup arch_arm_signal Signals implementation
+ * @ingroup arch_arm
+ * @{
+ */
+
 #include <cmrx/os/signal.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/assert.h>
@@ -111,4 +116,4 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 	}
 }
 
-
+/** @} */

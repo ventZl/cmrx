@@ -1,6 +1,8 @@
 /** @defgroup api_rpc Remote Procedure Calls
  *
  * @ingroup api
+ *
+ * 
  */
 #pragma once
 

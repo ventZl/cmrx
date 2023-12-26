@@ -1,16 +1,17 @@
 @page overview Overview
 
-This page provides and overview of basic concepts in CMRX environment. You shall
+This page provides an overview of basic concepts in CMRX environment. You shall
 make yourself familiar with all the concepts listed here in order to understand
 how CMRX environment behaves and how to achieve certain goals.
 
-@subpage concepts Basic concepts
+@subpage concepts describes model of execution under CMRX
 
-@subpage mem_model Memory model
+@subpage mem_model outlines how memory is organized and what can be accessed and how
 
-@subpage rpc_intro Remote Procedure Call intro
+@subpage rpc_intro introduces the RPC mechanism
 
-@subpage dev_env Build environment
+@subpage dev_env describes the how the build environment and integration with vendor's SDK
+works
 
 @page concepts Basic concepts
 If using CMRX, there are some basic concepts enforced by the kernel itself.
@@ -50,22 +51,10 @@ It is possible to launch multiple instances of same code, all of them having dif
 data. This is due to the fact that code, even process-specific, is visible to all the 
 userspace.
 
-RPC services are the only supported means of inter-process communication. While threads
+@ref rpc_intro services are the only supported means of inter-process communication. While threads
 belonging to the same process all share the same memory, there is no means of sharing memory
 belonging to any other process unconditionally. One has to use RPC to execute code within 
 context of other process.
-
-Any process can create one or more services. These services are composed of methods the service
-offers. It is then possible to create as many instances of these services as needed. Service
-declaration is exclusively static operation done during compile time. Instance creation is possible
-during the compile time, enabling fully static creation of RPC services, or optionally during
-runtime.
-
-Instances can then be used to call methods of services in cross-process fashion. RPC call
-dispatch is provided by the kernel in fully memory protected fashion. While performing RPC call,
-certain, statically defined regions of memory can be shared between the caller and callee. Only code
-the service owner specified, can be executed via RPC call.
-
 
 @page mem_model Memory Model
 Processes running in CMRX environment have memory protection use enforced.
@@ -112,7 +101,7 @@ Shared variables region
 This region is composed of variables defined in compilation units belonging to
 some specific process, which has their definition prefixed by keyword
 `SHARED`. Doing so will relocate given variable into shared region. Under normal
-conditions, access rules to shared variables is the same as for static
+conditions, access rules to shared variables are same as for static
 variables. All the code of all compilation units belonging to the owning
 process can access all the shared variables.
 
@@ -125,8 +114,8 @@ Stack
 -----
 
 Stack is automatically allocated for each and every thread running in system.
-Stack is thread-private and even no two threads of same process can access each
-other's stack. Stack is automatically reclaimed by the kernel, once process
+Stack is thread-private and even no two threads of same process cant access each
+other's stack. Stack is automatically reclaimed by the kernel, once thread
 ends.
 
 Memory-mapped IO
@@ -199,10 +188,10 @@ Method entry in class may look like:
 void (*method_name)(INSTANCE(this), int arg);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-RPC object
-----------
+RPC instance
+------------
 
-RPC object holds the data, RPC service provides access to. It is plain C
+RPC instance holds the data, RPC service provides access to. It is plain C
 structure with only one requirement. First member of this struct **must** be a
 pointer to the RPC service, which provides access to this object and this member
 **must** be called `vtable`. Amount, types, structure and order of remaining
@@ -245,8 +234,8 @@ interface, it is not possible to access it. Not even in read-only manner.
 Define service implementation
 -----------------------------
 
-Next, it is necessary to provide implementation of all functions declared in
-interface the service implements. Once these functions are implemented, they can
+Next, it is necessary to provide implementation of all functions declared in the
+interface this service implements. Once these functions are implemented, they can
 be put together into interface implementation table. This is an instance of
 interface, where function pointers point to actual functions just created.
 
@@ -276,6 +265,7 @@ much any CMSIS-compliant HAL and to support broad range of target
 microcontrollers.
 
 From the developer's point of view, every process is composed of single library,
-which is then linked to the final binary.
-
-
+which is then linked to the final binary. All the variables found in all source files
+belonging to the library are considered a data of this process. All code present in this
+library will have access to this data. Remaining variables not belonging to any library is
+only accessible by the kernel.
