@@ -1,12 +1,9 @@
-/** @defgroup os_sched Kernel scheduler
+/** @defgroup arch_arm_sched Kernel scheduler
  *
- * @ingroup os_kernel
+ * @ingroup arch_arm
  *
  * @brief Kernel scheduler internals
  *
- */
-
-/** @ingroup os_sched
  * @{
  */
 #include <cmrx/os/runtime.h>
@@ -27,19 +24,6 @@
 #endif
 
 #include <cmrx/assert.h>
-
-/*
-int __os_process_create(Process_t process_id, const struct OS_process_definition_t * definition);
-int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority);
-int os_thread_alloc(Process_t process, uint8_t priority);
-void os_thread_dispose(int arg0);
-__attribute__((noreturn)) int os_idle_thread(void * data);
-bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread);
-int os_stack_create();
-unsigned long * os_stack_get(int stack_id);
-struct OS_thread_t * os_thread_get(Thread_t thread_id);
-void os_sched_timed_event(void);
-*/
 
 /** Populate stack of new thread so it can be executed.
  * Populates stack of new thread so that it can be executed with no

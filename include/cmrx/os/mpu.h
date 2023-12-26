@@ -3,6 +3,9 @@
  * @ingroup os
  *
  * Kernel internals in support for MPU configuration.
+ */
+
+/** @ingroup os_mpu
  * @{
  */
 #pragma once

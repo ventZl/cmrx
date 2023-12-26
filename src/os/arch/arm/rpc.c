@@ -1,3 +1,7 @@
+/** @defgroup arch_arm_rpc RPC implementation
+ * @ingroup arch_arm
+ * @{
+ */
 #include <cmrx/os/rpc.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/syscall.h>
@@ -138,3 +142,5 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	
 	return arg0;
 }
+
+/** @} */

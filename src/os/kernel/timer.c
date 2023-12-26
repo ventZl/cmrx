@@ -1,3 +1,6 @@
+/** @addtogroup os_timer 
+ * @{ 
+ */
 #include <cmrx/os/timer.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/signal.h>
@@ -252,3 +255,5 @@ void os_run_timer(uint32_t microtime)
 		}
 	}
 }
+
+/** @} */

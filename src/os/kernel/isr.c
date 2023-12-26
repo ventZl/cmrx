@@ -1,3 +1,7 @@
+/** @defgroup os_isr Interrupt service routines
+ * @ingroup os 
+ * @{ 
+ */
 #include <cmrx/ipc/isr.h>
 #include <conf/kernel.h>
 #include <cmrx/os/runtime.h>
@@ -31,3 +35,5 @@ void isr_kill(Thread_t thread_id, uint32_t signal)
 		}
 	}
 }
+
+/** @} */

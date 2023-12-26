@@ -3,9 +3,6 @@
  * @ingroup os
  *
  * This kernel implementation of RPC mechanism.
- */
-
-/** @ingroup os_rpc
  * @{
  */
 #pragma once

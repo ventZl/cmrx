@@ -1,6 +1,6 @@
-/** @defgroup util_intrinsics ARM intrinsics
+/** @defgroup arch_arm_intrinsics ARM intrinsics
  *
- * @ingroup util
+ * @ingroup arch_arm 
  *
  * Various intrinsics. Mostly reimplemented CMSIS intrinsics for use in kernel code.
  * @{
