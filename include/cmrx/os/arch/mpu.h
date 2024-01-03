@@ -1,6 +1,6 @@
 #pragma once
 
-/** @ingroup arch_arch
+/** @addtogroup arch_arch
  * @{ 
  */
 
@@ -17,6 +17,12 @@
 struct MPU_Registers;
 
 /** Start memory protection.
+ * Initialize hardware memory protection unit so that following conditions are met:
+ * * RAM is not executable
+ * * kernel can execute all the flash and read/write all the RAM 
+ * * FLASH can optionally be executable from userspace, if hardware is not capable enough
+ *   to allow for fine-grained execution access.
+ * Kernel must be able to continue execution past this point.
 */
 void os_memory_protection_start();
 

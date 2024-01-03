@@ -9,12 +9,16 @@
 #include <conf/kernel.h>
 #include <cmrx/os/sched.h>
 
+/** Constant denoting unknown owning process ID of VTable. */
 #define E_VTABLE_UNKNOWN			0xFF
 
+/// @cond IGNORE
+/// This is documented in the Kernel API group
 __SYSCALL void rpc_return()
 {
 	__SVC(SYSCALL_RPC_RETURN);
 }
+/// @endcond
 
 Process_t get_vtable_process(VTable_t * vtable)
 {

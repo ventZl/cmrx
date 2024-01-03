@@ -8,15 +8,64 @@ how CMRX environment behaves and how to achieve certain goals.
 
 @subpage mem_model outlines how memory is organized and what can be accessed and how
 
+@subpage exec_model provides information on how userpace code is selected for execution
+under CMRX scheduler.
+
 @subpage rpc_intro introduces the RPC mechanism
+
+@subpage dev_code_organization outlines how the code has to be organized in the project
 
 @subpage dev_env describes the how the build environment and integration with vendor's SDK
 works
+
+@subpage hal_integration outlines how SDK libraries and HALs are integrated into
+CMRX-based project.
+
 
 @page concepts Basic concepts
 If using CMRX, there are some basic concepts enforced by the kernel itself.
 
 Application code is organized into processes.
+
+\dot "Organization of CMRX runtime" width=720px
+digraph D {
+    subgraph cluster_all {
+        label = "Application Firmware";
+
+        node [shape = record];
+
+        isr_1 [ label = "ISR 1" ];
+        isr_2 [ label = "ISR 2" ];
+        core [ label = "Kernel" ];
+        thread_1 [ label = "Thread 1" ];
+        thread_2 [ label = "Thread 2" ];
+
+        subgraph cluster_kernel {
+           label = "Privileged";
+
+            core;
+            isr_1;
+            isr_2;
+        }
+
+        subgraph cluster_userspace {
+            label = "Userspace";
+
+            subgraph cluster_process_1 {
+                label = "Process 1";
+
+                thread_1;
+            }
+
+            subgraph cluster_process_2 {
+                label = "Process 2";
+
+                thread_2;
+            }
+        }
+    }
+}
+\enddot
 
 Process is a collection of accessible 
 memory, threads and RPC services. Any userspace code has either run as ISR handler, or
@@ -25,10 +74,44 @@ There is no way to run kernel-privileged code outside interrupts. Currently, pro
 have to be statically declared at compile time and it is not possible to create new 
 processes during runtime.
 
+\dot "The anatomy of CMRX process" width=720px
+digraph D {
+    subgraph cluster_process {
+        node [shape = record];
+        stack_1 [ label = "Stack", rank=2 ];
+        stack_2 [ label = "Stack", rank=2 ];
+        initialized_data [ label = "Initialized data" ];
+        bss [ label = "BSS" ];
+        shared_memory [ label = "Sharable data" ];
+        rpc_services  [ label = "RPC services" ];
+
+        label = "Process";
+
+        subgraph cluster_thread_1 {
+            label = "Thread 1";
+
+            stack_1;
+        }
+
+        subgraph cluster_thread_2 {
+            label = "Thread 2";
+
+            stack_2;
+        }
+
+        initialized_data;
+        bss;
+        shared_memory;
+        rpc_services;
+        bss->stack_1 [style = invis];
+        bss->stack_2 [style = invis];
+    }
+}
+\enddot
 Thread is an execution context within process. Thread has its private stack, priority,
 and hosting process. Threads can be auto-started on system startup after processes
-are created. This effectivelly allows fully-static operation. Or threads can be created 
-during runtime. It is not possible to create a thread inside foreign process.
+are created. This effectivelly allows fully-static operation. Threads can also be created 
+during runtime. It is not possible to inject a thread into foreign process.
 
 Memory, which is accessible for the userspace code can generally be divided into four
 types:
@@ -57,10 +140,11 @@ belonging to any other process unconditionally. One has to use RPC to execute co
 context of other process.
 
 @page mem_model Memory Model
-Processes running in CMRX environment have memory protection use enforced.
+Code running in the context of process in CMRX environment is limited by memory protection.
 Therefore the application (or, better: process) can only access resources, which
-belong to it. In CMRX, the process is the governing entity, when it comes to what
-resources can be accessed from within specific execution context.
+belong to it. In CMRX, the process is the governing entity when it comes to what
+resources can be accessed from within specific execution context. A process is thus a 
+container which groups all accessible resources living in the user space.
 
 Code and read-only data
 -----------------------
@@ -71,10 +155,10 @@ Process has to have name and is given access to certain memory areas.
 
 Due to limitations of Cortex-M hardware, whole flash region is marked as read +
 execute. It would be extremely difficult to provide working implementation of
-memory protection which would allow use of library functions if code was under
-memory protection. And it would probably impossible to do that statically. This
-design decision has effect you have to be aware of as a developer: every code
-can read everything in flash, including any possible secrets stored there.
+memory protection which would allow use of library functions if process' code execution was 
+explicitly allowed by the memory protection. And it would probably impossible to do that statically. This
+design decision has effect you have to be aware of as a developer: **every code
+can read everything in flash, including any possible secrets stored there**.
 
 When it comes to RAM, the situation is completely different. Any process can
 only access RAM claimed by variables being defined by process' code.
@@ -147,8 +231,42 @@ From high level perspective, RPC interface works in a way similar to C++
 objects. Server process can declare one or more services, which are composed 
 of methods. Methods are callable via the instance of the service.
 
+@dot "Hierarchy of RPC components" width=720px
+digraph D {
+    node [shape="box"];
+    interface [ label = "RPC Interface" ];
+    implementation_1 [label = "Implementation 1"]
+    implementation_2 [label = "Implementation 2"]
+    interface;
+    service_1 [ label = "Service 1" ];
+    service_2 [ label = "Service 2" ];
+    service_3 [ label = "Service 3" ];
+    
+    subgraph cluster_process_1 {
+        label = "Process 1";
+
+        implementation_1;
+        service_1;
+        service_2;
+    }
+
+    subgraph cluster_process_2 {
+        label = "Process 2";
+
+        implementation_2;
+        service_3;
+    }
+
+    implementation_1 -> interface;
+    implementation_2 -> interface;
+    service_1 -> implementation_1;
+    service_2 -> implementation_1;
+    service_3 -> implementation_2;
+}
+@enddot
+
 From the server perspective, the service instance is a fully defined structure,
-which holds both data and has assigned a set of callable service methods.
+which holds service data and contains pointer to the list of callable service methods.
 
 From the caller perspective, the service instance is an opaque pointer. This
 pointer, once obtained, can be used to call service methods. Internally, the
@@ -167,37 +285,48 @@ control to the provided address. At no time, the calling process has access to
 service object, despite it's ability to call service methods. Runtime resolution
 is done by the kernel.
 
-RPC service
+RPC interface
 -------------
 
-RPC service is a structure, which lists pointer-to-function kind of members.
+RPC interface is a structure, which lists pointer-to-function kind of members.
 This is a typical way of writing "C classes". There are no special requirements
 for internal organization of this structure except of typical best practices in
 writing reusable interfaces.
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+#include <cmrx/rpc/interface.h>
+
+struct RPC_interface {
+    void (*method_1)(INSTANCE(this), int arg1);
+    int (*method_2)(INSTANCE(this), int arg1, int arg2);
+    void * (*method_3)(INSTANCE(this) /* no arguments */);
+};
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 There are limitations given by RPC mechanism in CMRX though. Any method of RPC
 interface has to have 1 up to 5 arguments. First arguments **must** be pointer
-to instance. This semantics is same as used in Python methods. To simplify
-things, you can use all caps `SELF` to fulfill that need. Remaining four
+to instance. This semantics is same as used in Python methods. Remaining four
 arguments can be of any scalar type. Method can return any scalar type, but does
 not need to return anything.
 
-Method entry in class may look like:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-void (*method_name)(INSTANCE(this), int arg);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-RPC instance
+RPC service
 ------------
 
-RPC instance holds the data, RPC service provides access to. It is plain C
+RPC service holds the data, RPC service provides access to. It is plain C
 structure with only one requirement. First member of this struct **must** be a
 pointer to the RPC service, which provides access to this object and this member
 **must** be called `vtable`. Amount, types, structure and order of remaining
 items is completely up to application developer. Even removal or reordering of
 items within structure won't compromise binary compatibility, as long as your
 service can cope with it.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+struct RPC_service {
+    const struct RPC_interface vtable;
+    long long service_data;
+};
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Becoming a RPC server
 ---------------------
@@ -209,13 +338,21 @@ Declare interfaces
 ------------------
 
 Very first step is to define the interface. Interface is a structure visible
-both to the server and the client, which defines what actions any given service
+both to the server and the client, which defines what actions some type of service
 supports. Interface is purely procedural and does not support publishing of data
 members. Interface has a form of structure containing pointer-to-function
-members.
+members. Interfaces shall be as abstract as possible, creating contracts between the
+caller and the callee rather than describe manipulation methods specific to one single
+interface. This facilitates interface reuse. If your service has possible actions similar
+to some other service, then both services shall implement the same interface. If they do
+then these services are interchangeable. Caller can call an instance of both without
+actually knowing what specific service it is calling or that they are in fact different.
+
+This step can be skipped if there is suitable interface available somewhere in your
+project. You can reuse it rather than defining your own interface.
 
 Declare services
-------------------
+----------------
 
 After interfaces were defined (or adopted), the structure of the service itself
 has to be provided. This is typically a structure, which holds all the state of
@@ -239,11 +376,43 @@ interface this service implements. Once these functions are implemented, they ca
 be put together into interface implementation table. This is an instance of
 interface, where function pointers point to actual functions just created.
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+
+#include <cmrx/rpc/implementation.h>
+IMPLEMENTATION_OF(struct RPC_service, struct RPC_interface);
+
+static void service_method_1(INSTANCE(this), int arg1)
+{
+    /* ..... */
+}
+
+static int service_method_2(INSTANCE(this), int arg1, int arg2)
+{
+    /* ..... */
+}
+
+static void * service_method_3(INSTANCE(this))
+{
+    /* ..... */
+}
+
+VTABLE struct RPC_interface service_vtable = {
+    service_method_1,
+    service_method_2,
+    service_method_3
+};
+
+struct RPC_service service = {
+    &service_vtable,
+    0x42
+};
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 If any interface provides some function, then it is mandatory to implement it.
 No pointer in interface can point to NULL. Doing so will crash any caller which
 attempts to call such interface method.
 
-Instances of interfaces have to be marked by special keyword `VTABLE`.
+Instances of interfaces have to be marked by special keyword @ref VTABLE.
 This keyword serves the purpose of putting such variable into
 VTABLE "region" of the process. Only those interface implementations residing in VTABLE
 regions can be called. Net effects of this limitation are two:
@@ -255,17 +424,401 @@ regions can be called. Net effects of this limitation are two:
    also important from memory protection perspective, as it allows kernel to
    determine, how to set up memory protection during the RPC call.
 
-@page dev_env Development environment
+Calling RPC service
+-------------------
 
-CMRX itself is built on top of CMake build system. CMRX only contains the
-minimum set of tools, services and rules to make things actually happen, so
-unlike others offers in the real-time operating system market, CMRX does not
-provide it's own HAL nor drivers. This allows CMRX to be integrated with pretty
-much any CMSIS-compliant HAL and to support broad range of target
-microcontrollers.
+Once RPC service has been established having its own implementation it is possible to
+perform calls of this service. Service instance lives in the address space of the process,
+which instantiated it. It is not possible to place the service instance into some
+globally-accessible place as no such space exists. It is not even needed. All that any
+potential caller needs is the address of the service. Call of this service can then be
+performed using the following code:
 
-From the developer's point of view, every process is composed of single library,
-which is then linked to the final binary. All the variables found in all source files
-belonging to the library are considered a data of this process. All code present in this
-library will have access to this data. Remaining variables not belonging to any library is
-only accessible by the kernel.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+int retval = rpc_call(service_ptr, method_2, 0x42, 0xF00F);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This call will perform the call of method_2 from within service using CMRX RPC mechanism.
+
+Advantages of RPC mechanism
+---------------------------
+
+Why mechanism so complicated?
+
+Despite looking complicated, this mechanism has a few advantages over directly calling
+functions, or calling functions via pointer-to-function table indirection. If we first
+consider the simplest case of calling specific service functions via their names directly,
+such as:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+int retval = service_method_2(service_ptr, 0x42, 0xF00F);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Then there is an obvious difference, that in the latter case, you are explicitly stating
+the method to call. While using the RPC mechanism, you are only stating its name. So the
+service is able to provide whatever specific function that implements the requested method
+for this specific kind of service. Calling client and called server are tightly bound to
+perform one specific action.
+
+Another way of calling service methods in a polymorphic way is to use "object oriented C"
+approach and call the method like:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+int retval = service_ptr->vtable->method_2(service_ptr, 0x42, 0xF00F);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This approach is much closer to what RPC call actually does with a few little, yet
+important differences. Even if it looks like the actual function executed when `method_2`
+is called can be changed, it isn't absolutely true. There is still rather high degree of
+binding between the interface and the service here. The function, whose address is used to
+initialize the vtable structure must match the type and count of arguments in the vtable
+type declaration. This will force you to use method with the following prototype:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+int (*method_2_t)(RPC_service * this, int arg1, int arg2);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This works as long as you have one service and one interface. There is direct relationship
+between RPC_interface structure whose members type their first argument as `RPC_service *`.
+If you attempt to create an interface usable with multiple services, you will face type
+incompatibility problems. Either you'll have to typecast functions during the
+initialization of RPC_interface instance, or use some generic type for `this`, such as
+`void * this`. Both will clutter the code with typecasts and will throw part of type
+safety as typecasts will be explicit and can contain typos or other mistakes.
+
+Another problem of both approaches is, that the function which ends up being called one
+way or another must reside in the same process as the caller. You can't call function from
+within another process as it will crash in the moment it tries to access it's own
+process' memory.
+
+RPC call mechanism deals with both problems. Syntactic sugar around the macro @ref INSTANCE() 
+causes that whenever an interface is declared, its `this` pointer is not typed. It
+effectively behaves as `void * this`. On the other side, whenever you provide an
+implementation of the interface, you have to provide a service - interface pair. When you
+do this, the check, if the intended service actually provides intended interface will
+happen. This way, typos are avoided. Attempt to implement an interface for service it
+isn't providing it will cause build error. Another effect is that use of macro INSTANCE()
+during the implementation of the interface will use the correct type expected by this
+specific implementation.
+
+From the client's perspective, the actual type of service data structure is not important.
+Client handles structure instance as an opaque pointer during runtime. It never accesses
+it as it resides in other process' memory. All the preparatory work to implement the RPC
+call is done during the compile time. Here, the type checking is done, so that the type
+and amount of arguments to the call is checked. Compilation will fail if there is a
+mismatch. Compilation will also fail if there is an attempt to call non-existent RPC
+method.
+
+Then, during the runtime, when RPC call is performed, CMRX kernel will make necessary
+adjustments of the runtime environment to allow the called method to access the memory
+region of owning process.
+
+@page exec_model Execution Model
+
+As long as memory is concerned, the entity governing access is a process. As long as
+scheduling is concern, the governing entity is a thread. CMRX contains prioritized,
+multi-threaded, preemptive scheduler. As of now, this scheduler is not SMP-capable.
+
+Scheduler
+---------
+
+Scheduler of CMRX RTOS offers 256 different priorities of threads, with priority 0 being
+the highest and priority 255 being the lowest, reserved for the idle task use. Scheduler
+is prioritized, so whenever a thread has to be selected for execution, the thread with
+the highest priority (the lowest numerical value of priority) is selected that is ready to
+execute.
+
+Priorities are assigned per-thread, not per-process. So it is possible for one process to
+have multiple threads having different priorities. Threads with higher priorities might be
+used to handle external events, while threads with lower priorities might be used to
+crunch asynchronous work.
+
+Scheduler is preemptive, which means that whenever there are two threads ready to execute
+having same priority, they will share the CPU time. Scheduler will periodically switch from
+one thread to another so that both threads can run "simultaneously". This is something to
+consider when designing event handler thread priorities. If two event handler threads have
+the same priority, then it may happen that arrival of event handled by some of these
+threads, while other thread is already running may preempt one thread by another. This may
+introduce non-determinism or unacceptably long latencies.
+
+There is no per-process prioritization. Whenever a thread has to be selected, all threads
+from all processes are considered. Process switch occurs automatically if the next thread
+to be executed belongs to different process than the thread being swapped out. There is no
+fairness in CPU time allocated to threads or processes. CPU time is always allocated to
+thread(s) with highest priority that are runnable. If there is more than one such thread,
+then CPU time is divided between these processes evenly.
+
+Interrupts
+----------
+
+All the code running in the userspace, even the code of threads with priority 0 has lower
+priority than any interrupt that may happen. This way any code registered as an interrupt
+handler will preempt any thread running. Device interrupt handlers have priority higher
+than the kernel service handler. The effect of such setup is, that hardware
+interrupts will preempt even running kernel system call. This has the consequence, that it
+is not possible to call system calls from within interrupt service routines. There is
+special set of @ref api_isr minimalistic API which allows to run limited subset of kernel 
+services from within interrupt service handler. The goal of this design is to make ISRs as 
+lean as possible to they won't disturb thread execution much.
+
+Only perform time-sensitive work in the context of an ISR and defer all remaining work to
+designated thread.
+
+@page dev_code_organization Organization of the Code
+
+Any CMRX-based project has to follow certain rules of code organization in order to build
+and run successfully. Typical project organization is shown on the figure below:
+
+@dot "Hierarchy of source files" width=720px
+digraph G {
+    node [shape = "box" ];
+    main_c [label = "main.c" ];
+    utils_c [label = "utils.c" ];
+    process_1_c [ label = "process_1.c", rank=2 ];
+    process_2_c [ label = "process_2.c", rank=2 ];
+    service_1_c [ label = "service_1.c", rank=2 ];
+    service_2_c [ label = "service_2.c", rank=2 ];
+    system_c [ label = "system.c", rank=3 ];
+    startup_c [ label = "startup.c", rank=3 ];
+    one_c [ label = "...." ];
+    two_c [ label = "...." ];
+
+    subgraph cluster_firmware {
+        label = "firmware.elf";
+
+        main_c;
+        utils_c;
+
+        subgraph cluster_app_1 {
+            label = "libprocess_1.a";
+
+            process_1_c;
+            service_1_c;
+        }
+
+        subgraph cluster_app_b {
+            label = "libprocess_2.a";
+
+            process_2_c;
+            service_2_c;
+        }
+
+        subgraph cluster_hal {
+            label = "libsdk.a";
+
+            startup_c;
+            system_c;
+        }
+
+        subgraph cluster_cmrx {
+            label = "licmrx.a";
+
+            one_c;
+            two_c;
+        }
+
+    }
+
+    process_1_c -> startup_c [style = invis ];
+    one_c -> process_2_c [style = invis ];
+    one_c -> process_1_c [style = invis ];
+}
+@enddot
+
+Figure shows several C files organized into a hierarchy of libraries.
+
+First, there is a group of C files represented by the usually present `main.c` file, which
+provide some basic MCU configuration and then start the OS kernel. These files might
+contain stuff such as GPIO configuration, configuration of system clock sources and
+possible static initialization of peripherals, such as their clock source and mapping to
+GPIO pins. Main rule is that things done here shall not deal with initialization of
+processes or threads. Another content of C files which are compiled directly with the
+final executable and don't belong into any process are sources containing shared library
+routines. These files can contain code that will be accessible by all processes but can't
+contain any data as the data defined in modules not belonging to any process won't be
+accessible from the userspace.
+
+Next, there is a group of files belonging to the HAL used. Here, the actual form might
+vary depending on HAL used. Minimalistic CMSIS-based example is depicted, which usually
+provides at least two modules: startup.c and system.c. Former contains startup code which
+ultimately leads to main() being executed while latter contains implementation of some
+basic system code, usually basic SysTick and NVIC routines. The organization of these
+files is governed by the HAL used and might not be organized into library. Some SDKs
+generate these files dynamically, while others provide feature-rich library containing
+fully-equipped SDK.
+
+Then there are multiple libraries. Each library represents one process. All global
+variables in all C files linked into `libprocess_1.a` are accessible from all the code
+which runs in any thread owned by the `process 1`. Note that all code is executable at all
+times, so all the data of `process 1` is visible not just from code of process own C files,
+but also from the code provided by the `utils.c` source file. What truly matters is, in
+what context the code runs. If the code will be running as part process' 1s thread
+execution, then it will be able to access its data. If the code will be running in the
+thread owned by the `pocess 2`, then no data of `process 1` will be visible regardless of
+where the code executing is stored. One process can group as many C files as necessary and
+they all will be able to access each other's data without any specific precautions.
+
+Last part is the CMRX kernel itself. It is linked as a library and contains all the
+relevant portions of the kernel itself. None of its data is accessible from any process.
+
+@page dev_env Development Environment
+
+CMRX is using CMake build system. There are several entities which are visible from the
+project which integrates CMRX in their buildsystem:
+
+* CMRX CMake module - this module defines several functions that wrap creation of
+  libraries and executables with post build events and calculate certain properties.
+
+* CMRX source and header directories - here, the code and headers of CMRX are stored. CMRX
+  is distributed as a source and is compiled during the build of the firmware. Build of
+  CMRX results in creation of library named `os` which you have to link to the final
+  executable. Include paths to headers are automatically propagated to each target which
+  links to the `os` library.
+
+* Linker script adjustment tool - for seamless operation of memory protection, it is 
+  necessary to calculate alignment values for private data of each process. This mechanism
+  takes the original linker script and injects per-process include blocks into it. These
+  blocks are then adjusted based on map file analysis. This altered linker script is then
+  used to link the binary.
+
+CMake functions
+---------------
+
+While firmware built using CMRX is pretty much standard binary, there are certain tasks
+done after the binary is built. Similarly, every CMRX process is wrapped into fairly
+standard static library, yet there are some tasks done after the library is built. In
+order for things to work correctly, CMRX is also maintaining a set of properties bound to
+either firmware images or process libraries. There are three main CMake functions
+available for use:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cmake}
+add_firmware(<firmware name> <source file(s)>)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use this function in place of `add_executable()` to define firmware binary. Adding binary
+this way will automatically enable map file creation, apply patched linker script and add
+post-build actions which automatically recompute alignment constants. It also generates
+properties needed to ensure reliable operation.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cmake}
+add_application(<application name> <source file(s)>)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use this function in place of `add_library()` to create a static library which contains
+all the process data and code. Creating process this way will automatically add some post
+build events which perform sanity checks and create linker script includes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cmake}
+target_add_applications(<firmware name> <application name(s)>)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use this function to link application libraries to the firmware binary. This command
+effectively wraps `target_link_libraries()` command, while doing some sanity checks and
+generating post-build events to ensure that the linker script is always up to date.
+
+Source and header directories
+-----------------------------
+
+CMRX is distributed as a source and it has to be compiled with your application in order
+to build runnable firmware. To accomplish this you have to use `add_subdirectory()`
+command to add CMRX sources into your project. By doing so, several new targets will be
+defined:
+
+* library `os` - this library wraps all the compiled code of the CMRX kernel. It is
+  internally composed of two parts: the portable part and the architecture port. The
+  architecture port is handled automatically. Library propagates include paths into every
+  target you link against it. Therefore you don't have to set up include paths to be able
+  to include CMRX headers explicitly.
+
+* library `cmrx_arch` - this library is the architecture dependent portion of CMRX kernel.
+  It is automatically created depending on selected target architecture and HAL being
+  used. Handled automatically by the `os` library. Listed just for reference.
+
+* library `stdlib` - this library contains functions that call system calls. These
+  functions are callable from processes. See @ref api to learn on what functions are
+  available.
+
+* library `aux_systick` - this is an auxiliary library which implements SysTick-based
+  timing provider. This optional library can be used to quickly bootstrap the kernel
+  before more comprehensive hardware- and task-specific timing provider is developed.
+
+Linker script adjustment tool
+-----------------------------
+
+This tool makes the use of memory protection seamless. The main purpose of this tool is to
+recalculate alignment of data regions of each process based on its size. This is
+necessary, because memory protection units on most microcontrollers have a limitation,
+that a region which has access rights defined by MPU must have it's base address aligned
+at least to its size. So if the region is 256 bytes large, it has to start at address
+aligned to 256 bytes. Due to this, the size of data segments has to be determined after
+build and then new alignments have to be determined. To save the RAM, regions are ordered
+descending based on their alignment.
+
+One side effect of this mechanism is, that sometimes, the binary has to be linked twice.
+This happens when the size of data block causes that the alignment value used to link it
+is not valid anymore. In such case, you have to link the binary again using new, up to
+date linker script. If linker script adjustment tool detects this case, it will delete the
+firmware binary. This behavior is to prevent use of incorrectly linked binary which won't
+run.
+
+@page hal_integration Integrating vendor SDKs
+
+As mentioned before, CMRX does not provide any OS-specific HAL or SDK. You have to
+integrate vendor-provided HAL. This way, the use of CMRX is as non-intrusive as
+technically possible. CMRX itself - being a microkernel - uses only minimalistic set of 
+peripherals, almost exclusively only peripherals residing on Cortex core itself. Only
+architecture dependent part of the kernel code is ever using these peripherals. This part
+is always written with some HAL in mind. For example the default ARM port is written using
+CMSIS standard. CMSIS standard is quite broad but minimalistic needs of CMRX kernel can
+usually be satisfied by the basic CMSIS device header. This header is often present in
+vendor SDK for a microcontroller in some form usable by the CMRX.
+
+Second part usually present in the vendor SDK is the linker script for your target device
+which declares base addresses of RAM and FLASH and defines regions for code, data, bss and
+others. This script is needed to link the binary correctly. CMRX needs this scriupt to be
+manipulated in order to enable memory protection.
+
+Third part of vendor SDK are the startup and system source files. They might or might not
+be present, or may be present in slightly different organization. Here vendors are
+creative and mostly ignore CMSIS standard.
+
+As long as the CMRX kernel itself is concerned, this is all that is needed from the vendor
+SDK. Your application's need will usually be bigger as you might want to use peripheral
+drivers and utility libraries provided by the SDK. While the range and way of using these
+vary from project to project, CMRX does not deal with these at all. It is up to integrator
+to include them into project.
+
+CMSIS helper
+------------
+
+To make integration of CMSIS HAL for needs of the CMRX easier, there is small CMake module
+which helps to find various CMSIS components and set up defines. This module is called
+`FindCMSIS.cmake`. This module will determine include paths for core CMSIS headers and try
+to find startup and system components of CMSIS, if available. It will copy the linker file
+to location CMRX expects to find one.
+
+The basic use of `FindCMSIS` is like:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cmake}
+set(CMSIS_ROOT <path to where CMSIS is located in vendor SDK>)
+set(DEVICE <device name recognized by the vendor SDK>)
+set(CMSIS_LINKER_FILE <location of the linker file>)
+include(FindCMSIS)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If necessary CMSIS components are found, then following is done:
+
+* library `cmsis_core_lib` is created. This is an interface library that propagates
+  include paths to all headers of CMSIS core. This ensures that the CMSIS headers can be
+  included into CMRX source. ARM port based on CMSIS HAL expects this library to exist
+  while compiling.
+* file `RTE_Components.h` is creates in `CMAKE_BINARY_DIR`. This file contains an alias to
+  device file as per CMSIS specs, so the CMRX kernel code is device-independent. ARM port
+  based on CMSIS HAL expects this file to exist.
+* linker file is copied into file named `gen.<DEVICE>.ld` into `CMAKE_BINARY_DIR`. This is
+  where CMRX expects to find the device linker script. If linker script provided in
+  variable `CMSIS_LINKER_FILE` does not exist, then FindCMSIS will fail with error.
+* variable `CMSIS_SRCS` is defined which contains list of files found that compose the
+  CMSIS core. Only files named according to CMSIS specs are detected. These files are not
+  handled automatically, rather it is the integrator's task to handle them in a way the
+  vendor SDK is designed to do.

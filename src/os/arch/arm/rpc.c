@@ -1,5 +1,14 @@
 /** @defgroup arch_arm_rpc RPC implementation
  * @ingroup arch_arm
+ * 
+ * Implementation of RPC mechanism for ARM Cortex-M processors.
+ * 
+ * When running on Cortex-M, remote procedure call is performed by injecting
+ * an artificial exception frame which causes code to jump to the called routine
+ * instead of returning to where it came from. Returning will then jump into specially
+ * crafted routine, that injects rpc_return system call. This restores the previous 
+ * state of caller's stack while copying the return value.
+ * 
  * @{
  */
 #include <cmrx/os/rpc.h>
@@ -15,14 +24,8 @@
 #include <cmrx/assert.h>
 #include <cmrx/os/sanitize.h>
 
-#define E_VTABLE_UNKNOWN			0xFF
 
 void rpc_return();
-
-Process_t get_vtable_process(VTable_t * vtable);
-bool rpc_stack_push(Process_t process_id);
-int rpc_stack_pop();
-Process_t rpc_stack_top();
 
 int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
@@ -41,7 +44,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 		return E_INVALID_ADDRESS;
 	}
 	
-	if (!rpc_stack_push(process_id))
+	if (0 /*!rpc_stack_push(process_id)*/)
 	{
 		return E_IN_TOO_DEEP;
 	}
@@ -67,7 +70,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	set_exception_argument(remote_frame, 0, (uint32_t) service);
 	set_exception_argument(remote_frame, 5, 0xAA55AA55);
-	set_exception_pc_lr(remote_frame, method, rpc_return);
+	set_exception_pc_lr(remote_frame, method, 0 /* rpc_return */);
 	
 	__set_PSP((uint32_t) remote_frame);
 
@@ -91,14 +94,14 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	ASSERT(canary == 0xAA55AA55);*/
 
-	ExceptionFrame * local_frame = pop_exception_frame(remote_frame, 2);
+	ExceptionFrame * local_frame = 0; //pop_exception_frame(remote_frame, 2);
 	
-	int pstack_depth = rpc_stack_pop();
+	int pstack_depth = 0; //rpc_stack_pop();
 	Process_t process_id;
 
 	if (pstack_depth > 0)
 	{
-		process_id = rpc_stack_top();
+		process_id = 0; //rpc_stack_top();
 	}
 	else
 	{

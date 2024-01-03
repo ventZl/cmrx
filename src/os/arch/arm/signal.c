@@ -12,17 +12,6 @@
 #include <cmrx/os/syscall.h>
 #include <arch/cortex.h>
 
-int os_signal(int signo, void (*sighandler)(int))
-{
-    (void) signo;
-    /* @todo: what to do with signo? */
-	uint8_t thread_id = os_get_current_thread();
-	ASSERT(thread_id < OS_THREADS);
-
-	os_threads[thread_id].signal_handler = sighandler;
-	return 0;
-}
-
 /** Perform signal delivery in thread's userspace.
  * This "function" is ever only called from os_deliver_signal(). It stores
  * original values of LR and R0 - R3 registers and PC onto stack. 
@@ -44,7 +33,6 @@ __attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *si
 			);
 }
 
-//static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
 void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 {
 	ExceptionFrame * frame;

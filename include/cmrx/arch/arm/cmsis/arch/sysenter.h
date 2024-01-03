@@ -20,8 +20,7 @@
 			"BX LR\n\t" : : [immediate] "I" (no))
 
 /** Perform syscall.
- * @param no number of syscall. This must be compile time deducible. You can't use
- * enumerations here. Only verbatim numbers and macros are permissible here.
+ * @param no number of syscall. 
  */
 #define __SVC(no) ___SVC(no)
 

@@ -1,3 +1,12 @@
+/** @defgroup libs Libraries
+ * Optional libraries providing extended functionality.
+ *
+ * CMRX offers a small set of libraries that extend its functionality in some way.
+ * Their use is purely optional, CMRX kernel does not need depend on them. Some of these
+ * libraries provide new servers, while some others provide basic implementation of APIs 
+ * which have to be implemented by the integrator normally.
+ */
+
 /** @defgroup util_assert Assertions
  *
  * @ingroup util

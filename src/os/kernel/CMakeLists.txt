@@ -3,7 +3,7 @@
 add_definitions(-fomit-frame-pointer)
 
 if (NOT TESTING)
-    set(os_SRCS isr.c rpc.c sched.c signal.c timer.c)
+    set(os_SRCS isr.c rpc.c sched.c signal.c syscall.c timer.c)
 else()
 	set(os_SRCS sched.c timer.c)
 endif()

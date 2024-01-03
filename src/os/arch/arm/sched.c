@@ -1,4 +1,4 @@
-/** @defgroup arch_arm_sched Kernel scheduler
+/** @defgroup arch_arm_sched Scheduler implementation
  *
  * @ingroup arch_arm
  *
@@ -23,6 +23,7 @@
 #define STATIC static
 #endif
 
+
 #include <cmrx/assert.h>
 
 /** Populate stack of new thread so it can be executed.
@@ -46,15 +47,6 @@ uint32_t * os_thread_populate_stack(int stack_id, unsigned stack_size, entrypoin
 
 }
 
-
-/** Create process using process definition.
- * Takes process definition and initializes MPU regions for process out of it.
- * @param process_id ID of process to be initialized
- * @param definition process definition. This is constructed at compile time using OS_APPLICATION macros
- * @returns E_OK if process was contructed properly, E_INVALID if process ID is already used or
- * if process definition contains invalid section boundaries. E_OUT_OF_RANGE is returned if process ID
- * requested is out of limits given by the size of process table.
- */
 int os_process_create(Process_t process_id, const struct OS_process_definition_t * definition)
 {
 	if (process_id >= OS_PROCESSES)
@@ -81,7 +73,10 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 	return E_OK;
 }
 
-__attribute__((naked,noreturn)) void os_boot_thread(Thread_t boot_thread)
+/// @cond IGNORE
+__attribute__((naked,noreturn)) 
+/// @endcond
+void os_boot_thread(Thread_t boot_thread)
 {
     // Start this thread
     // We are adding 8 here, because normally pend_sv_handler would be reading 8 general 

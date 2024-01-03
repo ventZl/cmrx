@@ -3,15 +3,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <cmrx/interface.h>
-/** @defgroup bsw Basic Software
- *
- * CMRX offers small palette of services and toolkits serving the purpose of basic 
- * foundation for building higher software layers.
- */
-
 /** @defgroup bsw_com Communication abstraction
  *
- * @ingroup bsw
+ * @ingroup libs
  *
  * Communication abstraction offers transport-independent way of communication. Abstract 
  * mechanisms offered here cover one-way communication either as a producer
