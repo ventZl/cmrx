@@ -4,46 +4,20 @@
  */
 #include <stdint.h>
 #include <cmrx/os/syscall.h>
-#include <cmrx/os/syscalls.h>
-#include <cmrx/os/rpc.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/timer.h>
-#include <cmrx/os/signal.h>
 
 #include <cmrx/os/sched.h>
-#include <cmrx/assert.h>
 #include <cmrx/os/sanitize.h>
 
 #include <arch/sysenter.h>
 #include <arch/cortex.h>
 
-/** List of syscalls provided by the kernel.
- * This table lists syscall ID and syscall handler for each supported
- * syscall.
- */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wcast-function-type"
-
-static const struct Syscall_Entry_t syscalls[] = {
-	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
-	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
-	{ SYSCALL_RPC_CALL, (Syscall_Handler_t) &os_rpc_call },
-	{ SYSCALL_RPC_RETURN, (Syscall_Handler_t) &os_rpc_return },
-	{ SYSCALL_THREAD_CREATE, (Syscall_Handler_t) &os_thread_create },
-	{ SYSCALL_THREAD_JOIN, (Syscall_Handler_t) &os_thread_join },
-	{ SYSCALL_THREAD_EXIT, (Syscall_Handler_t) &os_thread_exit },
-	{ SYSCALL_USLEEP, (Syscall_Handler_t) &os_usleep },
-	{ SYSCALL_SETITIMER, (Syscall_Handler_t) &os_setitimer },
-	{ SYSCALL_SIGNAL, (Syscall_Handler_t) &os_signal },
-	{ SYSCALL_KILL, (Syscall_Handler_t) &os_kill },
-	{ SYSCALL_SETPRIORITY, (Syscall_Handler_t) &os_setpriority }
-};
-#pragma GCC diagnostic pop
-
-/** Kernel entrypoint for system call handlers.
+/** ARM-specific entrypoint for system call handlers.
  *
  * This routine is common entrypoint for all syscall routines. It decodes
- * the syscall ID requested by userspace application and finds it's handler.
+ * the syscall ID requested by userspace application and calls generic
+ * method to service the system call. It is callable by executing the SVC 
+ * instruction. Code of SVC_Handler will retrieve the requested SVC ID and
+ * let generic machinery to execute specified system call.
  * @param arg0 syscall argument
  * @param arg1 syscall argument
  * @param arg2 syscall argument
@@ -55,21 +29,9 @@ __attribute__((used)) void SVC_Handler(uint32_t arg0, uint32_t arg1, uint32_t ar
 	sanitize_psp(psp);
 	uint16_t * lra = (uint16_t *) *(psp + 6);
 	uint8_t syscall_id = *(lra - 1);
-	ASSERT(syscall_id < 16);
-	for (unsigned q = 0; q < (sizeof(syscalls) / sizeof(syscalls[0])); ++q)
-	{
-		if (syscalls[q].id == syscall_id)
-		{
-			uint32_t rv = syscalls[q].handler(arg0, arg1, arg2, arg3);
-			*(psp) = rv;
-			return; /*asm volatile("BX lr");*/
-		}
-	}
-
-	*(psp) = 0xFF;
-	__ISB();
-	__DSB();
-	return;
+    uint32_t rv = os_system_call(arg0, arg1, arg2, arg3, syscall_id);
+    *(psp) = rv;
+    return; /*asm volatile("BX lr");*/
 }
 
 /** @} */

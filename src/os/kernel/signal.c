@@ -6,6 +6,17 @@
 #include <cmrx/ipc/signal.h>
 #include <cmrx/os/sched.h>
 
+int os_signal(int signo, void (*sighandler)(int))
+{
+    (void) signo;
+    /* @todo: what to do with signo? */
+	uint8_t thread_id = os_get_current_thread();
+	ASSERT(thread_id < OS_THREADS);
+
+	os_threads[thread_id].signal_handler = sighandler;
+	return 0;
+}
+
 int os_kill(uint8_t thread_id, uint8_t signal_id)
 {
 	ASSERT(thread_id < OS_THREADS);

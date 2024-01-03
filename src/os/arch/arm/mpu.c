@@ -307,6 +307,8 @@ int mpu_clear_region(uint8_t region)
 	return E_OK;
 }
 
+/** @} */
+
 void os_memory_protection_start()
 {
 	mpu_set_region(OS_MPU_REGION_EXECUTABLE, (const void *) code_base(), code_size(), MPU_RX);
@@ -320,5 +322,4 @@ int mpu_init_stack(int thread_id)
 
 }
 
-/** @} */
 

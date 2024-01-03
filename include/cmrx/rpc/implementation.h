@@ -57,40 +57,21 @@
  * @section api_rpc_objects RPC objects (services)
  *
  * After the interface has been implemented for certain process, it is possible to create 
- * objects which can be manipulated using the given interface. Objects serve as the actual
- * data storage for the implementation of the interface. Object structure is thus bound with
- * the interface implementation. The only limitation given to objects is that they have to 
- * contain a pointer to vtable instance, which is the first member of the XXXXXXXXXX.
- * Remote procedure call mechanism in CMRX is built on top of class-like interfaces.
- * Party, which provides an interface, always provides two entities to the caller. First of them
- * is opaque pointer to the interface instance (let's call it object). Object resides in memory
- * space of it's provider and it is usually inaccesible by the user, because memory areas of
- * different processes are separated by the means of MPU. Second entity provided to the caller
- * is interface description (let's call it virtual method table). This table contains names
- * and prototypes of methods, which can be called for any given object. Caller can then call
- * any method using wrapper rpc_call, method name and object pointer.
+ * structures which can be manipulated using the given interface. These services store the actual
+ * data for the implementation of the interface. Object structure is thus bound with
+ * the interface implementation. The only limitation given to services is that they have to 
+ * contain a pointer to vtable instance, which is the first member of the structure holding 
+ * service state. This will be checked at compile time and build will fail if service designer
+ * fails to stick to this rule.
  *
  * @section api_rpc_instances RPC service instances
  *
- * wadda wadda
- * Caller thus does not need any details on what is actual organization of objects internals,
- * neither does need to care about calling the right method to perform correct operation on
- * correct object type. On the other side, this organization offers some degree of abstraction,
- * because offering party can declare, that interface is of some generic kind (such as ComSource),
- * but internally, it can implement completely distinct object, which only offers interface
- * compatible with one announced.
- *
- * Another significant property of remote procedure calls is that they are truly remote.
- * Caller and callee may reside in two completely different processes. RPC call is performed via
- * kernel, which will ensure, that thread, which called RPC method, will gain access to address
- * space of callee process exclusively just for the duration of method call. Immediately after 
- * method finishes, access to address space of callee is removed. On the other hand, callee won't
- * gain automatic access to caller's address space. This arrangement minimizes possible damage, 
- * which can be caused either by malfunctioning caller, or callee. In order to enable sharing 
- * of larger portions of memory between caller and callee, there is separate mechanism of
- * @ref api_shared, which enables callee access to specified portions of caller's address space.
- *
- *
+ * Where RPC service is a type which provides data storage to RPC interface implementation,
+ * the service instance is actual existing instance of this service. Service can't be used 
+ * until instantiated. This instance can be allocated and initialized statically or dynamically.
+ * There are no limitations on where the instance resides other than limitations imposed by the
+ * memory protection mechanism. An instance of service translates to variable having the type
+ * of RPC service.
  *
  * @{
  */

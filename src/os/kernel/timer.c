@@ -13,15 +13,32 @@
 #include <stdbool.h>
 #include <cmrx/clock.h>
 
+/** Description of one sleep request.
+ * Contains details required to calculate when the next sleep interrupt shall happen
+ * and to determine which request shall be the next.
+ */
 struct TimerEntry_t {
-	uint32_t sleep_from;
-	uint32_t interval;
-	uint8_t thread_id;
+	uint32_t sleep_from;      ///< time at which sleep has been requested
+	uint32_t interval;        ///< amount of time sleep shall take
+	uint8_t thread_id;        ///< thread ID which requested the sleep
 };
 
+/** List of all delays requested from kernel.
+ * This structure contains all scheduled sleeps requested by all threads.
+ * Every thread can technically request one periodic timer and one one-shot
+ * delay.
+ */
 struct TimerEntry_t sleepers[SLEEPERS_MAX];
 
+/** Determine if interval in sleep entry is periodic or not.
+ * @returns 1 if interval is periodic, 0 if interval is one-shot.
+ */
 #define IS_PERIODIC(interval) (((interval) >> 31) == 1)
+
+/** Get how long the sleep should take.
+ * Will clean the periodicity flag from interval.
+ * @returns sleep time in microseconds.
+ */
 #define GET_SLEEPTIME(interval) ((interval) & (~(1 << 31)))
 
 /** Perform heavy lifting of setting timers
@@ -118,32 +135,14 @@ static int cancel_timed_event(Thread_t owner, bool periodic)
 	return E_NOTAVAIL;
 }
 
+/** Perform short busy wait.
+ * This will perform busywait in the context of current thread.
+ * Useful to do short waits for I/O.
+ * @param period_us how long the wait should take
+ */
 static void delay_us(uint32_t period_us)
 {
     timing_provider_delay(period_us);
-
-/*
-    #warning "I am dirty!"
-    #warning "I am ignoring shims!"
-    #warning "I should not be here!"
-    #warning "I do not provide correct timing!"
-	dwt_enable_cycle_counter();
-	uint32_t start = dwt_read_cycle_counter();
-	uint32_t end = start + (period_us * 64);
-	uint32_t run = 1;
-	do {
-		uint32_t curr = dwt_read_cycle_counter();
-		if (end > start)
-		{
-			if (curr >= end)
-				run = 0;
-		}
-		else
-		{
-			if (curr >= end && curr < start)
-				run = 0;
-		}
-	} while (run);*/
 }
 
 int os_usleep(unsigned microseconds)
@@ -176,6 +175,12 @@ void os_timer_init()
 	}
 }
 
+/** Helper function to calculate time considering type wraparound.
+ * This function will calculate the final time considering timer wraparound.
+ * @param sleep_from time at which the sleep starts (microseconds)
+ * @param microtime duration of sleep (microseconds)
+ * @returns new value of kernel timer at the end of sleep
+ */
 static uint32_t get_sleep_time(uint32_t sleep_from, uint32_t microtime)
 {
 	if (sleep_from < microtime)

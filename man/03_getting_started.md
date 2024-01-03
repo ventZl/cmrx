@@ -59,7 +59,7 @@ target_add_applications(helloworld init)
 ~~~~
 
 Above example makes a choice of the ARM target architecture and CMSIS-based HAL. More on
-how to integrate with hal below. It also mentions two source files: `main.c` and `hello.c`. Lets create both of them:
+how to integrate with HALs below. It also mentions two source files: `main.c` and `hello.c`. Lets create both of them:
 
 main.c:
 ~~~~~{.c}
@@ -87,7 +87,6 @@ CMRX_APPLICATION(init);
 CMRX_APPLICATION_MMIO_RANGE(init);
 CMRX_THREAD_CREATE(init, main, NULL, 64);
 ~~~~~
-
 
 This constructs the minimal example. It is not buildable yet, because we have to integrate
 startup files provided by the HAL somehow. CMRX using CMSIS expects that RTE_components.h

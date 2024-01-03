@@ -5,19 +5,19 @@
  * 
  * CMRX kernel needs source of clock to perform certain tasks, such as preemptive
  * multi-threading and reliable implementation of delays and timers. This resource
- * is not provided by the kernel itself. It is a task of the implementor to provide 
+ * is not provided by the kernel itself. It is a task of the integrator to provide 
  * suitable implementation of calls which form the API of timing provider. This
- * gives the implementor a possibility to choose the source of clock which suits his
+ * gives the integrator a possibility to choose the source of clock which suits his
  * intended purposes the best.
  *
  * The design of timing provider API is done in a way that it is possible to implement
- * CPU core power management here as the call directly informs the implementor on how
- * long the kernel is not expecting any CPU activity. Implementor is free to perform
+ * CPU core power management here as the call directly informs the integrator on how
+ * long the kernel is not expecting any CPU activity. Integrator is free to perform
  * the delay in any way available on the target HW, including shutting down the CPU 
  * as long as the method implemented is able to resume CPU operation in requested time
  * or very close to it.
  *
- * Kernel source tree provides an auxiliary implementation of timing provider based on
+ * Kernel source tree provides @ref aux_systick based on
  * ARM Cortex-M SysTick peripheral. This implementation lacks any form of power management
  * as the SysTick peripheral is only running if CPU clock is also running. It can be used
  * to bootstrap the kernel on the target HW or debug problems with more complex timing 
@@ -52,8 +52,9 @@
  * has passed. This call is asynchronous in terms that the timing provider shall return 
  * immediately after it sets up timer to trigger after certain amount of time.
  *
- * Once the hardware timer triggers the delay, the timing provider shall call the callback
- * of the kernel notifying it, that given amount of time has passed.
+ * Once the hardware timer triggers the delay, the timing provider shall call the 
+ * @ref os_sched_timing_callback() of the kernel notifying it, that given amount of time 
+ * has passed.
  * @{
  */
 

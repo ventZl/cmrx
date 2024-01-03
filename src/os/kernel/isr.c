@@ -1,5 +1,17 @@
 /** @defgroup os_isr Interrupt service routines
  * @ingroup os 
+ *
+ * Routines available from running interrupt service routine context.
+ *
+ * By default, all the interrupt service routines have higher priority than the kernel
+ * service call handler. CMRX is not expecthing this to change. This configuration causes
+ * that service call handler is not callable from within interrupt service handlers. 
+ * Following routines are provided so that interrupt service routines can ask kernel 
+ * to perform certain tasks while in servicing interrupt.
+ *
+ * Never perform direct calls into kernel other than methods listed in this group. These
+ * methods are not reentrant and calling them from within interrupt handler may corrupt 
+ * kernel internal state.
  * @{ 
  */
 #include <cmrx/ipc/isr.h>
