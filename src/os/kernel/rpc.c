@@ -6,11 +6,7 @@
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/rpc.h>
 #include <arch/sysenter.h>
-#include <conf/kernel.h>
 #include <cmrx/os/sched.h>
-
-/** Constant denoting unknown owning process ID of VTable. */
-#define E_VTABLE_UNKNOWN			0xFF
 
 /// @cond IGNORE
 /// This is documented in the Kernel API group
@@ -75,5 +71,6 @@ Process_t rpc_stack_top()
 	}
 	return E_VTABLE_UNKNOWN;
 }
+
 
 /** @} */
