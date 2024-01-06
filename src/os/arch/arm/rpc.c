@@ -44,7 +44,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 		return E_INVALID_ADDRESS;
 	}
 	
-	if (0 /*!rpc_stack_push(process_id)*/)
+	if (!rpc_stack_push(process_id))
 	{
 		return E_IN_TOO_DEEP;
 	}
@@ -70,7 +70,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	set_exception_argument(remote_frame, 0, (uint32_t) service);
 	set_exception_argument(remote_frame, 5, 0xAA55AA55);
-	set_exception_pc_lr(remote_frame, method, 0 /* rpc_return */);
+	set_exception_pc_lr(remote_frame, method, rpc_return);
 	
 	__set_PSP((uint32_t) remote_frame);
 
@@ -96,12 +96,12 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	ExceptionFrame * local_frame = 0; //pop_exception_frame(remote_frame, 2);
 	
-	int pstack_depth = 0; //rpc_stack_pop();
+	int pstack_depth = rpc_stack_pop();
 	Process_t process_id;
 
 	if (pstack_depth > 0)
 	{
-		process_id = 0; //rpc_stack_top();
+		process_id = rpc_stack_top();
 	}
 	else
 	{

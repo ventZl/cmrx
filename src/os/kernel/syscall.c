@@ -1,9 +1,11 @@
 #include "cmrx/defines.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/syscall.h>
 #include <cmrx/assert.h>
+#include <arch/sysenter.h>
 
 #include <cmrx/os/rpc.h>
 #include <cmrx/os/sched.h>
