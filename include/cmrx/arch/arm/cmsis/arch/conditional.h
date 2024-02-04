@@ -51,6 +51,7 @@ ALWAYS_INLINE static inline void __CLREX()
 			);
 }
 
+#if 0
 /** Get value of process SP
  * @return top of application stack
  */
@@ -65,6 +66,7 @@ ALWAYS_INLINE static inline void * __get_PSP(void)
 
 	return psp;
 }
+#endif
 
 /** Get value of process LR
  * @return top of application stack
@@ -81,6 +83,7 @@ ALWAYS_INLINE static inline void * __get_LR(void)
 	return psp;
 }
 
+#if 0
 /** Set value of process SP
  * @param stack_top new top of application stack
  */
@@ -92,6 +95,7 @@ ALWAYS_INLINE static inline void __set_PSP(unsigned long * stack_top)
 			: : "r" (stack_top)
 	);
 }
+#endif
 
 #if 0
 /** Save application context.
@@ -143,6 +147,7 @@ ALWAYS_INLINE static inline void load_context(uint32_t * sp)
 }
 #endif
 
+#if 0
 ALWAYS_INLINE static inline void __set_CONTROL(uint32_t control)
 {
 	asm volatile("MSR control, %0\n" : : "r" (control) : "memory");
@@ -158,6 +163,7 @@ ALWAYS_INLINE static inline void __ISB()
 	asm volatile("ISB\n" : : : "memory");	
 //	asm volatile("ISB 0xF\n" : : : "memory");	
 }
+#endif
 
 ALWAYS_INLINE static inline void __ISR_return()
 {

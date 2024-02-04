@@ -2,6 +2,10 @@
  * @{
  */
 
+#include <RTE_Components.h>
+#include CMSIS_device_header
+
+
 #include <cmrx/ipc/mutex.h>
 #include <cmrx/ipc/thread.h>
 #include <arch/conditional.h>
