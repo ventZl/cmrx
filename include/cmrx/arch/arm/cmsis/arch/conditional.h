@@ -11,6 +11,7 @@
 
 #define ALWAYS_INLINE __attribute__((always_inline))
 
+#if 0
 /** Intrinsic access to ARM LDREXB instruction.
  * @param addr address to load from
  * @return 8-bit value read from addr
@@ -25,7 +26,9 @@ ALWAYS_INLINE static inline uint8_t __LDREXB(uint8_t * addr)
 			);
 	return retval;
 }
+#endif
 
+#if 0
 /** Intrinsic access to ARM STREXB instruction.
  * @param addr address to store to
  * @param value 8-bit value to be stored to addr
@@ -43,13 +46,16 @@ ALWAYS_INLINE static inline int __STREXB(uint8_t * addr, uint8_t value)
 
 	return status;
 }
+#endif
 
+#if 0
 ALWAYS_INLINE static inline void __CLREX()
 {
 	asm volatile(
 			"CLREX\n\t"
 			);
 }
+#endif
 
 #if 0
 /** Get value of process SP

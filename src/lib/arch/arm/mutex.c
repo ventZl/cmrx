@@ -11,7 +11,7 @@
 #include <arch/conditional.h>
 #include <cmrx/defines.h>
 
-#ifdef __ARM_ARCH_7M__
+#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_7EM__
 
 /** Lock futex.
  * Perform atomic futex lock. It is possible to lock futex which is either completely unlocked,
@@ -115,6 +115,12 @@ static inline int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 
 #ifdef __ARM_ARCH_6M__
 
+/* ARM v6M does not support loat/store exclusive. v6M relies on kernel calls
+ * to implement this functionality. As of now this has two major issues:
+ * 1. kernel does not actually implement the calls 
+ * 2. even if it did, it will be massively slow
+ */ 
+
 #include <arch/sysenter.h>
 
 __SYSCALL int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
@@ -136,16 +142,15 @@ __SYSCALL int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 
 #endif
 
-#if 0
-int mutex_init(mutex_t * restrict mutex)
+int futex_init(futex_t * restrict futex)
 {
-	mutex->owner = 0xFF;
-	mutex->flags |= MUTEX_INITIALIZED;
-	mutex->state = 0;
+	futex->owner = 0xFF;
+	futex->state = MUTEX_INITIALIZED;
+	futex->flags = 0;
 	return 0;
 }
 
-int mutex_destroy(mutex_t * mutex)
+int futex_destroy(mutex_t * mutex)
 {
 	mutex->owner = 0xFF;
 	mutex->flags = 0;
@@ -153,102 +158,6 @@ int mutex_destroy(mutex_t * mutex)
 	return 0;
 }
 
-int mutex_lock(mutex_t * mutex)
-{
-	// claim "exclusivity" on mutex
-	uint8_t tmp_state;
-	uint8_t thread_id = get_tid();
-	while (1) {
-		tmp_state = __LDREXB(&mutex->state);
-		if (mutex->owner != thread_id && mutex->owner != 0xFF)
-		{
-//			sched_yield();
-			continue;
-		}
-		if (tmp_state == 0)
-		{
-			int success = __STREXB(&mutex->state, 1);
-			// STREXB writes 0, if store was successful
-			if (success == 0)
-			{
-				mutex->owner = thread_id;
-				return 0;
-			}
-			else
-			{
-				sched_yield();
-				continue;
-			}
-		}
-	}
-}
-
-
-int mutex_trylock(mutex_t * mutex)
-{
-	// claim "exclusivity" on mutex
-	uint8_t tmp_state = __LDREXB(&(mutex->state));
-	uint8_t thread_id = get_tid();
-	if (mutex->owner != thread_id)
-	{
-		__CLREX();
-		return E_BUSY;
-	}
-	if (tmp_state == 0)
-	{
-		int success = __STREXB(&(mutex->state), 1);
-		if (success == 0)
-		{
-			mutex->owner = thread_id;
-			return 0;
-		}
-		else
-		{
-			return E_DEADLK;
-		}
-	}
-	__CLREX();
-	return E_DEADLK;
-}
-
-int mutex_unlock(mutex_t * mutex)
-{
-	uint8_t tmp_state = __LDREXB(&mutex->state);
-	uint8_t thread_id = get_tid();
-	if (mutex->owner != thread_id)
-	{
-		__CLREX();
-		return E_BUSY;
-	}
-
-	if (tmp_state == 0)
-	{
-		// mutex is unlocked, so what now?
-		__CLREX();
-		return 0;
-	}
-
-	int success = 1;
-	do
-	{
-		tmp_state = __LDREXB(&mutex->state);
-		success = __STREXB(&mutex->state, 0);
-	} while (success != 0);
-	
-	mutex->owner = 0xFF;
-
-	return 0;
-}
-
-#endif
-
-int futex_init(futex_t * restrict futex)
-{
-	futex->owner = 0xFF;
-	futex->state = 0;
-	futex->flags = 0;
-	return 0;
-}
 
 int futex_lock(futex_t * futex)
 {
