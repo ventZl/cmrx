@@ -13,6 +13,10 @@
 #include <stdio.h>
 #endif
 
+/** @ingroup arch_arm_mpu 
+ * @{
+ */
+
 /** MPU region access rights.
  * This array maps CMRX access modes to ARM access modes
  * See @ref enum MPU_Flags for meaning of individual indices.
@@ -303,6 +307,8 @@ int mpu_clear_region(uint8_t region)
 	return E_OK;
 }
 
+/** @} */
+
 void os_memory_protection_start()
 {
 	mpu_set_region(OS_MPU_REGION_EXECUTABLE, (const void *) code_base(), code_size(), MPU_RX);
@@ -315,3 +321,5 @@ int mpu_init_stack(int thread_id)
     return mpu_set_region(OS_MPU_REGION_STACK, &os_stacks.stacks[thread_stack], sizeof(os_stacks.stacks[thread_stack]), MPU_RW);
 
 }
+
+

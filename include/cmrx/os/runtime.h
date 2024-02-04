@@ -6,9 +6,6 @@
  * scheduler. Scheduler can be started up after basic HW setup is done by calling 
  * @ref os_start(). This will collect all auto-started threads, prepare them and
  * start thread scheduler. All other mechanisms are built around thread scheduler.
- */
-
-/** @ingroup os_kernel
  * @{
  */
 #pragma once
@@ -51,6 +48,11 @@ enum ThreadState {
  * for whoever will call @ref thread_join() as thread exit status.
  */
 typedef int (entrypoint_t)(void *);
+
+/** RPC call owner process stack.
+ * This stack records owners of nested RPC calls. It can accomodate up to 8 owners
+ * which means 8 nested RPC calls.
+ */
 typedef Process_t OS_RPC_stack[8];
 
 struct OS_process_t;
@@ -183,7 +185,11 @@ struct OS_thread_create_t {
 
 /** Scheduler notion on existing threads. */
 extern struct OS_thread_t os_threads[OS_THREADS];
+
+/** Scheduler notion on existing processes. */
 extern struct OS_process_t os_processes[OS_PROCESSES];
+
+/** Scheduler notion on existing stacks. */
 extern struct OS_stack_t os_stacks;
 
 
@@ -194,9 +200,9 @@ extern struct OS_stack_t os_stacks;
  * CPUs.
  */
 struct OS_core_state_t {
-	Thread_t thread_prev;
-	Thread_t thread_current;
-	Thread_t thread_next;
+	Thread_t thread_prev; ///< previously running thread ID
+	Thread_t thread_current; ///< ID of thread which is currently executed
+	Thread_t thread_next; ///< ID of thread which will be scheduled once thread switch occurs.
 };
 
 

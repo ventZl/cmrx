@@ -2,33 +2,76 @@
 
 /** @addtogroup api_rpc
  *
- * Remote procedure call mechanism in CMRX is built on top of class-like interfaces.
- * Party, which provides an interface, always provides two entities to the caller. First of them
- * is opaque pointer to the interface instance (let's call it object). Object resides in memory
- * space of it's provider and it is usually inaccesible by the user, because memory areas of
- * different processes are separated by the means of MPU. Second entity provided to the caller
- * is interface description (let's call it virtual method table). This table contains names
- * and prototypes of methods, which can be called for any given object. Caller can then call
- * any method using wrapper rpc_call, method name and object pointer.
+ * API to create remote procedure call services and to call them.
  *
- * Caller thus does not need any details on what is actual organization of objects internals,
- * neither does need to care about calling the right method to perform correct operation on
- * correct object type. On the other side, this organization offers some degree of abstraction,
- * because offering party can declare, that interface is of some generic kind (such as ComSource),
- * but internally, it can implement completely distinct object, which only offers interface
- * compatible with one announced.
+ * @section api_rpc_overview RPC mechanism overview 
+ * 
+ * RPC mechanism is client-server-like mechanism based on interfaces. First, the interface
+ * must exist. This interface defines a range of operations that can be performed on some 
+ * object. Next, any process within CMRX is free to provide an implementation of this interface.
+ * Then, it can define as many objects which support this implementation as it wants.
  *
- * Another significant property of remote procedure calls is that they are truly remote.
- * Caller and callee may reside in two completely different processes. RPC call is performed via
- * kernel, which will ensure, that thread, which called RPC method, will gain access to address
- * space of callee process exclusively just for the duration of method call. Immediately after 
- * method finishes, access to address space of callee is removed. On the other hand, callee won't
- * gain automatic access to caller's address space. This arrangement minimizes possible damage, 
- * which can be caused either by malfunctioning caller, or callee. In order to enable sharing 
- * of larger portions of memory between caller and callee, there is separate mechanism of
- * @ref api_shared, which enables callee access to specified portions of caller's address space.
+ * Any other process (even the same) - client can then call the implemented operations on 
+ * the object as long as it knows the address of the object in the memory. For the client, the
+ * internal structure and content of the object are opaque and inaccessible. It can only call
+ * methods this object support in the implementation. The validity of call is checked
+ * at compile time. The validity of pointers is checked at runtime.
  *
+ * @section api_rpc_interface RPC interfaces (vtables)
  *
+ * RPC interfaces are defined in a form of type definition of structures containing pointers 
+ * to functions. The sole purpose of interfaces is to declare a set of operations that are 
+ * available for certain types of objects. Interfaces never provide any implementation, not 
+ * even default one. Interfaces shall be as abstract as the topic of the interface possibly 
+ * allows. The interface may consist of any amount of functions that have following limitations:
+ *  * first argument to the function call must be pointer to the object 
+ *  * other than the pointer to the object, functions can have 0 to 4 arguments that must be 
+ *  * integers.
+ * Interfaces never contain any data members, only pointer to functions. To make the code more
+ * readable, there is a helper macro to identify the pointer to object, named @ref INSTANCE().
+ * A type declaration, which consists exclusively of pointer-to-function members and these
+ * members follow the rules for RPC API are called vtables.
+ *
+ * @section api_rpc_implementation Implementation of RPC interfaces
+ *
+ * Each process willing to provide RPC calls - the server - has to provide an implementation
+ * of these interfaces. The implementation of interface is performed by defining functions
+ * having prototypes equivalent to prototypes of vtable member functions. Unlike interfaces,
+ * where the pointer-to-object argument has no specific type (as the interface is abstract),
+ * with implementations it is necessary to type this pointer correctly. This is second 
+ * responsibility of the @ref INSTANCE() macro. During the implementation phase, it typecasts
+ * the `this` pointer to correct type, so strong type safety can be achieved.
+ *
+ * Any amount of processes within one firmware can implement one specific interface. There is 
+ * no limitation on this. One process can even provide multiple implementations of the same
+ * interface, for example in case that it manages multiple objects of different type, which 
+ * all provide the same manipulation semantics.
+ *
+ * In order to publish an implementation of some interface, a process must create a variable
+ * using desired interface's vtable structure. This variable will be initialized to contain
+ * pointers to functions that implement the interface. This variable **must** be defined within
+ * one of process' modules and **must** be prefixed by the @ref VTABLE keyword otherwise the
+ * kernel will refuse calls using such implementation for security reasons. This variable is 
+ * known as vtable instance.
+ *
+ * @section api_rpc_objects RPC objects (services)
+ *
+ * After the interface has been implemented for certain process, it is possible to create 
+ * structures which can be manipulated using the given interface. These services store the actual
+ * data for the implementation of the interface. Object structure is thus bound with
+ * the interface implementation. The only limitation given to services is that they have to 
+ * contain a pointer to vtable instance, which is the first member of the structure holding 
+ * service state. This will be checked at compile time and build will fail if service designer
+ * fails to stick to this rule.
+ *
+ * @section api_rpc_instances RPC service instances
+ *
+ * Where RPC service is a type which provides data storage to RPC interface implementation,
+ * the service instance is actual existing instance of this service. Service can't be used 
+ * until instantiated. This instance can be allocated and initialized statically or dynamically.
+ * There are no limitations on where the instance resides other than limitations imposed by the
+ * memory protection mechanism. An instance of service translates to variable having the type
+ * of RPC service.
  *
  * @{
  */

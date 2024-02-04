@@ -4,6 +4,16 @@
  *
  * Kernel offers mechanism to interrupt, or periodically schedule execution of 
  * thread.
+ *
+ * Kernel API provides two kinds of interruptions: one-time and periodic. one-time
+ * interruption is always synchronous - the thread won't be given control until delay
+ * elapses. Kernel is free to schedule any other thread in this time if delay is long
+ * enough.
+ *
+ * Periodic delays are always asynchronous - the thread won't be stopped after the 
+ * delay is scheduled. Once the delay elapses, kernel will deliver a signal to the 
+ * requesting thread. If thread has nothing to do until the delay elapses, it may
+ * stop itself via calling @ref kill() using @ref SIG_STOP signal.
  */
 
 /** @ingroup api_timer

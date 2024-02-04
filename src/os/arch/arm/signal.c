@@ -1,3 +1,8 @@
+/** @defgroup arch_arm_signal Signals implementation
+ * @ingroup arch_arm
+ * @{
+ */
+
 #include <cmrx/os/signal.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/assert.h>
@@ -6,17 +11,6 @@
 #include <cmrx/defines.h>
 #include <cmrx/os/syscall.h>
 #include <arch/cortex.h>
-
-int os_signal(int signo, void (*sighandler)(int))
-{
-    (void) signo;
-    /* @todo: what to do with signo? */
-	uint8_t thread_id = os_get_current_thread();
-	ASSERT(thread_id < OS_THREADS);
-
-	os_threads[thread_id].signal_handler = sighandler;
-	return 0;
-}
 
 /** Perform signal delivery in thread's userspace.
  * This "function" is ever only called from os_deliver_signal(). It stores
@@ -39,7 +33,6 @@ __attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *si
 			);
 }
 
-//static void os_deliver_signal(uint8_t thread_id, uint32_t signals)
 void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 {
 	ExceptionFrame * frame;
@@ -111,4 +104,4 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 	}
 }
 
-
+/** @} */

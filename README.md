@@ -21,9 +21,6 @@ Additionally CMRX offers basic set of IPC features:
 * remote procedure call: kernel can dispatch call performed using interface and 
   method ID and then provide result back to the caller.
 
-TBD:
-* registering RPC services as syscalls
-
 In line with microkernel architecture, operating system itself does not offer
 any non-essential services. Instead of this, there is a mechanism, which allows
 implementation of various services and system calls using standalone processes,
@@ -33,3 +30,5 @@ CMRX does not offer any specific set of higher RTOS API. The only API (optional)
 CMRX offers is POSIX-compatible threading and signal API. Absence of any
 specific RTOS API is intentional. No defined higher API means, that on top of
 CMRX kernel, any API can be implemented, be it CMSIS-RTOS or OSEK OS.
+
+

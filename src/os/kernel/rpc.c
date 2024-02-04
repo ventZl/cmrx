@@ -1,16 +1,20 @@
+/** @defgroup os_rpc RPC implementation
+ * @ingroup os
+ * @{
+ */
 #include <cmrx/os/syscall.h>
 #include <cmrx/os/syscalls.h>
 #include <cmrx/os/rpc.h>
 #include <arch/sysenter.h>
-#include <conf/kernel.h>
 #include <cmrx/os/sched.h>
 
-#define E_VTABLE_UNKNOWN			0xFF
-
+/// @cond IGNORE
+/// This is documented in the Kernel API group
 __SYSCALL void rpc_return()
 {
 	__SVC(SYSCALL_RPC_RETURN);
 }
+/// @endcond
 
 Process_t get_vtable_process(VTable_t * vtable)
 {
@@ -69,3 +73,4 @@ Process_t rpc_stack_top()
 }
 
 
+/** @} */

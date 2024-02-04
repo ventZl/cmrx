@@ -2,6 +2,8 @@
  *
  * @ingroup api
  *
+ * API for sending signals and handling incoming signals.
+ *
  * Threads can send signals asynchronously to each other. Kernel provides
  * mechanism to register signal handler, which gets executed whenever thread
  * receives a signal. There are two kinds of signals:

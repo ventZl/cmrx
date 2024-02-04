@@ -1,3 +1,7 @@
+/** @defgroup arch_arm_static Static initialization
+ * @ingroup arch_arm 
+ * Implementation of retrieving static initialization structures.
+ * @{ */
 #include "cmrx/os/runtime.h"
 #include <cmrx/os/arch/static.h>
 
@@ -29,3 +33,4 @@ const struct OS_process_definition_t * static_init_process_table()
     return &__applications_start;
 }
 
+/// @}

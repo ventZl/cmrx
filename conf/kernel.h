@@ -1,11 +1,16 @@
-/** @ingroup config
+/** @defgroup os_config Kernel runtime configuration
+ * Compile-time configuration of kernel runtime parameters.
+ * Some kernel properties can be configured statically at compile-time. For some of them
+ * it is the only way to configure them at all.
  * @{
  */
 #pragma once
 
-/** This turns on memory protection globally */
+/** This turns on memory protection globally.
+ * This is a partially obsolete and unsupported option. CMRX does not support running 
+ * without memory protection activated as certain mechanism in the kernel are directly
+ * expecting MPU will intervene on specific bad behavior of the application. */
 #define KERNEL_HAS_MEMORY_PROTECTION
-//#undef KERNEL_HAS_MEMORY_PROTECTION
 
 /** How many MPU regions are saved per thread */
 #define MPU_STATE_SIZE			7

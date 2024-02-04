@@ -1,13 +1,15 @@
-/** @defgroup os Kernel internals
- *
- * Following documents kernel internals. You should only ever be interested in this part of
- * CMRX if you intend to develop kernel server, extend CMRX kernel or you came accross a bug
- * or poorly documented part of kernel API.
- */
-
 /** @defgroup api Kernel API
  *
- * Following documents public API available for userspace threads.
+ * Public API for userspace code to interface with the kernel.
+ *
+ * This API provides access to all services of the CMRX RTOS and covers all callbacks CMRX 
+ * might have into integrators's code. This API is designed to be cross-platform compatible
+ * and from the userspace point of view, it is presented as functions that can be called.
+ *
+ * For certain purposes, mainly for customization, CMRX might require integrator to provide
+ * some callbacks that CMRX can call. These callbacks are also cross-platform compatible and
+ * allow the integrator to customize some basic services such as clock source and power
+ * management.
  *
  * @{
  */
@@ -32,6 +34,10 @@
 #define E_IN_TOO_DEEP			11
 /** @} */
 
+/** Name the null pointer.
+ * NULL is not a C name, rather than POSIX one. Introduce it here so we can
+ * have a named null pointer rather than a magic constant.
+ */
 #define NULL					((void *) 0)
 
 /** Data type used for thread IDs */
@@ -40,5 +46,6 @@ typedef uint8_t Thread_t;
 /** Data type used for process IDs */
 typedef uint8_t Process_t;
 
+/** @} */
 /** @} */
 

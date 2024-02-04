@@ -3,6 +3,13 @@
  * @ingroup os
  *
  * Kernel internals in support for MPU configuration.
+ * 
+ * Real implementation of memory protection is heavily dependant on specific
+ * hardware capabilities. See @ref arch_arch for details on expected API supported by
+ * architecture support layer regarding memory protection.
+ */
+
+/** @ingroup os_mpu
  * @{
  */
 #pragma once

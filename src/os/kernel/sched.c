@@ -1,3 +1,7 @@
+/** @defgroup os_sched Thread scheduling 
+ * @ingroup os 
+ * @{
+ */
 #include <stdint.h>
 #include <conf/kernel.h>
 #include <arch/corelocal.h>
@@ -14,6 +18,8 @@
 #include <cmrx/clock.h>
 #include <string.h>
 
+#define STACK_ALIGN 
+
 typedef uint8_t Thread_t;
 
 /** List of active threads. */
@@ -25,8 +31,15 @@ struct OS_process_t os_processes[OS_PROCESSES];
 /** CPU scheduling thread IDs */
 static struct OS_core_state_t core[OS_NUM_CORES];
 
+#define PRIORITY_INVALID    0x1FFU
+#define PRIORITY_MAX        0xFFU
+#define STACK_INVALID       0xFFFFFFFFU
+
+/// @cond IGNORE
+__attribute__((aligned(1024))) 
+/// @endcond
 /** Thread stacks */
-__attribute__((aligned(1024))) struct OS_stack_t os_stacks;
+struct OS_stack_t os_stacks;
 
 /** Amount of real time advance per one scheduler tick. */
 extern uint32_t sched_tick_increment;
@@ -34,7 +47,9 @@ extern uint32_t sched_tick_increment;
 /** Current scheduler real time */
 static uint32_t sched_microtime = 0;
 
+/* Forward declaration. */
 int os_thread_alloc(Process_t process, uint8_t priority);
+
 /** Obtain next thread to run.
  *
  * This function performs thread list lookup. It searches for thread, which 
@@ -47,7 +62,7 @@ int os_thread_alloc(Process_t process, uint8_t priority);
  */
 bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 {
-	uint16_t best_prio = 0x1FF;
+	uint16_t best_prio = PRIORITY_INVALID;
 	uint8_t candidate_thread;
 	uint8_t thread = current_thread;
 
@@ -74,7 +89,7 @@ bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 	ASSERT(loops > 0);
 //	ASSERT(candidate_thread != current_thread);
 
-	if (best_prio < 0x100 && candidate_thread != current_thread)
+	if (best_prio <= PRIORITY_MAX && candidate_thread != current_thread)
 	{
 		*next_thread = candidate_thread;
 		return true;
@@ -184,12 +199,14 @@ uint32_t os_get_micro_time(void)
 	return sched_microtime;
 }
 
+/// @cond IGNORE 
+__attribute__((noreturn)) 
+/// @endcond
 /** CMRX idle thread.
  *
  * This thread runs whenever no other CMRX thread is ready to be run.
- * It does nothing useful.
- */
-__attribute__((noreturn)) int os_idle_thread(void * data)
+ * It does nothing useful. */
+int os_idle_thread(void * data)
 {
     (void) data;
 	while (1);
@@ -197,7 +214,7 @@ __attribute__((noreturn)) int os_idle_thread(void * data)
 
 /** Find free stack slot and allocate it.
  * @return If there is at least one free stack slot, then return it's ID. If no free stack
- * is available, return 0xFFFFFFFF.
+ * is available, return STACK_INVALID constant.
  */
 int os_stack_create()
 {
@@ -212,7 +229,7 @@ int os_stack_create()
 		stack_mask *= 2;
 	}
 
-	return 0xFFFFFFFF;
+	return STACK_INVALID;
 }
 
 unsigned long * os_stack_get(int stack_id)
@@ -482,3 +499,5 @@ struct OS_thread_t * os_thread_get(Thread_t thread_id)
 {
     return &os_threads[thread_id];
 }
+
+/** @} */

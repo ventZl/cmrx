@@ -4,10 +4,14 @@
  *
  * @ingroup api
  *
- * During remote procedure call, called procedure has no access to memory area
- * of calling thread / process. This is to ensure robustness. If caller needs
- * to communicate larger chunk of data with RPC callee, then it must be passed
- * either via stack or using shared memory section.
+ * API to declare memory as shared between two processes.
+ *
+ * CMRX does not allow for unconditional sharing of memory between two processes. 
+ * Memory can be shared only between two processes during the remote procedure call.
+ * Even at this time, the process which serves the RPC does not have full access to 
+ * the caller's memory. This is to ensure robustness. If client has a need 
+ * to communicate larger chunk of data with RPC server, then the buffer holding this 
+ * data must be marked as belonging to the shared memory.
  */
 
 /** @ingroup api_shared
