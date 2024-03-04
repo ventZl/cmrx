@@ -1,7 +1,7 @@
 C Microkernel Realtime eXecutive
 ================================
 
-This is realtime, mikrokernel operating system with fully static operation currently 
+This is realtime, mickrokernel operating system with fully static operation currently 
 targeted towards Cortex-M microcontrollers having usable support for MPU. Currently 
 microcontrollers based on Cortex-M0+, Cortex-M3, Cortex-M4 and Cortex-M7 are known 
 to be supported.
