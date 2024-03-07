@@ -27,9 +27,10 @@ include(FindCMSIS)
 # Set variables for CMRX to select the right architecture and HAL
 set(CMRX_ARCH arm)
 set(CMRX_HAL cmsis)
+# To get access to special commands
 include(CMRX)
 
-# To get access to special commands
+# To compile CMRX source
 add_subdirectory(cmrx)
 
 # Create firmware, main.c has to host void main(void) function
