@@ -1,4 +1,4 @@
-\page intro Introduction
+\mainpage Introduction
 
 CMRX is a realtime operating system targeting Cortex-M hardware built around several core ideas:
 
