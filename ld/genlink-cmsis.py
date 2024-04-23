@@ -1,4 +1,3 @@
-from __future__ import print_function
 from pprint import pprint
 import sys
 import os
@@ -756,9 +755,7 @@ class Parser:
         '''
         token = Token()
         while True:
-#            print("Token before read (%d, \"%s\")"  % (token.type, token.value))
-            c = file.read(1)
-#            print("Read: '%c'" % (c))
+            c = file.read(1).decode()
             if (c == '' and token.type != NONE):
                 return token
 
@@ -1147,7 +1144,7 @@ if (todo.create is not None):
     external files. These files then contain process-specific directives for explicit
     deployment. This makes use of ARM MPU possible.
     '''
-    ifile = open(todo.create[0], "r")
+    ifile = open(todo.create[0], "rb")
 
     parser = LinkerScriptParser()
     linker_file = parser.parse(ifile)
@@ -1184,7 +1181,7 @@ elif (todo.add_application is not None):
     sections = [ "bss", "data", "shared", "text", "vtable", "inst" ]
     for section in sections:
         file_name = todo.add_application[2] + "/gen."+todo.add_application[1]+"."+section+".ld"
-        ifile = open(file_name, "r")
+        ifile = open(file_name, "rb")
         parser = LinkerScriptParser()
         linker_file = parser.parse(ifile)
         ifile.close()
@@ -1208,7 +1205,7 @@ elif (todo.realign is not None):
     the binary is deleted as it won't be bootable due to MPU regions misalignment.
 
     '''
-    ifile = open(todo.realign[0], "r")
+    ifile = open(todo.realign[0], "rb")
     parser = MapFileParser()
     map_file = parser.parse(ifile)
     map_file.process()
@@ -1220,7 +1217,7 @@ elif (todo.realign is not None):
     sections = [ "bss", "data", "shared", "text" ]
     for section in sections:
         linker_file_name = todo.realign[2] + "/gen." + todo.realign[1] + "." + section + ".ld"
-        ifile = open(linker_file_name, "r")
+        ifile = open(linker_file_name, "rb")
         parser = LinkerScriptParser()
         old_linker_file = parser.parse(ifile)
 
