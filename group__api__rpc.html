@@ -103,7 +103,26 @@ $(document).ready(function(){initNavTree('group__api__rpc.html',''); initResizab
   <div class="headertitle"><div class="title">Remote Procedure Calls<div class="ingroups"><a class="el" href="group__api.html">Kernel API</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+
+<p>API to create remote procedure call services and to call them.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaac2c999e12c83857c3437c413cb7d47c" id="r_gaac2c999e12c83857c3437c413cb7d47c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__rpc.html#gaac2c999e12c83857c3437c413cb7d47c">IMPLEMENTATION</a>(service)&#160;&#160;&#160;CMRX_IMPLEMENTATION_HELPER(service, CMRX__INTERFACE__COUNTER)</td></tr>
+<tr class="memdesc:gaac2c999e12c83857c3437c413cb7d47c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin implementation of interface for service.  <br /></td></tr>
+<tr class="separator:gaac2c999e12c83857c3437c413cb7d47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3467c0dc3f1f95bb00289609f2ce35f8" id="r_ga3467c0dc3f1f95bb00289609f2ce35f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__rpc.html#ga3467c0dc3f1f95bb00289609f2ce35f8">IMPLEMENTATION_OF</a>(service,  interface)</td></tr>
+<tr class="memdesc:ga3467c0dc3f1f95bb00289609f2ce35f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended version of IMPLEMENTATION macro.  <br /></td></tr>
+<tr class="separator:ga3467c0dc3f1f95bb00289609f2ce35f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac79f9e6f9c7223d603a5ac7365617ea7" id="r_gac79f9e6f9c7223d603a5ac7365617ea7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__rpc.html#gac79f9e6f9c7223d603a5ac7365617ea7">INSTANCE</a>(a)&#160;&#160;&#160;void * a ## _</td></tr>
+<tr class="memdesc:gac79f9e6f9c7223d603a5ac7365617ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark function argument as reference to current service instance.  <br /></td></tr>
+<tr class="separator:gac79f9e6f9c7223d603a5ac7365617ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50383951d2a9d4f1a855b2cec5e03274" id="r_ga50383951d2a9d4f1a855b2cec5e03274"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__rpc.html#ga50383951d2a9d4f1a855b2cec5e03274">this</a>&#160;&#160;&#160;CMRX_THIS_HELPER(CMRX__INTERFACE__COUNTER)</td></tr>
+<tr class="memdesc:ga50383951d2a9d4f1a855b2cec5e03274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access current service instance.  <br /></td></tr>
+<tr class="separator:ga50383951d2a9d4f1a855b2cec5e03274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API to create remote procedure call services and to call them. </p>
 <h1><a class="anchor" id="api_rpc_overview"></a>
 RPC mechanism overview</h1>
@@ -127,22 +146,6 @@ RPC objects (services)</h1>
 <h1><a class="anchor" id="api_rpc_instances"></a>
 RPC service instances</h1>
 <p>Where RPC service is a type which provides data storage to RPC interface implementation, the service instance is actual existing instance of this service. Service can't be used until instantiated. This instance can be allocated and initialized statically or dynamically. There are no limitations on where the instance resides other than limitations imposed by the memory protection mechanism. An instance of service translates to variable having the type of RPC service. </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaac2c999e12c83857c3437c413cb7d47c" id="r_gaac2c999e12c83857c3437c413cb7d47c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__rpc.html#gaac2c999e12c83857c3437c413cb7d47c">IMPLEMENTATION</a>(service)&#160;&#160;&#160;CMRX_IMPLEMENTATION_HELPER(service, CMRX__INTERFACE__COUNTER)</td></tr>
-<tr class="memdesc:gaac2c999e12c83857c3437c413cb7d47c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin implementation of interface for service.  <br /></td></tr>
-<tr class="separator:gaac2c999e12c83857c3437c413cb7d47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3467c0dc3f1f95bb00289609f2ce35f8" id="r_ga3467c0dc3f1f95bb00289609f2ce35f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__rpc.html#ga3467c0dc3f1f95bb00289609f2ce35f8">IMPLEMENTATION_OF</a>(service,  interface)</td></tr>
-<tr class="memdesc:ga3467c0dc3f1f95bb00289609f2ce35f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended version of IMPLEMENTATION macro.  <br /></td></tr>
-<tr class="separator:ga3467c0dc3f1f95bb00289609f2ce35f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac79f9e6f9c7223d603a5ac7365617ea7" id="r_gac79f9e6f9c7223d603a5ac7365617ea7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__rpc.html#gac79f9e6f9c7223d603a5ac7365617ea7">INSTANCE</a>(a)&#160;&#160;&#160;void * a ## _</td></tr>
-<tr class="memdesc:gac79f9e6f9c7223d603a5ac7365617ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark function argument as reference to current service instance.  <br /></td></tr>
-<tr class="separator:gac79f9e6f9c7223d603a5ac7365617ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50383951d2a9d4f1a855b2cec5e03274" id="r_ga50383951d2a9d4f1a855b2cec5e03274"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__rpc.html#ga50383951d2a9d4f1a855b2cec5e03274">this</a>&#160;&#160;&#160;CMRX_THIS_HELPER(CMRX__INTERFACE__COUNTER)</td></tr>
-<tr class="memdesc:ga50383951d2a9d4f1a855b2cec5e03274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access current service instance.  <br /></td></tr>
-<tr class="separator:ga50383951d2a9d4f1a855b2cec5e03274"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gaac2c999e12c83857c3437c413cb7d47c" name="gaac2c999e12c83857c3437c413cb7d47c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaac2c999e12c83857c3437c413cb7d47c">&#9670;&#160;</a></span>IMPLEMENTATION</h2>

@@ -103,9 +103,9 @@ $(document).ready(function(){initNavTree('group__arch__arm__rpc.html',''); initR
   <div class="headertitle"><div class="title">RPC implementation<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__arm.html">ARM port</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Implementation of RPC mechanism for ARM Cortex-M processors. </p>
-<p>When running on Cortex-M, remote procedure call is performed by injecting an artificial exception frame which causes code to jump to the called routine instead of returning to where it came from. Returning will then jump into specially crafted routine, that injects rpc_return system call. This restores the previous state of caller's stack while copying the return value. </p>
+
+<p>Implementation of RPC mechanism for ARM Cortex-M processors.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -120,6 +120,9 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_return syscall.  <br /></td></tr>
 <tr class="separator:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Implementation of RPC mechanism for ARM Cortex-M processors. </p>
+<p>When running on Cortex-M, remote procedure call is performed by injecting an artificial exception frame which causes code to jump to the called routine instead of returning to where it came from. Returning will then jump into specially crafted routine, that injects rpc_return system call. This restores the previous state of caller's stack while copying the return value. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga241bd76bc39dd9597dd818fc530bec57" name="ga241bd76bc39dd9597dd818fc530bec57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga241bd76bc39dd9597dd818fc530bec57">&#9670;&#160;</a></span>_rpc_call()</h2>

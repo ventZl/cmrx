@@ -105,45 +105,9 @@ $(document).ready(function(){initNavTree('group__bsw__com.html',''); initResizab
   <div class="headertitle"><div class="title">Communication abstraction<div class="ingroups"><a class="el" href="group__libs.html">Libraries</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Communication abstraction offers transport-independent way of communication. </p>
-<p>Abstract mechanisms offered here cover one-way communication either as a producer or as a consumer and two-way communication. These mechanisms internally use CMRX RPC interfaces, thus actual implementation of communication interfaces is fully up to provider / consumer.</p>
-<p>Main advantage of abstract communication interfaces is, that it is possible to change communication channel without need of changing higher layers of the software. This improves portability and reusability of the code.</p>
-<p>You can use communication abstraction in a following way:</p>
-<p>Depending on if your communication is uni- or bi-directional and what direction the data flows, choose from one of three interfaces offered here: <a class="el" href="structComSink.html" title="Sink - write end of simplex channel.">ComSink</a>, <a class="el" href="structComSource.html" title="Source - read end of simplex channel.">ComSource</a> or <a class="el" href="structComChannel.html" title="Channel - bidirectional communication channel.">ComChannel</a>. Each of these provides pre-defined virtual method table and very lean "virtual" class, which only publishes virtual method table itself. Therefore you are free to provide your own data members and means of how any of these interfaces is implemented.</p>
-<p>Next, create your own interface using virtual method table of previously chosen interface, such as:</p>
-<div class="fragment"><div class="line"><span class="keyword">struct </span>MySourceImplementation {</div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structComSourceVMT.html">ComSourceVMT</a> * vtable;</div>
-<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> my_member;</div>
-<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> my_member_two;</div>
-<div class="line">};</div>
-<div class="ttc" id="astructComSourceVMT_html"><div class="ttname"><a href="structComSourceVMT.html">ComSourceVMT</a></div><div class="ttdoc">Methods implemented by the interface of class ComSource.</div><div class="ttdef"><b>Definition</b> com.h:142</div></div>
-</div><!-- fragment --><p>Next, if you create instance of this interface, you need to initialize the vtable of your interface. You can do it such as:</p>
-<div class="fragment"><div class="line"><span class="comment">// declare, which class will actually be accessible from within methods</span></div>
-<div class="line"><span class="preprocessor">#define CLASS struct MySourceImplementation</span></div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// prototypes of methods of interface implementations</span></div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> my_source_read(SELF, uint8_t * data, <span class="keywordtype">unsigned</span> max_len);</div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">bool</span> my_source_ready(SELF);</div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> my_source_set_notify(SELF, <span class="keyword">struct</span> <a class="code hl_struct" href="structComNotification.html">ComNotification</a> * listener, uint32_t <a class="code hl_function" href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a>);</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// map methods into slots of interface vtable</span></div>
-<div class="line"><span class="keyword">static</span> <a class="code hl_define" href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a> <span class="keyword">struct </span><a class="code hl_struct" href="structComSourceVMT.html">ComSourceVMT</a> my_source_vtable = {</div>
-<div class="line">    &amp;my_source_read,</div>
-<div class="line">    &amp;my_source_ready,</div>
-<div class="line">    &amp;my_source_set_notify</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// create interface instance</span></div>
-<div class="line"><span class="keyword">static</span> <span class="keyword">struct </span>MySourceImplementation instance = {</div>
-<div class="line">    &amp;my_source_vtable,</div>
-<div class="line">    1,</div>
-<div class="line">    2</div>
-<div class="line">};</div>
-<div class="ttc" id="agroup__api__init_html_gaa4a137442c139400b647ac62b40ea51a"><div class="ttname"><a href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a></div><div class="ttdeci">#define VTABLE</div><div class="ttdef"><b>Definition</b> application.h:21</div></div>
-<div class="ttc" id="agroup__api__signal_html_gaca5040b15e7a554d7d6a99a0b89efcd8"><div class="ttname"><a href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a></div><div class="ttdeci">__SYSCALL int signal(int signo, void(*sighandler)(uint32_t))</div><div class="ttdoc">Register function as current thread signal handler.</div><div class="ttdef"><b>Definition</b> signal.c:7</div></div>
-<div class="ttc" id="astructComNotification_html"><div class="ttname"><a href="structComNotification.html">ComNotification</a></div><div class="ttdef"><b>Definition</b> com.h:130</div></div>
-</div><!-- fragment --><p>As you can see, You don't need to provide your own declaration of virtual method table. All you need to do is to provide your own methods to be filled into vtable of chosen interface. Another advantage of this approach is that you can pass instance of <code>MySourceImplementation</code> class whenever, when <a class="el" href="structComSource.html" title="Source - read end of simplex channel.">ComSource</a> is expected. This will work transparently. Methods you've provided will have access to full details of class <code>MySourceImplementation</code>, while caller will simply treat your class as if it was generic <code><a class="el" href="structComSource.html" title="Source - read end of simplex channel.">ComSource</a></code> class. </p>
+
+<p>Communication abstraction offers transport-independent way of communication.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -182,6 +146,45 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1861d01ee10efbd041270df16815a8db" id="r_ga1861d01ee10efbd041270df16815a8db"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bsw__com.html#ga1861d01ee10efbd041270df16815a8db">foo</a> (int bar)</td></tr>
 <tr class="separator:ga1861d01ee10efbd041270df16815a8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Communication abstraction offers transport-independent way of communication. </p>
+<p>Abstract mechanisms offered here cover one-way communication either as a producer or as a consumer and two-way communication. These mechanisms internally use CMRX RPC interfaces, thus actual implementation of communication interfaces is fully up to provider / consumer.</p>
+<p>Main advantage of abstract communication interfaces is, that it is possible to change communication channel without need of changing higher layers of the software. This improves portability and reusability of the code.</p>
+<p>You can use communication abstraction in a following way:</p>
+<p>Depending on if your communication is uni- or bi-directional and what direction the data flows, choose from one of three interfaces offered here: <a class="el" href="structComSink.html" title="Sink - write end of simplex channel.">ComSink</a>, <a class="el" href="structComSource.html" title="Source - read end of simplex channel.">ComSource</a> or <a class="el" href="structComChannel.html" title="Channel - bidirectional communication channel.">ComChannel</a>. Each of these provides pre-defined virtual method table and very lean "virtual" class, which only publishes virtual method table itself. Therefore you are free to provide your own data members and means of how any of these interfaces is implemented.</p>
+<p>Next, create your own interface using virtual method table of previously chosen interface, such as:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>MySourceImplementation {</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structComSourceVMT.html">ComSourceVMT</a> * vtable;</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> my_member;</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> my_member_two;</div>
+<div class="line">};</div>
+<div class="ttc" id="astructComSourceVMT_html"><div class="ttname"><a href="structComSourceVMT.html">ComSourceVMT</a></div><div class="ttdoc">Methods implemented by the interface of class ComSource.</div><div class="ttdef"><b>Definition</b> com.h:142</div></div>
+</div><!-- fragment --><p>Next, if you create instance of this interface, you need to initialize the vtable of your interface. You can do it such as:</p>
+<div class="fragment"><div class="line"><span class="comment">// declare, which class will actually be accessible from within methods</span></div>
+<div class="line"><span class="preprocessor">#define CLASS struct MySourceImplementation</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// prototypes of methods of interface implementations</span></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> my_source_read(SELF, uint8_t * data, <span class="keywordtype">unsigned</span> max_len);</div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">bool</span> my_source_ready(SELF);</div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> my_source_set_notify(SELF, <span class="keyword">struct</span> <a class="code hl_struct" href="structComNotification.html">ComNotification</a> * listener, uint32_t <a class="code hl_function" href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// map methods into slots of interface vtable</span></div>
+<div class="line"><span class="keyword">static</span> <a class="code hl_define" href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a> <span class="keyword">struct </span><a class="code hl_struct" href="structComSourceVMT.html">ComSourceVMT</a> my_source_vtable = {</div>
+<div class="line">    &amp;my_source_read,</div>
+<div class="line">    &amp;my_source_ready,</div>
+<div class="line">    &amp;my_source_set_notify</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// create interface instance</span></div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">struct </span>MySourceImplementation instance = {</div>
+<div class="line">    &amp;my_source_vtable,</div>
+<div class="line">    1,</div>
+<div class="line">    2</div>
+<div class="line">};</div>
+<div class="ttc" id="agroup__api__init_html_gaa4a137442c139400b647ac62b40ea51a"><div class="ttname"><a href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a></div><div class="ttdeci">#define VTABLE</div><div class="ttdef"><b>Definition</b> application.h:21</div></div>
+<div class="ttc" id="agroup__api__signal_html_gaca5040b15e7a554d7d6a99a0b89efcd8"><div class="ttname"><a href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a></div><div class="ttdeci">__SYSCALL int signal(int signo, void(*sighandler)(uint32_t))</div><div class="ttdoc">Register function as current thread signal handler.</div><div class="ttdef"><b>Definition</b> signal.c:7</div></div>
+<div class="ttc" id="astructComNotification_html"><div class="ttname"><a href="structComNotification.html">ComNotification</a></div><div class="ttdef"><b>Definition</b> com.h:130</div></div>
+</div><!-- fragment --><p>As you can see, You don't need to provide your own declaration of virtual method table. All you need to do is to provide your own methods to be filled into vtable of chosen interface. Another advantage of this approach is that you can pass instance of <code>MySourceImplementation</code> class whenever, when <a class="el" href="structComSource.html" title="Source - read end of simplex channel.">ComSource</a> is expected. This will work transparently. Methods you've provided will have access to full details of class <code>MySourceImplementation</code>, while caller will simply treat your class as if it was generic <code><a class="el" href="structComSource.html" title="Source - read end of simplex channel.">ComSource</a></code> class. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga0046e741f355150b05ac97f456e39482" name="ga0046e741f355150b05ac97f456e39482"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga0046e741f355150b05ac97f456e39482">&#9670;&#160;</a></span>COM_NOTIFICATION</h2>

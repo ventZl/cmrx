@@ -103,7 +103,23 @@ $(document).ready(function(){initNavTree('group__api__timing.html',''); initResi
   <div class="headertitle"><div class="title">Timing provider API<div class="ingroups"><a class="el" href="group__api.html">Kernel API</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+
+<p>API providing clock source to the kernel.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa382f230650e9c08f3d5dec13da6fbd4" id="r_gaa382f230650e9c08f3d5dec13da6fbd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#gaa382f230650e9c08f3d5dec13da6fbd4">timing_provider_schedule</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
+<tr class="memdesc:gaa382f230650e9c08f3d5dec13da6fbd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedule next timer callback to kernel.  <br /></td></tr>
+<tr class="separator:gaa382f230650e9c08f3d5dec13da6fbd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32ca98f569fe077cd53c29a5417f80de" id="r_ga32ca98f569fe077cd53c29a5417f80de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#ga32ca98f569fe077cd53c29a5417f80de">timing_provider_delay</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
+<tr class="memdesc:ga32ca98f569fe077cd53c29a5417f80de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform tight busy-wait delay.  <br /></td></tr>
+<tr class="separator:ga32ca98f569fe077cd53c29a5417f80de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2eee99d75e6b65c227f65a6880f2e9f" id="r_gad2eee99d75e6b65c227f65a6880f2e9f"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
+<tr class="memdesc:gad2eee99d75e6b65c227f65a6880f2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel callback for timing provider.  <br /></td></tr>
+<tr class="separator:gad2eee99d75e6b65c227f65a6880f2e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API providing clock source to the kernel. </p>
 <p>CMRX kernel needs source of clock to perform certain tasks, such as preemptive multi-threading and reliable implementation of delays and timers. This resource is not provided by the kernel itself. It is a task of the integrator to provide suitable implementation of calls which form the API of timing provider. This gives the integrator a possibility to choose the source of clock which suits his intended purposes the best.</p>
 <p>The design of timing provider API is done in a way that it is possible to implement CPU core power management here as the call directly informs the integrator on how long the kernel is not expecting any CPU activity. Integrator is free to perform the delay in any way available on the target HW, including shutting down the CPU as long as the method implemented is able to resume CPU operation in requested time or very close to it.</p>
@@ -123,19 +139,6 @@ Precise synchronous delays</h1>
 Asynchronous delays involving power management</h1>
 <p>This kind of delay is used when kernel needs to be notified that certain amount of time has passed. This call is asynchronous in terms that the timing provider shall return immediately after it sets up timer to trigger after certain amount of time.</p>
 <p>Once the hardware timer triggers the delay, the timing provider shall call the <a class="el" href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback()</a> of the kernel notifying it, that given amount of time has passed. </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaa382f230650e9c08f3d5dec13da6fbd4" id="r_gaa382f230650e9c08f3d5dec13da6fbd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#gaa382f230650e9c08f3d5dec13da6fbd4">timing_provider_schedule</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
-<tr class="memdesc:gaa382f230650e9c08f3d5dec13da6fbd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedule next timer callback to kernel.  <br /></td></tr>
-<tr class="separator:gaa382f230650e9c08f3d5dec13da6fbd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32ca98f569fe077cd53c29a5417f80de" id="r_ga32ca98f569fe077cd53c29a5417f80de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#ga32ca98f569fe077cd53c29a5417f80de">timing_provider_delay</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
-<tr class="memdesc:ga32ca98f569fe077cd53c29a5417f80de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform tight busy-wait delay.  <br /></td></tr>
-<tr class="separator:ga32ca98f569fe077cd53c29a5417f80de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2eee99d75e6b65c227f65a6880f2e9f" id="r_gad2eee99d75e6b65c227f65a6880f2e9f"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
-<tr class="memdesc:gad2eee99d75e6b65c227f65a6880f2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel callback for timing provider.  <br /></td></tr>
-<tr class="separator:gad2eee99d75e6b65c227f65a6880f2e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gad2eee99d75e6b65c227f65a6880f2e9f" name="gad2eee99d75e6b65c227f65a6880f2e9f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad2eee99d75e6b65c227f65a6880f2e9f">&#9670;&#160;</a></span>os_sched_timing_callback()</h2>

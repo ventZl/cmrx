@@ -103,12 +103,9 @@ $(document).ready(function(){initNavTree('group__arch.html',''); initResizable()
   <div class="headertitle"><div class="title">Architecture support<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Layer containing bits that are specific to each supported architecture. </p>
-<p>Most of the kernel is written in platform-independent style. Still this platform-indepentent kernel has to have architecture support layer that does the low level work. Here is the documentation of these parts.</p>
-<p>Section <a class="el" href="group__arch__arch.html">Porting layer</a> documents the API you have to provide if you want to port CMRX to a new architecture. This usually translates to new <b>CPU</b> architecture as different platforms using some already supported CPU don't need kernel to be ported again.</p>
-<p>Other sections describe port(s) already done.</p>
-<p>Architecture layer linked to the kernel depends on setting of CMake variable CMRX_ARCH. The architecture layer then forms library named <code>cmrx_arch</code> which CMRX automatically links. </p>
+
+<p>Layer containing bits that are specific to each supported architecture.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
 Modules</h2></td></tr>
@@ -119,6 +116,12 @@ Modules</h2></td></tr>
 <tr class="memdesc:group__arch__arch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Description of CMRX porting layer. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Layer containing bits that are specific to each supported architecture. </p>
+<p>Most of the kernel is written in platform-independent style. Still this platform-indepentent kernel has to have architecture support layer that does the low level work. Here is the documentation of these parts.</p>
+<p>Section <a class="el" href="group__arch__arch.html">Porting layer</a> documents the API you have to provide if you want to port CMRX to a new architecture. This usually translates to new <b>CPU</b> architecture as different platforms using some already supported CPU don't need kernel to be ported again.</p>
+<p>Other sections describe port(s) already done.</p>
+<p>Architecture layer linked to the kernel depends on setting of CMake variable CMRX_ARCH. The architecture layer then forms library named <code>cmrx_arch</code> which CMRX automatically links. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->

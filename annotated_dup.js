@@ -1,0 +1,25 @@
+var annotated_dup =
+[
+    [ "ComChannel", "structComChannel.html", "structComChannel" ],
+    [ "ComChannelVMT", "structComChannelVMT.html", "structComChannelVMT" ],
+    [ "ComNotification", "structComNotification.html", "structComNotification" ],
+    [ "ComNotificationVMT", "structComNotificationVMT.html", "structComNotificationVMT" ],
+    [ "ComSink", "structComSink.html", "structComSink" ],
+    [ "ComSinkVMT", "structComSinkVMT.html", "structComSinkVMT" ],
+    [ "ComSource", "structComSource.html", "structComSource" ],
+    [ "ComSourceVMT", "structComSourceVMT.html", "structComSourceVMT" ],
+    [ "ExceptionFrame", "structExceptionFrame.html", "structExceptionFrame" ],
+    [ "futex_t", "structfutex__t.html", "structfutex__t" ],
+    [ "MPU_Registers", "structMPU__Registers.html", "structMPU__Registers" ],
+    [ "OS_core_state_t", "structOS__core__state__t.html", "structOS__core__state__t" ],
+    [ "OS_MPU_region", "structOS__MPU__region.html", "structOS__MPU__region" ],
+    [ "OS_process_definition_t", "structOS__process__definition__t.html", "structOS__process__definition__t" ],
+    [ "OS_process_t", "structOS__process__t.html", "structOS__process__t" ],
+    [ "OS_stack_t", "structOS__stack__t.html", "structOS__stack__t" ],
+    [ "OS_thread_create_t", "structOS__thread__create__t.html", "structOS__thread__create__t" ],
+    [ "OS_thread_t", "structOS__thread__t.html", "structOS__thread__t" ],
+    [ "RPC_Service_t_", "structRPC__Service__t__.html", "structRPC__Service__t__" ],
+    [ "Syscall_Entry_t", "structSyscall__Entry__t.html", "structSyscall__Entry__t" ],
+    [ "TimerEntry_t", "structTimerEntry__t.html", "structTimerEntry__t" ],
+    [ "timeval", "structtimeval.html", "structtimeval" ]
+];

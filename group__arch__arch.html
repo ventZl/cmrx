@@ -103,7 +103,41 @@ $(document).ready(function(){initNavTree('group__arch__arch.html',''); initResiz
   <div class="headertitle"><div class="title">Porting layer<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+
+<p>Description of CMRX porting layer.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga2b816407f1b57d532407988a5da92716" id="r_ga2b816407f1b57d532407988a5da92716"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a> ()</td></tr>
+<tr class="memdesc:ga2b816407f1b57d532407988a5da92716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start memory protection.  <br /></td></tr>
+<tr class="separator:ga2b816407f1b57d532407988a5da92716"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1e98b6b913a67b51e041e4e9002a399" id="r_gad1e98b6b913a67b51e041e4e9002a399"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399">mpu_init_stack</a> (int thread_id)</td></tr>
+<tr class="memdesc:gad1e98b6b913a67b51e041e4e9002a399"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize MPU for stack of thread.  <br /></td></tr>
+<tr class="separator:gad1e98b6b913a67b51e041e4e9002a399"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaccaca933ccccec5a6f6808252b4a5fbc" id="r_gaccaca933ccccec5a6f6808252b4a5fbc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc">mpu_restore</a> (const MPU_State *hosted_state, const MPU_State *parent_state)</td></tr>
+<tr class="memdesc:gaccaca933ccccec5a6f6808252b4a5fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load MPU settings.  <br /></td></tr>
+<tr class="separator:gaccaca933ccccec5a6f6808252b4a5fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ee8f29f3009ad125af02a612603504f" id="r_ga9ee8f29f3009ad125af02a612603504f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga9ee8f29f3009ad125af02a612603504f">os_rpc_call</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
+<tr class="memdesc:ga9ee8f29f3009ad125af02a612603504f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_call syscall.  <br /></td></tr>
+<tr class="separator:ga9ee8f29f3009ad125af02a612603504f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b0268c1c8ecd0d6e3194f0f52be350c" id="r_ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
+<tr class="memdesc:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_return syscall.  <br /></td></tr>
+<tr class="separator:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1e4c4f6735a5acd050873acdb00cdbf" id="r_gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a> ()</td></tr>
+<tr class="memdesc:gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides count of statically initialized threads.  <br /></td></tr>
+<tr class="separator:gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab06a63362ae820b797a3bf0b1c6386a0" id="r_gab06a63362ae820b797a3bf0b1c6386a0"><td class="memItemLeft" align="right" valign="top">const struct <a class="el" href="structOS__thread__create__t.html">OS_thread_create_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gab06a63362ae820b797a3bf0b1c6386a0">static_init_thread_table</a> ()</td></tr>
+<tr class="memdesc:gab06a63362ae820b797a3bf0b1c6386a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides address of statically initialized thread table.  <br /></td></tr>
+<tr class="separator:gab06a63362ae820b797a3bf0b1c6386a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4128fe30c4eef560ae2dc025e89abf2" id="r_gad4128fe30c4eef560ae2dc025e89abf2"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gad4128fe30c4eef560ae2dc025e89abf2">static_init_process_count</a> ()</td></tr>
+<tr class="memdesc:gad4128fe30c4eef560ae2dc025e89abf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides count of statically initialized processes.  <br /></td></tr>
+<tr class="separator:gad4128fe30c4eef560ae2dc025e89abf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40ff64621b791a06874bb7ca27a9164e" id="r_ga40ff64621b791a06874bb7ca27a9164e"><td class="memItemLeft" align="right" valign="top">const struct <a class="el" href="structOS__process__definition__t.html">OS_process_definition_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e">static_init_process_table</a> ()</td></tr>
+<tr class="memdesc:ga40ff64621b791a06874bb7ca27a9164e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides address of statically intialized process table.  <br /></td></tr>
+<tr class="separator:ga40ff64621b791a06874bb7ca27a9164e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Description of CMRX porting layer. </p>
 <p>CMRX expects that the following functions are provided by architecture support layer. If creating new layer, these functions have to be implemented.</p>
 <p>This list is by no means definitive. Each architecture will require its own mechanisms to be implemented so the kernel can actually work. Mechanisms CMRX requires to be present in the architecture and be implemented are:</p><ul>
@@ -154,37 +188,6 @@ Port implementation sources</h1>
 <p>Optionally, additional mechanisms can be implemented in the port, such as:</p>
 <p>mechanism to handle certain types of program faults. This handler might be useful in determining if the root cause of the fault was a memory protection violation and to send the signal to kill the failing thread.</p>
 <p>mechanism to defer thread switch. CMRX is written in a way, that thread switch is expected to be executed after the system call / interrupt service handler or kernel callback has finished its run. If target architecture doesn't support this behavior, this mechanism does not need to be implemented. </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga2b816407f1b57d532407988a5da92716" id="r_ga2b816407f1b57d532407988a5da92716"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a> ()</td></tr>
-<tr class="memdesc:ga2b816407f1b57d532407988a5da92716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start memory protection.  <br /></td></tr>
-<tr class="separator:ga2b816407f1b57d532407988a5da92716"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1e98b6b913a67b51e041e4e9002a399" id="r_gad1e98b6b913a67b51e041e4e9002a399"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399">mpu_init_stack</a> (int thread_id)</td></tr>
-<tr class="memdesc:gad1e98b6b913a67b51e041e4e9002a399"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize MPU for stack of thread.  <br /></td></tr>
-<tr class="separator:gad1e98b6b913a67b51e041e4e9002a399"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaccaca933ccccec5a6f6808252b4a5fbc" id="r_gaccaca933ccccec5a6f6808252b4a5fbc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc">mpu_restore</a> (const MPU_State *hosted_state, const MPU_State *parent_state)</td></tr>
-<tr class="memdesc:gaccaca933ccccec5a6f6808252b4a5fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load MPU settings.  <br /></td></tr>
-<tr class="separator:gaccaca933ccccec5a6f6808252b4a5fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ee8f29f3009ad125af02a612603504f" id="r_ga9ee8f29f3009ad125af02a612603504f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga9ee8f29f3009ad125af02a612603504f">os_rpc_call</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
-<tr class="memdesc:ga9ee8f29f3009ad125af02a612603504f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_call syscall.  <br /></td></tr>
-<tr class="separator:ga9ee8f29f3009ad125af02a612603504f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b0268c1c8ecd0d6e3194f0f52be350c" id="r_ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
-<tr class="memdesc:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_return syscall.  <br /></td></tr>
-<tr class="separator:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1e4c4f6735a5acd050873acdb00cdbf" id="r_gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a> ()</td></tr>
-<tr class="memdesc:gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides count of statically initialized threads.  <br /></td></tr>
-<tr class="separator:gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab06a63362ae820b797a3bf0b1c6386a0" id="r_gab06a63362ae820b797a3bf0b1c6386a0"><td class="memItemLeft" align="right" valign="top">const struct <a class="el" href="structOS__thread__create__t.html">OS_thread_create_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gab06a63362ae820b797a3bf0b1c6386a0">static_init_thread_table</a> ()</td></tr>
-<tr class="memdesc:gab06a63362ae820b797a3bf0b1c6386a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides address of statically initialized thread table.  <br /></td></tr>
-<tr class="separator:gab06a63362ae820b797a3bf0b1c6386a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4128fe30c4eef560ae2dc025e89abf2" id="r_gad4128fe30c4eef560ae2dc025e89abf2"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gad4128fe30c4eef560ae2dc025e89abf2">static_init_process_count</a> ()</td></tr>
-<tr class="memdesc:gad4128fe30c4eef560ae2dc025e89abf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides count of statically initialized processes.  <br /></td></tr>
-<tr class="separator:gad4128fe30c4eef560ae2dc025e89abf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga40ff64621b791a06874bb7ca27a9164e" id="r_ga40ff64621b791a06874bb7ca27a9164e"><td class="memItemLeft" align="right" valign="top">const struct <a class="el" href="structOS__process__definition__t.html">OS_process_definition_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e">static_init_process_table</a> ()</td></tr>
-<tr class="memdesc:ga40ff64621b791a06874bb7ca27a9164e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides address of statically intialized process table.  <br /></td></tr>
-<tr class="separator:ga40ff64621b791a06874bb7ca27a9164e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gad1e98b6b913a67b51e041e4e9002a399" name="gad1e98b6b913a67b51e041e4e9002a399"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad1e98b6b913a67b51e041e4e9002a399">&#9670;&#160;</a></span>mpu_init_stack()</h2>

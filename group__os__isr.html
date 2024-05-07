@@ -103,10 +103,9 @@ $(document).ready(function(){initNavTree('group__os__isr.html',''); initResizabl
   <div class="headertitle"><div class="title">Interrupt service routines<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Routines available from running interrupt service routine context. </p>
-<p>By default, all the interrupt service routines have higher priority than the kernel service call handler. CMRX is not expecthing this to change. This configuration causes that service call handler is not callable from within interrupt service handlers. Following routines are provided so that interrupt service routines can ask kernel to perform certain tasks while in servicing interrupt.</p>
-<p>Never perform direct calls into kernel other than methods listed in this group. These methods are not reentrant and calling them from within interrupt handler may corrupt kernel internal state. </p>
+
+<p>Routines available from running interrupt service routine context.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -114,6 +113,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:gabbc12f9850a82cd7f598e577efbee4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send signal from ISR context.  <br /></td></tr>
 <tr class="separator:gabbc12f9850a82cd7f598e577efbee4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Routines available from running interrupt service routine context. </p>
+<p>By default, all the interrupt service routines have higher priority than the kernel service call handler. CMRX is not expecthing this to change. This configuration causes that service call handler is not callable from within interrupt service handlers. Following routines are provided so that interrupt service routines can ask kernel to perform certain tasks while in servicing interrupt.</p>
+<p>Never perform direct calls into kernel other than methods listed in this group. These methods are not reentrant and calling them from within interrupt handler may corrupt kernel internal state. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gabbc12f9850a82cd7f598e577efbee4bc" name="gabbc12f9850a82cd7f598e577efbee4bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gabbc12f9850a82cd7f598e577efbee4bc">&#9670;&#160;</a></span>isr_kill()</h2>

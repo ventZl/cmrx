@@ -101,7 +101,10 @@ $(document).ready(function(){initNavTree('group__api__shared.html',''); initResi
   <div class="headertitle"><div class="title">Shared memory<div class="ingroups"><a class="el" href="group__api.html">Kernel API</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+
+<p>API to declare memory as shared between two processes.  
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API to declare memory as shared between two processes. </p>
 <p>CMRX does not allow for unconditional sharing of memory between two processes. Memory can be shared only between two processes during the remote procedure call. Even at this time, the process which serves the RPC does not have full access to the caller's memory. This is to ensure robustness. If client has a need to communicate larger chunk of data with RPC server, then the buffer holding this data must be marked as belonging to the shared memory. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>

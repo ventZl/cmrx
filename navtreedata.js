@@ -38,13 +38,23 @@ var NAVTREE =
     [ "Getting started", "getting_started.html", [
       [ "Obtain dependencies and CMRX", "getting_started.html#autotoc_md0", null ],
       [ "Project template", "getting_started.html#autotoc_md1", null ]
+    ] ],
+    [ "Topics", "topics.html", "topics" ],
+    [ "Data Structures", "annotated.html", [
+      [ "Data Structures", "annotated.html", "annotated_dup" ],
+      [ "Data Structure Index", "classes.html", null ],
+      [ "Data Fields", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Variables", "functions_vars.html", null ]
+      ] ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"concepts.html"
+"annotated.html",
+"group__os__mpu.html#gae35ef2b40da61cecee6e76bbac5fb3e2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
