@@ -1,6 +1,6 @@
 #include <cmrx/os/sched.h>
 #include <debug.h>
-#include <aux/systick.h>
+#include <extra/systick.h>
 
 int main(void)
 {
