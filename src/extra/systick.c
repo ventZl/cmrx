@@ -1,4 +1,4 @@
-#include <aux/systick.h>
+#include <extra/systick.h>
 #include <RTE_Components.h>
 #include <stdint.h>
 #include <cmrx/clock.h>
