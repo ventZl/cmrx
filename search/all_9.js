@@ -5,7 +5,7 @@ var searchData=
   ['implementation_20of_20rpc_20interfaces_2',['Implementation of RPC interfaces',['../group__api__rpc.html#api_rpc_implementation',1,'']]],
   ['implementation_20sources_3',['Port implementation sources',['../group__arch__arch.html#sources',1,'']]],
   ['implementation_5fof_4',['IMPLEMENTATION_OF',['../group__api__rpc.html#ga3467c0dc3f1f95bb00289609f2ce35f8',1,'implementation.h']]],
-  ['initialization_5',['initialization',['../group__api__init.html',1,'Static initialization'],['../group__arch__arm__static.html',1,'Static initialization']]],
+  ['initialization_5',['initialization',['../group__arch__arm__static.html',1,'Static initialization'],['../group__api__init.html',1,'Static initialization']]],
   ['instance_6',['INSTANCE',['../group__api__rpc.html#gac79f9e6f9c7223d603a5ac7365617ea7',1,'implementation.h']]],
   ['instances_7',['RPC service instances',['../group__api__rpc.html#api_rpc_instances',1,'']]],
   ['integrating_20vendor_20sdks_8',['Integrating vendor SDKs',['../hal_integration.html',1,'overview']]],

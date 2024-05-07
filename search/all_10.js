@@ -11,7 +11,7 @@ var searchData=
   ['region_8',['region',['../mem_model.html#autotoc_md4',1,'Shared variables region'],['../mem_model.html#autotoc_md3',1,'Static variables region']]],
   ['region_20names_9',['MPU region names',['../group__mpu__region__names.html',1,'']]],
   ['register_20aliases_10',['ARM MPU register aliases',['../group__arm__mpu__registers.html',1,'']]],
-  ['remote_20procedure_20calls_11',['remote procedure calls',['../rpc_intro.html',1,'Remote Procedure Calls'],['../group__os__rpc.html',1,'Remote Procedure Calls'],['../group__api__rpc.html',1,'Remote Procedure Calls']]],
+  ['remote_20procedure_20calls_11',['remote procedure calls',['../rpc_intro.html',1,'Remote Procedure Calls'],['../group__api__rpc.html',1,'Remote Procedure Calls'],['../group__os__rpc.html',1,'Remote Procedure Calls']]],
   ['routines_12',['routines',['../group__arch__arm__cortex.html',1,'Cortex-M support routines'],['../group__os__isr.html',1,'Interrupt service routines'],['../group__api__isr.html',1,'Interrupt Service Routines']]],
   ['rpc_20implementation_13',['RPC implementation',['../group__arch__arm__rpc.html',1,'']]],
   ['rpc_20interface_14',['RPC interface',['../rpc_intro.html#autotoc_md8',1,'']]],
