@@ -1,4 +1,4 @@
-set(cmrx_arch_SRCS 
+set(cmrx_arm_SRCS 
     static.c 
     mpu.c 
     pendsv.c 
@@ -9,5 +9,5 @@ set(cmrx_arch_SRCS
     syscall.c
 )
 
-add_library(cmrx_arch STATIC ${cmrx_arch_SRCS})
-target_link_libraries(cmrx_arch PUBLIC os cmsis_core_lib)
+target_link_libraries(os PUBLIC cmsis_core_lib)
+target_sources(os PRIVATE ${cmrx_arm_SRCS})

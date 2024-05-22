@@ -730,10 +730,6 @@ defined:
   target you link against it. Therefore you don't have to set up include paths to be able
   to include CMRX headers explicitly.
 
-* library `cmrx_arch` - this library is the architecture dependent portion of CMRX kernel.
-  It is automatically created depending on selected target architecture and HAL being
-  used. Handled automatically by the `os` library. Listed just for reference.
-
 * library `stdlib` - this library contains functions that call system calls. These
   functions are callable from processes. See @ref api to learn on what functions are
   available.

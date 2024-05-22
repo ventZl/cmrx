@@ -9,7 +9,7 @@ if (TESTING)
 endif()
 
 if (NOT CMRX_GDB_PATH)
-    message(STATUS "Path to GDB not set! Skipping tests!")
+    message(STATUS "Path to GDB not set! Skipping tests! Set CMRX_GDB_PATH variable if you want to enable HIL tests.")
     return()
 endif()
 

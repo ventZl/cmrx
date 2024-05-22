@@ -1,4 +1,10 @@
-message(STATUS "CMRX root dir: ${CMAKE_CURRENT_SOURCE_DIR}")
+# We do add sources from within foreign directories, so we want the paths
+# absolute.
+# We also add dependencies to targets defined elsewhere.
+cmake_policy(SET CMP0079 NEW)
+cmake_policy(SET CMP0076 NEW)
+
+message(DEBUG "CMRX root dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 set_property(GLOBAL PROPERTY CMRX_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 include_directories(include)
@@ -17,7 +23,7 @@ endif()
 
 set(HAL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include/cmrx/arch/${CMRX_ARCH}/${CMRX_HAL})
 get_filename_component(HAL_PATH ${HAL_PATH} ABSOLUTE)
-message(STATUS "HAL path: ${HAL_PATH}")
+message(DEBUG "HAL path: ${HAL_PATH}")
 if (NOT IS_DIRECTORY ${HAL_PATH})
     message(FATAL_ERROR "Architecture ${CMRX_ARCH} does not support HAL ${CMRX_HAL}!")
 endif()
