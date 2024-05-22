@@ -18,7 +18,8 @@
  * Other sections describe port(s) already done.
  *
  * Architecture layer linked to the kernel depends on setting of CMake variable @ref CMRX_ARCH.
- * The architecture layer then forms library named `cmrx_arch` which CMRX automatically links.
+ * The architecture layer updates the `os` target to provide portions which are necessary to 
+ * support desired architecture.
  *
  */
 
@@ -144,10 +145,11 @@ This file has to define two objects:
 Port has to implement certain functions that are expected to be provided by it. Sources of
 the port can be stored in directory `<root_dir>/src/os/arch/<architecture>`. CMRX build
 system will expect that `CMakeLists.txt` file exist there and will include it automatically.
-This `CMakeLists.txt` file shall define one static library named `cmrx_arch`.
-platform-independent part of CMRX will automatically link this library. It can link to
-`cmrx` library to obtain access to certain functions of CMRX kernel that might be usable
-for it.
+This `CMakeLists.txt` file shall update the target `os` to include sources located in the
+architecture support directory. This way the platform-independent portion will be extended
+by the necessary platform support. If platform support requires linking of any additional
+libraries, such as HAL, then commands to let the `os` target link them should be present
+in CMakeLists.txt in this directory as well. 
 
 These sources shall provide implementation of functions outlined in this 
 section of the manual. If port fails to provide the implementation for any of them, build
