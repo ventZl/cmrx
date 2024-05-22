@@ -121,7 +121,6 @@ Source and header directories</h2>
 <p>CMRX is distributed as a source and it has to be compiled with your application in order to build runnable firmware. To accomplish this you have to use <code>add_subdirectory()</code> command to add CMRX sources into your project. By doing so, several new targets will be defined:</p>
 <ul>
 <li>library <code>os</code> - this library wraps all the compiled code of the CMRX kernel. It is internally composed of two parts: the portable part and the architecture port. The architecture port is handled automatically. Library propagates include paths into every target you link against it. Therefore you don't have to set up include paths to be able to include CMRX headers explicitly.</li>
-<li>library <code>cmrx_arch</code> - this library is the architecture dependent portion of CMRX kernel. It is automatically created depending on selected target architecture and HAL being used. Handled automatically by the <code>os</code> library. Listed just for reference.</li>
 <li>library <code>stdlib</code> - this library contains functions that call system calls. These functions are callable from processes. See <a class="el" href="group__api.html">Kernel API</a> to learn on what functions are available.</li>
 <li>library <code>aux_systick</code> - this is an auxiliary library which implements SysTick-based timing provider. This optional library can be used to quickly bootstrap the kernel before more comprehensive hardware- and task-specific timing provider is developed.</li>
 </ul>

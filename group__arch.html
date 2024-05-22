@@ -121,7 +121,7 @@ Modules</h2></td></tr>
 <p>Most of the kernel is written in platform-independent style. Still this platform-indepentent kernel has to have architecture support layer that does the low level work. Here is the documentation of these parts.</p>
 <p>Section <a class="el" href="group__arch__arch.html">Porting layer</a> documents the API you have to provide if you want to port CMRX to a new architecture. This usually translates to new <b>CPU</b> architecture as different platforms using some already supported CPU don't need kernel to be ported again.</p>
 <p>Other sections describe port(s) already done.</p>
-<p>Architecture layer linked to the kernel depends on setting of CMake variable CMRX_ARCH. The architecture layer then forms library named <code>cmrx_arch</code> which CMRX automatically links. </p>
+<p>Architecture layer linked to the kernel depends on setting of CMake variable CMRX_ARCH. The architecture layer updates the <code>os</code> target to provide portions which are necessary to support desired architecture. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
