@@ -1,5 +1,4 @@
 set $_TEST_STEP = 0
-#target extended-remote | openocd -f openocd.cfg -c "gdb_port pipe"
 target extended-remote localhost:3333
 monitor reset halt
 load
