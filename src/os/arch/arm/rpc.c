@@ -94,7 +94,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	ASSERT(canary == 0xAA55AA55);*/
 
-	ExceptionFrame * local_frame = 0; //pop_exception_frame(remote_frame, 2);
+	ExceptionFrame * local_frame = pop_exception_frame(remote_frame, 2);
 	
 	int pstack_depth = rpc_stack_pop();
 	Process_t process_id;
