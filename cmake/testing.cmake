@@ -68,8 +68,6 @@ function(make_hw_test TEST_DIR)
 
     target_link_libraries(${TEST_NAME} test_platform_main)
     message(STATUS "Added test ${TEST_NAME}")
-    message("${CMAKE_CURRENT_LIST_DIR}/gdb.sh ${CMRX_GDB_PATH} ${GDB_FILE} ${OPENOCD_FILE} $<TARGET_FILE:${TEST_NAME}> ${CMAKE_BINARY_DIR}
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}")
     add_test(NAME ${TEST_NAME}
         COMMAND ${CMAKE_CURRENT_LIST_DIR}/gdb.sh ${CMRX_GDB_PATH} ${GDB_FILE} ${OPENOCD_FILE} $<TARGET_FILE:${TEST_NAME}> ${CMAKE_BINARY_DIR}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
