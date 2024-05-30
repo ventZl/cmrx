@@ -1,25 +1,26 @@
 set $_TEST_STEP = 0
-target extended-remote | openocd -f openocd.cfg -c "gdb_port pipe"
+#target extended-remote | openocd -f openocd.cfg -c "gdb_port pipe"
+target extended-remote localhost:3333
 monitor reset halt
 load
 
 break TEST_SUCCESS
 commands
-    detach
+    disconnect
 	quit 0
 end
 
 break TEST_FAIL
 commands
     bt
-    detach
+    disconnect
 	quit 1
 end
 
 break TEST_STEP
 commands
     if step != ($_TEST_STEP + 1)
-        detach
+        disconnect
         quit 1
     end
     set $_TEST_STEP = step
@@ -27,4 +28,6 @@ commands
 end
 
 run
+detach
+disconnect
 quit 2
