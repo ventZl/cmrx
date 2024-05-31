@@ -16,7 +16,7 @@ jobs:
         c-compiler: gcc
         run-build: true
         build-dir: unit_tests
-        options: [ "UNIT_TESTING=ON" ]
+        options: UNIT_TESTING=ON
 
      - name: Run unit Tests
        run: cmake -B unit_tests -- test
