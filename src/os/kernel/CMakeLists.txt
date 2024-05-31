@@ -2,21 +2,16 @@
 
 add_definitions(-fomit-frame-pointer)
 
-if (NOT TESTING)
-    set(os_SRCS isr.c sched.c signal.c syscall.c timer.c rpc.c)
-else()
-	set(os_SRCS sched.c timer.c)
+if (UNIT_TESTING_BUILD)
+    add_definitions(-Dstatic=)
 endif()
+
+set(os_SRCS isr.c sched.c signal.c syscall.c timer.c rpc.c)
 
 add_library(os STATIC EXCLUDE_FROM_ALL ${os_SRCS})
 
 # Just an alias
 add_library(cmrx ALIAS os)
-if (TESTING)
-	set(test_kernel_SRCS tests/test_sched.c)
-	add_executable(test_kernel ${test_kernel_SRCS})
-	target_link_libraries(test_kernel os ctest)
-	#	target_compile_definitions(os PRIVATE -Dstatic=)
-
-	add_test(NAME test_kernel COMMAND test_kernel)
+if (UNIT_TESTING_BUILD)
+    add_subdirectory(tests)
 endif()

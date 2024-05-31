@@ -7,6 +7,10 @@
 # the platform-agnostic and architecture-dependent portion of kernel this is done
 # by modifying the `os` target rather than defining own target.
 add_subdirectory(kernel)
-add_subdirectory(arch/${CMRX_ARCH})
+if (UNIT_TESTING_BUILD)
+    add_subdirectory(arch/testing)
+else()
+    add_subdirectory(arch/${CMRX_ARCH})
+endif()
 
 

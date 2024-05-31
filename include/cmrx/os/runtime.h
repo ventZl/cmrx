@@ -66,7 +66,7 @@ struct OS_thread_t {
 	 * THREAD_STATE_RUNNING. Obviously it is undefined for empty thread slots
 	 * and slots which don't have stack allocated yet.
 	 */
-	unsigned long * sp;
+	uint32_t * sp;
 	/** ID of stack, which is allocated to this thread. */
 	uint8_t stack_id;
 

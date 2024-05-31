@@ -38,7 +38,9 @@
  * NULL is not a C name, rather than POSIX one. Introduce it here so we can
  * have a named null pointer rather than a magic constant.
  */
-#define NULL					((void *) 0)
+#ifndef NULL
+#   define NULL					((void *) 0)
+#endif
 
 /** Data type used for thread IDs */
 typedef uint8_t Thread_t;
