@@ -1,4 +1,4 @@
-#include <cmrx/shim/static.h>
+#include <arch/static.h>
 #include <unistd.h>
 
 static struct OS_process_definition_t * process_table = NULL;
@@ -24,7 +24,7 @@ unsigned static_init_thread_count()
 	return thread_count;
 }
 
-const struct OS_thread_create_t * const static_init_thread_table()
+const struct OS_thread_create_t * static_init_thread_table()
 {
 	return thread_table;
 }
@@ -34,7 +34,7 @@ unsigned static_init_process_count()
 	return process_count;
 }
 
-const struct OS_process_definition_t * const static_init_process_table()
+const struct OS_process_definition_t * static_init_process_table()
 {
 	return process_table;
 }
