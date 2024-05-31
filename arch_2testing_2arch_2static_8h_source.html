@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: include/testing/cmrx/shim/static.h Source File</title>
+<title>C Microkernel Realtime eXecutive: include/cmrx/arch/testing/arch/static.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('testing_2cmrx_2shim_2static_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('arch_2testing_2arch_2static_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,16 +103,16 @@ $(document).ready(function(){initNavTree('testing_2cmrx_2shim_2static_8h_source.
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keywordtype">unsigned</span> <a class="code hl_function" href="group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a>();</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structOS__thread__create__t.html">OS_thread_create_t</a> * <span class="keyword">const</span> <a class="code hl_function" href="group__arch__arch.html#gab06a63362ae820b797a3bf0b1c6386a0">static_init_thread_table</a>();</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keywordtype">unsigned</span> <a class="code hl_function" href="group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a>();</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structOS__thread__create__t.html">OS_thread_create_t</a> * <a class="code hl_function" href="group__arch__arm__static.html#gab06a63362ae820b797a3bf0b1c6386a0">static_init_thread_table</a>();</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keywordtype">unsigned</span> <a class="code hl_function" href="group__arch__arch.html#gad4128fe30c4eef560ae2dc025e89abf2">static_init_process_count</a>();</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structOS__process__definition__t.html">OS_process_definition_t</a> * <span class="keyword">const</span> <a class="code hl_function" href="group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e">static_init_process_table</a>();</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keywordtype">unsigned</span> <a class="code hl_function" href="group__arch__arm__static.html#gad4128fe30c4eef560ae2dc025e89abf2">static_init_process_count</a>();</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structOS__process__definition__t.html">OS_process_definition_t</a> * <a class="code hl_function" href="group__arch__arm__static.html#ga40ff64621b791a06874bb7ca27a9164e">static_init_process_table</a>();</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="ttc" id="agroup__arch__arch_html_ga40ff64621b791a06874bb7ca27a9164e"><div class="ttname"><a href="group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e">static_init_process_table</a></div><div class="ttdeci">const struct OS_process_definition_t * static_init_process_table()</div><div class="ttdoc">Provides address of statically intialized process table.</div><div class="ttdef"><b>Definition</b> static.c:31</div></div>
-<div class="ttc" id="agroup__arch__arch_html_gaa1e4c4f6735a5acd050873acdb00cdbf"><div class="ttname"><a href="group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a></div><div class="ttdeci">unsigned static_init_thread_count()</div><div class="ttdoc">Provides count of statically initialized threads.</div><div class="ttdef"><b>Definition</b> static.c:14</div></div>
-<div class="ttc" id="agroup__arch__arch_html_gab06a63362ae820b797a3bf0b1c6386a0"><div class="ttname"><a href="group__arch__arch.html#gab06a63362ae820b797a3bf0b1c6386a0">static_init_thread_table</a></div><div class="ttdeci">const struct OS_thread_create_t * static_init_thread_table()</div><div class="ttdoc">Provides address of statically initialized thread table.</div><div class="ttdef"><b>Definition</b> static.c:19</div></div>
-<div class="ttc" id="agroup__arch__arch_html_gad4128fe30c4eef560ae2dc025e89abf2"><div class="ttname"><a href="group__arch__arch.html#gad4128fe30c4eef560ae2dc025e89abf2">static_init_process_count</a></div><div class="ttdeci">unsigned static_init_process_count()</div><div class="ttdoc">Provides count of statically initialized processes.</div><div class="ttdef"><b>Definition</b> static.c:25</div></div>
+<div class="ttc" id="agroup__arch__arm__static_html_ga40ff64621b791a06874bb7ca27a9164e"><div class="ttname"><a href="group__arch__arm__static.html#ga40ff64621b791a06874bb7ca27a9164e">static_init_process_table</a></div><div class="ttdeci">const struct OS_process_definition_t * static_init_process_table()</div><div class="ttdef"><b>Definition</b> static.c:31</div></div>
+<div class="ttc" id="agroup__arch__arm__static_html_gaa1e4c4f6735a5acd050873acdb00cdbf"><div class="ttname"><a href="group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a></div><div class="ttdeci">unsigned static_init_thread_count()</div><div class="ttdef"><b>Definition</b> static.c:14</div></div>
+<div class="ttc" id="agroup__arch__arm__static_html_gab06a63362ae820b797a3bf0b1c6386a0"><div class="ttname"><a href="group__arch__arm__static.html#gab06a63362ae820b797a3bf0b1c6386a0">static_init_thread_table</a></div><div class="ttdeci">const struct OS_thread_create_t * static_init_thread_table()</div><div class="ttdef"><b>Definition</b> static.c:19</div></div>
+<div class="ttc" id="agroup__arch__arm__static_html_gad4128fe30c4eef560ae2dc025e89abf2"><div class="ttname"><a href="group__arch__arm__static.html#gad4128fe30c4eef560ae2dc025e89abf2">static_init_process_count</a></div><div class="ttdeci">unsigned static_init_process_count()</div><div class="ttdef"><b>Definition</b> static.c:25</div></div>
 <div class="ttc" id="astructOS__process__definition__t_html"><div class="ttname"><a href="structOS__process__definition__t.html">OS_process_definition_t</a></div><div class="ttdoc">Static definition of process in firmware image.</div><div class="ttdef"><b>Definition</b> runtime.h:138</div></div>
 <div class="ttc" id="astructOS__thread__create__t_html"><div class="ttname"><a href="structOS__thread__create__t.html">OS_thread_create_t</a></div><div class="ttdoc">Structure describing auto-spawned thread.</div><div class="ttdef"><b>Definition</b> runtime.h:172</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('testing_2cmrx_2shim_2static_8h_source.
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_a8f5dd5631cff2e293db83b46625e3aa.html">testing</a></li><li class="navelem"><a class="el" href="dir_d74c5f162d5d7ac7b1282990a536e4b9.html">cmrx</a></li><li class="navelem"><a class="el" href="dir_55520d16329ebc73d231141156f4b22f.html">shim</a></li><li class="navelem"><b>static.h</b></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_98202475f9f46bced46f85653c1a7139.html">cmrx</a></li><li class="navelem"><a class="el" href="dir_865cca317f95a4078c24ac6f6c44795d.html">arch</a></li><li class="navelem"><a class="el" href="dir_87928c6d6409b0e31e851522bf6b9076.html">testing</a></li><li class="navelem"><a class="el" href="dir_c7142a25c5b2b0293b6231670ba2e4d2.html">arch</a></li><li class="navelem"><b>static.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

@@ -144,7 +144,7 @@ Project template</h1>
 <div class="line">{</div>
 <div class="line">    <a class="code hl_function" href="group__os.html#ga66e1653fdfc09dfb93da917d0f833888">os_start</a>();</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__os_html_ga66e1653fdfc09dfb93da917d0f833888"><div class="ttname"><a href="group__os.html#ga66e1653fdfc09dfb93da917d0f833888">os_start</a></div><div class="ttdeci">void os_start()</div><div class="ttdoc">Start up scheduler.</div><div class="ttdef"><b>Definition</b> sched.c:442</div></div>
+<div class="ttc" id="agroup__os_html_ga66e1653fdfc09dfb93da917d0f833888"><div class="ttname"><a href="group__os.html#ga66e1653fdfc09dfb93da917d0f833888">os_start</a></div><div class="ttdeci">void os_start()</div><div class="ttdoc">Start up scheduler.</div><div class="ttdef"><b>Definition</b> sched.c:443</div></div>
 </div><!-- fragment --><p>hello.c </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmrx/application.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> main(<span class="keywordtype">void</span> * unused)</div>
@@ -158,7 +158,7 @@ Project template</h1>
 <div class="line">CMRX_APPLICATION(init);</div>
 <div class="line">CMRX_APPLICATION_MMIO_RANGE(init);</div>
 <div class="line">CMRX_THREAD_CREATE(init, main, <a class="code hl_define" href="group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a>, 64);</div>
-<div class="ttc" id="agroup__api_html_ga070d2ce7b6bb7e5c05602aa8c308d0c4"><div class="ttname"><a href="group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></div><div class="ttdeci">#define NULL</div><div class="ttdoc">Name the null pointer.</div><div class="ttdef"><b>Definition</b> defines.h:41</div></div>
+<div class="ttc" id="agroup__api_html_ga070d2ce7b6bb7e5c05602aa8c308d0c4"><div class="ttname"><a href="group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></div><div class="ttdeci">#define NULL</div><div class="ttdoc">Name the null pointer.</div><div class="ttdef"><b>Definition</b> defines.h:42</div></div>
 </div><!-- fragment --><p>This constructs the minimal example. It is not buildable yet, because we have to integrate startup files provided by the HAL somehow. CMRX using CMSIS expects that RTE_components.h file is available in include path. This file shall be provided by the runtime, but usually is not. There is a helper CMake module, which can try to find CMSIS components, set up include paths, create RTE_Components.h file and create targets to build startup and system components of HAL (if present).</p>
 <p>To use this helper, you have to add lines similar to these before you include CMRX CMake module:</p>
 <div class="fragment"><div class="line">set(CMSIS_ROOT &lt;path to CMSIS root directory&gt;)</div>
