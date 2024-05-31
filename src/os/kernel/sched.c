@@ -64,9 +64,9 @@ bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 {
 	uint16_t best_prio = PRIORITY_INVALID;
 	uint8_t candidate_thread;
-	uint8_t thread = current_thread;
+    uint8_t thread = (current_thread + 1) % OS_THREADS;
 
-	uint8_t loops = OS_THREADS + 2;
+	uint8_t loops = OS_THREADS;
 
 	do {
 		if (os_threads[thread].state == THREAD_STATE_READY 
@@ -84,14 +84,15 @@ bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 		}
 
 		thread = (thread + 1) % OS_THREADS;
-	} while (loops-- && thread != current_thread);
+	} while (loops--);
 
 	ASSERT(loops > 0);
 //	ASSERT(candidate_thread != current_thread);
 
+	*next_thread = candidate_thread;
+
 	if (best_prio <= PRIORITY_MAX && candidate_thread != current_thread)
 	{
-		*next_thread = candidate_thread;
 		return true;
 	}
 
@@ -270,7 +271,7 @@ int os_thread_kill(uint8_t thread_id, int status)
 
 		os_stack_dispose(os_threads[thread_id].stack_id);
 		os_threads[thread_id].stack_id = OS_TASK_NO_STACK;
-		os_threads[thread_id].sp = (unsigned long *) ~0;
+		os_threads[thread_id].sp = (uint32_t *) ~0;
 		if (thread_id == os_get_current_thread())
 		{
 			os_sched_yield();
@@ -419,7 +420,7 @@ int os_thread_alloc(Process_t process, uint8_t priority)
 			memset(&os_threads[q], 0, sizeof(os_threads[q]));
 			os_threads[q].stack_id = OS_TASK_NO_STACK;
 			os_threads[q].process_id = process;
-			os_threads[q].sp = (unsigned long *) ~0;
+			os_threads[q].sp = (uint32_t *) ~0;
 			os_threads[q].state = THREAD_STATE_CREATED;
 			os_threads[q].signals = 0;
 			os_threads[q].signal_handler = NULL;
@@ -460,7 +461,7 @@ void os_start()
 		__os_thread_create(process_id, autostart_threads[q].entrypoint, autostart_threads[q].data, autostart_threads[q].priority);
 	}
 
-	__os_thread_create((int) NULL, os_idle_thread, NULL, 0xFF);
+	__os_thread_create((uint32_t) NULL, os_idle_thread, NULL, 0xFF);
 
 	uint8_t startup_thread;
 
