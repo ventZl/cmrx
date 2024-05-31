@@ -292,8 +292,8 @@ int os_thread_stop(uint8_t thread)
 			if (thread == os_get_current_thread())
 			{
 				os_sched_yield();
-				return 0;
 			}
+			return 0;
 		}
 		else
 		{
