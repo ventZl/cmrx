@@ -19,4 +19,4 @@ jobs:
         options: UNIT_TESTING=ON
 
      - name: Run unit Tests
-       run: cmake -B unit_tests -- test
+       run: cmake --build unit_tests -- test
