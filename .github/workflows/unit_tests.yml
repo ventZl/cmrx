@@ -1,0 +1,22 @@
+name: Run Unit Tests
+on: push
+
+jobs:
+  build-project:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v4.1.6
+       with:
+        submodules: 'true'
+
+     - name: Configure and Build Unit Tests
+       uses: threeal/cmake-action@main
+       with:
+        c-compiler: gcc
+        run-build: true
+        build-dir: unit_tests
+        options: [ "UNIT_TESTING=ON" ]
+
+     - name: Run unit Tests
+       run: cmake -B unit_tests -- test
