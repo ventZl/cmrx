@@ -26,7 +26,7 @@
 
 #ifndef NDEBUG
 
-#ifndef TESTING
+#ifndef UNIT_TESTING
 /** Evaluate condition and break if it evalues to false.
  */
 #define ASSERT(cond) \
