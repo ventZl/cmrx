@@ -8,10 +8,10 @@
 
 extern struct OS_stack_t os_stacks;
 
-CTEST_DATA(stack) {
+CTEST_DATA(os_stack) {
 };
 
-CTEST_SETUP(stack) 
+CTEST_SETUP(os_stack) 
 {
     (void) data;
 	memset(&os_stacks, 0, sizeof(os_stacks));
@@ -25,7 +25,7 @@ extern void os_stack_dispose(uint32_t stack_id);
  * that many stacks, how many stacks were requested
  * in kernel configuration.
  */
-CTEST2(stack, alloc)
+CTEST2(os_stack, alloc)
 {
     (void) data;
 	int stack;
@@ -43,7 +43,7 @@ CTEST2(stack, alloc)
  * Test if stack deallocation will keep the stack
  * allocator in clean and expected state.
  */
-CTEST2(stack, dispose)
+CTEST2(os_stack, dispose)
 {
     (void) data;
 	int stack;
@@ -60,7 +60,7 @@ CTEST2(stack, dispose)
  * Test if an attempt to deallocate out of bounds
  * stack will corrupt stack allocator state.
  */
-CTEST2(stack, dispose_invalid)
+CTEST2(os_stack, dispose_invalid)
 {
     (void) data;
 	// Fake invalid internal stack allocation state

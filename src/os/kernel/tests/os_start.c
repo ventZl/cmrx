@@ -8,10 +8,10 @@
 extern void provide_process_table(struct OS_process_definition_t * table, unsigned count);
 extern void provide_thread_table(struct OS_thread_create_t * table, unsigned count);
 
-CTEST_DATA(init) {
+CTEST_DATA(os_start) {
 };
 
-CTEST_SETUP(init)
+CTEST_SETUP(os_start)
 {
     (void) data;
 	memset(os_threads, 0, sizeof(os_threads));
@@ -23,7 +23,7 @@ CTEST_SETUP(init)
  * This tests that process initialization done from static
  * process table is performed correctly.
  */
-CTEST2(init, process) 
+CTEST2(os_start, process) 
 {
     (void) data;
 	struct OS_process_definition_t ptable[] = {
@@ -59,7 +59,7 @@ int dummy_thread_entry(void * data)
  * This tests that thread initialization done from static
  * thread autostart table is performed correctly.
  */
-CTEST2(init, thread)
+CTEST2(os_start, thread)
 {
     (void) data;
 	struct OS_process_definition_t ptable[] = {

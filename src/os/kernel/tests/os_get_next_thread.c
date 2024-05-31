@@ -9,7 +9,7 @@ extern bool os_get_next_thread(uint8_t current, uint8_t * next);
  * Test if scheduler will behave as documented in case there is 
  * only one runnable thread.
  */
-CTEST(sched, yield_single_thread) {
+CTEST(os_get_next_thread, single_thread) {
     memset(&os_threads, 0, sizeof(os_threads));
 
     os_threads[0].state = THREAD_STATE_RUNNING;
@@ -35,7 +35,7 @@ CTEST(sched, yield_single_thread) {
  * Test if scheduler will periodically switch between two or
  * more threads having same priority.
  */
-CTEST(sched, yield_same_priority) {
+CTEST(os_get_next_thread, same_priority) {
     memset(&os_threads, 0, sizeof(os_threads));
 
     os_threads[0].state = THREAD_STATE_RUNNING;
@@ -44,7 +44,7 @@ CTEST(sched, yield_same_priority) {
     os_threads[1].state = THREAD_STATE_READY;
     os_threads[1].priority = 32;
 
-    uint8_t next_thread;
+    uint8_t next_thread = 255;
     bool rv = os_get_next_thread(0, &next_thread);
 
     ASSERT_EQUAL(rv, true);
@@ -64,7 +64,7 @@ CTEST(sched, yield_same_priority) {
  * Test if scheduler will switch to higher priority thread and keep
  * it running.
  */
-CTEST(sched, yield_higher_priority) {
+CTEST(os_get_next_thread, higher_priority) {
     memset(&os_threads, 0, sizeof(os_threads));
 
     os_threads[0].state = THREAD_STATE_RUNNING;
@@ -74,7 +74,7 @@ CTEST(sched, yield_higher_priority) {
     os_threads[1].priority = 16;
 
     uint8_t current_thread = 0;
-    uint8_t next_thread;
+    uint8_t next_thread = 255;
     bool rv = os_get_next_thread(current_thread, &next_thread);
 
     ASSERT_EQUAL(rv, true);
@@ -96,7 +96,7 @@ CTEST(sched, yield_higher_priority) {
  * Test if scheduler will ignore lower priority runnable thread and keep
  * running the higher priority thread instead.
  */
-CTEST(sched_e, yield_lower_priority) {
+CTEST(os_get_next_thread, lower_priority) {
     memset(&os_threads, 0, sizeof(os_threads));
 
     os_threads[0].state = THREAD_STATE_RUNNING;
@@ -106,7 +106,7 @@ CTEST(sched_e, yield_lower_priority) {
     os_threads[1].priority = 32;
 
     uint8_t current_thread = 0;
-    uint8_t next_thread;
+    uint8_t next_thread = 255;
     bool rv = os_get_next_thread(current_thread, &next_thread);
 
     ASSERT_EQUAL(rv, false);
