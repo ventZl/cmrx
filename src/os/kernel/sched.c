@@ -12,6 +12,7 @@
 #include <cmrx/assert.h>
 #include <cmrx/os/arch/static.h>
 #include <cmrx/os/arch/sched.h>
+#include <cmrx/os/context.h>
 #include <cmrx/os/arch/mpu.h>
 #include <cmrx/os/timer.h>
 #include <cmrx/os/syscalls.h>
@@ -63,7 +64,7 @@ int os_thread_alloc(Process_t process, uint8_t priority);
 bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 {
 	uint16_t best_prio = PRIORITY_INVALID;
-	uint8_t candidate_thread;
+    uint8_t candidate_thread = 0xFF;
     uint8_t thread = (current_thread + 1) % OS_THREADS;
 
 	uint8_t loops = OS_THREADS;
@@ -233,7 +234,7 @@ int os_stack_create()
 	return STACK_INVALID;
 }
 
-unsigned long * os_stack_get(int stack_id)
+uint32_t * os_stack_get(int stack_id)
 {
     return os_stacks.stacks[stack_id];
 }

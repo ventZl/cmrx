@@ -114,7 +114,7 @@ struct OS_thread_t {
  */
 struct OS_stack_t {
 	/** Thread stacks. */
-	unsigned long stacks[OS_STACKS][OS_STACK_DWORD];
+	uint32_t stacks[OS_STACKS][OS_STACK_DWORD];
 
 	/** Information about stack allocation. If n-th bit is set, 
 	 * then n-th stack is allocated. Otherwise it is available. */
