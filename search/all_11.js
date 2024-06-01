@@ -38,7 +38,7 @@ var searchData=
   ['sigsegv_35',['SIGSEGV',['../group__api__signal.html#gae20b4f7171a09516ea73c9d2745bd596',1,'signal.h']]],
   ['sigstop_36',['SIGSTOP',['../group__api__signal.html#ga069e358bc9a864b7dc4fed2440eda14c',1,'signal.h']]],
   ['sleep_5ffrom_37',['sleep_from',['../structTimerEntry__t.html#a95a419fabe89c0d94edd540788e48e96',1,'TimerEntry_t']]],
-  ['sleepers_38',['sleepers',['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'timer.c']]],
+  ['sleepers_38',['sleepers',['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c']]],
   ['sleepers_5fmax_39',['SLEEPERS_MAX',['../group__os__config.html#gac1843ed039050da6d9253cfba6ed8caa',1,'kernel.h']]],
   ['source_20and_20header_20directories_40',['Source and header directories',['../dev_env.html#autotoc_md19',1,'']]],
   ['sources_41',['Port implementation sources',['../group__arch__arch.html#sources',1,'']]],
