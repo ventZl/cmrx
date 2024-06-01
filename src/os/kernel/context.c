@@ -15,7 +15,7 @@ static struct OS_process_t * old_host_process;
 static struct OS_process_t * new_host_process;
 
 static uint32_t * new_stack;*/
-bool ctxt_switch_pending;
+bool ctxt_switch_pending = false;
 
 extern struct OS_stack_t os_stacks;
 
