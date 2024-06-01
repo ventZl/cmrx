@@ -99,47 +99,42 @@ $(document).ready(function(){initNavTree('group__arch__arm__os.html',''); initRe
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">OS services implementation<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__arm.html">ARM port</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf1e29342624824b3772fe70c0a358497" id="r_gaf1e29342624824b3772fe70c0a358497"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaf1e29342624824b3772fe70c0a358497">schedule_context_switch</a> (uint32_t current_task, uint32_t next_task)</td></tr>
-<tr class="memdesc:gaf1e29342624824b3772fe70c0a358497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opt for task switch.  <br /></td></tr>
-<tr class="separator:gaf1e29342624824b3772fe70c0a358497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf6b80c02401002f49137d397ba971b0" id="r_gaaf6b80c02401002f49137d397ba971b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaaf6b80c02401002f49137d397ba971b0">os_request_context_switch</a> ()</td></tr>
+<tr class="memdesc:gaaf6b80c02401002f49137d397ba971b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
+<tr class="separator:gaaf6b80c02401002f49137d397ba971b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6303e1f258cbdc1f970ce579cc015623" id="r_ga6303e1f258cbdc1f970ce579cc015623"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga6303e1f258cbdc1f970ce579cc015623">PendSV_Handler</a> (void)</td></tr>
 <tr class="memdesc:ga6303e1f258cbdc1f970ce579cc015623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle task switch.  <br /></td></tr>
 <tr class="separator:ga6303e1f258cbdc1f970ce579cc015623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:gab8dc492b4bde9f39e88324ba05cb9765" id="r_gab8dc492b4bde9f39e88324ba05cb9765"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gab8dc492b4bde9f39e88324ba05cb9765">old_task</a></td></tr>
-<tr class="separator:gab8dc492b4bde9f39e88324ba05cb9765"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11c07eb858d88957553544a439f86818" id="r_ga11c07eb858d88957553544a439f86818"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga11c07eb858d88957553544a439f86818">new_task</a></td></tr>
-<tr class="separator:ga11c07eb858d88957553544a439f86818"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga285dcdc1928dac6b946d7c11d644570e" id="r_ga285dcdc1928dac6b946d7c11d644570e"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structOS__process__t.html">OS_process_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga285dcdc1928dac6b946d7c11d644570e">old_parent_process</a></td></tr>
-<tr class="separator:ga285dcdc1928dac6b946d7c11d644570e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e3c931aead76822453e0fd8b6308b33" id="r_ga3e3c931aead76822453e0fd8b6308b33"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structOS__process__t.html">OS_process_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga3e3c931aead76822453e0fd8b6308b33">new_parent_process</a></td></tr>
-<tr class="separator:ga3e3c931aead76822453e0fd8b6308b33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa3e768504dfb4a3dc1e85ae6e0fc5c4" id="r_gafa3e768504dfb4a3dc1e85ae6e0fc5c4"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structOS__process__t.html">OS_process_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gafa3e768504dfb4a3dc1e85ae6e0fc5c4">old_host_process</a></td></tr>
-<tr class="separator:gafa3e768504dfb4a3dc1e85ae6e0fc5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae884da4353bc949a7ac71952001e5e3c" id="r_gae884da4353bc949a7ac71952001e5e3c"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structOS__process__t.html">OS_process_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gae884da4353bc949a7ac71952001e5e3c">new_host_process</a></td></tr>
-<tr class="separator:gae884da4353bc949a7ac71952001e5e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa46d661b7d84c89c0f165bc9a0c2fc97" id="r_gaa46d661b7d84c89c0f165bc9a0c2fc97"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaa46d661b7d84c89c0f165bc9a0c2fc97">new_thread_id</a></td></tr>
-<tr class="separator:gaa46d661b7d84c89c0f165bc9a0c2fc97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7cd2d90b5948c048c752cadc57c48d1d" id="r_ga7cd2d90b5948c048c752cadc57c48d1d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga7cd2d90b5948c048c752cadc57c48d1d">new_process_id</a></td></tr>
-<tr class="separator:ga7cd2d90b5948c048c752cadc57c48d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10965edb07faee05ccc8b5d297cee65c" id="r_ga10965edb07faee05ccc8b5d297cee65c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga10965edb07faee05ccc8b5d297cee65c">ctxt_switch_pending</a></td></tr>
-<tr class="separator:ga10965edb07faee05ccc8b5d297cee65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea74e023a260529e36ff7609c8a53555" id="r_gaea74e023a260529e36ff7609c8a53555"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__stack__t.html">OS_stack_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaea74e023a260529e36ff7609c8a53555">os_stacks</a></td></tr>
-<tr class="memdesc:gaea74e023a260529e36ff7609c8a53555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread stacks.  <br /></td></tr>
-<tr class="separator:gaea74e023a260529e36ff7609c8a53555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gaaf6b80c02401002f49137d397ba971b0" name="gaaf6b80c02401002f49137d397ba971b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaf6b80c02401002f49137d397ba971b0">&#9670;&#160;</a></span>os_request_context_switch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_request_context_switch </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Request context switch. </p>
+<p>This function is called by the platform independent part of the kernel when cpu_context structure is filled with valid data and context switch shall happen. The implementation of this function should configure the hardware in a way that context switch will happen as soon as kernel finishes its work and is ready to return the CPU back to the userspace code. </p>
+
+</div>
+</div>
 <a id="ga6303e1f258cbdc1f970ce579cc015623" name="ga6303e1f258cbdc1f970ce579cc015623"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga6303e1f258cbdc1f970ce579cc015623">&#9670;&#160;</a></span>PendSV_Handler()</h2>
 
@@ -158,269 +153,6 @@ Variables</h2></td></tr>
 
 <p>Handle task switch. </p>
 <p>This function performs the heavy lifting of context switching when CPU is switched from one task to another. As of now, it stores outgoing task's application context onto stack and restores incoming task's context from its stack. It then sets PSP to point to incoming task's stack and resumes normal operation. </p>
-
-</div>
-</div>
-<a id="gaf1e29342624824b3772fe70c0a358497" name="gaf1e29342624824b3772fe70c0a358497"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf1e29342624824b3772fe70c0a358497">&#9670;&#160;</a></span>schedule_context_switch()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool schedule_context_switch </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>current_task</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>next_task</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Opt for task switch. </p>
-<p>Schedule context switch on next suitable moment.</p>
-<p>Calling this function will prepare task switch. It will set up some stuff needed and then schedule PendSV. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">current_task</td><td>ID of task, which is currently running </td></tr>
-    <tr><td class="paramname">next_task</td><td>ID of task, which should be scheduled next </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>API of this function is dumb. </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="ga10965edb07faee05ccc8b5d297cee65c" name="ga10965edb07faee05ccc8b5d297cee65c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga10965edb07faee05ccc8b5d297cee65c">&#9670;&#160;</a></span>ctxt_switch_pending</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ctxt_switch_pending</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gae884da4353bc949a7ac71952001e5e3c" name="gae884da4353bc949a7ac71952001e5e3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae884da4353bc949a7ac71952001e5e3c">&#9670;&#160;</a></span>new_host_process</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structOS__process__t.html">OS_process_t</a>* new_host_process</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga3e3c931aead76822453e0fd8b6308b33" name="ga3e3c931aead76822453e0fd8b6308b33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3e3c931aead76822453e0fd8b6308b33">&#9670;&#160;</a></span>new_parent_process</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structOS__process__t.html">OS_process_t</a>* new_parent_process</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga7cd2d90b5948c048c752cadc57c48d1d" name="ga7cd2d90b5948c048c752cadc57c48d1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7cd2d90b5948c048c752cadc57c48d1d">&#9670;&#160;</a></span>new_process_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> new_process_id</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga11c07eb858d88957553544a439f86818" name="ga11c07eb858d88957553544a439f86818"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga11c07eb858d88957553544a439f86818">&#9670;&#160;</a></span>new_task</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a>* new_task</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gaa46d661b7d84c89c0f165bc9a0c2fc97" name="gaa46d661b7d84c89c0f165bc9a0c2fc97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa46d661b7d84c89c0f165bc9a0c2fc97">&#9670;&#160;</a></span>new_thread_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t new_thread_id</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gafa3e768504dfb4a3dc1e85ae6e0fc5c4" name="gafa3e768504dfb4a3dc1e85ae6e0fc5c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafa3e768504dfb4a3dc1e85ae6e0fc5c4">&#9670;&#160;</a></span>old_host_process</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structOS__process__t.html">OS_process_t</a>* old_host_process</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga285dcdc1928dac6b946d7c11d644570e" name="ga285dcdc1928dac6b946d7c11d644570e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga285dcdc1928dac6b946d7c11d644570e">&#9670;&#160;</a></span>old_parent_process</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structOS__process__t.html">OS_process_t</a>* old_parent_process</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gab8dc492b4bde9f39e88324ba05cb9765" name="gab8dc492b4bde9f39e88324ba05cb9765"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab8dc492b4bde9f39e88324ba05cb9765">&#9670;&#160;</a></span>old_task</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a>* old_task</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gaea74e023a260529e36ff7609c8a53555" name="gaea74e023a260529e36ff7609c8a53555"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaea74e023a260529e36ff7609c8a53555">&#9670;&#160;</a></span>os_stacks</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structOS__stack__t.html">OS_stack_t</a> os_stacks</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Thread stacks. </p>
-<p>Scheduler notion on existing stacks. </p>
 
 </div>
 </div>

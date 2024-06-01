@@ -9,7 +9,7 @@ var searchData=
   ['sleepers_6',['sleepers',['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c']]],
   ['sp_7',['sp',['../structOS__thread__t.html#a402b571dc6672000a6f56eccff94b78e',1,'OS_thread_t']]],
   ['stack_5fid_8',['stack_id',['../structOS__thread__t.html#a7ea5132f358b5e6003cf6c480b1f9177',1,'OS_thread_t']]],
-  ['stacks_9',['stacks',['../structOS__stack__t.html#a277ee04059b4b3fac0d4c8659eee6266',1,'OS_stack_t']]],
+  ['stacks_9',['stacks',['../structOS__stack__t.html#ac64b6bed80c0329e43aba6903453ed95',1,'OS_stack_t']]],
   ['start_10',['start',['../structOS__MPU__region.html#a0642cc60aaf53cce8d66b4070802b19e',1,'OS_MPU_region']]],
   ['state_11',['state',['../structOS__thread__t.html#a3316dfeb2de5d7b03f7e0f6842f7c256',1,'OS_thread_t::state'],['../structfutex__t.html#acf924c6402369f5b0479148d65d9a306',1,'futex_t::state']]]
 ];

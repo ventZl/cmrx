@@ -14,7 +14,7 @@ var group__os__kernel =
     ] ],
     [ "OS_stack_t", "structOS__stack__t.html", [
       [ "allocations", "structOS__stack__t.html#acdd99296ece572e929831ab286622c45", null ],
-      [ "stacks", "structOS__stack__t.html#a277ee04059b4b3fac0d4c8659eee6266", null ]
+      [ "stacks", "structOS__stack__t.html#ac64b6bed80c0329e43aba6903453ed95", null ]
     ] ],
     [ "OS_MPU_region", "structOS__MPU__region.html", [
       [ "end", "structOS__MPU__region.html#ad764a379d4013b7559bd3286db398425", null ],

@@ -22,7 +22,7 @@ var searchData=
   ['threads_19',['Threads',['../group__os__sched.html',1,'']]],
   ['threadstate_20',['ThreadState',['../group__os__kernel.html#gab3804a8a4369184ad46dadf8e54957b6',1,'runtime.h']]],
   ['timerentry_5ft_21',['TimerEntry_t',['../structTimerEntry__t.html',1,'']]],
-  ['timers_22',['timers',['../group__os__timer.html',1,'Timers'],['../group__api__timer.html',1,'Timers']]],
+  ['timers_22',['timers',['../group__api__timer.html',1,'Timers'],['../group__os__timer.html',1,'Timers']]],
   ['timeval_23',['timeval',['../structtimeval.html',1,'']]],
   ['timing_20provider_24',['SysTick-Based Timing Provider',['../group__aux__systick.html',1,'']]],
   ['timing_20provider_20api_25',['Timing provider API',['../group__api__timing.html',1,'']]],

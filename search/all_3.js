@@ -2,7 +2,7 @@ var searchData=
 [
   ['c_20headers_0',['C headers',['../group__arch__arch.html#headers',1,'']]],
   ['calling_20rpc_20service_1',['Calling RPC service',['../rpc_intro.html#autotoc_md14',1,'']]],
-  ['calls_2',['calls',['../group__os__rpc.html',1,'Remote Procedure Calls'],['../group__api__rpc.html',1,'Remote Procedure Calls'],['../rpc_intro.html',1,'Remote Procedure Calls'],['../group__os__syscall.html',1,'System calls']]],
+  ['calls_2',['calls',['../group__api__rpc.html',1,'Remote Procedure Calls'],['../group__os__rpc.html',1,'Remote Procedure Calls'],['../rpc_intro.html',1,'Remote Procedure Calls'],['../group__os__syscall.html',1,'System calls']]],
   ['calls_20implementation_3',['System calls implementation',['../group__arch__arm__syscall.html',1,'']]],
   ['cancel_5ftimed_5fevent_4',['cancel_timed_event',['../group__os__timer.html#gafd631293a404e992816aaa99e85c2625',1,'timer.c']]],
   ['cmake_20functions_5',['CMake functions',['../dev_env.html#autotoc_md18',1,'']]],
@@ -25,9 +25,9 @@ var searchData=
   ['concepts_22',['Basic concepts',['../concepts.html',1,'overview']]],
   ['configuration_23',['Kernel runtime configuration',['../group__os__config.html',1,'']]],
   ['constants_20for_20errors_24',['Named constants for errors',['../group__api__errors.html',1,'']]],
-  ['core_25',['core',['../group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106',1,'core:&#160;sched.c'],['../group__os__kernel.html',1,'Kernel core']]],
-  ['corelocal_20h_26',['corelocal.h',['../group__arch__arch.html#corelocal_h',1,'']]],
-  ['cortex_20m_20support_20routines_27',['Cortex-M support routines',['../group__arch__arm__cortex.html',1,'']]],
-  ['ctrl_20fields_28',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
-  ['ctxt_5fswitch_5fpending_29',['ctxt_switch_pending',['../group__arch__arm__os.html#ga10965edb07faee05ccc8b5d297cee65c',1,'pendsv.c']]]
+  ['context_20switching_25',['Context switching',['../group__os__context.html',1,'']]],
+  ['core_26',['core',['../group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106',1,'core:&#160;sched.c'],['../group__os__kernel.html',1,'Kernel core']]],
+  ['corelocal_20h_27',['corelocal.h',['../group__arch__arch.html#corelocal_h',1,'']]],
+  ['cortex_20m_20support_20routines_28',['Cortex-M support routines',['../group__arch__arm__cortex.html',1,'']]],
+  ['ctrl_20fields_29',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]]
 ];

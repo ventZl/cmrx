@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['new_5fhost_5fprocess_0',['new_host_process',['../group__arch__arm__os.html#gae884da4353bc949a7ac71952001e5e3c',1,'pendsv.c']]],
-  ['new_5fparent_5fprocess_1',['new_parent_process',['../group__arch__arm__os.html#ga3e3c931aead76822453e0fd8b6308b33',1,'pendsv.c']]],
-  ['new_5fprocess_5fid_2',['new_process_id',['../group__arch__arm__os.html#ga7cd2d90b5948c048c752cadc57c48d1d',1,'pendsv.c']]],
-  ['new_5ftask_3',['new_task',['../group__arch__arm__os.html#ga11c07eb858d88957553544a439f86818',1,'pendsv.c']]],
-  ['new_5fthread_5fid_4',['new_thread_id',['../group__arch__arm__os.html#gaa46d661b7d84c89c0f165bc9a0c2fc97',1,'pendsv.c']]]
+  ['new_5fhost_5fprocess_0',['new_host_process',['../structOS__scheduling__context__t.html#ac16dfdd57d15b7496a96d961c4febebf',1,'OS_scheduling_context_t']]],
+  ['new_5fparent_5fprocess_1',['new_parent_process',['../structOS__scheduling__context__t.html#a0ce5b7d74f40e76d0a0ba93ab5298b37',1,'OS_scheduling_context_t']]],
+  ['new_5fstack_2',['new_stack',['../structOS__scheduling__context__t.html#a5372277933da93d68480ff97134c4217',1,'OS_scheduling_context_t']]],
+  ['new_5ftask_3',['new_task',['../structOS__scheduling__context__t.html#a1b662e76305857887851d810db38139c',1,'OS_scheduling_context_t']]]
 ];

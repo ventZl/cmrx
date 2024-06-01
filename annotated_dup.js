@@ -15,6 +15,7 @@ var annotated_dup =
     [ "OS_MPU_region", "structOS__MPU__region.html", "structOS__MPU__region" ],
     [ "OS_process_definition_t", "structOS__process__definition__t.html", "structOS__process__definition__t" ],
     [ "OS_process_t", "structOS__process__t.html", "structOS__process__t" ],
+    [ "OS_scheduling_context_t", "structOS__scheduling__context__t.html", "structOS__scheduling__context__t" ],
     [ "OS_stack_t", "structOS__stack__t.html", "structOS__stack__t" ],
     [ "OS_thread_create_t", "structOS__thread__create__t.html", "structOS__thread__create__t" ],
     [ "OS_thread_t", "structOS__thread__t.html", "structOS__thread__t" ],

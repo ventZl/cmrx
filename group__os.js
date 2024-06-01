@@ -1,6 +1,7 @@
 var group__os =
 [
     [ "Architecture support", "group__arch.html", "group__arch" ],
+    [ "Context switching", "group__os__context.html", "group__os__context" ],
     [ "Interrupt service routines", "group__os__isr.html", "group__os__isr" ],
     [ "Kernel core", "group__os__kernel.html", "group__os__kernel" ],
     [ "Memory protection", "group__os__mpu.html", "group__os__mpu" ],

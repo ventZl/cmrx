@@ -109,6 +109,9 @@ $(document).ready(function(){initNavTree('group__arch__arch.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gaaf6b80c02401002f49137d397ba971b0" id="r_gaaf6b80c02401002f49137d397ba971b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaaf6b80c02401002f49137d397ba971b0">os_request_context_switch</a> ()</td></tr>
+<tr class="memdesc:gaaf6b80c02401002f49137d397ba971b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
+<tr class="separator:gaaf6b80c02401002f49137d397ba971b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b816407f1b57d532407988a5da92716" id="r_ga2b816407f1b57d532407988a5da92716"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a> ()</td></tr>
 <tr class="memdesc:ga2b816407f1b57d532407988a5da92716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start memory protection.  <br /></td></tr>
 <tr class="separator:ga2b816407f1b57d532407988a5da92716"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -339,6 +342,26 @@ Port implementation sources</h1>
 
 </div>
 </div>
+<a id="gaaf6b80c02401002f49137d397ba971b0" name="gaaf6b80c02401002f49137d397ba971b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaf6b80c02401002f49137d397ba971b0">&#9670;&#160;</a></span>os_request_context_switch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_request_context_switch </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Request context switch. </p>
+<p>This function is called by the platform independent part of the kernel when cpu_context structure is filled with valid data and context switch shall happen. The implementation of this function should configure the hardware in a way that context switch will happen as soon as kernel finishes its work and is ready to return the CPU back to the userspace code. </p>
+
+</div>
+</div>
 <a id="ga9ee8f29f3009ad125af02a612603504f" name="ga9ee8f29f3009ad125af02a612603504f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga9ee8f29f3009ad125af02a612603504f">&#9670;&#160;</a></span>os_rpc_call()</h2>
 
@@ -478,54 +501,6 @@ Port implementation sources</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Address to which the SP shall be set. </dd></dl>
-
-</div>
-</div>
-<a id="gaf1e29342624824b3772fe70c0a358497" name="gaf1e29342624824b3772fe70c0a358497"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf1e29342624824b3772fe70c0a358497">&#9670;&#160;</a></span>schedule_context_switch()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool schedule_context_switch </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>current_task</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>next_task</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Schedule context switch on next suitable moment. </p>
-<p>This function will tell scheduler, that we want to switch running tasks. Switch itself will be performed on next suitable moment by asynchronous routine. This mechanism is used to avoid context switch in the middle of interrupt routine, or otherwise complicated situation.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">current_task</td><td>ID of thread which is currently being executed </td></tr>
-    <tr><td class="paramname">next_task</td><td>ID of thread which should start being executed </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if context switch will happen, false otherwise</dd></dl>
-<p>Schedule context switch on next suitable moment.</p>
-<p>Calling this function will prepare task switch. It will set up some stuff needed and then schedule PendSV. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">current_task</td><td>ID of task, which is currently running </td></tr>
-    <tr><td class="paramname">next_task</td><td>ID of task, which should be scheduled next </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>API of this function is dumb. </dd></dl>
 
 </div>
 </div>
