@@ -92,8 +92,8 @@ CTEST2(os_thread_stop, stop_continue) {
     // Expect round robin scheduling being applied to threads of
     // same priority
     ASSERT_EQUAL(schedule_context_switch_called, true);
-    ASSERT_EQUAL(os_threads[1].state, THREAD_STATE_READY);
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(os_threads[1].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_READY);
     ASSERT_EQUAL(core[0].thread_current, 1);
 
 }
