@@ -13,6 +13,7 @@ set(test_kernel_SRCS
     os_setitimer.c
     rpc_stack_push.c
     rpc_stack_pop.c
+    os_sched_timing_callback.c
     )
 add_executable(test_kernel ${test_kernel_SRCS})
 target_link_libraries(test_kernel os ctest)
