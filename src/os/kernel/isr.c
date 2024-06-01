@@ -18,7 +18,7 @@
 #include <conf/kernel.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
-#include <cmrx/os/arch/sched.h>
+#include <cmrx/os/context.h>
 
 void isr_kill(Thread_t thread_id, uint32_t signal)
 {

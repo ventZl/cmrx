@@ -115,7 +115,7 @@ int os_setpriority(uint8_t priority);
  * @param stack_id ID of stack
  * @returns base address of stack
  */
-unsigned long * os_stack_get(int stack_id);
+uint32_t * os_stack_get(int stack_id);
 
 /** Get thread descriptor.
  * @param thread_id ID of thread

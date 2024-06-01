@@ -6,7 +6,14 @@ if (UNIT_TESTING_BUILD)
     add_definitions(-Dstatic=)
 endif()
 
-set(os_SRCS isr.c sched.c signal.c syscall.c timer.c rpc.c)
+set(os_SRCS 
+    context.c
+    isr.c 
+    sched.c 
+    signal.c 
+    syscall.c 
+    timer.c 
+    rpc.c)
 
 add_library(os STATIC EXCLUDE_FROM_ALL ${os_SRCS})
 
