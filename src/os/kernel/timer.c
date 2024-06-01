@@ -121,10 +121,7 @@ static int cancel_timed_event(Thread_t owner, bool periodic)
 	{
 		if (sleepers[q].thread_id == owner)
 		{
-			if (
-					(periodic && !IS_PERIODIC(sleepers[q].interval))
-					|| (!periodic && IS_PERIODIC(sleepers[q].interval))
-			   )
+			if (periodic == IS_PERIODIC(sleepers[q].interval))
 			{
 				sleepers[q].thread_id = 0xFF;
 				return 0;
