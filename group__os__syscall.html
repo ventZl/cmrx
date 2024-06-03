@@ -126,7 +126,7 @@ $(document).ready(function(){initNavTree('group__os__syscall.html',''); initResi
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">asm</span> <span class="keyword">volatile</span>(\</div>
 <div class="line">            <span class="stringliteral">&quot;SVC %[immediate]\n\t&quot;</span>\</div>
-<div class="line">            <span class="stringliteral">&quot;BX LR\n\t&quot;</span> : : [immediate] <span class="stringliteral">&quot;I&quot;</span> (no))</div>
+<div class="line">                  <span class="stringliteral">&quot;BX LR\n\t&quot;</span> : : [immediate] <span class="stringliteral">&quot;I&quot;</span> (no) : <span class="stringliteral">&quot;r0&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
 </div>

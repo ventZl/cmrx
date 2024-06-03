@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('arm_2cmsis_2arch_2sysenter_8h_source.h
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="group__os__syscall.html#gae074ff178f562a3742a23bdd56e08122">   17</a></span><span class="preprocessor">#define ___SVC(no)\</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">    asm volatile(\</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">            &quot;SVC %[immediate]\n\t&quot;\</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">            &quot;BX LR\n\t&quot; : : [immediate] &quot;I&quot; (no))</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">                  &quot;BX LR\n\t&quot; : : [immediate] &quot;I&quot; (no) : &quot;r0&quot;)</span></div>
 </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="group__os__syscall.html#ga7b1388f7bd14b83bd3f8f773fbf3375b">   25</a></span><span class="preprocessor">#define __SVC(no) ___SVC(no)</span></div>
