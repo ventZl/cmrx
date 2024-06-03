@@ -45,6 +45,13 @@ __attribute__((naked)) void PendSV_Handler(void)
 	cortex_disable_interrupts();
 	/* Do NOT put anything here. You will clobber context being stored! */
 	cpu_context.old_task->sp = save_context();
+
+    // This assert checks that we are not preempting some other interrupt 
+    // handler. If you assert here, then your interrupt handler priority
+    // is messed up. You need to configure PendSV to be the handler with
+    // absolutely the lowest priority.
+    ASSERT(__get_LR() == 0xFFFFFFFDU);
+
 	ctxt_switch_pending = false;
 	sanitize_psp(cpu_context.old_task->sp);
 
