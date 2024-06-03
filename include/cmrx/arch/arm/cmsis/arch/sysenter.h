@@ -17,7 +17,7 @@
 #define ___SVC(no)\
 	asm volatile(\
 			"SVC %[immediate]\n\t"\
-			"BX LR\n\t" : : [immediate] "I" (no))
+                  "BX LR\n\t" : : [immediate] "I" (no) : "r0")
 
 /** Perform syscall.
  * @param no number of syscall. 

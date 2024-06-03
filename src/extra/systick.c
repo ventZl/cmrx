@@ -18,13 +18,18 @@ static inline void SysTick_Disable()
 
 void timing_provider_setup(int interval_ms)
 {
+    // We need the PendSV be of the same priority as SysTick.
+    // Otherwise scheduling PendSV from SysTick will fire it 
+    // immediately and that won't do any good to the state of
+    // the program.
+    NVIC_SetPriority(PendSV_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);
     SysTick_Config(SystemCoreClock / (interval_ms * 1000));
     // SysTick_Config will enable the systick automatically
     SysTick_Disable();
     systick_us = interval_ms * 1000;
 }
 
-void SysTick_Handler()
+__attribute__((interrupt)) void SysTick_Handler()
 {
     os_sched_timing_callback(systick_us);
 }
