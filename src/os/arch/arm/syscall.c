@@ -23,7 +23,7 @@
  * @param arg2 syscall argument
  * @param arg3 syscall argument
  */
-__attribute__((used)) void SVC_Handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
+__attribute__((interrupt)) void SVC_Handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
 	uint32_t * psp = (uint32_t *) __get_PSP();
 	sanitize_psp(psp);
