@@ -19,6 +19,6 @@ var searchData=
   ['introduction_16',['Introduction',['../index.html',1,'']]],
   ['involving_20power_20management_17',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
   ['io_18',['Memory-mapped IO',['../mem_model.html#autotoc_md6',1,'']]],
-  ['is_5fperiodic_19',['IS_PERIODIC',['../group__os__timer.html#gabb6f7eb7da7ee190ca65cbe3a54a0c10',1,'timer.c']]],
+  ['is_5fperiodic_19',['is_periodic',['../group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c',1,'timer.c']]],
   ['isr_5fkill_20',['isr_kill',['../group__os__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c'],['../group__api__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c']]]
 ];

@@ -100,7 +100,6 @@ $(document).ready(function(){initNavTree('group__os__timer.html',''); initResiza
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Timers<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
@@ -112,15 +111,6 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimerEntry__t.html">TimerEntry_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Description of one sleep request.  <a href="structTimerEntry__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gabb6f7eb7da7ee190ca65cbe3a54a0c10" id="r_gabb6f7eb7da7ee190ca65cbe3a54a0c10"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gabb6f7eb7da7ee190ca65cbe3a54a0c10">IS_PERIODIC</a>(interval)&#160;&#160;&#160;(((interval) &gt;&gt; 31) == 1)</td></tr>
-<tr class="memdesc:gabb6f7eb7da7ee190ca65cbe3a54a0c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if interval in sleep entry is periodic or not.  <br /></td></tr>
-<tr class="separator:gabb6f7eb7da7ee190ca65cbe3a54a0c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf87056a047e79385ed9b7a4328d1ac95" id="r_gaf87056a047e79385ed9b7a4328d1ac95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gaf87056a047e79385ed9b7a4328d1ac95">GET_SLEEPTIME</a>(interval)&#160;&#160;&#160;((interval) &amp; (~(1 &lt;&lt; 31)))</td></tr>
-<tr class="memdesc:gaf87056a047e79385ed9b7a4328d1ac95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get how long the sleep should take.  <br /></td></tr>
-<tr class="separator:gaf87056a047e79385ed9b7a4328d1ac95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -139,6 +129,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga807091ac93d2fe8f891d40f39b49b7da" id="r_ga807091ac93d2fe8f891d40f39b49b7da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga807091ac93d2fe8f891d40f39b49b7da">os_run_timer</a> (uint32_t microtime)</td></tr>
 <tr class="memdesc:ga807091ac93d2fe8f891d40f39b49b7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire scheduled event.  <br /></td></tr>
 <tr class="separator:ga807091ac93d2fe8f891d40f39b49b7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7f49ccfaa49c941f8068bba1b340d1c" id="r_gaa7f49ccfaa49c941f8068bba1b340d1c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c">is_periodic</a> (unsigned interval)</td></tr>
+<tr class="memdesc:gaa7f49ccfaa49c941f8068bba1b340d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if interval in sleep entry is periodic or not.  <br /></td></tr>
+<tr class="separator:gaa7f49ccfaa49c941f8068bba1b340d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacee9648cc90be455d550756ca473a56f" id="r_gacee9648cc90be455d550756ca473a56f"><td class="memItemLeft" align="right" valign="top">static unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gacee9648cc90be455d550756ca473a56f">get_sleeptime</a> (const unsigned interval)</td></tr>
+<tr class="memdesc:gacee9648cc90be455d550756ca473a56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get how long the sleep should take.  <br /></td></tr>
+<tr class="separator:gacee9648cc90be455d550756ca473a56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga465c07e76bc53e1a23ca9abeeceefbbe" id="r_ga465c07e76bc53e1a23ca9abeeceefbbe"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga465c07e76bc53e1a23ca9abeeceefbbe">do_set_timed_event</a> (unsigned slot, unsigned interval, bool _periodic)</td></tr>
 <tr class="memdesc:ga465c07e76bc53e1a23ca9abeeceefbbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform heavy lifting of setting timers This routine will store timed event into list of timed events.  <br /></td></tr>
 <tr class="separator:ga465c07e76bc53e1a23ca9abeeceefbbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,49 +158,6 @@ Variables</h2></td></tr>
 <tr class="separator:gaa0e811d6349480297cbad82c700077de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="gaf87056a047e79385ed9b7a4328d1ac95" name="gaf87056a047e79385ed9b7a4328d1ac95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf87056a047e79385ed9b7a4328d1ac95">&#9670;&#160;</a></span>GET_SLEEPTIME</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GET_SLEEPTIME</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">interval</td><td>)</td>
-          <td>&#160;&#160;&#160;((interval) &amp; (~(1 &lt;&lt; 31)))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get how long the sleep should take. </p>
-<p>Will clean the periodicity flag from interval. </p><dl class="section return"><dt>Returns</dt><dd>sleep time in microseconds. </dd></dl>
-
-</div>
-</div>
-<a id="gabb6f7eb7da7ee190ca65cbe3a54a0c10" name="gabb6f7eb7da7ee190ca65cbe3a54a0c10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabb6f7eb7da7ee190ca65cbe3a54a0c10">&#9670;&#160;</a></span>IS_PERIODIC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IS_PERIODIC</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">interval</td><td>)</td>
-          <td>&#160;&#160;&#160;(((interval) &gt;&gt; 31) == 1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Determine if interval in sleep entry is periodic or not. </p>
-<dl class="section return"><dt>Returns</dt><dd>1 if interval is periodic, 0 if interval is one-shot. </dd></dl>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gafd631293a404e992816aaa99e85c2625" name="gafd631293a404e992816aaa99e85c2625"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gafd631293a404e992816aaa99e85c2625">&#9670;&#160;</a></span>cancel_timed_event()</h2>
@@ -383,6 +336,64 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new value of kernel timer at the end of sleep </dd></dl>
+
+</div>
+</div>
+<a id="gacee9648cc90be455d550756ca473a56f" name="gacee9648cc90be455d550756ca473a56f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacee9648cc90be455d550756ca473a56f">&#9670;&#160;</a></span>get_sleeptime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned get_sleeptime </td>
+          <td>(</td>
+          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramname"><em>interval</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get how long the sleep should take. </p>
+<p>Will clean the periodicity flag from interval. </p><dl class="section return"><dt>Returns</dt><dd>sleep time in microseconds. </dd></dl>
+
+</div>
+</div>
+<a id="gaa7f49ccfaa49c941f8068bba1b340d1c" name="gaa7f49ccfaa49c941f8068bba1b340d1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa7f49ccfaa49c941f8068bba1b340d1c">&#9670;&#160;</a></span>is_periodic()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool is_periodic </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>interval</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine if interval in sleep entry is periodic or not. </p>
+<dl class="section return"><dt>Returns</dt><dd>1 if interval is periodic, 0 if interval is one-shot. </dd></dl>
 
 </div>
 </div>
