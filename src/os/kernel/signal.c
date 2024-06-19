@@ -20,16 +20,17 @@ int os_signal(int signo, void (*sighandler)(int))
 int os_kill(uint8_t thread_id, uint8_t signal_id)
 {
 	ASSERT(thread_id < OS_THREADS);
-	if (os_threads[thread_id].state == THREAD_STATE_READY 
-			|| os_threads[thread_id].state == THREAD_STATE_RUNNING
-			|| os_threads[thread_id].state == THREAD_STATE_STOPPED
+    struct OS_thread_t * thread = &os_threads[thread_id];
+	if (thread->state == THREAD_STATE_READY 
+			|| thread->state == THREAD_STATE_RUNNING
+			|| thread->state == THREAD_STATE_STOPPED
 			)
 	{
 		if (signal_id < 32)
 		{
-			os_threads[thread_id].signals |= 1 << signal_id;
+			thread->signals |= 1 << signal_id;
 
-			if (os_threads[thread_id].state == THREAD_STATE_STOPPED)
+			if (thread->state == THREAD_STATE_STOPPED)
 			{
 				os_thread_continue(thread_id);
 			}
