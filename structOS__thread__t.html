@@ -112,21 +112,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a402b571dc6672000a6f56eccff94b78e" id="r_a402b571dc6672000a6f56eccff94b78e"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a402b571dc6672000a6f56eccff94b78e">sp</a></td></tr>
 <tr class="memdesc:a402b571dc6672000a6f56eccff94b78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value of SP.  <br /></td></tr>
 <tr class="separator:a402b571dc6672000a6f56eccff94b78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ea5132f358b5e6003cf6c480b1f9177" id="r_a7ea5132f358b5e6003cf6c480b1f9177"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a7ea5132f358b5e6003cf6c480b1f9177">stack_id</a></td></tr>
-<tr class="memdesc:a7ea5132f358b5e6003cf6c480b1f9177"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of stack, which is allocated to this thread.  <br /></td></tr>
-<tr class="separator:a7ea5132f358b5e6003cf6c480b1f9177"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3316dfeb2de5d7b03f7e0f6842f7c256" id="r_a3316dfeb2de5d7b03f7e0f6842f7c256"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="group__os__kernel.html#gab3804a8a4369184ad46dadf8e54957b6">ThreadState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a3316dfeb2de5d7b03f7e0f6842f7c256">state</a></td></tr>
-<tr class="memdesc:a3316dfeb2de5d7b03f7e0f6842f7c256"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of this thread.  <br /></td></tr>
-<tr class="separator:a3316dfeb2de5d7b03f7e0f6842f7c256"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20739e2e1e1235f9e5f8ad070697039a" id="r_a20739e2e1e1235f9e5f8ad070697039a"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a20739e2e1e1235f9e5f8ad070697039a">block_object</a></td></tr>
 <tr class="memdesc:a20739e2e1e1235f9e5f8ad070697039a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identification of object, which causes this thread to block.  <br /></td></tr>
 <tr class="separator:a20739e2e1e1235f9e5f8ad070697039a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac38a8ca09c98ad92cecefcd716534920" id="r_ac38a8ca09c98ad92cecefcd716534920"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__kernel.html#ga59b9ffdaff162b7deb5f6d34348513d9">OS_RPC_stack</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#ac38a8ca09c98ad92cecefcd716534920">rpc_stack</a></td></tr>
-<tr class="memdesc:ac38a8ca09c98ad92cecefcd716534920"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ummmmm...  <br /></td></tr>
-<tr class="separator:ac38a8ca09c98ad92cecefcd716534920"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abde22ec841a589ba96cc6bc54f9eabb5" id="r_abde22ec841a589ba96cc6bc54f9eabb5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#abde22ec841a589ba96cc6bc54f9eabb5">priority</a></td></tr>
-<tr class="memdesc:abde22ec841a589ba96cc6bc54f9eabb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread priority.  <br /></td></tr>
-<tr class="separator:abde22ec841a589ba96cc6bc54f9eabb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e3cdaf8f549f44f9dbbb9450c00fe67" id="r_a6e3cdaf8f549f44f9dbbb9450c00fe67"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a6e3cdaf8f549f44f9dbbb9450c00fe67">signal_handler</a> )(int)</td></tr>
 <tr class="memdesc:a6e3cdaf8f549f44f9dbbb9450c00fe67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of signal handler to use.  <br /></td></tr>
 <tr class="separator:a6e3cdaf8f549f44f9dbbb9450c00fe67"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,6 +124,18 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a2424a7be713fbc3a61887ed4429c64bf" id="r_a2424a7be713fbc3a61887ed4429c64bf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf">exit_status</a></td></tr>
 <tr class="memdesc:a2424a7be713fbc3a61887ed4429c64bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exit status after thread quit.  <br /></td></tr>
 <tr class="separator:a2424a7be713fbc3a61887ed4429c64bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac38a8ca09c98ad92cecefcd716534920" id="r_ac38a8ca09c98ad92cecefcd716534920"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__kernel.html#ga59b9ffdaff162b7deb5f6d34348513d9">OS_RPC_stack</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#ac38a8ca09c98ad92cecefcd716534920">rpc_stack</a></td></tr>
+<tr class="memdesc:ac38a8ca09c98ad92cecefcd716534920"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ummmmm...  <br /></td></tr>
+<tr class="separator:ac38a8ca09c98ad92cecefcd716534920"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ea5132f358b5e6003cf6c480b1f9177" id="r_a7ea5132f358b5e6003cf6c480b1f9177"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a7ea5132f358b5e6003cf6c480b1f9177">stack_id</a></td></tr>
+<tr class="memdesc:a7ea5132f358b5e6003cf6c480b1f9177"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of stack, which is allocated to this thread.  <br /></td></tr>
+<tr class="separator:a7ea5132f358b5e6003cf6c480b1f9177"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3316dfeb2de5d7b03f7e0f6842f7c256" id="r_a3316dfeb2de5d7b03f7e0f6842f7c256"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="group__os__kernel.html#gab3804a8a4369184ad46dadf8e54957b6">ThreadState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a3316dfeb2de5d7b03f7e0f6842f7c256">state</a></td></tr>
+<tr class="memdesc:a3316dfeb2de5d7b03f7e0f6842f7c256"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of this thread.  <br /></td></tr>
+<tr class="separator:a3316dfeb2de5d7b03f7e0f6842f7c256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde22ec841a589ba96cc6bc54f9eabb5" id="r_abde22ec841a589ba96cc6bc54f9eabb5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#abde22ec841a589ba96cc6bc54f9eabb5">priority</a></td></tr>
+<tr class="memdesc:abde22ec841a589ba96cc6bc54f9eabb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread priority.  <br /></td></tr>
+<tr class="separator:abde22ec841a589ba96cc6bc54f9eabb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3ea786a749ff514c3362f8dbbed81d9" id="r_aa3ea786a749ff514c3362f8dbbed81d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#aa3ea786a749ff514c3362f8dbbed81d9">process_id</a></td></tr>
 <tr class="memdesc:aa3ea786a749ff514c3362f8dbbed81d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Owning process reference.  <br /></td></tr>
 <tr class="separator:aa3ea786a749ff514c3362f8dbbed81d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
