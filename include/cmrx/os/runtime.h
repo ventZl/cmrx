@@ -37,7 +37,10 @@ enum ThreadState {
 	THREAD_STATE_FINISHED,
 	/** Thread is blocked waitihg for other thread to finish.
 	 */
-	THREAD_STATE_BLOCKED_JOINING
+	THREAD_STATE_BLOCKED_JOINING,
+    /** Thread has been stopped and is ready to migrate over to another core
+     */
+    THREAD_STATE_MIGRATING
 };
 
 /** Prototype for thread entrypoint function.
@@ -103,6 +106,9 @@ struct OS_thread_t {
 
 	/** Owning process reference. */
     Process_t process_id;
+
+    /** Core at which this thread is running */
+    uint8_t core_id;
 };
 
 #define OS_TASK_NO_STACK		(~0)
