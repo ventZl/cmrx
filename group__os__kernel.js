@@ -2,6 +2,7 @@ var group__os__kernel =
 [
     [ "OS_thread_t", "structOS__thread__t.html", [
       [ "block_object", "structOS__thread__t.html#a20739e2e1e1235f9e5f8ad070697039a", null ],
+      [ "core_id", "structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92", null ],
       [ "exit_status", "structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf", null ],
       [ "priority", "structOS__thread__t.html#abde22ec841a589ba96cc6bc54f9eabb5", null ],
       [ "process_id", "structOS__thread__t.html#aa3ea786a749ff514c3362f8dbbed81d9", null ],
@@ -49,7 +50,8 @@ var group__os__kernel =
       [ "THREAD_STATE_CREATED", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6afb57d1df9b82dc0b35626e572b83a089", null ],
       [ "THREAD_STATE_STOPPED", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf", null ],
       [ "THREAD_STATE_FINISHED", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96", null ],
-      [ "THREAD_STATE_BLOCKED_JOINING", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1", null ]
+      [ "THREAD_STATE_BLOCKED_JOINING", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1", null ],
+      [ "THREAD_STATE_MIGRATING", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b", null ]
     ] ],
     [ "os_processes", "group__os__kernel.html#ga92c7c87a5b690240597294d232980842", null ],
     [ "os_stacks", "group__os__kernel.html#gaea74e023a260529e36ff7609c8a53555", null ],

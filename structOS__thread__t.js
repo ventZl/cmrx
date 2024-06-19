@@ -1,6 +1,7 @@
 var structOS__thread__t =
 [
     [ "block_object", "structOS__thread__t.html#a20739e2e1e1235f9e5f8ad070697039a", null ],
+    [ "core_id", "structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92", null ],
     [ "exit_status", "structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf", null ],
     [ "priority", "structOS__thread__t.html#abde22ec841a589ba96cc6bc54f9eabb5", null ],
     [ "process_id", "structOS__thread__t.html#aa3ea786a749ff514c3362f8dbbed81d9", null ],

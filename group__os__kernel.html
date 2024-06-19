@@ -162,6 +162,7 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf">THREAD_STATE_STOPPED</a>
 , <a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96">THREAD_STATE_FINISHED</a>
 , <a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1">THREAD_STATE_BLOCKED_JOINING</a>
+, <a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b">THREAD_STATE_MIGRATING</a>
 <br />
  }</td></tr>
 <tr class="memdesc:gab3804a8a4369184ad46dadf8e54957b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of states in which thread can be.  <a href="group__os__kernel.html#gab3804a8a4369184ad46dadf8e54957b6">More...</a><br /></td></tr>
@@ -276,6 +277,8 @@ Variables</h2></td></tr>
 <p>Nobody called <a class="el" href="group__api__thread.html#gafecb0503475d000bb26f547db0f54936">thread_join()</a> yet. This state is the same as "zombie" in Linux. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1" name="ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1"></a>THREAD_STATE_BLOCKED_JOINING&#160;</td><td class="fielddoc"><p>Thread is blocked waitihg for other thread to finish. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b" name="ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b"></a>THREAD_STATE_MIGRATING&#160;</td><td class="fielddoc"><p>Thread has been stopped and is ready to migrate over to another core. </p>
 </td></tr>
 </table>
 

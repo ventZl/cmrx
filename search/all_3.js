@@ -27,7 +27,8 @@ var searchData=
   ['constants_20for_20errors_24',['Named constants for errors',['../group__api__errors.html',1,'']]],
   ['context_20switching_25',['Context switching',['../group__os__context.html',1,'']]],
   ['core_26',['core',['../group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106',1,'core:&#160;sched.c'],['../group__os__kernel.html',1,'Kernel core']]],
-  ['corelocal_20h_27',['corelocal.h',['../group__arch__arch.html#corelocal_h',1,'']]],
-  ['cortex_20m_20support_20routines_28',['Cortex-M support routines',['../group__arch__arm__cortex.html',1,'']]],
-  ['ctrl_20fields_29',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]]
+  ['core_5fid_27',['core_id',['../structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92',1,'OS_thread_t']]],
+  ['corelocal_20h_28',['corelocal.h',['../group__arch__arch.html#corelocal_h',1,'']]],
+  ['cortex_20m_20support_20routines_29',['Cortex-M support routines',['../group__arch__arm__cortex.html',1,'']]],
+  ['ctrl_20fields_30',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]]
 ];
