@@ -67,26 +67,12 @@ struct OS_thread_t {
 	 * and slots which don't have stack allocated yet.
 	 */
 	uint32_t * sp;
-	/** ID of stack, which is allocated to this thread. */
-	uint8_t stack_id;
-
-	/** State of this thread. */
-	enum ThreadState state;
-
 	/** Identification of object, which causes this thread to block.
 	 * This value if context-dependent. If thread is blocked joining other thread,
 	 * then this contains thread ID. If thread is blocked waiting for mutex, then
 	 * this contains mutex address.
 	 */
 	unsigned long block_object;
-
-	/** Ummmmm... */
-	OS_RPC_stack rpc_stack;
-
-	/** Thread priority.
-	 * This is used by scheduler to decide which thread to run.
-	 */
-	uint8_t priority;
 
 	/** Address of signal handler to use.
 	 */
@@ -100,8 +86,23 @@ struct OS_thread_t {
 
 	/** Exit status after thread quit. */
 	int exit_status;
+
+	/** Ummmmm... */
+	OS_RPC_stack rpc_stack;
+
+	/** ID of stack, which is allocated to this thread. */
+	uint8_t stack_id;
+
+	/** State of this thread. */
+	enum ThreadState state;
+
+	/** Thread priority.
+	 * This is used by scheduler to decide which thread to run.
+	 */
+	uint8_t priority;
+
 	/** Owning process reference. */
-	Process_t process_id;
+    Process_t process_id;
 };
 
 #define OS_TASK_NO_STACK		(~0)

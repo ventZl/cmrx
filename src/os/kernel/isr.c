@@ -22,23 +22,24 @@
 
 void isr_kill(Thread_t thread_id, uint32_t signal)
 {
+    struct OS_thread_t * thread = &os_threads[thread_id];
 	if (thread_id < OS_THREADS
 			&& signal < 32
 			&& (
-				os_threads[thread_id].state == THREAD_STATE_READY
-				|| os_threads[thread_id].state == THREAD_STATE_RUNNING
-				|| os_threads[thread_id].state == THREAD_STATE_STOPPED
+				thread->state == THREAD_STATE_READY
+				|| thread->state == THREAD_STATE_RUNNING
+				|| thread->state == THREAD_STATE_STOPPED
 			   )
 	   )
 	{
-		os_threads[thread_id].signals |= 1 << signal;
-		if (os_threads[thread_id].state == THREAD_STATE_STOPPED)
+		thread->signals |= 1 << signal;
+		if (thread->state == THREAD_STATE_STOPPED)
 		{
-			os_threads[thread_id].state = THREAD_STATE_READY;
+			thread->state = THREAD_STATE_READY;
 		}
 		/* this stuff is dodgy and would deserve complete 
 		 * rewrite to be more robust and more predictable */
-		if (os_threads[thread_id].priority > os_threads[os_get_current_thread()].priority)
+		if (thread->priority > os_threads[os_get_current_thread()].priority)
 		{
 			if (schedule_context_switch(os_get_current_thread(), thread_id))
 			{
