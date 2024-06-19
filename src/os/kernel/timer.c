@@ -33,13 +33,17 @@ struct TimerEntry_t sleepers[SLEEPERS_MAX];
 /** Determine if interval in sleep entry is periodic or not.
  * @returns 1 if interval is periodic, 0 if interval is one-shot.
  */
-#define IS_PERIODIC(interval) (((interval) >> 31) == 1)
+static bool is_periodic(unsigned interval) { 
+    return (interval >> 31) == 1; 
+}
 
 /** Get how long the sleep should take.
  * Will clean the periodicity flag from interval.
  * @returns sleep time in microseconds.
  */
-#define GET_SLEEPTIME(interval) ((interval) & (~(1 << 31)))
+static unsigned get_sleeptime(const unsigned interval) {
+    return (interval & (~(1 << 31)));
+}
 
 /** Perform heavy lifting of setting timers
  * This routine will store timed event into list of timed events. If 
@@ -55,10 +59,11 @@ static int do_set_timed_event(unsigned slot, unsigned interval, bool _periodic)
 	uint32_t periodic = (_periodic ? 1 : 0);
 	Thread_t thread_id = os_get_current_thread();
 	uint32_t microtime = os_get_micro_time();
-	sleepers[slot].thread_id = thread_id;
-	ASSERT(sleepers[slot].thread_id < OS_THREADS);
-	sleepers[slot].sleep_from = microtime;
-	sleepers[slot].interval = interval | (periodic << 31);
+    struct TimerEntry_t * sleeper = &sleepers[slot];
+	sleeper->thread_id = thread_id;
+	ASSERT(sleeper->thread_id < OS_THREADS);
+	sleeper->sleep_from = microtime;
+	sleeper->interval = interval | (periodic << 31);
 	if (!_periodic)
 	{
 		os_thread_stop(thread_id);
@@ -81,23 +86,21 @@ static int set_timed_event(unsigned microseconds, bool periodic)
 
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
-		if (sleepers[q].thread_id == 0xFF)
+        struct TimerEntry_t * sleeper = &sleepers[q];
+		if (sleeper->thread_id == 0xFF)
 		{
 			return do_set_timed_event(q, microseconds, periodic);
 		}
 		else
 		{
-			if (sleepers[q].thread_id == thread_id)
+			if (sleepers->thread_id == thread_id)
 			{
 				/* We are searching for interval timer / delay for this thread
 				 * we found some entry belonging to this thread, but it is of
 				 * different kind than we are searching for. It is delay and
 				 * we are searching for interval timer or vice versa.
 				 */
-				if (
-						(periodic  && IS_PERIODIC(sleepers[q].interval))
-						|| (!periodic && !(IS_PERIODIC(sleepers[q].interval)))
-				   )
+				if (periodic == is_periodic(sleepers->interval))
 				{
 					return do_set_timed_event(q, microseconds, periodic);
 				}
@@ -119,11 +122,12 @@ static int cancel_timed_event(Thread_t owner, bool periodic)
 {
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
-		if (sleepers[q].thread_id == owner)
+        struct TimerEntry_t * sleeper = &sleepers[q];
+		if (sleeper->thread_id == owner)
 		{
-			if (periodic == IS_PERIODIC(sleepers[q].interval))
+			if (periodic == is_periodic(sleeper->interval))
 			{
-				sleepers[q].thread_id = 0xFF;
+				sleeper->thread_id = 0xFF;
 				return 0;
 			}
 		}
@@ -198,14 +202,15 @@ bool os_schedule_timer(unsigned * delay)
 
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
-		if (sleepers[q].thread_id != 0xFF)
+        struct TimerEntry_t * sleeper = &sleepers[q];
+		if (sleeper->thread_id != 0xFF)
 		{
 			/* Figure how long this particular sleeper is already sleeing */
-			uint32_t sleeping = get_sleep_time(sleepers[q].sleep_from, microtime);
+			uint32_t sleeping = get_sleep_time(sleeper->sleep_from, microtime);
 			/* Figure out how long should this particular sleeper continue
 			 * to sleep
 			 */
-			uint32_t tosleep = GET_SLEEPTIME(sleepers[q].interval);
+			uint32_t tosleep = get_sleeptime(sleeper->interval);
 
 			uint32_t delay;
 			if (sleeping < tosleep)
@@ -238,20 +243,21 @@ void os_run_timer(uint32_t microtime)
 
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
-		if (sleepers[q].thread_id != 0xFF)
+        struct TimerEntry_t * sleeper = &sleepers[q];
+		if (sleeper->thread_id != 0xFF)
 		{
-
-			if (get_sleep_time(sleepers[q].sleep_from, microtime) >= GET_SLEEPTIME(sleepers[q].interval))
+            const unsigned sleeper_sleeptime = get_sleeptime(sleeper->interval);
+			if (get_sleep_time(sleeper->sleep_from, microtime) >= sleeper_sleeptime)
 			{
 				// restart usleep-ed thread
-				os_thread_continue(sleepers[q].thread_id);
-				if (IS_PERIODIC(sleepers[q].interval))
+				os_thread_continue(sleeper->thread_id);
+				if (is_periodic(sleeper->interval))
 				{
-					sleepers[q].sleep_from = sleepers[q].sleep_from + GET_SLEEPTIME(sleepers[q].interval);
+					sleeper->sleep_from = sleeper->sleep_from + sleeper_sleeptime;
 				}
 				else
 				{
-					sleepers[q].thread_id = 0xFF;
+					sleeper->thread_id = 0xFF;
 				}
 			}
 		}

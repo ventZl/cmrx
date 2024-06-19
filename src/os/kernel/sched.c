@@ -61,7 +61,7 @@ int os_thread_alloc(Process_t process, uint8_t priority);
  * @returns true if any runnable thread (different than current) was found, false
  * otherwise.
  */
-bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
+__attribute__((noinline)) bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 {
 	uint16_t best_prio = PRIORITY_INVALID;
     uint8_t candidate_thread = 0xFF;
@@ -106,13 +106,15 @@ int os_sched_yield(void)
 
 //	os_sched_timed_event();
 
-	if (os_get_next_thread(core[coreid()].thread_current, &candidate_thread))
+    struct OS_core_state_t * core_state = &core[coreid()];
+
+	if (os_get_next_thread(core_state->thread_current, &candidate_thread))
 	{
-		core[coreid()].thread_prev = core[coreid()].thread_current;
-		core[coreid()].thread_next = candidate_thread;
-		if (schedule_context_switch(core[coreid()].thread_current, candidate_thread))
+		core_state->thread_prev = core_state->thread_current;
+		core_state->thread_next = candidate_thread;
+		if (schedule_context_switch(core_state->thread_current, candidate_thread))
 		{
-			core[coreid()].thread_current = core[coreid()].thread_next;
+			core_state->thread_current = core_state->thread_next;
 		}
 	}
 	return 0;
@@ -263,16 +265,17 @@ int os_thread_kill(uint8_t thread_id, int status)
 		return E_INVALID;
 	}
 
-	if (os_threads[thread_id].state != THREAD_STATE_EMPTY
-			&& os_threads[thread_id].state != THREAD_STATE_FINISHED
+    struct OS_thread_t * const thread = &os_threads[thread_id];
+	if (thread->state != THREAD_STATE_EMPTY
+			&& thread->state != THREAD_STATE_FINISHED
 			)
 	{
-		os_threads[thread_id].state = THREAD_STATE_FINISHED;
-		os_threads[thread_id].exit_status = status;
+		thread->state = THREAD_STATE_FINISHED;
+		thread->exit_status = status;
 
-		os_stack_dispose(os_threads[thread_id].stack_id);
-		os_threads[thread_id].stack_id = OS_TASK_NO_STACK;
-		os_threads[thread_id].sp = (uint32_t *) ~0;
+		os_stack_dispose(thread->stack_id);
+		thread->stack_id = OS_TASK_NO_STACK;
+		thread->sp = (uint32_t *) ~0;
 		if (thread_id == os_get_current_thread())
 		{
 			os_sched_yield();
@@ -384,14 +387,16 @@ int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data)
 	{
 		if (os_threads[tid].state == THREAD_STATE_CREATED)
 		{
+            struct OS_thread_t * new_thread = &os_threads[tid];
 			uint32_t stack_id = os_stack_create();
 			if (stack_id != 0xFFFFFFFF)
 			{
-				os_threads[tid].stack_id = stack_id;
-//				os_threads[tid].sp = &os_stacks.stacks[stack_id][OS_STACK_DWORD - 16];
-                os_threads[tid].sp = os_thread_populate_stack(stack_id, OS_STACK_DWORD, entrypoint, data);
+				new_thread->stack_id = stack_id;
+//				new_thread->sp = &os_stacks.stacks[stack_id][OS_STACK_DWORD - 16];
+                new_thread->sp = os_thread_populate_stack(stack_id, OS_STACK_DWORD, entrypoint, data);
+                new_thread->core_id = coreid();
 
-				os_threads[tid].state = THREAD_STATE_READY;
+				new_thread->state = THREAD_STATE_READY;
 				return E_OK;
 			}
 			else
@@ -418,14 +423,15 @@ int os_thread_alloc(Process_t process, uint8_t priority)
 	{
 		if (os_threads[q].state == THREAD_STATE_EMPTY)
 		{
-			memset(&os_threads[q], 0, sizeof(os_threads[q]));
-			os_threads[q].stack_id = OS_TASK_NO_STACK;
-			os_threads[q].process_id = process;
-			os_threads[q].sp = (uint32_t *) ~0;
-			os_threads[q].state = THREAD_STATE_CREATED;
-			os_threads[q].signals = 0;
-			os_threads[q].signal_handler = NULL;
-			os_threads[q].priority = priority;
+            struct OS_thread_t * new_thread = &os_threads[q];
+            memset(new_thread, 0, sizeof(struct OS_thread_t));
+			new_thread->stack_id = OS_TASK_NO_STACK;
+			new_thread->process_id = process;
+			new_thread->sp = (uint32_t *) ~0;
+			new_thread->state = THREAD_STATE_CREATED;
+			new_thread->signals = 0;
+			new_thread->signal_handler = NULL;
+			new_thread->priority = priority;
 			return q;
 		}
 	}
@@ -458,8 +464,9 @@ void os_start()
 
 	for (unsigned q = 0; q < threads; ++q)
 	{
-		Process_t process_id = (autostart_threads[q].process - app_definition);
-		__os_thread_create(process_id, autostart_threads[q].entrypoint, autostart_threads[q].data, autostart_threads[q].priority);
+        const struct OS_thread_create_t * const autostarted_thread = &autostart_threads[q];
+		Process_t process_id = (autostarted_thread->process - app_definition);
+		__os_thread_create(process_id, autostarted_thread->entrypoint, autostarted_thread->data, autostarted_thread->priority);
 	}
 
 	__os_thread_create((uint32_t) NULL, os_idle_thread, NULL, 0xFF);
