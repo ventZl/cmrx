@@ -15,8 +15,15 @@ set(test_kernel_SRCS
     rpc_stack_pop.c
     os_sched_timing_callback.c
     )
+
+
 add_executable(test_kernel ${test_kernel_SRCS})
 target_link_libraries(test_kernel os ctest)
+
+# The following tests are only supported if SMP is enabled
+if (CMRX_ARCH_SMP_SUPPORTED)
+    target_sources(test_kernel PRIVATE os_thread_migrate.c)
+endif()
 
 add_test(NAME test_kernel COMMAND test_kernel)
 
