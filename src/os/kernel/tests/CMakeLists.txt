@@ -22,7 +22,11 @@ target_link_libraries(test_kernel os ctest)
 
 # The following tests are only supported if SMP is enabled
 if (CMRX_ARCH_SMP_SUPPORTED)
-    target_sources(test_kernel PRIVATE os_thread_migrate.c)
+    target_sources(test_kernel PRIVATE 
+        os_thread_migrate.c
+        background_checker.c
+        smp_atomic_ops.c
+        )
 endif()
 
 add_test(NAME test_kernel COMMAND test_kernel)
