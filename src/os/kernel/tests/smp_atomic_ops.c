@@ -47,7 +47,7 @@ CTEST2(smp_atomic, os_stack_alloc) {
 }
 
 CTEST2(smp_atomic, os_stack_dispose) {
-    uint32_t template[3] = { 1, 0, 1 };
+    uint32_t template[3] = { 0, 1, 0 };
 
     struct checker_t * checker = checker_create(&os_stacks.allocations, template, sizeof(os_stacks.allocations), 3, &cmrx_os_smp_locked, barrier);
 
