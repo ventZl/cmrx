@@ -14,7 +14,8 @@ struct checker_t {
     size_t data_size;
     size_t templ_count;
     unsigned * semaphore;
-    struct barrier_t * barrier;
+    struct barrier_t * lock_barrier;
+    struct barrier_t * unlock_barrier;
     bool running;
     bool result;
 };
@@ -39,7 +40,7 @@ enum eCheckerResult {
  * Check is suspended if semaphore has non-zero value. This allows to emulate
  * atomic behavior.
  */
-struct checker_t * checker_create(void * data, void * templ, size_t data_size, size_t templ_count, unsigned * semaphore, struct barrier_t * barrier);
+struct checker_t * checker_create(void * data, void * templ, size_t data_size, size_t templ_count, unsigned * semaphore);
 
 /** Finish checker run.
  * @returns return value of checker run:
@@ -69,4 +70,8 @@ bool barrier_wait(struct barrier_t * barrier);
  * nothing.
  */
 bool barrier_release(struct barrier_t * barrier);
+
+/** Free barrier object.
+ */
+void barrier_free(struct barrier_t * barrier);
 

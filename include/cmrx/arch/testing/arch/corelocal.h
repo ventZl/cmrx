@@ -13,6 +13,7 @@
 
 typedef void (*callback_t)();
 extern callback_t cmrx_smp_locked_callback;
+extern callback_t cmrx_smp_unlocked_callback;
 
 
 extern unsigned coreid();

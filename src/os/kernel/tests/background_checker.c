@@ -2,6 +2,7 @@
 
 #include <memory.h>
 #include <string.h>
+#include <stdio.h>
 
 int _checker_main(void * _d)
 {
@@ -10,19 +11,16 @@ int _checker_main(void * _d)
     memset(buf, 0, checker->data_size);
 
     int result = OK;
-    bool unlock_barrier = true;
     unsigned cursor = 0;
 
     while (checker->running) {
         if (*checker->semaphore != 0) {
-            if (unlock_barrier)
-            {
-                unlock_barrier = false;
-                cursor++;
-                barrier_release(checker->barrier);
-            }
-            // semaphore active
-            continue;
+            cursor++;
+            // Unlock barrier which is holding test blocked
+            barrier_release(checker->lock_barrier);
+
+            // Block itself until test unlocks the BKL
+            barrier_wait(checker->unlock_barrier);
         }
         if (cursor >= checker->templ_count)
         {
@@ -31,7 +29,6 @@ int _checker_main(void * _d)
             result = LockCountMismatch;
             continue;
         }
-        unlock_barrier = true;
 
         memcpy(buf, checker->data, checker->data_size);
 
@@ -50,9 +47,9 @@ int _checker_main(void * _d)
 }
 
 
-struct checker_t * checker_create(void * data, void * templ, size_t data_size, size_t templ_count, unsigned * semaphore, struct barrier_t * barrier) 
+struct checker_t * checker_create(void * data, void * templ, size_t data_size, size_t templ_count, unsigned * semaphore) 
 {
-    if (data == NULL || templ == NULL || semaphore == NULL || barrier == NULL)
+    if (data == NULL || templ == NULL || semaphore == NULL)
     {
         return NULL;
     }
@@ -70,7 +67,8 @@ struct checker_t * checker_create(void * data, void * templ, size_t data_size, s
     checker->semaphore = semaphore;
     checker->running = true;
     checker->result = true;
-    checker->barrier = barrier;
+    checker->lock_barrier = barrier_create();
+    checker->unlock_barrier = barrier_create();
 
     int rv = thrd_create(&checker->thread, _checker_main, checker);
 
@@ -103,6 +101,8 @@ enum eCheckerResult checker_finish(struct checker_t *checker)
 
     thrd_join(checker->thread, &rv);
 
+    barrier_free(checker->lock_barrier);
+    barrier_free(checker->unlock_barrier);
     free(checker);
 
     return rv;
@@ -160,4 +160,18 @@ bool barrier_release(struct barrier_t * barrier)
     cnd_signal(&barrier->cv);
 
     return true;
+}
+
+void barrier_free(struct barrier_t * barrier)
+{
+    if (barrier == NULL)
+    {
+        return;
+    }
+
+    mtx_unlock(&barrier->mutex);
+    mtx_destroy(&barrier->mutex);
+    cnd_destroy(&barrier->cv);
+
+    free(barrier);
 }
