@@ -223,17 +223,24 @@ int os_idle_thread(void * data)
 int os_stack_create()
 {
 	uint32_t stack_mask = 1;
+    int rv = STACK_INVALID;
+
+    os_smp_lock();
+
 	for(int q = 0; q < OS_STACKS; ++q)
 	{
 		if ((os_stacks.allocations & stack_mask) == 0)
 		{
 			os_stacks.allocations |= stack_mask;
-			return q;
+			rv = q;
+            break;
 		}
 		stack_mask *= 2;
 	}
 
-	return STACK_INVALID;
+    os_smp_unlock();
+
+	return rv;
 }
 
 uint32_t * os_stack_get(int stack_id)
