@@ -255,7 +255,9 @@ void os_stack_dispose(uint32_t stack_id)
 {
 	if (stack_id < OS_STACKS)
 	{
+        os_smp_lock();
 		os_stacks.allocations &= ~(1 << stack_id);
+        os_smp_unlock();
 	}
 }
 
