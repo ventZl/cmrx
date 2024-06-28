@@ -43,10 +43,24 @@ if (UNIT_TESTING)
             message(WARNING "There is a directory named `tests` in CMRX source tree. Its content is going to be mixed with unit test build. Result is unpredictable!")
         endif()
 
+        # Collect all non-default options
+        set(UT_BUILD_OPTIONS )
+        foreach(CMRX_OPTION ${CMRX_ALL_OPTIONS})
+            message("Examining option ${CMRX_OPTION}")
+            if (DEFINED ${CMRX_OPTION} AND NOT DEFINED CACHE{${CMRX_OPTION}})
+                list(APPEND UT_BUILD_OPTIONS -D${CMRX_OPTION}=${${CMRX_OPTION}})
+                message("Non default value for option ${CMRX_OPTION}")
+            else()
+                message("Option ${CMRX_OPTION} has default value ${${CMRX_OPTION}}")
+            endif()
+        endforeach()
         # Create directory which will host the build and run CMake
         file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/tests)
-        execute_process(COMMAND ${CMAKE_COMMAND} -D__UNIT_TESTING_BUILD=1 ${CMAKE_CURRENT_SOURCE_DIR}
+        execute_process(COMMAND ${CMAKE_COMMAND} -D__UNIT_TESTING_BUILD=1 ${UT_BUILD_OPTIONS} ${CMAKE_CURRENT_SOURCE_DIR}
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/tests)
+        message(Execute COMMAND ${CMAKE_COMMAND} -D__UNIT_TESTING_BUILD=1 ${UT_BUILD_OPTIONS} ${CMAKE_CURRENT_SOURCE_DIR}
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/tests)
+
 
         # Create targets which jump into the nested build
         # Target to build all tests

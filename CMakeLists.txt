@@ -1,12 +1,16 @@
 # We do add sources from within foreign directories, so we want the paths
 # absolute.
 # We also add dependencies to targets defined elsewhere.
+# If any of options defined herein already exists as a variable, then do nothing;
+# This allows users to configure the kernel in their CMakeLists.txt
 cmake_policy(SET CMP0079 NEW)
 cmake_policy(SET CMP0076 NEW)
+cmake_policy(SET CMP0077 NEW)
 
 message(DEBUG "CMRX root dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 set_property(GLOBAL PROPERTY CMRX_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
+include(cmake/options.cmake)
 include(cmake/unit_test_build.cmake)
 
 include_directories(include)
