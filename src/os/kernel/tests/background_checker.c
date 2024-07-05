@@ -2,7 +2,6 @@
 
 #include <memory.h>
 #include <string.h>
-#include <stdio.h>
 
 int _checker_main(void * _d)
 {

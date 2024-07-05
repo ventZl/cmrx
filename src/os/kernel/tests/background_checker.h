@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define ARR_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
+
 struct barrier_t;
 
 struct checker_t {
