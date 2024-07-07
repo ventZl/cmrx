@@ -13,6 +13,8 @@ under CMRX scheduler.
 
 @subpage rpc_intro introduces the RPC mechanism
 
+@subpage txn_intro describes how transactional processing within kernel works
+
 @subpage dev_code_organization outlines how the code has to be organized in the project
 
 @subpage dev_env describes the how the build environment and integration with vendor's SDK
@@ -654,12 +656,135 @@ times, so all the data of `process 1` is visible not just from code of process o
 but also from the code provided by the `utils.c` source file. What truly matters is, in
 what context the code runs. If the code will be running as part process' 1s thread
 execution, then it will be able to access its data. If the code will be running in the
-thread owned by the `pocess 2`, then no data of `process 1` will be visible regardless of
+thread owned by the `process 2`, then no data of `process 1` will be visible regardless of
 where the code executing is stored. One process can group as many C files as necessary and
 they all will be able to access each other's data without any specific precautions.
 
 Last part is the CMRX kernel itself. It is linked as a library and contains all the
 relevant portions of the kernel itself. None of its data is accessible from any process.
+
+@page txn_intro Transactional Processing
+
+One of important roles of any kernel is to keep things consistent at all times. This is 
+rather trivial task even in a multi-threaded environment as long as your kernel processing
+does not get preempted. This normally does not happen, unless your ISRs are calling kernel
+services. Once they start doing so, the kernel code may get interrupted at any time with 
+routines modifying the current kernel state.
+
+Another similar, but not entirely the same situation happens if your kernel is running on 
+multiple CPUs in SMP arrangement. Two CPU cores may execute kernel code in parallel.
+
+While the latter situation can easily be resolved by using so called "big kernel locks" - 
+locks which ever only allow one core to enter critical section - it won't help with interrupts.
+
+If you allow interrupt to be handled while in critical section and this interrupt decides to 
+enter this critical section, you get a deadlock situation. This is due to the priority inversion.
+Kernel code which is running inside ISR with lower priority holds a lock which prevents a code 
+from higher priority ISR to proceed. Due to the priorities the code already holding the lock 
+will never be able to proceed and everything hangs.
+
+If you disable interrupts for the duration of the critical section, then the worst-case latency
+is hurt as you need to account for the longest-possible critical section blocking your interrupt 
+from happening.
+
+From critical section to transaction
+------------------------------------
+
+The approach selected for CMRX is to split critical section into two distinct parts. This split
+roughly aligns with transactional processing, thus this term was chosen to describe the behavior.
+
+Critical sections also have three steps:
+1. Lock the mutex and enter the critical section
+2. Do whatever calculations needed in isolation and then modify the shared data structures
+3. Unlock the mutex leaving critical sections allowing others to proceed
+
+Step 1 and 3 above are usually ignored as they are considered to happen immediately if no other
+code is already in the critical section.
+
+You either get deadlocks in your interrupt service routines if you don't disable interrupts in 
+critical sections, or your interrupt latency gets quite bad if you do.
+
+To fight these two problems, different semantics is used. Code that would normally reside in 
+critical section is said to reside inside transaction. Then the steps are:
+
+1. Start the transaction obtaining transaction identifier
+2. Do whatever calculations needed before you are ready to write into shared data structures 
+3. Commit transaction
+4. If successful, then write changes do the shared data structures
+5. Finish the transaction
+
+There are two additional steps. The main difference between critical section and transactional
+processing is that while step 2 of critical section happens inside the critical section, thus
+code has exclusive access to the shared resources, step 2 of transactional processing happens
+in normal mode of operation. This code can be interrupted or another code running on another
+core(s) can modify the data while this code runs.
+
+Normally that would lead to race conditions. With some caution in writing the code, this does 
+not happen here. The step 3 of transactional processing makes the difference.
+
+When the code makes an attempt to commit the transaction created in step 1, the transaction
+engine checks, if there was another transaction committed in between this transaction was 
+created and the commit attempt has been made. It does not matter if this transaction happened
+inside ISR or on another core.
+
+If another transaction has been **committed** while the computation of this transaction 
+computation ran, then the computation is considered inconsistent. It is then up on the calling 
+code to decide on what to do now. In some cases, transaction can be dismissed entirely. In other
+cases it has to be computed again.
+
+If there was no conflict and commit is allowed, then critical section is entered and the code 
+has exclusive access to the resources and can modify the shared kernel data. Here the **atomicity**
+is ensured.
+
+Transaction caveats
+-------------------
+
+Unlike transactional databases, the transactional processing inside the kernel is not fully 
+isolated. While computation of transactions happens outside of critical sections, it may happen 
+that code running one core will read the data while critical section running on another core 
+will update it.
+
+This could be avoided by processing in isolation, creating a local copy of data being processed
+upon starting transaction. This would be extremely expensive as such kind of conflicts only 
+happens rarely. In most cases, the effect of modification done inside the transaction only 
+affects the local core. Thus the decision here is to make sure that changes made while 
+committing transactions are made in a way that there won't be any transient hazard state 
+generated.
+
+Transient hazard state happens when the current state of data in shared kernel structures,
+if interpreted by another piece of code, could lead to an unexpected and unwanted behavior.
+
+Transaction engine properties
+-----------------------------
+
+The transaction engine provides level of guarantees roughly at the level "read committed".
+
+There are two types of transactions supported:
+* read-only transactions - the sole purpose of these transactions is to make sure no other 
+  transaction has been committed while the computation was performed. This ensures that whatever
+  data were read were in consistent state all the time. 
+* read-write transactions - this type of transaction ensures that all writes to the shared
+  context were made atomically and that no other read-only transaction will process these data 
+  in an inconsistent manner without knowing it.
+
+Guarantees offered:
+* Atomicity of writes - changes written are written atomically, no two transactions will write their
+  changes simultaneously. There is no guarantee that reads will be atomic. See isolation below.
+  There can be only one transaction committing its changes at any time in the whole system.
+* Consistency awareness - computations made within transactions are let know if the shared state could 
+  become inconsistent. If this hint is honored and changes are written in a hazard-free way, then
+  consistency of data is guaranteed even in read-only transactions. There can as many read-only 
+  transactions running in parallel as needed. Committing any of them won't abort any other 
+  concurrent read-only or read-write transaction. Yet if there is read-write transaction committed
+  while there are read-only transaction opened, all of them will be aborted.
+
+Guarantees not offered:
+* Isolation - read-only transactions don't access the data isolated from other (mostly read-write)
+  transactions. There may happen a commit at any time of processing read-only transaction. Reads
+  are not blocked while commit is writing modifications. Thus the code modifying the data must
+  ensure there are no data hazards.
+* Durability - this guarantee is not provided as it makes no sense. The current state of the
+  kernel is volatile. No persistence is provided.
 
 @page dev_env Development Environment
 
