@@ -2,6 +2,10 @@
 #include <RTE_Components.h>
 #include CMSIS_device_header
 #include <conf/kernel.h>
+#include "cortex.h"
+
+#define os_core_lock() __disable_irq()
+#define os_core_unlock() __enable_irq()
 
 #ifndef CMRX_ARCH_SMP_SUPPORTED
 

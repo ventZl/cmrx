@@ -1,6 +1,7 @@
 #include <arch/corelocal.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 unsigned cmrx_current_core = 0;
 unsigned cmrx_os_smp_locked = 0;
@@ -14,6 +15,13 @@ unsigned coreid()
 }
 
 void os_smp_lock() { 
+    if (cmrx_os_smp_locked)
+    {
+        printf("\nFATAL ERROR: Attempt to lock BKL while already locked!\n");
+        // Attempt to lock recursively!
+        abort();
+    }
+//    printf("\nBKL lock!");
     cmrx_os_smp_locked = 1; 
     if (cmrx_smp_locked_callback != NULL) 
     {
@@ -22,6 +30,13 @@ void os_smp_lock() {
 }
 
 void os_smp_unlock() { 
+    if (!cmrx_os_smp_locked)
+    {
+        printf("\nFATAL ERROR: Attempt to unlock BKL while not locked!\n");
+        // Attempt to unlock when no lock is locked!
+        abort();
+    }
+//    printf("\nBKL unlock!");
     cmrx_os_smp_locked = 0; 
     if (cmrx_smp_unlocked_callback != NULL)
     {

@@ -2,6 +2,10 @@
 
 #include <conf/kernel.h>
 
+// These do nothing in testing environment
+#define os_core_lock()
+#define os_core_unlock()
+
 #ifndef CMRX_ARCH_SMP_SUPPORTED
 
 #define coreid()	0

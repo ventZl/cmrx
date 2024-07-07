@@ -40,4 +40,15 @@ void os_smp_lock();
  */
 void os_smp_unlock();
 
+/** Lock the current core
+ * This function ensures that no other code will interrupt the currently running core.
+ * It usually boils down to disabling interrupts.
+ * @note Calling this function does *NOT* prevent another core from running code which
+ * will manipulate kernel data structures. If you want this behavior, use @ref os_smp_lock().
+ */
+void os_core_lock();
 
+/** Unlock the current core
+ * Unlocks exclusive access to the current core. Usually it boils down to enabling interrupts.
+ */
+void os_core_unlock();
