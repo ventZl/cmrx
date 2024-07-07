@@ -13,6 +13,7 @@ set(os_SRCS
     signal.c 
     syscall.c 
     timer.c 
+    txn.c
     rpc.c)
 
 add_library(os STATIC EXCLUDE_FROM_ALL ${os_SRCS})
