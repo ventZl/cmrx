@@ -2,6 +2,7 @@
 
 #include <memory.h>
 #include <string.h>
+#include <stdio.h>
 
 int _checker_main(void * _d)
 {
@@ -32,6 +33,21 @@ int _checker_main(void * _d)
         memcpy(buf, checker->data, checker->data_size);
 
         if (memcmp(buf, &checker->templ[cursor * checker->data_size], checker->data_size) != 0) {
+            if (result != DataMismatch)
+            {
+                printf("\nTemplate data does not match the actual data in sample %d!\nExpected:", cursor);
+                for (int q = 0; q < checker->data_size; ++q)
+                {
+                    printf(" %02hhX", checker->templ[cursor * checker->data_size + q]);
+                }
+                printf("\nActual:  ");
+                for (int q = 0; q < checker->data_size; ++q)
+                {
+                    printf(" %02hhX", buf[q]);
+                }
+                printf("\n");
+                abort();
+            }
             result = DataMismatch;
         }
 
@@ -39,6 +55,7 @@ int _checker_main(void * _d)
 
     if (cursor != checker->templ_count - 1)
     {
+        printf("\nTemplate contains different amount of samples than were seen in the test (expected %d, seen %d)!\n", checker->templ_count, cursor + 1);
         result = LockCountMismatch;
     }
 
