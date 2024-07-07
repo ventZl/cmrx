@@ -131,11 +131,12 @@ struct OS_thread_t * os_thread_get(Thread_t thread_id);
  * @param tid Thread ID of thread to be constructed
  * @param entrypoint pointer to thread entrypoint function
  * @param data pointer to thread data. pass NULL pointer if no thread data is used
+ * @param core ID of core the thread should run at
  * @returns E_OK if thread was constructed, E_OUT_OF_STACKS if there is no free stack
  * available and E_TASK_RUNNING if thread is not in state suitable for construction
  * (either slot is free, or already constructed).
  */
-int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data);
+int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, uint8_t core);
 
 /** Alias to thread_exit.
  * This is in fact the same function as @ref thread_exit. The only difference is 

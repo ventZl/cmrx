@@ -4,6 +4,7 @@
 #include <cmrx/os/timer.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/signal.h>
+#include <cmrx/os/txn.h>
 #include <conf/kernel.h>
 
 #include <stdint.h>
@@ -49,26 +50,32 @@ static unsigned get_sleeptime(const unsigned interval) {
  * This routine will store timed event into list of timed events. If 
  * event is not periodic, it will also stop thread (\ref os_usleep semantics).
  *
+ * @param txn transaction used to modify the table
  * @param slot number of slot in \ref sleepers list
  * @param interval amount of us for which thread should sleep
  * @param _periodic true if timer should be periodic, false otherwise
  * @return 0 if timer was set up properly
  */
-static int do_set_timed_event(unsigned slot, unsigned interval, bool _periodic)
+static int do_set_timed_event(Txn_t txn, unsigned slot, unsigned interval, bool _periodic)
 {
-	uint32_t periodic = (_periodic ? 1 : 0);
-	Thread_t thread_id = os_get_current_thread();
-	uint32_t microtime = os_get_micro_time();
-    struct TimerEntry_t * sleeper = &sleepers[slot];
-	sleeper->thread_id = thread_id;
-	ASSERT(sleeper->thread_id < OS_THREADS);
-	sleeper->sleep_from = microtime;
-	sleeper->interval = interval | (periodic << 31);
-	if (!_periodic)
-	{
-		os_thread_stop(thread_id);
-	}
-	return 0;
+    if (os_txn_commit(txn, TXN_READWRITE) == E_OK) {
+        uint32_t periodic = (_periodic ? 1 : 0);
+        Thread_t thread_id = os_get_current_thread();
+        uint32_t microtime = os_get_micro_time();
+        struct TimerEntry_t * sleeper = &sleepers[slot];
+        sleeper->thread_id = thread_id;
+        ASSERT(sleeper->thread_id < OS_THREADS);
+        sleeper->sleep_from = microtime;
+        sleeper->interval = interval | (periodic << 31);
+        os_txn_done();
+        if (!_periodic)
+        {
+            os_thread_stop(thread_id);
+        }
+        return 0;
+    } else {
+        return 1;
+    }
 }
 
 /** Find a slot for timed event and store it.
@@ -82,6 +89,7 @@ static int do_set_timed_event(unsigned slot, unsigned interval, bool _periodic)
  */
 static int set_timed_event(unsigned microseconds, bool periodic)
 {
+    Txn_t txn = os_txn_start();
 	Thread_t thread_id = os_get_current_thread();
 
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
@@ -89,7 +97,13 @@ static int set_timed_event(unsigned microseconds, bool periodic)
         struct TimerEntry_t * sleeper = &sleepers[q];
 		if (sleeper->thread_id == 0xFF)
 		{
-			return do_set_timed_event(q, microseconds, periodic);
+			if (do_set_timed_event(txn, q, microseconds, periodic) == 0) {
+                return 0;
+            } else {
+                // Transaction has been aborted, restart search
+                q = -1;
+                continue;
+            }
 		}
 		else
 		{
@@ -102,7 +116,12 @@ static int set_timed_event(unsigned microseconds, bool periodic)
 				 */
 				if (periodic == is_periodic(sleepers->interval))
 				{
-					return do_set_timed_event(q, microseconds, periodic);
+					if (do_set_timed_event(txn, q, microseconds, periodic) == 0) {
+                        return 0;
+                    } else {
+                        q = -1;
+                        continue;
+                    }
 				}
 			}
 		}
@@ -120,6 +139,7 @@ static int set_timed_event(unsigned microseconds, bool periodic)
  */
 static int cancel_timed_event(Thread_t owner, bool periodic)
 {
+    Txn_t txn = os_txn_start();
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
         struct TimerEntry_t * sleeper = &sleepers[q];
@@ -127,8 +147,11 @@ static int cancel_timed_event(Thread_t owner, bool periodic)
 		{
 			if (periodic == is_periodic(sleeper->interval))
 			{
-				sleeper->thread_id = 0xFF;
-				return 0;
+                if (os_txn_commit(txn, TXN_READWRITE) == E_OK) {
+    				sleeper->thread_id = 0xFF;
+                    os_txn_done();
+	    			return 0;
+                }
 			}
 		}
 	}

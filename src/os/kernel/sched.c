@@ -8,6 +8,7 @@
 #include <cmrx/os/sched.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
+#include <cmrx/os/txn.h>
 #include <stdbool.h>
 #include <cmrx/assert.h>
 #include <cmrx/os/arch/static.h>
@@ -50,6 +51,7 @@ static uint32_t sched_microtime = 0;
 
 /* Forward declaration. */
 int os_thread_alloc(Process_t process, uint8_t priority);
+int __os_thread_create_on_core(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority, uint8_t core);
 
 /** Obtain next thread to run.
  *
@@ -88,9 +90,8 @@ __attribute__((noinline)) bool os_get_next_thread(uint8_t current_thread, uint8_
 	} while (loops--);
 
 	ASSERT(loops > 0);
-//	ASSERT(candidate_thread != current_thread);
 
-	*next_thread = candidate_thread;
+    *next_thread = candidate_thread;
 
 	if (best_prio <= PRIORITY_MAX && candidate_thread != current_thread)
 	{
@@ -105,18 +106,22 @@ int os_sched_yield(void)
 	uint8_t candidate_thread;
 
 //	os_sched_timed_event();
+    uint8_t txn_id = os_txn_start();
 
     struct OS_core_state_t * core_state = &core[coreid()];
 
 	if (os_get_next_thread(core_state->thread_current, &candidate_thread))
 	{
-		core_state->thread_prev = core_state->thread_current;
-		core_state->thread_next = candidate_thread;
-		if (schedule_context_switch(core_state->thread_current, candidate_thread))
-		{
-			core_state->thread_current = core_state->thread_next;
-		}
-	}
+        if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK) {
+            core_state->thread_prev = core_state->thread_current;
+            core_state->thread_next = candidate_thread;
+            if (schedule_context_switch(core_state->thread_current, candidate_thread))
+            {
+                core_state->thread_current = core_state->thread_next;
+            }
+            os_txn_done();
+        }
+ 	}
 	return 0;
 }
 
@@ -225,20 +230,25 @@ int os_stack_create()
 	uint32_t stack_mask = 1;
     int rv = STACK_INVALID;
 
-    os_smp_lock();
+    uint8_t txn_id = os_txn_start();
 
 	for(int q = 0; q < OS_STACKS; ++q)
 	{
 		if ((os_stacks.allocations & stack_mask) == 0)
 		{
-			os_stacks.allocations |= stack_mask;
-			rv = q;
-            break;
+            if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK) {
+    			os_stacks.allocations |= stack_mask;
+	    		rv = q;
+                os_txn_done();
+                break;
+            } else {
+                // Transaction aborted, restart search
+                q = -1;
+                continue;
+            }
 		}
 		stack_mask *= 2;
 	}
-
-    os_smp_unlock();
 
 	return rv;
 }
@@ -255,9 +265,9 @@ void os_stack_dispose(uint32_t stack_id)
 {
 	if (stack_id < OS_STACKS)
 	{
-        os_smp_lock();
+        os_txn_start_commit();
 		os_stacks.allocations &= ~(1 << stack_id);
-        os_smp_unlock();
+        os_txn_done();
 	}
 }
 
@@ -279,12 +289,14 @@ int os_thread_kill(uint8_t thread_id, int status)
 			&& thread->state != THREAD_STATE_FINISHED
 			)
 	{
+        os_txn_start_commit();
 		thread->state = THREAD_STATE_FINISHED;
 		thread->exit_status = status;
-
-		os_stack_dispose(thread->stack_id);
+        uint32_t stack_id = thread->stack_id;
 		thread->stack_id = OS_TASK_NO_STACK;
 		thread->sp = (uint32_t *) ~0;
+        os_txn_done();
+		os_stack_dispose(stack_id);
 		if (thread_id == os_get_current_thread())
 		{
 			os_sched_yield();
@@ -298,20 +310,31 @@ int os_thread_stop(uint8_t thread)
 {
 	if (thread < OS_THREADS)
 	{
-		if (os_threads[thread].state == THREAD_STATE_READY ||
-				os_threads[thread].state == THREAD_STATE_RUNNING)
-		{
-			os_threads[thread].state = THREAD_STATE_STOPPED;
-			if (thread == os_get_current_thread())
-			{
-				os_sched_yield();
-			}
-			return 0;
-		}
-		else
-		{
-			return E_NOTAVAIL;
-		}
+        while (1) 
+        {
+            Txn_t txn = os_txn_start();
+            if (os_threads[thread].state == THREAD_STATE_READY ||
+                    os_threads[thread].state == THREAD_STATE_RUNNING)
+            {
+                if (os_txn_commit(txn, TXN_READWRITE) == E_OK)
+                {
+                    os_threads[thread].state = THREAD_STATE_STOPPED;
+                    os_txn_done();
+                } else {
+                    // Try again!
+                    continue;
+                }
+                if (thread == os_get_current_thread())
+                {
+                    os_sched_yield();
+                }
+                return 0;
+            }
+            else
+            {
+                return E_NOTAVAIL;
+            }
+        }
 	}
 	return E_INVALID;
 }
@@ -320,23 +343,33 @@ int os_thread_continue(uint8_t thread)
 {
 	if (thread < OS_THREADS)
 	{
-		if (os_threads[thread].state == THREAD_STATE_STOPPED)
-		{
-			os_threads[thread].state = THREAD_STATE_READY;
-			os_sched_yield();
-			return 0;
-		}
-		else
-		{
-			return E_NOTAVAIL;
-		}
+        while (1)
+        {
+            Txn_t txn = os_txn_start();
+            if (os_threads[thread].state == THREAD_STATE_STOPPED)
+            {
+                if (os_txn_commit(txn, TXN_READWRITE) == E_OK) 
+                {
+                    os_threads[thread].state = THREAD_STATE_READY;
+                    os_txn_done();
+                }
+                os_sched_yield();
+                return 0;
+            }
+            else
+            {
+                return E_NOTAVAIL;
+            }
+        }
 	}
 	return E_INVALID;
 }
 
 int os_setpriority(uint8_t priority)
 {
+    os_txn_start_commit();
 	os_threads[os_get_current_thread()].priority = priority;
+    os_txn_done();
 	os_sched_yield();
 	return 0;
 }
@@ -345,18 +378,21 @@ int os_thread_join(uint8_t thread_id)
 {
 	if (thread_id < OS_THREADS)
 	{
-		if (os_threads[thread_id].state == THREAD_STATE_FINISHED)
-		{
-			int rv = os_threads[thread_id].exit_status;
-			os_threads[thread_id].state = THREAD_STATE_EMPTY;
-			return rv;
-		}
-		else
-		{
-			uint8_t current_thread_id = os_get_current_thread();
-			os_threads[current_thread_id].state = THREAD_STATE_BLOCKED_JOINING;
-			os_threads[current_thread_id].block_object = thread_id;
-		}
+        os_txn_start_commit();
+        if (os_threads[thread_id].state == THREAD_STATE_FINISHED)
+        {
+            int rv = os_threads[thread_id].exit_status;
+            os_threads[thread_id].state = THREAD_STATE_EMPTY;
+            os_txn_done();
+            return rv;
+           }
+        else
+        {
+            uint8_t current_thread_id = os_get_current_thread();
+            os_threads[current_thread_id].state = THREAD_STATE_BLOCKED_JOINING;
+            os_threads[current_thread_id].block_object = thread_id;
+            os_txn_done();
+        }
 	}
 	return E_INVALID;
 }
@@ -373,8 +409,14 @@ int os_thread_join(uint8_t thread_id)
  */
 int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority)
 {
+    uint8_t current_core = coreid();
+    return __os_thread_create_on_core(process, entrypoint, data, priority, current_core);
+}
+
+int __os_thread_create_on_core(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority, uint8_t core)
+{
 	uint8_t thread_id = os_thread_alloc(process, priority);
-	os_thread_construct(thread_id, entrypoint, data);
+	os_thread_construct(thread_id, entrypoint, data, core);
 	return thread_id;
 }
 
@@ -390,7 +432,7 @@ int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data
  * available and E_TASK_RUNNING if thread is not in state suitable for construction
  * (either slot is free, or already constructed).
  */
-int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data)
+int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, uint8_t core_id)
 {
 	if (tid < OS_THREADS)
 	{
@@ -401,9 +443,8 @@ int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data)
 			if (stack_id != 0xFFFFFFFF)
 			{
 				new_thread->stack_id = stack_id;
-//				new_thread->sp = &os_stacks.stacks[stack_id][OS_STACK_DWORD - 16];
                 new_thread->sp = os_thread_populate_stack(stack_id, OS_STACK_DWORD, entrypoint, data);
-                new_thread->core_id = coreid();
+                new_thread->core_id = core_id;
 
 				new_thread->state = THREAD_STATE_READY;
 				return E_OK;
@@ -428,23 +469,31 @@ int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data)
  */
 int os_thread_alloc(Process_t process, uint8_t priority)
 {
-	for (int q = 0; q < OS_THREADS; ++q)
-	{
-		if (os_threads[q].state == THREAD_STATE_EMPTY)
-		{
-            struct OS_thread_t * new_thread = &os_threads[q];
-            memset(new_thread, 0, sizeof(struct OS_thread_t));
-			new_thread->stack_id = OS_TASK_NO_STACK;
-			new_thread->process_id = process;
-			new_thread->sp = (uint32_t *) ~0;
-			new_thread->state = THREAD_STATE_CREATED;
-			new_thread->signals = 0;
-			new_thread->signal_handler = NULL;
-			new_thread->priority = priority;
-			return q;
-		}
-	}
-	return ~0;
+    while (1)
+    {
+        Txn_t txn = os_txn_start();
+        for (int q = 0; q < OS_THREADS; ++q)
+        {
+            if (os_threads[q].state == THREAD_STATE_EMPTY)
+            {
+                if (os_txn_commit(txn, TXN_READWRITE) == E_OK)
+                {
+                    struct OS_thread_t * new_thread = &os_threads[q];
+                    memset(new_thread, 0, sizeof(struct OS_thread_t));
+                    new_thread->stack_id = OS_TASK_NO_STACK;
+                    new_thread->process_id = process;
+                    new_thread->sp = (uint32_t *) ~0;
+                    new_thread->state = THREAD_STATE_CREATED;
+                    new_thread->signals = 0;
+                    new_thread->signal_handler = NULL;
+                    new_thread->priority = priority;
+                    os_txn_done();
+                    return q;
+                }
+            }
+        }
+	    return ~0;
+    }
 }
 
 /** Syscall handling thread_create()
