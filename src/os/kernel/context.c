@@ -15,7 +15,7 @@ static struct OS_process_t * old_host_process;
 static struct OS_process_t * new_host_process;
 
 static uint32_t * new_stack;*/
-bool ctxt_switch_pending = false;
+//bool ctxt_switch_pending = false;
 
 extern struct OS_stack_t os_stacks;
 
@@ -32,13 +32,17 @@ extern struct OS_stack_t os_stacks;
  */
 bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
 {
-	if (ctxt_switch_pending)
+// This is probably useless with transactions now
+#if 0
+
+    if (ctxt_switch_pending)
 	{
 		// can this be any more robust?
 		return false;
 	}
 
 	ctxt_switch_pending = true;
+#endif
 
 	cpu_context.old_task = &os_threads[current_task];
 	cpu_context.old_parent_process = &os_processes[cpu_context.old_task->process_id];
