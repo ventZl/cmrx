@@ -1,6 +1,10 @@
 #include <cmrx/os/txn.h>
 #include <cmrx/defines.h>
+#include <arch/corelocal.h>
 #include <ctest.h>
+#include <stdbool.h>>
+
+extern callback_t cmrx_smp_wrong_lock_callback;
 
 /* Undisturbed read-only transaction will commit cleanly */
 CTEST(os_txn, txn_start_read_commit) 
@@ -181,5 +185,33 @@ CTEST(os_txn, txn_read_nested_write_aborted)
     rv = os_txn_commit(id_1, TXN_READONLY);
 
     ASSERT_EQUAL(rv, E_INVALID);
+}
 
+static bool test_lock_abort_called = false;
+
+static void test_lock_aborted() {
+    test_lock_abort_called = true;
+}
+
+/* Transaction creation cannot be nested into commit
+ * critical section */
+CTEST(os_txn, commit_neste_start_detected)
+{
+    cmrx_smp_wrong_lock_callback = test_lock_aborted;
+
+    test_lock_abort_called = false;
+
+    Txn_t id_1 = os_txn_start();
+
+    ASSERT_EQUAL(test_lock_abort_called, false);
+
+    int rv = os_txn_commit(id_1, TXN_READWRITE);
+    
+    ASSERT_EQUAL(test_lock_abort_called, false);
+
+    Txn_t id_2 = os_txn_start();
+
+    ASSERT_EQUAL(test_lock_abort_called, true);
+    
+    os_txn_done();
 }
