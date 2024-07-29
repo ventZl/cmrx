@@ -62,8 +62,9 @@ int os_sched_yield(void);
  * This function populates thread table based on thread autostart macro use.
  * It also creates idle thread with priority 255 and starts scheduler. It never 
  * returns until you have very bad day.
+ * @param [in] start_core number of core for which the kernel is started
  */
-void os_start();
+void _os_start(uint8_t start_core);
 
 /** Configures systick timer.
  *

@@ -505,15 +505,24 @@ int os_thread_create(entrypoint_t * entrypoint, void * data, uint8_t priority)
 	return __os_thread_create(process_id, entrypoint, data, priority);
 }
 
-void os_start()
+#define KERNEL_STRUCTS_INITIALIZED_SIGNATURE    0x434D5258
+
+__attribute__((noreturn)) void _os_start(uint8_t start_core)
 {
+    static uint32_t kernel_structs_initialized = 0;
 	unsigned threads = static_init_thread_count(); 
 	unsigned applications = static_init_process_count(); 
 	const struct OS_process_definition_t * const app_definition = static_init_process_table();
 	const struct OS_thread_create_t * const autostart_threads = static_init_thread_table();
 
-	memset(&os_threads, 0, sizeof(os_threads));
-	os_timer_init();
+    os_smp_lock();
+    if (kernel_structs_initialized != KERNEL_STRUCTS_INITIALIZED_SIGNATURE)
+    {
+        kernel_structs_initialized = KERNEL_STRUCTS_INITIALIZED_SIGNATURE;
+        memset(&os_threads, 0, sizeof(os_threads));
+        os_timer_init();
+    }
+    os_smp_unlock();
 
 	for (unsigned q = 0; q < applications; ++q)
 	{
@@ -524,16 +533,16 @@ void os_start()
 	{
         const struct OS_thread_create_t * const autostarted_thread = &autostart_threads[q];
 		Process_t process_id = (autostarted_thread->process - app_definition);
-		__os_thread_create(process_id, autostarted_thread->entrypoint, autostarted_thread->data, autostarted_thread->priority);
+		__os_thread_create_on_core(process_id, autostarted_thread->entrypoint, autostarted_thread->data, autostarted_thread->priority, start_core);
 	}
 
-	__os_thread_create((uint32_t) NULL, os_idle_thread, NULL, 0xFF);
+	__os_thread_create_on_core((uint32_t) NULL, os_idle_thread, NULL, 0xFF, start_core);
 
 	uint8_t startup_thread;
 
 	if (os_get_next_thread(0xFF, &startup_thread))
 	{
-		core[coreid()].thread_current = startup_thread;
+		core[start_core].thread_current = startup_thread;
 		Process_t startup_process = os_threads[startup_thread].process_id;
 		os_threads[startup_thread].state = THREAD_STATE_RUNNING;
 
