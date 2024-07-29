@@ -1,6 +1,8 @@
+#include "cmrx/os/runtime.h"
 #include <cmrx/application.h>
 #include <cmrx/ipc/thread.h>
 #include <debug.h>
+#include <utils.h>
 
 int new_thread_entry(void * data)
 {

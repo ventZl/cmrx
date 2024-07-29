@@ -1,5 +1,6 @@
 #include <cmrx/application.h>
 #include <debug.h>
+#include <utils.h>
 
 int init_main(void * data)
 {

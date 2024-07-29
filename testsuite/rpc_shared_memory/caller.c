@@ -3,6 +3,7 @@
 #include <cmrx/ipc/rpc.h>
 #include <cmrx/ipc/shmem.h>
 #include <debug.h>
+#include <utils.h>
 #include "service.h"
 
 char SHARED buffer[] = "Babedeadbabedead";

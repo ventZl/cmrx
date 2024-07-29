@@ -1,6 +1,7 @@
 #include <cmrx/ipc/thread.h>
 #include <cmrx/application.h>
 #include <debug.h>
+#include <utils.h>
 #include <cmrx/ipc/signal.h>
 
 void signal_handler(uint32_t signo)

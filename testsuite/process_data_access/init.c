@@ -1,5 +1,6 @@
 #include <cmrx/application.h>
 #include <debug.h>
+#include <utils.h>
 
 static int process_variable = 0;
 

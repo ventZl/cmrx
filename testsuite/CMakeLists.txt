@@ -27,4 +27,4 @@ endif()
 
 message(STATUS "GDB: ${CMRX_GDB_PATH}")
 
-find_tests(${CMAKE_CURRENT_SOURCE_DIR})
+find_tests(${CMAKE_CURRENT_SOURCE_DIR} ${CMRX_PLATFORM_TEST_SRC})
