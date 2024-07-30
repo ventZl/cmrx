@@ -50,7 +50,6 @@ int os_txn_start_commit() {
 }
 
 void os_txn_done() {
-    printf("\nTransaction %d done!\n", os_txn_current_id);
     os_smp_unlock();
     os_core_unlock();
 
