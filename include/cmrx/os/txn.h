@@ -19,6 +19,9 @@ typedef uint8_t Txn_t;
  * This function will start a transaction. Starting a transaction means that the code
  * will remember actual record version number (active rolling counter value). rolling
  * counters are updated whenever read-write transaction is commited.
+ * @note It is perfectly valid to start transaction and not commit it. This effectively
+ * equals to voluntarily aborting the transaction. Such abandonned transactions pose no 
+ * overhead nor stall / corruption risk.
  * @return transaction ID
  */
 Txn_t os_txn_start();

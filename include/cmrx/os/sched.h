@@ -145,4 +145,17 @@ int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, ui
  */
 void os_thread_dispose(void);
 
+/** Migrate thread between CPU cores.
+ * This function takes existing thread which is bound to some core 
+ * and moved it over to scheduler queue of another core. In order for this call
+ * to be successful, the thread must already be stopped. If thread is woken up 
+ * by e.g. signal arrived from interrupt service handler via isr_kill() while
+ * this call is in progress then the call will fail.
+ * @param thread_id ID of thread to be migrated
+ * @param target_core ID of core where the thread should be migrated.
+ * @returns E_OK if thread was migrated; E_INVALID if thread is not stopped or call is 
+ * not made from the core at which the thread is currently running.
+ */
+int os_thread_migrate(uint8_t thread_id, int target_core);
+
 /** @} */

@@ -23,6 +23,7 @@ works
 @subpage hal_integration outlines how SDK libraries and HALs are integrated into
 CMRX-based project.
 
+@subpage smp_support details on specifics of SMP support
 
 @page concepts Basic concepts
 If using CMRX, there are some basic concepts enforced by the kernel itself.
@@ -943,3 +944,15 @@ If necessary CMSIS components are found, then following is done:
   CMSIS core. Only files named according to CMSIS specs are detected. These files are not
   handled automatically, rather it is the integrator's task to handle them in a way the
   vendor SDK is designed to do.
+
+@page smp_support
+
+CMRX kernel supports SMP-aware configuration. If SMP operation is enabled via @ref CMRX_ARCH_SMP_SUPPORTED
+then there are few changes in CMRX behavior:
+
+ * Kernel is started per-core. The prototype of function @ref os_start changes. It now accepts an argument,
+   which denotes, for which core the kernel is being started. This function can't be called from within thread
+   and it won't return. The order in which cores are started is not important, just mind the order in which
+   auto-started threads will begin execution.
+ * Thread auto-starting gets one additional argument which identifies core on which thread is meant to be started.
+ * Additional API @ref os_thread_migrate is provided which allows to migrate thread between cores.

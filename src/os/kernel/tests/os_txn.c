@@ -2,7 +2,7 @@
 #include <cmrx/defines.h>
 #include <arch/corelocal.h>
 #include <ctest.h>
-#include <stdbool.h>>
+#include <stdbool.h>
 
 extern callback_t cmrx_smp_wrong_lock_callback;
 
@@ -208,8 +208,10 @@ CTEST(os_txn, commit_neste_start_detected)
     int rv = os_txn_commit(id_1, TXN_READWRITE);
     
     ASSERT_EQUAL(test_lock_abort_called, false);
+    ASSERT_EQUAL(rv, E_OK);
 
     Txn_t id_2 = os_txn_start();
+    (void)id_2;
 
     ASSERT_EQUAL(test_lock_abort_called, true);
     

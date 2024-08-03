@@ -108,6 +108,12 @@ CTEST2(smp_atomic, os_setitimer) {
 }
 
 CTEST2(smp_atomic, os_usleep) {
+    // Template steps:
+    // 1. before os_usleep is called
+    // 2. transaction is created in do_set_timed_event
+    // 3. transaction is commited in do_set_timed_event
+    // 4. transaction is created in sched_yield
+    // 5. transaction is commited in sched_yield
     static struct TimerEntry_t template[] = {{0, 0, 0xFF}, {0, 0, 0xFF}, {0, 10000, 4}, {0, 10000, 4}, {0, 10000, 4}};
 
     struct checker_t * checker = checker_create(&sleepers[0], template, sizeof(struct TimerEntry_t), ARR_SIZE(template), &cmrx_os_smp_locked);

@@ -17,11 +17,6 @@ extern int os_thread_migrate(uint8_t thread_id, int status);
 extern bool schedule_context_switch_called;
 extern unsigned cmrx_current_core;
 
-int os_thread_migrate(uint8_t, int)
-{
-    return 0;
-}
-
 CTEST_DATA(os_thread_migrate) {
 };
 
@@ -61,7 +56,7 @@ CTEST2(os_thread_migrate, clean_migration_stopped_thread) {
     cmrx_current_core = 0;
 
     int return_value = os_thread_migrate(1, 1);
-    ASSERT_EQUAL(return_value, E_INVALID);
+    ASSERT_EQUAL(return_value, E_OK);
     ASSERT_EQUAL(os_threads[1].state, THREAD_STATE_MIGRATING);
     ASSERT_EQUAL(os_threads[1].core_id, 1);
 
@@ -95,6 +90,6 @@ CTEST2(os_thread_migrate, rejected_migration_running_thread) {
 
     int return_value = os_thread_migrate(0, 1);
     ASSERT_EQUAL(return_value, E_INVALID);
-    ASSERT_EQUAL(os_threads[1].state, THREAD_STATE_RUNNING);
-    ASSERT_EQUAL(os_threads[1].core_id, 0);
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(os_threads[0].core_id, 0);
 }

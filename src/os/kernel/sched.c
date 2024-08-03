@@ -2,6 +2,7 @@
  * @ingroup os 
  * @{
  */
+#include "cmrx/defines.h"
 #include <stdint.h>
 #include <conf/kernel.h>
 #include <arch/corelocal.h>
@@ -574,6 +575,40 @@ __attribute__((noreturn)) void _os_start(uint8_t start_core)
 struct OS_thread_t * os_thread_get(Thread_t thread_id)
 {
     return &os_threads[thread_id];
+}
+
+int os_thread_migrate(uint8_t thread_id, int target_core)
+{
+    uint8_t current_core = coreid();
+    if (thread_id < OS_THREADS)
+    {
+        Txn_t txn = os_txn_start();
+        struct OS_thread_t * thread = os_thread_get(thread_id);
+        if (thread->core_id != current_core || thread->state != THREAD_STATE_STOPPED)
+        {
+            return E_INVALID;
+        }
+        else 
+        {
+            if (os_txn_commit(txn, TXN_READONLY) == E_OK)
+            {
+                // This stuff is not actually fully implemented yet
+                // Thread needs to be picked up by the receiving core.
+                // Receiving core needs to be pinged about the arriving thread.
+                thread->state = THREAD_STATE_MIGRATING;
+                thread->core_id = target_core;
+                return E_NOTAVAIL;
+            }
+            else
+            {
+                // This can potentically cause problems if transaction was interrupted for some
+                // unrelated read-write transaction. While it is not clear yet if this function
+                // is actually useful, leave this as is. Can be fixed later.
+                return E_INVALID;
+            }
+        }
+    }
+    return E_OUT_OF_RANGE;
 }
 
 /** @} */
