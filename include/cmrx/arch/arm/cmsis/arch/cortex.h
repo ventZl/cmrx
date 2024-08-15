@@ -291,5 +291,21 @@ static inline ExceptionFrame * pop_exception_frame(ExceptionFrame * frame, unsig
 	return outframe;
 }
 
+/** Get value of process LR
+ * @return top of application stack
+ */
+ALWAYS_INLINE void * __get_LR(void)
+{
+	void * psp;
+	asm volatile(
+			".syntax unified\n\t"
+			"MOV %0, LR\n\t"
+			: "=r" (psp) 
+			);
+
+	return psp;
+}
+
+
 
 /// @}

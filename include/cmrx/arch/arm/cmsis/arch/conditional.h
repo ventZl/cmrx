@@ -51,48 +51,6 @@ ALWAYS_INLINE static inline void __CLREX()
 			);
 }
 
-/** Get value of process SP
- * @return top of application stack
- */
-ALWAYS_INLINE static inline void * __get_PSP(void)
-{
-	void * psp;
-	asm volatile(
-			".syntax unified\n\t"
-			"MRS %0, psp\n\t"
-			: "=r" (psp) 
-			);
-
-	return psp;
-}
-
-/** Get value of process LR
- * @return top of application stack
- */
-ALWAYS_INLINE static inline void * __get_LR(void)
-{
-	void * psp;
-	asm volatile(
-			".syntax unified\n\t"
-			"MOV %0, LR\n\t"
-			: "=r" (psp) 
-			);
-
-	return psp;
-}
-
-/** Set value of process SP
- * @param stack_top new top of application stack
- */
-ALWAYS_INLINE static inline void __set_PSP(unsigned long * stack_top)
-{
-	asm volatile(
-			".syntax unified\n\t"
-			"MSR psp, %0\n\t"
-			: : "r" (stack_top)
-	);
-}
-
 #if 0
 /** Save application context.
  * This function will grab process SP
@@ -142,21 +100,5 @@ ALWAYS_INLINE static inline void load_context(uint32_t * sp)
 	);
 }
 #endif
-
-ALWAYS_INLINE static inline void __set_CONTROL(uint32_t control)
-{
-	asm volatile("MSR control, %0\n" : : "r" (control) : "memory");
-}
-
-ALWAYS_INLINE static inline void __DSB()
-{
-	asm volatile("DSB 0xF\n" : : : "memory");	
-}
-
-ALWAYS_INLINE static inline void __ISB()
-{
-	asm volatile("ISB\n" : : : "memory");	
-//	asm volatile("ISB 0xF\n" : : : "memory");	
-}
 
 /** @} */
