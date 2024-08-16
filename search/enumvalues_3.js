@@ -7,5 +7,7 @@ var searchData=
   ['thread_5fstate_5fmigrating_4',['THREAD_STATE_MIGRATING',['../group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b',1,'runtime.h']]],
   ['thread_5fstate_5fready_5',['THREAD_STATE_READY',['../group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a327b504fcea41a280d9c9d25a530321d',1,'runtime.h']]],
   ['thread_5fstate_5frunning_6',['THREAD_STATE_RUNNING',['../group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a6dff8b555ffb582bb3d30a240c9b83e3',1,'runtime.h']]],
-  ['thread_5fstate_5fstopped_7',['THREAD_STATE_STOPPED',['../group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf',1,'runtime.h']]]
+  ['thread_5fstate_5fstopped_7',['THREAD_STATE_STOPPED',['../group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf',1,'runtime.h']]],
+  ['txn_5freadonly_8',['TXN_READONLY',['../group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f',1,'txn.h']]],
+  ['txn_5freadwrite_9',['TXN_READWRITE',['../group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50',1,'txn.h']]]
 ];

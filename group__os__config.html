@@ -136,11 +136,29 @@ Macros</h2></td></tr>
 <tr class="memitem:gac1843ed039050da6d9253cfba6ed8caa" id="r_gac1843ed039050da6d9253cfba6ed8caa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#gac1843ed039050da6d9253cfba6ed8caa">SLEEPERS_MAX</a>&#160;&#160;&#160;(2 * <a class="el" href="group__os__config.html#ga1383e9a762dc5563440cf1623542667d">OS_THREADS</a>)</td></tr>
 <tr class="memdesc:gac1843ed039050da6d9253cfba6ed8caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many sleeping threads can exist.  <br /></td></tr>
 <tr class="separator:gac1843ed039050da6d9253cfba6ed8caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54ec6c4dfec8397771e101eb023fd91a" id="r_ga54ec6c4dfec8397771e101eb023fd91a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga54ec6c4dfec8397771e101eb023fd91a">CMRX_ARCH_SMP_SUPPORTED</a></td></tr>
+<tr class="separator:ga54ec6c4dfec8397771e101eb023fd91a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1efb4303a8fe3497b166ba0e18be3477" id="r_ga1efb4303a8fe3497b166ba0e18be3477"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>&#160;&#160;&#160;@CMRX_OS_NUM_CORES@</td></tr>
+<tr class="separator:ga1efb4303a8fe3497b166ba0e18be3477"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Compile-time configuration of kernel runtime parameters. </p>
 <p>Some kernel properties can be configured statically at compile-time. For some of them it is the only way to configure them at all. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga54ec6c4dfec8397771e101eb023fd91a" name="ga54ec6c4dfec8397771e101eb023fd91a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54ec6c4dfec8397771e101eb023fd91a">&#9670;&#160;</a></span>CMRX_ARCH_SMP_SUPPORTED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMRX_ARCH_SMP_SUPPORTED</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="gaf7702691bbc4eaf9070b56a3b8d53c82" name="gaf7702691bbc4eaf9070b56a3b8d53c82"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf7702691bbc4eaf9070b56a3b8d53c82">&#9670;&#160;</a></span>KERNEL_HAS_MEMORY_PROTECTION</h2>
 
@@ -187,6 +205,20 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>How many MPU regions are saved per thread. </p>
+
+</div>
+</div>
+<a id="ga1efb4303a8fe3497b166ba0e18be3477" name="ga1efb4303a8fe3497b166ba0e18be3477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1efb4303a8fe3497b166ba0e18be3477">&#9670;&#160;</a></span>OS_NUM_CORES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define OS_NUM_CORES&#160;&#160;&#160;@CMRX_OS_NUM_CORES@</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

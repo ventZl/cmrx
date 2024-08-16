@@ -9,6 +9,7 @@ var group__arch__arm__cortex =
     ] ],
     [ "ALWAYS_INLINE", "group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a", null ],
     [ "EXCEPTION_FRAME_SIZE", "group__arch__arm__cortex.html#gacf4dbaf7327b08d6a31c584b1aa200b8", null ],
+    [ "__get_LR", "group__arch__arm__cortex.html#gad2e17ebf5c6096d178a9816f7339703d", null ],
     [ "__ISR_return", "group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86", null ],
     [ "get_exception_arg_addr", "group__arch__arm__cortex.html#gabb8ca1a0c49221cc753e1621f5029911", null ],
     [ "get_exception_argument", "group__arch__arm__cortex.html#ga11970c0e7d4b51785f808c8961d09fca", null ],

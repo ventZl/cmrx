@@ -12,13 +12,14 @@ var searchData=
   ['interface_9',['RPC interface',['../rpc_intro.html#autotoc_md8',1,'']]],
   ['interfaces_10',['interfaces',['../rpc_intro.html#autotoc_md11',1,'Declare interfaces'],['../group__api__rpc.html#api_rpc_implementation',1,'Implementation of RPC interfaces']]],
   ['interfaces_20vtables_11',['RPC interfaces (vtables)',['../group__api__rpc.html#api_rpc_interface',1,'']]],
-  ['interrupt_20service_20routines_12',['interrupt service routines',['../group__os__isr.html',1,'Interrupt service routines'],['../group__api__isr.html',1,'Interrupt Service Routines']]],
+  ['interrupt_20service_20routines_12',['interrupt service routines',['../group__api__isr.html',1,'Interrupt Service Routines'],['../group__os__isr.html',1,'Interrupt service routines']]],
   ['interrupts_13',['Interrupts',['../exec_model.html#autotoc_md17',1,'']]],
   ['interval_14',['interval',['../structTimerEntry__t.html#a2f45a4b2fcffd30370f2159d80311b00',1,'TimerEntry_t']]],
   ['intrinsics_15',['ARM intrinsics',['../group__arch__arm__intrinsics.html',1,'']]],
   ['introduction_16',['Introduction',['../index.html',1,'']]],
   ['involving_20power_20management_17',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
   ['io_18',['Memory-mapped IO',['../mem_model.html#autotoc_md6',1,'']]],
-  ['is_5fperiodic_19',['is_periodic',['../group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c',1,'timer.c']]],
-  ['isr_5fkill_20',['isr_kill',['../group__os__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c'],['../group__api__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c']]]
+  ['ipi_20provider_19',['Cortex-M generic IPI provider',['../group__aux__cm__ipi.html',1,'']]],
+  ['is_5fperiodic_20',['is_periodic',['../group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c',1,'timer.c']]],
+  ['isr_5fkill_21',['isr_kill',['../group__os__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c'],['../group__api__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c']]]
 ];

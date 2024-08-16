@@ -10,6 +10,7 @@ var group__api__errors =
     [ "E_OK", "group__api__errors.html#ga1e7cc741c56207a8872ea58373276925", null ],
     [ "E_OUT_OF_RANGE", "group__api__errors.html#ga5e7e68944cce7c2ff8c4286db2a058bc", null ],
     [ "E_OUT_OF_STACKS", "group__api__errors.html#ga49a829e1fc284d59d6f2fe11af98e44c", null ],
+    [ "E_OUT_OF_THREADS", "group__api__errors.html#ga6b9005faf912d6a521fdce0a0ecbcbb9", null ],
     [ "E_TASK_RUNNING", "group__api__errors.html#ga4270da15c87c31b8b1bade2e37e82e44", null ],
     [ "E_WRONG_SIZE", "group__api__errors.html#ga17d4198ad1e2c2bd907d9ed7a36b77c6", null ]
 ];

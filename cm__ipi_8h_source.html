@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: include/cmrx/arch/testing/arch/corelocal.h Source File</title>
+<title>C Microkernel Realtime eXecutive: include/extra/cm_ipi.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('testing_2arch_2corelocal_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('cm__ipi_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,20 +98,26 @@ $(document).ready(function(){initNavTree('testing_2arch_2corelocal_8h_source.htm
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">corelocal.h</div></div>
+  <div class="headertitle"><div class="title">cm_ipi.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#define coreid()    0</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#define OS_NUM_CORES 1</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__aux__cm__ipi.html#ga406768807186211937d0ae289490231d">os_ipi_sync_request</a>();</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__aux__cm__ipi.html#gaf585a2c2059dfbdc1bad79c7f370ea36">os_ipi_sync_release</a>();</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__aux__cm__ipi.html#gaf2a18c9a690c0de3735ef1f78abe1554">os_ipi_sync_probe</a>();</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="ttc" id="agroup__aux__cm__ipi_html_ga406768807186211937d0ae289490231d"><div class="ttname"><a href="group__aux__cm__ipi.html#ga406768807186211937d0ae289490231d">os_ipi_sync_request</a></div><div class="ttdeci">void os_ipi_sync_request()</div><div class="ttdoc">Request Inter-processor synchronization.</div><div class="ttdef"><b>Definition</b> cm_ipi.c:14</div></div>
+<div class="ttc" id="agroup__aux__cm__ipi_html_gaf2a18c9a690c0de3735ef1f78abe1554"><div class="ttname"><a href="group__aux__cm__ipi.html#gaf2a18c9a690c0de3735ef1f78abe1554">os_ipi_sync_probe</a></div><div class="ttdeci">void os_ipi_sync_probe()</div><div class="ttdoc">Check if inter-processor synchronization is requested.</div><div class="ttdef"><b>Definition</b> cm_ipi.c:45</div></div>
+<div class="ttc" id="agroup__aux__cm__ipi_html_gaf585a2c2059dfbdc1bad79c7f370ea36"><div class="ttname"><a href="group__aux__cm__ipi.html#gaf585a2c2059dfbdc1bad79c7f370ea36">os_ipi_sync_release</a></div><div class="ttdeci">void os_ipi_sync_release()</div><div class="ttdoc">Release cores waiting in inter-processor synchronization loop.</div><div class="ttdef"><b>Definition</b> cm_ipi.c:38</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_98202475f9f46bced46f85653c1a7139.html">cmrx</a></li><li class="navelem"><a class="el" href="dir_865cca317f95a4078c24ac6f6c44795d.html">arch</a></li><li class="navelem"><a class="el" href="dir_87928c6d6409b0e31e851522bf6b9076.html">testing</a></li><li class="navelem"><a class="el" href="dir_c7142a25c5b2b0293b6231670ba2e4d2.html">arch</a></li><li class="navelem"><b>corelocal.h</b></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_19c6994ae8f47c929da9d9850f36dcd3.html">extra</a></li><li class="navelem"><b>cm_ipi.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

@@ -121,11 +121,30 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a101f5f58e48c5b90a973d0f63c2a5b0b" id="r_a101f5f58e48c5b90a973d0f63c2a5b0b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__create__t.html#a101f5f58e48c5b90a973d0f63c2a5b0b">priority</a></td></tr>
 <tr class="memdesc:a101f5f58e48c5b90a973d0f63c2a5b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread priority.  <br /></td></tr>
 <tr class="separator:a101f5f58e48c5b90a973d0f63c2a5b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0224e5ced934ff094125a1ba6295a6d" id="r_ac0224e5ced934ff094125a1ba6295a6d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__create__t.html#ac0224e5ced934ff094125a1ba6295a6d">core</a></td></tr>
+<tr class="memdesc:ac0224e5ced934ff094125a1ba6295a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core at which thread should be started.  <br /></td></tr>
+<tr class="separator:ac0224e5ced934ff094125a1ba6295a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Structure describing auto-spawned thread. </p>
-<p>This is a mechanism of creating threads without need to explicitly call <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0">thread_create()</a>. Kernel will do that automatically upon main calling <a class="el" href="group__os.html#ga66e1653fdfc09dfb93da917d0f833888">os_start()</a>. </p>
+<p>This is a mechanism of creating threads without need to explicitly call <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0">thread_create()</a>. Kernel will do that automatically upon main calling <a class="el" href="group__os.html#ga1e67d0545de716571a189e81ae619f37">os_start()</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
+<a id="ac0224e5ced934ff094125a1ba6295a6d" name="ac0224e5ced934ff094125a1ba6295a6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0224e5ced934ff094125a1ba6295a6d">&#9670;&#160;</a></span>core</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t OS_thread_create_t::core</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Core at which thread should be started. </p>
+
+</div>
+</div>
 <a id="a0ce5624721f9e81bade70aea96d6ac22" name="a0ce5624721f9e81bade70aea96d6ac22"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ce5624721f9e81bade70aea96d6ac22">&#9670;&#160;</a></span>data</h2>
 

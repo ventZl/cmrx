@@ -31,9 +31,11 @@ var NAVTREE =
       [ "Memory Model", "mem_model.html", null ],
       [ "Execution Model", "exec_model.html", null ],
       [ "Remote Procedure Calls", "rpc_intro.html", null ],
+      [ "Transactional Processing", "txn_intro.html", null ],
       [ "Organization of the Code", "dev_code_organization.html", null ],
       [ "Development Environment", "dev_env.html", null ],
-      [ "Integrating vendor SDKs", "hal_integration.html", null ]
+      [ "Integrating vendor SDKs", "hal_integration.html", null ],
+      [ "SMP support", "smp_support.html", null ]
     ] ],
     [ "Getting started", "getting_started.html", [
       [ "Obtain dependencies and CMRX", "getting_started.html#autotoc_md0", null ],
@@ -54,7 +56,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__os__rpc.html#ga26f43d83332c3aca17beb91973e59156"
+"group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -7,7 +7,7 @@ var group__os__timer =
     ] ],
     [ "cancel_timed_event", "group__os__timer.html#gafd631293a404e992816aaa99e85c2625", null ],
     [ "delay_us", "group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b", null ],
-    [ "do_set_timed_event", "group__os__timer.html#ga465c07e76bc53e1a23ca9abeeceefbbe", null ],
+    [ "do_set_timed_event", "group__os__timer.html#gae3a4508687fd813fb7e3e56271ef64bb", null ],
     [ "get_sleep_time", "group__os__timer.html#ga298a4922fb4180235c76c8cc8fecb6f5", null ],
     [ "get_sleeptime", "group__os__timer.html#gacee9648cc90be455d550756ca473a56f", null ],
     [ "is_periodic", "group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c", null ],

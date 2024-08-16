@@ -118,16 +118,17 @@ $(document).ready(function(){initNavTree('defines_8h_source.html',''); initResiz
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="group__api__errors.html#ga25a33917a19693d071b4bfd2c1a0f5ce">   32</a></span><span class="preprocessor">#define E_NOTAVAIL              9</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="group__api__errors.html#ga79cad4bcfba6b7b498354d36522bea1a">   33</a></span><span class="preprocessor">#define E_INVALID               10</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="group__api__errors.html#gae10f885fade690c86f820e2e0af359d1">   34</a></span><span class="preprocessor">#define E_IN_TOO_DEEP           11</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#ifndef NULL</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">   42</a></span><span class="preprocessor">#   define NULL                 ((void *) 0)</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">   46</a></span><span class="keyword">typedef</span> uint8_t <a class="code hl_typedef" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">   49</a></span><span class="keyword">typedef</span> uint8_t <a class="code hl_typedef" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a>;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="ttc" id="agroup__api_html_ga36958e2082eecb09f367fa4aa3a9a84d"><div class="ttname"><a href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a></div><div class="ttdeci">uint8_t Process_t</div><div class="ttdoc">Data type used for process IDs.</div><div class="ttdef"><b>Definition</b> defines.h:49</div></div>
-<div class="ttc" id="agroup__api_html_gaae12e635a9412afabedb95620d3e2ffe"><div class="ttname"><a href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a></div><div class="ttdeci">uint8_t Thread_t</div><div class="ttdoc">Data type used for thread IDs.</div><div class="ttdef"><b>Definition</b> defines.h:46</div></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="group__api__errors.html#ga6b9005faf912d6a521fdce0a0ecbcbb9">   35</a></span><span class="preprocessor">#define E_OUT_OF_THREADS        0xFF</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#ifndef NULL</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">   43</a></span><span class="preprocessor">#   define NULL                 ((void *) 0)</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">   47</a></span><span class="keyword">typedef</span> uint8_t <a class="code hl_typedef" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">   50</a></span><span class="keyword">typedef</span> uint8_t <a class="code hl_typedef" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="ttc" id="agroup__api_html_ga36958e2082eecb09f367fa4aa3a9a84d"><div class="ttname"><a href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a></div><div class="ttdeci">uint8_t Process_t</div><div class="ttdoc">Data type used for process IDs.</div><div class="ttdef"><b>Definition</b> defines.h:50</div></div>
+<div class="ttc" id="agroup__api_html_gaae12e635a9412afabedb95620d3e2ffe"><div class="ttname"><a href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a></div><div class="ttdeci">uint8_t Thread_t</div><div class="ttdoc">Data type used for thread IDs.</div><div class="ttdef"><b>Definition</b> defines.h:47</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->

@@ -112,6 +112,21 @@ Functions</h2></td></tr>
 <tr class="memitem:gaaf6b80c02401002f49137d397ba971b0" id="r_gaaf6b80c02401002f49137d397ba971b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaaf6b80c02401002f49137d397ba971b0">os_request_context_switch</a> ()</td></tr>
 <tr class="memdesc:gaaf6b80c02401002f49137d397ba971b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
 <tr class="separator:gaaf6b80c02401002f49137d397ba971b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08c83fbec4a92bba591402c53805f345" id="r_ga08c83fbec4a92bba591402c53805f345"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345">coreid</a> ()</td></tr>
+<tr class="memdesc:ga08c83fbec4a92bba591402c53805f345"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide kernel with identification of current CPU core.  <br /></td></tr>
+<tr class="separator:ga08c83fbec4a92bba591402c53805f345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac579ea1044d56f3f04887b8b21118826" id="r_gac579ea1044d56f3f04887b8b21118826"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826">os_smp_lock</a> ()</td></tr>
+<tr class="memdesc:gac579ea1044d56f3f04887b8b21118826"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the "big kernel lock".  <br /></td></tr>
+<tr class="separator:gac579ea1044d56f3f04887b8b21118826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad026c280d52436bedf3e3643900d735f" id="r_gad026c280d52436bedf3e3643900d735f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gad026c280d52436bedf3e3643900d735f">os_smp_unlock</a> ()</td></tr>
+<tr class="memdesc:gad026c280d52436bedf3e3643900d735f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock the "big kernel lock".  <br /></td></tr>
+<tr class="separator:gad026c280d52436bedf3e3643900d735f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c0d351c7f2f49293fe5907c2ac5d289" id="r_ga4c0d351c7f2f49293fe5907c2ac5d289"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">os_core_lock</a> ()</td></tr>
+<tr class="memdesc:ga4c0d351c7f2f49293fe5907c2ac5d289"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the current core This function ensures that no other code will interrupt the currently running core.  <br /></td></tr>
+<tr class="separator:ga4c0d351c7f2f49293fe5907c2ac5d289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b7c981ccf3a59d00d3424fa768c71ea" id="r_ga7b7c981ccf3a59d00d3424fa768c71ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea">os_core_unlock</a> ()</td></tr>
+<tr class="memdesc:ga7b7c981ccf3a59d00d3424fa768c71ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock the current core Unlocks exclusive access to the current core.  <br /></td></tr>
+<tr class="separator:ga7b7c981ccf3a59d00d3424fa768c71ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b816407f1b57d532407988a5da92716" id="r_ga2b816407f1b57d532407988a5da92716"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a> ()</td></tr>
 <tr class="memdesc:ga2b816407f1b57d532407988a5da92716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start memory protection.  <br /></td></tr>
 <tr class="separator:ga2b816407f1b57d532407988a5da92716"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,6 +207,29 @@ Port implementation sources</h1>
 <p>mechanism to handle certain types of program faults. This handler might be useful in determining if the root cause of the fault was a memory protection violation and to send the signal to kill the failing thread.</p>
 <p>mechanism to defer thread switch. CMRX is written in a way, that thread switch is expected to be executed after the system call / interrupt service handler or kernel callback has finished its run. If target architecture doesn't support this behavior, this mechanism does not need to be implemented. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga08c83fbec4a92bba591402c53805f345" name="ga08c83fbec4a92bba591402c53805f345"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga08c83fbec4a92bba591402c53805f345">&#9670;&#160;</a></span>coreid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned coreid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provide kernel with identification of current CPU core. </p>
+<p>Kernel calls this function if it is configured for SMP. This function is part of the porting layer but does not need to be implemented in port. If the architecture does not provide unified way of determining which core is the one currently executing this code, then the implementation of this method may be left to the user. </p><dl class="section return"><dt>Returns</dt><dd>ID of the currently running code</dd></dl>
+<p>Provide kernel with identification of current CPU core.</p>
+<dl class="section return"><dt>Returns</dt><dd>ID of core executing this code. Starts with 0 </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>It is implementor's task to provide body of this function as it is heavily HW-dependent. </dd></dl>
+
+</div>
+</div>
 <a id="gad1e98b6b913a67b51e041e4e9002a399" name="gad1e98b6b913a67b51e041e4e9002a399"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad1e98b6b913a67b51e041e4e9002a399">&#9670;&#160;</a></span>mpu_init_stack()</h2>
 
@@ -277,6 +315,46 @@ Port implementation sources</h1>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga4c0d351c7f2f49293fe5907c2ac5d289" name="ga4c0d351c7f2f49293fe5907c2ac5d289"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4c0d351c7f2f49293fe5907c2ac5d289">&#9670;&#160;</a></span>os_core_lock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_core_lock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lock the current core This function ensures that no other code will interrupt the currently running core. </p>
+<p>It usually boils down to disabling interrupts. </p><dl class="section note"><dt>Note</dt><dd>Calling this function does <em>NOT</em> prevent another core from running code which will manipulate kernel data structures. If you want this behavior, use os_smp_lock(). </dd></dl>
+
+</div>
+</div>
+<a id="ga7b7c981ccf3a59d00d3424fa768c71ea" name="ga7b7c981ccf3a59d00d3424fa768c71ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7b7c981ccf3a59d00d3424fa768c71ea">&#9670;&#160;</a></span>os_core_unlock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_core_unlock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unlock the current core Unlocks exclusive access to the current core. </p>
+<p>Usually it boils down to enabling interrupts. </p>
 
 </div>
 </div>
@@ -449,6 +527,48 @@ Port implementation sources</h1>
 
 <p>Kernel implementation of rpc_return syscall. </p>
 <p>This syscall has to return the control back to the code which called <a class="el" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a>. This has to be done in a way that the calling code will be able to access the return value of the RPC method. </p>
+
+</div>
+</div>
+<a id="gac579ea1044d56f3f04887b8b21118826" name="gac579ea1044d56f3f04887b8b21118826"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac579ea1044d56f3f04887b8b21118826">&#9670;&#160;</a></span>os_smp_lock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_smp_lock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lock the "big kernel lock". </p>
+<p>This function starts the critical section within kernel. Actions that happen within critical section can ever only happen on one CPU core and other cores must not motify the same data. Big kernel lock is used to lock thread table, stack allocation table and sleepers table.</p>
+<p>This function is part of porting layer but depends heavily on target CPU. It may be left to be implemented by the user. If this function is called, the code should make sure that if this function is called on any other core before os_smp_unlock() is called that another call won't proceed. </p>
+
+</div>
+</div>
+<a id="gad026c280d52436bedf3e3643900d735f" name="gad026c280d52436bedf3e3643900d735f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad026c280d52436bedf3e3643900d735f">&#9670;&#160;</a></span>os_smp_unlock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_smp_unlock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unlock the "big kernel lock". </p>
+<p>This function ends the critical setion within kernel.</p>
+<p>This function is part of the porting layer but depends heavily on target CPU. It may be left the be implemented by the user. Once this function is called the code must make sure that any other core potentially being blocked by parallel call to os_smp_lock() will be unlocked and continue execution. </p>
 
 </div>
 </div>

@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['rasr_20fields_0',['ARM MPU RASR fields',['../group__arm__mpu__rars.html',1,'']]],
-  ['rbar_20fields_1',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],
-  ['region_20names_2',['MPU region names',['../group__mpu__region__names.html',1,'']]],
-  ['register_20aliases_3',['ARM MPU register aliases',['../group__arm__mpu__registers.html',1,'']]],
-  ['remote_20procedure_20calls_4',['remote procedure calls',['../group__api__rpc.html',1,'Remote Procedure Calls'],['../group__os__rpc.html',1,'Remote Procedure Calls']]],
-  ['routines_5',['routines',['../group__arch__arm__cortex.html',1,'Cortex-M support routines'],['../group__api__isr.html',1,'Interrupt Service Routines'],['../group__os__isr.html',1,'Interrupt service routines']]],
-  ['rpc_20implementation_6',['RPC implementation',['../group__arch__arm__rpc.html',1,'']]],
-  ['runtime_20configuration_7',['Kernel runtime configuration',['../group__os__config.html',1,'']]]
+  ['port_0',['ARM port',['../group__arch__arm.html',1,'']]],
+  ['porting_20layer_1',['Porting layer',['../group__arch__arch.html',1,'']]],
+  ['procedure_20calls_2',['procedure calls',['../group__os__rpc.html',1,'Remote Procedure Calls'],['../group__api__rpc.html',1,'Remote Procedure Calls']]],
+  ['protection_3',['protection',['../group__os__mpu.html',1,'Memory protection'],['../group__arch__arm__mpu.html',1,'Memory protection']]],
+  ['provider_4',['provider',['../group__aux__cm__ipi.html',1,'Cortex-M generic IPI provider'],['../group__aux__systick.html',1,'SysTick-Based Timing Provider']]],
+  ['provider_20api_5',['Timing provider API',['../group__api__timing.html',1,'']]]
 ];

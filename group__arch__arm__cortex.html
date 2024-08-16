@@ -154,6 +154,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0deb287bdcb87be51cdb7440df6ad7e5" id="r_ga0deb287bdcb87be51cdb7440df6ad7e5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#ga0deb287bdcb87be51cdb7440df6ad7e5">pop_exception_frame</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, unsigned args)</td></tr>
 <tr class="memdesc:ga0deb287bdcb87be51cdb7440df6ad7e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove exception frame from thread's stack.  <br /></td></tr>
 <tr class="separator:ga0deb287bdcb87be51cdb7440df6ad7e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2e17ebf5c6096d178a9816f7339703d" id="r_gad2e17ebf5c6096d178a9816f7339703d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__intrinsics.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gad2e17ebf5c6096d178a9816f7339703d">__get_LR</a> (void)</td></tr>
+<tr class="memdesc:gad2e17ebf5c6096d178a9816f7339703d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of process LR.  <br /></td></tr>
+<tr class="separator:gad2e17ebf5c6096d178a9816f7339703d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Routines supporting access to Cortex-M core facilities. </p>
@@ -188,6 +191,27 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gad2e17ebf5c6096d178a9816f7339703d" name="gad2e17ebf5c6096d178a9816f7339703d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad2e17ebf5c6096d178a9816f7339703d">&#9670;&#160;</a></span>__get_LR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__arch__arm__intrinsics.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void * __get_LR </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get value of process LR. </p>
+<dl class="section return"><dt>Returns</dt><dd>top of application stack </dd></dl>
+
+</div>
+</div>
 <a id="gabe1c8e0b0ce8425aa5eaadc6c7715a86" name="gabe1c8e0b0ce8425aa5eaadc6c7715a86"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gabe1c8e0b0ce8425aa5eaadc6c7715a86">&#9670;&#160;</a></span>__ISR_return()</h2>
 

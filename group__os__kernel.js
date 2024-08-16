@@ -29,6 +29,7 @@ var group__os__kernel =
       [ "definition", "structOS__process__t.html#a0159c1ff60b0227b8f3a66674c92006d", null ]
     ] ],
     [ "OS_thread_create_t", "structOS__thread__create__t.html", [
+      [ "core", "structOS__thread__create__t.html#ac0224e5ced934ff094125a1ba6295a6d", null ],
       [ "data", "structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22", null ],
       [ "entrypoint", "structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c", null ],
       [ "priority", "structOS__thread__create__t.html#a101f5f58e48c5b90a973d0f63c2a5b0b", null ],
@@ -43,6 +44,7 @@ var group__os__kernel =
     [ "OS_TASK_NO_STACK", "group__os__kernel.html#ga5ed1a3a4c42bd97febc5e1dab288a0f5", null ],
     [ "entrypoint_t", "group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4", null ],
     [ "OS_RPC_stack", "group__os__kernel.html#ga59b9ffdaff162b7deb5f6d34348513d9", null ],
+    [ "Txn_t", "group__os__kernel.html#gac01e3878510de719773a39e4333a84f4", null ],
     [ "ThreadState", "group__os__kernel.html#gab3804a8a4369184ad46dadf8e54957b6", [
       [ "THREAD_STATE_EMPTY", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7fa9cec9c302fe0bfbf03b37a6abc480", null ],
       [ "THREAD_STATE_READY", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a327b504fcea41a280d9c9d25a530321d", null ],
@@ -53,6 +55,16 @@ var group__os__kernel =
       [ "THREAD_STATE_BLOCKED_JOINING", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1", null ],
       [ "THREAD_STATE_MIGRATING", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b", null ]
     ] ],
+    [ "TxnType", "group__os__kernel.html#ga171384e518db04097e0f3e6750129a2a", [
+      [ "TXN_READONLY", "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f", null ],
+      [ "TXN_READWRITE", "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50", null ]
+    ] ],
+    [ "TXN_READONLY", "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f", null ],
+    [ "TXN_READWRITE", "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50", null ],
+    [ "os_txn_commit", "group__os__kernel.html#gacbfa20536e7c7fc317d57022ee00d471", null ],
+    [ "os_txn_done", "group__os__kernel.html#ga1d718af22b206b311f22c214bda9387a", null ],
+    [ "os_txn_start", "group__os__kernel.html#ga6835c2c092a489fb9a24dce9e2b4c3ac", null ],
+    [ "os_txn_start_commit", "group__os__kernel.html#gaf10efb77e984671b520a403ede9ce8c2", null ],
     [ "os_processes", "group__os__kernel.html#ga92c7c87a5b690240597294d232980842", null ],
     [ "os_stacks", "group__os__kernel.html#gaea74e023a260529e36ff7609c8a53555", null ],
     [ "os_threads", "group__os__kernel.html#ga5bcb4dcf2afcf71f716d8dc85b18134d", null ]

@@ -177,7 +177,7 @@ Define service implementation</h2>
 <div class="line">    &amp;service_vtable,</div>
 <div class="line">    0x42</div>
 <div class="line">};</div>
-<div class="ttc" id="agroup__api__init_html_gaa4a137442c139400b647ac62b40ea51a"><div class="ttname"><a href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a></div><div class="ttdeci">#define VTABLE</div><div class="ttdef"><b>Definition</b> application.h:21</div></div>
+<div class="ttc" id="agroup__api__init_html_gaa4a137442c139400b647ac62b40ea51a"><div class="ttname"><a href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a></div><div class="ttdeci">#define VTABLE</div><div class="ttdef"><b>Definition</b> application.h:22</div></div>
 <div class="ttc" id="agroup__api__rpc_html_ga3467c0dc3f1f95bb00289609f2ce35f8"><div class="ttname"><a href="group__api__rpc.html#ga3467c0dc3f1f95bb00289609f2ce35f8">IMPLEMENTATION_OF</a></div><div class="ttdeci">#define IMPLEMENTATION_OF(service, interface)</div><div class="ttdoc">Extended version of IMPLEMENTATION macro.</div><div class="ttdef"><b>Definition</b> implementation.h:103</div></div>
 </div><!-- fragment --><p>If any interface provides some function, then it is mandatory to implement it. No pointer in interface can point to NULL. Doing so will crash any caller which attempts to call such interface method.</p>
 <p>Instances of interfaces have to be marked by special keyword <a class="el" href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a>. This keyword serves the purpose of putting such variable into VTABLE "region" of the process. Only those interface implementations residing in VTABLE regions can be called. Net effects of this limitation are two:</p><ol type="1">

@@ -135,9 +135,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gacee9648cc90be455d550756ca473a56f" id="r_gacee9648cc90be455d550756ca473a56f"><td class="memItemLeft" align="right" valign="top">static unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gacee9648cc90be455d550756ca473a56f">get_sleeptime</a> (const unsigned interval)</td></tr>
 <tr class="memdesc:gacee9648cc90be455d550756ca473a56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get how long the sleep should take.  <br /></td></tr>
 <tr class="separator:gacee9648cc90be455d550756ca473a56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga465c07e76bc53e1a23ca9abeeceefbbe" id="r_ga465c07e76bc53e1a23ca9abeeceefbbe"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga465c07e76bc53e1a23ca9abeeceefbbe">do_set_timed_event</a> (unsigned slot, unsigned interval, bool _periodic)</td></tr>
-<tr class="memdesc:ga465c07e76bc53e1a23ca9abeeceefbbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform heavy lifting of setting timers This routine will store timed event into list of timed events.  <br /></td></tr>
-<tr class="separator:ga465c07e76bc53e1a23ca9abeeceefbbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3a4508687fd813fb7e3e56271ef64bb" id="r_gae3a4508687fd813fb7e3e56271ef64bb"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gae3a4508687fd813fb7e3e56271ef64bb">do_set_timed_event</a> (<a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> txn, unsigned slot, unsigned interval, bool _periodic)</td></tr>
+<tr class="memdesc:gae3a4508687fd813fb7e3e56271ef64bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform heavy lifting of setting timers This routine will store timed event into list of timed events.  <br /></td></tr>
+<tr class="separator:gae3a4508687fd813fb7e3e56271ef64bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9e0dc7082cb04a6a9ed1176aea534609" id="r_ga9e0dc7082cb04a6a9ed1176aea534609"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga9e0dc7082cb04a6a9ed1176aea534609">set_timed_event</a> (unsigned microseconds, bool periodic)</td></tr>
 <tr class="memdesc:ga9e0dc7082cb04a6a9ed1176aea534609"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a slot for timed event and store it.  <br /></td></tr>
 <tr class="separator:ga9e0dc7082cb04a6a9ed1176aea534609"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -239,8 +239,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga465c07e76bc53e1a23ca9abeeceefbbe" name="ga465c07e76bc53e1a23ca9abeeceefbbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga465c07e76bc53e1a23ca9abeeceefbbe">&#9670;&#160;</a></span>do_set_timed_event()</h2>
+<a id="gae3a4508687fd813fb7e3e56271ef64bb" name="gae3a4508687fd813fb7e3e56271ef64bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae3a4508687fd813fb7e3e56271ef64bb">&#9670;&#160;</a></span>do_set_timed_event()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,6 +251,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static int do_set_timed_event </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a>&#160;</td>
+          <td class="paramname"><em>txn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>slot</em>, </td>
         </tr>
@@ -283,6 +289,7 @@ Variables</h2></td></tr>
 <p>If event is not periodic, it will also stop thread (<a class="el" href="group__os__timer.html#ga579228f0ea6911563f3c09d50b0f441d">os_usleep</a> semantics).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">txn</td><td>transaction used to modify the table </td></tr>
     <tr><td class="paramname">slot</td><td>number of slot in <a class="el" href="group__os__timer.html#gaa0e811d6349480297cbad82c700077de">sleepers</a> list </td></tr>
     <tr><td class="paramname">interval</td><td>amount of us for which thread should sleep </td></tr>
     <tr><td class="paramname">_periodic</td><td>true if timer should be periodic, false otherwise </td></tr>
