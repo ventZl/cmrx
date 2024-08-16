@@ -945,7 +945,7 @@ If necessary CMSIS components are found, then following is done:
   handled automatically, rather it is the integrator's task to handle them in a way the
   vendor SDK is designed to do.
 
-@page smp_support
+@page smp_support SMP support
 
 CMRX kernel supports SMP-aware configuration. If SMP operation is enabled via @ref CMRX_ARCH_SMP_SUPPORTED
 then there are few changes in CMRX behavior:
@@ -956,3 +956,9 @@ then there are few changes in CMRX behavior:
    auto-started threads will begin execution.
  * Thread auto-starting gets one additional argument which identifies core on which thread is meant to be started.
  * Additional API @ref os_thread_migrate is provided which allows to migrate thread between cores.
+
+In SMP arrangement, kernel maintains run queue for each core on which CMRX has been booted. This means that 
+you may have a multicore machine with e.g. 4 cores, run some non-managed code there (such as radio firmware) and
+boot CMRX on three remaining cores. Then you can divide workload between those three cores.
+
+Signal distribution initiated both from thread and ISR currently does not propagate cross-core reliably.

@@ -51,7 +51,7 @@ void timing_provider_setup(int interval_ms);
  */
 void sys_tick_handler();
 
-/** @} */
-
 void timing_provider_schedule(long delay_us);
+
+/** @} */
 
