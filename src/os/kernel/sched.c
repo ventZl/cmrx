@@ -52,7 +52,7 @@ static uint32_t sched_microtime = 0;
 
 /* Forward declaration. */
 int os_thread_alloc(Process_t process, uint8_t priority);
-int __os_thread_create_on_core(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority, uint8_t core);
+int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority, uint8_t core);
 
 /** Obtain next thread to run.
  *
@@ -69,12 +69,14 @@ __attribute__((noinline)) bool os_get_next_thread(uint8_t current_thread, uint8_
 	uint16_t best_prio = PRIORITY_INVALID;
     uint8_t candidate_thread = 0xFF;
     uint8_t thread = (current_thread + 1) % OS_THREADS;
+    uint8_t core_id = coreid();
 
 	uint8_t loops = OS_THREADS;
 
 	do {
-		if (os_threads[thread].state == THREAD_STATE_READY 
+		if ((os_threads[thread].state == THREAD_STATE_READY 
 				|| os_threads[thread].state == THREAD_STATE_RUNNING)
+                && os_threads[thread].core_id == core_id)
 		{
 			/* Schedule different thread only if it has lower numerical value of priority
 			 * than one we've already found. This should enforce prioritized round robin
@@ -91,6 +93,7 @@ __attribute__((noinline)) bool os_get_next_thread(uint8_t current_thread, uint8_
 	} while (loops--);
 
 	ASSERT(loops > 0);
+    ASSERT(candidate_thread < OS_THREADS);
 
     *next_thread = candidate_thread;
 
@@ -171,7 +174,7 @@ long os_sched_timing_callback(long delay_us)
 	unsigned rt = 0;
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
-		if (os_threads[q].state == THREAD_STATE_RUNNING)
+		if (os_threads[q].state == THREAD_STATE_RUNNING && os_threads[q].core_id == coreid())
 			rt++;
 	}
 
@@ -244,6 +247,7 @@ int os_stack_create()
                 break;
             } else {
                 // Transaction aborted, restart search
+                txn_id = os_txn_start();
                 q = -1;
                 continue;
             }
@@ -406,18 +410,17 @@ int os_thread_join(uint8_t thread_id)
  * @param entrypoint address of function which shall be executed as entrypoint into the thread
  * @param data address of data block which should be passed to entrypoint function as an argument
  * @param priority thread priority. Numerically lower values mean higher priorities
+ * @param core core on which thread will be created
  * @return Non-negative values denote ID of thread just created, negative values mean errors.
  */
-int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority)
-{
-    uint8_t current_core = coreid();
-    return __os_thread_create_on_core(process, entrypoint, data, priority, current_core);
-}
-
-int __os_thread_create_on_core(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority, uint8_t core)
+int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data, uint8_t priority, uint8_t core)
 {
 	uint8_t thread_id = os_thread_alloc(process, priority);
-	os_thread_construct(thread_id, entrypoint, data, core);
+    if (thread_id < OS_THREADS)
+    {
+    	os_thread_construct(thread_id, entrypoint, data, core);
+    }
+    ASSERT(thread_id < OS_THREADS);
 	return thread_id;
 }
 
@@ -470,31 +473,34 @@ int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, ui
  */
 int os_thread_alloc(Process_t process, uint8_t priority)
 {
-    while (1)
+    Txn_t txn = os_txn_start();
+    for (int q = 0; q < OS_THREADS; ++q)
     {
-        Txn_t txn = os_txn_start();
-        for (int q = 0; q < OS_THREADS; ++q)
+        if (os_threads[q].state == THREAD_STATE_EMPTY)
         {
-            if (os_threads[q].state == THREAD_STATE_EMPTY)
+            if (os_txn_commit(txn, TXN_READWRITE) == E_OK)
             {
-                if (os_txn_commit(txn, TXN_READWRITE) == E_OK)
-                {
-                    struct OS_thread_t * new_thread = &os_threads[q];
-                    memset(new_thread, 0, sizeof(struct OS_thread_t));
-                    new_thread->stack_id = OS_TASK_NO_STACK;
-                    new_thread->process_id = process;
-                    new_thread->sp = (uint32_t *) ~0;
-                    new_thread->state = THREAD_STATE_CREATED;
-                    new_thread->signals = 0;
-                    new_thread->signal_handler = NULL;
-                    new_thread->priority = priority;
-                    os_txn_done();
-                    return q;
-                }
+                struct OS_thread_t * new_thread = &os_threads[q];
+                memset(new_thread, 0, sizeof(struct OS_thread_t));
+                new_thread->stack_id = OS_TASK_NO_STACK;
+                new_thread->process_id = process;
+                new_thread->sp = (uint32_t *) ~0;
+                new_thread->state = THREAD_STATE_CREATED;
+                new_thread->signals = 0;
+                new_thread->signal_handler = NULL;
+                new_thread->priority = priority;
+                os_txn_done();
+                return q;
+            }
+            else
+            {
+                txn = os_txn_start();
+                q = -1;
+                continue;
             }
         }
-	    return ~0;
     }
+    return E_OUT_OF_THREADS;
 }
 
 /** Syscall handling thread_create()
@@ -503,13 +509,19 @@ int os_thread_alloc(Process_t process, uint8_t priority)
 int os_thread_create(entrypoint_t * entrypoint, void * data, uint8_t priority)
 {
 	uint8_t process_id = os_get_current_process();
-	return __os_thread_create(process_id, entrypoint, data, priority);
+    uint8_t core_id = coreid();
+	return __os_thread_create(process_id, entrypoint, data, priority, core_id);
 }
 
 #define KERNEL_STRUCTS_INITIALIZED_SIGNATURE    0x434D5258
 
 __attribute__((noreturn)) void _os_start(uint8_t start_core)
 {
+    volatile Thread_t created_threads[8];
+    volatile unsigned cursor = 0;
+    for (int q = 0; q < 8; ++q) {
+        created_threads[q] = 0xFF;
+    }
     static uint32_t kernel_structs_initialized = 0;
 	unsigned threads = static_init_thread_count(); 
 	unsigned applications = static_init_process_count(); 
@@ -533,11 +545,20 @@ __attribute__((noreturn)) void _os_start(uint8_t start_core)
 	for (unsigned q = 0; q < threads; ++q)
 	{
         const struct OS_thread_create_t * const autostarted_thread = &autostart_threads[q];
+        if (autostarted_thread->core != start_core)
+        {
+            continue;
+        }
+
 		Process_t process_id = (autostarted_thread->process - app_definition);
-		__os_thread_create_on_core(process_id, autostarted_thread->entrypoint, autostarted_thread->data, autostarted_thread->priority, start_core);
+        created_threads[cursor] = __os_thread_create(process_id, autostarted_thread->entrypoint, autostarted_thread->data, autostarted_thread->priority, start_core);
+        ASSERT(created_threads[cursor] != E_OUT_OF_THREADS);
+        cursor++;
 	}
 
-	__os_thread_create_on_core((uint32_t) NULL, os_idle_thread, NULL, 0xFF, start_core);
+	created_threads[cursor] = __os_thread_create((uint32_t) 0, os_idle_thread, NULL, 0xFF, start_core);
+    ASSERT(created_threads[cursor] != E_OUT_OF_THREADS);
+    cursor++;
 
 	uint8_t startup_thread;
 

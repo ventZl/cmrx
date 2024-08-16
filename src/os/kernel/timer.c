@@ -101,6 +101,7 @@ static int set_timed_event(unsigned microseconds, bool periodic)
                 return 0;
             } else {
                 // Transaction has been aborted, restart search
+                txn = os_txn_start();
                 q = -1;
                 continue;
             }
@@ -119,6 +120,7 @@ static int set_timed_event(unsigned microseconds, bool periodic)
 					if (do_set_timed_event(txn, q, microseconds, periodic) == 0) {
                         return 0;
                     } else {
+                        txn = os_txn_start();
                         q = -1;
                         continue;
                     }
