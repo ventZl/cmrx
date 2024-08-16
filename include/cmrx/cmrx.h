@@ -14,6 +14,16 @@
  * @{
  */
 
-extern void os_start();
+#include <stdint.h>
+#include <conf/kernel.h>
+
+#ifdef CMRX_ARCH_SMP_SUPPORTED
+#   define os_start(core) _os_start((core))
+#else
+#   define os_start() _os_start(0)
+#endif
+
+// Declaring this as noreturn will break HIL tests
+extern void _os_start(uint8_t core);
 
 /** @} */

@@ -1,4 +1,5 @@
 set(cmrx_testing_SRCS
+    corelocal.c
     static.c
     mpu.c
     sched.c

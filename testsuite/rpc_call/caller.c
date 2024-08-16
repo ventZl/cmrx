@@ -2,6 +2,7 @@
 #include <cmrx/ipc/thread.h>
 #include <cmrx/ipc/rpc.h>
 #include <debug.h>
+#include <utils.h>
 #include "service.h"
 
 int caller_high_prio(void * data)

@@ -62,8 +62,9 @@ int os_sched_yield(void);
  * This function populates thread table based on thread autostart macro use.
  * It also creates idle thread with priority 255 and starts scheduler. It never 
  * returns until you have very bad day.
+ * @param [in] start_core number of core for which the kernel is started
  */
-void os_start();
+void _os_start(uint8_t start_core);
 
 /** Configures systick timer.
  *
@@ -131,16 +132,30 @@ struct OS_thread_t * os_thread_get(Thread_t thread_id);
  * @param tid Thread ID of thread to be constructed
  * @param entrypoint pointer to thread entrypoint function
  * @param data pointer to thread data. pass NULL pointer if no thread data is used
+ * @param core ID of core the thread should run at
  * @returns E_OK if thread was constructed, E_OUT_OF_STACKS if there is no free stack
  * available and E_TASK_RUNNING if thread is not in state suitable for construction
  * (either slot is free, or already constructed).
  */
-int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data);
+int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, uint8_t core);
 
 /** Alias to thread_exit.
  * This is in fact the same function as @ref thread_exit. The only difference is 
  * that if for whatever reason syscall to os_thread_exit() will fail, this asserts.
  */
 void os_thread_dispose(void);
+
+/** Migrate thread between CPU cores.
+ * This function takes existing thread which is bound to some core 
+ * and moved it over to scheduler queue of another core. In order for this call
+ * to be successful, the thread must already be stopped. If thread is woken up 
+ * by e.g. signal arrived from interrupt service handler via isr_kill() while
+ * this call is in progress then the call will fail.
+ * @param thread_id ID of thread to be migrated
+ * @param target_core ID of core where the thread should be migrated.
+ * @returns E_OK if thread was migrated; E_INVALID if thread is not stopped or call is 
+ * not made from the core at which the thread is currently running.
+ */
+int os_thread_migrate(uint8_t thread_id, int target_core);
 
 /** @} */

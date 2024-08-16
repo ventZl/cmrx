@@ -52,7 +52,6 @@ __attribute__((naked)) void PendSV_Handler(void)
     // absolutely the lowest priority.
     ASSERT(__get_LR() == 0xFFFFFFFDU);
 
-	ctxt_switch_pending = false;
 	sanitize_psp(cpu_context.old_task->sp);
 
 #ifdef KERNEL_HAS_MEMORY_PROTECTION

@@ -13,9 +13,12 @@ set(os_SRCS
     signal.c 
     syscall.c 
     timer.c 
+    txn.c
     rpc.c)
 
 add_library(os STATIC EXCLUDE_FROM_ALL ${os_SRCS})
+get_property(CMRX_ROOT_DIR GLOBAL PROPERTY CMRX_ROOT_DIR)
+target_include_directories(os INTERFACE ${CMRX_ROOT_DIR}/include ${CMAKE_BINARY_DIR} ${HAL_PATH})
 
 # Just an alias
 add_library(cmrx ALIAS os)

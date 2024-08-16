@@ -188,6 +188,9 @@ struct OS_thread_create_t {
 
 	/** Thread priority */
 	uint8_t priority;
+
+    /** Core at which thread should be started */
+    uint8_t core;
 };
 
 /** Scheduler notion on existing threads. */

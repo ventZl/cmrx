@@ -1,8 +1,15 @@
+#include <cmrx/cmrx.h>
 #include <cmrx/os/sched.h>
 
 #undef NULL
 #include <ctest.h>
 #include <string.h>
+
+#ifdef CMRX_ARCH_SMP_SUPPORTED
+#define CORE_ZERO   0
+#else
+#define CORE_ZERO
+#endif
 
 #define _ptr(x)	((void *) (x))
 extern void provide_process_table(struct OS_process_definition_t * table, unsigned count);
@@ -40,7 +47,7 @@ CTEST2(os_start, process)
 
 	provide_process_table(ptable, 1);
 
-	os_start();
+	os_start(CORE_ZERO);
 	ASSERT_EQUAL((long) os_processes[0].definition, (long) &ptable[0]);
 	ASSERT_EQUAL(0, os_threads[0].process_id);
 	ASSERT_EQUAL(0, os_threads[1].priority);
@@ -85,7 +92,7 @@ CTEST2(os_start, thread)
 
 	provide_thread_table(ttable, 1);
 
-	os_start();
+	os_start(CORE_ZERO);
 
 	ASSERT_EQUAL((long) os_processes[0].definition, (long) &ptable[0]);
 

@@ -32,6 +32,7 @@
 #define E_NOTAVAIL				9
 #define E_INVALID				10
 #define E_IN_TOO_DEEP			11
+#define E_OUT_OF_THREADS        0xFF
 /** @} */
 
 /** Name the null pointer.

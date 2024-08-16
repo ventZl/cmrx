@@ -15,6 +15,7 @@
 
 //#include "os.h"
 #include <cmrx/os/runtime.h>
+#include <conf/kernel.h>
 #include <stddef.h>
 
 #define __APPL_SYMBOL(application, symbol)	application ## _ ## symbol
@@ -75,12 +76,21 @@ __attribute__((externally_visible, used, section(".applications") )) const struc
  * @param data user-defined data passed to entrypoint function.
  * @param priority thread priority of newly created thread
  */
+#ifdef CMRX_ARCH_SMP_SUPPORTED
+#define OS_THREAD_CREATE(application, entrypoint, data, priority, core) \
+    _OS_THREAD_CREATE(application, entrypoint, data, priority, core)
+#else
 #define OS_THREAD_CREATE(application, entrypoint, data, priority) \
+    _OS_THREAD_CREATE(application, entrypoint, data, priority, 0)
+#endif
+
+#define _OS_THREAD_CREATE(application, entrypoint, data, priority, core) \
 __attribute__((externally_visible, used, section(".thread_create") )) const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\
 	&__APPL_SYMBOL(application, instance),\
 	entrypoint,\
 	data,\
-	priority\
+	priority,\
+    core\
 }
 
 /** @} */

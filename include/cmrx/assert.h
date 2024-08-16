@@ -24,7 +24,7 @@
  */
 #pragma once
 
-#ifndef NDEBUG
+// #ifndef NDEBUG
 
 #ifndef UNIT_TESTING
 /** Evaluate condition and break if it evalues to false.
@@ -47,7 +47,7 @@
 
 #endif
 
-#else
+#if 0
 
 #define ASSERT(cond)
 

@@ -45,7 +45,6 @@ static const struct Syscall_Entry_t syscalls[] = {
 
 int os_system_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3, uint8_t syscall_id)
 {
-	ASSERT(syscall_id < (sizeof(syscalls) / sizeof(syscalls[0])));
 	for (unsigned q = 0; q < (sizeof(syscalls) / sizeof(syscalls[0])); ++q)
 	{
 		if (syscalls[q].id == syscall_id)
