@@ -1,8 +1,7 @@
 var NAVTREEINDEX1 =
 {
-"group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f":[3,1,3,13,0],
-"group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,13,1],
 "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,15],
+"group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,13,1],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a327b504fcea41a280d9c9d25a530321d":[3,1,3,12,1],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b":[3,1,3,12,7],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a6dff8b555ffb582bb3d30a240c9b83e3":[3,1,3,12,2],
@@ -120,8 +119,8 @@ var NAVTREEINDEX1 =
 "group__util__assert.html":[3,4,0],
 "group__util__assert.html#ga0966b817b229d48e5ffc7feab19a0be6":[3,4,0,0],
 "hal_integration.html":[1,7],
-"index.html":[0],
 "index.html":[],
+"index.html":[0],
 "mem_model.html":[1,1],
 "overview.html":[1],
 "pages.html":[],

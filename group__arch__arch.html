@@ -223,10 +223,7 @@ Port implementation sources</h1>
 </div><div class="memdoc">
 
 <p>Provide kernel with identification of current CPU core. </p>
-<p>Kernel calls this function if it is configured for SMP. This function is part of the porting layer but does not need to be implemented in port. If the architecture does not provide unified way of determining which core is the one currently executing this code, then the implementation of this method may be left to the user. </p><dl class="section return"><dt>Returns</dt><dd>ID of the currently running code</dd></dl>
-<p>Provide kernel with identification of current CPU core.</p>
-<dl class="section return"><dt>Returns</dt><dd>ID of core executing this code. Starts with 0 </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>It is implementor's task to provide body of this function as it is heavily HW-dependent. </dd></dl>
+<p>Kernel calls this function if it is configured for SMP. This function is part of the porting layer but does not need to be implemented in port. If the architecture does not provide unified way of determining which core is the one currently executing this code, then the implementation of this method may be left to the user. </p><dl class="section return"><dt>Returns</dt><dd>ID of the currently running code </dd></dl>
 
 </div>
 </div>
