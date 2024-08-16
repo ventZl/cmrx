@@ -37,6 +37,8 @@
 #define SLEEPERS_MAX			(2 * OS_THREADS)
 
 #cmakedefine CMRX_ARCH_SMP_SUPPORTED
-#define OS_NUM_CORES    @CMRX_OS_NUM_CORES@
+#if CMRX_ARCH_SMP_SUPPORTED
+#    define OS_NUM_CORES    @CMRX_OS_NUM_CORES@
+#endif
 
 /** @} */

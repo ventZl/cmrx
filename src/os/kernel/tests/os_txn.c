@@ -195,7 +195,7 @@ static void test_lock_aborted() {
 
 /* Transaction creation cannot be nested into commit
  * critical section */
-CTEST(os_txn, commit_neste_start_detected)
+CTEST(os_txn, commit_nested_start_detected)
 {
     cmrx_smp_wrong_lock_callback = test_lock_aborted;
 
