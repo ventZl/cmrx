@@ -7,7 +7,9 @@
 #include <arch/conditional.h>
 #include <cmrx/defines.h>
 
-#ifdef __ARM_ARCH_7M__
+#if (defined __ARM_ARCH_7M__) || (defined __ARM_ARCH_7EM__) \
+	|| (defined __ARM_ARCH_8M_BASE__) || (defined __ARM_ARCH_8_1M_MAIN__) \
+	|| (defined __ARM_ARCH_8_1M_BASE__) || (defined __ARM_ARCH_8M_MAIN__)
 
 /** Lock futex.
  * Perform atomic futex lock. It is possible to lock futex which is either completely unlocked,

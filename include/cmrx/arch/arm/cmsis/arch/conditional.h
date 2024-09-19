@@ -7,9 +7,14 @@
  */
 #pragma once
 
+#include <RTE_Components.h>
+#include CMSIS_device_header
+
 #include <stdint.h>
 
 #define ALWAYS_INLINE __attribute__((always_inline))
+
+#if 0
 
 /** Intrinsic access to ARM LDREXB instruction.
  * @param addr address to load from
@@ -50,6 +55,7 @@ ALWAYS_INLINE static inline void __CLREX()
 			"CLREX\n\t"
 			);
 }
+#endif
 
 #if 0
 /** Save application context.
