@@ -4,7 +4,7 @@
 
 #include <cmrx/ipc/mutex.h>
 #include <cmrx/ipc/thread.h>
-#include <arch/conditional.h>
+#include <arch/cortex.h>
 #include <cmrx/defines.h>
 
 #if (defined __ARM_ARCH_7M__) || (defined __ARM_ARCH_7EM__) \
