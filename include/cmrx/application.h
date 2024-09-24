@@ -27,14 +27,17 @@
 	static void * const __APPL_SYMBOL(application, mmio_start) = (void *) (from);\
 	static void * const __APPL_SYMBOL(application, mmio_end) = (void *) (to);\
 	static void * const __APPL_SYMBOL(application, mmio_2_start) = (void *) 0;\
-	static void * const __APPL_SYMBOL(application, mmio_2_end) = (void *) 0
+	static void * const __APPL_SYMBOL(application, mmio_2_end) = (void *) 0;\
+	_Static_assert(from % (to - from) == 0, "MMIO range not size-aligned")
 
 
 #define OS_APPLICATION_MMIO_RANGES(application, from, to, from2, to2)\
 	static void * const __APPL_SYMBOL(application, mmio_start) = (void *) (from);\
 	static void * const __APPL_SYMBOL(application, mmio_end) = (void *) (to);\
 	static void * const __APPL_SYMBOL(application, mmio_2_start) = (void *) (from2);\
-	static void * const __APPL_SYMBOL(application, mmio_2_end) = (void *) (to2)
+	static void * const __APPL_SYMBOL(application, mmio_2_end) = (void *) (to2);\
+	_Static_assert(from % (to - from) == 0, "MMIO range 1 not size-aligned");\
+    _Static_assert(from2 % (to2 - from2) == 0, "MMIO range 2 not size-aligned")
 
 
 /** Declare userspace process.
