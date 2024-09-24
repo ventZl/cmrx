@@ -44,8 +44,10 @@ function(add_firmware FW_NAME)
         ${FW_NAME}
         )
     target_link_options(${FW_NAME} PUBLIC -Wl,-Map=${FW_NAME}.map)
-    # TODO: CMake will de-duplicate any incoming interface 
-    #   target_link_options(${FW_NAME} PUBLIC LINKER:--script=${BINARY_LINKER_SCRIPT})
+    # TODO: CMake will de-duplicate any incoming interface
+    if (NOT CMRX_SKIP_LINKER_FILE_USE)
+        target_link_options(${FW_NAME} PUBLIC LINKER:--script=${BINARY_LINKER_SCRIPT})
+    endif()
     set_property(TARGET ${FW_NAME} PROPERTY PICO_TARGET_LINKER_SCRIPT ${BINARY_LINKER_SCRIPT})
 endfunction()
 
