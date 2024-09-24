@@ -59,7 +59,7 @@ ALWAYS_INLINE void __ISR_return()
 ALWAYS_INLINE void __ISR_return()
 {
 		asm volatile(
-				"POP {R0, R1, R2, R3, R12, LR}\n\t"
+				"POP {R12, LR}\n\t"
 				"POP {R0, R1, R2, R3}\n\t"
 				"POP {R6, R7}\n\t"
 				"BX R6\n\t"

@@ -3,6 +3,7 @@ import sys
 import os
 import math
 import argparse
+import io
 
 INIT = 0
 BLOCK_COMMENT = 1
@@ -56,7 +57,9 @@ AMPERSAND = 45
 EXCLAMATION_MARK = 46
 TEXT = 47
 
-def filename_to_libname(file_name):
+TOKEN_MAX = 48
+
+def filename_to_libname(file_name : str) -> str:
     '''
     Extract library name from filename. Removes "lib" prefix, if present.
     '''
@@ -66,7 +69,7 @@ def filename_to_libname(file_name):
 
     return lib_name
 
-def sort_by_size(container):
+def sort_by_size(container : dict) -> dict:
     '''
     Sorts container by size descending. This stuff should not really be here,
     rather in MPUAllocation class.
@@ -79,12 +82,26 @@ def sort_by_size(container):
 
     return out
 
+class Stream:
+    def __init__(self, file : io.TextIOBase):
+        self.file = file
+        self.unread = []
+
+    def read(self) -> str:
+        if len(self.unread) > 0:
+            return self.unread.pop()
+
+        return self.file.read(1)
+
+    def undo_read(self, char : str):
+        self.unread.append(char)
+
 class Token:
     '''
     Lexical token. Holds token type and its value.
     Value is held so that the input can be reconstructed from a list of tokens.
     '''
-    def __init__(self, type = NONE, value = ""):
+    def __init__(self, type = NONE, value : str = ""):
         self.type = type
         self.value = value
 
@@ -96,6 +113,9 @@ class Token:
 
     def __desc__(self):
         return self.__str__()
+
+    def __str__(self):
+        return "%d : %s" % (self.type, self.value)
 
 class TokenList:
     '''
@@ -223,7 +243,7 @@ class TokenList:
         return None
 
 
-    def find_pair(self, iterator):
+    def find_pair(self, iterator : int) -> int | None:
         '''
         Find position of pair bracket. Will examine position given by iterator
         and find closing bracket for given opening bracket. If there are any
@@ -241,11 +261,12 @@ class TokenList:
         elif (opening == LEFT_SHARP_BRACKET):
             closing = RIGHT_SHARP_BRACKET
         else:
+            raise RuntimeError()
             # token at opening position is not a valid pair token
-            return None
+#            return None
         return self._do_find_pair(position, +1, opening, closing)
 
-    def find_pair_reverse(self, iterator):
+    def find_pair_reverse(self, iterator : int) -> int | None:
         ''' 
         same as fdind_pair, but acts on right brackets and searches backwards
         '''
@@ -259,13 +280,14 @@ class TokenList:
         elif (opening == RIGHT_SHARP_BRACKET):
             closing = LEFT_SHARP_BRACKET
         else:
+            raise RuntimeError()
             # token at opening position is not a valid pair token
             return None
 
         return self._do_find_pair(position, -1, opening, closing)
 
 
-    def sub_range(self, begin, end):
+    def sub_range(self, begin : int, end : int):
         '''
         Returns sub-range of token run determined by start and end position. sub-range
         is created in <begin, end) fashion, thus token at begin position is included,
@@ -279,7 +301,8 @@ class TokenList:
             return None
         return TokenList([], begin, end, self)
 
-    def find_next(self, pos, token_type):
+    def find_next(self, pos : int, token_type: int) -> int | None:
+        assert(token_type < TOKEN_MAX)
         while pos < len(self):
             if (self[pos].type == token_type):
                 return pos
@@ -320,7 +343,7 @@ class LinkerFile(TokenList):
     def __init__(self, tl):
         TokenList.__init__(self, tl._tokens)
 
-    def same(self, other):
+    def same(self, other : TokenList):
         if (len(self) != len(other)):
             return False
 
@@ -414,6 +437,11 @@ class LinkerFile(TokenList):
                     # Find out the destination memory region for this section
                     output_region_pos = self._get_section_output_region(block, section_closing)
 
+                    # This section is not put anywhere (DISCARD maybe?) skip it.
+                    if (output_region_pos is None):
+                        pos += 1
+                        continue
+
                     # Then find next newline, which is position where we append our 
                     # newly generated stuff
                     next_newline_pos = block.find_next(output_region_pos, NEWLINE)
@@ -479,7 +507,7 @@ class LinkerFile(TokenList):
             pos += 1
 
 
-    def add_subscript_includes(self, binary_name):
+    def add_subscript_includes(self, binary_name : str):
         '''
         Will find .data section and augment it to include another script.
         Will add another section .vtable just after .data section.
@@ -736,8 +764,8 @@ class Parser:
     def __init__(self):
         pass 
 
-    def undo_read(self, token, file):
-        file.seek(-1, 1)
+    def undo_read(self, token, stream, char):
+        stream.undo_read(char)
         token.value = token.value[:-1]
 
     def parse_error(self, token, character):
@@ -749,13 +777,13 @@ class Parser:
         token.type = TEXT
         return token
 
-    def token(self, file):
+    def token(self, stream):
         '''
         Lexical parser. Will parse out next token and return its type and content.
         '''
         token = Token()
         while True:
-            c = file.read(1).decode()
+            c = stream.read()
             if (c == '' and token.type != NONE):
                 return token
 
@@ -844,14 +872,14 @@ class Parser:
                     token.type = DECREMENT
                     return token
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
             elif (token.type == ADD):
                 if (c == '+'):
                     token.type = INCREMENT
                     return token
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
             elif (token.type == SYMBOL_GREATER_THAN):
                 if (c == '>'):
@@ -861,7 +889,7 @@ class Parser:
                     token.type = SYMBOL_GREATER_THAN_EQUAL
                     return token
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
             elif (token.type == SYMBOL_LESS_THAN):
                 if (c == '<'):
@@ -871,7 +899,7 @@ class Parser:
                     token.type = SYMBOL_LESS_THAN_EQUAL
                     return token
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
             elif (token.type == NUMBER):
                 if (c >= '0' and c <= '9'):
@@ -887,7 +915,7 @@ class Parser:
                     else:
                         return self.parse_error(token, c)
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
 
             elif (token.type == MULTIPLY):
@@ -895,7 +923,7 @@ class Parser:
                     token.type = BLOCK_COMMENT_END
                     return token
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
 
             elif (token.type == ASSIGN):
@@ -903,7 +931,7 @@ class Parser:
                     token.type = COMPARE
                     return token
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
     
             elif (token.type == NEWLINE):
@@ -911,7 +939,7 @@ class Parser:
                     return token
                 else:
                     # Not \n, undo and return plain \r
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
             elif (token.type == SLASH_CANDIDATE):
                 if (c == '*'):
@@ -921,7 +949,7 @@ class Parser:
                     token.type = LINE_COMMENT_START
                     return token
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     token.type = SLASH;
                     return token
             elif (token.type == SYMBOL_NAME):
@@ -931,13 +959,13 @@ class Parser:
                     # Seek one character back (unget last read character) 
                     # What we just read is not part of token, "push back into file"
                     # and return previous value.
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
             elif (token.type == WHITE_SPACE):
                 if (c == ' ' or c == '\t'):
                     continue
                 else:
-                    self.undo_read(token, file)
+                    self.undo_read(token, stream, c)
                     return token
 
 
@@ -1011,6 +1039,9 @@ class Parser:
                 if (token.type == FULLSTOP or token.type == SLASH or token.type == SYMBOL_NAME or token.type == NUMBER or token.type == SUBTRACT):
                     temp_token.value += token.value
                 else:
+                    # convert /DISCARD/ back to section name
+                    if temp_token.value == "/DISCARD/":
+                        temp_token.type = SECTION_NAME
                     state = NONE
                     tokens.append(temp_token)
                     temp_token = None
@@ -1144,10 +1175,10 @@ if (todo.create is not None):
     external files. These files then contain process-specific directives for explicit
     deployment. This makes use of ARM MPU possible.
     '''
-    ifile = open(todo.create[0], "rb")
+    ifile = open(todo.create[0], "r")
 
     parser = LinkerScriptParser()
-    linker_file = parser.parse(ifile)
+    linker_file = parser.parse(Stream(ifile))
 
     ifile.close()
 
@@ -1181,7 +1212,7 @@ elif (todo.add_application is not None):
     sections = [ "bss", "data", "shared", "text", "vtable", "inst" ]
     for section in sections:
         file_name = todo.add_application[2] + "/gen."+todo.add_application[1]+"."+section+".ld"
-        ifile = open(file_name, "rb")
+        ifile = open(file_name, "r")
         parser = LinkerScriptParser()
         linker_file = parser.parse(ifile)
         ifile.close()
@@ -1205,7 +1236,7 @@ elif (todo.realign is not None):
     the binary is deleted as it won't be bootable due to MPU regions misalignment.
 
     '''
-    ifile = open(todo.realign[0], "rb")
+    ifile = open(todo.realign[0], "r")
     parser = MapFileParser()
     map_file = parser.parse(ifile)
     map_file.process()
@@ -1217,7 +1248,7 @@ elif (todo.realign is not None):
     sections = [ "bss", "data", "shared", "text" ]
     for section in sections:
         linker_file_name = todo.realign[2] + "/gen." + todo.realign[1] + "." + section + ".ld"
-        ifile = open(linker_file_name, "rb")
+        ifile = open(linker_file_name, "r")
         parser = LinkerScriptParser()
         old_linker_file = parser.parse(ifile)
 
