@@ -55,8 +55,8 @@ file(WRITE ${CMAKE_BINARY_DIR}/cmsis_conf.h
 file(COPY_FILE ${CMAKE_BINARY_DIR}/cmsis_conf.h ${CMAKE_BINARY_DIR}/RTE_Components.h)
 
 set(CMSIS_SRCS ${SYSTEM_SOURCE} ${STARTUP_SOURCE})
-add_library(cmsis_core_lib INTERFACE)
-set_property(TARGET cmsis_core_lib
+add_library(cmsis_headers INTERFACE)
+set_property(TARGET cmsis_headers
     PROPERTY
     INTERFACE_INCLUDE_DIRECTORIES ${INCLUDE_DIRS})
 

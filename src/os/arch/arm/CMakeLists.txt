@@ -9,5 +9,5 @@ set(cmrx_arm_SRCS
     syscall.c
 )
 
-target_link_libraries(os PUBLIC cmsis_core_lib)
+target_link_libraries(os PUBLIC cmsis_headers)
 target_sources(os PRIVATE ${cmrx_arm_SRCS})
