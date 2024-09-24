@@ -50,7 +50,7 @@ __attribute__((naked)) void PendSV_Handler(void)
     // handler. If you assert here, then your interrupt handler priority
     // is messed up. You need to configure PendSV to be the handler with
     // absolutely the lowest priority.
-    ASSERT(__get_LR() == 0xFFFFFFFDU);
+    ASSERT(__get_LR() == (void *) 0xFFFFFFFDU);
 
 	sanitize_psp(cpu_context.old_task->sp);
 
