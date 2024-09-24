@@ -115,7 +115,7 @@ class Token:
         return self.__str__()
 
     def __str__(self):
-        return "%d : %s" % (self.type, self.value)
+        return "%d : %s" % (self.type, self.value[0:64])
 
 class TokenList:
     '''
@@ -689,6 +689,7 @@ class MapFile(TokenList):
         tokens = self.tokens()
 
         for q in range(len(tokens)):
+            # print(q)
             if (tokens[q].type == NEWLINE):
                 if (self.match_pattern(q, pattern_output_section)):
                     # Output section begins
@@ -1078,7 +1079,7 @@ class Parser:
 
         return TokenList(tokens)
 
-    def parse(self, file):
+    def parse(self, file : Stream):
         
         tokens = []
         while True:
@@ -1214,7 +1215,7 @@ elif (todo.add_application is not None):
         file_name = todo.add_application[2] + "/gen."+todo.add_application[1]+"."+section+".ld"
         ifile = open(file_name, "r")
         parser = LinkerScriptParser()
-        linker_file = parser.parse(ifile)
+        linker_file = parser.parse(Stream(ifile))
         ifile.close()
 
         if (section == "inst"):
@@ -1238,7 +1239,7 @@ elif (todo.realign is not None):
     '''
     ifile = open(todo.realign[0], "r")
     parser = MapFileParser()
-    map_file = parser.parse(ifile)
+    map_file = parser.parse(Stream(ifile))
     map_file.process()
     ifile.close()
 
@@ -1250,9 +1251,10 @@ elif (todo.realign is not None):
         linker_file_name = todo.realign[2] + "/gen." + todo.realign[1] + "." + section + ".ld"
         ifile = open(linker_file_name, "r")
         parser = LinkerScriptParser()
-        old_linker_file = parser.parse(ifile)
+        old_linker_file = parser.parse(Stream(ifile))
 
         content = map_file.mpu_blocks("."+section)
+
         sort_by_size(content)
 
         tl = TokenList([])
