@@ -1,6 +1,5 @@
 var group__arch__arm =
 [
-    [ "ARM intrinsics", "group__arch__arm__intrinsics.html", "group__arch__arm__intrinsics" ],
     [ "Cortex-M support routines", "group__arch__arm__cortex.html", "group__arch__arm__cortex" ],
     [ "Memory protection", "group__arch__arm__mpu.html", "group__arch__arm__mpu" ],
     [ "OS services implementation", "group__arch__arm__os.html", "group__arch__arm__os" ],

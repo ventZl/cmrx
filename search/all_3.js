@@ -2,7 +2,7 @@ var searchData=
 [
   ['c_20headers_0',['C headers',['../group__arch__arch.html#headers',1,'']]],
   ['calling_20rpc_20service_1',['Calling RPC service',['../rpc_intro.html#autotoc_md14',1,'']]],
-  ['calls_2',['calls',['../group__os__rpc.html',1,'Remote Procedure Calls'],['../group__api__rpc.html',1,'Remote Procedure Calls'],['../rpc_intro.html',1,'Remote Procedure Calls'],['../group__os__syscall.html',1,'System calls']]],
+  ['calls_2',['calls',['../group__api__rpc.html',1,'Remote Procedure Calls'],['../group__os__rpc.html',1,'Remote Procedure Calls'],['../rpc_intro.html',1,'Remote Procedure Calls'],['../group__os__syscall.html',1,'System calls']]],
   ['calls_20implementation_3',['System calls implementation',['../group__arch__arm__syscall.html',1,'']]],
   ['cancel_5ftimed_5fevent_4',['cancel_timed_event',['../group__os__timer.html#gafd631293a404e992816aaa99e85c2625',1,'timer.c']]],
   ['caveats_5',['Transaction caveats',['../txn_intro.html#autotoc_md19',1,'']]],

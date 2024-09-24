@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('arm_2cmsis_2arch_2cortex_8h_source.htm
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86">   59</a></span><a class="code hl_define" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> <span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86">__ISR_return</a>()</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>{</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keyword">asm</span> <span class="keyword">volatile</span>(</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                <span class="stringliteral">&quot;POP {R0, R1, R2, R3, R12, LR}\n\t&quot;</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                <span class="stringliteral">&quot;POP {R12, LR}\n\t&quot;</span></div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                <span class="stringliteral">&quot;POP {R0, R1, R2, R3}\n\t&quot;</span></div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                <span class="stringliteral">&quot;POP {R6, R7}\n\t&quot;</span></div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                <span class="stringliteral">&quot;BX R6\n\t&quot;</span></div>
