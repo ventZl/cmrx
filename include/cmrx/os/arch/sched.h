@@ -38,4 +38,10 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
  */
 __attribute__((naked,noreturn)) void os_boot_thread(Thread_t boot_thread);
 
+/** Set return value of syscall on given stack.
+ * @param stack_id Id of the stack thread has exception handler at
+ * @param retval value to store on the stack
+ */
+int os_set_syscall_return_value(Thread_t thread_id, int32_t retval);
+
 /** @} */

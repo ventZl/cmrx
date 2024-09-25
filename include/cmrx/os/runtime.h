@@ -35,9 +35,9 @@ enum ThreadState {
 	 * This state is the same as "zombie" in Linux.
 	 */
 	THREAD_STATE_FINISHED,
-	/** Thread is blocked waitihg for other thread to finish.
+	/** Thread is waitihg for object to be notified
 	 */
-	THREAD_STATE_BLOCKED_JOINING,
+	THREAD_STATE_WAITING,
     /** Thread has been stopped and is ready to migrate over to another core
      */
     THREAD_STATE_MIGRATING
@@ -58,6 +58,18 @@ typedef int (entrypoint_t)(void *);
  */
 typedef Process_t OS_RPC_stack[8];
 
+/** Type to carry event being notified.
+ * Event signals what exactly happened to the object being notified. See @ref EventTypes for
+ * the list of events.
+ */
+typedef int Event_t;
+
+/** Prototype for function that handles thread wakeup on notification.
+ */
+typedef void (WaitHandler_t)(const void *, Thread_t, Event_t);
+
+
+
 struct OS_process_t;
 
 /** Thread control block.
@@ -75,7 +87,9 @@ struct OS_thread_t {
 	 * then this contains thread ID. If thread is blocked waiting for mutex, then
 	 * this contains mutex address.
 	 */
-	unsigned long block_object;
+	const void * wait_object;
+
+	WaitHandler_t * wait_callback;
 
 	/** Address of signal handler to use.
 	 */

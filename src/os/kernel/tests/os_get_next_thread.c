@@ -22,7 +22,7 @@ CTEST(os_get_next_thread, single_thread) {
     os_threads[2].priority = 1;
 
     os_threads[3].state = THREAD_STATE_FINISHED;
-    os_threads[4].priority = 128;
+    os_threads[3].priority = 128;
 
     uint8_t next_thread;
     bool rv = os_get_next_thread(0, &next_thread);

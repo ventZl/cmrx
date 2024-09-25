@@ -8,7 +8,8 @@ endif()
 
 set(os_SRCS 
     context.c
-    isr.c 
+    isr.c
+    notify.c
     sched.c 
     signal.c 
     syscall.c 

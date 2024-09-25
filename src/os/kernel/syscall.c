@@ -11,6 +11,7 @@
 #include <cmrx/os/sched.h>
 #include <cmrx/os/timer.h>
 #include <cmrx/os/signal.h>
+#include <cmrx/os/notify.h>
 
 /** @defgroup os_syscall System calls
  * @ingroup os
@@ -38,7 +39,9 @@ static const struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_SETITIMER, (Syscall_Handler_t) &os_setitimer },
 	{ SYSCALL_SIGNAL, (Syscall_Handler_t) &os_signal },
 	{ SYSCALL_KILL, (Syscall_Handler_t) &os_kill },
-	{ SYSCALL_SETPRIORITY, (Syscall_Handler_t) &os_setpriority }
+	{ SYSCALL_SETPRIORITY, (Syscall_Handler_t) &os_setpriority },
+	{ SYSCALL_NOTIFY_OBJECT, (Syscall_Handler_t) &os_sys_notify_object },
+	{ SYSCALL_WAIT_FOR_OBJECT, (Syscall_Handler_t) &os_sys_wait_for_object }
 };
 
 #pragma GCC diagnostic pop

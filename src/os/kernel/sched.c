@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <conf/kernel.h>
 #include <arch/corelocal.h>
+#include <cmrx/os/notify.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
@@ -379,6 +380,19 @@ int os_setpriority(uint8_t priority)
 	return 0;
 }
 
+static void cb_thread_join_notify(const void * object, Thread_t thread, Event_t event)
+{
+    struct OS_thread_t * dead_thread = (struct OS_thread_t *) object;
+    if (os_threads[thread].state == THREAD_STATE_WAITING
+        && os_threads[thread].wait_object == object)
+    {
+        if (event == EVT_THREAD_DONE)
+        {
+            os_set_syscall_return_value(thread, dead_thread->exit_status);
+        }
+    }
+}
+
 int os_thread_join(uint8_t thread_id)
 {
 	if (thread_id < OS_THREADS)
@@ -394,9 +408,8 @@ int os_thread_join(uint8_t thread_id)
         else
         {
             uint8_t current_thread_id = os_get_current_thread();
-            os_threads[current_thread_id].state = THREAD_STATE_BLOCKED_JOINING;
-            os_threads[current_thread_id].block_object = thread_id;
             os_txn_done();
+            os_wait_for_object(&os_threads[current_thread_id], cb_thread_join_notify);
         }
 	}
 	return E_INVALID;

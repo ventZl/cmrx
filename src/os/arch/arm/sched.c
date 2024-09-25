@@ -93,4 +93,17 @@ void os_boot_thread(Thread_t boot_thread)
 
 }
 
+int os_set_syscall_return_value(Thread_t thread_id, int32_t retval)
+{
+    struct OS_thread_t * thread = os_thread_get(thread_id);
+	if (thread == NULL)
+	{
+		return E_INVALID;
+	}
+
+	ExceptionFrame * ef = (ExceptionFrame *) thread->sp;
+	ef->r0123[0] = retval;
+	return E_OK;
+}
+
 /** @} */
