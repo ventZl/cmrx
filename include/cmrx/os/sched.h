@@ -66,13 +66,6 @@ int os_sched_yield(void);
  */
 void _os_start(uint8_t start_core);
 
-/** Configures systick timer.
- *
- * Configures systick timer to cause sys_tick_handler to be called periodically.
- * @param xms amount of milliseconds between calls.
- */
-void systick_setup(int xms);
-
 /** Kernel implementation of thread_create() syscall.
  *
  */
@@ -157,5 +150,6 @@ void os_thread_dispose(void);
  * not made from the core at which the thread is currently running.
  */
 int os_thread_migrate(uint8_t thread_id, int target_core);
+
 
 /** @} */

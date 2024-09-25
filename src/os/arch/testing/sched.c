@@ -1,4 +1,11 @@
 #include <cmrx/os/runtime.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+Thread_t updated_syscall_return_thread = 0xFF;
+uint32_t updated_syscall_return_value = 0;
+bool updated_syscall_return_called = false;
+
 
 void os_boot_thread(Thread_t boot_thread)
 {
@@ -31,3 +38,10 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 	return E_OK;
 }
 
+int os_set_syscall_return_value(Thread_t thread_id, int32_t retval)
+{
+	updated_syscall_return_called = true;
+	updated_syscall_return_thread = thread_id;
+	updated_syscall_return_value = retval;
+	return E_OK;
+}

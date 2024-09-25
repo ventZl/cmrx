@@ -15,6 +15,7 @@ set(test_kernel_SRCS
     rpc_stack_pop.c
     os_sched_timing_callback.c
     os_txn.c
+    os_notify_wait_object.c
     )
 
 
