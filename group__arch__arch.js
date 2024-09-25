@@ -11,6 +11,7 @@ var group__arch__arch =
     [ "os_request_context_switch", "group__arch__arch.html#gaaf6b80c02401002f49137d397ba971b0", null ],
     [ "os_rpc_call", "group__arch__arch.html#ga9ee8f29f3009ad125af02a612603504f", null ],
     [ "os_rpc_return", "group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c", null ],
+    [ "os_set_syscall_return_value", "group__arch__arch.html#gabb3070fe93f5997763b5685b81288f5c", null ],
     [ "os_smp_lock", "group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826", null ],
     [ "os_smp_unlock", "group__arch__arch.html#gad026c280d52436bedf3e3643900d735f", null ],
     [ "os_thread_populate_stack", "group__arch__arch.html#ga1f714f6892c35a090439a7071ddadf46", null ],

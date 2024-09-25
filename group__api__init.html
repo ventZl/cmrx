@@ -170,7 +170,7 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>&#160;</td>
+          <td class="paramname">core&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -187,7 +187,7 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 <div class="line"><span class="preprocessor">    core\</span></div>
 <div class="line"><span class="preprocessor">}</span></div>
 <div class="ttc" id="agroup__api__init_html_ga51afde51c723416910204d56135d784e"><div class="ttname"><a href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a></div><div class="ttdeci">#define __APPL_SYMBOL(application, symbol)</div><div class="ttdef"><b>Definition</b> application.h:21</div></div>
-<div class="ttc" id="astructOS__thread__create__t_html"><div class="ttname"><a href="structOS__thread__create__t.html">OS_thread_create_t</a></div><div class="ttdoc">Structure describing auto-spawned thread.</div><div class="ttdef"><b>Definition</b> runtime.h:179</div></div>
+<div class="ttc" id="astructOS__thread__create__t_html"><div class="ttname"><a href="structOS__thread__create__t.html">OS_thread_create_t</a></div><div class="ttdoc">Structure describing auto-spawned thread.</div><div class="ttdef"><b>Definition</b> runtime.h:193</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -227,7 +227,7 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 <div class="line">    },\</div>
 <div class="line">    { &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, vtable_start), &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, vtable_end) }\</div>
 <div class="line">    }</div>
-<div class="ttc" id="astructOS__process__definition__t_html"><div class="ttname"><a href="structOS__process__definition__t.html">OS_process_definition_t</a></div><div class="ttdoc">Static definition of process in firmware image.</div><div class="ttdef"><b>Definition</b> runtime.h:145</div></div>
+<div class="ttc" id="astructOS__process__definition__t_html"><div class="ttname"><a href="structOS__process__definition__t.html">OS_process_definition_t</a></div><div class="ttdoc">Static definition of process in firmware image.</div><div class="ttdef"><b>Definition</b> runtime.h:159</div></div>
 </div><!-- fragment -->
 <p>Declare userspace process. </p>
 <p>This will create userspace process entry in process table. Process is used to contain information on MPU configuration all threads bound to this process can use. </p>
@@ -269,7 +269,7 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_end) = (<span class="keywordtype">void</span> *) (to);\</div>
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_start) = (<span class="keywordtype">void</span> *) 0;\</div>
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_end) = (<span class="keywordtype">void</span> *) 0;\</div>
-<div class="line">    _Static_assert(from % (to - from) == 0, <span class="stringliteral">&quot;MMIO range not size-aligned&quot;</span>)</div>
+<div class="line">    _Static_assert(from == 0 || to == 0 || from % (to - from) == 0, <span class="stringliteral">&quot;MMIO range not size-aligned&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -320,8 +320,8 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_end) = (<span class="keywordtype">void</span> *) (to);\</div>
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_start) = (<span class="keywordtype">void</span> *) (from2);\</div>
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_end) = (<span class="keywordtype">void</span> *) (to2);\</div>
-<div class="line">    _Static_assert(from % (to - from) == 0, <span class="stringliteral">&quot;MMIO range 1 not size-aligned&quot;</span>);\</div>
-<div class="line">    _Static_assert(from2 % (to2 - from2) == 0, <span class="stringliteral">&quot;MMIO range 2 not size-aligned&quot;</span>)</div>
+<div class="line">    _Static_assert(from == 0 || to == 0 || from % (to - from) == 0, <span class="stringliteral">&quot;MMIO range 1 not size-aligned&quot;</span>);\</div>
+<div class="line">    _Static_assert(from == 0 || to == 0 || from2 == 0 || to2 == 0 || from2 % (to2 - from2) == 0, <span class="stringliteral">&quot;MMIO range 2 not size-aligned&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -359,12 +359,12 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>&#160;</td>
+          <td class="paramname">core&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    <a class="el" href="group__api__init.html#ga55818cf77e57abe9bf2ad9fb5cffbd36">_OS_THREAD_CREATE</a>(application, entrypoint, data, priority, <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td>
+          <td></td><td>&#160;&#160;&#160;    <a class="el" href="group__api__init.html#ga55818cf77e57abe9bf2ad9fb5cffbd36">_OS_THREAD_CREATE</a>(application, entrypoint, data, priority, core)</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,21 +1,8 @@
 var searchData=
 [
-  ['sigalarm_0',['SIGALARM',['../group__os__signal.html#ggae334395fdd2ddcad969d5988c071c289af8654d423c49ba98ec66b45453d2ed60',1,'signal.h']]],
-  ['syscall_5fget_5ftid_1',['SYSCALL_GET_TID',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cafcd682b1eda938618ae36dc8e128ecab',1,'syscalls.h']]],
-  ['syscall_5fkill_2',['SYSCALL_KILL',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca805395ea3d38618848abef5215530210',1,'syscalls.h']]],
-  ['syscall_5fmutex_5fdestroy_3',['SYSCALL_MUTEX_DESTROY',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cabd802d411abb98cbd1c9cd2d9a98fbf2',1,'syscalls.h']]],
-  ['syscall_5fmutex_5finit_4',['SYSCALL_MUTEX_INIT',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cafb8482b03e9287997b40a18e356713dd',1,'syscalls.h']]],
-  ['syscall_5fmutex_5ftrylock_5',['SYSCALL_MUTEX_TRYLOCK',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca261f81b9032da9d945e088274cec20e8',1,'syscalls.h']]],
-  ['syscall_5fmutex_5funlock_6',['SYSCALL_MUTEX_UNLOCK',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cad8615286f2f44b2228e53ab6d1650e09',1,'syscalls.h']]],
-  ['syscall_5freset_7',['SYSCALL_RESET',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca048d1ca2a60d40eaadc64de9af798702',1,'syscalls.h']]],
-  ['syscall_5frpc_5fcall_8',['SYSCALL_RPC_CALL',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8caa80161e2f5d98a5d67a835f3f2e413c6',1,'syscalls.h']]],
-  ['syscall_5frpc_5freturn_9',['SYSCALL_RPC_RETURN',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca37221749c556b44a4fe1da86b1c7af19',1,'syscalls.h']]],
-  ['syscall_5fsched_5fyield_10',['SYSCALL_SCHED_YIELD',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca0f4a1b65b37b05187900f2c1343a93a2',1,'syscalls.h']]],
-  ['syscall_5fsetitimer_11',['SYSCALL_SETITIMER',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca77ff0c605bc2c6664d364e2f7c81ec26',1,'syscalls.h']]],
-  ['syscall_5fsetpriority_12',['SYSCALL_SETPRIORITY',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cae036d9dace8a809308690d330733ff5c',1,'syscalls.h']]],
-  ['syscall_5fsignal_13',['SYSCALL_SIGNAL',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8caf3209a69e73de6cd0c35d37c57ae4f5e',1,'syscalls.h']]],
-  ['syscall_5fthread_5fcreate_14',['SYSCALL_THREAD_CREATE',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cad625df5634d7a773618f3067e953e28b',1,'syscalls.h']]],
-  ['syscall_5fthread_5fexit_15',['SYSCALL_THREAD_EXIT',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8caadae95e6f725acffb58800c4a94a9d4b',1,'syscalls.h']]],
-  ['syscall_5fthread_5fjoin_16',['SYSCALL_THREAD_JOIN',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cafc4cb0aed15a099a86bd453440470e56',1,'syscalls.h']]],
-  ['syscall_5fusleep_17',['SYSCALL_USLEEP',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca7c6fd18f70a38135bdd266ff08df3f4c',1,'syscalls.h']]]
+  ['mpu_5fnone_0',['MPU_NONE',['../group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a12a2c5f9794322278e58bc3c6b1ddedd',1,'mpu.h']]],
+  ['mpu_5fr_1',['MPU_R',['../group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a13db624d78fe3ea69c924eaaa63601d6',1,'mpu.h']]],
+  ['mpu_5frw_2',['MPU_RW',['../group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a7d9fb598571457547838dd8604d8fe23',1,'mpu.h']]],
+  ['mpu_5frwx_3',['MPU_RWX',['../group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a15f945e26ec55719949e5a9b2715e6a9',1,'mpu.h']]],
+  ['mpu_5frx_4',['MPU_RX',['../group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a1b27b1215cd9cbf1edc350fe1fdd1db0',1,'mpu.h']]]
 ];

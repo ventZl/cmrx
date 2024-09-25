@@ -151,9 +151,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gab30027c97dc034137c00192f28c6e178" id="r_gab30027c97dc034137c00192f28c6e178"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab30027c97dc034137c00192f28c6e178">_os_start</a> (uint8_t start_core)</td></tr>
 <tr class="memdesc:gab30027c97dc034137c00192f28c6e178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start up scheduler.  <br /></td></tr>
 <tr class="separator:gab30027c97dc034137c00192f28c6e178"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96ccdf9295f2ba22d36816a7036918b8" id="r_ga96ccdf9295f2ba22d36816a7036918b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga96ccdf9295f2ba22d36816a7036918b8">systick_setup</a> (int xms)</td></tr>
-<tr class="memdesc:ga96ccdf9295f2ba22d36816a7036918b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures systick timer.  <br /></td></tr>
-<tr class="separator:ga96ccdf9295f2ba22d36816a7036918b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebb2e4fd35891b58767666454d4b78ea" id="r_gaebb2e4fd35891b58767666454d4b78ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaebb2e4fd35891b58767666454d4b78ea">os_thread_create</a> (<a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t priority)</td></tr>
 <tr class="memdesc:gaebb2e4fd35891b58767666454d4b78ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0" title="Create new thread.">thread_create()</a> syscall.  <br /></td></tr>
 <tr class="separator:gaebb2e4fd35891b58767666454d4b78ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,7 +178,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3b7326827d532971c4612ab1751428e9" id="r_ga3b7326827d532971c4612ab1751428e9"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga3b7326827d532971c4612ab1751428e9">os_thread_get</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id)</td></tr>
 <tr class="memdesc:ga3b7326827d532971c4612ab1751428e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get thread descriptor.  <br /></td></tr>
 <tr class="separator:ga3b7326827d532971c4612ab1751428e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab74a182c67f78a02ad1bc34362910958" id="r_gab74a182c67f78a02ad1bc34362910958"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab74a182c67f78a02ad1bc34362910958">os_thread_construct</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> tid, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
+<tr class="memitem:gab74a182c67f78a02ad1bc34362910958" id="r_gab74a182c67f78a02ad1bc34362910958"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab74a182c67f78a02ad1bc34362910958">os_thread_construct</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> tid, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t core)</td></tr>
 <tr class="memdesc:gab74a182c67f78a02ad1bc34362910958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make thread runnable.  <br /></td></tr>
 <tr class="separator:gab74a182c67f78a02ad1bc34362910958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5725c397d24dc7de634648a43675bc74" id="r_ga5725c397d24dc7de634648a43675bc74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga5725c397d24dc7de634648a43675bc74">os_thread_dispose</a> (void)</td></tr>
@@ -193,7 +190,7 @@ Functions</h2></td></tr>
 <tr class="memitem:gae41148b47f9674a16741165066c4b066" id="r_gae41148b47f9674a16741165066c4b066"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gae41148b47f9674a16741165066c4b066">os_thread_alloc</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, uint8_t priority)</td></tr>
 <tr class="memdesc:gae41148b47f9674a16741165066c4b066"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate thread entry in thread table.  <br /></td></tr>
 <tr class="separator:gae41148b47f9674a16741165066c4b066"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33ba16e9e99099ad4a6831478774e195" id="r_ga33ba16e9e99099ad4a6831478774e195"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195">__os_thread_create</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t priority, uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
+<tr class="memitem:ga33ba16e9e99099ad4a6831478774e195" id="r_ga33ba16e9e99099ad4a6831478774e195"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195">__os_thread_create</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t priority, uint8_t core)</td></tr>
 <tr class="memdesc:ga33ba16e9e99099ad4a6831478774e195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full workflow needed to create a thread.  <br /></td></tr>
 <tr class="separator:ga33ba16e9e99099ad4a6831478774e195"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga844762b99c00b298ab23f6d7f55e997b" id="r_ga844762b99c00b298ab23f6d7f55e997b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga844762b99c00b298ab23f6d7f55e997b">os_get_next_thread</a> (uint8_t current_thread, uint8_t *next_thread)</td></tr>
@@ -208,6 +205,8 @@ Functions</h2></td></tr>
 <tr class="memitem:gad17dc6e8305ce5070b4d64f6ebc2ff6c" id="r_gad17dc6e8305ce5070b4d64f6ebc2ff6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gad17dc6e8305ce5070b4d64f6ebc2ff6c">os_stack_dispose</a> (uint32_t stack_id)</td></tr>
 <tr class="memdesc:gad17dc6e8305ce5070b4d64f6ebc2ff6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release stack slot.  <br /></td></tr>
 <tr class="separator:gad17dc6e8305ce5070b4d64f6ebc2ff6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac9b76e4b0629693553a999dd77dabc96" id="r_gac9b76e4b0629693553a999dd77dabc96"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gac9b76e4b0629693553a999dd77dabc96">cb_thread_join_notify</a> (const void *object, <a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a> event)</td></tr>
+<tr class="separator:gac9b76e4b0629693553a999dd77dabc96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -400,6 +399,48 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="gac9b76e4b0629693553a999dd77dabc96" name="gac9b76e4b0629693553a999dd77dabc96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac9b76e4b0629693553a999dd77dabc96">&#9670;&#160;</a></span>cb_thread_join_notify()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void cb_thread_join_notify </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>&#160;</td>
+          <td class="paramname"><em>thread</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1046,32 +1087,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Kernel implementation of thread_stop() syscall. </p>
-
-</div>
-</div>
-<a id="ga96ccdf9295f2ba22d36816a7036918b8" name="ga96ccdf9295f2ba22d36816a7036918b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga96ccdf9295f2ba22d36816a7036918b8">&#9670;&#160;</a></span>systick_setup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void systick_setup </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>xms</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Configures systick timer. </p>
-<p>Configures systick timer to cause sys_tick_handler to be called periodically. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">xms</td><td>amount of milliseconds between calls. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

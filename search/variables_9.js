@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['lock_5fbarrier_0',['lock_barrier',['../structchecker__t.html#a1d61ea2b720381dab31ddd75d116d3ea',1,'checker_t']]],
-  ['lr_1',['lr',['../structExceptionFrame.html#aa07963c4b14474b08faded690e341a07',1,'ExceptionFrame']]]
+  ['mpu_5fregions_0',['mpu_regions',['../structOS__process__definition__t.html#ace13b242a85ec9b654965d72b9249e69',1,'OS_process_definition_t']]],
+  ['mutex_1',['mutex',['../structbarrier__t.html#a1199ccc90143a129d29580af19f9b21c',1,'barrier_t']]]
 ];

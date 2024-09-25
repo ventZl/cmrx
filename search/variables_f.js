@@ -1,16 +1,12 @@
 var searchData=
 [
-  ['sched_5fmicrotime_0',['sched_microtime',['../group__os__sched.html#ga6611cb1ff80f54abebb06a818d0a1ce2',1,'sched.c']]],
-  ['sched_5ftick_5fincrement_1',['sched_tick_increment',['../group__os__sched.html#ga575ede15b4fe0a42c29b7167d0822745',1,'sched.c']]],
-  ['semaphore_2',['semaphore',['../structchecker__t.html#ae7b7d85149931e0684b00bbf48062bdf',1,'checker_t']]],
-  ['set_5fnotify_3',['set_notify',['../structComSourceVMT.html#aca6266264577e2f6e2c8e6dfcacc461e',1,'ComSourceVMT::set_notify'],['../structComChannelVMT.html#a12120a6d16294b9092756a5dfa3623c0',1,'ComChannelVMT::set_notify']]],
-  ['signal_5fhandler_4',['signal_handler',['../structOS__thread__t.html#a6e3cdaf8f549f44f9dbbb9450c00fe67',1,'OS_thread_t']]],
-  ['signals_5',['signals',['../structOS__thread__t.html#a07cea510f30eafa336c112e630cb2542',1,'OS_thread_t']]],
-  ['sleep_5ffrom_6',['sleep_from',['../structTimerEntry__t.html#a95a419fabe89c0d94edd540788e48e96',1,'TimerEntry_t']]],
-  ['sleepers_7',['sleepers',['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c'],['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'sleepers:&#160;timer.c']]],
-  ['sp_8',['sp',['../structOS__thread__t.html#a402b571dc6672000a6f56eccff94b78e',1,'OS_thread_t']]],
-  ['stack_5fid_9',['stack_id',['../structOS__thread__t.html#a7ea5132f358b5e6003cf6c480b1f9177',1,'OS_thread_t']]],
-  ['stacks_10',['stacks',['../structOS__stack__t.html#ac64b6bed80c0329e43aba6903453ed95',1,'OS_stack_t']]],
-  ['start_11',['start',['../structOS__MPU__region.html#a0642cc60aaf53cce8d66b4070802b19e',1,'OS_MPU_region']]],
-  ['state_12',['state',['../structOS__thread__t.html#a3316dfeb2de5d7b03f7e0f6842f7c256',1,'OS_thread_t::state'],['../structfutex__t.html#acf924c6402369f5b0479148d65d9a306',1,'futex_t::state']]]
+  ['templ_0',['templ',['../structchecker__t.html#ac35f683dff2c3762c7041ff028baa165',1,'checker_t']]],
+  ['templ_5fcount_1',['templ_count',['../structchecker__t.html#a121228dae984e777fecaeb4e3a87b8d6',1,'checker_t']]],
+  ['thread_2',['thread',['../structchecker__t.html#a9f537da8d68466fb3b3f8aa3228054ac',1,'checker_t']]],
+  ['thread_5fcurrent_3',['thread_current',['../structOS__core__state__t.html#ae05a2d1f6299eccf2e5811b2d5508b7d',1,'OS_core_state_t']]],
+  ['thread_5fid_4',['thread_id',['../structComNotification.html#a40cef8ec9f7dfd48bab2151cec815ffd',1,'ComNotification::thread_id'],['../structTimerEntry__t.html#af581a4f03b2ff0ca3042f23f9634b994',1,'TimerEntry_t::thread_id']]],
+  ['thread_5fnext_5',['thread_next',['../structOS__core__state__t.html#addaba14b5bd17c76d0b929cf8e1f0e26',1,'OS_core_state_t']]],
+  ['thread_5fprev_6',['thread_prev',['../structOS__core__state__t.html#a012cf1dfaf1eb4507de4891a720da75c',1,'OS_core_state_t']]],
+  ['tv_5fsec_7',['tv_sec',['../structtimeval.html#aef6ddab1064c430758f9f913b7e4a21e',1,'timeval']]],
+  ['tv_5fusec_8',['tv_usec',['../structtimeval.html#a810bf8fcd58e255a5c1896d19538b86a',1,'timeval']]]
 ];

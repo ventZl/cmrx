@@ -152,6 +152,12 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga59b9ffdaff162b7deb5f6d34348513d9" id="r_ga59b9ffdaff162b7deb5f6d34348513d9"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#ga59b9ffdaff162b7deb5f6d34348513d9">OS_RPC_stack</a>[8]</td></tr>
 <tr class="memdesc:ga59b9ffdaff162b7deb5f6d34348513d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">RPC call owner process stack.  <br /></td></tr>
 <tr class="separator:ga59b9ffdaff162b7deb5f6d34348513d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga680eadb82b6578f258791cef85501af2" id="r_ga680eadb82b6578f258791cef85501af2"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a></td></tr>
+<tr class="memdesc:ga680eadb82b6578f258791cef85501af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type to carry event being notified.  <br /></td></tr>
+<tr class="separator:ga680eadb82b6578f258791cef85501af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86c1d9def4919aa07143abede7baa08e" id="r_ga86c1d9def4919aa07143abede7baa08e"><td class="memItemLeft" align="right" valign="top">typedef void()&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e">WaitHandler_t</a>(const void *, <a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a>)</td></tr>
+<tr class="memdesc:ga86c1d9def4919aa07143abede7baa08e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for function that handles thread wakeup on notification.  <br /></td></tr>
+<tr class="separator:ga86c1d9def4919aa07143abede7baa08e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac01e3878510de719773a39e4333a84f4" id="r_gac01e3878510de719773a39e4333a84f4"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a></td></tr>
 <tr class="separator:gac01e3878510de719773a39e4333a84f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -165,7 +171,7 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf">THREAD_STATE_STOPPED</a>
 , <a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96">THREAD_STATE_FINISHED</a>
-, <a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1">THREAD_STATE_BLOCKED_JOINING</a>
+, <a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6ac754775b8c91b7fa7de29fd8eb731bbf">THREAD_STATE_WAITING</a>
 , <a class="el" href="group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b">THREAD_STATE_MIGRATING</a>
 <br />
  }</td></tr>
@@ -254,6 +260,23 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ga680eadb82b6578f258791cef85501af2" name="ga680eadb82b6578f258791cef85501af2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga680eadb82b6578f258791cef85501af2">&#9670;&#160;</a></span>Event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef int <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type to carry event being notified. </p>
+<p>Event signals what exactly happened to the object being notified. See <a class="el" href="group__os__notify.html#ga914d2da0ec9f0e22cd5e400bc1f968b8">EventTypes</a> for the list of events. </p>
+
+</div>
+</div>
 <a id="ga59b9ffdaff162b7deb5f6d34348513d9" name="ga59b9ffdaff162b7deb5f6d34348513d9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga59b9ffdaff162b7deb5f6d34348513d9">&#9670;&#160;</a></span>OS_RPC_stack</h2>
 
@@ -282,6 +305,22 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga86c1d9def4919aa07143abede7baa08e" name="ga86c1d9def4919aa07143abede7baa08e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga86c1d9def4919aa07143abede7baa08e">&#9670;&#160;</a></span>WaitHandler_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void() WaitHandler_t(const void *, <a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prototype for function that handles thread wakeup on notification. </p>
 
 </div>
 </div>
@@ -314,7 +353,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96" name="ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96"></a>THREAD_STATE_FINISHED&#160;</td><td class="fielddoc"><p>Thread finished it's execution either explicitly by calling <a class="el" href="group__api__thread.html#ga189ee445e0ac8bf8fa112a2fa719d9b6">thread_exit()</a> or by returning from thread entrypoint. </p>
 <p>Nobody called <a class="el" href="group__api__thread.html#gafecb0503475d000bb26f547db0f54936">thread_join()</a> yet. This state is the same as "zombie" in Linux. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1" name="ggab3804a8a4369184ad46dadf8e54957b6aaccf6a91c9aca901c795889ad889c6d1"></a>THREAD_STATE_BLOCKED_JOINING&#160;</td><td class="fielddoc"><p>Thread is blocked waitihg for other thread to finish. </p>
+<tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6ac754775b8c91b7fa7de29fd8eb731bbf" name="ggab3804a8a4369184ad46dadf8e54957b6ac754775b8c91b7fa7de29fd8eb731bbf"></a>THREAD_STATE_WAITING&#160;</td><td class="fielddoc"><p>Thread is waitihg for object to be notified. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b" name="ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b"></a>THREAD_STATE_MIGRATING&#160;</td><td class="fielddoc"><p>Thread has been stopped and is ready to migrate over to another core. </p>
 </td></tr>

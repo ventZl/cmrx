@@ -112,9 +112,11 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a402b571dc6672000a6f56eccff94b78e" id="r_a402b571dc6672000a6f56eccff94b78e"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a402b571dc6672000a6f56eccff94b78e">sp</a></td></tr>
 <tr class="memdesc:a402b571dc6672000a6f56eccff94b78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value of SP.  <br /></td></tr>
 <tr class="separator:a402b571dc6672000a6f56eccff94b78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20739e2e1e1235f9e5f8ad070697039a" id="r_a20739e2e1e1235f9e5f8ad070697039a"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a20739e2e1e1235f9e5f8ad070697039a">block_object</a></td></tr>
-<tr class="memdesc:a20739e2e1e1235f9e5f8ad070697039a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identification of object, which causes this thread to block.  <br /></td></tr>
-<tr class="separator:a20739e2e1e1235f9e5f8ad070697039a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba0c89a1f04ad1917ac3280af46e1ffc" id="r_aba0c89a1f04ad1917ac3280af46e1ffc"><td class="memItemLeft" align="right" valign="top">const void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#aba0c89a1f04ad1917ac3280af46e1ffc">wait_object</a></td></tr>
+<tr class="memdesc:aba0c89a1f04ad1917ac3280af46e1ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identification of object, which causes this thread to block.  <br /></td></tr>
+<tr class="separator:aba0c89a1f04ad1917ac3280af46e1ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f6023ac269232e404ca352ba5517b1e" id="r_a5f6023ac269232e404ca352ba5517b1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e">WaitHandler_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a5f6023ac269232e404ca352ba5517b1e">wait_callback</a></td></tr>
+<tr class="separator:a5f6023ac269232e404ca352ba5517b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e3cdaf8f549f44f9dbbb9450c00fe67" id="r_a6e3cdaf8f549f44f9dbbb9450c00fe67"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a6e3cdaf8f549f44f9dbbb9450c00fe67">signal_handler</a> )(int)</td></tr>
 <tr class="memdesc:a6e3cdaf8f549f44f9dbbb9450c00fe67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of signal handler to use.  <br /></td></tr>
 <tr class="separator:a6e3cdaf8f549f44f9dbbb9450c00fe67"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,23 +149,6 @@ Data Fields</h2></td></tr>
 <div class="textblock"><p>Thread control block. </p>
 <p>This structure holds current status of the thread. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a20739e2e1e1235f9e5f8ad070697039a" name="a20739e2e1e1235f9e5f8ad070697039a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20739e2e1e1235f9e5f8ad070697039a">&#9670;&#160;</a></span>block_object</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned long OS_thread_t::block_object</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Identification of object, which causes this thread to block. </p>
-<p>This value if context-dependent. If thread is blocked joining other thread, then this contains thread ID. If thread is blocked waiting for mutex, then this contains mutex address. </p>
-
-</div>
-</div>
 <a id="a92a48d3f33bbb1d5bac8fa215bfb2b92" name="a92a48d3f33bbb1d5bac8fa215bfb2b92"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a92a48d3f33bbb1d5bac8fa215bfb2b92">&#9670;&#160;</a></span>core_id</h2>
 
@@ -324,6 +309,37 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 
 <p>State of this thread. </p>
+
+</div>
+</div>
+<a id="a5f6023ac269232e404ca352ba5517b1e" name="a5f6023ac269232e404ca352ba5517b1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f6023ac269232e404ca352ba5517b1e">&#9670;&#160;</a></span>wait_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e">WaitHandler_t</a>* OS_thread_t::wait_callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aba0c89a1f04ad1917ac3280af46e1ffc" name="aba0c89a1f04ad1917ac3280af46e1ffc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba0c89a1f04ad1917ac3280af46e1ffc">&#9670;&#160;</a></span>wait_object</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const void* OS_thread_t::wait_object</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Identification of object, which causes this thread to block. </p>
+<p>This value if context-dependent. If thread is blocked joining other thread, then this contains thread ID. If thread is blocked waiting for mutex, then this contains mutex address. </p>
 
 </div>
 </div>

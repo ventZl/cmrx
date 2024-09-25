@@ -124,6 +124,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1efbfe606317fd469d8fc187a4cb9a79" id="r_ga1efbfe606317fd469d8fc187a4cb9a79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#ga1efbfe606317fd469d8fc187a4cb9a79">os_boot_thread</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> boot_thread)</td></tr>
 <tr class="memdesc:ga1efbfe606317fd469d8fc187a4cb9a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start executing thread.  <br /></td></tr>
 <tr class="separator:ga1efbfe606317fd469d8fc187a4cb9a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb3070fe93f5997763b5685b81288f5c" id="r_gabb3070fe93f5997763b5685b81288f5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#gabb3070fe93f5997763b5685b81288f5c">os_set_syscall_return_value</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id, int32_t retval)</td></tr>
+<tr class="memdesc:gabb3070fe93f5997763b5685b81288f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set return value of syscall on given stack.  <br /></td></tr>
+<tr class="separator:gabb3070fe93f5997763b5685b81288f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Kernel scheduler internals. </p>
@@ -204,6 +207,43 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>E_OK if process was contructed properly, E_INVALID if process ID is already used or if process definition contains invalid section boundaries. E_OUT_OF_RANGE is returned if process ID requested is out of limits given by the size of process table. </dd></dl>
+
+</div>
+</div>
+<a id="gabb3070fe93f5997763b5685b81288f5c" name="gabb3070fe93f5997763b5685b81288f5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb3070fe93f5997763b5685b81288f5c">&#9670;&#160;</a></span>os_set_syscall_return_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_set_syscall_return_value </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>&#160;</td>
+          <td class="paramname"><em>thread_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>retval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set return value of syscall on given stack. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stack_id</td><td>Id of the stack thread has exception handler at </td></tr>
+    <tr><td class="paramname">retval</td><td>value to store on the stack </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
