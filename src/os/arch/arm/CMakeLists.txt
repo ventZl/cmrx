@@ -1,6 +1,7 @@
 set(cmrx_arm_SRCS 
     static.c 
-    mpu.c 
+    mpu.c
+    nvic.c
     pendsv.c 
     sanitize.c 
     sched.c 

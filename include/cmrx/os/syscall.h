@@ -16,6 +16,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define SYSCALL_DEFINITION __attribute__((section(".syscall"))) const
+
 typedef int (* Syscall_Handler_t)(int, int, int, int);
 
 /** Entry in syscall table.

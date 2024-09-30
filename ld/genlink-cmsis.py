@@ -476,6 +476,10 @@ class LinkerFile(TokenList):
                         include_seq += self._gen_variable_assignment("__thread_create_start", [Token(FULLSTOP, ".")])
                         include_seq += self._gen_keep_deploy("*", [".thread_create"])
                         include_seq += self._gen_variable_assignment("__thread_create_end", [Token(FULLSTOP, ".")])
+                        include_seq += self._gen_comment("Compile-time collected syscall descriptions")
+                        include_seq += self._gen_variable_assignment("__syscall_start", [Token(FULLSTOP, ".")])
+                        include_seq += self._gen_keep_deploy("*", [".syscall"])
+                        include_seq += self._gen_variable_assignment("__syscall_end", [Token(FULLSTOP, ".")])
                         include_seq += self._gen_comment("RPC interface VTABLEs")
                         include_seq += self._gen_include("gen." + binary_name + ".vtable.ld")
 

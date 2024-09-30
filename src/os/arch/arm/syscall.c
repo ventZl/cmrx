@@ -3,6 +3,7 @@
  * @{
  */
 #include <stdint.h>
+#include <cmrx/os/syscalls.h>
 #include <cmrx/os/syscall.h>
 
 #include <cmrx/os/sched.h>
@@ -10,6 +11,18 @@
 
 #include <arch/sysenter.h>
 #include <arch/cortex.h>
+#include <arch/nvic.h>
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"
+
+static SYSCALL_DEFINITION struct Syscall_Entry_t nvic_syscalls[] = {
+	{ SYSCALL_ENABLE_IRQ, (Syscall_Handler_t) &os_nvic_enable },
+	{ SYSCALL_DISABLE_IRQ, (Syscall_Handler_t) &os_nvic_disable },
+};
+
+#pragma GCC diagnostic pop
+
 
 /** ARM-specific entrypoint for system call handlers.
  *
@@ -23,13 +36,14 @@
  * @param arg2 syscall argument
  * @param arg3 syscall argument
  */
-__attribute__((interrupt)) void SVC_Handler(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
+__attribute__((interrupt)) void SVC_Handler(void)
 {
 	uint32_t * psp = (uint32_t *) __get_PSP();
 	sanitize_psp(psp);
-	uint16_t * lra = (uint16_t *) *(psp + 6);
+	ExceptionFrame * frame = (ExceptionFrame *) psp;
+	uint16_t * lra = (uint16_t *) frame->pc;
 	uint8_t syscall_id = *(lra - 1);
-    uint32_t rv = os_system_call(arg0, arg1, arg2, arg3, syscall_id);
+    uint32_t rv = os_system_call(frame->r0123[0], frame->r0123[1], frame->r0123[2], frame->r0123[3], syscall_id);
     *(psp) = rv;
     return; /*asm volatile("BX lr");*/
 }
