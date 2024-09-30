@@ -1,1 +1,1 @@
-add_application(queue_server queue_server.c)
+add_application(queue_server queue_server.c queue.c)
