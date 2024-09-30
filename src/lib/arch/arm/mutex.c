@@ -281,4 +281,13 @@ int futex_unlock(futex_t * futex)
 	return success;
 }
 
+int futex_destroy(futex_t* futex)
+{
+	futex->state = 0;
+	futex->owner = 0xFF;
+	futex->flags = 0;
+	return 0;
+}
+
+
 /** @} */
