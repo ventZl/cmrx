@@ -13,7 +13,7 @@ extern struct OS_core_state_t core[OS_NUM_CORES];
 void os_request_context_switch()
 {
     ASSERT_EQUAL(os_threads[core[0].thread_next].state, THREAD_STATE_RUNNING);
-
+    core[coreid()].thread_current = core[coreid()].thread_next;
     schedule_context_switch_called = true;
 //    ctxt_switch_pending = false;
 }

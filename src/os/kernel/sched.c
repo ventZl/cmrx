@@ -33,7 +33,7 @@ struct OS_thread_t os_threads[OS_THREADS];
 struct OS_process_t os_processes[OS_PROCESSES];
 
 /** CPU scheduling thread IDs */
-static struct OS_core_state_t core[OS_NUM_CORES];
+struct OS_core_state_t core[OS_NUM_CORES];
 
 #define PRIORITY_INVALID    0x1FFU
 #define PRIORITY_MAX        0xFFU
@@ -120,10 +120,7 @@ int os_sched_yield(void)
         if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK) {
             core_state->thread_prev = core_state->thread_current;
             core_state->thread_next = candidate_thread;
-            if (schedule_context_switch(core_state->thread_current, candidate_thread))
-            {
-                core_state->thread_current = core_state->thread_next;
-            }
+            schedule_context_switch(core_state->thread_current, candidate_thread);
             os_txn_done();
         }
  	}
