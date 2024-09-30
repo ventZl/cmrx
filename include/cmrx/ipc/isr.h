@@ -27,4 +27,12 @@
  */
 void isr_kill(Thread_t thread_id, uint32_t signal);
 
+/** Notify object from ISR context.
+ * This routine is an equivalent of \ref notify_object() syscall
+ * which is usable from interrupt service routine context.
+ * @param object object to be notified
+ */
+void isr_notify_object(const void * object);
+
+
 /** @} */
