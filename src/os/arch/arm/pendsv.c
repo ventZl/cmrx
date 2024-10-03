@@ -4,6 +4,7 @@
  */
 #include <stdint.h>
 #include <cmrx/os/runtime.h>
+#include <cmrx/os/sched.h>
 #include <arch/cortex.h>
 #include <conf/kernel.h>
 
@@ -54,6 +55,8 @@ __attribute__((naked)) void PendSV_Handler(void)
 
 	sanitize_psp(cpu_context.old_task->sp);
 
+	struct OS_core_state_t * cpu_state = &core[coreid()];
+
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
 	if (cpu_context.old_parent_process != cpu_context.new_parent_process 
         || cpu_context.old_host_process != cpu_context.new_host_process)
@@ -73,6 +76,17 @@ __attribute__((naked)) void PendSV_Handler(void)
 		os_deliver_signal(cpu_context.new_task, cpu_context.new_task->signals);
 		cpu_context.new_task->signals = 0;
 	}
+	if (os_threads[cpu_state->thread_current].state == THREAD_STATE_RUNNING)
+	{
+		// only mark leaving thread as ready, if it was runnig before
+		// if leaving thread was, for example, quit before calling
+		// os_sched_yield, then this would return it back to life
+		os_threads[cpu_state->thread_current].state = THREAD_STATE_READY;
+	}
+	cpu_state->thread_current = cpu_state->thread_next;
+
+	os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
+
 	load_context(cpu_context.new_task->sp);
 	/* Do NOT put anything here. You will clobber context just restored! */
 	__ISB();

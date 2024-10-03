@@ -56,13 +56,6 @@ bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
 		cpu_context.old_host_process = cpu_context.old_parent_process;
 	}
 
-	if (os_threads[current_task].state == THREAD_STATE_RUNNING)
-	{
-		// only mark leaving thread as ready, if it was runnig before
-		// if leaving thread was, for example, quit before calling
-		// os_sched_yield, then this would return it back to life
-		os_threads[current_task].state = THREAD_STATE_READY;
-	}
 	cpu_context.new_task = &os_threads[next_task];
 	cpu_context.new_parent_process = &os_processes[cpu_context.new_task->process_id];
 	if (cpu_context.new_task->rpc_stack[0] != 0)
@@ -75,8 +68,6 @@ bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
 	}
 
     cpu_context.new_stack = os_stacks.stacks[cpu_context.new_task->stack_id];
-
-	os_threads[next_task].state = THREAD_STATE_RUNNING;
 
     os_request_context_switch();
 

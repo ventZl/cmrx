@@ -7,6 +7,9 @@
 
 #include <cmrx/os/runtime.h>
 #include <stdbool.h>
+#include <arch/corelocal.h>
+
+extern struct OS_core_state_t core[OS_NUM_CORES];
 
 /** Kernel callback for timing provider.
  * 

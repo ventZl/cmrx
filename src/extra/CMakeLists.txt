@@ -11,3 +11,5 @@ target_link_libraries(aux_ipi cmsis_headers)
 if (CMRX_STDLIB_USE_CMSIS_CORE)
     target_link_libraries(aux_ipi cmsis_core)
 endif()
+
+add_subdirectory(queue_server)

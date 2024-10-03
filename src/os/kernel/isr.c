@@ -19,6 +19,7 @@
 #include <cmrx/os/runtime.h>
 #include <cmrx/os/sched.h>
 #include <cmrx/os/context.h>
+#include <cmrx/os/notify.h>
 
 void isr_kill(Thread_t thread_id, uint32_t signal)
 {
@@ -47,6 +48,11 @@ void isr_kill(Thread_t thread_id, uint32_t signal)
 			}
 		}
 	}
+}
+
+void isr_notify_object(const void * object)
+{
+	os_notify_object(object, EVT_USERSPACE_NOTIFICATION);
 }
 
 /** @} */

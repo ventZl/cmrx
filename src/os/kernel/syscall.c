@@ -27,7 +27,10 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-function-type"
 
-static const struct Syscall_Entry_t syscalls[] = {
+extern struct Syscall_Entry_t __syscall_start;
+extern struct Syscall_Entry_t __syscall_end;
+
+static SYSCALL_DEFINITION struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
 	{ SYSCALL_RPC_CALL, (Syscall_Handler_t) &os_rpc_call },
@@ -48,11 +51,11 @@ static const struct Syscall_Entry_t syscalls[] = {
 
 int os_system_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3, uint8_t syscall_id)
 {
-	for (unsigned q = 0; q < (sizeof(syscalls) / sizeof(syscalls[0])); ++q)
+	for (struct Syscall_Entry_t * syscall = &__syscall_start; syscall < &__syscall_end; ++syscall)
 	{
-		if (syscalls[q].id == syscall_id)
+		if (syscall->id == syscall_id)
 		{
-			uint32_t rv = syscalls[q].handler(arg0, arg1, arg2, arg3);
+			uint32_t rv = syscall->handler(arg0, arg1, arg2, arg3);
 			return rv; /*asm volatile("BX lr");*/
 		}
 	}

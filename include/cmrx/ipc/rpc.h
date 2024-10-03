@@ -81,14 +81,14 @@
  * the checking is performed in the compile time.
  */
 
-#define CMRX_RPC_CALL(service_instance, method_name, ...)\
-    CMRX_RPC_SERVICE_FORM_CHECKER(service_instance); \
+#define CMRX_RPC_CALL(service_instance, method_name, ...) \
+	CMRX_RPC_EVALUATOR(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__))(\
+		(service_instance), \
+		offsetof(typeof(*((service_instance)->vtable)), method_name) / sizeof(void *), \
+		##__VA_ARGS__); \
+	CMRX_RPC_SERVICE_FORM_CHECKER(service_instance); \
 	CMRX_RPC_TYPE_CHECKER(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__), (service_instance)->vtable->method_name, __VA_ARGS__) \
     CMRX_RPC_INTERFACE_CHECKER(service_instance); \
-	CMRX_RPC_EVALUATOR(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__))(\
-			(service_instance), \
-			offsetof(typeof(*((service_instance)->vtable)), method_name) / sizeof(void *), \
-			##__VA_ARGS__);
 
 /**
  * @ingroup api_rpc
@@ -129,6 +129,6 @@ __SYSCALL int _rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned ar
  * Kernel uses this to return from RPC. It is hooked into RPC call chain automatically, no need
  * to call it manually from RPC method. It is sufficient to return from RPC to call this.
  */
-__SYSCALL void rpc_return();
+__SYSCALL void rpc_return(void);
 
 /** @} */
