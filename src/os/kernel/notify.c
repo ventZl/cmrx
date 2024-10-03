@@ -51,6 +51,10 @@ int os_sys_notify_object(const void * object)
     return os_notify_object(object, EVT_USERSPACE_NOTIFICATION);
 }
 
+/**
+* @ingroup os_notify
+* @{
+*/
 /** Callback on receiving a notification.
  * @warning This callback is not executed within the context of the notified
  * thread, rather in the context of notifying thread. The state of notified
@@ -67,6 +71,7 @@ static void cb_syscall_notify_object(const void * object, Thread_t thread, Event
     (void) event;
     return;
 }
+/** @} */
 
 int os_sys_wait_for_object(const void * object, uint32_t timeout)
 {

@@ -16,6 +16,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/** Attribute used to publish syscall definitions in a way that
+ * os_syscall can process them
+ */
 #define SYSCALL_DEFINITION __attribute__((section(".syscall"))) const
 
 typedef int (* Syscall_Handler_t)(int, int, int, int);

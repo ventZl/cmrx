@@ -1,5 +1,31 @@
 #pragma once
 
+/** @defgroup api_notify Synchronization
+ *
+ * @ingroup api
+ *
+ * CMRX offers primitives to perform unaddressed synchronization
+ * unlike @ref kill() call, which allows thread to send a signal
+ * to another thread, API in this group uses memory location as
+ * a designator, rather than specific thread.
+ *
+ * Using this API, a programmer can write code that notifies
+ * unknown recipient. All that is needed for notifier and waiter
+ * for this mechanism to work is to agree upon memory location used as
+ * notification object.
+ *
+ * Any object can be used as the object itself is not examined or
+ * used during the notification. It is just a convenient way on
+ * determining the notification ID.
+ *
+ * It allows multiple object to wait for single object and thus
+ * can serve as a building block for more advanced primitives such
+ * as semaphores or queues.
+ *
+ * @ingroup api_notify
+ * @{
+ */
+
 #include <arch/sysenter.h>
 
 /** Notify waiter for object
@@ -34,3 +60,5 @@ __SYSCALL int irq_enable(uint32_t irq);
  * if timeout value other than 0 is supplied to the call.
  */
 __SYSCALL int irq_disable(uint32_t irq);
+
+/* @} */
