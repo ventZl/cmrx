@@ -184,6 +184,64 @@ $(document).ready(function(){initNavTree('group__api__signal.html',''); initResi
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga46328777c39260415d888507d2671c98" name="ga46328777c39260415d888507d2671c98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga46328777c39260415d888507d2671c98">&#9670;&#160;</a></span>irq_disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int irq_disable </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Wait for a notification on object. </p>
+<p>Calling this syscall will block the thread until any other thread notifies the same object and no other higher-priority thread is waiting for the same object.</p>
+<p>Optionally the thread can provide a timeout value. If there is no notification on object for given period of time, then waiting is aborted and thread will resume its operation with error return from this call. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td>object used to determine resuming notifications </td></tr>
+    <tr><td class="paramname">timeout</td><td>timeout timeout (in us) after which waiting is aborted and thread resumes operation. Value of 0 disables timeout and the call waits indefinitely. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK if notification has arrived. E_TIMEOUT if notification did not arrive before the timeout interval has passed. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Timeouts are not supported as of now. Syscall returns E_NOTAVAIL if timeout value other than 0 is supplied to the call. </dd></dl>
+
+</div>
+</div>
+<a id="ga8a318eb1486d9a157e128a92ef7a6c75" name="ga8a318eb1486d9a157e128a92ef7a6c75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a318eb1486d9a157e128a92ef7a6c75">&#9670;&#160;</a></span>irq_enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int irq_enable </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Notify waiter for object. </p>
+<p>This syscall will send a notification to the highest priority thread waiting for this specific object. Only one thread is notified, the one with highest priority. If no thread is waiting for this specific object, then the call does nothing.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td>object used to determine waiters to be notified </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK. Mostly. </dd></dl>
+
+</div>
+</div>
 <a id="ga31cb184e9e6351ce176c3324b7b49a24" name="ga31cb184e9e6351ce176c3324b7b49a24"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga31cb184e9e6351ce176c3324b7b49a24">&#9670;&#160;</a></span>kill()</h2>
 

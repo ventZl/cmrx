@@ -10,7 +10,7 @@ var searchData=
   ['memory_7',['Shared memory',['../group__api__shared.html',1,'']]],
   ['memory_20mapped_20io_8',['Memory-mapped IO',['../mem_model.html#autotoc_md6',1,'']]],
   ['memory_20model_9',['Memory Model',['../mem_model.html',1,'overview']]],
-  ['memory_20protection_10',['memory protection',['../group__arch__arm__mpu.html',1,'Memory protection'],['../group__os__mpu.html',1,'Memory protection']]],
+  ['memory_20protection_10',['memory protection',['../group__arch__arm__nvic.html',1,'Memory protection'],['../group__os__mpu.html',1,'Memory protection'],['../group__arch__arm__mpu.html',1,'Memory protection']]],
   ['model_11',['model',['../exec_model.html',1,'Execution Model'],['../mem_model.html',1,'Memory Model']]],
   ['mpu_20ctrl_20fields_12',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
   ['mpu_20h_13',['mpu.h',['../group__arch__arch.html#mpu_h',1,'']]],

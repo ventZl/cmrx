@@ -10,9 +10,11 @@ var searchData=
   ['delays_7',['Precise synchronous delays',['../group__api__timing.html#sync_delay',1,'']]],
   ['delays_20involving_20power_20management_8',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
   ['dependencies_20and_20cmrx_9',['Obtain dependencies and CMRX',['../getting_started.html#autotoc_md0',1,'']]],
-  ['design_20of_20rpc_20mechanism_10',['High level design of RPC mechanism',['../rpc_intro.html#autotoc_md7',1,'']]],
-  ['development_20environment_11',['Development Environment',['../dev_env.html',1,'overview']]],
-  ['directories_12',['Source and header directories',['../dev_env.html#autotoc_md22',1,'']]],
-  ['do_5fset_5ftimed_5fevent_13',['do_set_timed_event',['../group__os__timer.html#gae3a4508687fd813fb7e3e56271ef64bb',1,'timer.c']]],
-  ['documentation_14',['Kernel documentation',['../group__os.html',1,'']]]
+  ['depth_10',['depth',['../group__aux__queue.html#ga37e4b62f3fa7794622481dba035f3b12',1,'Queue']]],
+  ['design_20of_20rpc_20mechanism_11',['High level design of RPC mechanism',['../rpc_intro.html#autotoc_md7',1,'']]],
+  ['destroy_12',['destroy',['../structQueueInterface.html#ad826f2ff621e2220098e591056b4a42c',1,'QueueInterface']]],
+  ['development_20environment_13',['Development Environment',['../dev_env.html',1,'overview']]],
+  ['directories_14',['Source and header directories',['../dev_env.html#autotoc_md22',1,'']]],
+  ['do_5fset_5ftimed_5fevent_15',['do_set_timed_event',['../group__os__timer.html#gae3a4508687fd813fb7e3e56271ef64bb',1,'timer.c']]],
+  ['documentation_16',['Kernel documentation',['../group__os.html',1,'']]]
 ];

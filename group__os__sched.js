@@ -34,6 +34,7 @@ var group__os__sched =
     [ "os_thread_migrate", "group__os__sched.html#gaa1f37df2463307c3bbd30c193491d6aa", null ],
     [ "os_thread_stop", "group__os__sched.html#ga0f6f80faa1ed7029bfb94e7f32f3a994", null ],
     [ "core", "group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106", null ],
+    [ "core", "group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106", null ],
     [ "os_processes", "group__os__sched.html#ga92c7c87a5b690240597294d232980842", null ],
     [ "os_stacks", "group__os__sched.html#gaea74e023a260529e36ff7609c8a53555", null ],
     [ "os_threads", "group__os__sched.html#ga5bcb4dcf2afcf71f716d8dc85b18134d", null ],

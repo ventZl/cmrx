@@ -178,7 +178,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3b7326827d532971c4612ab1751428e9" id="r_ga3b7326827d532971c4612ab1751428e9"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga3b7326827d532971c4612ab1751428e9">os_thread_get</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id)</td></tr>
 <tr class="memdesc:ga3b7326827d532971c4612ab1751428e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get thread descriptor.  <br /></td></tr>
 <tr class="separator:ga3b7326827d532971c4612ab1751428e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab74a182c67f78a02ad1bc34362910958" id="r_gab74a182c67f78a02ad1bc34362910958"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab74a182c67f78a02ad1bc34362910958">os_thread_construct</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> tid, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t core)</td></tr>
+<tr class="memitem:gab74a182c67f78a02ad1bc34362910958" id="r_gab74a182c67f78a02ad1bc34362910958"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab74a182c67f78a02ad1bc34362910958">os_thread_construct</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> tid, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
 <tr class="memdesc:gab74a182c67f78a02ad1bc34362910958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make thread runnable.  <br /></td></tr>
 <tr class="separator:gab74a182c67f78a02ad1bc34362910958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5725c397d24dc7de634648a43675bc74" id="r_ga5725c397d24dc7de634648a43675bc74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga5725c397d24dc7de634648a43675bc74">os_thread_dispose</a> (void)</td></tr>
@@ -190,7 +190,7 @@ Functions</h2></td></tr>
 <tr class="memitem:gae41148b47f9674a16741165066c4b066" id="r_gae41148b47f9674a16741165066c4b066"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gae41148b47f9674a16741165066c4b066">os_thread_alloc</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, uint8_t priority)</td></tr>
 <tr class="memdesc:gae41148b47f9674a16741165066c4b066"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate thread entry in thread table.  <br /></td></tr>
 <tr class="separator:gae41148b47f9674a16741165066c4b066"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33ba16e9e99099ad4a6831478774e195" id="r_ga33ba16e9e99099ad4a6831478774e195"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195">__os_thread_create</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t priority, uint8_t core)</td></tr>
+<tr class="memitem:ga33ba16e9e99099ad4a6831478774e195" id="r_ga33ba16e9e99099ad4a6831478774e195"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195">__os_thread_create</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t priority, uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
 <tr class="memdesc:ga33ba16e9e99099ad4a6831478774e195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full workflow needed to create a thread.  <br /></td></tr>
 <tr class="separator:ga33ba16e9e99099ad4a6831478774e195"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga844762b99c00b298ab23f6d7f55e997b" id="r_ga844762b99c00b298ab23f6d7f55e997b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga844762b99c00b298ab23f6d7f55e997b">os_get_next_thread</a> (uint8_t current_thread, uint8_t *next_thread)</td></tr>
@@ -210,13 +210,16 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:ga2057e79833f71e7a4793d51bc2dca106" id="r_ga2057e79833f71e7a4793d51bc2dca106"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__core__state__t.html">OS_core_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a> [<a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>]</td></tr>
+<tr class="memdesc:ga2057e79833f71e7a4793d51bc2dca106"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU scheduling thread IDs.  <br /></td></tr>
+<tr class="separator:ga2057e79833f71e7a4793d51bc2dca106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5bcb4dcf2afcf71f716d8dc85b18134d" id="r_ga5bcb4dcf2afcf71f716d8dc85b18134d"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga5bcb4dcf2afcf71f716d8dc85b18134d">os_threads</a> [<a class="el" href="group__os__config.html#ga1383e9a762dc5563440cf1623542667d">OS_THREADS</a>]</td></tr>
 <tr class="memdesc:ga5bcb4dcf2afcf71f716d8dc85b18134d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of active threads.  <br /></td></tr>
 <tr class="separator:ga5bcb4dcf2afcf71f716d8dc85b18134d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga92c7c87a5b690240597294d232980842" id="r_ga92c7c87a5b690240597294d232980842"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__process__t.html">OS_process_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga92c7c87a5b690240597294d232980842">os_processes</a> [<a class="el" href="group__os__config.html#gacac8dbdebb899857ee307d8c8d917392">OS_PROCESSES</a>]</td></tr>
 <tr class="memdesc:ga92c7c87a5b690240597294d232980842"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of active processes.  <br /></td></tr>
 <tr class="separator:ga92c7c87a5b690240597294d232980842"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2057e79833f71e7a4793d51bc2dca106" id="r_ga2057e79833f71e7a4793d51bc2dca106"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structOS__core__state__t.html">OS_core_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a> [<a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>]</td></tr>
+<tr class="memitem:ga2057e79833f71e7a4793d51bc2dca106" id="r_ga2057e79833f71e7a4793d51bc2dca106"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__core__state__t.html">OS_core_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a> [<a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>]</td></tr>
 <tr class="memdesc:ga2057e79833f71e7a4793d51bc2dca106"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU scheduling thread IDs.  <br /></td></tr>
 <tr class="separator:ga2057e79833f71e7a4793d51bc2dca106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaea74e023a260529e36ff7609c8a53555" id="r_gaea74e023a260529e36ff7609c8a53555"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__stack__t.html">OS_stack_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaea74e023a260529e36ff7609c8a53555">os_stacks</a></td></tr>
@@ -1092,7 +1095,7 @@ Variables</h2></td></tr>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="ga2057e79833f71e7a4793d51bc2dca106" name="ga2057e79833f71e7a4793d51bc2dca106"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2057e79833f71e7a4793d51bc2dca106">&#9670;&#160;</a></span>core</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2057e79833f71e7a4793d51bc2dca106">&#9670;&#160;</a></span>core <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1106,9 +1109,25 @@ Variables</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+<p>CPU scheduling thread IDs. </p>
+
+</div>
+</div>
+<a id="ga2057e79833f71e7a4793d51bc2dca106" name="ga2057e79833f71e7a4793d51bc2dca106"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2057e79833f71e7a4793d51bc2dca106">&#9670;&#160;</a></span>core <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structOS__core__state__t.html">OS_core_state_t</a> core[<a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>]</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 <p>CPU scheduling thread IDs. </p>

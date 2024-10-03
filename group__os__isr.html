@@ -112,6 +112,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gabbc12f9850a82cd7f598e577efbee4bc" id="r_gabbc12f9850a82cd7f598e577efbee4bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__isr.html#gabbc12f9850a82cd7f598e577efbee4bc">isr_kill</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id, uint32_t <a class="el" href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a>)</td></tr>
 <tr class="memdesc:gabbc12f9850a82cd7f598e577efbee4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send signal from ISR context.  <br /></td></tr>
 <tr class="separator:gabbc12f9850a82cd7f598e577efbee4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05d9f276f0bfd526208afa466e89d4b1" id="r_ga05d9f276f0bfd526208afa466e89d4b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__isr.html#ga05d9f276f0bfd526208afa466e89d4b1">isr_notify_object</a> (const void *object)</td></tr>
+<tr class="memdesc:ga05d9f276f0bfd526208afa466e89d4b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify object from ISR context.  <br /></td></tr>
+<tr class="separator:ga05d9f276f0bfd526208afa466e89d4b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Routines available from running interrupt service routine context. </p>
@@ -149,6 +152,32 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">thread_id</td><td>thread, which should receive the signal </td></tr>
     <tr><td class="paramname">signal</td><td>signal to be sent </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga05d9f276f0bfd526208afa466e89d4b1" name="ga05d9f276f0bfd526208afa466e89d4b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga05d9f276f0bfd526208afa466e89d4b1">&#9670;&#160;</a></span>isr_notify_object()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void isr_notify_object </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>object</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Notify object from ISR context. </p>
+<p>This routine is an equivalent of notify_object() syscall which is usable from interrupt service routine context. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td>object to be notified </td></tr>
   </table>
   </dd>
 </dl>

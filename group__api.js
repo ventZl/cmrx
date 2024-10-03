@@ -3,7 +3,7 @@ var group__api =
     [ "Interrupt Service Routines", "group__api__isr.html", "group__api__isr" ],
     [ "Mutexes / Futexes", "group__api__mutex.html", "group__api__mutex" ],
     [ "Named constants for errors", "group__api__errors.html", "group__api__errors" ],
-    [ "Notifications", "group__api__notify.html", null ],
+    [ "Notifications", "group__api__notify.html", "group__api__notify" ],
     [ "Remote Procedure Calls", "group__api__rpc.html", "group__api__rpc" ],
     [ "Shared memory", "group__api__shared.html", "group__api__shared" ],
     [ "Signals", "group__api__signal.html", "group__api__signal" ],

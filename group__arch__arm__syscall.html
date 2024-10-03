@@ -99,21 +99,27 @@ $(document).ready(function(){initNavTree('group__arch__arm__syscall.html',''); i
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">System calls implementation<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__arm.html">ARM port</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1257cf17c116adf78b1ec8d7eba03f01" id="r_ga1257cf17c116adf78b1ec8d7eba03f01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#ga1257cf17c116adf78b1ec8d7eba03f01">SVC_Handler</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
-<tr class="memdesc:ga1257cf17c116adf78b1ec8d7eba03f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">ARM-specific entrypoint for system call handlers.  <br /></td></tr>
-<tr class="separator:ga1257cf17c116adf78b1ec8d7eba03f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e5ddb3df0d62f2dc357e64a3f04a6ce" id="r_ga3e5ddb3df0d62f2dc357e64a3f04a6ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#ga3e5ddb3df0d62f2dc357e64a3f04a6ce">SVC_Handler</a> (void)</td></tr>
+<tr class="memdesc:ga3e5ddb3df0d62f2dc357e64a3f04a6ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">ARM-specific entrypoint for system call handlers.  <br /></td></tr>
+<tr class="separator:ga3e5ddb3df0d62f2dc357e64a3f04a6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga873c7a16056f301fc0c69003f8f7b882" id="r_ga873c7a16056f301fc0c69003f8f7b882"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="group__os__syscall.html#ga8c3ef3b8ba8d29b49370620dc656c3b7">SYSCALL_DEFINITION</a> struct <a class="el" href="structSyscall__Entry__t.html">Syscall_Entry_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#ga873c7a16056f301fc0c69003f8f7b882">nvic_syscalls</a> []</td></tr>
+<tr class="separator:ga873c7a16056f301fc0c69003f8f7b882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga1257cf17c116adf78b1ec8d7eba03f01" name="ga1257cf17c116adf78b1ec8d7eba03f01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1257cf17c116adf78b1ec8d7eba03f01">&#9670;&#160;</a></span>SVC_Handler()</h2>
+<a id="ga3e5ddb3df0d62f2dc357e64a3f04a6ce" name="ga3e5ddb3df0d62f2dc357e64a3f04a6ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3e5ddb3df0d62f2dc357e64a3f04a6ce">&#9670;&#160;</a></span>SVC_Handler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -121,31 +127,9 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void SVC_Handler </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>arg0</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>arg1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>arg2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>arg3</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -161,6 +145,38 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ga873c7a16056f301fc0c69003f8f7b882" name="ga873c7a16056f301fc0c69003f8f7b882"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga873c7a16056f301fc0c69003f8f7b882">&#9670;&#160;</a></span>nvic_syscalls</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga8c3ef3b8ba8d29b49370620dc656c3b7">SYSCALL_DEFINITION</a> struct <a class="el" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> nvic_syscalls[]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    { <a class="code hl_enumvalue" href="group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cababdc1a4391a7b866c3a74303d83a616">SYSCALL_ENABLE_IRQ</a>, (<a class="code hl_typedef" href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">Syscall_Handler_t</a>) &amp;<a class="code hl_function" href="group__arch__arm__nvic.html#ga1f2b7cd42c4cda96dae3a6bf3a08a53d">os_nvic_enable</a> },</div>
+<div class="line">    { <a class="code hl_enumvalue" href="group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca64ba88bdc61aafe0a72b7ea55a6e50a9">SYSCALL_DISABLE_IRQ</a>, (<a class="code hl_typedef" href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">Syscall_Handler_t</a>) &amp;<a class="code hl_function" href="group__arch__arm__nvic.html#ga99e85036a50727934b3d09e988a9846d">os_nvic_disable</a> },</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__arch__arm__nvic_html_ga1f2b7cd42c4cda96dae3a6bf3a08a53d"><div class="ttname"><a href="group__arch__arm__nvic.html#ga1f2b7cd42c4cda96dae3a6bf3a08a53d">os_nvic_enable</a></div><div class="ttdeci">int os_nvic_enable(uint32_t irq)</div><div class="ttdoc">Implementation of irq_enable syscall for ARM Cortex-M See irq_enable for more details on arguments.</div><div class="ttdef"><b>Definition</b> nvic.c:7</div></div>
+<div class="ttc" id="agroup__arch__arm__nvic_html_ga99e85036a50727934b3d09e988a9846d"><div class="ttname"><a href="group__arch__arm__nvic.html#ga99e85036a50727934b3d09e988a9846d">os_nvic_disable</a></div><div class="ttdeci">int os_nvic_disable(uint32_t irq)</div><div class="ttdoc">Implementation of irq_disable syscall for ARM Cortex-M See irq_disable for more details on arguments.</div><div class="ttdef"><b>Definition</b> nvic.c:13</div></div>
+<div class="ttc" id="agroup__os__syscall_html_gada41dc2b7ccf9df17f433b5d5893cfcf"><div class="ttname"><a href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">Syscall_Handler_t</a></div><div class="ttdeci">int(* Syscall_Handler_t)(int, int, int, int)</div><div class="ttdef"><b>Definition</b> syscall.h:24</div></div>
+<div class="ttc" id="agroup__os__syscall_html_gga31e8f196f246216d32eec552c2640f8ca64ba88bdc61aafe0a72b7ea55a6e50a9"><div class="ttname"><a href="group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca64ba88bdc61aafe0a72b7ea55a6e50a9">SYSCALL_DISABLE_IRQ</a></div><div class="ttdeci">@ SYSCALL_DISABLE_IRQ</div><div class="ttdef"><b>Definition</b> syscalls.h:31</div></div>
+<div class="ttc" id="agroup__os__syscall_html_gga31e8f196f246216d32eec552c2640f8cababdc1a4391a7b866c3a74303d83a616"><div class="ttname"><a href="group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cababdc1a4391a7b866c3a74303d83a616">SYSCALL_ENABLE_IRQ</a></div><div class="ttdeci">@ SYSCALL_ENABLE_IRQ</div><div class="ttdef"><b>Definition</b> syscalls.h:30</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

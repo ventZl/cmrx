@@ -161,6 +161,52 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga47d2a2d00e35b45f4c294af4e7c4987d" name="ga47d2a2d00e35b45f4c294af4e7c4987d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47d2a2d00e35b45f4c294af4e7c4987d">&#9670;&#160;</a></span>cb_syscall_notify_object()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void cb_syscall_notify_object </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>&#160;</td>
+          <td class="paramname"><em>thread</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callback on receiving a notification. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This callback is not executed within the context of the notified thread, rather in the context of notifying thread. The state of notified thread is largely pre-notification at this point.</dd></dl>
+<p>Callback can not assume anything about the future state of the thread post this notification other than the thread will become READY for scheduling. </p>
+
+</div>
+</div>
 <a id="ga5979f2a094569c177e9e69da6a655dc1" name="ga5979f2a094569c177e9e69da6a655dc1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga5979f2a094569c177e9e69da6a655dc1">&#9670;&#160;</a></span>os_notify_object()</h2>
 

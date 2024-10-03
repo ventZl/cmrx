@@ -6,5 +6,5 @@ var group__api__rpc =
     [ "rpc_call", "group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f", null ],
     [ "this", "group__api__rpc.html#ga50383951d2a9d4f1a855b2cec5e03274", null ],
     [ "_rpc_call", "group__api__rpc.html#ga3be07e9a9f65c1035242a7c62863b58d", null ],
-    [ "rpc_return", "group__api__rpc.html#ga5002fdfc28ce48a3954707fe3b124151", null ]
+    [ "rpc_return", "group__api__rpc.html#gaf78e5f7fb20b02cbff061e5ea6daaed3", null ]
 ];

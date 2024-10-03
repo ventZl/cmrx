@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['waithandler_5ft_0',['WaitHandler_t',['../group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e',1,'runtime.h']]]
+  ['vtable_5ft_0',['VTable_t',['../group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239',1,'rpc.h']]]
 ];

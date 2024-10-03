@@ -12,13 +12,17 @@ var searchData=
   ['interface_9',['RPC interface',['../rpc_intro.html#autotoc_md8',1,'']]],
   ['interfaces_10',['interfaces',['../rpc_intro.html#autotoc_md11',1,'Declare interfaces'],['../group__api__rpc.html#api_rpc_implementation',1,'Implementation of RPC interfaces']]],
   ['interfaces_20vtables_11',['RPC interfaces (vtables)',['../group__api__rpc.html#api_rpc_interface',1,'']]],
-  ['interrupt_20service_20routines_12',['interrupt service routines',['../group__os__isr.html',1,'Interrupt service routines'],['../group__api__isr.html',1,'Interrupt Service Routines']]],
+  ['interrupt_20service_20routines_12',['interrupt service routines',['../group__api__isr.html',1,'Interrupt Service Routines'],['../group__os__isr.html',1,'Interrupt service routines']]],
   ['interrupts_13',['Interrupts',['../exec_model.html#autotoc_md17',1,'']]],
   ['interval_14',['interval',['../structTimerEntry__t.html#a2f45a4b2fcffd30370f2159d80311b00',1,'TimerEntry_t']]],
   ['introduction_15',['Introduction',['../index.html',1,'']]],
   ['involving_20power_20management_16',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
   ['io_17',['Memory-mapped IO',['../mem_model.html#autotoc_md6',1,'']]],
   ['ipi_20provider_18',['Cortex-M generic IPI provider',['../group__aux__cm__ipi.html',1,'']]],
-  ['is_5fperiodic_19',['is_periodic',['../group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c',1,'timer.c']]],
-  ['isr_5fkill_20',['isr_kill',['../group__os__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c'],['../group__api__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c']]]
+  ['irq_5fdisable_19',['irq_disable',['../group__api__signal.html#ga46328777c39260415d888507d2671c98',1,'irq_disable(uint32_t irq):&#160;irq.c'],['../group__api__notify.html#ga46328777c39260415d888507d2671c98',1,'irq_disable(uint32_t irq):&#160;irq.c']]],
+  ['irq_5fenable_20',['irq_enable',['../group__api__signal.html#ga8a318eb1486d9a157e128a92ef7a6c75',1,'irq_enable(uint32_t irq):&#160;irq.c'],['../group__api__notify.html#ga8a318eb1486d9a157e128a92ef7a6c75',1,'irq_enable(uint32_t irq):&#160;irq.c']]],
+  ['is_5fperiodic_21',['is_periodic',['../group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c',1,'timer.c']]],
+  ['isr_5fkill_22',['isr_kill',['../group__os__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c'],['../group__api__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c']]],
+  ['isr_5fnotify_5fobject_23',['isr_notify_object',['../group__os__isr.html#ga05d9f276f0bfd526208afa466e89d4b1',1,'isr_notify_object(const void *object):&#160;isr.c'],['../group__api__isr.html#ga05d9f276f0bfd526208afa466e89d4b1',1,'isr_notify_object(const void *object):&#160;isr.c']]],
+  ['item_5fsize_24',['item_size',['../group__aux__queue.html#gaf7ce592d2117e17be583562a544e0f6e',1,'Queue']]]
 ];
