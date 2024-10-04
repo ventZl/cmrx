@@ -1,6 +1,6 @@
 /** @defgroup api_mutex Mutexes / Futexes
- *
  * @ingroup api
+ * Basic synchronization primitives for use inside one process.
  *
  * CMRX offers mutual exclusive access facilities for userspace processes.
  * There is an implementation of futex (fast userspace mutex) available and

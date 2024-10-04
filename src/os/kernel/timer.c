@@ -1,10 +1,10 @@
 /** @addtogroup os_timer 
  * @{ 
  */
-#include <cmrx/os/timer.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/signal.h>
-#include <cmrx/os/txn.h>
+#include "timer.h"
+#include "sched.h"
+#include "signal.h"
+#include "txn.h"
 #include <conf/kernel.h>
 
 #include <stdint.h>

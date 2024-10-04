@@ -1,6 +1,6 @@
-#include <cmrx/os/sanitize.h>
+#include <kernel/sanitize.h>
 #include <cmrx/assert.h>
-#include <cmrx/os/sched.h>
+#include <kernel/sched.h>
 
 extern struct OS_stack_t os_stacks;
 

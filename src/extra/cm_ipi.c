@@ -1,4 +1,4 @@
-#include <cmrx/os/ipi.h>
+#include <cmrx/sys/ipi.h>
 #include <arch/corelocal.h>
 #include <conf/kernel.h>
 

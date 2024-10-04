@@ -1,4 +1,4 @@
-#include <cmrx/os/notify.h>
+#include <kernel/notify.h>
 #include <ctest.h>
 #include <arch/corelocal.h>
 extern struct OS_core_state_t core[OS_NUM_CORES];

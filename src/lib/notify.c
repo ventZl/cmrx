@@ -2,7 +2,7 @@
  * @{
  */
 #include <cmrx/ipc/signal.h>
-#include <cmrx/os/syscalls.h>
+#include <cmrx/sys/syscalls.h>
 
 __SYSCALL int notify_object(const void *)
 {

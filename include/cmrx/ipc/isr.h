@@ -1,9 +1,7 @@
 #pragma once
 
 /** @defgroup api_isr Interrupt Service Routines
- * 
  * @ingroup api
- *
  * Kernel services accessible from interrupt service handlers.
  *
  * Kernel interface is not accessible from the realm of interrupt service routines.

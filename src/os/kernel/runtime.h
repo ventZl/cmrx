@@ -1,7 +1,6 @@
 /** @defgroup os_kernel Kernel core
- *
  * @ingroup os
- *
+ * Basic structures that contain the internal state of kernel.
  * Kernel is built around minimalistic core, which consists of prioritized thread
  * scheduler. Scheduler can be started up after basic HW setup is done by calling 
  * @ref os_start(). This will collect all auto-started threads, prepare them and
@@ -10,9 +9,9 @@
  */
 #pragma once
 
+#include <cmrx/sys/runtime.h>
 #include <cmrx/defines.h>
 #include <conf/kernel.h>
-#include <arch/mpu.h>
 
 /** List of states in which thread can be.
  */
@@ -43,14 +42,6 @@ enum ThreadState {
     THREAD_STATE_MIGRATING
 };
 
-/** Prototype for thread entrypoint function.
- * Thread entrypoint function takes one user-defined argument. By default it is assumed
- * that this is a pointer to user data, but there is no checking performed on the value
- * passed to the callee. It can be anything, once properly typecasted.
- * Thread entrypoint can return signed 32bit value as it's return value. This is available
- * for whoever will call @ref thread_join() as thread exit status.
- */
-typedef int (entrypoint_t)(void *);
 
 /** RPC call owner process stack.
  * This stack records owners of nested RPC calls. It can accomodate up to 8 owners
@@ -142,29 +133,6 @@ struct OS_stack_t {
 	uint32_t allocations;
 };
 
-/** MPU region description.
- */
-struct OS_MPU_region {
-	/** Start address. */
-	void * start;
-	/** End address. */
-	void * end;
-};
-
-/** Static definition of process in firmware image.
- * This defines MPU regions of interest for this process,
- * such as data and BSS. Read-only data and code is all
- * readable.
- */
-struct OS_process_definition_t {
-	/** Static MPU region configuration for this process.
-	 */
-	struct OS_MPU_region mpu_regions[OS_TASK_MPU_REGIONS];
-
-	/** Ummmm */
-	struct OS_MPU_region rpc_interface; /* this is not an actual MPU region */
-};
-
 /** Process control block.
  *
  * Process is a container whose sole purpose is to drive the MPU.
@@ -184,28 +152,7 @@ struct OS_process_t {
 
 };
 
-/** Structure describing auto-spawned thread.
- *
- * This is a mechanism of creating threads without need to explicitly call
- * @ref thread_create(). Kernel will do that automatically upon main calling
- * @ref os_start().
- */
-struct OS_thread_create_t {
-	/** Owning process */
-	const struct OS_process_definition_t * process;
 
-	/** Entrypoint address */
-	entrypoint_t * entrypoint;
-
-	/** User data passed to entrypoint function */
-	void * data;
-
-	/** Thread priority */
-	uint8_t priority;
-
-    /** Core at which thread should be started */
-    uint8_t core;
-};
 
 /** Scheduler notion on existing threads. */
 extern struct OS_thread_t os_threads[OS_THREADS];

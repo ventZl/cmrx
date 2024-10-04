@@ -1,5 +1,5 @@
 #include <cmrx/cmrx.h>
-#include <cmrx/os/sched.h>
+#include <kernel/sched.h>
 
 #undef NULL
 #include <ctest.h>

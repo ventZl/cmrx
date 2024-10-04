@@ -2,7 +2,7 @@
  * @{
  */
 #include <cmrx/ipc/timer.h>
-#include <cmrx/os/syscalls.h>
+#include <cmrx/sys/syscalls.h>
 
 __SYSCALL int usleep(unsigned microseconds)
 {

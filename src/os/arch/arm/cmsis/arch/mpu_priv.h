@@ -10,7 +10,7 @@
 #include <RTE_Components.h>
 #include CMSIS_device_header
 
-#include <cmrx/os/arch/mpu.h>
+#include <kernel/arch/mpu.h>
 
 #ifdef __ARM_ARCH_6M__
 

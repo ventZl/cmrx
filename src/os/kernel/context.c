@@ -1,8 +1,8 @@
 #include <stdbool.h>
 #include <stdint.h>
-#include <cmrx/os/arch/context.h>
-#include <cmrx/os/runtime.h>
-#include <cmrx/os/context.h>
+#include "arch/context.h"
+#include "runtime.h"
+#include "context.h"
 
 struct OS_scheduling_context_t cpu_context;
 /*static struct OS_thread_t * old_task;

@@ -1,5 +1,5 @@
 #include <arch/corelocal.h>
-#include <cmrx/os/txn.h>
+#include "txn.h"
 #include <cmrx/defines.h>
 #include <stdio.h>
 
