@@ -1,7 +1,5 @@
 /** @defgroup api_thread Threading functions
- *
  * @ingroup api
- *
  * Functions providing support for manipulation of system execution state. It is possible
  * to create new threads, wait for other threads to finish or finish currently running thread.
  *

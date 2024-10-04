@@ -3,20 +3,20 @@
  * @{
  */
 #include <stdint.h>
-#include <cmrx/os/runtime.h>
-#include <cmrx/os/sched.h>
+#include <kernel/runtime.h>
+#include <kernel/sched.h>
 #include <arch/cortex.h>
 #include <conf/kernel.h>
 
 #include <stdbool.h>
 #include <cmrx/assert.h>
-#include <cmrx/os/sanitize.h>
+#include <kernel/sanitize.h>
 
-#include <cmrx/os/context.h>
+#include <kernel/context.h>
 #include <arch/scb.h>
 
 #ifdef KERNEL_HAS_MEMORY_PROTECTION
-#	include <cmrx/os/mpu.h>
+#	include <kernel/mpu.h>
 #   include <arch/mpu_priv.h>
 #endif
 

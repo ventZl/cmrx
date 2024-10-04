@@ -1,4 +1,4 @@
-#include <cmrx/os/txn.h>
+#include <kernel/txn.h>
 #include <cmrx/defines.h>
 #include <arch/corelocal.h>
 #include <ctest.h>

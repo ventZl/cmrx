@@ -1,24 +1,23 @@
-/** @defgroup os_sched Thread scheduling 
- * @ingroup os 
+/** @addtogroup os_sched
  * @{
  */
-#include "cmrx/defines.h"
+#include <cmrx/defines.h>
 #include <stdint.h>
 #include <conf/kernel.h>
 #include <arch/corelocal.h>
-#include <cmrx/os/notify.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/runtime.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/txn.h>
+#include "notify.h"
+#include "sched.h"
+#include "runtime.h"
+#include "sched.h"
+#include "txn.h"
 #include <stdbool.h>
 #include <cmrx/assert.h>
-#include <cmrx/os/arch/static.h>
-#include <cmrx/os/arch/sched.h>
-#include <cmrx/os/context.h>
-#include <cmrx/os/arch/mpu.h>
-#include <cmrx/os/timer.h>
-#include <cmrx/os/syscalls.h>
+#include "arch/static.h"
+#include "arch/sched.h"
+#include "context.h"
+#include "arch/mpu.h"
+#include "timer.h"
+#include <cmrx/sys/syscalls.h>
 #include <cmrx/clock.h>
 #include <string.h>
 

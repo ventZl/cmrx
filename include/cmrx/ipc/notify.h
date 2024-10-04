@@ -1,7 +1,5 @@
 /** @defgroup api_notify Notifications
- *
  * @ingroup api
- *
  * API for synchronization on shared objects.
  *
  * Notifications are a simple mechanism allowing threads to wait for notifications

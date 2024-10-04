@@ -1,7 +1,6 @@
 /** @defgroup api_rpc Remote Procedure Calls
- *
  * @ingroup api
- *
+ * API to perform calls that execute in foreign process.
  * 
  */
 #pragma once

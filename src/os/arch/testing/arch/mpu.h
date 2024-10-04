@@ -1,5 +1,6 @@
 #pragma once
 
+#include <conf/kernel.h>
 #include <stdint.h>
 
 struct MPU_Registers {

@@ -2,8 +2,8 @@
  * @ingroup arch_arm 
  * Implementation of retrieving static initialization structures.
  * @{ */
-#include "cmrx/os/runtime.h"
-#include <cmrx/os/arch/static.h>
+#include <kernel/runtime.h>
+#include <kernel/arch/static.h>
 
 extern const struct OS_process_definition_t __applications_start;
 extern const struct OS_process_definition_t __applications_end;

@@ -1,7 +1,5 @@
 /** @defgroup api_init Static initialization
- *
  * @ingroup api
- *
  * Mechanisms provided for application designer to statically initialize objects.
  * These mechanisms are provided, so that various structures are generated into
  * application image. These replace need to call os routines manually. Currently
@@ -14,7 +12,7 @@
 #pragma once
 
 //#include "os.h"
-#include <cmrx/os/runtime.h>
+#include <cmrx/sys/runtime.h>
 #include <conf/kernel.h>
 #include <stddef.h>
 

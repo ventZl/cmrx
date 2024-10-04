@@ -2,16 +2,16 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include <cmrx/os/syscalls.h>
-#include <cmrx/os/syscall.h>
+#include <cmrx/sys/syscalls.h>
+#include "syscall.h"
 #include <cmrx/assert.h>
 #include <arch/sysenter.h>
 
-#include <cmrx/os/rpc.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/timer.h>
-#include <cmrx/os/signal.h>
-#include <cmrx/os/notify.h>
+#include "rpc.h"
+#include "sched.h"
+#include "timer.h"
+#include "signal.h"
+#include "notify.h"
 
 /** @defgroup os_syscall System calls
  * @ingroup os

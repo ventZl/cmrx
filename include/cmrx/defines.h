@@ -18,6 +18,7 @@
 #include <stdint.h>
 
 /** @defgroup api_errors Named constants for errors
+ * Types of errors system calls in CMRX can return.
  * @{
  */
 #define E_OK					0

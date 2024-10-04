@@ -6,13 +6,13 @@
  *
  * @{
  */
-#include <cmrx/os/runtime.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/timer.h>
-#include <cmrx/os/arch/sched.h>
+#include <kernel/runtime.h>
+#include <kernel/sched.h>
+#include <kernel/timer.h>
+#include <kernel/arch/sched.h>
 #include <arch/memory.h>
 #include <arch/cortex.h>
-#include <cmrx/os/mpu.h>
+#include <kernel/mpu.h>
 #include <arch/mpu.h>
 #include <arch/mpu_priv.h>
 #include <string.h>

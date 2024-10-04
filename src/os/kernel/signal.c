@@ -1,10 +1,9 @@
-/** @defgroup os_signal Signal handling
- * @ingroup os
+/** @addtogroup os_signal
  * @{ 
  */
 #include <cmrx/assert.h>
 #include <cmrx/ipc/signal.h>
-#include <cmrx/os/sched.h>
+#include "sched.h"
 
 int os_signal(int signo, void (*sighandler)(int))
 {

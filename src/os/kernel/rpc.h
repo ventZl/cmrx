@@ -1,7 +1,5 @@
 /** @defgroup os_rpc Remote Procedure Calls
- *
  * @ingroup os
- *
  * This kernel implementation of RPC mechanism.
  * @{
  */

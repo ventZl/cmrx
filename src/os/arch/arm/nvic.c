@@ -1,7 +1,7 @@
 #include <RTE_Components.h>
 #include CMSIS_device_header
 
-#include <cmrx/os/syscall.h>
+#include <kernel/syscall.h>
 #include <cmrx/defines.h>
 
 int os_nvic_enable(uint32_t irq)

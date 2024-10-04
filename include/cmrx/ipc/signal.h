@@ -1,7 +1,5 @@
 /** @defgroup api_signal Signals
- *
  * @ingroup api
- *
  * API for sending signals and handling incoming signals.
  *
  * Threads can send signals asynchronously to each other. Kernel provides

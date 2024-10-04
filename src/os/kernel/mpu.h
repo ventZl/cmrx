@@ -1,7 +1,5 @@
 /** @defgroup os_mpu Memory protection
- *
  * @ingroup os
- *
  * Kernel internals in support for MPU configuration.
  * 
  * Real implementation of memory protection is heavily dependant on specific

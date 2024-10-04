@@ -1,4 +1,4 @@
-#include <cmrx/os/sched.h>
+#include <kernel/sched.h>
 #include <ctest.h>
 #include <string.h>
 

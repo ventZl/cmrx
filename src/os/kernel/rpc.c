@@ -1,12 +1,11 @@
-/** @defgroup os_rpc RPC implementation
- * @ingroup os
+/** @addtogroup os_rpc
  * @{
  */
-#include <cmrx/os/syscall.h>
-#include <cmrx/os/syscalls.h>
-#include <cmrx/os/rpc.h>
+#include "syscall.h"
+#include <cmrx/sys/syscalls.h>
+#include "rpc.h"
 #include <arch/sysenter.h>
-#include <cmrx/os/sched.h>
+#include "sched.h"
 
 /// @cond IGNORE
 /// This is documented in the Kernel API group

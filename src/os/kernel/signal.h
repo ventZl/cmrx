@@ -1,7 +1,5 @@
-/** @defgroup os_signal Signals
- *
+/** @defgroup os_signal Signal handling
  * @ingroup os
- *
  * Kernel implementation of signal propagation mechanism.
  */
 

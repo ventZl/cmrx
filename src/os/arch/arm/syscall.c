@@ -3,11 +3,11 @@
  * @{
  */
 #include <stdint.h>
-#include <cmrx/os/syscalls.h>
-#include <cmrx/os/syscall.h>
+#include <cmrx/sys/syscalls.h>
+#include <kernel/syscall.h>
 
-#include <cmrx/os/sched.h>
-#include <cmrx/os/sanitize.h>
+#include <kernel/sched.h>
+#include <kernel/sanitize.h>
 
 #include <arch/sysenter.h>
 #include <arch/cortex.h>

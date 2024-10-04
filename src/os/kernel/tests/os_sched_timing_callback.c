@@ -1,6 +1,6 @@
-#include <cmrx/os/sched.h>
-#include <cmrx/os/timer.h>
-#include <cmrx/os/signal.h>
+#include <kernel/sched.h>
+#include <kernel/timer.h>
+#include <kernel/signal.h>
 #include <cmrx/ipc/signal.h>
 #include <ctest.h>
 #include <string.h>

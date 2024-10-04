@@ -1,5 +1,5 @@
-#include <cmrx/os/timer.h>
-#include <cmrx/os/runtime.h>
+#include <kernel/timer.h>
+#include <kernel/runtime.h>
 #include <ctest.h>
 #include <arch/corelocal.h>
 

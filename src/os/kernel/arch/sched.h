@@ -3,7 +3,7 @@
  * @{
  */
 
-#include <cmrx/os/runtime.h>
+#include <kernel/runtime.h>
 #include <stdint.h>
 
 /** Populate stack of new thread so it can be executed.

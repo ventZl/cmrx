@@ -1,7 +1,6 @@
 /** @defgroup os_timer Timers
- *
  * @ingroup os
- *
+ * Kernel internals providing services of delayed and periodic execution.
  * @{
  */
 

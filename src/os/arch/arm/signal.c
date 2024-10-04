@@ -3,13 +3,13 @@
  * @{
  */
 
-#include <cmrx/os/signal.h>
-#include <cmrx/os/sched.h>
+#include <kernel/signal.h>
+#include <kernel/sched.h>
 #include <cmrx/assert.h>
-#include <cmrx/os/runtime.h>
+#include <kernel/runtime.h>
 #include <cmrx/ipc/signal.h>
 #include <cmrx/defines.h>
-#include <cmrx/os/syscall.h>
+#include <kernel/syscall.h>
 #include <arch/cortex.h>
 
 /** Perform signal delivery in thread's userspace.

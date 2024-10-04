@@ -1,4 +1,4 @@
-#include <cmrx/os/mpu.h>
+#include <kernel/mpu.h>
 #include <cmrx/defines.h>
 #include <arch/mpu_priv.h>
 #include <conf/kernel.h>
@@ -6,8 +6,8 @@
 #include <arch/memory.h>
 #include <cmrx/assert.h>
 #include <arch/scb.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/syscall.h>
+#include <kernel/sched.h>
+#include <kernel/syscall.h>
 
 #ifdef SEMIHOSTING
 #include <stdio.h>

@@ -2,7 +2,7 @@
  * @{
  */
 #include <cmrx/ipc/rpc.h>
-#include <cmrx/os/syscalls.h>
+#include <cmrx/sys/syscalls.h>
 #include <stdarg.h>
 #include <cmrx/assert.h>
 #include <arch/sysenter.h>

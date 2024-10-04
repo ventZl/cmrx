@@ -1,7 +1,7 @@
-#include <cmrx/os/notify.h>
-#include <cmrx/os/runtime.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/txn.h>
+#include "notify.h"
+#include "runtime.h"
+#include "sched.h"
+#include "txn.h"
 
 int os_notify_object(const void * object, Event_t event)
 {

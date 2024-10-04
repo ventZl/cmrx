@@ -3,7 +3,7 @@
 #include <string.h>
 #include <conf/kernel.h>
 #undef NULL
-#include <cmrx/os/runtime.h>
+#include <kernel/runtime.h>
 #include <ctest.h>
 
 extern struct OS_stack_t os_stacks;
