@@ -182,7 +182,7 @@ Functions</h2></td></tr>
 <p>Kernel implementation of rpc_call syscall. </p>
 <p>This syscall has to validate the RPC service and method IDs, determine the address of RPC method and owning process. Then it has to transfer the control to RPC method in a manner that:</p><ul>
 <li>method called will be able to access the first four arguments given to the <a class="el" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call()</a> call.</li>
-<li>when method returns, the <a class="el" href="group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return()</a> is triggered and will transfer the control back</li>
+<li>when method returns, the <a class="el" href="group__arch__arm__rpc.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return()</a> is triggered and will transfer the control back</li>
 <li>to the calling code and process. </li>
 </ul>
 

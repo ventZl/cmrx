@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: include/cmrx/os/notify.h Source File</title>
+<title>C Microkernel Realtime eXecutive: src/os/kernel/notify.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('os_2notify_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('src_2os_2kernel_2notify_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -123,8 +123,8 @@ $(document).ready(function(){initNavTree('os_2notify_8h_source.html',''); initRe
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__os__notify.html#gad43f88a4c3d7f3a842f13edfd8318004">os_sys_wait_for_object</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> * <span class="keywordtype">object</span>, uint32_t timeout);</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="ttc" id="agroup__os__kernel_html_ga680eadb82b6578f258791cef85501af2"><div class="ttname"><a href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a></div><div class="ttdeci">int Event_t</div><div class="ttdoc">Type to carry event being notified.</div><div class="ttdef"><b>Definition</b> runtime.h:65</div></div>
-<div class="ttc" id="agroup__os__kernel_html_ga86c1d9def4919aa07143abede7baa08e"><div class="ttname"><a href="group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e">WaitHandler_t</a></div><div class="ttdeci">void() WaitHandler_t(const void *, Thread_t, Event_t)</div><div class="ttdoc">Prototype for function that handles thread wakeup on notification.</div><div class="ttdef"><b>Definition</b> runtime.h:69</div></div>
+<div class="ttc" id="agroup__os__kernel_html_ga680eadb82b6578f258791cef85501af2"><div class="ttname"><a href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a></div><div class="ttdeci">int Event_t</div><div class="ttdoc">Type to carry event being notified.</div><div class="ttdef"><b>Definition</b> runtime.h:56</div></div>
+<div class="ttc" id="agroup__os__kernel_html_ga86c1d9def4919aa07143abede7baa08e"><div class="ttname"><a href="group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e">WaitHandler_t</a></div><div class="ttdeci">void() WaitHandler_t(const void *, Thread_t, Event_t)</div><div class="ttdoc">Prototype for function that handles thread wakeup on notification.</div><div class="ttdef"><b>Definition</b> runtime.h:60</div></div>
 <div class="ttc" id="agroup__os__notify_html_ga1b959b83e59e9d0ec11c42099e34be24"><div class="ttname"><a href="group__os__notify.html#ga1b959b83e59e9d0ec11c42099e34be24">os_wait_for_object</a></div><div class="ttdeci">int os_wait_for_object(const void *object, WaitHandler_t callback)</div><div class="ttdoc">Wait for object.</div><div class="ttdef"><b>Definition</b> notify.c:88</div></div>
 <div class="ttc" id="agroup__os__notify_html_ga5979f2a094569c177e9e69da6a655dc1"><div class="ttname"><a href="group__os__notify.html#ga5979f2a094569c177e9e69da6a655dc1">os_notify_object</a></div><div class="ttdeci">int os_notify_object(const void *object, Event_t event)</div><div class="ttdoc">Resume one thread that are waiting for this object.</div><div class="ttdef"><b>Definition</b> notify.c:6</div></div>
 <div class="ttc" id="agroup__os__notify_html_ga914d2da0ec9f0e22cd5e400bc1f968b8"><div class="ttname"><a href="group__os__notify.html#ga914d2da0ec9f0e22cd5e400bc1f968b8">EventTypes</a></div><div class="ttdeci">EventTypes</div><div class="ttdoc">List of possible notification types.</div><div class="ttdef"><b>Definition</b> notify.h:19</div></div>
@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('os_2notify_8h_source.html',''); initRe
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_98202475f9f46bced46f85653c1a7139.html">cmrx</a></li><li class="navelem"><a class="el" href="dir_3a38c5100b0397d8350fe0095acca511.html">os</a></li><li class="navelem"><b>notify.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><b>notify.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

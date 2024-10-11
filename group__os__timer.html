@@ -105,6 +105,9 @@ $(document).ready(function(){initNavTree('group__os__timer.html',''); initResiza
   <div class="headertitle"><div class="title">Timers<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Kernel internals providing services of delayed and periodic execution.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -114,21 +117,6 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga579228f0ea6911563f3c09d50b0f441d" id="r_ga579228f0ea6911563f3c09d50b0f441d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga579228f0ea6911563f3c09d50b0f441d">os_usleep</a> (unsigned microseconds)</td></tr>
-<tr class="memdesc:ga579228f0ea6911563f3c09d50b0f441d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a" title="Suspend thread execution for short time.">usleep()</a> syscall.  <br /></td></tr>
-<tr class="separator:ga579228f0ea6911563f3c09d50b0f441d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad144032be21d6335801e51f3668d62d7" id="r_gad144032be21d6335801e51f3668d62d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gad144032be21d6335801e51f3668d62d7">os_setitimer</a> (unsigned microseconds)</td></tr>
-<tr class="memdesc:gad144032be21d6335801e51f3668d62d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__timer.html#ga9f408bf7753a44225214c63f3285e440" title="Set interval timer to be called periodically.">setitimer()</a> syscall.  <br /></td></tr>
-<tr class="separator:gad144032be21d6335801e51f3668d62d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b581bf8c03d871934b4d2fd1845a343" id="r_ga7b581bf8c03d871934b4d2fd1845a343"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga7b581bf8c03d871934b4d2fd1845a343">os_timer_init</a> ()</td></tr>
-<tr class="memdesc:ga7b581bf8c03d871934b4d2fd1845a343"><td class="mdescLeft">&#160;</td><td class="mdescRight">This routine initializes kernel scheduling subsystem.  <br /></td></tr>
-<tr class="separator:ga7b581bf8c03d871934b4d2fd1845a343"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6a7c0053f7960e97d395651f4d08fad" id="r_gac6a7c0053f7960e97d395651f4d08fad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gac6a7c0053f7960e97d395651f4d08fad">os_schedule_timer</a> (unsigned *delay)</td></tr>
-<tr class="memdesc:gac6a7c0053f7960e97d395651f4d08fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide information on next scheduled event.  <br /></td></tr>
-<tr class="separator:gac6a7c0053f7960e97d395651f4d08fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga807091ac93d2fe8f891d40f39b49b7da" id="r_ga807091ac93d2fe8f891d40f39b49b7da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga807091ac93d2fe8f891d40f39b49b7da">os_run_timer</a> (uint32_t microtime)</td></tr>
-<tr class="memdesc:ga807091ac93d2fe8f891d40f39b49b7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire scheduled event.  <br /></td></tr>
-<tr class="separator:ga807091ac93d2fe8f891d40f39b49b7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa7f49ccfaa49c941f8068bba1b340d1c" id="r_gaa7f49ccfaa49c941f8068bba1b340d1c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c">is_periodic</a> (unsigned interval)</td></tr>
 <tr class="memdesc:gaa7f49ccfaa49c941f8068bba1b340d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if interval in sleep entry is periodic or not.  <br /></td></tr>
 <tr class="separator:gaa7f49ccfaa49c941f8068bba1b340d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,9 +135,24 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5a54481fa8804be03b96cbc5d85ec03b" id="r_ga5a54481fa8804be03b96cbc5d85ec03b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a> (uint32_t period_us)</td></tr>
 <tr class="memdesc:ga5a54481fa8804be03b96cbc5d85ec03b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform short busy wait.  <br /></td></tr>
 <tr class="separator:ga5a54481fa8804be03b96cbc5d85ec03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga579228f0ea6911563f3c09d50b0f441d" id="r_ga579228f0ea6911563f3c09d50b0f441d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga579228f0ea6911563f3c09d50b0f441d">os_usleep</a> (unsigned microseconds)</td></tr>
+<tr class="memdesc:ga579228f0ea6911563f3c09d50b0f441d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a" title="Suspend thread execution for short time.">usleep()</a> syscall.  <br /></td></tr>
+<tr class="separator:ga579228f0ea6911563f3c09d50b0f441d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad144032be21d6335801e51f3668d62d7" id="r_gad144032be21d6335801e51f3668d62d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gad144032be21d6335801e51f3668d62d7">os_setitimer</a> (unsigned microseconds)</td></tr>
+<tr class="memdesc:gad144032be21d6335801e51f3668d62d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__timer.html#ga9f408bf7753a44225214c63f3285e440" title="Set interval timer to be called periodically.">setitimer()</a> syscall.  <br /></td></tr>
+<tr class="separator:gad144032be21d6335801e51f3668d62d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b581bf8c03d871934b4d2fd1845a343" id="r_ga7b581bf8c03d871934b4d2fd1845a343"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga7b581bf8c03d871934b4d2fd1845a343">os_timer_init</a> ()</td></tr>
+<tr class="memdesc:ga7b581bf8c03d871934b4d2fd1845a343"><td class="mdescLeft">&#160;</td><td class="mdescRight">This routine initializes kernel scheduling subsystem.  <br /></td></tr>
+<tr class="separator:ga7b581bf8c03d871934b4d2fd1845a343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga298a4922fb4180235c76c8cc8fecb6f5" id="r_ga298a4922fb4180235c76c8cc8fecb6f5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga298a4922fb4180235c76c8cc8fecb6f5">get_sleep_time</a> (uint32_t sleep_from, uint32_t microtime)</td></tr>
 <tr class="memdesc:ga298a4922fb4180235c76c8cc8fecb6f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to calculate time considering type wraparound.  <br /></td></tr>
 <tr class="separator:ga298a4922fb4180235c76c8cc8fecb6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6a7c0053f7960e97d395651f4d08fad" id="r_gac6a7c0053f7960e97d395651f4d08fad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gac6a7c0053f7960e97d395651f4d08fad">os_schedule_timer</a> (unsigned *delay)</td></tr>
+<tr class="memdesc:gac6a7c0053f7960e97d395651f4d08fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide information on next scheduled event.  <br /></td></tr>
+<tr class="separator:gac6a7c0053f7960e97d395651f4d08fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga807091ac93d2fe8f891d40f39b49b7da" id="r_ga807091ac93d2fe8f891d40f39b49b7da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga807091ac93d2fe8f891d40f39b49b7da">os_run_timer</a> (uint32_t microtime)</td></tr>
+<tr class="memdesc:ga807091ac93d2fe8f891d40f39b49b7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire scheduled event.  <br /></td></tr>
+<tr class="separator:ga807091ac93d2fe8f891d40f39b49b7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -158,6 +161,7 @@ Variables</h2></td></tr>
 <tr class="separator:gaa0e811d6349480297cbad82c700077de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Kernel internals providing services of delayed and periodic execution. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gafd631293a404e992816aaa99e85c2625" name="gafd631293a404e992816aaa99e85c2625"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gafd631293a404e992816aaa99e85c2625">&#9670;&#160;</a></span>cancel_timed_event()</h2>

@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['queue_20library_0',['Queue library',['../group__aux__queue.html',1,'']]],
-  ['queue_20rpc_20queue_5fserver_1',['Queue RPC queue_server',['../group__queue__server.html',1,'']]],
-  ['queue_5fserver_2',['Queue RPC queue_server',['../group__queue__server.html',1,'']]]
+  ['port_0',['ARM port',['../group__arch__arm.html',1,'']]],
+  ['porting_20layer_1',['Porting layer',['../group__arch__arch.html',1,'']]],
+  ['procedure_20calls_2',['procedure calls',['../group__os__rpc.html',1,'Remote Procedure Calls'],['../group__api__rpc.html',1,'Remote Procedure Calls']]],
+  ['protection_3',['protection',['../group__arch__arm__nvic.html',1,'Memory protection'],['../group__os__mpu.html',1,'Memory protection'],['../group__arch__arm__mpu.html',1,'Memory protection']]],
+  ['provider_4',['provider',['../group__aux__cm__ipi.html',1,'Cortex-M generic IPI provider'],['../group__aux__systick.html',1,'SysTick-Based Timing Provider']]],
+  ['provider_20api_5',['Timing provider API',['../group__api__timing.html',1,'']]]
 ];

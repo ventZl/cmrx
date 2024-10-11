@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['layer_0',['Porting layer',['../group__arch__arch.html',1,'']]],
-  ['libraries_1',['Libraries',['../group__libs.html',1,'']]],
-  ['library_2',['Queue library',['../group__aux__queue.html',1,'']]]
+  ['kernel_20api_0',['Kernel API',['../group__api.html',1,'']]],
+  ['kernel_20core_1',['Kernel core',['../group__os__kernel.html',1,'']]],
+  ['kernel_20documentation_2',['Kernel documentation',['../group__os.html',1,'']]],
+  ['kernel_20runtime_20configuration_3',['Kernel runtime configuration',['../group__os__config.html',1,'']]]
 ];

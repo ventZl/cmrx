@@ -159,7 +159,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Release cores waiting in inter-processor synchronization loop. </p>
-<p>This function will release all cores which are waiting in os_ipi_sync_probe() function waiting for core which requested synchronization to release it. Failure to call this function after os_ipi_sync_request() was called will result in permanent halt of all other system cores. </p>
+<p>This function will release all cores which are waiting in <a class="el" href="group__arch__arch.html#gaf2a18c9a690c0de3735ef1f78abe1554" title="Check if inter-processor synchronization is requested.">os_ipi_sync_probe()</a> function waiting for core which requested synchronization to release it. Failure to call this function after <a class="el" href="group__arch__arch.html#ga406768807186211937d0ae289490231d" title="Request Inter-processor synchronization.">os_ipi_sync_request()</a> was called will result in permanent halt of all other system cores. </p>
 
 </div>
 </div>
@@ -179,7 +179,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Request Inter-processor synchronization. </p>
-<p>This is minimalistic implementation for inter-processor synchronization request for Cortex-M processors. This implementation does not assume presence of any inter-processor interrupt mechanism. It assumes that each core checks for inter-processor sync every now and then. This function will block until all online cores call os_ipi_sync_probe(). By doing so all cores remain synchronized and it is guarranteed they will do nothing. Then this function returns. </p>
+<p>This is minimalistic implementation for inter-processor synchronization request for Cortex-M processors. This implementation does not assume presence of any inter-processor interrupt mechanism. It assumes that each core checks for inter-processor sync every now and then. This function will block until all online cores call <a class="el" href="group__arch__arch.html#gaf2a18c9a690c0de3735ef1f78abe1554" title="Check if inter-processor synchronization is requested.">os_ipi_sync_probe()</a>. By doing so all cores remain synchronized and it is guarranteed they will do nothing. Then this function returns. </p>
 
 </div>
 </div>

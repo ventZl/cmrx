@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: include/cmrx/arch/linux/posix/arch Directory Reference</title>
+<title>C Microkernel Realtime eXecutive: src/os/kernel/arch/mpu.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('dir_a8d41e77acd171765ffc243f9a1ddeb9.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('kernel_2arch_2mpu_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,26 +98,33 @@ $(document).ready(function(){initNavTree('dir_a8d41e77acd171765ffc243f9a1ddeb9.h
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">arch Directory Reference</div></div>
+  <div class="headertitle"><div class="title">mpu.h</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="linux_2posix_2arch_2cortex_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>cortex.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="arch_2linux_2posix_2arch_2mpu_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>mpu.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="linux_2posix_2arch_2scb_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>scb.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;arch/mpu.h&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">struct </span><a class="code hl_struct" href="structMPU__Registers.html">MPU_Registers</a>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a>();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399">mpu_init_stack</a>(<span class="keywordtype">int</span> thread_id);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc">mpu_restore</a>(<span class="keyword">const</span> MPU_State * hosted_state, <span class="keyword">const</span> MPU_State * parent_state);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="ttc" id="agroup__arch__arch_html_ga2b816407f1b57d532407988a5da92716"><div class="ttname"><a href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a></div><div class="ttdeci">void os_memory_protection_start()</div><div class="ttdoc">Start memory protection.</div><div class="ttdef"><b>Definition</b> mpu.c:312</div></div>
+<div class="ttc" id="agroup__arch__arch_html_gaccaca933ccccec5a6f6808252b4a5fbc"><div class="ttname"><a href="group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc">mpu_restore</a></div><div class="ttdeci">int mpu_restore(const MPU_State *hosted_state, const MPU_State *parent_state)</div><div class="ttdoc">Load MPU settings.</div><div class="ttdef"><b>Definition</b> mpu.c:110</div></div>
+<div class="ttc" id="agroup__arch__arch_html_gad1e98b6b913a67b51e041e4e9002a399"><div class="ttname"><a href="group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399">mpu_init_stack</a></div><div class="ttdeci">int mpu_init_stack(int thread_id)</div><div class="ttdoc">Initialize MPU for stack of thread.</div><div class="ttdef"><b>Definition</b> mpu.c:318</div></div>
+<div class="ttc" id="astructMPU__Registers_html"><div class="ttname"><a href="structMPU__Registers.html">MPU_Registers</a></div><div class="ttdoc">Convenience structure which groups RBAR and RASR register for one MPU region together.</div><div class="ttdef"><b>Definition</b> mpu.h:9</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_98202475f9f46bced46f85653c1a7139.html">cmrx</a></li><li class="navelem"><a class="el" href="dir_865cca317f95a4078c24ac6f6c44795d.html">arch</a></li><li class="navelem"><a class="el" href="dir_5c27ee2f73ae318a1bb1f86135e8ff85.html">linux</a></li><li class="navelem"><a class="el" href="dir_a665fa56119e06bec71ea4a012d16bc1.html">posix</a></li><li class="navelem"><a class="el" href="dir_a8d41e77acd171765ffc243f9a1ddeb9.html">arch</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><a class="el" href="dir_f3913cdb192a60ecaf3e841b502083ba.html">arch</a></li><li class="navelem"><b>mpu.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

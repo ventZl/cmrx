@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: include/cmrx/arch/arm/cmsis/arch Directory Reference</title>
+<title>C Microkernel Realtime eXecutive: src/os/kernel/arch/rpc.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('dir_50af34bb3f2507d0cce8e82631212b80.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('src_2os_2kernel_2arch_2rpc_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,38 +98,23 @@ $(document).ready(function(){initNavTree('dir_50af34bb3f2507d0cce8e82631212b80.h
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">arch Directory Reference</div></div>
+  <div class="headertitle"><div class="title">rpc.h</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="arch_2arm_2cmsis_2arch_2corelocal_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>corelocal.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="arm_2cmsis_2arch_2cortex_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>cortex.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="memory_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>memory.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="arch_2arm_2cmsis_2arch_2mpu_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>mpu.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="mpu__priv_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>mpu_priv.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="nvic_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>nvic.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="arm_2cmsis_2arch_2scb_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>scb.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="arch_2arm_2cmsis_2arch_2static_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>static.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="arm_2cmsis_2arch_2sysenter_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>sysenter.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__arch__arch.html#ga9ee8f29f3009ad125af02a612603504f">os_rpc_call</a>(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return</a>(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="ttc" id="agroup__arch__arch_html_ga2b0268c1c8ecd0d6e3194f0f52be350c"><div class="ttname"><a href="group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return</a></div><div class="ttdeci">int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</div><div class="ttdoc">Kernel implementation of rpc_return syscall.</div><div class="ttdef"><b>Definition</b> rpc.c:86</div></div>
+<div class="ttc" id="agroup__arch__arch_html_ga9ee8f29f3009ad125af02a612603504f"><div class="ttname"><a href="group__arch__arch.html#ga9ee8f29f3009ad125af02a612603504f">os_rpc_call</a></div><div class="ttdeci">int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</div><div class="ttdoc">Kernel implementation of rpc_call syscall.</div><div class="ttdef"><b>Definition</b> rpc.c:31</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_98202475f9f46bced46f85653c1a7139.html">cmrx</a></li><li class="navelem"><a class="el" href="dir_865cca317f95a4078c24ac6f6c44795d.html">arch</a></li><li class="navelem"><a class="el" href="dir_d4fd619049ff2c9aa6b187b481a0b2cb.html">arm</a></li><li class="navelem"><a class="el" href="dir_687503c9c1fd2d349b2eebe6cb98aa5a.html">cmsis</a></li><li class="navelem"><a class="el" href="dir_50af34bb3f2507d0cce8e82631212b80.html">arch</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><a class="el" href="dir_f3913cdb192a60ecaf3e841b502083ba.html">arch</a></li><li class="navelem"><b>rpc.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

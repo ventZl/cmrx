@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: include/cmrx/os/arch/mpu.h Source File</title>
+<title>C Microkernel Realtime eXecutive: src/os/kernel/arch/static.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('os_2arch_2mpu_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('kernel_2arch_2static_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,33 +98,32 @@ $(document).ready(function(){initNavTree('os_2arch_2mpu_8h_source.html',''); ini
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">mpu.h</div></div>
+  <div class="headertitle"><div class="title">static.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;arch/mpu.h&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">struct </span><a class="code hl_struct" href="structMPU__Registers.html">MPU_Registers</a>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a>();</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399">mpu_init_stack</a>(<span class="keywordtype">int</span> thread_id);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc">mpu_restore</a>(<span class="keyword">const</span> MPU_State * hosted_state, <span class="keyword">const</span> MPU_State * parent_state);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="ttc" id="agroup__arch__arch_html_ga2b816407f1b57d532407988a5da92716"><div class="ttname"><a href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a></div><div class="ttdeci">void os_memory_protection_start()</div><div class="ttdoc">Start memory protection.</div><div class="ttdef"><b>Definition</b> mpu.c:312</div></div>
-<div class="ttc" id="agroup__arch__arch_html_gaccaca933ccccec5a6f6808252b4a5fbc"><div class="ttname"><a href="group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc">mpu_restore</a></div><div class="ttdeci">int mpu_restore(const MPU_State *hosted_state, const MPU_State *parent_state)</div><div class="ttdoc">Load MPU settings.</div><div class="ttdef"><b>Definition</b> mpu.c:110</div></div>
-<div class="ttc" id="agroup__arch__arch_html_gad1e98b6b913a67b51e041e4e9002a399"><div class="ttname"><a href="group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399">mpu_init_stack</a></div><div class="ttdeci">int mpu_init_stack(int thread_id)</div><div class="ttdoc">Initialize MPU for stack of thread.</div><div class="ttdef"><b>Definition</b> mpu.c:318</div></div>
-<div class="ttc" id="astructMPU__Registers_html"><div class="ttname"><a href="structMPU__Registers.html">MPU_Registers</a></div><div class="ttdoc">Convenience structure which groups RBAR and RASR register for one MPU region together.</div><div class="ttdef"><b>Definition</b> mpu.h:9</div></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="keywordtype">unsigned</span> <a class="code hl_function" href="group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a>();</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structOS__thread__create__t.html">OS_thread_create_t</a> * <a class="code hl_function" href="group__arch__arch.html#gab06a63362ae820b797a3bf0b1c6386a0">static_init_thread_table</a>();</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="keywordtype">unsigned</span> <a class="code hl_function" href="group__arch__arm__static.html#gad4128fe30c4eef560ae2dc025e89abf2">static_init_process_count</a>();</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structOS__process__definition__t.html">OS_process_definition_t</a> * <a class="code hl_function" href="group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e">static_init_process_table</a>();</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="ttc" id="agroup__arch__arch_html_ga40ff64621b791a06874bb7ca27a9164e"><div class="ttname"><a href="group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e">static_init_process_table</a></div><div class="ttdeci">const struct OS_process_definition_t * static_init_process_table()</div><div class="ttdoc">Provides address of statically intialized process table.</div><div class="ttdef"><b>Definition</b> static.c:31</div></div>
+<div class="ttc" id="agroup__arch__arch_html_gab06a63362ae820b797a3bf0b1c6386a0"><div class="ttname"><a href="group__arch__arch.html#gab06a63362ae820b797a3bf0b1c6386a0">static_init_thread_table</a></div><div class="ttdeci">const struct OS_thread_create_t * static_init_thread_table()</div><div class="ttdoc">Provides address of statically initialized thread table.</div><div class="ttdef"><b>Definition</b> static.c:19</div></div>
+<div class="ttc" id="agroup__arch__arm__static_html_gaa1e4c4f6735a5acd050873acdb00cdbf"><div class="ttname"><a href="group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a></div><div class="ttdeci">unsigned static_init_thread_count()</div><div class="ttdef"><b>Definition</b> static.c:14</div></div>
+<div class="ttc" id="agroup__arch__arm__static_html_gad4128fe30c4eef560ae2dc025e89abf2"><div class="ttname"><a href="group__arch__arm__static.html#gad4128fe30c4eef560ae2dc025e89abf2">static_init_process_count</a></div><div class="ttdeci">unsigned static_init_process_count()</div><div class="ttdef"><b>Definition</b> static.c:25</div></div>
+<div class="ttc" id="astructOS__process__definition__t_html"><div class="ttname"><a href="structOS__process__definition__t.html">OS_process_definition_t</a></div><div class="ttdoc">Static definition of process in firmware image.</div><div class="ttdef"><b>Definition</b> runtime.h:30</div></div>
+<div class="ttc" id="astructOS__thread__create__t_html"><div class="ttname"><a href="structOS__thread__create__t.html">OS_thread_create_t</a></div><div class="ttdoc">Structure describing auto-spawned thread.</div><div class="ttdef"><b>Definition</b> runtime.h:45</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_98202475f9f46bced46f85653c1a7139.html">cmrx</a></li><li class="navelem"><a class="el" href="dir_3a38c5100b0397d8350fe0095acca511.html">os</a></li><li class="navelem"><a class="el" href="dir_213522b02f4f85dfecf8f6210a653a4b.html">arch</a></li><li class="navelem"><b>mpu.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><a class="el" href="dir_f3913cdb192a60ecaf3e841b502083ba.html">arch</a></li><li class="navelem"><b>static.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

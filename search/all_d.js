@@ -6,7 +6,7 @@ var searchData=
   ['new_5fparent_5fprocess_3',['new_parent_process',['../structOS__scheduling__context__t.html#a0ce5b7d74f40e76d0a0ba93ab5298b37',1,'OS_scheduling_context_t']]],
   ['new_5fstack_4',['new_stack',['../structOS__scheduling__context__t.html#a5372277933da93d68480ff97134c4217',1,'OS_scheduling_context_t']]],
   ['new_5ftask_5',['new_task',['../structOS__scheduling__context__t.html#a1b662e76305857887851d810db38139c',1,'OS_scheduling_context_t']]],
-  ['notifications_6',['notifications',['../group__os__notify.html',1,'Notifications'],['../group__api__notify.html',1,'Notifications']]],
+  ['notifications_6',['notifications',['../group__api__notify.html',1,'Notifications'],['../group__os__notify.html',1,'Notifications']]],
   ['notify_5fobject_7',['notify_object',['../group__api__signal.html#ga41864194fe48bd76519bcb27efcfb697',1,'notify.c']]],
   ['null_8',['NULL',['../group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4',1,'defines.h']]],
   ['nvic_5fsyscalls_9',['nvic_syscalls',['../group__arch__arm__syscall.html#ga873c7a16056f301fc0c69003f8f7b882',1,'syscall.c']]]

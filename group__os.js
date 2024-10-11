@@ -7,9 +7,9 @@ var group__os =
     [ "Memory protection", "group__os__mpu.html", "group__os__mpu" ],
     [ "Notifications", "group__os__notify.html", "group__os__notify" ],
     [ "Remote Procedure Calls", "group__os__rpc.html", "group__os__rpc" ],
-    [ "Signals", "group__os__signal.html", "group__os__signal" ],
+    [ "Signal handling", "group__os__signal.html", "group__os__signal" ],
     [ "System calls", "group__os__syscall.html", "group__os__syscall" ],
-    [ "Threads", "group__os__sched.html", "group__os__sched" ],
+    [ "Thread scheduling", "group__os__sched.html", "group__os__sched" ],
     [ "Timers", "group__os__timer.html", "group__os__timer" ],
     [ "os_start", "group__os.html#ga1e67d0545de716571a189e81ae619f37", null ],
     [ "_os_start", "group__os.html#gad814ad5aca8918a9fb4dd5952447ac06", null ]

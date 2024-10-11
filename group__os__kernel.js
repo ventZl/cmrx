@@ -18,23 +18,8 @@ var group__os__kernel =
       [ "allocations", "structOS__stack__t.html#acdd99296ece572e929831ab286622c45", null ],
       [ "stacks", "structOS__stack__t.html#ac64b6bed80c0329e43aba6903453ed95", null ]
     ] ],
-    [ "OS_MPU_region", "structOS__MPU__region.html", [
-      [ "end", "structOS__MPU__region.html#ad764a379d4013b7559bd3286db398425", null ],
-      [ "start", "structOS__MPU__region.html#a0642cc60aaf53cce8d66b4070802b19e", null ]
-    ] ],
-    [ "OS_process_definition_t", "structOS__process__definition__t.html", [
-      [ "mpu_regions", "structOS__process__definition__t.html#ace13b242a85ec9b654965d72b9249e69", null ],
-      [ "rpc_interface", "structOS__process__definition__t.html#a60479915c51d1fceacf4ea6ca72cb415", null ]
-    ] ],
     [ "OS_process_t", "structOS__process__t.html", [
       [ "definition", "structOS__process__t.html#a0159c1ff60b0227b8f3a66674c92006d", null ]
-    ] ],
-    [ "OS_thread_create_t", "structOS__thread__create__t.html", [
-      [ "core", "structOS__thread__create__t.html#ac0224e5ced934ff094125a1ba6295a6d", null ],
-      [ "data", "structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22", null ],
-      [ "entrypoint", "structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c", null ],
-      [ "priority", "structOS__thread__create__t.html#a101f5f58e48c5b90a973d0f63c2a5b0b", null ],
-      [ "process", "structOS__thread__create__t.html#a127e8c42cb74786a4b675eaae222c0ae", null ]
     ] ],
     [ "OS_core_state_t", "structOS__core__state__t.html", [
       [ "thread_current", "structOS__core__state__t.html#ae05a2d1f6299eccf2e5811b2d5508b7d", null ],
@@ -43,7 +28,6 @@ var group__os__kernel =
     ] ],
     [ "OS_STACK_DWORD", "group__os__kernel.html#gacb3141cb0632564896b1cd9cc0a32f06", null ],
     [ "OS_TASK_NO_STACK", "group__os__kernel.html#ga5ed1a3a4c42bd97febc5e1dab288a0f5", null ],
-    [ "entrypoint_t", "group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4", null ],
     [ "Event_t", "group__os__kernel.html#ga680eadb82b6578f258791cef85501af2", null ],
     [ "OS_RPC_stack", "group__os__kernel.html#ga59b9ffdaff162b7deb5f6d34348513d9", null ],
     [ "Txn_t", "group__os__kernel.html#gac01e3878510de719773a39e4333a84f4", null ],

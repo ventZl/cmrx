@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: Threads</title>
+<title>C Microkernel Realtime eXecutive: Thread scheduling</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,9 +103,12 @@ $(document).ready(function(){initNavTree('group__os__sched.html',''); initResiza
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Threads<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
+  <div class="headertitle"><div class="title">Thread scheduling<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Kernel primitives for manipulating threads.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
@@ -127,12 +130,21 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gae41148b47f9674a16741165066c4b066" id="r_gae41148b47f9674a16741165066c4b066"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gae41148b47f9674a16741165066c4b066">os_thread_alloc</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, uint8_t priority)</td></tr>
+<tr class="memdesc:gae41148b47f9674a16741165066c4b066"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate thread entry in thread table.  <br /></td></tr>
+<tr class="separator:gae41148b47f9674a16741165066c4b066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33ba16e9e99099ad4a6831478774e195" id="r_ga33ba16e9e99099ad4a6831478774e195"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195">__os_thread_create</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, entrypoint_t *entrypoint, void *data, uint8_t priority, uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
+<tr class="memdesc:ga33ba16e9e99099ad4a6831478774e195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full workflow needed to create a thread.  <br /></td></tr>
+<tr class="separator:ga33ba16e9e99099ad4a6831478774e195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga844762b99c00b298ab23f6d7f55e997b" id="r_ga844762b99c00b298ab23f6d7f55e997b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga844762b99c00b298ab23f6d7f55e997b">os_get_next_thread</a> (uint8_t current_thread, uint8_t *next_thread)</td></tr>
+<tr class="memdesc:ga844762b99c00b298ab23f6d7f55e997b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain next thread to run.  <br /></td></tr>
+<tr class="separator:ga844762b99c00b298ab23f6d7f55e997b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b248188aaf965a21f9a4081290f5c24" id="r_ga9b248188aaf965a21f9a4081290f5c24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga9b248188aaf965a21f9a4081290f5c24">os_sched_yield</a> (void)</td></tr>
+<tr class="memdesc:ga9b248188aaf965a21f9a4081290f5c24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#ga98ad8277df91806691c7c51d1606861a" title="Give up processor.">sched_yield()</a> syscall.  <br /></td></tr>
+<tr class="separator:ga9b248188aaf965a21f9a4081290f5c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad2eee99d75e6b65c227f65a6880f2e9f" id="r_gad2eee99d75e6b65c227f65a6880f2e9f"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
 <tr class="memdesc:gad2eee99d75e6b65c227f65a6880f2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel callback for timing provider.  <br /></td></tr>
 <tr class="separator:gad2eee99d75e6b65c227f65a6880f2e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b7c7fc2926c2c2e14942b4bcb0a432b" id="r_ga3b7c7fc2926c2c2e14942b4bcb0a432b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga3b7c7fc2926c2c2e14942b4bcb0a432b">os_get_current_process</a> (void)</td></tr>
-<tr class="memdesc:ga3b7c7fc2926c2c2e14942b4bcb0a432b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of get_pid.  <br /></td></tr>
-<tr class="separator:ga3b7c7fc2926c2c2e14942b4bcb0a432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0d76470d5f4abcaaf0ae4df66ecfc54c" id="r_ga0d76470d5f4abcaaf0ae4df66ecfc54c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga0d76470d5f4abcaaf0ae4df66ecfc54c">os_get_current_thread</a> (void)</td></tr>
 <tr class="memdesc:ga0d76470d5f4abcaaf0ae4df66ecfc54c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#ga52f86ad5da2364f17909fcb76bf84d71" title="Return current thread ID.">get_tid()</a> syscall.  <br /></td></tr>
 <tr class="separator:ga0d76470d5f4abcaaf0ae4df66ecfc54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,77 +154,65 @@ Functions</h2></td></tr>
 <tr class="memitem:gae3ee92a36f558b5a552c86c6dcce6c71" id="r_gae3ee92a36f558b5a552c86c6dcce6c71"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gae3ee92a36f558b5a552c86c6dcce6c71">os_get_current_stack</a> (void)</td></tr>
 <tr class="memdesc:gae3ee92a36f558b5a552c86c6dcce6c71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ID of stack used by current thread.  <br /></td></tr>
 <tr class="separator:gae3ee92a36f558b5a552c86c6dcce6c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b7c7fc2926c2c2e14942b4bcb0a432b" id="r_ga3b7c7fc2926c2c2e14942b4bcb0a432b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga3b7c7fc2926c2c2e14942b4bcb0a432b">os_get_current_process</a> (void)</td></tr>
+<tr class="memdesc:ga3b7c7fc2926c2c2e14942b4bcb0a432b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of get_pid.  <br /></td></tr>
+<tr class="separator:ga3b7c7fc2926c2c2e14942b4bcb0a432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga83f11a0a3d2e3efd962797d868000466" id="r_ga83f11a0a3d2e3efd962797d868000466"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga83f11a0a3d2e3efd962797d868000466">os_get_micro_time</a> (void)</td></tr>
 <tr class="memdesc:ga83f11a0a3d2e3efd962797d868000466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get amount of microseconds elapsed since scheduler start.  <br /></td></tr>
 <tr class="separator:ga83f11a0a3d2e3efd962797d868000466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b248188aaf965a21f9a4081290f5c24" id="r_ga9b248188aaf965a21f9a4081290f5c24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga9b248188aaf965a21f9a4081290f5c24">os_sched_yield</a> (void)</td></tr>
-<tr class="memdesc:ga9b248188aaf965a21f9a4081290f5c24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#ga98ad8277df91806691c7c51d1606861a" title="Give up processor.">sched_yield()</a> syscall.  <br /></td></tr>
-<tr class="separator:ga9b248188aaf965a21f9a4081290f5c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab30027c97dc034137c00192f28c6e178" id="r_gab30027c97dc034137c00192f28c6e178"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab30027c97dc034137c00192f28c6e178">_os_start</a> (uint8_t start_core)</td></tr>
-<tr class="memdesc:gab30027c97dc034137c00192f28c6e178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start up scheduler.  <br /></td></tr>
-<tr class="separator:gab30027c97dc034137c00192f28c6e178"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebb2e4fd35891b58767666454d4b78ea" id="r_gaebb2e4fd35891b58767666454d4b78ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaebb2e4fd35891b58767666454d4b78ea">os_thread_create</a> (<a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t priority)</td></tr>
-<tr class="memdesc:gaebb2e4fd35891b58767666454d4b78ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0" title="Create new thread.">thread_create()</a> syscall.  <br /></td></tr>
-<tr class="separator:gaebb2e4fd35891b58767666454d4b78ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71b4f416aa58be6d354450e4f896e4d0" id="r_ga71b4f416aa58be6d354450e4f896e4d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga71b4f416aa58be6d354450e4f896e4d0">os_thread_join</a> (uint8_t thread_id)</td></tr>
-<tr class="memdesc:ga71b4f416aa58be6d354450e4f896e4d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#gafecb0503475d000bb26f547db0f54936" title="Wait for other thread to finish.">thread_join()</a> syscall.  <br /></td></tr>
-<tr class="separator:ga71b4f416aa58be6d354450e4f896e4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf31f875c814fb6408ab42a5d7f502b6f" id="r_gaf31f875c814fb6408ab42a5d7f502b6f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaf31f875c814fb6408ab42a5d7f502b6f">os_thread_exit</a> (int status)</td></tr>
-<tr class="memdesc:gaf31f875c814fb6408ab42a5d7f502b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#ga189ee445e0ac8bf8fa112a2fa719d9b6" title="Terminate currently running thread.">thread_exit()</a> syscall.  <br /></td></tr>
-<tr class="separator:gaf31f875c814fb6408ab42a5d7f502b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f6f80faa1ed7029bfb94e7f32f3a994" id="r_ga0f6f80faa1ed7029bfb94e7f32f3a994"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga0f6f80faa1ed7029bfb94e7f32f3a994">os_thread_stop</a> (uint8_t thread_id)</td></tr>
-<tr class="memdesc:ga0f6f80faa1ed7029bfb94e7f32f3a994"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of thread_stop() syscall.  <br /></td></tr>
-<tr class="separator:ga0f6f80faa1ed7029bfb94e7f32f3a994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d13fca0696f3ab0fcf19b8d5503f31a" id="r_ga7d13fca0696f3ab0fcf19b8d5503f31a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga7d13fca0696f3ab0fcf19b8d5503f31a">os_thread_continue</a> (uint8_t thread_id)</td></tr>
-<tr class="memdesc:ga7d13fca0696f3ab0fcf19b8d5503f31a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of thread_continue() syscall.  <br /></td></tr>
-<tr class="separator:ga7d13fca0696f3ab0fcf19b8d5503f31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga597750339c1651a9d631df439e2e981c" id="r_ga597750339c1651a9d631df439e2e981c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga597750339c1651a9d631df439e2e981c">os_thread_kill</a> (uint8_t thread_id, int status)</td></tr>
-<tr class="memdesc:ga597750339c1651a9d631df439e2e981c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel way to kill an arbitrary thread.  <br /></td></tr>
-<tr class="separator:ga597750339c1651a9d631df439e2e981c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9548a96ef12f2d883d276855100191ef" id="r_ga9548a96ef12f2d883d276855100191ef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga9548a96ef12f2d883d276855100191ef">os_setpriority</a> (uint8_t priority)</td></tr>
-<tr class="memdesc:ga9548a96ef12f2d883d276855100191ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#gad14ed255ac7c3f9cfb0513c7d03e7cd8" title="Change thread priority.">setpriority()</a> syscall.  <br /></td></tr>
-<tr class="separator:ga9548a96ef12f2d883d276855100191ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee79d579e38cb5076959ad8d15aaba34" id="r_gaee79d579e38cb5076959ad8d15aaba34"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaee79d579e38cb5076959ad8d15aaba34">os_stack_get</a> (int stack_id)</td></tr>
-<tr class="memdesc:gaee79d579e38cb5076959ad8d15aaba34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address of stack.  <br /></td></tr>
-<tr class="separator:gaee79d579e38cb5076959ad8d15aaba34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b7326827d532971c4612ab1751428e9" id="r_ga3b7326827d532971c4612ab1751428e9"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga3b7326827d532971c4612ab1751428e9">os_thread_get</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id)</td></tr>
-<tr class="memdesc:ga3b7326827d532971c4612ab1751428e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get thread descriptor.  <br /></td></tr>
-<tr class="separator:ga3b7326827d532971c4612ab1751428e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab74a182c67f78a02ad1bc34362910958" id="r_gab74a182c67f78a02ad1bc34362910958"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab74a182c67f78a02ad1bc34362910958">os_thread_construct</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> tid, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
-<tr class="memdesc:gab74a182c67f78a02ad1bc34362910958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make thread runnable.  <br /></td></tr>
-<tr class="separator:gab74a182c67f78a02ad1bc34362910958"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5725c397d24dc7de634648a43675bc74" id="r_ga5725c397d24dc7de634648a43675bc74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga5725c397d24dc7de634648a43675bc74">os_thread_dispose</a> (void)</td></tr>
-<tr class="memdesc:ga5725c397d24dc7de634648a43675bc74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias to thread_exit.  <br /></td></tr>
-<tr class="separator:ga5725c397d24dc7de634648a43675bc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1f37df2463307c3bbd30c193491d6aa" id="r_gaa1f37df2463307c3bbd30c193491d6aa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaa1f37df2463307c3bbd30c193491d6aa">os_thread_migrate</a> (uint8_t thread_id, int target_core)</td></tr>
-<tr class="memdesc:gaa1f37df2463307c3bbd30c193491d6aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Migrate thread between CPU cores.  <br /></td></tr>
-<tr class="separator:gaa1f37df2463307c3bbd30c193491d6aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae41148b47f9674a16741165066c4b066" id="r_gae41148b47f9674a16741165066c4b066"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gae41148b47f9674a16741165066c4b066">os_thread_alloc</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, uint8_t priority)</td></tr>
-<tr class="memdesc:gae41148b47f9674a16741165066c4b066"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate thread entry in thread table.  <br /></td></tr>
-<tr class="separator:gae41148b47f9674a16741165066c4b066"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33ba16e9e99099ad4a6831478774e195" id="r_ga33ba16e9e99099ad4a6831478774e195"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195">__os_thread_create</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process, <a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *entrypoint, void *data, uint8_t priority, uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
-<tr class="memdesc:ga33ba16e9e99099ad4a6831478774e195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full workflow needed to create a thread.  <br /></td></tr>
-<tr class="separator:ga33ba16e9e99099ad4a6831478774e195"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga844762b99c00b298ab23f6d7f55e997b" id="r_ga844762b99c00b298ab23f6d7f55e997b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga844762b99c00b298ab23f6d7f55e997b">os_get_next_thread</a> (uint8_t current_thread, uint8_t *next_thread)</td></tr>
-<tr class="memdesc:ga844762b99c00b298ab23f6d7f55e997b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain next thread to run.  <br /></td></tr>
-<tr class="separator:ga844762b99c00b298ab23f6d7f55e997b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ac48577d48e2adc3015536fe19eaa21" id="r_ga6ac48577d48e2adc3015536fe19eaa21"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga6ac48577d48e2adc3015536fe19eaa21">os_idle_thread</a> (void *data)</td></tr>
 <tr class="memdesc:ga6ac48577d48e2adc3015536fe19eaa21"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMRX idle thread.  <br /></td></tr>
 <tr class="separator:ga6ac48577d48e2adc3015536fe19eaa21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae770569b05079cac856ec58d207929d1" id="r_gae770569b05079cac856ec58d207929d1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gae770569b05079cac856ec58d207929d1">os_stack_create</a> ()</td></tr>
 <tr class="memdesc:gae770569b05079cac856ec58d207929d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find free stack slot and allocate it.  <br /></td></tr>
 <tr class="separator:gae770569b05079cac856ec58d207929d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee79d579e38cb5076959ad8d15aaba34" id="r_gaee79d579e38cb5076959ad8d15aaba34"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaee79d579e38cb5076959ad8d15aaba34">os_stack_get</a> (int stack_id)</td></tr>
+<tr class="memdesc:gaee79d579e38cb5076959ad8d15aaba34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address of stack.  <br /></td></tr>
+<tr class="separator:gaee79d579e38cb5076959ad8d15aaba34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad17dc6e8305ce5070b4d64f6ebc2ff6c" id="r_gad17dc6e8305ce5070b4d64f6ebc2ff6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gad17dc6e8305ce5070b4d64f6ebc2ff6c">os_stack_dispose</a> (uint32_t stack_id)</td></tr>
 <tr class="memdesc:gad17dc6e8305ce5070b4d64f6ebc2ff6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release stack slot.  <br /></td></tr>
 <tr class="separator:gad17dc6e8305ce5070b4d64f6ebc2ff6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf31f875c814fb6408ab42a5d7f502b6f" id="r_gaf31f875c814fb6408ab42a5d7f502b6f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaf31f875c814fb6408ab42a5d7f502b6f">os_thread_exit</a> (int status)</td></tr>
+<tr class="memdesc:gaf31f875c814fb6408ab42a5d7f502b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#ga189ee445e0ac8bf8fa112a2fa719d9b6" title="Terminate currently running thread.">thread_exit()</a> syscall.  <br /></td></tr>
+<tr class="separator:gaf31f875c814fb6408ab42a5d7f502b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga597750339c1651a9d631df439e2e981c" id="r_ga597750339c1651a9d631df439e2e981c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga597750339c1651a9d631df439e2e981c">os_thread_kill</a> (uint8_t thread_id, int status)</td></tr>
+<tr class="memdesc:ga597750339c1651a9d631df439e2e981c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel way to kill an arbitrary thread.  <br /></td></tr>
+<tr class="separator:ga597750339c1651a9d631df439e2e981c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f6f80faa1ed7029bfb94e7f32f3a994" id="r_ga0f6f80faa1ed7029bfb94e7f32f3a994"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga0f6f80faa1ed7029bfb94e7f32f3a994">os_thread_stop</a> (uint8_t thread_id)</td></tr>
+<tr class="memdesc:ga0f6f80faa1ed7029bfb94e7f32f3a994"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of thread_stop() syscall.  <br /></td></tr>
+<tr class="separator:ga0f6f80faa1ed7029bfb94e7f32f3a994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d13fca0696f3ab0fcf19b8d5503f31a" id="r_ga7d13fca0696f3ab0fcf19b8d5503f31a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga7d13fca0696f3ab0fcf19b8d5503f31a">os_thread_continue</a> (uint8_t thread_id)</td></tr>
+<tr class="memdesc:ga7d13fca0696f3ab0fcf19b8d5503f31a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of thread_continue() syscall.  <br /></td></tr>
+<tr class="separator:ga7d13fca0696f3ab0fcf19b8d5503f31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9548a96ef12f2d883d276855100191ef" id="r_ga9548a96ef12f2d883d276855100191ef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga9548a96ef12f2d883d276855100191ef">os_setpriority</a> (uint8_t priority)</td></tr>
+<tr class="memdesc:ga9548a96ef12f2d883d276855100191ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#gad14ed255ac7c3f9cfb0513c7d03e7cd8" title="Change thread priority.">setpriority()</a> syscall.  <br /></td></tr>
+<tr class="separator:ga9548a96ef12f2d883d276855100191ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac9b76e4b0629693553a999dd77dabc96" id="r_gac9b76e4b0629693553a999dd77dabc96"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gac9b76e4b0629693553a999dd77dabc96">cb_thread_join_notify</a> (const void *object, <a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a> event)</td></tr>
 <tr class="separator:gac9b76e4b0629693553a999dd77dabc96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71b4f416aa58be6d354450e4f896e4d0" id="r_ga71b4f416aa58be6d354450e4f896e4d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga71b4f416aa58be6d354450e4f896e4d0">os_thread_join</a> (uint8_t thread_id)</td></tr>
+<tr class="memdesc:ga71b4f416aa58be6d354450e4f896e4d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#gafecb0503475d000bb26f547db0f54936" title="Wait for other thread to finish.">thread_join()</a> syscall.  <br /></td></tr>
+<tr class="separator:ga71b4f416aa58be6d354450e4f896e4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae211727af6e2835e21725cc95b0d65b0" id="r_gae211727af6e2835e21725cc95b0d65b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gae211727af6e2835e21725cc95b0d65b0">os_thread_construct</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> tid, entrypoint_t *entrypoint, void *data, uint8_t core_id)</td></tr>
+<tr class="memdesc:gae211727af6e2835e21725cc95b0d65b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make thread runnable.  <br /></td></tr>
+<tr class="separator:gae211727af6e2835e21725cc95b0d65b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebb2e4fd35891b58767666454d4b78ea" id="r_gaebb2e4fd35891b58767666454d4b78ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaebb2e4fd35891b58767666454d4b78ea">os_thread_create</a> (entrypoint_t *entrypoint, void *data, uint8_t priority)</td></tr>
+<tr class="memdesc:gaebb2e4fd35891b58767666454d4b78ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Syscall handling <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0" title="Create new thread.">thread_create()</a> Creates new thread inside current process using specified entrypoint.  <br /></td></tr>
+<tr class="separator:gaebb2e4fd35891b58767666454d4b78ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab30027c97dc034137c00192f28c6e178" id="r_gab30027c97dc034137c00192f28c6e178"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab30027c97dc034137c00192f28c6e178">_os_start</a> (uint8_t start_core)</td></tr>
+<tr class="memdesc:gab30027c97dc034137c00192f28c6e178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start up scheduler.  <br /></td></tr>
+<tr class="separator:gab30027c97dc034137c00192f28c6e178"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b7326827d532971c4612ab1751428e9" id="r_ga3b7326827d532971c4612ab1751428e9"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga3b7326827d532971c4612ab1751428e9">os_thread_get</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id)</td></tr>
+<tr class="memdesc:ga3b7326827d532971c4612ab1751428e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get thread descriptor.  <br /></td></tr>
+<tr class="separator:ga3b7326827d532971c4612ab1751428e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1f37df2463307c3bbd30c193491d6aa" id="r_gaa1f37df2463307c3bbd30c193491d6aa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaa1f37df2463307c3bbd30c193491d6aa">os_thread_migrate</a> (uint8_t thread_id, int target_core)</td></tr>
+<tr class="memdesc:gaa1f37df2463307c3bbd30c193491d6aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Migrate thread between CPU cores.  <br /></td></tr>
+<tr class="separator:gaa1f37df2463307c3bbd30c193491d6aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5725c397d24dc7de634648a43675bc74" id="r_ga5725c397d24dc7de634648a43675bc74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga5725c397d24dc7de634648a43675bc74">os_thread_dispose</a> (void)</td></tr>
+<tr class="memdesc:ga5725c397d24dc7de634648a43675bc74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias to thread_exit.  <br /></td></tr>
+<tr class="separator:ga5725c397d24dc7de634648a43675bc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga2057e79833f71e7a4793d51bc2dca106" id="r_ga2057e79833f71e7a4793d51bc2dca106"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__core__state__t.html">OS_core_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a> [<a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>]</td></tr>
-<tr class="memdesc:ga2057e79833f71e7a4793d51bc2dca106"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU scheduling thread IDs.  <br /></td></tr>
-<tr class="separator:ga2057e79833f71e7a4793d51bc2dca106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5bcb4dcf2afcf71f716d8dc85b18134d" id="r_ga5bcb4dcf2afcf71f716d8dc85b18134d"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga5bcb4dcf2afcf71f716d8dc85b18134d">os_threads</a> [<a class="el" href="group__os__config.html#ga1383e9a762dc5563440cf1623542667d">OS_THREADS</a>]</td></tr>
 <tr class="memdesc:ga5bcb4dcf2afcf71f716d8dc85b18134d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of active threads.  <br /></td></tr>
 <tr class="separator:ga5bcb4dcf2afcf71f716d8dc85b18134d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -231,8 +231,12 @@ Variables</h2></td></tr>
 <tr class="memitem:ga6611cb1ff80f54abebb06a818d0a1ce2" id="r_ga6611cb1ff80f54abebb06a818d0a1ce2"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga6611cb1ff80f54abebb06a818d0a1ce2">sched_microtime</a> = 0</td></tr>
 <tr class="memdesc:ga6611cb1ff80f54abebb06a818d0a1ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current scheduler real time.  <br /></td></tr>
 <tr class="separator:ga6611cb1ff80f54abebb06a818d0a1ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2057e79833f71e7a4793d51bc2dca106" id="r_ga2057e79833f71e7a4793d51bc2dca106"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__core__state__t.html">OS_core_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a> [<a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>]</td></tr>
+<tr class="memdesc:ga2057e79833f71e7a4793d51bc2dca106"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU scheduling thread IDs.  <br /></td></tr>
+<tr class="separator:ga2057e79833f71e7a4793d51bc2dca106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Kernel primitives for manipulating threads. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga26ea9f0ec722697387ee9deca8230844" name="ga26ea9f0ec722697387ee9deca8230844"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga26ea9f0ec722697387ee9deca8230844">&#9670;&#160;</a></span>KERNEL_STRUCTS_INITIALIZED_SIGNATURE</h2>
@@ -335,7 +339,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *&#160;</td>
+          <td class="paramtype">entrypoint_t *&#160;</td>
           <td class="paramname"><em>entrypoint</em>, </td>
         </tr>
         <tr>
@@ -791,8 +795,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gab74a182c67f78a02ad1bc34362910958" name="gab74a182c67f78a02ad1bc34362910958"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab74a182c67f78a02ad1bc34362910958">&#9670;&#160;</a></span>os_thread_construct()</h2>
+<a id="gae211727af6e2835e21725cc95b0d65b0" name="gae211727af6e2835e21725cc95b0d65b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae211727af6e2835e21725cc95b0d65b0">&#9670;&#160;</a></span>os_thread_construct()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -806,7 +810,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *&#160;</td>
+          <td class="paramtype">entrypoint_t *&#160;</td>
           <td class="paramname"><em>entrypoint</em>, </td>
         </tr>
         <tr>
@@ -835,7 +839,6 @@ Variables</h2></td></tr>
     <tr><td class="paramname">tid</td><td>Thread ID of thread to be constructed </td></tr>
     <tr><td class="paramname">entrypoint</td><td>pointer to thread entrypoint function </td></tr>
     <tr><td class="paramname">data</td><td>pointer to thread data. pass NULL pointer if no thread data is used </td></tr>
-    <tr><td class="paramname">core</td><td>ID of core the thread should run at </td></tr>
   </table>
   </dd>
 </dl>
@@ -845,6 +848,7 @@ Variables</h2></td></tr>
     <tr><td class="paramname">tid</td><td>Thread ID of thread to be constructed </td></tr>
     <tr><td class="paramname">entrypoint</td><td>pointer to thread entrypoint function </td></tr>
     <tr><td class="paramname">data</td><td>pointer to thread data. pass NULL pointer if no thread data is used </td></tr>
+    <tr><td class="paramname">core</td><td>ID of core the thread should run at </td></tr>
   </table>
   </dd>
 </dl>
@@ -862,7 +866,7 @@ Variables</h2></td></tr>
           <td class="memname">int os_thread_continue </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td class="paramname"><em>thread</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -881,7 +885,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int os_thread_create </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> *&#160;</td>
+          <td class="paramtype">entrypoint_t *&#160;</td>
           <td class="paramname"><em>entrypoint</em>, </td>
         </tr>
         <tr>
@@ -904,8 +908,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Kernel implementation of <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0" title="Create new thread.">thread_create()</a> syscall. </p>
 <p>Syscall handling <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0" title="Create new thread.">thread_create()</a> Creates new thread inside current process using specified entrypoint. </p>
+<p>Kernel implementation of <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0" title="Create new thread.">thread_create()</a> syscall. </p>
 
 </div>
 </div>
@@ -1083,7 +1087,7 @@ Variables</h2></td></tr>
           <td class="memname">int os_thread_stop </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td class="paramname"><em>thread</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1096,6 +1100,22 @@ Variables</h2></td></tr>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="ga2057e79833f71e7a4793d51bc2dca106" name="ga2057e79833f71e7a4793d51bc2dca106"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga2057e79833f71e7a4793d51bc2dca106">&#9670;&#160;</a></span>core <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structOS__core__state__t.html">OS_core_state_t</a> core[<a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>CPU scheduling thread IDs. </p>
+
+</div>
+</div>
+<a id="ga2057e79833f71e7a4793d51bc2dca106" name="ga2057e79833f71e7a4793d51bc2dca106"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2057e79833f71e7a4793d51bc2dca106">&#9670;&#160;</a></span>core <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1112,22 +1132,6 @@ Variables</h2></td></tr>
 <span class="mlabels"><span class="mlabel">extern</span></span>  </td>
   </tr>
 </table>
-</div><div class="memdoc">
-
-<p>CPU scheduling thread IDs. </p>
-
-</div>
-</div>
-<a id="ga2057e79833f71e7a4793d51bc2dca106" name="ga2057e79833f71e7a4793d51bc2dca106"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2057e79833f71e7a4793d51bc2dca106">&#9670;&#160;</a></span>core <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structOS__core__state__t.html">OS_core_state_t</a> core[<a class="el" href="group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477">OS_NUM_CORES</a>]</td>
-        </tr>
-      </table>
 </div><div class="memdoc">
 
 <p>CPU scheduling thread IDs. </p>

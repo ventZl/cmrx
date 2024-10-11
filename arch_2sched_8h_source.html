@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: include/cmrx/os/arch/sched.h Source File</title>
+<title>C Microkernel Realtime eXecutive: src/os/kernel/arch/sched.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -102,10 +102,10 @@ $(document).ready(function(){initNavTree('arch_2sched_8h_source.html',''); initR
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;cmrx/os/runtime.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;kernel/runtime.h&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>uint32_t * <a class="code hl_function" href="group__arch__arch.html#ga1f714f6892c35a090439a7071ddadf46">os_thread_populate_stack</a>(<span class="keywordtype">int</span> stack_id, <span class="keywordtype">unsigned</span> stack_size, <a class="code hl_typedef" href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a> * entrypoint, <span class="keywordtype">void</span> * data);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>uint32_t * <a class="code hl_function" href="group__arch__arch.html#ga1f714f6892c35a090439a7071ddadf46">os_thread_populate_stack</a>(<span class="keywordtype">int</span> stack_id, <span class="keywordtype">unsigned</span> stack_size, entrypoint_t * entrypoint, <span class="keywordtype">void</span> * data);</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__arch__arch.html#ga770860e52c205dc2a7e865b80b0fca11">os_process_create</a>(<a class="code hl_typedef" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process_id, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structOS__process__definition__t.html">OS_process_definition_t</a> * definition);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
@@ -113,21 +113,20 @@ $(document).ready(function(){initNavTree('arch_2sched_8h_source.html',''); initR
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__arch__arch.html#gabb3070fe93f5997763b5685b81288f5c">os_set_syscall_return_value</a>(<a class="code hl_typedef" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id, int32_t retval);</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="ttc" id="agroup__api_html_ga36958e2082eecb09f367fa4aa3a9a84d"><div class="ttname"><a href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a></div><div class="ttdeci">uint8_t Process_t</div><div class="ttdoc">Data type used for process IDs.</div><div class="ttdef"><b>Definition</b> defines.h:50</div></div>
-<div class="ttc" id="agroup__api_html_gaae12e635a9412afabedb95620d3e2ffe"><div class="ttname"><a href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a></div><div class="ttdeci">uint8_t Thread_t</div><div class="ttdoc">Data type used for thread IDs.</div><div class="ttdef"><b>Definition</b> defines.h:47</div></div>
+<div class="ttc" id="agroup__api_html_ga36958e2082eecb09f367fa4aa3a9a84d"><div class="ttname"><a href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a></div><div class="ttdeci">uint8_t Process_t</div><div class="ttdoc">Data type used for process IDs.</div><div class="ttdef"><b>Definition</b> defines.h:51</div></div>
+<div class="ttc" id="agroup__api_html_gaae12e635a9412afabedb95620d3e2ffe"><div class="ttname"><a href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a></div><div class="ttdeci">uint8_t Thread_t</div><div class="ttdoc">Data type used for thread IDs.</div><div class="ttdef"><b>Definition</b> defines.h:48</div></div>
 <div class="ttc" id="agroup__arch__arch_html_ga1efbfe606317fd469d8fc187a4cb9a79"><div class="ttname"><a href="group__arch__arch.html#ga1efbfe606317fd469d8fc187a4cb9a79">os_boot_thread</a></div><div class="ttdeci">void os_boot_thread(Thread_t boot_thread)</div><div class="ttdoc">Start executing thread.</div><div class="ttdef"><b>Definition</b> sched.c:79</div></div>
 <div class="ttc" id="agroup__arch__arch_html_ga1f714f6892c35a090439a7071ddadf46"><div class="ttname"><a href="group__arch__arch.html#ga1f714f6892c35a090439a7071ddadf46">os_thread_populate_stack</a></div><div class="ttdeci">uint32_t * os_thread_populate_stack(int stack_id, unsigned stack_size, entrypoint_t *entrypoint, void *data)</div><div class="ttdoc">Populate stack of new thread so it can be executed.</div><div class="ttdef"><b>Definition</b> sched.c:38</div></div>
 <div class="ttc" id="agroup__arch__arch_html_ga770860e52c205dc2a7e865b80b0fca11"><div class="ttname"><a href="group__arch__arch.html#ga770860e52c205dc2a7e865b80b0fca11">os_process_create</a></div><div class="ttdeci">int os_process_create(Process_t process_id, const struct OS_process_definition_t *definition)</div><div class="ttdoc">Create process using process definition.</div><div class="ttdef"><b>Definition</b> sched.c:50</div></div>
 <div class="ttc" id="agroup__arch__arch_html_gabb3070fe93f5997763b5685b81288f5c"><div class="ttname"><a href="group__arch__arch.html#gabb3070fe93f5997763b5685b81288f5c">os_set_syscall_return_value</a></div><div class="ttdeci">int os_set_syscall_return_value(Thread_t thread_id, int32_t retval)</div><div class="ttdoc">Set return value of syscall on given stack.</div><div class="ttdef"><b>Definition</b> sched.c:96</div></div>
-<div class="ttc" id="agroup__os__kernel_html_ga1bfa33feba4b1822dc64875964b011c4"><div class="ttname"><a href="group__os__kernel.html#ga1bfa33feba4b1822dc64875964b011c4">entrypoint_t</a></div><div class="ttdeci">int() entrypoint_t(void *)</div><div class="ttdoc">Prototype for thread entrypoint function.</div><div class="ttdef"><b>Definition</b> runtime.h:53</div></div>
-<div class="ttc" id="astructOS__process__definition__t_html"><div class="ttname"><a href="structOS__process__definition__t.html">OS_process_definition_t</a></div><div class="ttdoc">Static definition of process in firmware image.</div><div class="ttdef"><b>Definition</b> runtime.h:159</div></div>
+<div class="ttc" id="astructOS__process__definition__t_html"><div class="ttname"><a href="structOS__process__definition__t.html">OS_process_definition_t</a></div><div class="ttdoc">Static definition of process in firmware image.</div><div class="ttdef"><b>Definition</b> runtime.h:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_98202475f9f46bced46f85653c1a7139.html">cmrx</a></li><li class="navelem"><a class="el" href="dir_3a38c5100b0397d8350fe0095acca511.html">os</a></li><li class="navelem"><a class="el" href="dir_213522b02f4f85dfecf8f6210a653a4b.html">arch</a></li><li class="navelem"><b>sched.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><a class="el" href="dir_f3913cdb192a60ecaf3e841b502083ba.html">arch</a></li><li class="navelem"><b>sched.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

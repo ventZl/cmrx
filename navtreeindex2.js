@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"structQueue.html":[3,3,3,0],
+"structQueueInterface.html":[3,3,2,0],
 "structQueueInterface.html#a381a76c9615f0a71569daea71af31f49":[3,3,2,0,2],
 "structQueueInterface.html#a47320e4f2833075d64adc339db2f0e54":[3,3,2,0,1],
 "structQueueInterface.html#a4ff121beeea33992a2e1eebab4a65a72":[3,3,2,0,3],

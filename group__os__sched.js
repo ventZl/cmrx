@@ -23,7 +23,7 @@ var group__os__sched =
     [ "os_stack_dispose", "group__os__sched.html#gad17dc6e8305ce5070b4d64f6ebc2ff6c", null ],
     [ "os_stack_get", "group__os__sched.html#gaee79d579e38cb5076959ad8d15aaba34", null ],
     [ "os_thread_alloc", "group__os__sched.html#gae41148b47f9674a16741165066c4b066", null ],
-    [ "os_thread_construct", "group__os__sched.html#gab74a182c67f78a02ad1bc34362910958", null ],
+    [ "os_thread_construct", "group__os__sched.html#gae211727af6e2835e21725cc95b0d65b0", null ],
     [ "os_thread_continue", "group__os__sched.html#ga7d13fca0696f3ab0fcf19b8d5503f31a", null ],
     [ "os_thread_create", "group__os__sched.html#gaebb2e4fd35891b58767666454d4b78ea", null ],
     [ "os_thread_dispose", "group__os__sched.html#ga5725c397d24dc7de634648a43675bc74", null ],

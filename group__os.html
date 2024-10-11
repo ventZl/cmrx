@@ -121,26 +121,28 @@ Modules</h2></td></tr>
 <tr class="memdesc:group__os__isr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routines available from running interrupt service routine context. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__os__kernel" id="r_group__os__kernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html">Kernel core</a></td></tr>
-<tr class="memdesc:group__os__kernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel is built around minimalistic core, which consists of prioritized thread scheduler. <br /></td></tr>
+<tr class="memdesc:group__os__kernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic structures that contain the internal state of kernel. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__os__mpu" id="r_group__os__mpu"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__mpu.html">Memory protection</a></td></tr>
 <tr class="memdesc:group__os__mpu"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel internals in support for MPU configuration. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__os__notify" id="r_group__os__notify"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html">Notifications</a></td></tr>
-<tr class="memdesc:group__os__notify"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifications are concept that can be used to notify other threads implicitly without knowing their identity. <br /></td></tr>
+<tr class="memdesc:group__os__notify"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel internals supporting cross-process notifications. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__os__rpc" id="r_group__os__rpc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html">Remote Procedure Calls</a></td></tr>
 <tr class="memdesc:group__os__rpc"><td class="mdescLeft">&#160;</td><td class="mdescRight">This kernel implementation of RPC mechanism. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__os__signal" id="r_group__os__signal"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__signal.html">Signals</a></td></tr>
+<tr class="memitem:group__os__signal" id="r_group__os__signal"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__signal.html">Signal handling</a></td></tr>
 <tr class="memdesc:group__os__signal"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of signal propagation mechanism. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__os__syscall" id="r_group__os__syscall"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__syscall.html">System calls</a></td></tr>
-<tr class="memdesc:group__os__syscall"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel contains mechanism of using kernel services. <br /></td></tr>
+<tr class="memdesc:group__os__syscall"><td class="mdescLeft">&#160;</td><td class="mdescRight">Portable parts of system call machinery. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__os__sched" id="r_group__os__sched"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html">Threads</a></td></tr>
+<tr class="memitem:group__os__sched" id="r_group__os__sched"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html">Thread scheduling</a></td></tr>
+<tr class="memdesc:group__os__sched"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel primitives for manipulating threads. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__os__timer" id="r_group__os__timer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html">Timers</a></td></tr>
+<tr class="memdesc:group__os__timer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel internals providing services of delayed and periodic execution. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -190,7 +192,7 @@ Functions</h2></td></tr>
           <td class="memname">void _os_start </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>start_core</em></td><td>)</td>
+          <td class="paramname"><em>core</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
