@@ -11,18 +11,19 @@
  * 
  * @{
  */
-#include <cmrx/os/rpc.h>
-#include <cmrx/os/syscalls.h>
-#include <cmrx/os/syscall.h>
+#include <kernel/rpc.h>
+#include <kernel/syscall.h>
+#include <kernel/runtime.h>
+#include <kernel/sched.h>
+#include <kernel/sanitize.h>
+
 #include <arch/cortex.h>
 #include <arch/mpu.h>
 #include <arch/mpu_priv.h>
-#include <cmrx/os/runtime.h>
-#include <cmrx/os/sched.h>
-#include <conf/kernel.h>
 
+#include <cmrx/sys/syscalls.h>
+#include <conf/kernel.h>
 #include <cmrx/assert.h>
-#include <cmrx/os/sanitize.h>
 
 
 void rpc_return();

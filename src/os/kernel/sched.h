@@ -1,11 +1,11 @@
-/** @defgroup os_sched Threads
- *
+/** @defgroup os_sched Thread scheduling
  * @ingroup os
+ * Kernel primitives for manipulating threads.
  * @{
  */
 #pragma once
 
-#include <cmrx/os/runtime.h>
+#include "runtime.h"
 #include <stdbool.h>
 #include <arch/corelocal.h>
 

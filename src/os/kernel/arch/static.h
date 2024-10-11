@@ -1,9 +1,7 @@
 #pragma once
 
 /** @defgroup arch Architecture support
- *
  * @ingroup os 
- *
  * Layer containing bits that are specific to each supported architecture.
  *
  * @details

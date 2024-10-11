@@ -16,10 +16,10 @@
  */
 #include <cmrx/ipc/isr.h>
 #include <conf/kernel.h>
-#include <cmrx/os/runtime.h>
-#include <cmrx/os/sched.h>
-#include <cmrx/os/context.h>
-#include <cmrx/os/notify.h>
+#include "runtime.h"
+#include "sched.h"
+#include "context.h"
+#include "notify.h"
 
 void isr_kill(Thread_t thread_id, uint32_t signal)
 {

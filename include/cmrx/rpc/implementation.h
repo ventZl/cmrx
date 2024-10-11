@@ -2,7 +2,7 @@
 
 /** @addtogroup api_rpc
  *
- * API to create remote procedure call services and to call them.
+ * @brief API to create remote procedure call services and to call them.
  *
  * @section api_rpc_overview RPC mechanism overview 
  * 

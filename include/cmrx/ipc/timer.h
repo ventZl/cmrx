@@ -1,9 +1,6 @@
 /** @defgroup api_timer Timers
- *
  * @ingroup api
- *
- * Kernel offers mechanism to interrupt, or periodically schedule execution of 
- * thread.
+ * API to interrupt, or periodically schedule execution of a thread.
  *
  * Kernel API provides two kinds of interruptions: one-time and periodic. one-time
  * interruption is always synchronous - the thread won't be given control until delay

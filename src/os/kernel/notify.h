@@ -1,5 +1,5 @@
 /** @defgroup os_notify Notifications
- *
+ * Kernel internals supporting cross-process notifications.
  * Notifications are concept that can be used to notify other threads implicitly
  * without knowing their identity. The identity of notified  thread is established
  * based on the match of the object notified and waited for.

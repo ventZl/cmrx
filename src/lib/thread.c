@@ -3,7 +3,7 @@
  */
 
 #include <cmrx/ipc/thread.h>
-#include <cmrx/os/syscalls.h>
+#include <cmrx/sys/syscalls.h>
 #include <cmrx/assert.h>
 
 __SYSCALL int sched_yield()

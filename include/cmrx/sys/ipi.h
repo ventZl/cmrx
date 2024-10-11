@@ -1,5 +1,29 @@
 #pragma once
 
+/** @addtogroup arch_arch
+ *
+ * CMRX offers primitives to perform unaddressed synchronization
+ * unlike @ref kill() call, which allows thread to send a signal
+ * to another thread, API in this group uses memory location as
+ * a designator, rather than specific thread.
+ *
+ * Using this API, a programmer can write code that notifies
+ * unknown recipient. All that is needed for notifier and waiter
+ * for this mechanism to work is to agree upon memory location used as
+ * notification object.
+ *
+ * Any object can be used as the object itself is not examined or
+ * used during the notification. It is just a convenient way on
+ * determining the notification ID.
+ *
+ * It allows multiple object to wait for single object and thus
+ * can serve as a building block for more advanced primitives such
+ * as semaphores or queues.
+ *
+ * @ingroup arch_arch
+ * @{
+ */
+
 /** Request Inter-processor synchronization.
  * This is minimalistic implementation for inter-processor synchronization 
  * request for Cortex-M processors. This implementation does not assume

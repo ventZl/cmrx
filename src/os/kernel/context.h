@@ -1,12 +1,10 @@
 #pragma once
 
 #include <stdbool.h>
-#include <cmrx/os/runtime.h>
+#include "runtime.h"
 
 /** @defgroup os_context Context switching
- *
  * @ingroup os
- *
  * Kernel internals in support context switching
  * 
  * Bulk of the context switching is done inside the platform independent

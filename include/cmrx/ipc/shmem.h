@@ -1,9 +1,7 @@
 #pragma once
 
 /** @defgroup api_shared Shared memory
- *
  * @ingroup api
- *
  * API to declare memory as shared between two processes.
  *
  * CMRX does not allow for unconditional sharing of memory between two processes. 

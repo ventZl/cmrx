@@ -1,7 +1,7 @@
-#include <cmrx/os/context.h>
+#include <kernel/context.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <cmrx/os/runtime.h>
+#include <kernel/runtime.h>
 #include <arch/corelocal.h>
 
 #include <ctest.h>

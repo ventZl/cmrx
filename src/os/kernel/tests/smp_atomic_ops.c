@@ -3,8 +3,8 @@
 #include <ctest.h>
 #include <stdint.h>
 #include <string.h>
-#include <cmrx/os/runtime.h>
-#include <cmrx/os/timer.h>
+#include <kernel/runtime.h>
+#include <kernel/timer.h>
 #include <arch/corelocal.h>
 
 struct TimerEntry_t {
