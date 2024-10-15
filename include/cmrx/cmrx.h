@@ -29,6 +29,15 @@ extern void _os_start(uint8_t core);
 
 /** @} */
 
+/** @defgroup api_standard Standard API
+ * @ingroup api
+ * API providing standardized access to various aspects required by userland.
+ */
+
+/**
+ * @ingroup api_standard
+ * @{ */
+
 /** Obtain the current CPU frequency.
  *
  * Give userspace applications access to the current CPU frequency.
@@ -36,3 +45,5 @@ extern void _os_start(uint8_t core);
  * @returns CPU frequency in Hz or 0 if frequency is unknown or unreliable.
  */
 __SYSCALL long get_cpu_freq(void);
+
+/** @} */
