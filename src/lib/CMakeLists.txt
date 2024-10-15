@@ -1,4 +1,4 @@
-set(stdlib_SRCS rpc.c signal.c timer.c thread.c notify.c arch/${CMRX_ARCH}/mutex.c irq.c)
+set(stdlib_SRCS rpc.c signal.c timer.c thread.c notify.c arch/${CMRX_ARCH}/mutex.c irq.c std.c)
 
 add_library(stdlib STATIC ${stdlib_SRCS})
 target_include_directories(stdlib PUBLIC ${HAL_PATH})

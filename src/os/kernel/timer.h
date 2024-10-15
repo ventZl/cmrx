@@ -45,4 +45,11 @@ bool os_schedule_timer(unsigned * delay);
  */
 void os_run_timer(uint32_t microtime);
 
+/** Get current CPU frequency.
+ *
+ * Will return the current CPU frequency (if known and/or available).
+ * @returns CPU frequency in Hz, 0 if value is not known.
+ */
+uint32_t os_cpu_freq_get(void);
+
 /** @} */
