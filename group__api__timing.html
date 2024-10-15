@@ -115,6 +115,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga32ca98f569fe077cd53c29a5417f80de" id="r_ga32ca98f569fe077cd53c29a5417f80de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#ga32ca98f569fe077cd53c29a5417f80de">timing_provider_delay</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
 <tr class="memdesc:ga32ca98f569fe077cd53c29a5417f80de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform tight busy-wait delay.  <br /></td></tr>
 <tr class="separator:ga32ca98f569fe077cd53c29a5417f80de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7613a35fc20c795f3fcfe3042100769" id="r_gaa7613a35fc20c795f3fcfe3042100769"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769">timing_get_current_cpu_freq</a> (void)</td></tr>
+<tr class="memdesc:gaa7613a35fc20c795f3fcfe3042100769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide information on the current CPU speed.  <br /></td></tr>
+<tr class="separator:gaa7613a35fc20c795f3fcfe3042100769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad2eee99d75e6b65c227f65a6880f2e9f" id="r_gad2eee99d75e6b65c227f65a6880f2e9f"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback</a> (long <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</td></tr>
 <tr class="memdesc:gad2eee99d75e6b65c227f65a6880f2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel callback for timing provider.  <br /></td></tr>
 <tr class="separator:gad2eee99d75e6b65c227f65a6880f2e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,6 +148,9 @@ Asynchronous delays involving power management</h1>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">long os_sched_timing_callback </td>
@@ -154,6 +160,11 @@ Asynchronous delays involving power management</h1>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Kernel callback for timing provider. </p>
@@ -164,6 +175,28 @@ Asynchronous delays involving power management</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>amount of microseconds, which shall pass before next wakeup will happen. If this value is zero, then no next wakeup shall happen. </dd></dl>
+
+</div>
+</div>
+<a id="gaa7613a35fc20c795f3fcfe3042100769" name="gaa7613a35fc20c795f3fcfe3042100769"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa7613a35fc20c795f3fcfe3042100769">&#9670;&#160;</a></span>timing_get_current_cpu_freq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long timing_get_current_cpu_freq </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provide information on the current CPU speed. </p>
+<p>This call should return the current CPU speed in Hz. The kernel itself does not need to know this information as it outsources all the timing duties to the timing provider. Userspace applications and drivers might need to know this. As they all run in the userspace, typically it is not possible to access this information directly. Thus this system call is provided to make this information accessible in the userspace. </p><dl class="section return"><dt>Returns</dt><dd>Current CPU speed in Hz, or 0 if this value is not available or reliable. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function is guarranteed to be called from kernel context. </dd></dl>
 
 </div>
 </div>
@@ -190,6 +223,7 @@ Asynchronous delays involving power management</h1>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>This function is guarranteed to be called from kernel context. </dd></dl>
 
 </div>
 </div>

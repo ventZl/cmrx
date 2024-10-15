@@ -7,6 +7,7 @@ var group__api =
     [ "Remote Procedure Calls", "group__api__rpc.html", "group__api__rpc" ],
     [ "Shared memory", "group__api__shared.html", "group__api__shared" ],
     [ "Signals", "group__api__signal.html", "group__api__signal" ],
+    [ "Standard API", "group__api__standard.html", "group__api__standard" ],
     [ "Static initialization", "group__api__init.html", "group__api__init" ],
     [ "Threading functions", "group__api__thread.html", "group__api__thread" ],
     [ "Timers", "group__api__timer.html", "group__api__timer" ],

@@ -105,17 +105,22 @@ $(document).ready(function(){initNavTree('cmrx_8h_source.html',''); initResizabl
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;conf/kernel.h&gt;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef CMRX_ARCH_SMP_SUPPORTED</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#   define os_start(core) _os_start((core))</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="group__os.html#ga1e67d0545de716571a189e81ae619f37">   23</a></span><span class="preprocessor">#   define os_start() _os_start(0)</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">// Declaring this as noreturn will break HIL tests</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code hl_function" href="group__os.html#gad814ad5aca8918a9fb4dd5952447ac06">_os_start</a>(uint8_t <a class="code hl_variable" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;arch/sysenter.h&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#ifdef CMRX_ARCH_SMP_SUPPORTED</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#   define os_start(core) _os_start((core))</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="group__os.html#ga1e67d0545de716571a189e81ae619f37">   24</a></span><span class="preprocessor">#   define os_start() _os_start(0)</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">// Declaring this as noreturn will break HIL tests</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code hl_function" href="group__os.html#gad814ad5aca8918a9fb4dd5952447ac06">_os_start</a>(uint8_t <a class="code hl_variable" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">long</span> <a class="code hl_function" href="group__api__standard.html#ga3237021168ac3f0aa996c3c97b51e323">get_cpu_freq</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="ttc" id="agroup__api__standard_html_ga3237021168ac3f0aa996c3c97b51e323"><div class="ttname"><a href="group__api__standard.html#ga3237021168ac3f0aa996c3c97b51e323">get_cpu_freq</a></div><div class="ttdeci">__SYSCALL long get_cpu_freq(void)</div><div class="ttdoc">Obtain the current CPU frequency.</div><div class="ttdef"><b>Definition</b> std.c:4</div></div>
 <div class="ttc" id="agroup__os__sched_html_ga2057e79833f71e7a4793d51bc2dca106"><div class="ttname"><a href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a></div><div class="ttdeci">struct OS_core_state_t core[OS_NUM_CORES]</div><div class="ttdoc">CPU scheduling thread IDs.</div><div class="ttdef"><b>Definition</b> sched.c:35</div></div>
+<div class="ttc" id="agroup__os__syscall_html_ga6c52288e9645b2cd2c4ada0577669340"><div class="ttname"><a href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a></div><div class="ttdeci">#define __SYSCALL</div><div class="ttdoc">Mark function as syscall entrypoint in userspace.</div><div class="ttdef"><b>Definition</b> sysenter.h:15</div></div>
 <div class="ttc" id="agroup__os_html_gad814ad5aca8918a9fb4dd5952447ac06"><div class="ttname"><a href="group__os.html#gad814ad5aca8918a9fb4dd5952447ac06">_os_start</a></div><div class="ttdeci">void _os_start(uint8_t core)</div><div class="ttdoc">Start up scheduler.</div><div class="ttdef"><b>Definition</b> sched.c:527</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

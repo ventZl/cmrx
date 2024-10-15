@@ -11,6 +11,7 @@ var group__os__timer =
     [ "get_sleep_time", "group__os__timer.html#ga298a4922fb4180235c76c8cc8fecb6f5", null ],
     [ "get_sleeptime", "group__os__timer.html#gacee9648cc90be455d550756ca473a56f", null ],
     [ "is_periodic", "group__os__timer.html#gaa7f49ccfaa49c941f8068bba1b340d1c", null ],
+    [ "os_cpu_freq_get", "group__os__timer.html#ga7790e1b47e7589223de470f32523408d", null ],
     [ "os_run_timer", "group__os__timer.html#ga807091ac93d2fe8f891d40f39b49b7da", null ],
     [ "os_schedule_timer", "group__os__timer.html#gac6a7c0053f7960e97d395651f4d08fad", null ],
     [ "os_setitimer", "group__os__timer.html#gad144032be21d6335801e51f3668d62d7", null ],

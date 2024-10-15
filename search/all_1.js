@@ -12,7 +12,7 @@ var searchData=
   ['and_20cmrx_9',['Obtain dependencies and CMRX',['../getting_started.html#autotoc_md0',1,'']]],
   ['and_20header_20directories_10',['Source and header directories',['../dev_env.html#autotoc_md22',1,'']]],
   ['and_20read_20only_20data_11',['Code and read-only data',['../mem_model.html#autotoc_md2',1,'']]],
-  ['api_12',['api',['../group__api.html',1,'Kernel API'],['../group__api__timing.html',1,'Timing provider API']]],
+  ['api_12',['api',['../group__api.html',1,'Kernel API'],['../group__api__standard.html',1,'Standard API'],['../group__api__timing.html',1,'Timing provider API']]],
   ['architecture_20support_13',['Architecture support',['../group__arch.html',1,'']]],
   ['arm_20mpu_20ctrl_20fields_14',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
   ['arm_20mpu_20rasr_20fields_15',['ARM MPU RASR fields',['../group__arm__mpu__rars.html',1,'']]],

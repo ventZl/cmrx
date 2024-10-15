@@ -153,6 +153,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga807091ac93d2fe8f891d40f39b49b7da" id="r_ga807091ac93d2fe8f891d40f39b49b7da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga807091ac93d2fe8f891d40f39b49b7da">os_run_timer</a> (uint32_t microtime)</td></tr>
 <tr class="memdesc:ga807091ac93d2fe8f891d40f39b49b7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire scheduled event.  <br /></td></tr>
 <tr class="separator:ga807091ac93d2fe8f891d40f39b49b7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7790e1b47e7589223de470f32523408d" id="r_ga7790e1b47e7589223de470f32523408d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga7790e1b47e7589223de470f32523408d">os_cpu_freq_get</a> (void)</td></tr>
+<tr class="memdesc:ga7790e1b47e7589223de470f32523408d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current CPU frequency.  <br /></td></tr>
+<tr class="separator:ga7790e1b47e7589223de470f32523408d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -405,6 +408,27 @@ Variables</h2></td></tr>
 
 <p>Determine if interval in sleep entry is periodic or not. </p>
 <dl class="section return"><dt>Returns</dt><dd>1 if interval is periodic, 0 if interval is one-shot. </dd></dl>
+
+</div>
+</div>
+<a id="ga7790e1b47e7589223de470f32523408d" name="ga7790e1b47e7589223de470f32523408d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7790e1b47e7589223de470f32523408d">&#9670;&#160;</a></span>os_cpu_freq_get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t os_cpu_freq_get </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get current CPU frequency. </p>
+<p>Will return the current CPU frequency (if known and/or available). </p><dl class="section return"><dt>Returns</dt><dd>CPU frequency in Hz, 0 if value is not known. </dd></dl>
 
 </div>
 </div>
