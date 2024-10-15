@@ -79,9 +79,22 @@ void timing_provider_schedule(long delay_us);
  * because the overhead of thread switching will consume all the time. Timing timing 
  * provider shall perform busy-wait delay, waiting for given amount of microseconds.
  * @param [in] delays_ns amount of microseconds to wait before resuming execution
+ * @note This function is guarranteed to be called from kernel context.
  */
 void timing_provider_delay(long delay_us);
 
-long os_sched_timing_callback(long delay_us);
+/** Provide information on the current CPU speed.
+ * This call should return the current CPU speed in Hz. The kernel itself does not need
+ * to know this information as it outsources all the timing duties to the timing provider.
+ * Userspace applications and drivers might need to know this. As they all run in the
+ * userspace, typically it is not possible to access this information directly.
+ * Thus this system call is provided to make this information accessible in the userspace.
+ * @returns Current CPU speed in Hz, or 0 if this value is not available or reliable.
+ * @note This function is guarranteed to be called from kernel context.
+ */
+long timing_get_current_cpu_freq(void);
+
+extern long os_sched_timing_callback(long delay_us);
+
 
 /** @} */

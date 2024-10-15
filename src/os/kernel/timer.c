@@ -289,4 +289,9 @@ void os_run_timer(uint32_t microtime)
 	}
 }
 
+uint32_t os_cpu_freq_get(void)
+{
+	return timing_get_current_cpu_freq();
+}
+
 /** @} */
