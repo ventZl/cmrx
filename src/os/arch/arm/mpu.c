@@ -164,7 +164,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls
 
 int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RASR)
 {
-	uint8_t regszbits = ((sizeof(uint32_t)*8) - 1) - __builtin_clz(size);
+	uint8_t regszbits = ((sizeof(uint32_t)*8) - 1) - __builtin_clz(size) - 1;
 	uint32_t subregions = 0xFF;
 
 	uint32_t flags;
