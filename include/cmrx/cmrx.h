@@ -39,11 +39,20 @@ extern void _os_start(uint8_t core);
  * @{ */
 
 /** Obtain the current CPU frequency.
- *
  * Give userspace applications access to the current CPU frequency.
  *
  * @returns CPU frequency in Hz or 0 if frequency is unknown or unreliable.
  */
 __SYSCALL long get_cpu_freq(void);
+
+/** Obtain the current scheduler time.
+ * Returns current scheduler time. The time is returned with nanosecond
+ * resolution and precision depending on the timing provider implemented.
+ *
+ * This value wraps around after about 4000 seconds on 32-bit CPUs
+ *
+ * @returns current scheduler time in nanoseconds
+ */
+__SYSCALL uint32_t getmicrotime(void);
 
 /** @} */

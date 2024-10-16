@@ -4,6 +4,7 @@
  */
 #include <stdint.h>
 #include <cmrx/sys/syscalls.h>
+#include <cmrx/assert.h>
 #include <kernel/syscall.h>
 
 #include <kernel/sched.h>
@@ -38,6 +39,12 @@ static SYSCALL_DEFINITION struct Syscall_Entry_t nvic_syscalls[] = {
  */
 __attribute__((interrupt)) void SVC_Handler(void)
 {
+	// This assert checks that we are not preempting some other interrupt
+	// handler. If you assert here, then your interrupt handler priority
+	// is messed up. You need to configure PendSV to be the handler with
+	// absolutely the lowest priority.
+	ASSERT(__get_LR() == (void *) 0xFFFFFFFDU);
+
 	uint32_t * psp = (uint32_t *) __get_PSP();
 	sanitize_psp(psp);
 	ExceptionFrame * frame = (ExceptionFrame *) psp;
