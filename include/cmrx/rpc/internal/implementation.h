@@ -1,3 +1,7 @@
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wundef"
+
 /* Scary internals of how this mechanism allows for multiple 
  * interfaces being defined in one translation unit.
  * Internally, interface counter is maintained, which is incremented
@@ -37,6 +41,8 @@
 #undef CMRX__INTERFACE__COUNTER
 #define CMRX__INTERFACE__COUNTER 1
 #endif
+
+#pragma GCC diagnostic pop
 
 #ifndef CMRX__INTERFACE__COUNTER
 #   define CMRX__INTERFACE__COUNTER 0
