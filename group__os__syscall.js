@@ -28,6 +28,7 @@ var group__os__syscall =
       [ "SYSCALL_ENABLE_IRQ", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cababdc1a4391a7b866c3a74303d83a616", null ],
       [ "SYSCALL_DISABLE_IRQ", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca64ba88bdc61aafe0a72b7ea55a6e50a9", null ],
       [ "SYSCALL_CPUFREQ_GET", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca3631f6d07cb3d52c9767975875b4b1f3", null ],
+      [ "SYSCALL_GET_MICROTIME", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8caec3d335068d21978914181a00ad29a56", null ],
       [ "_SYSCALL_COUNT", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca4ca0c68f905e31ed3c06d15fde068f7e", null ]
     ] ],
     [ "os_system_call", "group__os__syscall.html#ga16718b58a2540d2e22ca17fe8ce11aab", null ]

@@ -8,5 +8,6 @@ var searchData=
   ['get_5fsleeptime_5',['get_sleeptime',['../group__os__timer.html#gacee9648cc90be455d550756ca473a56f',1,'timer.c']]],
   ['get_5ftid_6',['get_tid',['../group__api__thread.html#ga52f86ad5da2364f17909fcb76bf84d71',1,'get_tid():&#160;thread.c'],['../group__api__thread.html#ga52f86ad5da2364f17909fcb76bf84d71',1,'get_tid():&#160;thread.c']]],
   ['get_5fvtable_5fprocess_7',['get_vtable_process',['../group__os__rpc.html#gab6a04c90d0385e2685fb5e494af298ff',1,'rpc.c']]],
-  ['getting_20started_8',['Getting started',['../getting_started.html',1,'']]]
+  ['getmicrotime_8',['getmicrotime',['../group__api__standard.html#gab9090f01493a7759cdd3dd5bf4d917d2',1,'std.c']]],
+  ['getting_20started_9',['Getting started',['../getting_started.html',1,'']]]
 ];

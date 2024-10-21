@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__os__config.html#ga21c42a5a92bee81fcaa66f429082f860":[3,2,8],
 "group__os__config.html#ga50b141877ee78028195328399caf0d6a":[3,2,2],
 "group__os__config.html#ga54ec6c4dfec8397771e101eb023fd91a":[3,2,0],
 "group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e":[3,2,3],
@@ -30,8 +31,8 @@ var NAVTREEINDEX1 =
 "group__os__kernel.html#gaf10efb77e984671b520a403ede9ce8c2":[3,1,3,17],
 "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f":[3,1,3,11,0],
 "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f":[3,1,3,12],
-"group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,13],
 "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,11,1],
+"group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,13],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a327b504fcea41a280d9c9d25a530321d":[3,1,3,10,1],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b":[3,1,3,10,7],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a6dff8b555ffb582bb3d30a240c9b83e3":[3,1,3,10,2],
@@ -129,7 +130,7 @@ var NAVTREEINDEX1 =
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca261f81b9032da9d945e088274cec20e8":[3,1,8,5,6],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca3631f6d07cb3d52c9767975875b4b1f3":[3,1,8,5,21],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca37221749c556b44a4fe1da86b1c7af19":[3,1,8,5,8],
-"group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca4ca0c68f905e31ed3c06d15fde068f7e":[3,1,8,5,22],
+"group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca4ca0c68f905e31ed3c06d15fde068f7e":[3,1,8,5,23],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca64ba88bdc61aafe0a72b7ea55a6e50a9":[3,1,8,5,20],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca77ff0c605bc2c6664d364e2f7c81ec26":[3,1,8,5,11],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca7c6fd18f70a38135bdd266ff08df3f4c":[3,1,8,5,12],
@@ -142,6 +143,7 @@ var NAVTREEINDEX1 =
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cad625df5634d7a773618f3067e953e28b":[3,1,8,5,2],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cad8615286f2f44b2228e53ab6d1650e09":[3,1,8,5,5],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cae036d9dace8a809308690d330733ff5c":[3,1,8,5,15],
+"group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8caec3d335068d21978914181a00ad29a56":[3,1,8,5,22],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8caf3209a69e73de6cd0c35d37c57ae4f5e":[3,1,8,5,13],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cafb8482b03e9287997b40a18e356713dd":[3,1,8,5,3],
 "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cafc4cb0aed15a099a86bd453440470e56":[3,1,8,5,9],
@@ -171,8 +173,8 @@ var NAVTREEINDEX1 =
 "group__util__assert.html":[3,4,0],
 "group__util__assert.html#ga0966b817b229d48e5ffc7feab19a0be6":[3,4,0,0],
 "hal_integration.html":[1,7],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "mem_model.html":[1,1],
 "overview.html":[1],
 "pages.html":[],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf":[3,1,3,0,1],
 "structOS__thread__t.html#a3316dfeb2de5d7b03f7e0f6842f7c256":[3,1,3,0,9],
 "structOS__thread__t.html#a402b571dc6672000a6f56eccff94b78e":[3,1,3,0,7],
-"structOS__thread__t.html#a5f6023ac269232e404ca352ba5517b1e":[3,1,3,0,10],
-"structOS__thread__t.html#a6e3cdaf8f549f44f9dbbb9450c00fe67":[3,1,3,0,5],
-"structOS__thread__t.html#a7ea5132f358b5e6003cf6c480b1f9177":[3,1,3,0,8]
+"structOS__thread__t.html#a5f6023ac269232e404ca352ba5517b1e":[3,1,3,0,10]
 };
