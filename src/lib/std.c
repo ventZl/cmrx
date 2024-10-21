@@ -7,3 +7,7 @@ __SYSCALL long get_cpu_freq(void)
 }
 
 
+__SYSCALL uint32_t getmicrotime(void)
+{
+    __SVC(SYSCALL_GET_MICROTIME);
+}
