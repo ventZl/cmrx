@@ -15,6 +15,7 @@
 #pragma once
 
 #include <arch/sysenter.h>
+#include <stdint.h>
 
 /** Return current thread ID.
  *

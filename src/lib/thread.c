@@ -50,7 +50,7 @@ __SYSCALL int setpriority(uint8_t priority)
  * entrypoint to be recorded as thread return value.
  * @param arg0 value returned by thread entrypoint
  */
-void os_thread_dispose(int arg0)
+int os_thread_dispose(int arg0)
 {
     (void) arg0;
 	// Do not place anything here. It will clobber R0 value!

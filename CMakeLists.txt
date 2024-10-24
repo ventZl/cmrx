@@ -18,7 +18,7 @@ include_directories(${CMAKE_BINARY_DIR})
 add_definitions(-Wall -Wextra)
 set(CMAKE_C_STANDARD 11)
 
-if (NOT UNIT_TESTING_BUILD)
+if (NOT UNIT_TESTING_BUILD AND NOT BUILD_TESTING)
     if (NOT CMRX_ARCH)
         message(FATAL_ERROR "Target architecture not defined!")
     endif()
@@ -55,6 +55,9 @@ else()
     add_definitions(-fpack-struct)
     enable_testing()
     set(CMAKE_C_FLAGS -ggdb3)
+
+    set(HAL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/os/arch/testing)
+
 endif()
 
 configure_file(conf/kernel.h ${CMAKE_BINARY_DIR}/conf/kernel.h)
@@ -65,3 +68,6 @@ if (NOT UNIT_TESTING_BUILD)
     add_subdirectory(testsuite)
 endif()
 
+if (BUILD_TESTING)
+    add_subdirectory(testing)
+endif()
