@@ -74,8 +74,8 @@ var NAVTREEINDEX1 =
 "group__os__sched.html#ga0f6f80faa1ed7029bfb94e7f32f3a994":[3,1,9,32],
 "group__os__sched.html#ga1750d7e1f559518be7c25ed323065cf4":[3,1,9,4],
 "group__os__sched.html#ga1c0157588be40efb99fc590662e237ae":[3,1,9,1],
-"group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,33],
 "group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,34],
+"group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,33],
 "group__os__sched.html#ga26ea9f0ec722697387ee9deca8230844":[3,1,9,0],
 "group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195":[3,1,9,6],
 "group__os__sched.html#ga3b7326827d532971c4612ab1751428e9":[3,1,9,28],
@@ -171,7 +171,6 @@ var NAVTREEINDEX1 =
 "group__util.html#ga40805b5dd56ee36df59a7bbe403ddf33":[3,4,2],
 "group__util.html#gafedd38df23e9c9f801b82b8cdf210dae":[3,4,1],
 "group__util__assert.html":[3,4,0],
-"group__util__assert.html#ga0966b817b229d48e5ffc7feab19a0be6":[3,4,0,0],
 "hal_integration.html":[1,7],
 "index.html":[0],
 "index.html":[],
@@ -249,5 +248,6 @@ var NAVTREEINDEX1 =
 "structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf":[3,1,3,0,1],
 "structOS__thread__t.html#a3316dfeb2de5d7b03f7e0f6842f7c256":[3,1,3,0,9],
 "structOS__thread__t.html#a402b571dc6672000a6f56eccff94b78e":[3,1,3,0,7],
-"structOS__thread__t.html#a5f6023ac269232e404ca352ba5517b1e":[3,1,3,0,10]
+"structOS__thread__t.html#a5f6023ac269232e404ca352ba5517b1e":[3,1,3,0,10],
+"structOS__thread__t.html#a6e3cdaf8f549f44f9dbbb9450c00fe67":[3,1,3,0,5]
 };

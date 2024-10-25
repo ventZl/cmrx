@@ -98,50 +98,15 @@ $(document).ready(function(){initNavTree('group__util__assert.html',''); initRes
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">Assertions<div class="ingroups"><a class="el" href="group__util.html">Utilities</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>CMRX SDK provides assertiong mechanism.  
-<a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga0966b817b229d48e5ffc7feab19a0be6" id="r_ga0966b817b229d48e5ffc7feab19a0be6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__util__assert.html#ga0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(cond)</td></tr>
-<tr class="memdesc:ga0966b817b229d48e5ffc7feab19a0be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate condition and break if it evalues to false.  <br /></td></tr>
-<tr class="separator:ga0966b817b229d48e5ffc7feab19a0be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+</p>
 <p>CMRX SDK provides assertiong mechanism. </p>
 <p>This is fairly typical and very lean assertion wrapper. Assertion evaluates condition. If it evaluates to false, then debugger trap is signalized. This mechanism is available both in userspace and kernel space and generally has no limitation on when and how can be used. Just mind the fact, that condition should generally be a constant expression, otherwise code may behave differently, if assertions are turned off.</p>
 <p>Assertions are only built if NDEBUG macro is <b>not</b> defined. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga0966b817b229d48e5ffc7feab19a0be6" name="ga0966b817b229d48e5ffc7feab19a0be6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0966b817b229d48e5ffc7feab19a0be6">&#9670;&#160;</a></span>ASSERT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ASSERT</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">cond</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (!(cond)) \</div>
-<div class="line">        {\</div>
-<div class="line">            <span class="keyword">asm</span> <span class="keyword">volatile</span>(<span class="stringliteral">&quot;BKPT 0xFF\n\t&quot;</span>);\</div>
-<div class="line">        }</div>
-</div><!-- fragment -->
-<p>Evaluate condition and break if it evalues to false. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->

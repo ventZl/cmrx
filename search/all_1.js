@@ -19,7 +19,6 @@ var searchData=
   ['arm_20mpu_20rbar_20fields_16',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],
   ['arm_20mpu_20register_20aliases_17',['ARM MPU register aliases',['../group__arm__mpu__registers.html',1,'']]],
   ['arm_20port_18',['ARM port',['../group__arch__arm.html',1,'']]],
-  ['assert_19',['ASSERT',['../group__util__assert.html#ga0966b817b229d48e5ffc7feab19a0be6',1,'assert.h']]],
-  ['assertions_20',['Assertions',['../group__util__assert.html',1,'']]],
-  ['asynchronous_20delays_20involving_20power_20management_21',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]]
+  ['assertions_19',['Assertions',['../group__util__assert.html',1,'']]],
+  ['asynchronous_20delays_20involving_20power_20management_20',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]]
 ];
