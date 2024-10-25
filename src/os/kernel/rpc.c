@@ -9,7 +9,7 @@
 
 /// @cond IGNORE
 /// This is documented in the Kernel API group
-__SYSCALL void rpc_return()
+__SYSCALL int rpc_return()
 {
 	__SVC(SYSCALL_RPC_RETURN);
 }

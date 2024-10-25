@@ -3,8 +3,6 @@
  */
 #pragma once
 
-#include <stdint.h>
-
 #if (!defined TESTING)
 
 /** Mark function as syscall entrypoint in userspace.
