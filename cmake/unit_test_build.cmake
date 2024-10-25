@@ -9,7 +9,7 @@
 #
 # This combo is handled by following code
 
-if (UNIT_TESTING)
+if (CMRX_UNIT_TESTS)
     if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
         message(STATUS "Unit testing build enabled manually!")
         # This is special case handling, when UNIT_TESTING is requested directly on 
@@ -29,7 +29,8 @@ if (__UNIT_TESTING_BUILD)
     set(UNIT_TESTING 1)
 endif()
 
-if (UNIT_TESTING)
+# Enable the build of CMRX kernel unit tests
+if (CMRX_UNIT_TESTS)
     # Unit testing has been requested by the user
 
     if (NOT ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}"))
@@ -46,12 +47,12 @@ if (UNIT_TESTING)
         # Collect all non-default options
         set(UT_BUILD_OPTIONS )
         foreach(CMRX_OPTION ${CMRX_ALL_OPTIONS})
-            message("Examining option ${CMRX_OPTION}")
+            message(DEBUG "Examining option ${CMRX_OPTION}")
             if (DEFINED ${CMRX_OPTION} AND NOT DEFINED CACHE{${CMRX_OPTION}})
                 list(APPEND UT_BUILD_OPTIONS -D${CMRX_OPTION}=${${CMRX_OPTION}})
-                message("Non default value for option ${CMRX_OPTION}")
+                message(DEBUG "Non default value for option ${CMRX_OPTION}")
             else()
-                message("Option ${CMRX_OPTION} has default value ${${CMRX_OPTION}}")
+                message(DEBUG "Option ${CMRX_OPTION} has default value ${${CMRX_OPTION}}")
             endif()
         endforeach()
         # Create directory which will host the build and run CMake
