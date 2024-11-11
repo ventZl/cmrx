@@ -55,4 +55,28 @@ __SYSCALL long get_cpu_freq(void);
  */
 __SYSCALL uint32_t getmicrotime(void);
 
+/** Shutdown CMRX kernel
+ *
+ * This syscall will initiate CMRX kernel shutdown. Kernel shutdown ensures
+ * that the timing provider is stopped. Interrupts are also disabled globally.
+ * No check on existing threads status is made. It is up to the application
+ * developer to ensure that threads are in stable state before kernel is shut
+ * down. Any work done and not saved in threads still active will be lost.
+ *
+ * It is not possible to call CMRX system calls once kernel has been shut down.
+ * While in general, the possibility of restarting kernel after it has been
+ * shut down is not ruled out this workflow is considered as unsupported.
+ *
+ * After kernel is shut down the execution will continue in function named
+ * cmrx_shutdown_handler(). If this function is not defined, then the CPU will
+ * be reset.
+ *
+ * CPU state when cmrx_shutdown_handler() is called:
+ * - memory protection disabled
+ * - privileged mode execution
+ * - all interrupts disabled
+ */
+
+__SYSCALL uint32_t shutdown(void);
+
 /** @} */

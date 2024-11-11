@@ -11,3 +11,9 @@ __SYSCALL uint32_t getmicrotime(void)
 {
     __SVC(SYSCALL_GET_MICROTIME);
 }
+
+
+__SYSCALL uint32_t shutdown(void)
+{
+    __SVC(SYSCALL_SHUTDOWN);
+}

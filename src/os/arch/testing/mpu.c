@@ -6,6 +6,16 @@ void os_memory_protection_start()
 
 }
 
+void os_memory_protection_stop()
+{
+
+}
+
+void os_kernel_shutdown()
+{
+
+}
+
 int mpu_init_stack(int thread_id)
 {
     (void) thread_id;

@@ -38,6 +38,25 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
  */
 __attribute__((naked,noreturn)) void os_boot_thread(Thread_t boot_thread);
 
+/** Stop running the kernel.
+ * Return to bare metal execution mode similar to one after CPU reset.
+ * This function should configure the CPU to continue execution in privileged mode
+ * not distinguishing between thread and kernel space. Once this mode is configured
+ * the function @ref cmrx_shutdown_handler() should be executed.
+ *
+ * This is a point of no return. Code here is free to destroy any previous
+ * context.
+ */
+__attribute__((noreturn)) void os_kernel_shutdown();
+
+/** Reset the CPU.
+ * This is architecture- (and possibly HAL-) specific way to reset the CPU.
+ * This function can be used before the kernel has been started or after it has been
+ * shut down. If there is no shutdown handler provided by the integrator then
+ * the default handler will call this function to reset the CPU automatically.
+ */
+__attribute__((noreturn)) void os_reset_cpu();
+
 /** Set return value of syscall on given stack.
  * @param stack_id Id of the stack thread has exception handler at
  * @param retval value to store on the stack

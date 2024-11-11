@@ -154,5 +154,8 @@ void os_thread_dispose(void);
  */
 int os_thread_migrate(uint8_t thread_id, int target_core);
 
+/** Kernel implementation of the shutdown() syscall.
+ */
+uint32_t os_shutdown();
 
 /** @} */
