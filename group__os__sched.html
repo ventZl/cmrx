@@ -201,6 +201,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gab30027c97dc034137c00192f28c6e178" id="r_gab30027c97dc034137c00192f28c6e178"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab30027c97dc034137c00192f28c6e178">_os_start</a> (uint8_t start_core)</td></tr>
 <tr class="memdesc:gab30027c97dc034137c00192f28c6e178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start up scheduler.  <br /></td></tr>
 <tr class="separator:gab30027c97dc034137c00192f28c6e178"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3115342bb54e0e857c6a566334dcb76b" id="r_ga3115342bb54e0e857c6a566334dcb76b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga3115342bb54e0e857c6a566334dcb76b">os_shutdown</a> ()</td></tr>
+<tr class="memdesc:ga3115342bb54e0e857c6a566334dcb76b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of the <a class="el" href="group__api__standard.html#gae1715e8318d2fce3df9a39f863d9493f" title="Shutdown CMRX kernel.">shutdown()</a> syscall.  <br /></td></tr>
+<tr class="separator:ga3115342bb54e0e857c6a566334dcb76b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3b7326827d532971c4612ab1751428e9" id="r_ga3b7326827d532971c4612ab1751428e9"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga3b7326827d532971c4612ab1751428e9">os_thread_get</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id)</td></tr>
 <tr class="memdesc:ga3b7326827d532971c4612ab1751428e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get thread descriptor.  <br /></td></tr>
 <tr class="separator:ga3b7326827d532971c4612ab1751428e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -681,6 +684,26 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Kernel implementation of <a class="el" href="group__api__thread.html#gad14ed255ac7c3f9cfb0513c7d03e7cd8" title="Change thread priority.">setpriority()</a> syscall. </p>
+
+</div>
+</div>
+<a id="ga3115342bb54e0e857c6a566334dcb76b" name="ga3115342bb54e0e857c6a566334dcb76b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3115342bb54e0e857c6a566334dcb76b">&#9670;&#160;</a></span>os_shutdown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t os_shutdown </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kernel implementation of the <a class="el" href="group__api__standard.html#gae1715e8318d2fce3df9a39f863d9493f" title="Shutdown CMRX kernel.">shutdown()</a> syscall. </p>
 
 </div>
 </div>

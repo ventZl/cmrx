@@ -19,6 +19,7 @@ var group__os__sched =
     [ "os_sched_yield", "group__os__sched.html#ga9b248188aaf965a21f9a4081290f5c24", null ],
     [ "os_set_current_thread", "group__os__sched.html#ga9a3c6cfe2ad6d5e166678dc2c7045150", null ],
     [ "os_setpriority", "group__os__sched.html#ga9548a96ef12f2d883d276855100191ef", null ],
+    [ "os_shutdown", "group__os__sched.html#ga3115342bb54e0e857c6a566334dcb76b", null ],
     [ "os_stack_create", "group__os__sched.html#gae770569b05079cac856ec58d207929d1", null ],
     [ "os_stack_dispose", "group__os__sched.html#gad17dc6e8305ce5070b4d64f6ebc2ff6c", null ],
     [ "os_stack_get", "group__os__sched.html#gaee79d579e38cb5076959ad8d15aaba34", null ],

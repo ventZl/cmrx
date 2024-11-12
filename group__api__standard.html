@@ -152,6 +152,34 @@ $(document).ready(function(){initNavTree('group__api__standard.html',''); initRe
 
 </div>
 </div>
+<a id="gae1715e8318d2fce3df9a39f863d9493f" name="gae1715e8318d2fce3df9a39f863d9493f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae1715e8318d2fce3df9a39f863d9493f">&#9670;&#160;</a></span>shutdown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> uint32_t shutdown </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shutdown CMRX kernel. </p>
+<p>This syscall will initiate CMRX kernel shutdown. Kernel shutdown ensures that the timing provider is stopped. Interrupts are also disabled globally. No check on existing threads status is made. It is up to the application developer to ensure that threads are in stable state before kernel is shut down. Any work done and not saved in threads still active will be lost.</p>
+<p>It is not possible to call CMRX system calls once kernel has been shut down. While in general, the possibility of restarting kernel after it has been shut down is not ruled out this workflow is considered as unsupported.</p>
+<p>After kernel is shut down the execution will continue in function named <a class="el" href="group__arch__arm__sched.html#gaa1fe4414a243f61c85e0a1d2fbd01440" title="Default CMRX shutdown handler for ARM CPUs This is default action after for when the CMRX kernel is s...">cmrx_shutdown_handler()</a>. If this function is not defined, then the CPU will be reset.</p>
+<p>CPU state when <a class="el" href="group__arch__arm__sched.html#gaa1fe4414a243f61c85e0a1d2fbd01440" title="Default CMRX shutdown handler for ARM CPUs This is default action after for when the CMRX kernel is s...">cmrx_shutdown_handler()</a> is called:</p><ul>
+<li>memory protection disabled</li>
+<li>privileged mode execution</li>
+<li>all interrupts disabled </li>
+</ul>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->

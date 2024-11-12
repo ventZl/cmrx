@@ -163,9 +163,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Schedule next timer callback to kernel. </p>
-<p>Re-configure timing provider so that next timed kernel call will happen after given delay. This is the only function, whose implementation is mandatory and whose prototype nor behavior cannot be changed. If kernel calls this function, then timing provider must reconfigure itself so that it will be able to call the kernel as close as possible to time <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a> microseconds in the future. This must happen even if kernel previously signalized that there is no expected timed event and timers were turned off entirely. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Re-configure timing provider so that next timed kernel call will happen after given delay. This is the only function, whose implementation is mandatory and whose prototype nor behavior cannot be changed. If kernel calls this function, then timing provider must reconfigure itself so that it will be able to call back to the kernel as close as possible to time <a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a> microseconds in the future. This must happen even if kernel previously signalized that there is no expected timed event and timers were turned off entirely. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">delay_us</td><td>delay time, in microseconds after which kernel shall be called by the timing provider. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">delay_us</td><td>delay time, in microseconds after which kernel shall be called by the timing provider. The value of 0 means that timing provider should not trigger the kernel timer callback until further notice. </td></tr>
   </table>
   </dd>
 </dl>

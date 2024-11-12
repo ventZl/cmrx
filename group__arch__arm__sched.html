@@ -124,6 +124,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1efbfe606317fd469d8fc187a4cb9a79" id="r_ga1efbfe606317fd469d8fc187a4cb9a79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#ga1efbfe606317fd469d8fc187a4cb9a79">os_boot_thread</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> boot_thread)</td></tr>
 <tr class="memdesc:ga1efbfe606317fd469d8fc187a4cb9a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start executing thread.  <br /></td></tr>
 <tr class="separator:ga1efbfe606317fd469d8fc187a4cb9a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ef00a0f1fe50bb0af3bbf05cbdddfe3" id="r_ga0ef00a0f1fe50bb0af3bbf05cbdddfe3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#ga0ef00a0f1fe50bb0af3bbf05cbdddfe3">os_reset_cpu</a> ()</td></tr>
+<tr class="memdesc:ga0ef00a0f1fe50bb0af3bbf05cbdddfe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the CPU.  <br /></td></tr>
+<tr class="separator:ga0ef00a0f1fe50bb0af3bbf05cbdddfe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1fe4414a243f61c85e0a1d2fbd01440" id="r_gaa1fe4414a243f61c85e0a1d2fbd01440"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#gaa1fe4414a243f61c85e0a1d2fbd01440">cmrx_shutdown_handler</a> (void)</td></tr>
+<tr class="memdesc:gaa1fe4414a243f61c85e0a1d2fbd01440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default CMRX shutdown handler for ARM CPUs This is default action after for when the CMRX kernel is shutdown.  <br /></td></tr>
+<tr class="separator:gaa1fe4414a243f61c85e0a1d2fbd01440"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e29c6b6f3e6e761c076a0b28490da0e" id="r_ga6e29c6b6f3e6e761c076a0b28490da0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#ga6e29c6b6f3e6e761c076a0b28490da0e">os_kernel_shutdown</a> ()</td></tr>
+<tr class="memdesc:ga6e29c6b6f3e6e761c076a0b28490da0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the kernel shutdown.  <br /></td></tr>
+<tr class="separator:ga6e29c6b6f3e6e761c076a0b28490da0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb3070fe93f5997763b5685b81288f5c" id="r_gabb3070fe93f5997763b5685b81288f5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#gabb3070fe93f5997763b5685b81288f5c">os_set_syscall_return_value</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id, int32_t retval)</td></tr>
 <tr class="memdesc:gabb3070fe93f5997763b5685b81288f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set return value of syscall on given stack.  <br /></td></tr>
 <tr class="separator:gabb3070fe93f5997763b5685b81288f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,6 +155,27 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gaa1fe4414a243f61c85e0a1d2fbd01440" name="gaa1fe4414a243f61c85e0a1d2fbd01440"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa1fe4414a243f61c85e0a1d2fbd01440">&#9670;&#160;</a></span>cmrx_shutdown_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmrx_shutdown_handler </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default CMRX shutdown handler for ARM CPUs This is default action after for when the CMRX kernel is shutdown. </p>
+<p>It will reset the CPU. If you want to perform different action, then provide your function called `cmrx_shutdown_handler. It will override this one. </p><dl class="section note"><dt>Note</dt><dd>Your function should not return nor try to restart CMRX kernel. If you want to restart the kernel, then perform CPU reset first. </dd></dl>
+
+</div>
+</div>
 <a id="ga1efbfe606317fd469d8fc187a4cb9a79" name="ga1efbfe606317fd469d8fc187a4cb9a79"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga1efbfe606317fd469d8fc187a4cb9a79">&#9670;&#160;</a></span>os_boot_thread()</h2>
 
@@ -169,6 +199,27 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga6e29c6b6f3e6e761c076a0b28490da0e" name="ga6e29c6b6f3e6e761c076a0b28490da0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6e29c6b6f3e6e761c076a0b28490da0e">&#9670;&#160;</a></span>os_kernel_shutdown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_kernel_shutdown </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform the kernel shutdown. </p>
+<p>Stop running the kernel.</p>
+<p>This is platform-specific way of how to shutdown the kernel. In this case an interrupt frame is forged on stack that will resemble a frame returning back to the <a class="el" href="group__arch__arm__sched.html#gaa1fe4414a243f61c85e0a1d2fbd01440">cmrx_shutdown_handler</a> function. The result of running this function will be that the processor leaves the handler mode, enters privileged thread mode and will be using MSP. </p>
 
 </div>
 </div>
@@ -207,6 +258,26 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>E_OK if process was contructed properly, E_INVALID if process ID is already used or if process definition contains invalid section boundaries. E_OUT_OF_RANGE is returned if process ID requested is out of limits given by the size of process table. </dd></dl>
+
+</div>
+</div>
+<a id="ga0ef00a0f1fe50bb0af3bbf05cbdddfe3" name="ga0ef00a0f1fe50bb0af3bbf05cbdddfe3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0ef00a0f1fe50bb0af3bbf05cbdddfe3">&#9670;&#160;</a></span>os_reset_cpu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_reset_cpu </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the CPU. </p>
+<p>This is architecture- (and possibly HAL-) specific way to reset the CPU. This function can be used before the kernel has been started or after it has been shut down. If there is no shutdown handler provided by the integrator then the default handler will call this function to reset the CPU automatically. </p>
 
 </div>
 </div>
