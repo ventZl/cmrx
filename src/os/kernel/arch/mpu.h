@@ -40,5 +40,11 @@ int mpu_init_stack(int thread_id);
  */
 int mpu_restore(const MPU_State * hosted_state, const MPU_State * parent_state);
 
+/** Disable memory protection.
+ * Disables memory protection unit so that no rules are enforced by the hardware.
+ * The CPU state after this call should resemble MPU state after reset.
+ */
+void os_memory_protection_stop();
+
 /** @} */
 

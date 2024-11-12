@@ -602,6 +602,19 @@ __attribute__((noreturn)) void _os_start(uint8_t start_core)
 	}
 }
 
+uint32_t os_shutdown(void)
+{
+    // For disabling interrupts
+    os_core_lock();
+
+    // Disable timing provider
+    timing_provider_schedule(0);
+
+    os_memory_protection_stop();
+
+    os_kernel_shutdown();
+}
+
 struct OS_thread_t * os_thread_get(Thread_t thread_id)
 {
     return &os_threads[thread_id];

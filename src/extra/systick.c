@@ -36,8 +36,12 @@ __attribute__((interrupt)) void SysTick_Handler()
 
 void timing_provider_schedule(long delay_us)
 {
-    (void) delay_us;
-    SysTick_Enable();
+    if (delay_us == 0)
+    {
+        SysTick_Disable();
+    } else {
+        SysTick_Enable();
+    }
 
 }
 

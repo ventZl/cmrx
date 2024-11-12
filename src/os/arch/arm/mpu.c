@@ -67,7 +67,7 @@ static inline uint8_t log_2(uint32_t num)
  * @note It is safe to call this routine in kernel context even if no
  * memory regions are set.
  */
-void mpu_enable()
+static inline void mpu_enable()
 {
 	MPU_CTRL |= MPU_CTRL_PRIVDEFENA | MPU_CTRL_ENABLE;
 }
@@ -76,7 +76,7 @@ void mpu_enable()
  * This routine will disable memory protection even for unprivileged
  * code.
  */
-void mpu_disable()
+static inline void mpu_disable()
 {
 	MPU_CTRL &= ~(MPU_CTRL_PRIVDEFENA | MPU_CTRL_ENABLE);
 }
@@ -314,6 +314,12 @@ void os_memory_protection_start()
 	mpu_set_region(OS_MPU_REGION_EXECUTABLE, (const void *) code_base(), code_size(), MPU_RX);
 	mpu_enable();
 }
+
+void os_memory_protection_stop()
+{
+	mpu_disable();
+}
+
 
 int mpu_init_stack(int thread_id)
 {

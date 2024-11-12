@@ -3,8 +3,6 @@
 #include <conf/kernel.h>
 
 // These do nothing in testing environment
-#define os_core_lock()
-#define os_core_unlock()
 
 #ifndef CMRX_ARCH_SMP_SUPPORTED
 
@@ -19,6 +17,9 @@ extern callback_t cmrx_smp_unlocked_callback;
 
 
 extern unsigned coreid();
+extern void os_core_lock();
+extern void os_core_unlock();
+
 extern void os_smp_lock();
 extern void os_smp_unlock();
 

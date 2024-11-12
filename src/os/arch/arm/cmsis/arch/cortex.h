@@ -306,6 +306,35 @@ ALWAYS_INLINE void * __get_LR(void)
 	return psp;
 }
 
+/** Forges shutdown exception frame.
+ * This exception frame sets CPU state to state similar to boot:
+ * Privileged thread mode, MSP used as the stack.
+ * Then exception return is used to load this frame and effectively
+ * shutdown the remainder of the kernel.
+ * After this function is executed, processor will continue running
+ * code pointed to by @ref continue_here in privileged thread mode.
+ */
+ALWAYS_INLINE  void __forge_shutdown_exception_frame(void * continue_here)
+{
+	asm volatile(
+		".syntax unified\n\t"
+		"MOV R0, #0x01000000\n\t"
+		"MOV R1, %0\n\t"
+		"MOV R2, #0\n\t"
+		"MOV LR, #0xFFFFFFF9\n\t" // return to thread mode with MSP
+		"PUSH {R0}\n\t" // xPSR
+		"PUSH {R1}\n\t" // PC
+		"PUSH {R2}\n\t" // LR - NULL, point of no return
+		"PUSH {R2}\n\t" // R12
+		"PUSH {R2}\n\t" // R3
+		"PUSH {R2}\n\t" // R2
+		"PUSH {R2}\n\t" // R1
+		"PUSH {R2}\n\t" // R0
+		"BX LR"
+		:
+		: "r" (continue_here)
+	);
+}
 
 
 /// @}

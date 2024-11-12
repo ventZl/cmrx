@@ -93,6 +93,43 @@ void os_boot_thread(Thread_t boot_thread)
 
 }
 
+__attribute__((noreturn)) void os_reset_cpu()
+{
+	SCB->AIRCR = (0x5FA<<SCB_AIRCR_VECTKEY_Pos)|SCB_AIRCR_SYSRESETREQ_Msk;
+}
+
+
+/** Default CMRX shutdown handler for ARM CPUs
+ * This is default action after for when the CMRX kernel is shutdown.
+ * It will reset the CPU. If you want to perform different action, then
+ * provide your function called `cmrx_shutdown_handler. It will override
+ * this one.
+ * @note Your function should not return nor try to restart CMRX kernel.
+ * If you want to restart the kernel, then perform CPU reset first.
+ */
+__attribute__((weak)) void cmrx_shutdown_handler(void)
+{
+	os_reset_cpu();
+}
+
+/** Perform the kernel shutdown.
+ * This is platform-specific way of how to shutdown the kernel. In this case
+ * an interrupt frame is forged on stack that will resemble a frame returning
+ * back to the @ref cmrx_shutdown_handler function. The result of running
+ * this function will be that the processor leaves the handler mode, enters
+ * privileged thread mode and will be using MSP.
+ */
+/// @cond IGNORE
+__attribute__((noreturn, naked))
+/// @endcond
+void os_kernel_shutdown()
+{
+	__set_CONTROL(0); // SPSEL = 0 | nPRIV = 0; use MSP and privileged thread mode
+
+	__forge_shutdown_exception_frame(cmrx_shutdown_handler);
+}
+
+
 int os_set_syscall_return_value(Thread_t thread_id, int32_t retval)
 {
     struct OS_thread_t * thread = os_thread_get(thread_id);

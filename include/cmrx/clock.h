@@ -63,12 +63,13 @@
  * given delay. This is the only function, whose implementation is mandatory and
  * whose prototype nor behavior cannot be changed.
  * If kernel calls this function, then timing provider must reconfigure itself
- * so that it will be able to call the kernel as close as possible to time 
+ * so that it will be able to call back to the kernel as close as possible to time
  * @ref delay_us microseconds in the future. This must happen even if kernel
  * previously signalized that there is no expected timed event and timers were 
  * turned off entirely.
  * @param [in] delay_us delay time, in microseconds after which kernel shall be 
- * called by the timing provider.
+ * called by the timing provider. The value of 0 means that timing provider should
+ * not trigger the kernel timer callback until further notice.
  * @note This function is guarranteed to be called from kernel context.
  */
 void timing_provider_schedule(long delay_us);
