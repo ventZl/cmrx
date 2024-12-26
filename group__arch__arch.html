@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('group__arch__arch.html',''); initResiz
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Porting layer<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a></div></div></div>
 </div><!--header-->
@@ -107,6 +108,12 @@ $(document).ready(function(){initNavTree('group__arch__arch.html',''); initResiz
 <p>Description of CMRX porting layer.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html">Arch_State_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ARM-specific architecture state of a thread.  <a href="structArch__State__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga406768807186211937d0ae289490231d" id="r_ga406768807186211937d0ae289490231d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga406768807186211937d0ae289490231d">os_ipi_sync_request</a> ()</td></tr>
@@ -154,6 +161,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2b0268c1c8ecd0d6e3194f0f52be350c" id="r_ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
 <tr class="memdesc:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_return syscall.  <br /></td></tr>
 <tr class="separator:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga439fecf5da5136ef742a9a568c0f197d" id="r_ga439fecf5da5136ef742a9a568c0f197d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga439fecf5da5136ef742a9a568c0f197d">os_thread_initialize_arch</a> (struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *thread)</td></tr>
+<tr class="memdesc:ga439fecf5da5136ef742a9a568c0f197d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize architecture-specific initialization of thread.  <br /></td></tr>
+<tr class="separator:ga439fecf5da5136ef742a9a568c0f197d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1e4c4f6735a5acd050873acdb00cdbf" id="r_gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a> ()</td></tr>
 <tr class="memdesc:gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides count of statically initialized threads.  <br /></td></tr>
 <tr class="separator:gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -742,6 +752,27 @@ Port implementation sources</h1>
 <p>Unlock the "big kernel lock". </p>
 <p>This function ends the critical setion within kernel.</p>
 <p>This function is part of the porting layer but depends heavily on target CPU. It may be left the be implemented by the user. Once this function is called the code must make sure that any other core potentially being blocked by parallel call to os_smp_lock() will be unlocked and continue execution. </p>
+
+</div>
+</div>
+<a id="ga439fecf5da5136ef742a9a568c0f197d" name="ga439fecf5da5136ef742a9a568c0f197d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga439fecf5da5136ef742a9a568c0f197d">&#9670;&#160;</a></span>os_thread_initialize_arch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_thread_initialize_arch </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td>
+          <td class="paramname"><em>thread</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finalize architecture-specific initialization of thread. </p>
+<p>This routine is called when thread has been created. It has opportunity to perform architecture-specific default-initialization of the thread. </p><dl class="section note"><dt>Note</dt><dd>To save some CPU cycles, you can define this function as an empty macro if it is not used. In that case the <a class="el" href="structArch__State__t.html">Arch_State_t</a> should be an empty structure. </dd></dl>
 
 </div>
 </div>

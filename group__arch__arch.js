@@ -1,5 +1,6 @@
 var group__arch__arch =
 [
+    [ "Arch_State_t", "structArch__State__t.html", null ],
     [ "coreid", "group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345", null ],
     [ "mpu_init_stack", "group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399", null ],
     [ "mpu_restore", "group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc", null ],
@@ -20,6 +21,7 @@ var group__arch__arch =
     [ "os_set_syscall_return_value", "group__arch__arch.html#gabb3070fe93f5997763b5685b81288f5c", null ],
     [ "os_smp_lock", "group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826", null ],
     [ "os_smp_unlock", "group__arch__arch.html#gad026c280d52436bedf3e3643900d735f", null ],
+    [ "os_thread_initialize_arch", "group__arch__arch.html#ga439fecf5da5136ef742a9a568c0f197d", null ],
     [ "os_thread_populate_stack", "group__arch__arch.html#ga1f714f6892c35a090439a7071ddadf46", null ],
     [ "static_init_process_count", "group__arch__arch.html#gad4128fe30c4eef560ae2dc025e89abf2", null ],
     [ "static_init_process_table", "group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e", null ],

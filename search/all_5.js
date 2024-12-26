@@ -23,10 +23,11 @@ var searchData=
   ['esyscalls_20',['eSysCalls',['../group__os__syscall.html#ga31e8f196f246216d32eec552c2640f8c',1,'syscalls.h']]],
   ['event_5ft_21',['Event_t',['../group__os__kernel.html#ga680eadb82b6578f258791cef85501af2',1,'runtime.h']]],
   ['eventtypes_22',['EventTypes',['../group__os__notify.html#ga914d2da0ec9f0e22cd5e400bc1f968b8',1,'notify.h']]],
-  ['evt_5fthread_5fdone_23',['EVT_THREAD_DONE',['../group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a4b77aeb003d7f63c4e18bb932aeeebcf',1,'notify.h']]],
-  ['evt_5fuserspace_5fnotification_24',['EVT_USERSPACE_NOTIFICATION',['../group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a5033f65040585671eaa747a7a982ab41',1,'notify.h']]],
-  ['exception_5fframe_5fsize_25',['EXCEPTION_FRAME_SIZE',['../group__arch__arm__cortex.html#gacf4dbaf7327b08d6a31c584b1aa200b8',1,'cortex.h']]],
-  ['exceptionframe_26',['ExceptionFrame',['../structExceptionFrame.html',1,'']]],
-  ['execution_20model_27',['Execution Model',['../exec_model.html',1,'overview']]],
-  ['exit_5fstatus_28',['exit_status',['../structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf',1,'OS_thread_t']]]
+  ['evt_5finitialized_23',['EVT_INITIALIZED',['../group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a49da2fc18df08b163d8b7bcf4b8f0f55',1,'notify.h']]],
+  ['evt_5fthread_5fdone_24',['EVT_THREAD_DONE',['../group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a4b77aeb003d7f63c4e18bb932aeeebcf',1,'notify.h']]],
+  ['evt_5fuserspace_5fnotification_25',['EVT_USERSPACE_NOTIFICATION',['../group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a5033f65040585671eaa747a7a982ab41',1,'notify.h']]],
+  ['exception_5fframe_5fsize_26',['EXCEPTION_FRAME_SIZE',['../group__arch__arm__cortex.html#gacf4dbaf7327b08d6a31c584b1aa200b8',1,'cortex.h']]],
+  ['exceptionframe_27',['ExceptionFrame',['../structExceptionFrame.html',1,'']]],
+  ['execution_20model_28',['Execution Model',['../exec_model.html',1,'overview']]],
+  ['exit_5fstatus_29',['exit_status',['../structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf',1,'OS_thread_t']]]
 ];

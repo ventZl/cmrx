@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['barrier_5ft_0',['barrier_t',['../structbarrier__t.html',1,'']]],
-  ['basicqueue_1',['BasicQueue',['../structBasicQueue.html',1,'']]]
+  ['arch_5fstate_5ft_0',['Arch_State_t',['../structArch__State__t.html',1,'']]]
 ];

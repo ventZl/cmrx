@@ -13,12 +13,13 @@ var searchData=
   ['and_20header_20directories_10',['Source and header directories',['../dev_env.html#autotoc_md22',1,'']]],
   ['and_20read_20only_20data_11',['Code and read-only data',['../mem_model.html#autotoc_md2',1,'']]],
   ['api_12',['api',['../group__api.html',1,'Kernel API'],['../group__api__standard.html',1,'Standard API'],['../group__api__timing.html',1,'Timing provider API']]],
-  ['architecture_20support_13',['Architecture support',['../group__arch.html',1,'']]],
-  ['arm_20mpu_20ctrl_20fields_14',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
-  ['arm_20mpu_20rasr_20fields_15',['ARM MPU RASR fields',['../group__arm__mpu__rars.html',1,'']]],
-  ['arm_20mpu_20rbar_20fields_16',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],
-  ['arm_20mpu_20register_20aliases_17',['ARM MPU register aliases',['../group__arm__mpu__registers.html',1,'']]],
-  ['arm_20port_18',['ARM port',['../group__arch__arm.html',1,'']]],
-  ['assertions_19',['Assertions',['../group__util__assert.html',1,'']]],
-  ['asynchronous_20delays_20involving_20power_20management_20',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]]
+  ['arch_5fstate_5ft_13',['Arch_State_t',['../structArch__State__t.html',1,'']]],
+  ['architecture_20support_14',['Architecture support',['../group__arch.html',1,'']]],
+  ['arm_20mpu_20ctrl_20fields_15',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
+  ['arm_20mpu_20rasr_20fields_16',['ARM MPU RASR fields',['../group__arm__mpu__rars.html',1,'']]],
+  ['arm_20mpu_20rbar_20fields_17',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],
+  ['arm_20mpu_20register_20aliases_18',['ARM MPU register aliases',['../group__arm__mpu__registers.html',1,'']]],
+  ['arm_20port_19',['ARM port',['../group__arch__arm.html',1,'']]],
+  ['assertions_20',['Assertions',['../group__util__assert.html',1,'']]],
+  ['asynchronous_20delays_20involving_20power_20management_21',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]]
 ];

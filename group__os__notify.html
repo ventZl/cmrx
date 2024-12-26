@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('group__os__notify.html',''); initResiz
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Notifications<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
@@ -108,9 +109,15 @@ $(document).ready(function(){initNavTree('group__os__notify.html',''); initResiz
 <p>Kernel internals supporting cross-process notifications.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gacf0edd8a8af5d5cd5b2012f7260a9265" id="r_gacf0edd8a8af5d5cd5b2012f7260a9265"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#gacf0edd8a8af5d5cd5b2012f7260a9265">OS_NOTIFY_INVALID</a>&#160;&#160;&#160;0xFFFFFFFF</td></tr>
+<tr class="separator:gacf0edd8a8af5d5cd5b2012f7260a9265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga914d2da0ec9f0e22cd5e400bc1f968b8" id="r_ga914d2da0ec9f0e22cd5e400bc1f968b8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga914d2da0ec9f0e22cd5e400bc1f968b8">EventTypes</a> { <a class="el" href="group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a5033f65040585671eaa747a7a982ab41">EVT_USERSPACE_NOTIFICATION</a> = 0
+, <a class="el" href="group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a49da2fc18df08b163d8b7bcf4b8f0f55">EVT_INITIALIZED</a>
 , <a class="el" href="group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a4b77aeb003d7f63c4e18bb932aeeebcf">EVT_THREAD_DONE</a>
 , <a class="el" href="group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8af39165d0929ab62c500ec221f3045d26">_EVT_COUNT</a>
  }</td></tr>
@@ -119,12 +126,18 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga00e41bc3040822177a33c884e6d636f3" id="r_ga00e41bc3040822177a33c884e6d636f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga00e41bc3040822177a33c884e6d636f3">os_notify_init</a> ()</td></tr>
+<tr class="memdesc:ga00e41bc3040822177a33c884e6d636f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the notification structure This will initialize internal notification buffers to the default unused state.  <br /></td></tr>
+<tr class="separator:ga00e41bc3040822177a33c884e6d636f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5979f2a094569c177e9e69da6a655dc1" id="r_ga5979f2a094569c177e9e69da6a655dc1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga5979f2a094569c177e9e69da6a655dc1">os_notify_object</a> (const void *object, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a> event)</td></tr>
 <tr class="memdesc:ga5979f2a094569c177e9e69da6a655dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume one thread that are waiting for this object.  <br /></td></tr>
 <tr class="separator:ga5979f2a094569c177e9e69da6a655dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1b959b83e59e9d0ec11c42099e34be24" id="r_ga1b959b83e59e9d0ec11c42099e34be24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga1b959b83e59e9d0ec11c42099e34be24">os_wait_for_object</a> (const void *object, <a class="el" href="group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e">WaitHandler_t</a> callback)</td></tr>
 <tr class="memdesc:ga1b959b83e59e9d0ec11c42099e34be24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for object.  <br /></td></tr>
 <tr class="separator:ga1b959b83e59e9d0ec11c42099e34be24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64fe2129fb7405446b74a9821bb85ee1" id="r_ga64fe2129fb7405446b74a9821bb85ee1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga64fe2129fb7405446b74a9821bb85ee1">os_initialize_waitable_object</a> (const void *object)</td></tr>
+<tr class="memdesc:ga64fe2129fb7405446b74a9821bb85ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize waitable object.  <br /></td></tr>
+<tr class="separator:ga64fe2129fb7405446b74a9821bb85ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacaf7a04c1911b5a8637485aaa5189b52" id="r_gacaf7a04c1911b5a8637485aaa5189b52"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#gacaf7a04c1911b5a8637485aaa5189b52">os_sys_notify_object</a> (const void *object)</td></tr>
 <tr class="memdesc:gacaf7a04c1911b5a8637485aaa5189b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of notify_object syscall.  <br /></td></tr>
 <tr class="separator:gacaf7a04c1911b5a8637485aaa5189b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,6 +149,21 @@ Functions</h2></td></tr>
 <p>Kernel internals supporting cross-process notifications. </p>
 <p>Notifications are concept that can be used to notify other threads implicitly without knowing their identity. The identity of notified thread is established based on the match of the object notified and waited for.</p>
 <p>Thread which is waiting for notification can install a kernel-space callback that gets called before the thread is resumed. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gacf0edd8a8af5d5cd5b2012f7260a9265" name="gacf0edd8a8af5d5cd5b2012f7260a9265"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacf0edd8a8af5d5cd5b2012f7260a9265">&#9670;&#160;</a></span>OS_NOTIFY_INVALID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define OS_NOTIFY_INVALID&#160;&#160;&#160;0xFFFFFFFF</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga914d2da0ec9f0e22cd5e400bc1f968b8" name="ga914d2da0ec9f0e22cd5e400bc1f968b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga914d2da0ec9f0e22cd5e400bc1f968b8">&#9670;&#160;</a></span>EventTypes</h2>
@@ -153,7 +181,9 @@ Functions</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga914d2da0ec9f0e22cd5e400bc1f968b8a5033f65040585671eaa747a7a982ab41" name="gga914d2da0ec9f0e22cd5e400bc1f968b8a5033f65040585671eaa747a7a982ab41"></a>EVT_USERSPACE_NOTIFICATION&#160;</td><td class="fielddoc"><p>Plain userspace notification done via notify_object syscall. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga914d2da0ec9f0e22cd5e400bc1f968b8a4b77aeb003d7f63c4e18bb932aeeebcf" name="gga914d2da0ec9f0e22cd5e400bc1f968b8a4b77aeb003d7f63c4e18bb932aeeebcf"></a>EVT_THREAD_DONE&#160;</td><td class="fielddoc"><p>Emitted in case thread. </p>
+<tr><td class="fieldname"><a id="gga914d2da0ec9f0e22cd5e400bc1f968b8a49da2fc18df08b163d8b7bcf4b8f0f55" name="gga914d2da0ec9f0e22cd5e400bc1f968b8a49da2fc18df08b163d8b7bcf4b8f0f55"></a>EVT_INITIALIZED&#160;</td><td class="fielddoc"><p>Waitable object has been re-initialized. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga914d2da0ec9f0e22cd5e400bc1f968b8a4b77aeb003d7f63c4e18bb932aeeebcf" name="gga914d2da0ec9f0e22cd5e400bc1f968b8a4b77aeb003d7f63c4e18bb932aeeebcf"></a>EVT_THREAD_DONE&#160;</td><td class="fielddoc"><p>Emitted in case thread is terminated. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga914d2da0ec9f0e22cd5e400bc1f968b8af39165d0929ab62c500ec221f3045d26" name="gga914d2da0ec9f0e22cd5e400bc1f968b8af39165d0929ab62c500ec221f3045d26"></a>_EVT_COUNT&#160;</td><td class="fielddoc"></td></tr>
 </table>
@@ -204,6 +234,51 @@ Functions</h2></td></tr>
 <p>Callback on receiving a notification. </p>
 <dl class="section warning"><dt>Warning</dt><dd>This callback is not executed within the context of the notified thread, rather in the context of notifying thread. The state of notified thread is largely pre-notification at this point.</dd></dl>
 <p>Callback can not assume anything about the future state of the thread post this notification other than the thread will become READY for scheduling. </p>
+
+</div>
+</div>
+<a id="ga64fe2129fb7405446b74a9821bb85ee1" name="ga64fe2129fb7405446b74a9821bb85ee1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga64fe2129fb7405446b74a9821bb85ee1">&#9670;&#160;</a></span>os_initialize_waitable_object()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_initialize_waitable_object </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>object</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize waitable object. </p>
+<p>Call to this function will initialize clean state: no one is waiting, no one had notified this particular object. If any notifications were pending for this object they will be deleted. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td>address of the object for which notifications are being initialized </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga00e41bc3040822177a33c884e6d636f3" name="ga00e41bc3040822177a33c884e6d636f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00e41bc3040822177a33c884e6d636f3">&#9670;&#160;</a></span>os_notify_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_notify_init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the notification structure This will initialize internal notification buffers to the default unused state. </p>
 
 </div>
 </div>
