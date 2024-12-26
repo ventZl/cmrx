@@ -2,6 +2,79 @@
 #include "runtime.h"
 #include "sched.h"
 #include "txn.h"
+#include <cmrx/assert.h>
+#include <conf/kernel.h>
+
+const void * os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
+
+void os_notify_init()
+{
+    for (unsigned q = 0; q < OS_NOTIFICATION_BUFFER_SIZE; ++q)
+    {
+        os_notification_buffer[q] = (const void *) OS_NOTIFY_INVALID;
+    }
+}
+
+int os_initialize_waitable_object(const void* object)
+{
+    Txn_t txn_id = 0;
+    Thread_t thread_id = 0;
+    bool awaken = false;
+    do {
+        txn_id = os_txn_start();
+        if (os_threads[thread_id].state == THREAD_STATE_WAITING
+            &&  os_threads[thread_id].wait_object == object)
+        {
+            if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK)
+            {
+                struct OS_thread_t * notified_thread = &os_threads[thread_id];
+                awaken = true;
+                notified_thread->state = THREAD_STATE_READY;
+                if (notified_thread->wait_callback != NULL)
+                {
+                    notified_thread->wait_callback(object, thread_id, EVT_USERSPACE_NOTIFICATION);
+                    notified_thread->wait_callback = NULL;
+                }
+
+                notified_thread->wait_object = NULL;
+                os_txn_done();
+            } else {
+                txn_id = os_txn_start();
+                continue;
+            }
+
+            txn_id = os_txn_start();
+        }
+        thread_id++;
+    } while (thread_id < OS_THREADS);
+
+    uint8_t entry_id = 0;
+    txn_id = os_txn_start();
+    do {
+        if (os_notification_buffer[entry_id] == object)
+        {
+            if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK)
+            {
+                os_notification_buffer[entry_id] = (void *) OS_NOTIFY_INVALID;
+                os_txn_done();
+            }
+            else
+            {
+                txn_id = os_txn_start();
+                continue;
+            }
+
+            txn_id = os_txn_start();
+        }
+        entry_id++;
+    } while (entry_id < OS_NOTIFICATION_BUFFER_SIZE);
+
+    if (awaken)
+    {
+        os_sched_yield();
+    }
+}
+
 
 int os_notify_object(const void * object, Event_t event)
 {
@@ -38,7 +111,20 @@ int os_notify_object(const void * object, Event_t event)
 
         notified_thread->wait_object = NULL;
     }
+    else
+    {
+
+        for (uint8_t entry_id = 0; entry_id < OS_NOTIFICATION_BUFFER_SIZE; ++entry_id)
+        {
+            if (os_notification_buffer[entry_id] == (void *) OS_NOTIFY_INVALID)
+            {
+                os_notification_buffer[entry_id] = object;
+                break;
+            }
+        }
+    }
     os_txn_done();
+
     if (candidate_priority != 0xFF)
     {
         os_sched_yield();
@@ -87,6 +173,7 @@ int os_sys_wait_for_object(const void * object, uint32_t timeout)
 
 int os_wait_for_object(const void * object, WaitHandler_t callback)
 {
+
     Txn_t txn_id = os_txn_start();
 
     Thread_t current_thread = os_get_current_thread();
@@ -94,11 +181,27 @@ int os_wait_for_object(const void * object, WaitHandler_t callback)
     while (thread_state == THREAD_STATE_READY || thread_state == THREAD_STATE_RUNNING)
     {
         if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK) {
-            os_threads[current_thread].state = THREAD_STATE_WAITING;
-            os_threads[current_thread].wait_object = object;
-            os_threads[current_thread].wait_callback = callback;
+            bool pending = false;
+            for (uint8_t entry_id = 0; entry_id < OS_NOTIFICATION_BUFFER_SIZE; ++entry_id)
+            {
+                if (os_notification_buffer[entry_id] == object)
+                {
+                    os_notification_buffer[entry_id] = (void *) OS_NOTIFY_INVALID;
+                    pending = true;
+                    break;
+                }
+            }
+            if (!pending)
+            {
+                os_threads[current_thread].state = THREAD_STATE_WAITING;
+                os_threads[current_thread].wait_object = object;
+                os_threads[current_thread].wait_callback = callback;
+            }
             os_txn_done();
-            os_sched_yield();
+            if (!pending)
+            {
+                os_sched_yield();
+            }
             return E_OK;
         } else {
             txn_id = os_txn_start();

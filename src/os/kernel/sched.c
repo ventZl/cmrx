@@ -543,6 +543,7 @@ __attribute__((noreturn)) void _os_start(uint8_t start_core)
         kernel_structs_initialized = KERNEL_STRUCTS_INITIALIZED_SIGNATURE;
         memset(&os_threads, 0, sizeof(os_threads));
         os_timer_init();
+        os_notify_init();
     }
     os_smp_unlock();
 

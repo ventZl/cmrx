@@ -20,10 +20,21 @@ enum EventTypes {
 	/// Plain userspace notification done via notify_object syscall
 	EVT_USERSPACE_NOTIFICATION = 0,
 
-    /// Emitted in case thread
+	/// Waitable object has been re-initialized
+	EVT_INITIALIZED,
+
+    /// Emitted in case thread is terminated
     EVT_THREAD_DONE,
 	_EVT_COUNT
 };
+
+#define OS_NOTIFY_INVALID 0xFFFFFFFF
+
+/** Initialize the notification structure
+ * This will initialize internal notification buffers to the default
+ * unused state.
+ */
+void os_notify_init();
 
 /** Resume one thread that are waiting for this object.
  * This function will find one single thread which is waiting for this particular
@@ -46,6 +57,14 @@ int os_notify_object(const void * object, Event_t event);
  * waiting for something.
  */
 int os_wait_for_object(const void * object, WaitHandler_t callback);
+
+/** Initialize waitable object.
+ * Call to this function will initialize clean state: no one is waiting, no one had notified
+ * this particular object. If any notifications were pending for this object they will be
+ * deleted.
+ * @param object address of the object for which notifications are being initialized
+ */
+int os_initialize_waitable_object(const void * object);
 
 /** Implementation of notify_object syscall.
  * This is a wrapper around os_notify_object system call. It does some additional
