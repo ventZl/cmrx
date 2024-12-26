@@ -13,6 +13,11 @@ CTEST_DATA(os_notify_wait_object) {
 };
 
 CTEST_SETUP(os_notify_wait_object) {
+    for (unsigned q = 0; q < OS_THREADS; ++q)
+    {
+        os_threads[q].wait_object = NULL;
+    }
+
     os_threads[0].state = THREAD_STATE_RUNNING;
     os_threads[0].priority = 32;
 
@@ -33,6 +38,8 @@ CTEST_SETUP(os_notify_wait_object) {
 
     core[0].thread_current = 0;
 
+    os_notify_init();
+
     notify_called = false;
     notify_object = NULL;
     notify_thread = 0;
@@ -40,6 +47,7 @@ CTEST_SETUP(os_notify_wait_object) {
 }
 
 static void * const object_magic = (void *) 0x12345678;
+static void * const another_object_magic = (void *) 0x87654321;
 
 CTEST2(os_notify_wait_object, os_wait_object) {
     int rv = os_wait_for_object(object_magic, NULL);
@@ -192,4 +200,66 @@ CTEST2(os_notify_wait_object, os_notify_callback) {
     ASSERT_EQUAL(notify_called, true);
     ASSERT_EQUAL((long) notify_object, (long) object_magic);
     ASSERT_EQUAL(notify_event, 42);
+}
+
+CTEST2(os_notify_wait_object, os_notify_different_object) {
+    int rv = os_wait_for_object(object_magic, NULL);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    rv = os_notify_object(another_object_magic, 42);
+
+    ASSERT_EQUAL(rv, E_OK);
+    ASSERT_EQUAL(notify_called, false);
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL((long) os_threads[0].wait_object, (long) object_magic);
+}
+
+CTEST2(os_notify_wait_object, os_notify_missed) {
+    // Notification, that aims at object nobody is waiting for right now
+    int rv = os_notify_object(object_magic, 42);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    rv = os_wait_for_object(object_magic, cb_object_notify);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
+}
+
+CTEST2(os_notify_wait_object, os_notify_missed_different_object) {
+    // Notification, that aims at object nobody is waiting for right now
+    int rv = os_notify_object(object_magic, 42);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    rv = os_wait_for_object(another_object_magic, cb_object_notify);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL((long) os_threads[0].wait_object, (long) another_object_magic);
+}
+
+CTEST2(os_notify_wait_object, os_notify_missed_acts_once) {
+    // Notification, that aims at object nobody is waiting for right now
+    int rv = os_notify_object(object_magic, 42);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    rv = os_wait_for_object(object_magic, cb_object_notify);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
+
+    rv = os_wait_for_object(object_magic, NULL);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL((long) os_threads[0].wait_object, (long) object_magic);
 }

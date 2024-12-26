@@ -43,6 +43,7 @@ static SYSCALL_DEFINITION struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_SIGNAL, (Syscall_Handler_t) &os_signal },
 	{ SYSCALL_KILL, (Syscall_Handler_t) &os_kill },
 	{ SYSCALL_SETPRIORITY, (Syscall_Handler_t) &os_setpriority },
+	{ SYSCALL_INIT_WAITABLE_OBJECT, (Syscall_Handler_t) &os_initialize_waitable_object },
 	{ SYSCALL_NOTIFY_OBJECT, (Syscall_Handler_t) &os_sys_notify_object },
 	{ SYSCALL_WAIT_FOR_OBJECT, (Syscall_Handler_t) &os_sys_wait_for_object },
 	{ SYSCALL_CPUFREQ_GET, (Syscall_Handler_t) &os_cpu_freq_get },
