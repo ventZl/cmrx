@@ -4,6 +4,7 @@ var group__os__config =
     [ "KERNEL_HAS_MEMORY_PROTECTION", "group__os__config.html#gaf7702691bbc4eaf9070b56a3b8d53c82", null ],
     [ "MPU_HOSTED_STATE_SIZE", "group__os__config.html#ga50b141877ee78028195328399caf0d6a", null ],
     [ "MPU_STATE_SIZE", "group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e", null ],
+    [ "OS_NOTIFICATION_BUFFER_SIZE", "group__os__config.html#gaff122f76bb637d29be60bec7a35abc62", null ],
     [ "OS_NUM_CORES", "group__os__config.html#ga1efb4303a8fe3497b166ba0e18be3477", null ],
     [ "OS_PROCESSES", "group__os__config.html#gacac8dbdebb899857ee307d8c8d917392", null ],
     [ "OS_STACK_SIZE", "group__os__config.html#ga9fdcaeee2ac8d68ac5fbbcd450fd08da", null ],
