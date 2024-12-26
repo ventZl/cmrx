@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('structQueueInterface.html',''); initRe
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="structQueue.html" title="Queue structure.">Queue</a> object interface.  
+<p><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> object interface.  
  <a href="structQueueInterface.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -123,7 +123,7 @@ Data Fields</h2></td></tr>
 <tr class="separator:ad826f2ff621e2220098e591056b4a42c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="structQueue.html" title="Queue structure.">Queue</a> object interface. </p>
+<div class="textblock"><p><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> object interface. </p>
 <p>This API allows use of queue previously allocated via <a class="el" href="structQueueServiceInterface.html">QueueServiceInterface</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="ad826f2ff621e2220098e591056b4a42c" name="ad826f2ff621e2220098e591056b4a42c"></a>
@@ -139,7 +139,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destroy queue. </p>
-<p>This will destroy this queue. Further calls to this queue will fail. <a class="el" href="structQueue.html" title="Queue structure.">Queue</a> can be allocated to another process in the future. </p>
+<p>This will destroy this queue. Further calls to this queue will fail. <a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> can be allocated to another process in the future. </p>
 
 </div>
 </div>
@@ -204,7 +204,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send data via the queue. </p>
-<p>This will copy data into queue. <a class="el" href="structQueue.html" title="Queue structure.">Queue</a> must be initialized before this call is made. The size of data is determined based on value of <code>item_size</code> used during queue initialization.</p>
+<p>This will copy data into queue. <a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> must be initialized before this call is made. The size of data is determined based on value of <code>item_size</code> used during queue initialization.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">this</td><td>will be provided by the RPC call mechanism </td></tr>

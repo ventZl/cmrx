@@ -113,15 +113,15 @@ $(document).ready(function(){initNavTree('group__queue__server.html',''); initRe
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structQueueInterface.html">QueueInterface</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structQueue.html" title="Queue structure.">Queue</a> object interface.  <a href="structQueueInterface.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> object interface.  <a href="structQueueInterface.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structQueueObject.html">QueueObject</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structQueueServiceInterface.html">QueueServiceInterface</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structQueue.html" title="Queue structure.">Queue</a> Service interface.  <a href="structQueueServiceInterface.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> Service interface.  <a href="structQueueServiceInterface.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structQueueService.html">QueueService</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structQueue.html" title="Queue structure.">Queue</a> Server internals.  <a href="structQueueService.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> Server internals.  <a href="structQueueService.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -137,7 +137,7 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:ga5de064241e0a2728ed0e0ea9a7991911" id="r_ga5de064241e0a2728ed0e0ea9a7991911"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structQueueService.html">QueueService</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__queue__server.html#ga5de064241e0a2728ed0e0ea9a7991911">queue_server</a></td></tr>
-<tr class="memdesc:ga5de064241e0a2728ed0e0ea9a7991911"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structQueue.html" title="Queue structure.">Queue</a> server instance for RPC calls.  <br /></td></tr>
+<tr class="memdesc:ga5de064241e0a2728ed0e0ea9a7991911"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> server instance for RPC calls.  <br /></td></tr>
 <tr class="separator:ga5de064241e0a2728ed0e0ea9a7991911"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -148,7 +148,7 @@ Variables</h2></td></tr>
 <div class="ttc" id="agroup__queue__server_html_ga5de064241e0a2728ed0e0ea9a7991911"><div class="ttname"><a href="group__queue__server.html#ga5de064241e0a2728ed0e0ea9a7991911">queue_server</a></div><div class="ttdeci">struct QueueService * queue_server</div><div class="ttdoc">Queue server instance for RPC calls.</div><div class="ttdef"><b>Definition</b> queue_server.c:75</div></div>
 </div><!-- fragment --><p>into CMakeLists.txt.</p>
 <p>This will include the queue server and enable services described in this document.</p>
-<p><a class="el" href="structQueue.html" title="Queue structure.">Queue</a> server behaves as a pretty standard <a class="el" href="rpc_intro.html">remote procedure call server</a>. You need a server instance in order to be able to work with queues. <a class="el" href="structQueue.html" title="Queue structure.">Queue</a> server always creates one publicly available instance.</p>
+<p><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> server behaves as a pretty standard <a class="el" href="rpc_intro.html">remote procedure call server</a>. You need a server instance in order to be able to work with queues. <a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> server always creates one publicly available instance.</p>
 <p>Application can call queue service to create a new queue such as:</p>
 <div class="fragment"><div class="line"><a class="code hl_define" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a>(<a class="code hl_variable" href="group__queue__server.html#ga5de064241e0a2728ed0e0ea9a7991911">queue_server</a>, create, ...)</div>
 <div class="ttc" id="agroup__api__rpc_html_ga896b17abf6ce670f5000ac4a0852393f"><div class="ttname"><a href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a></div><div class="ttdeci">#define rpc_call(service_instance, method_name,...)</div><div class="ttdoc">User-visible way to perform remote procedure call.</div><div class="ttdef"><b>Definition</b> rpc.h:112</div></div>
@@ -204,7 +204,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="structQueue.html" title="Queue structure.">Queue</a> server instance for RPC calls. </p>
+<p><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> server instance for RPC calls. </p>
 <p>This is publicly available instance of queue server. You can use it to call <a class="el" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call()</a> using interface defined in <a class="el" href="structQueueServiceInterface.html">QueueServiceInterface</a>. </p>
 
 </div>

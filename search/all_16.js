@@ -5,5 +5,5 @@ var searchData=
   ['wait_5fobject_2',['wait_object',['../structOS__thread__t.html#aba0c89a1f04ad1917ac3280af46e1ffc',1,'OS_thread_t']]],
   ['waithandler_5ft_3',['WaitHandler_t',['../group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e',1,'runtime.h']]],
   ['write_4',['write',['../structComSinkVMT.html#a8645e2cc8b7f8f1fabd52ee6114f8002',1,'ComSinkVMT::write'],['../structComChannelVMT.html#a747071b4cb78b127049872fd3adaae4f',1,'ComChannelVMT::write']]],
-  ['write_5fcursor_5',['write_cursor',['../group__aux__queue.html#gabb86745c37cc2d03b39f1e353949a8f5',1,'Queue']]]
+  ['write_5fcursor_5',['write_cursor',['../group__aux__queue.html#gae6646837b4fc9162cca5407d10b8b766',1,'Queue']]]
 ];

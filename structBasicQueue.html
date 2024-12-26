@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: Queue Struct Reference</title>
+<title>C Microkernel Realtime eXecutive: BasicQueue Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structQueue.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structBasicQueue.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -100,39 +100,34 @@ $(document).ready(function(){initNavTree('structQueue.html',''); initResizable()
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">Queue Struct Reference<div class="ingroups"><a class="el" href="group__libs.html">Libraries</a> &raquo; <a class="el" href="group__aux__queue.html">Queue library</a></div></div></div>
+  <div class="headertitle"><div class="title">BasicQueue Struct Reference<div class="ingroups"><a class="el" href="group__libs.html">Libraries</a> &raquo; <a class="el" href="group__aux__queue.html">Queue library</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Generic queue structure.  
- <a href="structQueue.html#details">More...</a></p>
+<p><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> with 256 bytes of storage preallocated.  
+ <a href="structBasicQueue.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:gae6646837b4fc9162cca5407d10b8b766" id="r_gae6646837b4fc9162cca5407d10b8b766"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gae6646837b4fc9162cca5407d10b8b766">write_cursor</a></td></tr>
-<tr class="separator:gae6646837b4fc9162cca5407d10b8b766"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac72a9f364bebedad5630ba56ef52aa7c" id="r_gac72a9f364bebedad5630ba56ef52aa7c"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gac72a9f364bebedad5630ba56ef52aa7c">read_cursor</a></td></tr>
-<tr class="separator:gac72a9f364bebedad5630ba56ef52aa7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0aacd5630786ba373424343593e7755b" id="r_ga0aacd5630786ba373424343593e7755b"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga0aacd5630786ba373424343593e7755b">empty</a></td></tr>
-<tr class="separator:ga0aacd5630786ba373424343593e7755b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37e4b62f3fa7794622481dba035f3b12" id="r_ga37e4b62f3fa7794622481dba035f3b12"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga37e4b62f3fa7794622481dba035f3b12">depth</a></td></tr>
-<tr class="separator:ga37e4b62f3fa7794622481dba035f3b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7ce592d2117e17be583562a544e0f6e" id="r_gaf7ce592d2117e17be583562a544e0f6e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gaf7ce592d2117e17be583562a544e0f6e">item_size</a></td></tr>
-<tr class="separator:gaf7ce592d2117e17be583562a544e0f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c3d232b52fdd2ff01ed578fed30400e" id="r_ga7c3d232b52fdd2ff01ed578fed30400e"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga7c3d232b52fdd2ff01ed578fed30400e">content</a> []</td></tr>
-<tr class="separator:ga7c3d232b52fdd2ff01ed578fed30400e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga508e2cd37abf123f71d9be1846d60e4d" id="r_ga508e2cd37abf123f71d9be1846d60e4d"><td class="memItemLeft" >union {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4bca1cae2cd33ac9082a021677b24ad" id="r_gab4bca1cae2cd33ac9082a021677b24ad"><td class="memItemLeft" >&#160;&#160;&#160;struct <a class="el" href="structQueue.html">Queue</a>&#160;&#160;&#160;<a class="el" href="group__aux__queue.html#gad239d4315bc1e98249fc5d7ab7c34a09">BasicQueue::q</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:gab4bca1cae2cd33ac9082a021677b24ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1071b5920273e6c67b1d9716550fffee" id="r_ga1071b5920273e6c67b1d9716550fffee"><td class="memItemLeft" >&#160;&#160;&#160;unsigned char&#160;&#160;&#160;<a class="el" href="group__aux__queue.html#ga8ad0c0e100f40b8ba03f80bc0754892c">BasicQueue::buffer</a> [sizeof(struct <a class="el" href="structQueue.html">Queue</a>)+<a class="el" href="group__aux__queue.html#ga055729a37bf543876e2ce9d57b95ab7b">QUEUE_LENGTH</a>]&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:ga1071b5920273e6c67b1d9716550fffee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga508e2cd37abf123f71d9be1846d60e4d" id="r_ga508e2cd37abf123f71d9be1846d60e4d"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom">&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:ga508e2cd37abf123f71d9be1846d60e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Generic queue structure. </p>
-<p>This structure provides a header for queue that can be used with routines provided by the queue library. Note that this structure does <em>not</em> allocate any storage space for the queue data itself. It is up on the developer to allocate that space.</p>
-<p>If your use case requires roughly 256 bytes of queue storage, you can use <a class="el" href="structBasicQueue.html">BasicQueue</a> structure to allocate storage for the queue automatically. </p>
+<div class="textblock"><p><a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> with 256 bytes of storage preallocated. </p>
+<p>This provides queue structure with 256 bytes of preallocated storage space. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structQueue.html">Queue</a></li>
+    <li class="navelem"><a class="el" href="structBasicQueue.html">BasicQueue</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
