@@ -25,16 +25,47 @@
 
 #define QUEUE_LENGTH    256
 
-/** Queue structure */
+/** Generic queue structure.
+ * This structure provides a header for queue that can be used with routines provided
+ * by the queue library. Note that this structure does *not* allocate any storage space
+ * for the queue data itself. It is up on the developer to allocate that space.
+ *
+ * If your use case requires roughly 256 bytes of queue storage, you can use @ref BasicQueue
+ * structure to allocate storage for the queue automatically.
+ */
 struct Queue {
-    unsigned char content[QUEUE_LENGTH];
-    volatile uint8_t write_cursor;
-    volatile uint8_t read_cursor;
+    volatile uint16_t write_cursor;
+    volatile uint16_t read_cursor;
     volatile bool empty;
     uint8_t depth;
     uint8_t item_size;
-
+    unsigned char content[];
 };
+
+/** Queue with 256 bytes of storage preallocated.
+ * This provides queue structure with 256 bytes of preallocated storage space.
+ */
+struct BasicQueue {
+  union {
+    struct Queue q;
+    unsigned char buffer[sizeof(struct Queue) + QUEUE_LENGTH];
+  };
+};
+
+/** Create queue with custom storage allocation size.
+ * This is a helper macro that defines queue with developer-specified size
+ * of the queue data storage. Suitable for cases where fixed allocation size
+ * of 256 bytes of @ref BasicQueue is either too much or too little.
+ */
+#define STATIC_QUEUE(name, size) \
+struct {\
+    union {\
+        struct Queue q;\
+        unsigned char buffer[sizeof(struct Queue) + QUEUE_LENGTH];\
+    };\
+} name;
+
+//#define unpack_queue(__q) _Generic((__q), struct Queue * : (__q), default: ((__q)->q))
 
 /** Initialize queue structure.
  *
@@ -82,3 +113,10 @@ bool queue_receive(struct Queue * queue, unsigned char * data);
  * @returns true if queue is empty, false otherwise
  */
 bool queue_empty(struct Queue * queue);
+
+/** Tell if queue is already full.
+ *
+ * @param [in] queue pointer to queue queried
+ * @returns true if queue is full false otherwise
+ */
+bool queue_full(struct Queue * queue);

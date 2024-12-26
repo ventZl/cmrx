@@ -1,6 +1,6 @@
-if (NOT UNIT_TESTING_BUILD)
-    add_subdirectory(extra)
-endif()
+include_directories(os)
+
+add_subdirectory(extra)
 add_subdirectory(os)
 if (NOT UNIT_TESTING_BUILD)
     add_subdirectory(lib)
