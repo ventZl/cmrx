@@ -39,7 +39,7 @@ struct OS_core_state_t core[OS_NUM_CORES];
 #define STACK_INVALID       0xFFFFFFFFU
 
 /// @cond IGNORE
-__attribute__((aligned(1024))) 
+__attribute__((aligned(OS_STACK_SIZE)))
 /// @endcond
 /** Thread stacks */
 struct OS_stack_t os_stacks;
