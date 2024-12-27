@@ -56,12 +56,14 @@ struct BasicQueue {
  * This is a helper macro that defines queue with developer-specified size
  * of the queue data storage. Suitable for cases where fixed allocation size
  * of 256 bytes of @ref BasicQueue is either too much or too little.
+ * @param name resulting name of queue variable
+ * @param size size of the buffer in bytes
  */
 #define STATIC_QUEUE(name, size) \
 struct {\
     union {\
         struct Queue q;\
-        unsigned char buffer[sizeof(struct Queue) + QUEUE_LENGTH];\
+        unsigned char buffer[sizeof(struct Queue) + size];\
     };\
 } name;
 
@@ -86,13 +88,31 @@ bool queue_init(struct Queue * queue, uint8_t depth, uint8_t item_size);
  * this call is made. The size of data is determined based on value
  * of `item_size` used during queue initialization.
  *
- * @param [in] queue pointe to queue data is being sent into
- * @param [in] data pointer to data.
+ * @param [in] queue pointer to queue data is being sent into
+ * @param [in] data pointer to data
  * @returns true if data was copied into queue and false if queue is
  * already full
  */
 
-bool queue_send(struct Queue * queue, const unsigned char * data);
+bool queue_send(struct Queue * queue, const void * data);
+
+/** Fills queue without notifying receivers.
+ * This method performs the same action as @ref queue_send() without
+ * actually performing notification of clients waiting for queue
+ * data to be available.
+ * This function may be useful e.g. in the interrupt context where
+ * calling @ref notify_object() is not possible.
+ * @warning It is caller responsibility to perform suitable version
+ * of notification on the queue object, otherwise any potential
+ * receivers which are waiting for the data to arrive will keep
+ * waiting.
+ * @param queue pointer to queue data is being sent into
+ * @param [in] data pointer to data
+ * @returns true if data was copied into queue and false if queue is
+ * already full
+ */
+bool queue_send_silent(struct Queue * queue, const void * data);
+
 
 /** Receive data from queue.
  *
@@ -105,7 +125,7 @@ bool queue_send(struct Queue * queue, const unsigned char * data);
  * @returns true. Returns false in case spurious interrupt occurred
  * and queue is still empty.
  */
-bool queue_receive(struct Queue * queue, unsigned char * data);
+bool queue_receive(struct Queue * queue, void * data);
 
 /** Returns queue status.
  *

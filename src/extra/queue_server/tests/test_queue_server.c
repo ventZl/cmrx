@@ -7,7 +7,21 @@ STATIC_QUEUE(queue, 256);
 #define TEST_QUEUE_DEPTH 16
 #define TEST_QUEUE_ITEM_SIZE 12
 
+static bool wait_for_object_called = false;
+static void * wait_for_object_addr = NULL;
+
+static bool notify_object_called = false;
+static void * notify_object_addr = NULL;
+
+int notify_object(void * addr) {
+    notify_object_called = true;
+    notify_object_addr = addr;
+    return 0;
+}
+
 int wait_for_object(void * addr, int timeout) {
+    wait_for_object_called = true;
+    wait_for_object_addr = addr;
     return 0;
 }
 
@@ -16,15 +30,24 @@ CTEST_DATA(queue_server) {
 };
 
 CTEST_SETUP(queue_server) {
+    wait_for_object_called = false;
+    notify_object_called = false;
+    wait_for_object_addr = NULL;
+    notify_object_addr = NULL;
     bool rv = queue_init(&queue.q, TEST_QUEUE_DEPTH, TEST_QUEUE_ITEM_SIZE);
     ASSERT_EQUAL(rv, true);
 }
 
 CTEST2(queue_server, queue_empty_read) {
     unsigned char buffer[TEST_QUEUE_ITEM_SIZE];
+
+    // Precondition check
+    ASSERT_EQUAL(wait_for_object_called, false);
+
     bool rv = queue_receive(&queue.q, buffer);
 
     ASSERT_EQUAL(rv, false);
+    ASSERT_EQUAL(wait_for_object_called, true);
 }
 
 // Test skipped as currently this cannot be reasonably triggered
@@ -37,10 +60,22 @@ CTEST2_SKIP(queue_server, queue_too_large_init_fail) {
 
 CTEST2(queue_server, queue_empty_write) {
     unsigned char buffer[TEST_QUEUE_ITEM_SIZE] = { 0x42 };
+    ASSERT_EQUAL(notify_object_called, false);
 
     bool rv = queue_send(&queue.q, buffer);
 
     ASSERT_EQUAL(rv, true);
+    ASSERT_EQUAL(notify_object_called, true);
+}
+
+CTEST2(queue_server, queue_empty_silent_write) {
+    unsigned char buffer[TEST_QUEUE_ITEM_SIZE] = { 0x42 };
+    ASSERT_EQUAL(notify_object_called, false);
+
+    bool rv = queue_send_silent(&queue.q, buffer);
+
+    ASSERT_EQUAL(rv, true);
+    ASSERT_EQUAL(notify_object_called, false);
 
 }
 
@@ -53,10 +88,12 @@ CTEST2(queue_server, queue_write_read) {
 
     bool rv = queue_send(&queue.q, buffer);
 
+    ASSERT_EQUAL(notify_object_called, true);
     ASSERT_EQUAL(rv, true);
 
     rv = queue_receive(&queue.q, buffer2);
 
+    ASSERT_EQUAL(wait_for_object_called, false);
     ASSERT_EQUAL(rv, true);
 
     cmp = memcmp(buffer, buffer2, TEST_QUEUE_ITEM_SIZE);
