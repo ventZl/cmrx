@@ -2,7 +2,7 @@
 #include <cmrx/ipc/notify.h>
 #include <limits.h>
 
-bool queue_send(struct Queue * queue, const unsigned char * data)
+bool queue_send_silent(struct Queue * queue, const void * data)
 {
     if (queue->read_cursor == queue->write_cursor && !queue->empty)
     {
@@ -13,7 +13,7 @@ bool queue_send(struct Queue * queue, const unsigned char * data)
 
     uint8_t cursor = queue->write_cursor;
     for (uint8_t q = 0; q < queue->item_size; ++q) {
-        queue->content[cursor] = data[q];
+        queue->content[cursor] = ((unsigned char *)data)[q];
         cursor = (cursor + 1) % size_limit;
     }
 
@@ -23,7 +23,17 @@ bool queue_send(struct Queue * queue, const unsigned char * data)
     return true;
 }
 
-bool queue_receive(struct Queue * queue, unsigned char * data)
+bool queue_send(struct Queue * queue, const void * data)
+{
+    bool rv = queue_send_silent(queue, data);
+    if (rv)
+    {
+        notify_object(queue);
+    }
+    return rv;
+}
+
+bool queue_receive(struct Queue * queue, void * data)
 {
 
     if (queue->empty)
@@ -40,7 +50,7 @@ bool queue_receive(struct Queue * queue, unsigned char * data)
 
     uint8_t cursor = queue->read_cursor;
     for (uint8_t q = 0; q < queue->item_size; ++q) {
-        data[q] = queue->content[cursor];
+        ((unsigned char *)data)[q] = queue->content[cursor];
         cursor = (cursor + 1) % size_limit;
     }
 
