@@ -132,12 +132,15 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa7d1e0d4ea7e93ad6af453ebabd644d2" id="r_gaa7d1e0d4ea7e93ad6af453ebabd644d2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gaa7d1e0d4ea7e93ad6af453ebabd644d2">queue_init</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, uint8_t depth, uint8_t item_size)</td></tr>
 <tr class="memdesc:gaa7d1e0d4ea7e93ad6af453ebabd644d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize queue structure.  <br /></td></tr>
 <tr class="separator:gaa7d1e0d4ea7e93ad6af453ebabd644d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabbf1e3a62ca4719405be6bffefb0dcad" id="r_gabbf1e3a62ca4719405be6bffefb0dcad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gabbf1e3a62ca4719405be6bffefb0dcad">queue_send</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, const unsigned char *data)</td></tr>
-<tr class="memdesc:gabbf1e3a62ca4719405be6bffefb0dcad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data via the queue.  <br /></td></tr>
-<tr class="separator:gabbf1e3a62ca4719405be6bffefb0dcad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga06123155d93e3440b739c13deeaf2e0e" id="r_ga06123155d93e3440b739c13deeaf2e0e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga06123155d93e3440b739c13deeaf2e0e">queue_receive</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, unsigned char *data)</td></tr>
-<tr class="memdesc:ga06123155d93e3440b739c13deeaf2e0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data from queue.  <br /></td></tr>
-<tr class="separator:ga06123155d93e3440b739c13deeaf2e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7fe4467c0404b3ff715b0c359d0188f" id="r_gab7fe4467c0404b3ff715b0c359d0188f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gab7fe4467c0404b3ff715b0c359d0188f">queue_send</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, const void *data)</td></tr>
+<tr class="memdesc:gab7fe4467c0404b3ff715b0c359d0188f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data via the queue.  <br /></td></tr>
+<tr class="separator:gab7fe4467c0404b3ff715b0c359d0188f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b39109a0cec8cb801afeb993057e171" id="r_ga0b39109a0cec8cb801afeb993057e171"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga0b39109a0cec8cb801afeb993057e171">queue_send_silent</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, const void *data)</td></tr>
+<tr class="memdesc:ga0b39109a0cec8cb801afeb993057e171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills queue without notifying receivers.  <br /></td></tr>
+<tr class="separator:ga0b39109a0cec8cb801afeb993057e171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaffea499b06610861dca5a2ea58c9f3c5" id="r_gaffea499b06610861dca5a2ea58c9f3c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gaffea499b06610861dca5a2ea58c9f3c5">queue_receive</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, void *data)</td></tr>
+<tr class="memdesc:gaffea499b06610861dca5a2ea58c9f3c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data from queue.  <br /></td></tr>
+<tr class="separator:gaffea499b06610861dca5a2ea58c9f3c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4eb65aa97addc979fe4486b7456682d9" id="r_ga4eb65aa97addc979fe4486b7456682d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga4eb65aa97addc979fe4486b7456682d9">queue_empty</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue)</td></tr>
 <tr class="memdesc:ga4eb65aa97addc979fe4486b7456682d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns queue status.  <br /></td></tr>
 <tr class="separator:ga4eb65aa97addc979fe4486b7456682d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,14 +225,19 @@ Variables</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">struct </span>{\</div>
 <div class="line">    <span class="keyword">union </span>{\</div>
 <div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structQueue.html">Queue</a> q;\</div>
-<div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> buffer[<span class="keyword">sizeof</span>(<span class="keyword">struct </span><a class="code hl_struct" href="structQueue.html">Queue</a>) + <a class="code hl_define" href="group__aux__queue.html#ga055729a37bf543876e2ce9d57b95ab7b">QUEUE_LENGTH</a>];\</div>
+<div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> buffer[<span class="keyword">sizeof</span>(<span class="keyword">struct </span><a class="code hl_struct" href="structQueue.html">Queue</a>) + size];\</div>
 <div class="line">    };\</div>
 <div class="line">} name;</div>
-<div class="ttc" id="agroup__aux__queue_html_ga055729a37bf543876e2ce9d57b95ab7b"><div class="ttname"><a href="group__aux__queue.html#ga055729a37bf543876e2ce9d57b95ab7b">QUEUE_LENGTH</a></div><div class="ttdeci">#define QUEUE_LENGTH</div><div class="ttdef"><b>Definition</b> queue.h:26</div></div>
 <div class="ttc" id="astructQueue_html"><div class="ttname"><a href="structQueue.html">Queue</a></div><div class="ttdoc">Generic queue structure.</div><div class="ttdef"><b>Definition</b> queue.h:36</div></div>
 </div><!-- fragment -->
 <p>Create queue with custom storage allocation size. </p>
-<p>This is a helper macro that defines queue with developer-specified size of the queue data storage. Suitable for cases where fixed allocation size of 256 bytes of <a class="el" href="structBasicQueue.html">BasicQueue</a> is either too much or too little. </p>
+<p>This is a helper macro that defines queue with developer-specified size of the queue data storage. Suitable for cases where fixed allocation size of 256 bytes of <a class="el" href="structBasicQueue.html">BasicQueue</a> is either too much or too little. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>resulting name of queue variable </td></tr>
+    <tr><td class="paramname">size</td><td>size of the buffer in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -334,8 +342,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga06123155d93e3440b739c13deeaf2e0e" name="ga06123155d93e3440b739c13deeaf2e0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga06123155d93e3440b739c13deeaf2e0e">&#9670;&#160;</a></span>queue_receive()</h2>
+<a id="gaffea499b06610861dca5a2ea58c9f3c5" name="gaffea499b06610861dca5a2ea58c9f3c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaffea499b06610861dca5a2ea58c9f3c5">&#9670;&#160;</a></span>queue_receive()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,7 +357,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned char *&#160;</td>
+          <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -373,8 +381,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gabbf1e3a62ca4719405be6bffefb0dcad" name="gabbf1e3a62ca4719405be6bffefb0dcad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabbf1e3a62ca4719405be6bffefb0dcad">&#9670;&#160;</a></span>queue_send()</h2>
+<a id="gab7fe4467c0404b3ff715b0c359d0188f" name="gab7fe4467c0404b3ff715b0c359d0188f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab7fe4467c0404b3ff715b0c359d0188f">&#9670;&#160;</a></span>queue_send()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -388,7 +396,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned char *&#160;</td>
+          <td class="paramtype">const void *&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -403,8 +411,47 @@ Variables</h2></td></tr>
 <p>This will copy data into queue. <a class="el" href="structQueue.html" title="Generic queue structure.">Queue</a> must be initialized before this call is made. The size of data is determined based on value of <code>item_size</code> used during queue initialization.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue</td><td>pointe to queue data is being sent into </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>pointer to data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue</td><td>pointer to queue data is being sent into </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>pointer to data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if data was copied into queue and false if queue is already full </dd></dl>
+
+</div>
+</div>
+<a id="ga0b39109a0cec8cb801afeb993057e171" name="ga0b39109a0cec8cb801afeb993057e171"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0b39109a0cec8cb801afeb993057e171">&#9670;&#160;</a></span>queue_send_silent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool queue_send_silent </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structQueue.html">Queue</a> *&#160;</td>
+          <td class="paramname"><em>queue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fills queue without notifying receivers. </p>
+<p>This method performs the same action as <a class="el" href="group__aux__queue.html#gab7fe4467c0404b3ff715b0c359d0188f">queue_send()</a> without actually performing notification of clients waiting for queue data to be available. This function may be useful e.g. in the interrupt context where calling notify_object() is not possible. </p><dl class="section warning"><dt>Warning</dt><dd>It is caller responsibility to perform suitable version of notification on the queue object, otherwise any potential receivers which are waiting for the data to arrive will keep waiting. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">queue</td><td>pointer to queue data is being sent into </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>pointer to data </td></tr>
   </table>
   </dd>
 </dl>

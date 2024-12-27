@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__libs.html":[3,3],
 "group__mpu__region__names.html":[3,1,0,0,1,4],
 "group__mpu__region__names.html#ga10dd6c5ce41eec88ecf0d8d0627f5ffb":[3,1,0,0,1,4,5],
 "group__mpu__region__names.html#ga58d2a0cc04ff56b6958b97d82b347ae6":[3,1,0,0,1,4,4],
@@ -47,8 +48,8 @@ var NAVTREEINDEX1 =
 "group__os__kernel.html#gaf10efb77e984671b520a403ede9ce8c2":[3,1,3,17],
 "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f":[3,1,3,12],
 "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f":[3,1,3,11,0],
-"group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,13],
 "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,11,1],
+"group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50":[3,1,3,13],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a327b504fcea41a280d9c9d25a530321d":[3,1,3,10,1],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b":[3,1,3,10,7],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a6dff8b555ffb582bb3d30a240c9b83e3":[3,1,3,10,2],
@@ -94,8 +95,8 @@ var NAVTREEINDEX1 =
 "group__os__sched.html#ga0f6f80faa1ed7029bfb94e7f32f3a994":[3,1,9,33],
 "group__os__sched.html#ga1750d7e1f559518be7c25ed323065cf4":[3,1,9,4],
 "group__os__sched.html#ga1c0157588be40efb99fc590662e237ae":[3,1,9,1],
-"group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,34],
 "group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,35],
+"group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,34],
 "group__os__sched.html#ga26ea9f0ec722697387ee9deca8230844":[3,1,9,0],
 "group__os__sched.html#ga3115342bb54e0e857c6a566334dcb76b":[3,1,9,19],
 "group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195":[3,1,9,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "structOS__core__state__t.html#ae05a2d1f6299eccf2e5811b2d5508b7d":[3,1,3,3,0],
 "structOS__process__definition__t.html":[4,0,17],
 "structOS__process__definition__t.html#a60479915c51d1fceacf4ea6ca72cb415":[4,0,17,1],
-"structOS__process__definition__t.html#ace13b242a85ec9b654965d72b9249e69":[4,0,17,0],
-"structOS__process__t.html":[3,1,3,2]
+"structOS__process__definition__t.html#ace13b242a85ec9b654965d72b9249e69":[4,0,17,0]
 };
