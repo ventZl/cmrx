@@ -4,6 +4,7 @@
 #include "txn.h"
 #include <cmrx/assert.h>
 #include <conf/kernel.h>
+#include <kernel/trace.h>
 
 struct NotificationObject os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
 
@@ -77,6 +78,10 @@ int os_initialize_waitable_object(const void* object)
     {
         os_sched_yield();
     }
+
+    trace_event(EVENT_NOTIFY_WAIT_INIT, (uint32_t) object);
+
+    return 0;
 }
 
 
@@ -111,6 +116,7 @@ int os_notify_object(const void * object, Event_t event)
         notified_thread->state = THREAD_STATE_READY;
         if (notified_thread->wait_callback != NULL)
         {
+            trace_event(EVENT_NOTIFY_WAITING, (uint32_t) object);
             notified_thread->wait_callback(object, candidate_thread, event);
             notified_thread->wait_callback = NULL;
         }
@@ -147,6 +153,7 @@ int os_notify_object(const void * object, Event_t event)
         if (current_object_entry != NULL)
         {
             current_object_entry->pending_notifications += 1;
+            trace_event(EVENT_NOTIFY_PENDING, (uint32_t) object);
         }
         else
         {
@@ -224,12 +231,14 @@ int os_wait_for_object(const void * object, WaitHandler_t callback)
                     {
                         current_entry->address = (void *) OS_NOTIFY_INVALID;
                     }
+                    trace_event(EVENT_WAIT_PENDING, (uint32_t) object);
                     pending = true;
                     break;
                 }
             }
             if (!pending)
             {
+                trace_event(EVENT_WAIT_SUSPEND, (uint32_t) object);
                 os_threads[current_thread].state = THREAD_STATE_WAITING;
                 os_threads[current_thread].wait_object = object;
                 os_threads[current_thread].wait_callback = callback;

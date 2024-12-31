@@ -20,6 +20,8 @@
 #   include <arch/mpu_priv.h>
 #endif
 
+#include <kernel/trace.h>
+
 void os_request_context_switch()
 {
 	SCB_ICSR |= SCB_ICSR_PENDSVSET;
@@ -76,6 +78,9 @@ __attribute__((naked)) void PendSV_Handler(void)
 		os_deliver_signal(cpu_context.new_task, cpu_context.new_task->signals);
 		cpu_context.new_task->signals = 0;
 	}
+
+	trace_event(EVENT_THREAD_SWITCH, cpu_context.new_task - os_threads);
+
 	if (os_threads[cpu_state->thread_current].state == THREAD_STATE_RUNNING)
 	{
 		// only mark leaving thread as ready, if it was runnig before

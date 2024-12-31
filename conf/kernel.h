@@ -47,4 +47,7 @@
 
 #define OS_NOTIFICATION_BUFFER_SIZE     16
 
+/** Enable / disable kernel tracing */
+#cmakedefine CMRX_KERNEL_TRACING
+
 /** @} */

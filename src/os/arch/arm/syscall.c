@@ -14,6 +14,8 @@
 #include <arch/cortex.h>
 #include <arch/nvic.h>
 
+#include <kernel/trace.h>
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-function-type"
 
@@ -50,6 +52,7 @@ __attribute__((interrupt)) void SVC_Handler(void)
 	ExceptionFrame * frame = (ExceptionFrame *) psp;
 	uint16_t * lra = (uint16_t *) frame->pc;
 	uint8_t syscall_id = *(lra - 1);
+	trace_event(EVENT_SYSCALL, syscall_id);
     uint32_t rv = os_system_call(frame->r0123[0], frame->r0123[1], frame->r0123[2], frame->r0123[3], syscall_id);
     *(psp) = rv;
     return; /*asm volatile("BX lr");*/

@@ -20,6 +20,7 @@
 #include <cmrx/sys/syscalls.h>
 #include <cmrx/clock.h>
 #include <string.h>
+#include <kernel/trace.h>
 
 #define STACK_ALIGN 
 
@@ -528,6 +529,9 @@ __attribute__((noreturn)) void _os_start(uint8_t start_core)
 {
     volatile Thread_t created_threads[8];
     volatile unsigned cursor = 0;
+
+    trace_event(EVENT_CPU_BOOT, start_core);
+
     for (int q = 0; q < 8; ++q) {
         created_threads[q] = 0xFF;
     }
@@ -574,6 +578,8 @@ __attribute__((noreturn)) void _os_start(uint8_t start_core)
 
 	if (os_get_next_thread(0xFF, &startup_thread))
 	{
+        trace_event(EVENT_THREAD_SWITCH, startup_thread);
+
 		core[start_core].thread_current = startup_thread;
 		Process_t startup_process = os_threads[startup_thread].process_id;
 		os_threads[startup_thread].state = THREAD_STATE_RUNNING;
