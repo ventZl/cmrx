@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <cmrx/clock.h>
 #include CMSIS_device_header
+#include <cmrx/sys/trace.h>
 
 static uint32_t systick_us = 0;
 
@@ -31,6 +32,7 @@ void timing_provider_setup(int interval_ms)
 
 __attribute__((interrupt)) void SysTick_Handler()
 {
+    trace_event(EVENT_KERNEL_TICK, systick_us);
     os_sched_timing_callback(systick_us);
 }
 
