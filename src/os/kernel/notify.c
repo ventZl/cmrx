@@ -5,13 +5,14 @@
 #include <cmrx/assert.h>
 #include <conf/kernel.h>
 
-const void * os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
+struct NotificationObject os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
 
 void os_notify_init()
 {
     for (unsigned q = 0; q < OS_NOTIFICATION_BUFFER_SIZE; ++q)
     {
-        os_notification_buffer[q] = (const void *) OS_NOTIFY_INVALID;
+        os_notification_buffer[q].address = (const void *) OS_NOTIFY_INVALID;
+        os_notification_buffer[q].pending_notifications = 0;
     }
 }
 
@@ -51,11 +52,14 @@ int os_initialize_waitable_object(const void* object)
     uint8_t entry_id = 0;
     txn_id = os_txn_start();
     do {
-        if (os_notification_buffer[entry_id] == object)
+        struct NotificationObject * current_entry = &os_notification_buffer[entry_id];
+        if (current_entry->address == object)
         {
             if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK)
             {
-                os_notification_buffer[entry_id] = (void *) OS_NOTIFY_INVALID;
+                ASSERT(current_entry->pending_notifications > 0);
+                current_entry->pending_notifications = 0;
+                current_entry->address = (void *) OS_NOTIFY_INVALID;
                 os_txn_done();
             }
             else
@@ -80,6 +84,8 @@ int os_notify_object(const void * object, Event_t event)
 {
     Thread_t candidate_thread = 0;
     uint8_t candidate_priority = 0xFF;
+
+    int retval = E_OK;
 
     Txn_t txn_id = 0;
     do {
@@ -113,15 +119,40 @@ int os_notify_object(const void * object, Event_t event)
     }
     else
     {
+        struct NotificationObject * first_free_entry = NULL;
+        struct NotificationObject * current_object_entry = NULL;
 
         for (uint8_t entry_id = 0; entry_id < OS_NOTIFICATION_BUFFER_SIZE; ++entry_id)
         {
-            if (os_notification_buffer[entry_id] == (void *) OS_NOTIFY_INVALID)
+            struct NotificationObject * current_entry = &os_notification_buffer[entry_id];
+            if (current_entry->address == (void *) OS_NOTIFY_INVALID)
             {
-                os_notification_buffer[entry_id] = object;
+                if (first_free_entry == NULL)
+                {
+                    first_free_entry = current_entry;
+                }
+            }
+            if (current_entry->address == object)
+            {
+                current_object_entry = current_entry;
                 break;
             }
         }
+        if (current_object_entry == NULL && first_free_entry != NULL)
+        {
+            first_free_entry->address = object;
+            ASSERT(first_free_entry->pending_notifications == 0);
+            current_object_entry = first_free_entry;
+        }
+        if (current_object_entry != NULL)
+        {
+            current_object_entry->pending_notifications += 1;
+        }
+        else
+        {
+            retval = E_OUT_OF_NOTIFICATIONS;
+        }
+
     }
     os_txn_done();
 
@@ -129,7 +160,7 @@ int os_notify_object(const void * object, Event_t event)
     {
         os_sched_yield();
     }
-    return E_OK;
+    return retval;
 }
 
 int os_sys_notify_object(const void * object)
@@ -184,9 +215,15 @@ int os_wait_for_object(const void * object, WaitHandler_t callback)
             bool pending = false;
             for (uint8_t entry_id = 0; entry_id < OS_NOTIFICATION_BUFFER_SIZE; ++entry_id)
             {
-                if (os_notification_buffer[entry_id] == object)
+                struct NotificationObject * current_entry = &os_notification_buffer[entry_id];
+                if (current_entry->address == object)
                 {
-                    os_notification_buffer[entry_id] = (void *) OS_NOTIFY_INVALID;
+                    ASSERT(current_entry->pending_notifications > 0);
+                    const uint32_t remaining_notifications = --current_entry->pending_notifications;
+                    if (remaining_notifications == 0)
+                    {
+                        current_entry->address = (void *) OS_NOTIFY_INVALID;
+                    }
                     pending = true;
                     break;
                 }

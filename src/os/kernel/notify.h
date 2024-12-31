@@ -14,6 +14,11 @@
 
 #include "runtime.h"
 
+struct NotificationObject {
+	const void * address;
+	uint32_t pending_notifications;
+};
+
 /** List of possible notification types.
  */
 enum EventTypes {

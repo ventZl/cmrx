@@ -26,7 +26,9 @@
  * waiting for this specific object, then the call does nothing.
  *
  * @param object object used to determine waiters to be notified
- * @returns E_OK. Mostly.
+ * @returns E_OK if notification has been sent. E_OUT_OF_NOTIFICATIONS
+ * if there is too many different pending notifications and there is
+ * nobody waiting for a notification on this particular object.
  */
 __SYSCALL int notify_object(const void * object);
 

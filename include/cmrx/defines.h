@@ -21,18 +21,33 @@
  * Types of errors system calls in CMRX can return.
  * @{
  */
+/// No error. Operation completed successfully
 #define E_OK					0
+/// Object ID passed by the caller is out of range
 #define E_OUT_OF_RANGE			1
+/// There is no stack space to be allocated for the thread
 #define E_OUT_OF_STACKS			2
+/// Internal error. Suggests that operation is made on thread that is already running while the semantics of the operation suggests is should not be
 #define E_TASK_RUNNING			3
+/// Internal error. Invalid address has been passed by the caller
 #define E_INVALID_ADDRESS		4
+/// Internal error. MPU region is misaligned and can't be configured into the hardware
 #define E_MISALIGNED			5
+/// Internal error. MPU region size is wrong.
 #define E_WRONG_SIZE			6
+/// Object is busy and can't complete the requested operation
 #define E_BUSY					7
+/// Deadlock detected
 #define E_DEADLK				8
+/// Object or service is not available
 #define E_NOTAVAIL				9
+/// Caller passed generally invalid argument
 #define E_INVALID				10
+/// RPC call cannot be dispatched because this thread is already too deep in the RPC call tree
 #define E_IN_TOO_DEEP			11
+/// Too many pending notifications for differnt objects
+#define E_OUT_OF_NOTIFICATIONS  12
+/// Internal error. No more free threads
 #define E_OUT_OF_THREADS        0xFF
 /** @} */
 
