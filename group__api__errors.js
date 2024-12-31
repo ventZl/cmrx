@@ -8,6 +8,7 @@ var group__api__errors =
     [ "E_MISALIGNED", "group__api__errors.html#ga435a26cc047372abcc3bb46c380f3c1f", null ],
     [ "E_NOTAVAIL", "group__api__errors.html#ga25a33917a19693d071b4bfd2c1a0f5ce", null ],
     [ "E_OK", "group__api__errors.html#ga1e7cc741c56207a8872ea58373276925", null ],
+    [ "E_OUT_OF_NOTIFICATIONS", "group__api__errors.html#gab216a4558e7bb2fe1a9d00dd8883ff58", null ],
     [ "E_OUT_OF_RANGE", "group__api__errors.html#ga5e7e68944cce7c2ff8c4286db2a058bc", null ],
     [ "E_OUT_OF_STACKS", "group__api__errors.html#ga49a829e1fc284d59d6f2fe11af98e44c", null ],
     [ "E_OUT_OF_THREADS", "group__api__errors.html#ga6b9005faf912d6a521fdce0a0ecbcbb9", null ],

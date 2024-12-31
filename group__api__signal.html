@@ -304,7 +304,7 @@ $(document).ready(function(){initNavTree('group__api__signal.html',''); initResi
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>E_OK. Mostly. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK if notification has been sent. E_OUT_OF_NOTIFICATIONS if there is too many different pending notifications and there is nobody waiting for a notification on this particular object. </dd></dl>
 
 </div>
 </div>

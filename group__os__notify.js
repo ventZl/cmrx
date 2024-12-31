@@ -1,5 +1,9 @@
 var group__os__notify =
 [
+    [ "NotificationObject", "structNotificationObject.html", [
+      [ "address", "structNotificationObject.html#a8ad4157961a23de02fde431a55d98388", null ],
+      [ "pending_notifications", "structNotificationObject.html#a314f4b8525154216bbbdc1cfc67476b9", null ]
+    ] ],
     [ "OS_NOTIFY_INVALID", "group__os__notify.html#gacf0edd8a8af5d5cd5b2012f7260a9265", null ],
     [ "EventTypes", "group__os__notify.html#ga914d2da0ec9f0e22cd5e400bc1f968b8", [
       [ "EVT_USERSPACE_NOTIFICATION", "group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a5033f65040585671eaa747a7a982ab41", null ],

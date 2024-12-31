@@ -15,6 +15,7 @@ var annotated_dup =
     [ "ExceptionFrame", "structExceptionFrame.html", "structExceptionFrame" ],
     [ "futex_t", "structfutex__t.html", "structfutex__t" ],
     [ "MPU_Registers", "structMPU__Registers.html", "structMPU__Registers" ],
+    [ "NotificationObject", "structNotificationObject.html", "structNotificationObject" ],
     [ "OS_core_state_t", "structOS__core__state__t.html", "structOS__core__state__t" ],
     [ "OS_MPU_region", "structOS__MPU__region.html", "structOS__MPU__region" ],
     [ "OS_process_definition_t", "structOS__process__definition__t.html", "structOS__process__definition__t" ],
