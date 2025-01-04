@@ -697,6 +697,7 @@ class MapFile(TokenList):
             if (tokens[q].type == NEWLINE):
                 if (self.match_pattern(q, pattern_output_section)):
                     # Output section begins
+                    input_file = None
                     input_section = tokens[q + 1].value
                     address = tokens[q + 3].value
                     size = tokens[q + 5].value
