@@ -4,7 +4,7 @@ var searchData=
   ['_5f_5fappl_5fsymbol_1',['__APPL_SYMBOL',['../group__api__init.html#ga51afde51c723416910204d56135d784e',1,'application.h']]],
   ['_5f_5fapplications_5fend_2',['__applications_end',['../group__arch__arm__static.html#gae114366a6ba6a621a8369b3ce3fc8b17',1,'static.c']]],
   ['_5f_5fapplications_5fstart_3',['__applications_start',['../group__arch__arm__static.html#gae5e90950d5440e51d672173d9414b24e',1,'static.c']]],
-  ['_5f_5fforge_5fshutdown_5fexception_5fframe_4',['__forge_shutdown_exception_frame',['../group__arch__arm__cortex.html#ga7f35039ee27ed3c7462688601a85dac6',1,'cortex.h']]],
+  ['_5f_5fforge_5fshutdown_5fexception_5fframe_4',['__forge_shutdown_exception_frame',['../group__arch__arm__cortex.html#gae2ca2a580649d905b09dbd62ebb3c01c',1,'cortex.h']]],
   ['_5f_5fget_5flr_5',['__get_LR',['../group__arch__arm__cortex.html#gad2e17ebf5c6096d178a9816f7339703d',1,'cortex.h']]],
   ['_5f_5fisr_5freturn_6',['__ISR_return',['../group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86',1,'cortex.h']]],
   ['_5f_5fmpu_5fexpand_5fclass_7',['__mpu_expand_class',['../group__arch__arm__mpu.html#ga4e796735b3c15d3a8bb3e8f7c72bf746',1,'mpu.c']]],

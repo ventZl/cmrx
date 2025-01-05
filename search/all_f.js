@@ -2,7 +2,7 @@ var searchData=
 [
   ['pc_0',['pc',['../structExceptionFrame.html#a0eefca46cfc007207520ff8a7b23f332',1,'ExceptionFrame']]],
   ['pending_5fnotifications_1',['pending_notifications',['../structNotificationObject.html#a314f4b8525154216bbbdc1cfc67476b9',1,'NotificationObject']]],
-  ['pendsv_5fhandler_2',['PendSV_Handler',['../group__arch__arm__os.html#ga6303e1f258cbdc1f970ce579cc015623',1,'pendsv.c']]],
+  ['pendsv_5fhandler_2',['PendSV_Handler',['../group__arch__arm__os.html#ga6303e1f258cbdc1f970ce579cc015623',1,'cortex.c']]],
   ['pop_5fexception_5fframe_3',['pop_exception_frame',['../group__arch__arm__cortex.html#ga0deb287bdcb87be51cdb7440df6ad7e5',1,'cortex.h']]],
   ['port_4',['port',['../group__arch__arch.html#anatomy',1,'Anatomy of CMRX port'],['../group__arch__arm.html',1,'ARM port']]],
   ['port_20implementation_20sources_5',['Port implementation sources',['../group__arch__arch.html#sources',1,'']]],

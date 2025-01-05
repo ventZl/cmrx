@@ -6,7 +6,7 @@ var searchData=
   ['calls_20implementation_3',['System calls implementation',['../group__arch__arm__syscall.html',1,'']]],
   ['cancel_5ftimed_5fevent_4',['cancel_timed_event',['../group__os__timer.html#gafd631293a404e992816aaa99e85c2625',1,'timer.c']]],
   ['caveats_5',['Transaction caveats',['../txn_intro.html#autotoc_md19',1,'']]],
-  ['cb_5fsyscall_5fnotify_5fobject_6',['cb_syscall_notify_object',['../group__os__notify.html#ga47d2a2d00e35b45f4c294af4e7c4987d',1,'notify.c']]],
+  ['cb_5fsyscall_5fnotify_5fobject_6',['cb_syscall_notify_object',['../group__os__notify.html#ga777174f11e68a4644f69c31bc737ce10',1,'notify.c']]],
   ['cb_5fthread_5fjoin_5fnotify_7',['cb_thread_join_notify',['../group__os__sched.html#gac9b76e4b0629693553a999dd77dabc96',1,'sched.c']]],
   ['checker_5ft_8',['checker_t',['../structchecker__t.html',1,'']]],
   ['cmake_20functions_9',['CMake functions',['../dev_env.html#autotoc_md21',1,'']]],

@@ -167,7 +167,15 @@ Functions</h2></td></tr>
 <p>As this routine is only designed to be called from pend_sv handler, it has strict requirements on state of thread. It must be in state just before being resumed. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">thread</td><td>thread which gets signal handler injected </td></tr>
-    <tr><td class="paramname">signals</td><td>mask of signals being delivered </td></tr>
+    <tr><td class="paramname">signals</td><td>mask of signals being delivered</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Internal implementation of signal delivery into thread context.</p>
+<p>Modifies threads stack and registers to continue executing signal handler. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">thread</td><td>thread whose signal handler should be pushed onto stack </td></tr>
+    <tr><td class="paramname">signals</td><td>signal mask of signals being delivered </td></tr>
   </table>
   </dd>
 </dl>

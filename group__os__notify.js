@@ -11,7 +11,7 @@ var group__os__notify =
       [ "EVT_THREAD_DONE", "group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a4b77aeb003d7f63c4e18bb932aeeebcf", null ],
       [ "_EVT_COUNT", "group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8af39165d0929ab62c500ec221f3045d26", null ]
     ] ],
-    [ "cb_syscall_notify_object", "group__os__notify.html#ga47d2a2d00e35b45f4c294af4e7c4987d", null ],
+    [ "cb_syscall_notify_object", "group__os__notify.html#ga777174f11e68a4644f69c31bc737ce10", null ],
     [ "os_initialize_waitable_object", "group__os__notify.html#ga64fe2129fb7405446b74a9821bb85ee1", null ],
     [ "os_notify_init", "group__os__notify.html#ga00e41bc3040822177a33c884e6d636f3", null ],
     [ "os_notify_object", "group__os__notify.html#ga5979f2a094569c177e9e69da6a655dc1", null ],

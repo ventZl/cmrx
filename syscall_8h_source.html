@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('syscall_8h_source.html',''); initResiz
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="group__os__syscall.html#ga8c3ef3b8ba8d29b49370620dc656c3b7">   22</a></span><span class="preprocessor">#define SYSCALL_DEFINITION __attribute__((section(&quot;.syscall&quot;))) const</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="group__os__syscall.html#ga8c3ef3b8ba8d29b49370620dc656c3b7">   22</a></span><span class="preprocessor">#define SYSCALL_DEFINITION __attribute__((section(&quot;.syscall&quot;), used)) const</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">   24</a></span><span class="keyword">typedef</span> int (* <a class="code hl_typedef" href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">Syscall_Handler_t</a>)(int, int, int, int);</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>

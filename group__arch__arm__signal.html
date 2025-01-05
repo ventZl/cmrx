@@ -110,7 +110,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaa3dc9f411e1cd722fc5b4cb0653d0bc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform signal delivery in thread's userspace.  <br /></td></tr>
 <tr class="separator:gaa3dc9f411e1cd722fc5b4cb0653d0bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa2d22243a5b2278963a3b6c4fa9c0f40" id="r_gaa2d22243a5b2278963a3b6c4fa9c0f40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__signal.html#gaa2d22243a5b2278963a3b6c4fa9c0f40">os_deliver_signal</a> (struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *thread, uint32_t signals)</td></tr>
-<tr class="memdesc:gaa2d22243a5b2278963a3b6c4fa9c0f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal implementation of signal delivery into thread context.  <br /></td></tr>
+<tr class="memdesc:gaa2d22243a5b2278963a3b6c4fa9c0f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to push signal handler onto thread stack.  <br /></td></tr>
 <tr class="separator:gaa2d22243a5b2278963a3b6c4fa9c0f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -141,11 +141,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Internal implementation of signal delivery into thread context. </p>
-<p>As this routine is only designed to be called from pend_sv handler, it has strict requirements on state of thread. It must be in state just before being resumed. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Method to push signal handler onto thread stack. </p>
+<p>Internal implementation of signal delivery into thread context.</p>
+<p>Modifies threads stack and registers to continue executing signal handler. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">thread</td><td>thread which gets signal handler injected </td></tr>
-    <tr><td class="paramname">signals</td><td>mask of signals being delivered </td></tr>
+    <tr><td class="paramname">thread</td><td>thread whose signal handler should be pushed onto stack </td></tr>
+    <tr><td class="paramname">signals</td><td>signal mask of signals being delivered </td></tr>
   </table>
   </dd>
 </dl>
@@ -187,7 +188,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Perform signal delivery in thread's userspace. </p>
-<p>This "function" is ever only called from <a class="el" href="group__arch__arm__signal.html#gaa2d22243a5b2278963a3b6c4fa9c0f40" title="Internal implementation of signal delivery into thread context.">os_deliver_signal()</a>. It stores original values of LR and R0 - R3 registers and PC onto stack. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This "function" is ever only called from <a class="el" href="group__arch__arm__signal.html#gaa2d22243a5b2278963a3b6c4fa9c0f40" title="Method to push signal handler onto thread stack.">os_deliver_signal()</a>. It stores original values of LR and R0 - R3 registers and PC onto stack. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sighandler</td><td>address of signal handler function. Guarranteed to be non-NULL. Yet not to be valid. </td></tr>
     <tr><td class="paramname">signal_mask</td><td>Bitmask of activated (pending) signals, which are catchable by the application. </td></tr>

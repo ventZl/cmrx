@@ -1,7 +1,7 @@
 var group__api__thread =
 [
     [ "get_tid", "group__api__thread.html#ga52f86ad5da2364f17909fcb76bf84d71", null ],
-    [ "os_thread_dispose", "group__api__thread.html#ga02d0f4e38363d1b07e522e608ec3f007", null ],
+    [ "os_thread_dispose", "group__api__thread.html#ga168c4cb569080ac4832a11d0f006eeb1", null ],
     [ "sched_yield", "group__api__thread.html#ga98ad8277df91806691c7c51d1606861a", null ],
     [ "setpriority", "group__api__thread.html#gad14ed255ac7c3f9cfb0513c7d03e7cd8", null ],
     [ "thread_create", "group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0", null ],

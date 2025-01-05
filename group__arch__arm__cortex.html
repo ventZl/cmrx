@@ -142,9 +142,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaff50eeff9c1a2b472601ba02a2df18c0" id="r_gaff50eeff9c1a2b472601ba02a2df18c0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gaff50eeff9c1a2b472601ba02a2df18c0">set_exception_argument</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, unsigned argno, unsigned value)</td></tr>
 <tr class="memdesc:gaff50eeff9c1a2b472601ba02a2df18c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value of exception frame function call argument.  <br /></td></tr>
 <tr class="separator:gaff50eeff9c1a2b472601ba02a2df18c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b94f1ef1a111a0eb556641698104808" id="r_ga6b94f1ef1a111a0eb556641698104808"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#ga6b94f1ef1a111a0eb556641698104808">set_exception_pc_lr</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, void *pc, void *lr)</td></tr>
-<tr class="memdesc:ga6b94f1ef1a111a0eb556641698104808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure PC and LR register values in exception frame.  <br /></td></tr>
-<tr class="separator:ga6b94f1ef1a111a0eb556641698104808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d08b897734ba00f4ae1fee5fe2b2576" id="r_ga7d08b897734ba00f4ae1fee5fe2b2576"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#ga7d08b897734ba00f4ae1fee5fe2b2576">set_exception_pc_lr</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, void *pc, void(*lr)())</td></tr>
+<tr class="memdesc:ga7d08b897734ba00f4ae1fee5fe2b2576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure PC and LR register values in exception frame.  <br /></td></tr>
+<tr class="separator:ga7d08b897734ba00f4ae1fee5fe2b2576"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2c8bf166b828e4a26c74bc974774510f" id="r_ga2c8bf166b828e4a26c74bc974774510f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#ga2c8bf166b828e4a26c74bc974774510f">push_exception_frame</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, unsigned args)</td></tr>
 <tr class="memdesc:ga2c8bf166b828e4a26c74bc974774510f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicate exception frame on thread's stack.  <br /></td></tr>
 <tr class="separator:ga2c8bf166b828e4a26c74bc974774510f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -157,9 +157,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad2e17ebf5c6096d178a9816f7339703d" id="r_gad2e17ebf5c6096d178a9816f7339703d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gad2e17ebf5c6096d178a9816f7339703d">__get_LR</a> (void)</td></tr>
 <tr class="memdesc:gad2e17ebf5c6096d178a9816f7339703d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of process LR.  <br /></td></tr>
 <tr class="separator:gad2e17ebf5c6096d178a9816f7339703d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f35039ee27ed3c7462688601a85dac6" id="r_ga7f35039ee27ed3c7462688601a85dac6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#ga7f35039ee27ed3c7462688601a85dac6">__forge_shutdown_exception_frame</a> (void *continue_here)</td></tr>
-<tr class="memdesc:ga7f35039ee27ed3c7462688601a85dac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forges shutdown exception frame.  <br /></td></tr>
-<tr class="separator:ga7f35039ee27ed3c7462688601a85dac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2ca2a580649d905b09dbd62ebb3c01c" id="r_gae2ca2a580649d905b09dbd62ebb3c01c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gae2ca2a580649d905b09dbd62ebb3c01c">__forge_shutdown_exception_frame</a> (void(*continue_here)(void))</td></tr>
+<tr class="memdesc:gae2ca2a580649d905b09dbd62ebb3c01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forges shutdown exception frame.  <br /></td></tr>
+<tr class="separator:gae2ca2a580649d905b09dbd62ebb3c01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Routines supporting access to Cortex-M core facilities. </p>
@@ -194,8 +194,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga7f35039ee27ed3c7462688601a85dac6" name="ga7f35039ee27ed3c7462688601a85dac6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7f35039ee27ed3c7462688601a85dac6">&#9670;&#160;</a></span>__forge_shutdown_exception_frame()</h2>
+<a id="gae2ca2a580649d905b09dbd62ebb3c01c" name="gae2ca2a580649d905b09dbd62ebb3c01c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae2ca2a580649d905b09dbd62ebb3c01c">&#9670;&#160;</a></span>__forge_shutdown_exception_frame()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +203,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void __forge_shutdown_exception_frame </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype">void(*)(void)&#160;</td>
           <td class="paramname"><em>continue_here</em></td><td>)</td>
           <td></td>
         </tr>
@@ -538,8 +538,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga6b94f1ef1a111a0eb556641698104808" name="ga6b94f1ef1a111a0eb556641698104808"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6b94f1ef1a111a0eb556641698104808">&#9670;&#160;</a></span>set_exception_pc_lr()</h2>
+<a id="ga7d08b897734ba00f4ae1fee5fe2b2576" name="ga7d08b897734ba00f4ae1fee5fe2b2576"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7d08b897734ba00f4ae1fee5fe2b2576">&#9670;&#160;</a></span>set_exception_pc_lr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -562,7 +562,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype">void(*)()&#160;</td>
           <td class="paramname"><em>lr</em>&#160;</td>
         </tr>
         <tr>

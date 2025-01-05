@@ -3,7 +3,7 @@ var searchData=
   ['save_5fcontext_0',['save_context',['../group__arch__arm__cortex.html#gac7d319ef3237c279150083fe5944dc19',1,'cortex.h']]],
   ['sched_5fyield_1',['sched_yield',['../group__api__thread.html#ga98ad8277df91806691c7c51d1606861a',1,'sched_yield():&#160;thread.c'],['../group__api__thread.html#ga98ad8277df91806691c7c51d1606861a',1,'sched_yield():&#160;thread.c']]],
   ['set_5fexception_5fargument_2',['set_exception_argument',['../group__arch__arm__cortex.html#gaff50eeff9c1a2b472601ba02a2df18c0',1,'cortex.h']]],
-  ['set_5fexception_5fpc_5flr_3',['set_exception_pc_lr',['../group__arch__arm__cortex.html#ga6b94f1ef1a111a0eb556641698104808',1,'cortex.h']]],
+  ['set_5fexception_5fpc_5flr_3',['set_exception_pc_lr',['../group__arch__arm__cortex.html#ga7d08b897734ba00f4ae1fee5fe2b2576',1,'cortex.h']]],
   ['set_5ftimed_5fevent_4',['set_timed_event',['../group__os__timer.html#ga9e0dc7082cb04a6a9ed1176aea534609',1,'timer.c']]],
   ['setitimer_5',['setitimer',['../group__api__timer.html#ga9f408bf7753a44225214c63f3285e440',1,'timer.c']]],
   ['setpriority_6',['setpriority',['../group__api__thread.html#gad14ed255ac7c3f9cfb0513c7d03e7cd8',1,'setpriority(uint8_t priority):&#160;thread.c'],['../group__api__thread.html#gad14ed255ac7c3f9cfb0513c7d03e7cd8',1,'setpriority(uint8_t priority):&#160;thread.c']]],
@@ -14,6 +14,6 @@ var searchData=
   ['static_5finit_5fprocess_5ftable_11',['static_init_process_table',['../group__arch__arm__static.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table():&#160;static.c'],['../group__arch__arm__static.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table():&#160;static.c'],['../group__arch__arm__static.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table():&#160;static.c'],['../group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table():&#160;static.c']]],
   ['static_5finit_5fthread_5fcount_12',['static_init_thread_count',['../group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count():&#160;static.c'],['../group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count():&#160;static.c'],['../group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count():&#160;static.c'],['../group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count():&#160;static.c']]],
   ['static_5finit_5fthread_5ftable_13',['static_init_thread_table',['../group__arch__arm__static.html#gab06a63362ae820b797a3bf0b1c6386a0',1,'static_init_thread_table():&#160;static.c'],['../group__arch__arm__static.html#gab06a63362ae820b797a3bf0b1c6386a0',1,'static_init_thread_table():&#160;static.c'],['../group__arch__arm__static.html#gab06a63362ae820b797a3bf0b1c6386a0',1,'static_init_thread_table():&#160;static.c'],['../group__arch__arch.html#gab06a63362ae820b797a3bf0b1c6386a0',1,'static_init_thread_table():&#160;static.c']]],
-  ['svc_5fhandler_14',['SVC_Handler',['../group__arch__arm__syscall.html#ga3e5ddb3df0d62f2dc357e64a3f04a6ce',1,'syscall.c']]],
+  ['svc_5fhandler_14',['SVC_Handler',['../group__arch__arm__syscall.html#ga3e5ddb3df0d62f2dc357e64a3f04a6ce',1,'cortex.c']]],
   ['sys_5ftick_5fhandler_15',['sys_tick_handler',['../group__aux__systick.html#gac1f3beb37c30fe05a0e3f9c30dae2de2',1,'systick.h']]]
 ];
