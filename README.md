@@ -20,6 +20,12 @@ Features
  * priority-aware preemptive scheduler
  * basic POSIX-like API for managing threads, timers and signals
  * object-oriented remote procedure calling mechanism
+ * (customizable) timing provider based on SysTick timer
+ * userspace mutexes
+ * notification API
+ * queue library and queue server for cross-process queues
+ * C11 clean
+ * compatible with all SDKs providing CMSIS headers
 
 Documentation
 -------------
@@ -35,4 +41,3 @@ in the root directory of this repository. HTML documentation will be generated i
 Examples
 --------
 There are some examples of how to use CMRX with various HALs on various platforms in [Examples repository](https://github.com/ventZl/cmrx-examples).
-
