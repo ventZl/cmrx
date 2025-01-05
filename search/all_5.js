@@ -7,8 +7,8 @@ var searchData=
   ['basicqueue_4',['BasicQueue',['../structBasicQueue.html',1,'']]],
   ['becoming_20a_20rpc_20server_5',['Becoming a RPC server',['../rpc_intro.html#autotoc_md23',1,'']]],
   ['blinky_20application_6',['Creating the blinky application',['../getting_started.html#autotoc_md11',1,'']]],
-  ['blinky_20application_20to_20the_20build_7',['Adding blinky application to the build',['../getting_started.html#autotoc_md13',1,'']]],
+  ['blinky_20application_20to_20the_20build_7',['Adding blinky application to the build',['../getting_started.html#autotoc_md14',1,'']]],
   ['buffer_8',['buffer',['../group__aux__queue.html#ga8ad0c0e100f40b8ba03f80bc0754892c',1,'BasicQueue::buffer'],['../group__aux__queue.html#ga1071b5920273e6c67b1d9716550fffee',1,'BasicQueue::@0::buffer']]],
-  ['build_9',['Adding blinky application to the build',['../getting_started.html#autotoc_md13',1,'']]],
+  ['build_9',['Adding blinky application to the build',['../getting_started.html#autotoc_md14',1,'']]],
   ['by_20cmrx_20into_20cmake_20module_20path_10',['1. Add CMake modules provided by CMRX into CMake module path',['../getting_started.html#autotoc_md7',1,'']]]
 ];
