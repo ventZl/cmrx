@@ -1,13 +1,19 @@
 var searchData=
 [
-  ['generic_20ipi_20provider_0',['Cortex-M generic IPI provider',['../group__aux__cm__ipi.html',1,'']]],
-  ['get_5fcpu_5ffreq_1',['get_cpu_freq',['../group__api__standard.html#ga3237021168ac3f0aa996c3c97b51e323',1,'get_cpu_freq(void):&#160;std.c'],['../group__api__standard.html#ga3237021168ac3f0aa996c3c97b51e323',1,'get_cpu_freq(void):&#160;std.c']]],
-  ['get_5fexception_5farg_5faddr_2',['get_exception_arg_addr',['../group__arch__arm__cortex.html#gabb8ca1a0c49221cc753e1621f5029911',1,'cortex.h']]],
-  ['get_5fexception_5fargument_3',['get_exception_argument',['../group__arch__arm__cortex.html#ga11970c0e7d4b51785f808c8961d09fca',1,'cortex.h']]],
-  ['get_5fsleep_5ftime_4',['get_sleep_time',['../group__os__timer.html#ga298a4922fb4180235c76c8cc8fecb6f5',1,'timer.c']]],
-  ['get_5fsleeptime_5',['get_sleeptime',['../group__os__timer.html#gacee9648cc90be455d550756ca473a56f',1,'timer.c']]],
-  ['get_5ftid_6',['get_tid',['../group__api__thread.html#ga52f86ad5da2364f17909fcb76bf84d71',1,'get_tid():&#160;thread.c'],['../group__api__thread.html#ga52f86ad5da2364f17909fcb76bf84d71',1,'get_tid():&#160;thread.c']]],
-  ['get_5fvtable_5fprocess_7',['get_vtable_process',['../group__os__rpc.html#gab6a04c90d0385e2685fb5e494af298ff',1,'rpc.c']]],
-  ['getmicrotime_8',['getmicrotime',['../group__api__standard.html#gab9090f01493a7759cdd3dd5bf4d917d2',1,'std.c']]],
-  ['getting_20started_9',['Getting started',['../getting_started.html',1,'']]]
+  ['data_0',['data',['../mem_model.html#autotoc_md15',1,'Code and read-only data'],['../structchecker__t.html#ae610e9b2b8ba0f4c5941f3547807a48c',1,'checker_t::data'],['../structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22',1,'OS_thread_create_t::data']]],
+  ['data_5fsize_1',['data_size',['../structchecker__t.html#aebc15008413616b9c11b7e86cec7cfac',1,'checker_t']]],
+  ['declare_20interfaces_2',['Declare interfaces',['../rpc_intro.html#autotoc_md24',1,'']]],
+  ['declare_20services_3',['Declare services',['../rpc_intro.html#autotoc_md25',1,'']]],
+  ['define_20service_20implementation_4',['Define service implementation',['../rpc_intro.html#autotoc_md26',1,'']]],
+  ['definition_5',['definition',['../structOS__process__t.html#a0159c1ff60b0227b8f3a66674c92006d',1,'OS_process_t']]],
+  ['delay_5fus_6',['delay_us',['../group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b',1,'timer.c']]],
+  ['delays_7',['Precise synchronous delays',['../group__api__timing.html#sync_delay',1,'']]],
+  ['delays_20involving_20power_20management_8',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
+  ['depth_9',['depth',['../group__aux__queue.html#ga37e4b62f3fa7794622481dba035f3b12',1,'Queue']]],
+  ['design_20of_20rpc_20mechanism_10',['High level design of RPC mechanism',['../rpc_intro.html#autotoc_md20',1,'']]],
+  ['destroy_11',['destroy',['../structQueueInterface.html#ad826f2ff621e2220098e591056b4a42c',1,'QueueInterface']]],
+  ['development_20environment_12',['Development Environment',['../dev_env.html',1,'overview']]],
+  ['directories_13',['Source and header directories',['../dev_env.html#autotoc_md35',1,'']]],
+  ['do_5fset_5ftimed_5fevent_14',['do_set_timed_event',['../group__os__timer.html#gae3a4508687fd813fb7e3e56271ef64bb',1,'timer.c']]],
+  ['documentation_15',['Kernel documentation',['../group__os.html',1,'']]]
 ];

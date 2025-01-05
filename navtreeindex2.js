@@ -1,5 +1,18 @@
 var NAVTREEINDEX2 =
 {
+"structMPU__Registers.html#a0668dd1313f2045221b5e32512cd21c2":[4,0,14,3],
+"structMPU__Registers.html#a1743318dffbc94c876f6726ae2c8b46c":[4,0,14,2],
+"structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343":[4,0,14,0],
+"structMPU__Registers.html#af192544722f6e65244f494cdbf934a49":[4,0,14,1],
+"structNotificationObject.html":[3,1,5,0],
+"structNotificationObject.html#a314f4b8525154216bbbdc1cfc67476b9":[3,1,5,0,1],
+"structNotificationObject.html#a8ad4157961a23de02fde431a55d98388":[3,1,5,0,0],
+"structOS__MPU__region.html":[4,0,17],
+"structOS__MPU__region.html#a0642cc60aaf53cce8d66b4070802b19e":[4,0,17,1],
+"structOS__MPU__region.html#ad764a379d4013b7559bd3286db398425":[4,0,17,0],
+"structOS__core__state__t.html":[3,1,3,3],
+"structOS__core__state__t.html#a012cf1dfaf1eb4507de4891a720da75c":[3,1,3,3,2],
+"structOS__core__state__t.html#addaba14b5bd17c76d0b929cf8e1f0e26":[3,1,3,3,1],
 "structOS__core__state__t.html#ae05a2d1f6299eccf2e5811b2d5508b7d":[3,1,3,3,0],
 "structOS__process__definition__t.html":[4,0,18],
 "structOS__process__definition__t.html#a60479915c51d1fceacf4ea6ca72cb415":[4,0,18,1],

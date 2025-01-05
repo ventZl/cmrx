@@ -1,14 +1,12 @@
 var searchData=
 [
-  ['layer_0',['Porting layer',['../group__arch__arch.html',1,'']]],
-  ['length_1',['LENGTH',['../group__util.html#gafedd38df23e9c9f801b82b8cdf210dae',1,'util.h']]],
-  ['level_20design_20of_20rpc_20mechanism_2',['High level design of RPC mechanism',['../rpc_intro.html#autotoc_md7',1,'']]],
-  ['libraries_3',['Libraries',['../group__libs.html',1,'']]],
-  ['library_4',['Queue library',['../group__aux__queue.html',1,'']]],
-  ['linker_20script_20adjustment_20tool_5',['Linker script adjustment tool',['../dev_env.html#autotoc_md23',1,'']]],
-  ['load_5fcontext_6',['load_context',['../group__arch__arm__cortex.html#gaf3f11bf6495679261169947a65655d16',1,'cortex.h']]],
-  ['lock_5fbarrier_7',['lock_barrier',['../structchecker__t.html#a1d61ea2b720381dab31ddd75d116d3ea',1,'checker_t']]],
-  ['log2_8',['LOG2',['../group__util.html#ga40805b5dd56ee36df59a7bbe403ddf33',1,'util.h']]],
-  ['log_5f2_9',['log_2',['../group__arch__arm__mpu.html#ga0cc61c07f2641c9564f3b2e08340e692',1,'mpu.c']]],
-  ['lr_10',['lr',['../structExceptionFrame.html#a376558c1fe0fa2dc2d295c642e40b5ee',1,'ExceptionFrame']]]
+  ['h_0',['h',['../group__arch__arch.html#corelocal_h',1,'corelocal.h'],['../group__arch__arch.html#mpu_h',1,'mpu.h'],['../group__arch__arch.html#sysenter_h',1,'sysenter.h']]],
+  ['hal_20tweaks_1',['CubeMX HAL tweaks',['../getting_started.html#autotoc_md12',1,'']]],
+  ['handler_2',['handler',['../structSyscall__Entry__t.html#ace65d18a0d600d65292f949c52b1937a',1,'Syscall_Entry_t']]],
+  ['handling_3',['Signal handling',['../group__os__signal.html',1,'']]],
+  ['hard_5ffault_5fhandler_4',['hard_fault_handler',['../group__arch__arm__mpu.html#ga80b8e496817c48aab711bab6cb8a148d',1,'mpu.c']]],
+  ['header_20directories_5',['Source and header directories',['../dev_env.html#autotoc_md35',1,'']]],
+  ['headers_6',['C headers',['../group__arch__arch.html#headers',1,'']]],
+  ['helper_7',['CMSIS helper',['../hal_integration.html#autotoc_md37',1,'']]],
+  ['high_20level_20design_20of_20rpc_20mechanism_8',['High level design of RPC mechanism',['../rpc_intro.html#autotoc_md20',1,'']]]
 ];

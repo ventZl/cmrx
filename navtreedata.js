@@ -38,8 +38,22 @@ var NAVTREE =
       [ "SMP support", "smp_support.html", null ]
     ] ],
     [ "Getting started", "getting_started.html", [
-      [ "Obtain dependencies and CMRX", "getting_started.html#autotoc_md0", null ],
-      [ "Project template", "getting_started.html#autotoc_md1", null ]
+      [ "Prerequisites", "getting_started.html#autotoc_md0", null ],
+      [ "Creating project skeleton with CubeMX", "getting_started.html#autotoc_md1", null ],
+      [ "Basic CubeMX project settings", "getting_started.html#autotoc_md2", null ],
+      [ "Configuring the core", "getting_started.html#autotoc_md3", null ],
+      [ "Configuring GPIOs", "getting_started.html#autotoc_md4", null ],
+      [ "Generating project and getting CMRX source", "getting_started.html#autotoc_md5", null ],
+      [ "Integrating CMRX into CubeMX project", "getting_started.html#autotoc_md6", [
+        [ "1. Add CMake modules provided by CMRX into CMake module path", "getting_started.html#autotoc_md7", null ],
+        [ "2. Configure CubeMX integration", "getting_started.html#autotoc_md8", null ],
+        [ "3. Configure the CMRX kernel to use CubeMX", "getting_started.html#autotoc_md9", null ]
+      ] ],
+      [ "Linking CMRX to the project", "getting_started.html#autotoc_md10", null ],
+      [ "Creating the blinky application", "getting_started.html#autotoc_md11", null ],
+      [ "CubeMX HAL tweaks", "getting_started.html#autotoc_md12", null ],
+      [ "Adding blinky application to the build", "getting_started.html#autotoc_md13", null ],
+      [ "Flashing the application", "getting_started.html#autotoc_md14", null ]
     ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Data Structures", "annotated.html", [
@@ -56,8 +70,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__bsw__com.html#ga1861d01ee10efbd041270df16815a8db",
-"structOS__core__state__t.html#ae05a2d1f6299eccf2e5811b2d5508b7d"
+"group__aux__queue.html#gab7fe4467c0404b3ff715b0c359d0188f",
+"structMPU__Registers.html#a0668dd1313f2045221b5e32512cd21c2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
