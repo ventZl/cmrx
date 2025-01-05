@@ -42,6 +42,10 @@ struct Queue {
     unsigned char content[];
 };
 
+#pragma GCC diagnostic push
+/* Ignore warning about incorrect VLA use.
+ * The code is not portable outside GCC but works as designed */
+#pragma GCC diagnostic ignored "-Wpedantic"
 /** Queue with 256 bytes of storage preallocated.
  * This provides queue structure with 256 bytes of preallocated storage space.
  */
@@ -66,6 +70,7 @@ struct {\
         unsigned char buffer[sizeof(struct Queue) + size];\
     };\
 } name;
+#pragma GCC diagnostic pop
 
 //#define unpack_queue(__q) _Generic((__q), struct Queue * : (__q), default: ((__q)->q))
 

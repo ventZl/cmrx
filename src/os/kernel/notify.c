@@ -77,6 +77,8 @@ int os_initialize_waitable_object(const void* object)
     {
         os_sched_yield();
     }
+
+    return E_OK;
 }
 
 
@@ -181,13 +183,7 @@ int os_sys_notify_object(const void * object)
  * post this notification other than the thread will become READY for
  * scheduling.
  */
-static void cb_syscall_notify_object(const void * object, Thread_t thread, Event_t event)
-{
-    (void) object;
-    (void) thread;
-    (void) event;
-    return;
-}
+void cb_syscall_notify_object(const void * object, Thread_t thread, Event_t event);
 /** @} */
 
 int os_sys_wait_for_object(const void * object, uint32_t timeout)

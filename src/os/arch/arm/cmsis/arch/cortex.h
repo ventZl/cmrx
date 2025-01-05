@@ -21,8 +21,8 @@ typedef struct {
 	uint32_t r2;
 	uint32_t r3;*/
 	uint32_t r12;
-	void * lr;
-	void * pc;
+	void (*lr)();
+	void *pc;
 	uint32_t xpsr;
 /*	uint32_t arg4;
 	uint32_t arg5;
@@ -179,7 +179,7 @@ static inline void set_exception_argument(ExceptionFrame * frame, unsigned argno
  * @param pc new value for PC register in exception frame
  * @param lr new value for LR register in exception frame
  */
-static inline void set_exception_pc_lr(ExceptionFrame * frame, void * pc, void * lr)
+static inline void set_exception_pc_lr(ExceptionFrame * frame, void * pc, void (* lr)())
 {
 	frame->pc = pc;
 	frame->lr = lr;
@@ -314,7 +314,7 @@ ALWAYS_INLINE void * __get_LR(void)
  * After this function is executed, processor will continue running
  * code pointed to by @ref continue_here in privileged thread mode.
  */
-ALWAYS_INLINE  void __forge_shutdown_exception_frame(void * continue_here)
+ALWAYS_INLINE  void __forge_shutdown_exception_frame(void (*continue_here)(void))
 {
 	asm volatile(
 		".syntax unified\n\t"

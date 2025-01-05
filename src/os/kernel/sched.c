@@ -524,7 +524,7 @@ int os_thread_create(entrypoint_t * entrypoint, void * data, uint8_t priority)
 
 #define KERNEL_STRUCTS_INITIALIZED_SIGNATURE    0x434D5258
 
-__attribute__((noreturn)) void _os_start(uint8_t start_core)
+void _os_start(uint8_t start_core)
 {
     volatile Thread_t created_threads[8];
     volatile unsigned cursor = 0;
@@ -581,7 +581,7 @@ __attribute__((noreturn)) void _os_start(uint8_t start_core)
         os_memory_protection_start();
 		// Flash - RX
 		// At this state thread is not hosted anywhere
-		mpu_restore(&os_processes[startup_process].mpu, &os_processes[startup_process].mpu);
+		mpu_restore((const MPU_State *) &os_processes[startup_process].mpu, (const MPU_State *) &os_processes[startup_process].mpu);
 
 		// Configure stack access for incoming thread
 		if (mpu_init_stack(startup_thread) != E_OK)
@@ -595,11 +595,6 @@ __attribute__((noreturn)) void _os_start(uint8_t start_core)
         os_boot_thread(startup_thread);
 		// if thread we started here returns,
 		// it returns here. 
-	//	while (1);
-	}
-	else
-	{
-	//	while(1);
 	}
 }
 
