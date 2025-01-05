@@ -19,7 +19,7 @@
 /** Attribute used to publish syscall definitions in a way that
  * os_syscall can process them
  */
-#define SYSCALL_DEFINITION __attribute__((section(".syscall"))) const
+#define SYSCALL_DEFINITION __attribute__((section(".syscall"), used)) const
 
 typedef int (* Syscall_Handler_t)(int, int, int, int);
 

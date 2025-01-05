@@ -91,7 +91,7 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 	set_exception_argument(signal_frame, 1, (uint32_t) thread->signal_handler);
 
 	/* PC - os_fire_signal */
-	signal_frame->pc = os_fire_signal;
+	*((void (**)()) &signal_frame->pc) = os_fire_signal;
 
 	if (thread->state == THREAD_STATE_RUNNING)
 	{

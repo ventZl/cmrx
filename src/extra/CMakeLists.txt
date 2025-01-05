@@ -5,6 +5,7 @@ if (NOT UNIT_TESTING_BUILD)
     if (CMRX_STDLIB_USE_CMSIS_CORE)
         target_link_libraries(aux_systick cmsis_core)
     endif()
+    target_compile_options(aux_systick PRIVATE -mgeneral-regs-only)
 
     set(aux_ipi_SRCS cm_ipi.c)
     add_library(aux_ipi STATIC EXCLUDE_FROM_ALL ${aux_ipi_SRCS})

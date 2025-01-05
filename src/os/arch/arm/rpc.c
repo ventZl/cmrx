@@ -50,7 +50,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 		return E_IN_TOO_DEEP;
 	}
 
-	mpu_load(&os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
+	mpu_load((const MPU_State *) &os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
 
 	unsigned method_id = get_exception_argument(local_frame, 5); 
 	RPC_Method_t * method = vtable[method_id];
@@ -121,7 +121,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 		ASSERT(0);
 	}
 
-	mpu_load(&os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
+	mpu_load((const MPU_State *) &os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
 
 	// Additional sanitizing
 #if 0

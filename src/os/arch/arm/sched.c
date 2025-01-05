@@ -74,7 +74,7 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 }
 
 /// @cond IGNORE
-__attribute__((naked,noreturn)) 
+__attribute__((naked,noreturn))
 /// @endcond
 void os_boot_thread(Thread_t boot_thread)
 {
@@ -91,11 +91,13 @@ void os_boot_thread(Thread_t boot_thread)
 
     __ISR_return();
 
+	while (1);
 }
 
 __attribute__((noreturn)) void os_reset_cpu()
 {
 	SCB->AIRCR = (0x5FA<<SCB_AIRCR_VECTKEY_Pos)|SCB_AIRCR_SYSRESETREQ_Msk;
+	while (1);
 }
 
 

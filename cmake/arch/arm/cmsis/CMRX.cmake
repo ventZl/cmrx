@@ -19,6 +19,9 @@ function(add_firmware FW_NAME)
     __cmrx_get_linker_script_for_binary(${DEVICE} ${FW_NAME} BINARY_LINKER_SCRIPT)
 
     get_property(CMRX_ROOT_DIR GLOBAL PROPERTY CMRX_ROOT_DIR)
+    if ("${CMRX_ROOT_DIR}" STREQUAL "")
+        message(FATAL_ERROR "CMRX source tree directory property not set! Did you forget to add_subdirectory(cmrx) ?")
+    endif()
 
 	if (TESTING)
 		set(EXCL EXCLUDE_FROM_ALL)
@@ -44,6 +47,7 @@ function(add_firmware FW_NAME)
         ${FW_NAME}
         )
     target_link_options(${FW_NAME} PUBLIC -Wl,-Map=${FW_NAME}.map)
+    file(CREATE_LINK ${FW_NAME}.map ${FW_NAME}.elf.map SYMBOLIC)
     # TODO: CMake will de-duplicate any incoming interface
     if (NOT CMRX_SKIP_LINKER_FILE_USE)
         target_link_options(${FW_NAME} PUBLIC LINKER:--script=${BINARY_LINKER_SCRIPT})
