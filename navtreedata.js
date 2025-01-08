@@ -51,9 +51,9 @@ var NAVTREE =
       ] ],
       [ "Linking CMRX to the project", "getting_started.html#autotoc_md10", null ],
       [ "Creating the blinky application", "getting_started.html#autotoc_md11", null ],
-      [ "CubeMX HAL tweaks", "getting_started.html#autotoc_md13", null ],
-      [ "Adding blinky application to the build", "getting_started.html#autotoc_md14", null ],
-      [ "Flashing the application", "getting_started.html#autotoc_md15", null ]
+      [ "CubeMX HAL tweaks", "getting_started.html#autotoc_md12", null ],
+      [ "Adding blinky application to the build", "getting_started.html#autotoc_md13", null ],
+      [ "Flashing the application", "getting_started.html#autotoc_md14", null ]
     ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Data Structures", "annotated.html", [

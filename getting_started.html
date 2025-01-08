@@ -380,7 +380,7 @@ Creating the blinky application</h1>
 <li>Block size (end address - start address) must be a power of two value larger than 256</li>
 <li>Start address must be aligned to size of the block. This means that if block size is e.g. 256, then the start address must have alignment of 256 bytes.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 CubeMX HAL tweaks</h1>
 <p>Here we came across a tricky design feature of CubeMX HAL (which is similar to many other HALs actually): We want to include a HAL header from within application code. The application code has to be compiled into static library (to aid automatic memory protection facilities).</p>
 <p>CubeMX generates target that provides access to these headers - <code>stm32cubemx</code>. The problem lies in the fact that this target is defined as <code>INTERFACE</code> library. This, in CMake terms, means that source files on this library will be copied into every target that links against it. Linking <code>blinky</code> application to <code>stm32cubemx</code> target would mean we end up with two copies of HAL.</p>
@@ -392,7 +392,7 @@ CubeMX HAL tweaks</h1>
 <div class="line">target_include_directories(stm32cubemx_headers INTERFACE ${CUBEMX_INCLUDE_DIRECTORIES})</div>
 <div class="line">target_compile_definitions(stm32cubemx_headers INTERFACE ${CUBEMX_COMPILE_DEFINITIONS})</div>
 </div><!-- fragment --><p>This piece of code will create <code>INTERFACE</code> library <code>stm32cubemx_headers</code> that will provide same compile definitions and include paths as the <code>stm32cubemx</code> but won't inject any source files. We can link the blinky application against this library to get correct include path to <code>stm32h7xx_hal.h</code> file. Applications can link against this library in order use correct include paths and compiler definitions.</p>
-<h1><a class="anchor" id="autotoc_md14"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 Adding blinky application to the build</h1>
 <p>Very last step is to add this application to the build. To do so, two lines have to be added into master <code>CMakeLists.txt</code>.</p>
 <p>Just after the line </p><div class="fragment"><div class="line">add_subdirectory(cmake/stm32cubemx)</div>
@@ -403,7 +403,7 @@ Adding blinky application to the build</h1>
 <div class="line">    blinky</div>
 <div class="line">)</div>
 </div><!-- fragment --><p>This is it! You have created your first fully memory protected application running on top of CMRX operating system. You can build the project now. You should get file <code>build/cmrx-cubemx.example.elf</code> which contains the application firmware.</p>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md14"></a>
 Flashing the application</h1>
 <p>There are multiple ways of flashing the firmware available. This guide will use one of IDE-agnostic ways: direct use of openocd and gdb.</p>
 <p>OpenOCD is a gateway between your debugger probe and the debugger used on your PC.</p>
