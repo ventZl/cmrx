@@ -38,6 +38,24 @@ doxygen
 
 in the root directory of this repository. HTML documentation will be generated into `doc/html` subdirectory.
 
+Contributing
+------------
+
+CMRX is an open project and any contributions are welcome. You can help even if you don't feel like developing an operating system is your cup of coffee:
+
+* provide feedback on your experience testing CMRX on real hardware - Have you tried to make CMRX run with your board? Let us know that if it works or not.
+* reporting bugs - Did you find a bug? Did CMRX crash on you? Fill in a bug.
+* suggesting enhancements - Do you think some feature is missing? Propose a feature.
+* improve tests - Even though kernel does have some tests, the test suite can always be better.
+* contribute code - Contributions in the form of pull requests that resolve issues, implement enhancements or feature requests are welcome as long as they
+  adhere to the basic concept and mission of this project.
+
+Reporting bugs
+--------------
+
+If you find a bug within the kernel itself, the best way to report the bug is to create a pull request containing a failing kernel test. We understand that this
+is not always possible as fair amount of bugs will come from the integration and/or the build system, so the PR with failing test is not a must.
+
 Examples
 --------
 There are some examples of how to use CMRX with various HALs on various platforms in [Examples repository](https://github.com/ventZl/cmrx-examples).
