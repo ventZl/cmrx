@@ -125,9 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf2a18c9a690c0de3735ef1f78abe1554" id="r_gaf2a18c9a690c0de3735ef1f78abe1554"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaf2a18c9a690c0de3735ef1f78abe1554">os_ipi_sync_probe</a> ()</td></tr>
 <tr class="memdesc:gaf2a18c9a690c0de3735ef1f78abe1554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if inter-processor synchronization is requested.  <br /></td></tr>
 <tr class="separator:gaf2a18c9a690c0de3735ef1f78abe1554"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf6b80c02401002f49137d397ba971b0" id="r_gaaf6b80c02401002f49137d397ba971b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaaf6b80c02401002f49137d397ba971b0">os_request_context_switch</a> ()</td></tr>
-<tr class="memdesc:gaaf6b80c02401002f49137d397ba971b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
-<tr class="separator:gaaf6b80c02401002f49137d397ba971b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b1827c66da610023e93a6ad404bd38f" id="r_ga8b1827c66da610023e93a6ad404bd38f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga8b1827c66da610023e93a6ad404bd38f">os_request_context_switch</a> (bool activate)</td></tr>
+<tr class="memdesc:ga8b1827c66da610023e93a6ad404bd38f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
+<tr class="separator:ga8b1827c66da610023e93a6ad404bd38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga08c83fbec4a92bba591402c53805f345" id="r_ga08c83fbec4a92bba591402c53805f345"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345">coreid</a> ()</td></tr>
 <tr class="memdesc:ga08c83fbec4a92bba591402c53805f345"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide kernel with identification of current CPU core.  <br /></td></tr>
 <tr class="separator:ga08c83fbec4a92bba591402c53805f345"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -546,8 +546,8 @@ Port implementation sources</h1>
 
 </div>
 </div>
-<a id="gaaf6b80c02401002f49137d397ba971b0" name="gaaf6b80c02401002f49137d397ba971b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaf6b80c02401002f49137d397ba971b0">&#9670;&#160;</a></span>os_request_context_switch()</h2>
+<a id="ga8b1827c66da610023e93a6ad404bd38f" name="ga8b1827c66da610023e93a6ad404bd38f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8b1827c66da610023e93a6ad404bd38f">&#9670;&#160;</a></span>os_request_context_switch()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -555,7 +555,8 @@ Port implementation sources</h1>
         <tr>
           <td class="memname">void os_request_context_switch </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>activate</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

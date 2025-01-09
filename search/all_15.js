@@ -17,7 +17,7 @@ var searchData=
   ['service_14',['service',['../rpc_intro.html#autotoc_md27',1,'Calling RPC service'],['../rpc_intro.html#autotoc_md22',1,'RPC service']]],
   ['service_20implementation_15',['Define service implementation',['../rpc_intro.html#autotoc_md26',1,'']]],
   ['service_20instances_16',['RPC service instances',['../group__api__rpc.html#api_rpc_instances',1,'']]],
-  ['service_20routines_17',['service routines',['../group__api__isr.html',1,'Interrupt Service Routines'],['../group__os__isr.html',1,'Interrupt service routines']]],
+  ['service_20routines_17',['service routines',['../group__os__isr.html',1,'Interrupt service routines'],['../group__api__isr.html',1,'Interrupt Service Routines']]],
   ['services_18',['services',['../rpc_intro.html#autotoc_md25',1,'Declare services'],['../group__api__rpc.html#api_rpc_objects',1,'RPC objects (services)']]],
   ['services_20implementation_19',['OS services implementation',['../group__arch__arm__os.html',1,'']]],
   ['set_5fexception_5fargument_20',['set_exception_argument',['../group__arch__arm__cortex.html#gaff50eeff9c1a2b472601ba02a2df18c0',1,'cortex.h']]],

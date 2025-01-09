@@ -128,9 +128,9 @@ var NAVTREEINDEX0 =
 "group__arch__arch.html#ga6e29c6b6f3e6e761c076a0b28490da0e":[3,1,0,1,10],
 "group__arch__arch.html#ga770860e52c205dc2a7e865b80b0fca11":[3,1,0,1,13],
 "group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea":[3,1,0,1,6],
+"group__arch__arch.html#ga8b1827c66da610023e93a6ad404bd38f":[3,1,0,1,14],
 "group__arch__arch.html#ga9ee8f29f3009ad125af02a612603504f":[3,1,0,1,16],
 "group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf":[3,1,0,1,25],
-"group__arch__arch.html#gaaf6b80c02401002f49137d397ba971b0":[3,1,0,1,14],
 "group__arch__arch.html#gab06a63362ae820b797a3bf0b1c6386a0":[3,1,0,1,26],
 "group__arch__arch.html#gabb3070fe93f5997763b5685b81288f5c":[3,1,0,1,18],
 "group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826":[3,1,0,1,19],
@@ -179,8 +179,9 @@ var NAVTREEINDEX0 =
 "group__arch__arm__nvic.html#ga1f2b7cd42c4cda96dae3a6bf3a08a53d":[3,1,0,0,2,1],
 "group__arch__arm__nvic.html#ga99e85036a50727934b3d09e988a9846d":[3,1,0,0,2,0],
 "group__arch__arm__os.html":[3,1,0,0,3],
-"group__arch__arm__os.html#ga6303e1f258cbdc1f970ce579cc015623":[3,1,0,0,3,1],
-"group__arch__arm__os.html#gaaf6b80c02401002f49137d397ba971b0":[3,1,0,0,3,0],
+"group__arch__arm__os.html#ga6303e1f258cbdc1f970ce579cc015623":[3,1,0,0,3,2],
+"group__arch__arm__os.html#ga8b1827c66da610023e93a6ad404bd38f":[3,1,0,0,3,1],
+"group__arch__arm__os.html#gaa4cf099935c9747600b47a462131e023":[3,1,0,0,3,0],
 "group__arch__arm__rpc.html":[3,1,0,0,4],
 "group__arch__arm__rpc.html#ga241bd76bc39dd9597dd818fc530bec57":[3,1,0,0,4,0],
 "group__arch__arm__rpc.html#ga2b0268c1c8ecd0d6e3194f0f52be350c":[3,1,0,0,4,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "group__aux__queue.html#ga4eb65aa97addc979fe4486b7456682d9":[3,3,3,4],
 "group__aux__queue.html#ga7c3d232b52fdd2ff01ed578fed30400e":[3,3,3,12],
 "group__aux__queue.html#ga8ad0c0e100f40b8ba03f80bc0754892c":[3,3,3,10],
-"group__aux__queue.html#gaa7d1e0d4ea7e93ad6af453ebabd644d2":[3,3,3,6],
-"group__aux__queue.html#gab4bca1cae2cd33ac9082a021677b24ad":[3,3,3,17]
+"group__aux__queue.html#gaa7d1e0d4ea7e93ad6af453ebabd644d2":[3,3,3,6]
 };

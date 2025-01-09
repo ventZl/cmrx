@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"structMPU__Registers.html":[4,0,14],
 "structMPU__Registers.html#a0668dd1313f2045221b5e32512cd21c2":[4,0,14,3],
 "structMPU__Registers.html#a1743318dffbc94c876f6726ae2c8b46c":[4,0,14,2],
 "structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343":[4,0,14,0],

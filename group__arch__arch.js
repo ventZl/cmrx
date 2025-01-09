@@ -14,7 +14,7 @@ var group__arch__arch =
     [ "os_memory_protection_start", "group__arch__arch.html#ga2b816407f1b57d532407988a5da92716", null ],
     [ "os_memory_protection_stop", "group__arch__arch.html#gad478154133b190e328ee2cd65a4a8b20", null ],
     [ "os_process_create", "group__arch__arch.html#ga770860e52c205dc2a7e865b80b0fca11", null ],
-    [ "os_request_context_switch", "group__arch__arch.html#gaaf6b80c02401002f49137d397ba971b0", null ],
+    [ "os_request_context_switch", "group__arch__arch.html#ga8b1827c66da610023e93a6ad404bd38f", null ],
     [ "os_reset_cpu", "group__arch__arch.html#ga0ef00a0f1fe50bb0af3bbf05cbdddfe3", null ],
     [ "os_rpc_call", "group__arch__arch.html#ga9ee8f29f3009ad125af02a612603504f", null ],
     [ "os_rpc_return", "group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c", null ],

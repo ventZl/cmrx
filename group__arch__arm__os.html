@@ -106,17 +106,41 @@ $(document).ready(function(){initNavTree('group__arch__arm__os.html',''); initRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaaf6b80c02401002f49137d397ba971b0" id="r_gaaf6b80c02401002f49137d397ba971b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaaf6b80c02401002f49137d397ba971b0">os_request_context_switch</a> ()</td></tr>
-<tr class="memdesc:gaaf6b80c02401002f49137d397ba971b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
-<tr class="separator:gaaf6b80c02401002f49137d397ba971b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b1827c66da610023e93a6ad404bd38f" id="r_ga8b1827c66da610023e93a6ad404bd38f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga8b1827c66da610023e93a6ad404bd38f">os_request_context_switch</a> (bool activate)</td></tr>
+<tr class="memdesc:ga8b1827c66da610023e93a6ad404bd38f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
+<tr class="separator:ga8b1827c66da610023e93a6ad404bd38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4cf099935c9747600b47a462131e023" id="r_gaa4cf099935c9747600b47a462131e023"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaa4cf099935c9747600b47a462131e023">__get_SP</a> (void)</td></tr>
+<tr class="memdesc:gaa4cf099935c9747600b47a462131e023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of process LR.  <br /></td></tr>
+<tr class="separator:gaa4cf099935c9747600b47a462131e023"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6303e1f258cbdc1f970ce579cc015623" id="r_ga6303e1f258cbdc1f970ce579cc015623"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga6303e1f258cbdc1f970ce579cc015623">PendSV_Handler</a> (void)</td></tr>
 <tr class="memdesc:ga6303e1f258cbdc1f970ce579cc015623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle task switch.  <br /></td></tr>
 <tr class="separator:ga6303e1f258cbdc1f970ce579cc015623"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gaaf6b80c02401002f49137d397ba971b0" name="gaaf6b80c02401002f49137d397ba971b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaf6b80c02401002f49137d397ba971b0">&#9670;&#160;</a></span>os_request_context_switch()</h2>
+<a id="gaa4cf099935c9747600b47a462131e023" name="gaa4cf099935c9747600b47a462131e023"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa4cf099935c9747600b47a462131e023">&#9670;&#160;</a></span>__get_SP()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void * __get_SP </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get value of process LR. </p>
+<dl class="section return"><dt>Returns</dt><dd>top of application stack </dd></dl>
+
+</div>
+</div>
+<a id="ga8b1827c66da610023e93a6ad404bd38f" name="ga8b1827c66da610023e93a6ad404bd38f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8b1827c66da610023e93a6ad404bd38f">&#9670;&#160;</a></span>os_request_context_switch()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -124,7 +148,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void os_request_context_switch </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>activate</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
