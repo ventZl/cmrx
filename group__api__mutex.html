@@ -123,6 +123,10 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf91a7632549783f7a1692b3d4faf0ee7" id="r_gaf91a7632549783f7a1692b3d4faf0ee7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__mutex.html#gaf91a7632549783f7a1692b3d4faf0ee7">FUTEX_STATIC_INIT</a>&#160;&#160;&#160;{ 0xFF, 0, 0 }</td></tr>
 <tr class="memdesc:gaf91a7632549783f7a1692b3d4faf0ee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compile time initialization of futex.  <br /></td></tr>
 <tr class="separator:gaf91a7632549783f7a1692b3d4faf0ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39e1517235deb01928a1aff095ea9672" id="r_ga39e1517235deb01928a1aff095ea9672"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__mutex.html#ga39e1517235deb01928a1aff095ea9672">FUTEX_SUCCESS</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga39e1517235deb01928a1aff095ea9672"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga552e957a1d1f9f8a51841c139433d121" id="r_ga552e957a1d1f9f8a51841c139433d121"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__mutex.html#ga552e957a1d1f9f8a51841c139433d121">FUTEX_FAILURE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:ga552e957a1d1f9f8a51841c139433d121"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -155,6 +159,20 @@ Functions</h2></td></tr>
 <p>Basic synchronization primitives for use inside one process. </p>
 <p>CMRX offers mutual exclusive access facilities for userspace processes. There is an implementation of futex (fast userspace mutex) available and supported. There is also an implementation of mutex (driven by kernel), but this might get deprecated anytime soon. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga552e957a1d1f9f8a51841c139433d121" name="ga552e957a1d1f9f8a51841c139433d121"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga552e957a1d1f9f8a51841c139433d121">&#9670;&#160;</a></span>FUTEX_FAILURE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FUTEX_FAILURE&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="gaf91a7632549783f7a1692b3d4faf0ee7" name="gaf91a7632549783f7a1692b3d4faf0ee7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf91a7632549783f7a1692b3d4faf0ee7">&#9670;&#160;</a></span>FUTEX_STATIC_INIT</h2>
 
@@ -169,6 +187,20 @@ Functions</h2></td></tr>
 
 <p>Compile time initialization of futex. </p>
 <p>If futex is initialized using this value, then it is not necessary to call <a class="el" href="group__api__mutex.html#ga29d155f0ec6824a9bbf99d301a91fa43" title="Futexes Futex is fast userspace mutex.">futex_init()</a> during runtime. </p>
+
+</div>
+</div>
+<a id="ga39e1517235deb01928a1aff095ea9672" name="ga39e1517235deb01928a1aff095ea9672"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga39e1517235deb01928a1aff095ea9672">&#9670;&#160;</a></span>FUTEX_SUCCESS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FUTEX_SUCCESS&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

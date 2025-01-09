@@ -9,11 +9,13 @@ var searchData=
   ['from_20critical_20section_20to_20transaction_6',['From critical section to transaction',['../txn_intro.html#autotoc_md31',1,'']]],
   ['functions_7',['functions',['../dev_env.html#autotoc_md34',1,'CMake functions'],['../group__api__thread.html',1,'Threading functions']]],
   ['futex_5fdestroy_8',['futex_destroy',['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c']]],
-  ['futex_5finit_9',['futex_init',['../group__api__mutex.html#ga29d155f0ec6824a9bbf99d301a91fa43',1,'mutex.c']]],
-  ['futex_5flock_10',['futex_lock',['../group__api__mutex.html#ga95f34ae7e2f76249680fa5eba45822f2',1,'futex_lock(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#ga95f34ae7e2f76249680fa5eba45822f2',1,'futex_lock(futex_t *futex):&#160;mutex.c']]],
-  ['futex_5fstatic_5finit_11',['FUTEX_STATIC_INIT',['../group__api__mutex.html#gaf91a7632549783f7a1692b3d4faf0ee7',1,'mutex.h']]],
-  ['futex_5ft_12',['futex_t',['../structfutex__t.html',1,'']]],
-  ['futex_5ftrylock_13',['futex_trylock',['../group__api__mutex.html#ga74f3090e90f2bed16e323430714c7591',1,'futex_trylock(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#ga74f3090e90f2bed16e323430714c7591',1,'futex_trylock(futex_t *futex):&#160;mutex.c']]],
-  ['futex_5funlock_14',['futex_unlock',['../group__api__mutex.html#ga5b5ed0f811abd4507e34ef34f3d11991',1,'futex_unlock(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#ga5b5ed0f811abd4507e34ef34f3d11991',1,'futex_unlock(futex_t *futex):&#160;mutex.c']]],
-  ['futexes_15',['Mutexes / Futexes',['../group__api__mutex.html',1,'']]]
+  ['futex_5ffailure_9',['FUTEX_FAILURE',['../group__api__mutex.html#ga552e957a1d1f9f8a51841c139433d121',1,'mutex.h']]],
+  ['futex_5finit_10',['futex_init',['../group__api__mutex.html#ga29d155f0ec6824a9bbf99d301a91fa43',1,'mutex.c']]],
+  ['futex_5flock_11',['futex_lock',['../group__api__mutex.html#ga95f34ae7e2f76249680fa5eba45822f2',1,'futex_lock(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#ga95f34ae7e2f76249680fa5eba45822f2',1,'futex_lock(futex_t *futex):&#160;mutex.c']]],
+  ['futex_5fstatic_5finit_12',['FUTEX_STATIC_INIT',['../group__api__mutex.html#gaf91a7632549783f7a1692b3d4faf0ee7',1,'mutex.h']]],
+  ['futex_5fsuccess_13',['FUTEX_SUCCESS',['../group__api__mutex.html#ga39e1517235deb01928a1aff095ea9672',1,'mutex.h']]],
+  ['futex_5ft_14',['futex_t',['../structfutex__t.html',1,'']]],
+  ['futex_5ftrylock_15',['futex_trylock',['../group__api__mutex.html#ga74f3090e90f2bed16e323430714c7591',1,'futex_trylock(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#ga74f3090e90f2bed16e323430714c7591',1,'futex_trylock(futex_t *futex):&#160;mutex.c']]],
+  ['futex_5funlock_16',['futex_unlock',['../group__api__mutex.html#ga5b5ed0f811abd4507e34ef34f3d11991',1,'futex_unlock(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#ga5b5ed0f811abd4507e34ef34f3d11991',1,'futex_unlock(futex_t *futex):&#160;mutex.c']]],
+  ['futexes_17',['Mutexes / Futexes',['../group__api__mutex.html',1,'']]]
 ];

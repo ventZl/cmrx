@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"structExceptionFrame.html#a7ccd7e7e903b847334e99cb876618eaa":[3,1,0,0,0,0,4],
+"structExceptionFrame.html#af04a8ef4941698926515527bf3ce1c40":[3,1,0,0,0,0,3],
 "structMPU__Registers.html":[4,0,14],
 "structMPU__Registers.html#a0668dd1313f2045221b5e32512cd21c2":[4,0,14,3],
 "structMPU__Registers.html#a1743318dffbc94c876f6726ae2c8b46c":[4,0,14,2],
