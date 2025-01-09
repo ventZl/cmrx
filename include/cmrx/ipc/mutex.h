@@ -23,6 +23,9 @@
  */
 #define FUTEX_STATIC_INIT		{ 0xFF, 0, 0 }
 
+#define FUTEX_SUCCESS					0
+#define FUTEX_FAILURE					1
+
 /** Futex structure.
  * This is fast userspace mutex, which avoids calling kernel.
  * It provides basic functionality for locking, unlocking and
