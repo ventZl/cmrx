@@ -14,6 +14,7 @@
 #include <cmrx/assert.h>
 #include "arch/static.h"
 #include "arch/sched.h"
+#include "arch/context.h"
 #include "context.h"
 #include "arch/mpu.h"
 #include "timer.h"
@@ -123,6 +124,11 @@ int os_sched_yield(void)
             os_txn_done();
         }
  	}
+ 	else
+    {
+        os_request_context_switch(false);
+    }
+
 	return 0;
 }
 

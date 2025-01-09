@@ -1,7 +1,10 @@
 #include <kernel/notify.h>
+#include <kernel/sched.h>
 #include <ctest.h>
 #include <arch/corelocal.h>
 extern struct OS_core_state_t core[OS_NUM_CORES];
+extern bool schedule_context_switch_perform_switch;
+extern bool schedule_context_switch_called;
 
 static bool notify_called = false;
 static const void * notify_object = NULL;
@@ -44,6 +47,9 @@ CTEST_SETUP(os_notify_wait_object) {
     notify_object = NULL;
     notify_thread = 0;
     notify_event = 0;
+
+    schedule_context_switch_perform_switch = true;
+    schedule_context_switch_called = false;
 }
 
 static void * const object_magic = (void *) 0x12345678;
@@ -262,4 +268,35 @@ CTEST2(os_notify_wait_object, os_notify_missed_acts_once) {
 
     ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) object_magic);
+}
+
+/* This test tests for a situation, that a thread calls wait_for_object()
+ * without pending notification. Thus it gets suspended. Before the thread
+ * switch can actually occurr, ISR comes which calls notify_object() for
+ * the object that caused this, still current, thread to suspend. The expected
+ * outcome of this situation is that the thread will be set into running
+ * state as it wasn't scheduled out yet.
+ */
+CTEST2(os_notify_wait_object, wait_notify_same_thread_running) {
+    // We don't want PendSV to actually perform thread switch
+    schedule_context_switch_perform_switch = false;
+
+    // Here thread will be suspended but thread switch won't happen
+    int rv = os_wait_for_object(object_magic, NULL);
+
+    ASSERT_EQUAL(rv, E_OK);
+
+    // Thread switch did not happen as we simulate notify_object being called from ISR
+    // that executed before PendSV had chance to run.
+
+    schedule_context_switch_called = false;
+
+    // This notification should make the thread running again without
+    // actually executing thread switch
+    rv = os_notify_object(object_magic, 42);
+
+    ASSERT_EQUAL(rv, E_OK);
+    ASSERT_EQUAL(schedule_context_switch_called, false);
+    ASSERT_EQUAL(os_threads[core[coreid()].thread_current].state, THREAD_STATE_RUNNING);
+
 }

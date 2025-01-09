@@ -10,14 +10,16 @@
 
 #   define SCB_CFSR (SCB->CFSR)
 
-#   define SCB_ICSR (SCB->ICSR)
 
-#   define SCB_ICSR_PENDSVSET (SCB_ICSR_PENDSVSET_Msk)
 #   define SCB_CFSR_IACCVIOL (SCB_CFSR_IACCVIOL_Msk)
 #   define SCB_CFSR_DACCVIOL (SCB_CFSR_DACCVIOL_Msk)
 #   define SCB_CFSR_MMARVALID (SCB_CFSR_MMARVALID_Msk)
 
 #endif
+
+#define SCB_ICSR (SCB->ICSR)
+#define SCB_ICSR_PENDSVSET (SCB_ICSR_PENDSVSET_Msk)
+#define SCB_ICSR_PENDSVCLR (SCB_ICSR_PENDSVCLR_Msk)
 
 
 #define cortex_disable_interrupts __disable_irq

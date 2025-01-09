@@ -9,7 +9,7 @@
 #include <kernel/runtime.h>
 #include <kernel/sched.h>
 #include <arch/cortex.h>
-#include <conf/kernel.h>
+#include <kernel/arch/context.h>
 
 #include <stdbool.h>
 #include <cmrx/assert.h>
@@ -43,12 +43,40 @@ int os_nvic_disable(uint32_t irq)
  * @{
  */
 
-void os_request_context_switch()
+void os_request_context_switch(bool activate)
 {
-	SCB_ICSR |= SCB_ICSR_PENDSVSET;
+	/* Various Cortex-M manuals state that some fields
+	 * of ICSR are writable, but ARM's own manual states
+	 * that only SET and CLR bits are writable and everything
+	 * else has writes ignored.
+	 * So no ORing or ANDing needed here.
+	 */
+	if (activate)
+	{
+		SCB_ICSR = SCB_ICSR_PENDSVSET;
+	}
+	else
+	{
+		SCB_ICSR = SCB_ICSR_PENDSVCLR;
+	}
 
 	__ISB();
 	__DSB();
+}
+
+/** Get value of process LR
+ * @return top of application stack
+ */
+ALWAYS_INLINE void * __get_SP(void)
+{
+	void * sp;
+	asm volatile(
+		".syntax unified\n\t"
+		"MOV %0, SP\n\t"
+		: "=r" (sp)
+	);
+
+	return sp;
 }
 
 /** Handle task switch.
@@ -80,19 +108,16 @@ __attribute__((naked)) void PendSV_Handler(void)
 
 	struct OS_core_state_t * cpu_state = &core[coreid()];
 
-#ifdef KERNEL_HAS_MEMORY_PROTECTION
 	if (cpu_context.old_parent_process != cpu_context.new_parent_process
         || cpu_context.old_host_process != cpu_context.new_host_process)
 	{
-//		mpu_store(&old_host_process->mpu, &old_parent_process->mpu);
 		mpu_restore((const MPU_State *) &cpu_context.new_host_process->mpu, (const MPU_State *) &cpu_context.new_parent_process->mpu);
 	}
-#endif
 
 	// Configure stack for incoming process
     // This assumes that all stacks are of same size
 	mpu_set_region(OS_MPU_REGION_STACK, cpu_context.new_stack, sizeof(os_stacks.stacks[0]), MPU_RW);
-	sanitize_psp(cpu_context.new_task->sp);
+	sanitize_psp_for_thread(cpu_context.new_task->sp, cpu_state->thread_next);
 
 	if (cpu_context.new_task->signals != 0 && cpu_context.new_task->signal_handler != NULL)
 	{
@@ -110,11 +135,19 @@ __attribute__((naked)) void PendSV_Handler(void)
 
 	os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
 
+	ASSERT(*(uint32_t *)__get_SP() == EXC_RETURN_THREAD_PSP);
+
+	/* Clear any PendSV requests that might have been made by ISR handlers
+	 * preempting PendSV handler before it disabled interrupts
+	 */
+	SCB->ICSR = SCB_ICSR_PENDSVCLR;
+
 	load_context(cpu_context.new_task->sp);
 	/* Do NOT put anything here. You will clobber context just restored! */
 	__ISB();
 	__DSB();
 
+	/* Clear any potential stale pending service requests */
 	cortex_enable_interrupts();
 	asm volatile(
 			"pop {pc}"
