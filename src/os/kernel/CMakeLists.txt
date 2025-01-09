@@ -13,9 +13,14 @@ set(os_SRCS
     sched.c 
     signal.c 
     syscall.c 
-    timer.c 
+    timer.c
     txn.c
     rpc.c)
+
+# Add tracing source file if tracing is enabled
+if (CMRX_KERNEL_TRACING)
+    list(APPEND os_SRCS trace.c)
+endif()
 
 add_library(os STATIC EXCLUDE_FROM_ALL ${os_SRCS})
 get_property(CMRX_ROOT_DIR GLOBAL PROPERTY CMRX_ROOT_DIR)
