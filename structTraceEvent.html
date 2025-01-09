@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: src/os/kernel/arch/corelocal.h Source File</title>
+<title>C Microkernel Realtime eXecutive: TraceEvent Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('kernel_2arch_2corelocal_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structTraceEvent.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,28 +98,60 @@ $(document).ready(function(){initNavTree('kernel_2arch_2corelocal_8h_source.html
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">corelocal.h</div></div>
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
+  <div class="headertitle"><div class="title">TraceEvent Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keywordtype">unsigned</span> coreid();</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">void</span> os_smp_lock();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">void</span> os_smp_unlock();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">os_core_lock</a>();</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keywordtype">void</span> os_core_unlock();</div>
-<div class="ttc" id="agroup__arch__arch_html_ga4c0d351c7f2f49293fe5907c2ac5d289"><div class="ttname"><a href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">os_core_lock</a></div><div class="ttdeci">void os_core_lock()</div><div class="ttdoc">Lock the current core This function ensures that no other code will interrupt the currently running c...</div><div class="ttdef"><b>Definition</b> corelocal.c:21</div></div>
-</div><!-- fragment --></div><!-- contents -->
+
+<p>Kernel event tracing infrastructure.  
+ <a href="structTraceEvent.html#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a23ed7e7a1e2c19950bcd288838fc0150" id="r_a23ed7e7a1e2c19950bcd288838fc0150"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTraceEvent.html#a23ed7e7a1e2c19950bcd288838fc0150">event_id</a></td></tr>
+<tr class="separator:a23ed7e7a1e2c19950bcd288838fc0150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2abfb6c130fa83fa91ce2dd8d13997b1" id="r_a2abfb6c130fa83fa91ce2dd8d13997b1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTraceEvent.html#a2abfb6c130fa83fa91ce2dd8d13997b1">event_arg</a></td></tr>
+<tr class="separator:a2abfb6c130fa83fa91ce2dd8d13997b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Kernel event tracing infrastructure. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a2abfb6c130fa83fa91ce2dd8d13997b1" name="a2abfb6c130fa83fa91ce2dd8d13997b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2abfb6c130fa83fa91ce2dd8d13997b1">&#9670;&#160;</a></span>event_arg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t TraceEvent::event_arg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a23ed7e7a1e2c19950bcd288838fc0150" name="a23ed7e7a1e2c19950bcd288838fc0150"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23ed7e7a1e2c19950bcd288838fc0150">&#9670;&#160;</a></span>event_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t TraceEvent::event_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><a class="el" href="dir_f3913cdb192a60ecaf3e841b502083ba.html">arch</a></li><li class="navelem"><b>corelocal.h</b></li>
+    <li class="navelem"><a class="el" href="structTraceEvent.html">TraceEvent</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

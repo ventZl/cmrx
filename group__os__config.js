@@ -1,6 +1,7 @@
 var group__os__config =
 [
     [ "CMRX_ARCH_SMP_SUPPORTED", "group__os__config.html#ga54ec6c4dfec8397771e101eb023fd91a", null ],
+    [ "CMRX_KERNEL_TRACING", "group__os__config.html#ga46a3ec2ee0c0ead945b1185c467024c5", null ],
     [ "KERNEL_HAS_MEMORY_PROTECTION", "group__os__config.html#gaf7702691bbc4eaf9070b56a3b8d53c82", null ],
     [ "MPU_HOSTED_STATE_SIZE", "group__os__config.html#ga50b141877ee78028195328399caf0d6a", null ],
     [ "MPU_STATE_SIZE", "group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e", null ],

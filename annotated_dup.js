@@ -32,5 +32,7 @@ var annotated_dup =
     [ "RPC_Service_t_", "structRPC__Service__t__.html", "structRPC__Service__t__" ],
     [ "Syscall_Entry_t", "structSyscall__Entry__t.html", "structSyscall__Entry__t" ],
     [ "TimerEntry_t", "structTimerEntry__t.html", "structTimerEntry__t" ],
-    [ "timeval", "structtimeval.html", "structtimeval" ]
+    [ "timeval", "structtimeval.html", "structtimeval" ],
+    [ "TraceBuffer", "structTraceBuffer.html", "structTraceBuffer" ],
+    [ "TraceEvent", "structTraceEvent.html", "structTraceEvent" ]
 ];
