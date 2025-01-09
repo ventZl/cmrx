@@ -24,39 +24,21 @@
  * @param max_depth maximum depth futex can already be locked in order to be still able to lock it
  * @returns 0 if futex lock was successful, 1 if locking failed for whatever reason
  */
-static inline int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
+int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
 {
-	uint8_t state = __LDREXB(&futex->state);
-	if (state == 0)
+	unsigned state = __LDREXB(&futex->state);
+	int success;
+	if (state == 0 || (futex->owner == thread_id && state < max_depth))
 	{
-		if (__STREXB(1, &futex->state) == 0)
+		state++;
+		if ((success = __STREXB(state, &futex->state)) == 0)
 		{
+			// futex is claimed, mark us as the owner
 			futex->owner = thread_id;
-			// futex is claimed
-			__CLREX();
-			return FUTEX_SUCCESS;
-		}
-		else
-		{
-			// futex claim was not successfull
-		}
-	} else {
-		if (futex->owner == thread_id && state < max_depth)
-		{
-			if (__STREXB(&state + 1, futex->state) == 0)
-			{
-				// futex is nested one more time
-				__CLREX();
-				return FUTEX_SUCCESS;
-			}
-		}
-		else
-		{
-			// futex is either not owned by us or it is at max nesting
 		}
 	}
 	__CLREX();
-	return FUTEX_FAILURE;
+	return success;
 }
 
 /** Unlock futex.
@@ -69,37 +51,28 @@ static inline int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned
  * @returns 0 if futex unlock was successful, 1 if unlocking failed for
  * whatever reason.
  */
-static inline int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
+int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 {
 	uint8_t state = __LDREXB(&futex->state);
+	int success = FUTEX_FAILURE;
 	ASSERT(state > 0);
 	if (state > 0)
 	{
-		ASSERT(futex->owner == thread_id);
-
 		if (futex->owner == thread_id)
 		{
-			if (__STREXB(state - 1, &futex->state) == 0)
+			state--;
+			if ((success = __STREXB(state, &futex->state)) == 0)
 			{
-				// futex nesting decreased
-				if (state == 1)
+				if (state == 0)
 				{
 					// here the futex was entirely unlocked
-					// This is not particularly safe
 					futex->owner = 0xFF;
 				}
-
-				__CLREX();
-				return FUTEX_SUCCESS;
 			}
-		}
-		else
-		{
-			// futex isn't owned by us
 		}
 	}
 	__CLREX();
-	return FUTEX_FAILURE;
+	return success;
 }
 
 #endif
