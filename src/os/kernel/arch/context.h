@@ -13,4 +13,4 @@
  * as kernel finishes its work and is ready to return the
  * CPU back to the userspace code.
  */
-void os_request_context_switch();
+void os_request_context_switch(bool activate);

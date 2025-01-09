@@ -69,7 +69,7 @@ bool schedule_context_switch(uint32_t current_task, uint32_t next_task)
 
     cpu_context.new_stack = os_stacks.stacks[cpu_context.new_task->stack_id];
 
-    os_request_context_switch();
+    os_request_context_switch(true);
 
 	return true;
 }
