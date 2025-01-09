@@ -86,6 +86,7 @@ int os_notify_object(const void * object, Event_t event)
 {
     Thread_t candidate_thread = 0;
     uint8_t candidate_priority = 0xFF;
+    bool perform_thread_switch = false;
 
     int retval = E_OK;
 
@@ -110,7 +111,17 @@ int os_notify_object(const void * object, Event_t event)
     if (candidate_priority != 0xFF)
     {
         struct OS_thread_t * notified_thread = &os_threads[candidate_thread];
-        notified_thread->state = THREAD_STATE_READY;
+
+        if (core[coreid()].thread_current != candidate_thread)
+        {
+            notified_thread->state = THREAD_STATE_READY;
+            perform_thread_switch = true;
+        }
+        else
+        {
+            notified_thread->state = THREAD_STATE_RUNNING;
+        }
+
         if (notified_thread->wait_callback != NULL)
         {
             notified_thread->wait_callback(object, candidate_thread, event);
@@ -158,7 +169,7 @@ int os_notify_object(const void * object, Event_t event)
     }
     os_txn_done();
 
-    if (candidate_priority != 0xFF)
+    if (perform_thread_switch)
     {
         os_sched_yield();
     }
