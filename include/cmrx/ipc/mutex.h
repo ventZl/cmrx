@@ -32,9 +32,9 @@
  * non-blocking lock. It can be single-issue, or recursive.
  */
 typedef struct {
+	uint8_t state;
 	uint8_t owner;
 	uint8_t flags;
-	uint8_t state;	
 } futex_t;
 
 /* Mutex structure.
