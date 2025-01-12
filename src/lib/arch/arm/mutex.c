@@ -53,7 +53,7 @@ int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
  */
 int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 {
-	uint8_t state = __LDREXB(&futex->state);
+	unsigned state = __LDREXB(&futex->state);
 	int success = FUTEX_FAILURE;
 	ASSERT(state > 0);
 	if (state > 0)
