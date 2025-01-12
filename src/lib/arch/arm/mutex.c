@@ -27,7 +27,7 @@
 int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
 {
 	unsigned state = __LDREXB(&futex->state);
-	int success;
+	int success = FUTEX_FAILURE;
 	if (state == 0 || (futex->owner == thread_id && state < max_depth))
 	{
 		state++;
