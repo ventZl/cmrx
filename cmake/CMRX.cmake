@@ -10,6 +10,8 @@ option(SW_TESTING_BUILD "Enabled hosted build. This can be used to build hosted 
 option(CMRX_SKIP_LINKER_FILE_USE "Skips automatic use of generated linker file by targets. Developer becomes responsible for the use of correct linker file" FALSE)
 option(CMRX_STDLIB_USE_CMSIS_CORE "Forces CMRX standard library to link against cmsis_core library. This is needed with some HALs to successfully link the project" FALSE)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 if (SW_TESTING_BUILD)
     include(${CMAKE_CURRENT_LIST_DIR}/arch/testing/CMRX.cmake)
     # Override arch name to "testing"

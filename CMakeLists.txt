@@ -12,6 +12,7 @@ set_property(GLOBAL PROPERTY CMRX_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 include(cmake/options.cmake)
 include(cmake/unit_test_build.cmake)
+include(cmake/clang-tidy.cmake)
 
 include_directories(include)
 include_directories(${CMAKE_BINARY_DIR})
@@ -71,3 +72,5 @@ endif()
 if (BUILD_TESTING)
     add_subdirectory(testing)
 endif()
+
+apply_clang_tidy(os)
