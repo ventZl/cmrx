@@ -2,6 +2,7 @@ option(CMRX_ARCH_SMP_SUPPORTED "Architecture supports SMP and project is using i
 option(CMRX_OS_NUM_CORES "Amount of cores present in CPU package" INT:1)
 option(CMRX_UNIT_TESTS "Enable build of kernel unit tests" ON)
 option(CMRX_KERNEL_TRACING "Enable tracing of kernel events" OFF)
+option(CMRX_CLANG_TIDY "Enable linting using Clang-tidy" ON)
 set(OS_STACK_SIZE 1024 CACHE STRING "Stack allocated per thread in bytes")
 set(OS_THREADS 8 CACHE STRING "Amount of entries in the thread table")
 set(OS_PROCESSES 8 CACHE STRING "Amount of entries in the process table")
