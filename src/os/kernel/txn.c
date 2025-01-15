@@ -1,7 +1,6 @@
 #include <arch/corelocal.h>
 #include "txn.h"
 #include <cmrx/defines.h>
-#include <stdio.h>
 
 static Txn_t os_txn_current_id = 0;
 

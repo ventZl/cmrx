@@ -18,11 +18,10 @@ void os_notify_init()
 
 int os_initialize_waitable_object(const void* object)
 {
-    Txn_t txn_id = 0;
+    Txn_t txn_id = os_txn_start();
     Thread_t thread_id = 0;
     bool awaken = false;
     do {
-        txn_id = os_txn_start();
         if (os_threads[thread_id].state == THREAD_STATE_WAITING
             &&  os_threads[thread_id].wait_object == object)
         {
@@ -39,11 +38,10 @@ int os_initialize_waitable_object(const void* object)
 
                 notified_thread->wait_object = NULL;
                 os_txn_done();
-            } else {
-                txn_id = os_txn_start();
-                continue;
             }
 
+            // Success or not, new transaction has to be created
+            // as the old one has been already used
             txn_id = os_txn_start();
         }
         thread_id++;
