@@ -90,7 +90,7 @@ ALWAYS_INLINE void * save_context()
 			"SUBS %0, #16\n\t"
 			: "=r" (scratch)
 			:
-			: "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11"
+			: 
 	);
 
 	return scratch;
@@ -112,7 +112,7 @@ ALWAYS_INLINE void load_context(uint32_t * sp)
 			"MSR PSP, %0\n\t"
 			:
 			: [scratch] "r" (sp)
-			: "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11"
+			: 
 	);
 }
 
