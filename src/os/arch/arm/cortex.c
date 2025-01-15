@@ -43,7 +43,7 @@ int os_nvic_disable(uint32_t irq)
  * @{
  */
 
-void os_request_context_switch(bool activate)
+inline void os_request_context_switch(bool activate)
 {
 	/* Various Cortex-M manuals state that some fields
 	 * of ICSR are writable, but ARM's own manual states
@@ -87,13 +87,9 @@ ALWAYS_INLINE void * __get_SP(void)
  * It then sets PSP to point to incoming task's stack and resumes
  * normal operation.
  */
-__attribute__((naked)) void PendSV_Handler(void)
+__attribute__((interrupt)) void PendSV_Handler(void)
 {
 	/* Do NOT put anything here. You will clobber context being stored! */
-	asm volatile(
-			".syntax unified\n\t"
-			"push {lr}\n\t"
-	);
 	cortex_disable_interrupts();
 	/* Do NOT put anything here. You will clobber context being stored! */
 	cpu_context.old_task->sp = save_context();
@@ -102,7 +98,7 @@ __attribute__((naked)) void PendSV_Handler(void)
     // handler. If you assert here, then your interrupt handler priority
     // is messed up. You need to configure PendSV to be the handler with
     // absolutely the lowest priority.
-    ASSERT(__get_LR() == (void *) 0xFFFFFFFDU);
+    ASSERT(__get_LR() == (void *) EXC_RETURN_THREAD_PSP);
 
 	sanitize_psp(cpu_context.old_task->sp);
 
@@ -135,8 +131,6 @@ __attribute__((naked)) void PendSV_Handler(void)
 
 	os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
 
-	ASSERT(*(uint32_t *)__get_SP() == EXC_RETURN_THREAD_PSP);
-
 	/* Clear any PendSV requests that might have been made by ISR handlers
 	 * preempting PendSV handler before it disabled interrupts
 	 */
@@ -146,12 +140,12 @@ __attribute__((naked)) void PendSV_Handler(void)
 	/* Do NOT put anything here. You will clobber context just restored! */
 	__ISB();
 	__DSB();
-
 	/* Clear any potential stale pending service requests */
+	os_request_context_switch(false);
+	/* Do NOT put anything here. You will clobber context just restored! */
+
 	cortex_enable_interrupts();
-	asm volatile(
-			"pop {pc}"
-	);
+	/* Do NOT put anything here. You will clobber context just restored! */
 }
 
 /** @} */
