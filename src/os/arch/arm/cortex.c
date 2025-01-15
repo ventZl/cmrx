@@ -92,7 +92,7 @@ __attribute__((naked)) void PendSV_Handler(void)
 	/* Do NOT put anything here. You will clobber context being stored! */
 	asm volatile(
 			".syntax unified\n\t"
-			"push {lr}\n\t"
+			"push {r3, lr}\n\t"
 	);
 	cortex_disable_interrupts();
 	/* Do NOT put anything here. You will clobber context being stored! */
@@ -150,7 +150,7 @@ __attribute__((naked)) void PendSV_Handler(void)
 	/* Clear any potential stale pending service requests */
 	cortex_enable_interrupts();
 	asm volatile(
-			"pop {pc}"
+			"pop {r3, pc}"
 	);
 }
 
