@@ -5,7 +5,7 @@ var searchData=
   ['flashing_20the_20application_2',['Flashing the application',['../getting_started.html#autotoc_md14',1,'']]],
   ['foo_3',['foo',['../group__bsw__com.html#ga1861d01ee10efbd041270df16815a8db',1,'com.h']]],
   ['for_20errors_4',['Named constants for errors',['../group__api__errors.html',1,'']]],
-  ['free_5',['free',['../structComSinkVMT.html#ab37dc0a3573e2a74897718512058bc3c',1,'ComSinkVMT::free'],['../structComChannelVMT.html#afc32bb16e1ea8bac8cd76d1757e94a47',1,'ComChannelVMT::free']]],
+  ['free_5',['free',['../structComChannelVMT.html#afc32bb16e1ea8bac8cd76d1757e94a47',1,'ComChannelVMT::free'],['../structComSinkVMT.html#ab37dc0a3573e2a74897718512058bc3c',1,'ComSinkVMT::free']]],
   ['from_20critical_20section_20to_20transaction_6',['From critical section to transaction',['../txn_intro.html#autotoc_md31',1,'']]],
   ['functions_7',['functions',['../dev_env.html#autotoc_md34',1,'CMake functions'],['../group__api__thread.html',1,'Threading functions']]],
   ['futex_5fdestroy_8',['futex_destroy',['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c']]],
