@@ -12,10 +12,10 @@ fi
 
 SYMS=`objdump -j.applications -t $1 | grep $2 | wc -l`
 
-if [ "${SYMS}" == "1" ]; then
+if [ "${SYMS}" -eq "1" ]; then
     exit 0
 else
-    if [ "${SYMS}" == "0" ]; then
+    if [ "${SYMS}" -eq "0" ]; then
         echo "Symbol \`$2\` not found!"
     else 
         echo "Unexpected amount of symbol \`$2\` occurrences found!"
