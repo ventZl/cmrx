@@ -47,7 +47,7 @@ function(add_firmware FW_NAME)
         ${FW_NAME}
         )
     target_link_options(${FW_NAME} PUBLIC -Wl,-Map=${FW_NAME}.map)
-    file(CREATE_LINK ${FW_NAME}.map ${FW_NAME}.elf.map SYMBOLIC)
+    file(CREATE_LINK ${CMAKE_CURRENT_BINARY_DIR}/${FW_NAME}.map ${CMAKE_CURRENT_BINARY_DIR}/${FW_NAME}.elf.map SYMBOLIC)
     # TODO: CMake will de-duplicate any incoming interface
     if (NOT CMRX_SKIP_LINKER_FILE_USE)
         target_link_options(${FW_NAME} PUBLIC LINKER:--script=${BINARY_LINKER_SCRIPT})
