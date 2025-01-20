@@ -1,0 +1,40 @@
+name: 'Build: stm32h7'
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-project:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Prepare Cross-Toolchain Environment
+       uses: carlosperate/arm-none-eabi-gcc-action@v1
+       with:
+         release: '12.2.Rel1'
+     - name: Checkout Test Sources
+       uses: actions/checkout@v4.1.6
+       with:
+         repository: ventZl/cmrx-integration-tests
+         submodules: 'false'
+
+     - name: Checkout Latest CMRX Kernel
+       uses: actions/checkout@v4.1.6
+       with:
+         repository: ventZl/cmrx
+         path: stm32h7-cubemx/cmrx
+         submodules: 'false'
+
+     - name: Configure Integration Test Build
+       uses: threeal/cmake-action@main
+       with:
+        run-build: false
+        source-dir: stm32h7-cubemx
+        build-dir: build
+        args: -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug
+
+     - name: Pre-build Integration Test
+       run: make -C build
+       continue-on-error: true
+
+     - name: Build Integration Test
+       run: make -C build
