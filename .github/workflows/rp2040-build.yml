@@ -35,7 +35,7 @@ jobs:
        uses: threeal/cmake-action@main
        with:
         run-build: false
-        source-dir: stm32h7-cubemx
+        source-dir: rp2040-pico-sdk
         build-dir: build
         args: -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug -DPICO_SDK_PATH=${{github.workspace}}/pico-sdk
 
