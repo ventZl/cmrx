@@ -1,7 +1,7 @@
 C Microkernel Realtime eXecutive
 ================================
 
-![unit tests](https://github.com/ventZl/cmrx/actions/workflows/unit_tests.yml/badge.svg) ![stm32h7 build](https://github.com/ventZl/cmrx/actions/workflows/stm32h7-build.yml/badge.svg) ![stm32g4 build](https://github.com/ventZl/cmrx/actions/workflows/stm32g4-build.yml/badge.svg)
+![unit tests](https://github.com/ventZl/cmrx/actions/workflows/unit_tests.yml/badge.svg) ![stm32h7 build](https://github.com/ventZl/cmrx/actions/workflows/stm32h7-build.yml/badge.svg) ![stm32g4 build](https://github.com/ventZl/cmrx/actions/workflows/stm32g4-build.yml/badge.svg) ![rp2040 build](https://github.com/ventZl/cmrx/actions/workflows/rp2040-build.yml/badge.svg)
 
 CMRX is realtime microkernel operating system with fully static operation targeted towards Cortex-M microcontrollers having usable support for MPU. Currently microcontrollers based on Cortex-M0+, Cortex-M3, Cortex-M4 and Cortex-M7 are known to be supported.
 
