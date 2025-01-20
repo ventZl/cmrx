@@ -38,22 +38,22 @@ var NAVTREE =
       [ "SMP support", "smp_support.html", null ]
     ] ],
     [ "Getting started", "getting_started.html", [
-      [ "Prerequisites", "getting_started.html#autotoc_md2", null ],
-      [ "Creating project skeleton with CubeMX", "getting_started.html#autotoc_md7", null ],
-      [ "Basic CubeMX project settings", "getting_started.html#autotoc_md9", null ],
-      [ "Configuring the core", "getting_started.html#autotoc_md11", null ],
-      [ "Configuring GPIOs", "getting_started.html#autotoc_md12", null ],
-      [ "Generating project and getting CMRX source", "getting_started.html#autotoc_md15", null ],
-      [ "Integrating CMRX into CubeMX project", "getting_started.html#autotoc_md17", [
-        [ "1. Add CMake modules provided by CMRX into CMake module path", "getting_started.html#autotoc_md19", null ],
-        [ "2. Configure CubeMX integration", "getting_started.html#autotoc_md20", null ],
-        [ "3. Configure the CMRX kernel to use CubeMX", "getting_started.html#autotoc_md22", null ]
+      [ "Prerequisites", "getting_started.html#autotoc_md0", null ],
+      [ "Creating project skeleton with CubeMX", "getting_started.html#autotoc_md1", null ],
+      [ "Basic CubeMX project settings", "getting_started.html#autotoc_md2", null ],
+      [ "Configuring the core", "getting_started.html#autotoc_md3", null ],
+      [ "Configuring GPIOs", "getting_started.html#autotoc_md4", null ],
+      [ "Generating project and getting CMRX source", "getting_started.html#autotoc_md5", null ],
+      [ "Integrating CMRX into CubeMX project", "getting_started.html#autotoc_md6", [
+        [ "1. Add CMake modules provided by CMRX into CMake module path", "getting_started.html#autotoc_md7", null ],
+        [ "2. Configure CubeMX integration", "getting_started.html#autotoc_md8", null ],
+        [ "3. Configure the CMRX kernel to use CubeMX", "getting_started.html#autotoc_md9", null ]
       ] ],
-      [ "Linking CMRX to the project", "getting_started.html#autotoc_md24", null ],
-      [ "Creating the blinky application", "getting_started.html#autotoc_md26", null ],
-      [ "CubeMX HAL tweaks", "getting_started.html#autotoc_md27", null ],
-      [ "Adding blinky application to the build", "getting_started.html#autotoc_md29", null ],
-      [ "Flashing the application", "getting_started.html#autotoc_md30", null ]
+      [ "Linking CMRX to the project", "getting_started.html#autotoc_md10", null ],
+      [ "Creating the blinky application", "getting_started.html#autotoc_md11", null ],
+      [ "CubeMX HAL tweaks", "getting_started.html#autotoc_md12", null ],
+      [ "Adding blinky application to the build", "getting_started.html#autotoc_md13", null ],
+      [ "Flashing the application", "getting_started.html#autotoc_md14", null ]
     ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Data Structures", "annotated.html", [
