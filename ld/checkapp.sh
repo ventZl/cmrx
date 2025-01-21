@@ -10,7 +10,7 @@ if [ ! -e $1 ]; then
     exit 1
 fi
 
-SYMS=`objdump -j.applications -t $1 | grep $2 | wc -l`
+SYMS=`objdump -j.applications -t $1 | grep -E "\<$2\>" | wc -l`
 
 if [ "${SYMS}" -eq "1" ]; then
     exit 0
