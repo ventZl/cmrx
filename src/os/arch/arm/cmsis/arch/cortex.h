@@ -314,6 +314,34 @@ ALWAYS_INLINE void * __get_LR(void)
  * After this function is executed, processor will continue running
  * code pointed to by @ref continue_here in privileged thread mode.
  */
+
+#ifdef __ARM_ARCH_6M__
+
+ALWAYS_INLINE  void __forge_shutdown_exception_frame(void (*continue_here)(void))
+{
+	asm volatile(
+		".syntax unified\n\t"
+		"LDR R0, =0xFFFFFFF9\n\t" // return to thread mode with MSP
+		"MOV LR, R0\n\t"
+		"LDR R0, =0x01000000\n\t"
+		"MOV R1, %0\n\t"
+		"LDR R2, =0\n\t"
+		"PUSH {R0}\n\t" // xPSR
+		"PUSH {R1}\n\t" // PC
+		"PUSH {R2}\n\t" // LR - NULL, point of no return
+		"PUSH {R2}\n\t" // R12
+		"PUSH {R2}\n\t" // R3
+		"PUSH {R2}\n\t" // R2
+		"PUSH {R2}\n\t" // R1
+		"PUSH {R2}\n\t" // R0
+		"BX LR"
+		:
+		: "r" (continue_here)
+	);
+}
+
+#else
+
 ALWAYS_INLINE  void __forge_shutdown_exception_frame(void (*continue_here)(void))
 {
 	asm volatile(
@@ -336,5 +364,6 @@ ALWAYS_INLINE  void __forge_shutdown_exception_frame(void (*continue_here)(void)
 	);
 }
 
+#endif
 
 /// @}
