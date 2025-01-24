@@ -1,5 +1,18 @@
 var NAVTREEINDEX2 =
 {
+"structBasicQueue.html":[3,3,3,1],
+"structComChannel.html":[3,3,0,7],
+"structComChannel.html#a39754a6862ae6d0d4450ca575b02df05":[3,3,0,7,0],
+"structComChannelVMT.html":[3,3,0,6],
+"structComChannelVMT.html#a12120a6d16294b9092756a5dfa3623c0":[3,3,0,6,3],
+"structComChannelVMT.html#a38ab70634468ed478c2827397d2ac816":[3,3,0,6,2],
+"structComChannelVMT.html#a747071b4cb78b127049872fd3adaae4f":[3,3,0,6,4],
+"structComChannelVMT.html#af92f2222ca758d8c04449c9f7a0e7dab":[3,3,0,6,1],
+"structComChannelVMT.html#afc32bb16e1ea8bac8cd76d1757e94a47":[3,3,0,6,0],
+"structComNotification.html":[3,3,0,1],
+"structComNotification.html#a40cef8ec9f7dfd48bab2151cec815ffd":[3,3,0,1,0],
+"structComNotification.html#af7d8d1112414c89f81c99f9b8e658b59":[3,3,0,1,1],
+"structComNotificationVMT.html":[3,3,0,0],
 "structComNotificationVMT.html#a011e798d6130972953dd0c45bca156ce":[3,3,0,0,0],
 "structComSink.html":[3,3,0,5],
 "structComSink.html#aeb36255fb89dcd8afe53a3c0fe490c42":[3,3,0,5,0],
