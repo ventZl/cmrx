@@ -1,5 +1,24 @@
 @page getting_started Getting started
 
+This page contains getting started how to guides containing detailed description of the 
+integration process into various SDKs. The fact that your particular combination of SDK/MCU is
+not listed here does not mean it is not supported! In general, any ARM MCU is supported as long
+as it is equipped with ARM memory protection unit.
+
+@subpage getting_started_cubemx 
+
+This is a detailed guide on how to integrate CMRX RTOS into 
+project whose HAL is provided by ST Microelectronics' CubeMX tool. While the guide is using 
+STM32H7 as the target CPU, the guide should be valid for all supported STM32 microcontrollers.
+
+@subpage getting_started_picosdk 
+
+This is a detailed guide on how to integrate CMRX RTOS into 
+project running on top of the Pico-SDK. RP2040 is used as target microcontroller, but the
+steps neede should be very similar for RP2350.
+
+@page getting_started_cubemx HOWTO: Integrating CMRX into CubeMX project 
+
 Following is a step-by-step how to guide on creating a blinky project using CMRX
 RTOS. It will cover all steps and lists all tools needed to complete the integration.
 This guide assumes previous hands-on experience with creating embedded firmware,
@@ -158,10 +177,10 @@ If you tried to configure the project at this time, you'd get an error saying: "
 architecture not configured". This is because so far we did not tell the CMRX what 
 machine it is bewing built for.
 
-Instead of providing microcontroller-specific ports, CMake relies on generic architecture
+Instead of providing microcontroller-specific ports, CMRX relies on generic architecture
 support. For ARM Cortex-M this is possible due to the CMSIS device headers available for
 virtually all microcontrollers. CMRX can run on any microcontroller whose SDK/HAL provides these 
-headers. CubeMX HAL does provide these headers.
+headers. CubeMX HAL does provide them.
 
 To make the job easier, the ARM architecture support package provides `FindCMSIS` CMake 
 module. This module will find necessary CMSIS components and configure the kernel to use
@@ -569,7 +588,7 @@ target_add_applications(${CMAKE_PROJECT_NAME}
 
 This is it! You have created your first fully memory protected application running
 on top of CMRX operating system. You can build the project now. You should get
-file `build/cmrx-cubemx.example.elf` which contains the application firmware.
+file `build/cmrx-cubemx-example.elf` which contains the application firmware.
 
 Flashing the application
 ========================
@@ -595,6 +614,482 @@ Next, once your firmware is built, run GDB in another terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 gdb ~/projects/cmrx-cubemx-example/build/cmrx-cubemx-example.elf
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this GDB instance, the following sequence of commands will perform following actions:
+1) GDB will connect to the OpenOCD which will serve as GDB server and provide connection
+   to the CPU on your Nucleo board
+2) Load the CPU on the Nucleo board with the firmware just built
+3) Start executing the firmware
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+target extended-remote localhost:3333
+load
+run
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you did everything correctly, you should see that the green LED on the Nucleo
+board will blink roughly in 0.5 second interval.
+
+Congratulations! You have just successfully created, built and flashed your 
+first CMRX-based project!
+
+@page getting_started_picosdk HOWTO: Integrating CMRX into Pico-SDK project 
+
+Following is a step-by-step how to guide on creating a blinky project using CMRX
+RTOS. It will cover all steps and lists all tools needed to complete the integration.
+This guide assumes previous hands-on experience with creating embedded firmware,
+including the process of flashing and debugging. Basic understanding of CMake is 
+assumed.
+
+As an example, this howto will demonstrate the process of integrating CMRX into 
+project using Raspberry Pi Pico-SDK on RP2040 microcontroller. CMRX is flexible and supports
+virtually all microcontrollers with CMSIS headers available in their SDK/HAL. Thus
+this howto will avoid using vendor-specific build tools / IDEs to make the guide
+as portable as possible.
+
+This example will demonstrate creation of basic blinky example using SysTick timer
+as the kernel timing provider.
+
+Prerequisites
+=============
+
+In order to generate and build the project, following tools are required:
+| Name                 | Min. Supported Version       | Note                                 |
+| -------------------- | ---------------------------- | ------------------------------------ |
+| CMake                | 3.22.0                       |                                      |
+| Python               | 3.0                          |                                      |
+| ARM GCC toolchain    |                              |                                      |
+| Native GCC toolchain |                              | needed for unit test build, optional |
+| GNU Make / Ninja     |                              |                                      |
+| Git                  |                              |                                      |
+
+All the above tools need to be installed and available in execution path otherwise
+various parts of the configure and/or build process may fail. Note that if these
+tools are installed via default distribution mechanisms, they are usually available
+in execution path. If you install them manually, you may have add them to path as 
+well.
+
+Following is the list of additional tools required only by this guide. They are 
+project / MCU specific or can be replaced by tools of your choice (e.g. IDE of your 
+choice).
+
+| Name      | Min. Supported Version | Note                                            |
+| ------    | ---------------------- | ----------------------------------------------- |
+| Pico-SDK  | 2.0.0                  | older versions might work, but need adjustments |
+| OpenOCD   | 0.12.0                 |                                                 |
+| GDB       |                        | must be a multiarch build supporting AArch32    |
+
+Creating Project Skeleton
+=========================
+
+Pico-SDK is CMake-based SDK for the range of microcontrollers designed by the Raspberry Pi 
+Foundation. So for the skeleton, we have to create the CMakeLists.txt file. Yet, before we
+do so, lets first clone the CMRX source tree so we know some of paths we'll need in the 
+folling process. This how-to will assume that the path where project is stored is `$HOME/projects/pico-sdk-example`.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+mkdir -p ~/projects/pico-sdk-example
+cd ~/project/pico-sdk-example
+git init
+git submodule add https://github.com/ventZl/cmrx.git
+git submodule add https://github.com/raspberrypi/pico-sdk.git
+git submodule update --init --recursive
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This will initialize empty Git repository and create `cmrx` subdirectory containing the up-to-date source tree of CMRX RTOS. 
+
+
+Lets start with CMakeLists skeleton as it is published in the `Getting started with Raspberry Pi-Pico series` in Appendix C:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+cmake_minimum_required(VERSION 3.13)
+
+include(pico_sdk_import.cmake)
+project(blinky C CXX ASM)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+
+pico_sdk_init()
+
+add_executable(pico-sdk-example
+  src/main.c
+)
+pico_add_extra_outputs(pico-sdk-example)
+target_link_libraries(pico-sdk-example pico_stdlib)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Integrating CMRX into Pico-SDK project
+======================================
+
+Following steps will integrate CMRX RTOS into project we just created, make sure that CMRX will use the
+Pico-SDK and we will add a simply blinky application.
+
+
+1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path
+-------------------------------------------------------------------------
+
+First, we'll set some paths to make things more convenient. While we know that we submoduled both CMRX and Pico-SDK, we can add following lines to put both Pico-SDK and CMRX cmake subdirectories into CMake module search path:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)
+list(APPEND CMAKE_MODULE_PATH "${PICO_SDK_PATH}/external")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmrx/cmake")
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now you can update the line which imports pico_sdk to be:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+include(pico_sdk_import)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This way we don't need to copy it over into our source tree.
+
+
+2. Configuring Pico-SDK integration
+-----------------------------------
+
+Instead of providing microcontroller-specific ports, CMRX relies on generic architecture
+support. For ARM Cortex-M this is possible due to the CMSIS device headers available for
+virtually all microcontrollers. CMRX can run on any microcontroller whose SDK/HAL provides these 
+headers. Pico-SDK does provide them.
+
+To make the job easier, the ARM architecture support package provides `FindCMSIS` CMake 
+module. This module will find necessary CMSIS components and configure the kernel to use
+them. To be able to do so efficiently, you need to provide it with some basic 
+configuration details.
+
+Lets add `FindCMSIS` into the `CMakeLists.txt`. Add the following block after the previous
+one:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+set(CMSIS_ROOT ${PICO_SDK_PATH}/src/rp2_common/cmsis/stub/CMSIS)
+set(DEVICE RP2040)
+set(CMSIS_LINKER_FILE ${PICO_SDK_PATH}/src/rp2_common/pico_crt0/rp2040/memmap_default.ld)
+include(FindCMSIS)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This block configures a few variables and then includes the `FindCMSIS` module. These variables
+contain the following information:
+
+* `CMSIS_ROOT` - path to where CMSIS headers are stored within HAL/SDK sources. This depends on
+  the HAL/MCU used. This variable is mandatory.
+* `DEVICE` - the name of microcontroller used. CMSIS headers require this variable to be set
+  in order to provide correct definitions. Use the device name as supported by your HAL/SDK. 
+  This variable is mandatory.
+* `CMSIS_LINKER_FILE` - path to the linker file used by the project. The actual path to the
+  linker file may vary. Certain SDKs/HALs provide fixed linker scripts that are shipped with the
+  SDK, some (such as CubeMX) will generate linker script based on project configuration. This
+  variable is mandatory and must point to existing file.
+* `SYSTEM_INCLUDE_FILENAME` - this variable is optional. It may be needed in case that the CMSIS
+  system include file does not match your DEVICE name. Normally, the system include filename
+  should be system_<$DEVICE>.h but that's often not the case. If your HAL uses different naming
+  pattern (CubeMX often does) then you have to provide the name of this header.
+  
+Once all the variables are set, we can include FindCMSIS that will configure the ARM architecture
+support to use the CubeMX HAL.
+
+
+3. Configuring CMRX kernel to use Pico-SDK
+------------------------------------------
+
+The last step needed is to configure the kernel to actually use the configuration determined by
+the `FindCMSIS` module. This is actually rather simple. Again modify the `CMakeLists.txt` file.
+This time, add the following block just below the line that calls `pico_sdk_init`:
+
+~~~~~~~~~~~~~~~~~~
+set(CMRX_ARCH arm)
+set(CMRX_HAL cmsis)
+include(CMRX)
+~~~~~~~~~~~~~~~~~~
+
+This block tells the CMRX kernel, that it is expected to build for ARM architecture and that the
+HAL used is "CMSIS-compatible". This configuration will work as the `FindCMSIS` module found and
+recorded all the necessary HAL components.
+
+The next step is to add the CMRX source tree so the kernel will actually be built using the given
+configuration. To achieve this, add one line, just below the block just inserted:
+
+~~~~~~~~~~~~~~~~~~
+add_subdirectory(cmrx)
+~~~~~~~~~~~~~~~~~~
+
+This will tell CMake, that in subdirectory `cmrx` there is another part of the current project. 
+This directory comes from CMRX git repository and contains its own CMakeLists.txt suitable for
+embedding into other projects.
+
+Linking CMRX to the project
+===========================
+
+Now your project contains a buildable instance of the CMRX kernel, but the kernel is 
+not used by your project yet. In order to achieve this a few more modifications are 
+needed.
+
+CMRX itself is built as a static library called `cmrx`. In order to use CMRX, you have 
+to link this library to your project. Additionally, CMRX performs linker script 
+management. This is necessary to make memory protection work seamlessly. To achieve 
+this a special, CMRX-specific command exists: `add_firmware`.
+
+This command is a wrapper around `add_executable` normally used to define firmware files
+that adds post-build target to update linker scripts.
+
+Lets start by linking CMRX library to the main executable: At the very bottom of the 
+CMakeLists.txt there is `target_link_libraries` command. Update it to look like this:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+target_link_libraries(pico-sdk-example cmrx aux_systick pico_stdlib cmsis_core)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+While we were here, we added one additional library - `aux_systick`. 
+Library `aux_systick` contains the implementation of SysTick-based kernel timing provider. 
+The reason why it is implemented as a separate library is, that CMRX allows you to 
+implement your own timing provider if you want to use some other timing source, e.g. for 
+low power applications where SysTick is going to be shut down.
+
+Next, find the line:
+
+~~~~~~~~~~~~~~~~~~~~~
+add_executable(pico-sdk-example
+~~~~~~~~~~~~~~~~~~~~~
+
+And change it to:
+
+~~~~~~~~~~~~~~~~~~~~~
+add_firmware(pico-sdk-example
+~~~~~~~~~~~~~~~~~~~~~
+
+Your CMakeLists.txt should now look like this:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+cmake_minimum_required(VERSION 3.13)
+
+set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)
+list(APPEND CMAKE_MODULE_PATH "${PICO_SDK_PATH}/external")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmrx/cmake")
+
+include(pico_sdk_import)
+
+project(blinky C CXX ASM)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+
+set(CMSIS_ROOT ${PICO_SDK_PATH}/src/rp2_common/cmsis/stub/CMSIS)
+set(DEVICE RP2040)
+set(CMSIS_LINKER_FILE ${PICO_SDK_PATH}/src/rp2_common/pico_crt0/rp2040/memmap_default.ld)
+include(FindCMSIS)
+
+pico_sdk_init()
+
+set(CMRX_ARCH arm)
+set(CMRX_HAL cmsis)
+include(CMRX)
+
+add_subdirectory(cmrx)
+
+# Here we changed the call add_executable to add_firmware
+add_firmware(
+    pico-sdk-example src/main.c
+)
+
+pico_add_extra_outputs(test)
+target_link_libraries(pico-sdk-example cmrx aux_systick pico_stdlib cmsis_core)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creating main.c file
+====================
+
+Next we need a main file that will actually start out RTOS. This file is in fact very short:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+#include <extra/systick.h>
+#include <cmrx/cmrx.h>
+#include <RTE_Components.h>
+#include CMSIS_device_header
+
+long timing_get_current_cpu_freq(void)
+{
+    return SystemCoreClock;
+}
+
+int main(void)
+{
+    timing_provider_setup(1);
+    os_start();
+    return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+What does it do? Lets go bottom - up:
+
+The last function call - `os_start()` starts the operating system kernel. When this 
+is done, it will execute some of our threads. Yet, before this may happen, we need 
+to initialize the timing provider library, we included into project earlier. This 
+is done by calling `timing_provider_setup()`, giving it argument 1, which means that 
+threads will be switched once every millisecond.
+
+Now, while the timing provider is not chip-specific, it needs some way to determine 
+the CPU speed. There isn't any default way of doing so, instead, there is a callback 
+you have to provide, that returns this frequency. While we are using CMSIS headers, 
+we can rely on the `SystemCoreClock` variable which holds this information. So our 
+implementation of the callback will simply return this value.
+
+Provide a way how timing provider can learn CPU frequency, initialize it and then 
+start the kernel. Three easy steps to start the kernel.
+
+Creating the blinky application
+===============================
+
+Blinky application does a simple thing: it periodically turns a LED diode on 
+and off. We will implement blinky as a CMRX userspace application. The advantage
+of this design is that blinky will be isolated from the rest of the system by
+the MPU. This means that a memory access error can't damage kernel nor any other
+task in the system.
+
+Lets start by creating a skeleton of the application. First, create a directory
+`src/blinky`. The exact path does not matter but lets keep things nice and
+tidy and create blinky its own directory. In this directory, create two files:
+`src/blinky/CMakeLists.txt`:
+
+~~~~~~~~~~~~~~~~~~~~~~~
+set(blinky_SRCS blinky.c)
+add_application(blinky ${blinky_SRCS})
+target_link_libraries(blinky PRIVATE stdlib pico_stdlib_headers)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This `CMakeLists.txt` file contains CMRX-specific command `add_application()`
+which is a wrapper around `add_library()` command. It ensures that proper linker
+script management is performed. Next this application links against several 
+libraries. First is `stlib` - a standard library that gives the application access
+to the system call interface. Another one is a library we will cover later 
+in this guide. Now you need to know that this library exports information
+on CubeMX HAL include paths and defines.
+
+The source code of  `src/blinky/blinky.c` will be a bit more verbose than
+usual. Aside from defining the main function for the blinky application, we also
+need to define the application itself. Moreover, as said above, CMRX will make
+sure that the blinky application can only access its own private data and nothing
+else. The problem is that blinky, in its nature, behaves as a device driver - 
+it makes access to GPIO ports in order to light up LEDs.
+
+So the code in `blinky.c` will do four things:
+* define main function for the blinky application
+* define the blinky application so CMRX knows that there is such application
+* grant the blinky application access to GPIO ports
+* define a thread that will be automatically started, running the main function
+  for the blinky application
+
+~~~~~~~~~~~~~~~~~~~~~~~{.c}
+#include <cmrx/application.h>
+#include <pico/stdlib.h>
+#include <cmrx/ipc/timer.h>
+
+/* Main function for the blinky application */
+static int blinky_main(void * data)
+{
+    (void) data;
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+    while (1) {
+        gpio_put(PICO_DEFAULT_LED_PIN, 1);
+        usleep(500000);
+        gpio_put(PICO_DEFAULT_LED_PIN, 0);
+        usleep(500000);
+
+    }
+    return 0;
+
+    return 0;
+}
+
+/* Grant the blinky application access to the GPIO peripheral */
+OS_APPLICATION_MMIO_RANGES(blinky, 0x40000000, 0x50000000, 0xd0000000, 0xe0000000);
+
+/* Declare the blinky application */
+OS_APPLICATION(blinky);
+
+/* Tell CMRX to automatically start a thread using `blinky_main` as an
+ * entrypoint and having thread priority of 32 */
+OS_THREAD_CREATE(blinky, blinky_main, NULL, 32);
+
+
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Note that the name `blinky` used in macros inside `blinky.c` must be the same
+as the name `blinky` used in the `add_application()` function in CMakeLists.txt.
+
+If the name differs then the build will fail as CMRX expects that these two names
+match.
+
+The macro `OS_APPLICATION_MMIO_RANGES` allows to define up to two arbitrary ranges
+of memory accessible to the application. These ranges are defined by a pair of 
+starting and ending address. Without specifying the address range of GPIO 
+peripherals blinky won't be able to blink the LED.
+
+Addresses passed to this macro have several rules imposed by the CPU itself:
+* Block size (end address - start address) must be a power of two value larger than 256
+* Start address must be aligned to size of the block. This means that if block size 
+  is e.g. 256, then the start address must have alignment of 256 bytes.
+  
+Adding blinky application to the build
+======================================
+
+Very last step is to add this application to the build. To do so, two lines
+have to be added into master `CMakeLists.txt`.
+
+Just after the line
+~~~~~~~~~~~~~~~~~~~
+add_subdirectory(cmrx)
+~~~~~~~~~~~~~~~~~~~
+
+add another line:
+~~~~~~~~~~~~~~~~~~~
+add_subdirectory(src/blinky)
+~~~~~~~~~~~~~~~~~~~
+
+This will add source code for the blinky application into the build.
+
+To include the blinky application into the firmware, we need to link it to 
+the application. This is done using CMRX-specific command `target_add_applications()`.
+This command is essentially a wrapper around `target_link_libraries()` that
+automatically manages linker scripts. Add following line at the very end
+of the `CMakeLists.txt`:
+
+~~~~~~~~~~~~~~~~~~~
+target_add_applications(pico-sdk-example
+    blinky
+)
+~~~~~~~~~~~~~~~~~~~
+
+This is it! You have created your first fully memory protected application running
+on top of CMRX operating system. You can build the project now. You should get
+file `build/pico-sdk-example.elf` which contains the application firmware.
+
+Flashing the application
+========================
+
+There are multiple ways of flashing the firmware available. This guide will 
+use one of IDE-agnostic ways: direct use of openocd and gdb.
+
+OpenOCD is a gateway between your debugger probe and the debugger used on your PC.
+
+Proceed by connecting your Nucleo board (ST-Link side) to the computer via USB. 
+Make sure that ST-Link probe is visible by the operating system.
+
+Now execute the following command in terminal:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This will start openocd and connect it to your Picoprobe, detect the connected CPU 
+and wait for connection by debugger.
+
+Next, once your firmware is built, run GDB in another terminal:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gdb ~/projects/pico-sdk-example/build/pico-sdk-example.elf
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this GDB instance, the following sequence of commands will perform following actions:
