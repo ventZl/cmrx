@@ -54,11 +54,13 @@ bool queue_receive(struct Queue * queue, void * data)
         cursor = (cursor + 1) % size_limit;
     }
 
-    queue->read_cursor = cursor;
-    if (queue->read_cursor == queue->write_cursor)
+    // Update `empty` flag before updating cursor position
+    // otherwise we get a data hazard.
+    if (cursor == queue->write_cursor)
     {
         queue->empty = true;
     }
+    queue->read_cursor = cursor;
 
     return true;
 }
