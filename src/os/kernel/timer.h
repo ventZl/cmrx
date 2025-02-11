@@ -9,6 +9,31 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+/* List of various timer types supported by this framework.
+ * For most part, the most important characteristic is if
+ * the timer is periodic or not.
+ *
+ * This is decided by if the timer type is *above* or *below*
+ * the TIMER_PERIODIC type.
+ */
+enum eSleepType {
+    TIMER_SLEEP	= 0,
+    TIMER_TIMEOUT,
+    TIMER_PERIODIC,						// Marks the first periodic timer type
+    TIMER_INTERVAL = TIMER_PERIODIC,
+};
+
+/** Description of one sleep request.
+ * Contains details required to calculate when the next sleep interrupt shall happen
+ * and to determine which request shall be the next.
+ */
+struct TimerEntry_t {
+    uint32_t sleep_from;      ///< time at which sleep has been requested
+    uint32_t interval;        ///< amount of time sleep shall take
+    uint8_t thread_id;        ///< thread ID which requested the sleep
+    uint8_t timer_type;       ///< type of sleep performed
+};
+
 /** Kernel implementation of usleep() syscall.
  * See \ref usleep for details on arguments.
  */
