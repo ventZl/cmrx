@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 /** @defgroup os_txn Transcation subsystem
- * @addtogroup os_kernel
+ * @ingroup os
  * CMRX kernel is mostly implemented as non-blocking. Where exclusivity is needed, transactions
  * are used in place of mutexes. Transactions provide a means of ensuring that the internal
  * state of program has been consistent thorough the execution of transaction.
@@ -36,6 +36,7 @@ enum TxnType {
     TXN_READWRITE ///< Read-write transaction
 };
 
+/// Transaction handle type
 typedef uint8_t Txn_t;
 
 /** Start a transaction.
