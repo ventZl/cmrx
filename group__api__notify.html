@@ -109,34 +109,68 @@ $(document).ready(function(){initNavTree('group__api__notify.html',''); initResi
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8a318eb1486d9a157e128a92ef7a6c75" id="r_ga8a318eb1486d9a157e128a92ef7a6c75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__notify.html#ga8a318eb1486d9a157e128a92ef7a6c75">irq_enable</a> (uint32_t irq)</td></tr>
-<tr class="memdesc:ga8a318eb1486d9a157e128a92ef7a6c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify waiter for object.  <br /></td></tr>
-<tr class="separator:ga8a318eb1486d9a157e128a92ef7a6c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46328777c39260415d888507d2671c98" id="r_ga46328777c39260415d888507d2671c98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__notify.html#ga46328777c39260415d888507d2671c98">irq_disable</a> (uint32_t irq)</td></tr>
-<tr class="memdesc:ga46328777c39260415d888507d2671c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a notification on object.  <br /></td></tr>
-<tr class="separator:ga46328777c39260415d888507d2671c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41864194fe48bd76519bcb27efcfb697" id="r_ga41864194fe48bd76519bcb27efcfb697"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__notify.html#ga41864194fe48bd76519bcb27efcfb697">notify_object</a> (const void *object)</td></tr>
+<tr class="memdesc:ga41864194fe48bd76519bcb27efcfb697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify waiter for object.  <br /></td></tr>
+<tr class="separator:ga41864194fe48bd76519bcb27efcfb697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8325d2dc00e1c2322bfa684221191452" id="r_ga8325d2dc00e1c2322bfa684221191452"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452">wait_for_object</a> (const void *object, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga8325d2dc00e1c2322bfa684221191452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a notification on object.  <br /></td></tr>
+<tr class="separator:ga8325d2dc00e1c2322bfa684221191452"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API for synchronization on shared objects. </p>
-<p>CMRX offers primitives to perform unaddressed synchronization unlike <a class="el" href="group__api__signal.html#ga31cb184e9e6351ce176c3324b7b49a24">kill()</a> call, which allows thread to send a signal to another thread, API in this group uses memory location as a designator, rather than specific thread.</p>
 <p>Notifications are a simple mechanism allowing threads to wait for notifications done by other threads. Notifications are matched to waiting threads based on the address of the object. More than one thread can be waiting for any object.</p>
-<p>If multiple threads are waiting for single object, then waking up is performed based on their priority. The highest-priority thread is going to be woken-up first.</p>
-<p>Using this API, a programmer can write code that notifies unknown recipient. All that is needed for notifier and waiter for this mechanism to work is to agree upon memory location used as notification object.</p>
-<p>Any object can be used as the object itself is not examined or used during the notification. It is just a convenient way on determining the notification ID.</p>
-<p>It allows multiple object to wait for single object and thus can serve as a building block for more advanced primitives such as semaphores or queues. </p>
+<p>If multiple threads are waiting for single object, then waking up is performed based on their priority. The highest-priority thread is going to be woken-up first. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga46328777c39260415d888507d2671c98" name="ga46328777c39260415d888507d2671c98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga46328777c39260415d888507d2671c98">&#9670;&#160;</a></span>irq_disable()</h2>
+<a id="ga41864194fe48bd76519bcb27efcfb697" name="ga41864194fe48bd76519bcb27efcfb697"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga41864194fe48bd76519bcb27efcfb697">&#9670;&#160;</a></span>notify_object()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int irq_disable </td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int notify_object </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>object</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Notify waiter for object. </p>
+<p>This syscall will send a notification to the highest priority thread waiting for this specific object. Only one thread is notified, the one with highest priority. If no thread is waiting for this specific object, then the call does nothing.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td>object used to determine waiters to be notified </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK if notification has been sent. E_OUT_OF_NOTIFICATIONS if there is too many different pending notifications and there is nobody waiting for a notification on this particular object. </dd></dl>
+
+</div>
+</div>
+<a id="ga8325d2dc00e1c2322bfa684221191452" name="ga8325d2dc00e1c2322bfa684221191452"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8325d2dc00e1c2322bfa684221191452">&#9670;&#160;</a></span>wait_for_object()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int wait_for_object </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -152,34 +186,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>E_OK if notification has arrived. E_TIMEOUT if notification did not arrive before the timeout interval has passed. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Timeouts are not supported as of now. Syscall returns E_NOTAVAIL if timeout value other than 0 is supplied to the call. </dd></dl>
-
-</div>
-</div>
-<a id="ga8a318eb1486d9a157e128a92ef7a6c75" name="ga8a318eb1486d9a157e128a92ef7a6c75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8a318eb1486d9a157e128a92ef7a6c75">&#9670;&#160;</a></span>irq_enable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int irq_enable </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>irq</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Notify waiter for object. </p>
-<p>This syscall will send a notification to the highest priority thread waiting for this specific object. Only one thread is notified, the one with highest priority. If no thread is waiting for this specific object, then the call does nothing.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>object used to determine waiters to be notified </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>E_OK. Mostly. </dd></dl>
 
 </div>
 </div>

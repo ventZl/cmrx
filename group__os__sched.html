@@ -192,9 +192,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga71b4f416aa58be6d354450e4f896e4d0" id="r_ga71b4f416aa58be6d354450e4f896e4d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#ga71b4f416aa58be6d354450e4f896e4d0">os_thread_join</a> (uint8_t thread_id)</td></tr>
 <tr class="memdesc:ga71b4f416aa58be6d354450e4f896e4d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__thread.html#gafecb0503475d000bb26f547db0f54936" title="Wait for other thread to finish.">thread_join()</a> syscall.  <br /></td></tr>
 <tr class="separator:ga71b4f416aa58be6d354450e4f896e4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae211727af6e2835e21725cc95b0d65b0" id="r_gae211727af6e2835e21725cc95b0d65b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gae211727af6e2835e21725cc95b0d65b0">os_thread_construct</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> tid, entrypoint_t *entrypoint, void *data, uint8_t core_id)</td></tr>
-<tr class="memdesc:gae211727af6e2835e21725cc95b0d65b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make thread runnable.  <br /></td></tr>
-<tr class="separator:gae211727af6e2835e21725cc95b0d65b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab74a182c67f78a02ad1bc34362910958" id="r_gab74a182c67f78a02ad1bc34362910958"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gab74a182c67f78a02ad1bc34362910958">os_thread_construct</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> tid, entrypoint_t *entrypoint, void *data, uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
+<tr class="memdesc:gab74a182c67f78a02ad1bc34362910958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make thread runnable.  <br /></td></tr>
+<tr class="separator:gab74a182c67f78a02ad1bc34362910958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebb2e4fd35891b58767666454d4b78ea" id="r_gaebb2e4fd35891b58767666454d4b78ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__sched.html#gaebb2e4fd35891b58767666454d4b78ea">os_thread_create</a> (entrypoint_t *entrypoint, void *data, uint8_t priority)</td></tr>
 <tr class="memdesc:gaebb2e4fd35891b58767666454d4b78ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Syscall handling <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0" title="Create new thread.">thread_create()</a> Creates new thread inside current process using specified entrypoint.  <br /></td></tr>
 <tr class="separator:gaebb2e4fd35891b58767666454d4b78ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -818,8 +818,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gae211727af6e2835e21725cc95b0d65b0" name="gae211727af6e2835e21725cc95b0d65b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae211727af6e2835e21725cc95b0d65b0">&#9670;&#160;</a></span>os_thread_construct()</h2>
+<a id="gab74a182c67f78a02ad1bc34362910958" name="gab74a182c67f78a02ad1bc34362910958"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab74a182c67f78a02ad1bc34362910958">&#9670;&#160;</a></span>os_thread_construct()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -846,7 +846,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>core_id</em>&#160;</td>
+          <td class="paramname"><em>core</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -857,15 +857,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Make thread runnable. </p>
-<p>This function will take previously allocated thread and will construct it's internal state, so that it is runnable. This includes stack allocation and filling in values, so that thread can be scheduled and run. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tid</td><td>Thread ID of thread to be constructed </td></tr>
-    <tr><td class="paramname">entrypoint</td><td>pointer to thread entrypoint function </td></tr>
-    <tr><td class="paramname">data</td><td>pointer to thread data. pass NULL pointer if no thread data is used </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>E_OK if thread was constructed, E_OUT_OF_STACKS if there is no free stack available and E_TASK_RUNNING if thread is not in state suitable for construction (either slot is free, or already constructed).</dd></dl>
 <p>This function will take previously allocated thread and will construct it's internal state, so that it is runnable. This includes stack allocation and filling in values, so that thread can be scheduled and run. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tid</td><td>Thread ID of thread to be constructed </td></tr>

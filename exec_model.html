@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('exec_model.html',''); initResizable();
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>As long as memory is concerned, the entity governing access is a process. As long as scheduling is concern, the governing entity is a thread. CMRX contains prioritized, multi-threaded, preemptive scheduler. As of now, this scheduler is not SMP-capable.</p>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 Scheduler</h2>
 <p>Scheduler of CMRX RTOS offers 256 different priorities of threads, with priority 0 being the highest and priority 255 being the lowest, reserved for the idle task use. Scheduler is prioritized, so whenever a thread has to be selected for execution, the thread with the highest priority (the lowest numerical value of priority) is selected that is ready to execute.</p>
 <p>Priorities are assigned per-thread, not per-process. So it is possible for one process to have multiple threads having different priorities. Threads with higher priorities might be used to handle external events, while threads with lower priorities might be used to crunch asynchronous work.</p>

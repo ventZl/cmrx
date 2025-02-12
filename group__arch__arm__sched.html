@@ -134,7 +134,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga6e29c6b6f3e6e761c076a0b28490da0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the kernel shutdown.  <br /></td></tr>
 <tr class="separator:ga6e29c6b6f3e6e761c076a0b28490da0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb3070fe93f5997763b5685b81288f5c" id="r_gabb3070fe93f5997763b5685b81288f5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#gabb3070fe93f5997763b5685b81288f5c">os_set_syscall_return_value</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id, int32_t retval)</td></tr>
-<tr class="memdesc:gabb3070fe93f5997763b5685b81288f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set return value of syscall on given stack.  <br /></td></tr>
+<tr class="memdesc:gabb3070fe93f5997763b5685b81288f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set return value of syscall for given thread.  <br /></td></tr>
 <tr class="separator:gabb3070fe93f5997763b5685b81288f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -307,10 +307,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set return value of syscall on given stack. </p>
+<p>Set return value of syscall for given thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_id</td><td>Id of the stack thread has exception handler at </td></tr>
+    <tr><td class="paramname">thread_id</td><td>Id of the thread whose exception handler is being modified </td></tr>
     <tr><td class="paramname">retval</td><td>value to store on the stack </td></tr>
   </table>
   </dd>

@@ -237,7 +237,8 @@ $(document).ready(function(){initNavTree('group__api__thread.html',''); initResi
 <p>Creates new thread and prepares it for scheduling. This routine can be used for on-demand thread creation. New thread will be bound to current process (the one which owns currently running thread). You can set up thread entrypoint, pass it some user data and opt for thread priority. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">entrypoint</td><td>function, which will be called upon thread startup to run the thread </td></tr>
-    <tr><td class="paramname">data</td><td>user-defined data passed to the entrypoint as first argument @priority priority of newly created thread. Lower numbers mean higher priorities. Thread with priority 0 has realtime priority, thread with priority 255 is an idle thread. Note that there already is one idle thread and if you create another, then outcome most probably won't be as expected. Use priority 254 for custom idle threads. </td></tr>
+    <tr><td class="paramname">data</td><td>user-defined data passed to the entrypoint as first argument </td></tr>
+    <tr><td class="paramname">priority</td><td>of newly created thread. Lower numbers mean higher priorities. Thread with priority 0 has realtime priority, thread with priority 255 is an idle thread. Note that there already is one idle thread and if you create another, then outcome most probably won't be as expected. Use priority 254 for custom idle threads. </td></tr>
   </table>
   </dd>
 </dl>
@@ -292,7 +293,6 @@ $(document).ready(function(){initNavTree('group__api__thread.html',''); initResi
 <p>This function will block calling thread until other thread quits. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">thread</td><td>thread ID of other threads, which this thread wants to fair for </td></tr>
-    <tr><td class="paramname">status</td><td>place for return value from other thread to be written </td></tr>
   </table>
   </dd>
 </dl>

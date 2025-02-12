@@ -1,9 +1,7 @@
 var annotated_dup =
 [
     [ "Arch_State_t", "structArch__State__t.html", null ],
-    [ "barrier_t", "structbarrier__t.html", "structbarrier__t" ],
     [ "BasicQueue", "structBasicQueue.html", "structBasicQueue" ],
-    [ "checker_t", "structchecker__t.html", "structchecker__t" ],
     [ "ComChannel", "structComChannel.html", "structComChannel" ],
     [ "ComChannelVMT", "structComChannelVMT.html", "structComChannelVMT" ],
     [ "ComNotification", "structComNotification.html", "structComNotification" ],

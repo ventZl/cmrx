@@ -219,7 +219,7 @@ Asynchronous delays involving power management</h1>
 <p>Perform tight busy-wait delay. </p>
 <p>Kernel calls this function whenever tight delay is required. If delays are in orders of microseconds, then it usually makes no sense to yield or try to do anything else because the overhead of thread switching will consume all the time. Timing timing provider shall perform busy-wait delay, waiting for given amount of microseconds. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">delays_ns</td><td>amount of microseconds to wait before resuming execution </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">delay_us</td><td>amount of microseconds to wait before resuming execution </td></tr>
   </table>
   </dd>
 </dl>

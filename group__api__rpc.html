@@ -326,7 +326,7 @@ Due to the API of RPC calls, you <em>HAVE</em> to use this macro on 1st argument
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">unsigned&#160;</td>
-          <td class="paramname"><em>artg3</em>, </td>
+          <td class="paramname"><em>arg3</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -356,10 +356,16 @@ Due to the API of RPC calls, you <em>HAVE</em> to use this macro on 1st argument
 
 <p>Internal implementation of remote procedure call in userspace. </p>
 <p>This function is actually called when user calles <a class="el" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call()</a>. The only difference is, that this signature takes method number instead it's name. Macro rpc_call will figure this out automatically.</p>
+<dl class="section note"><dt>Note</dt><dd>Don't use this call directly, use <a class="el" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a> macro that performs some essential type checking before performing the call.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">service</td><td>address of service instance </td></tr>
     <tr><td class="paramname">method</td><td>offset of method in VMT of service </td></tr>
+    <tr><td class="paramname">arg0</td><td>1st argument to the RPC call </td></tr>
+    <tr><td class="paramname">arg1</td><td>2nd argument to the RPC call </td></tr>
+    <tr><td class="paramname">arg2</td><td>3rd argument to the RPC call </td></tr>
+    <tr><td class="paramname">arg3</td><td>4th argument to the RPC call </td></tr>
+    <tr><td class="paramname">canary</td><td>canary value passed to the call </td></tr>
   </table>
   </dd>
 </dl>

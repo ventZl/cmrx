@@ -1,5 +1,6 @@
 var group__api =
 [
+    [ "IRQ management", "group__api__irq.html", "group__api__irq" ],
     [ "Interrupt Service Routines", "group__api__isr.html", "group__api__isr" ],
     [ "Mutexes / Futexes", "group__api__mutex.html", "group__api__mutex" ],
     [ "Named constants for errors", "group__api__errors.html", "group__api__errors" ],

@@ -147,25 +147,28 @@ Modules</h2></td></tr>
 <tr class="memitem:group__os__tracing" id="r_group__os__tracing"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__tracing.html">Tracing Kernel Events</a></td></tr>
 <tr class="memdesc:group__os__tracing"><td class="mdescLeft">&#160;</td><td class="mdescRight">Facilities to trace progress of kernel execution. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__os__txn" id="r_group__os__txn"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__txn.html">Transcation subsystem</a></td></tr>
+<tr class="memdesc:group__os__txn"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMRX kernel is mostly implemented as non-blocking. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga1e67d0545de716571a189e81ae619f37" id="r_ga1e67d0545de716571a189e81ae619f37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os.html#ga1e67d0545de716571a189e81ae619f37">os_start</a>()&#160;&#160;&#160;<a class="el" href="group__os.html#gad814ad5aca8918a9fb4dd5952447ac06">_os_start</a>(0)</td></tr>
-<tr class="separator:ga1e67d0545de716571a189e81ae619f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0d275303ced3f7617b7d71fd1464687" id="r_gac0d275303ced3f7617b7d71fd1464687"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start</a>(<a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)&#160;&#160;&#160;<a class="el" href="group__os.html#gab30027c97dc034137c00192f28c6e178">_os_start</a>((<a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>))</td></tr>
+<tr class="separator:gac0d275303ced3f7617b7d71fd1464687"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad814ad5aca8918a9fb4dd5952447ac06" id="r_gad814ad5aca8918a9fb4dd5952447ac06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os.html#gad814ad5aca8918a9fb4dd5952447ac06">_os_start</a> (uint8_t <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
-<tr class="memdesc:gad814ad5aca8918a9fb4dd5952447ac06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start up scheduler.  <br /></td></tr>
-<tr class="separator:gad814ad5aca8918a9fb4dd5952447ac06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab30027c97dc034137c00192f28c6e178" id="r_gab30027c97dc034137c00192f28c6e178"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os.html#gab30027c97dc034137c00192f28c6e178">_os_start</a> (uint8_t start_core)</td></tr>
+<tr class="memdesc:gab30027c97dc034137c00192f28c6e178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start up scheduler.  <br /></td></tr>
+<tr class="separator:gab30027c97dc034137c00192f28c6e178"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Documentation of kernel internals. </p>
 <p>Covers parts of CMRX running in the privileged mode. Most of this code is accessible via system calls, while some being triggered by timing provider API or occupying vital system handlers. Kernel is divided into two parts: platform-independent part and part that is ported to support individual platforms.</p>
 <p>Documentation of kernel internals is usable if you want to understand how certain features are implemented or if you are porting CMRX to another platform. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga1e67d0545de716571a189e81ae619f37" name="ga1e67d0545de716571a189e81ae619f37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1e67d0545de716571a189e81ae619f37">&#9670;&#160;</a></span>os_start</h2>
+<a id="gac0d275303ced3f7617b7d71fd1464687" name="gac0d275303ced3f7617b7d71fd1464687"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac0d275303ced3f7617b7d71fd1464687">&#9670;&#160;</a></span>os_start</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,8 +176,9 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">#define os_start</td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="group__os.html#gad814ad5aca8918a9fb4dd5952447ac06">_os_start</a>(0)</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a></td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="group__os.html#gab30027c97dc034137c00192f28c6e178">_os_start</a>((<a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -182,8 +186,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gad814ad5aca8918a9fb4dd5952447ac06" name="gad814ad5aca8918a9fb4dd5952447ac06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad814ad5aca8918a9fb4dd5952447ac06">&#9670;&#160;</a></span>_os_start()</h2>
+<a id="gab30027c97dc034137c00192f28c6e178" name="gab30027c97dc034137c00192f28c6e178"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab30027c97dc034137c00192f28c6e178">&#9670;&#160;</a></span>_os_start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,7 +199,7 @@ Functions</h2></td></tr>
           <td class="memname">void _os_start </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>core</em></td><td>)</td>
+          <td class="paramname"><em>start_core</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

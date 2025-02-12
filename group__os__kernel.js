@@ -30,7 +30,6 @@ var group__os__kernel =
     [ "OS_TASK_NO_STACK", "group__os__kernel.html#ga5ed1a3a4c42bd97febc5e1dab288a0f5", null ],
     [ "Event_t", "group__os__kernel.html#ga680eadb82b6578f258791cef85501af2", null ],
     [ "OS_RPC_stack", "group__os__kernel.html#ga59b9ffdaff162b7deb5f6d34348513d9", null ],
-    [ "Txn_t", "group__os__kernel.html#gac01e3878510de719773a39e4333a84f4", null ],
     [ "WaitHandler_t", "group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e", null ],
     [ "ThreadState", "group__os__kernel.html#gab3804a8a4369184ad46dadf8e54957b6", [
       [ "THREAD_STATE_EMPTY", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7fa9cec9c302fe0bfbf03b37a6abc480", null ],
@@ -42,16 +41,6 @@ var group__os__kernel =
       [ "THREAD_STATE_WAITING", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6ac754775b8c91b7fa7de29fd8eb731bbf", null ],
       [ "THREAD_STATE_MIGRATING", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b", null ]
     ] ],
-    [ "TxnType", "group__os__kernel.html#ga171384e518db04097e0f3e6750129a2a", [
-      [ "TXN_READONLY", "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f", null ],
-      [ "TXN_READWRITE", "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50", null ]
-    ] ],
-    [ "TXN_READONLY", "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f", null ],
-    [ "TXN_READWRITE", "group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50", null ],
-    [ "os_txn_commit", "group__os__kernel.html#gacbfa20536e7c7fc317d57022ee00d471", null ],
-    [ "os_txn_done", "group__os__kernel.html#ga1d718af22b206b311f22c214bda9387a", null ],
-    [ "os_txn_start", "group__os__kernel.html#ga6835c2c092a489fb9a24dce9e2b4c3ac", null ],
-    [ "os_txn_start_commit", "group__os__kernel.html#gaf10efb77e984671b520a403ede9ce8c2", null ],
     [ "os_processes", "group__os__kernel.html#ga92c7c87a5b690240597294d232980842", null ],
     [ "os_stacks", "group__os__kernel.html#gaea74e023a260529e36ff7609c8a53555", null ],
     [ "os_threads", "group__os__kernel.html#ga5bcb4dcf2afcf71f716d8dc85b18134d", null ]

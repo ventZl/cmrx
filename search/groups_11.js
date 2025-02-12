@@ -9,11 +9,12 @@ var searchData=
   ['signals_6',['Signals',['../group__api__signal.html',1,'']]],
   ['signals_20implementation_7',['Signals implementation',['../group__arch__arm__signal.html',1,'']]],
   ['standard_20api_8',['Standard API',['../group__api__standard.html',1,'']]],
-  ['static_20initialization_9',['static initialization',['../group__api__init.html',1,'Static initialization'],['../group__arch__arm__static.html',1,'Static initialization']]],
-  ['support_10',['Architecture support',['../group__arch.html',1,'']]],
-  ['support_20routines_11',['Cortex-M support routines',['../group__arch__arm__cortex.html',1,'']]],
-  ['switching_12',['Context switching',['../group__os__context.html',1,'']]],
-  ['system_20calls_13',['System calls',['../group__os__syscall.html',1,'']]],
-  ['system_20calls_20implementation_14',['System calls implementation',['../group__arch__arm__syscall.html',1,'']]],
-  ['systick_20based_20timing_20provider_15',['SysTick-Based Timing Provider',['../group__aux__systick.html',1,'']]]
+  ['static_20initialization_9',['static initialization',['../group__arch__arm__static.html',1,'Static initialization'],['../group__api__init.html',1,'Static initialization']]],
+  ['subsystem_10',['Transcation subsystem',['../group__os__txn.html',1,'']]],
+  ['support_11',['Architecture support',['../group__arch.html',1,'']]],
+  ['support_20routines_12',['Cortex-M support routines',['../group__arch__arm__cortex.html',1,'']]],
+  ['switching_13',['Context switching',['../group__os__context.html',1,'']]],
+  ['system_20calls_14',['System calls',['../group__os__syscall.html',1,'']]],
+  ['system_20calls_20implementation_15',['System calls implementation',['../group__arch__arm__syscall.html',1,'']]],
+  ['systick_20based_20timing_20provider_16',['SysTick-Based Timing Provider',['../group__aux__systick.html',1,'']]]
 ];

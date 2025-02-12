@@ -101,25 +101,24 @@ $(document).ready(function(){initNavTree('include_2cmrx_2ipc_2signal_8h_source.h
   <div class="headertitle"><div class="title">signal.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &lt;arch/sysenter.h&gt;</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="group__api__signal.html#gaa6946723c6b7a86ec3c33caaf832840b">   29</a></span><span class="preprocessor">#define SIGALRM                 0</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="group__api__signal.html#gaddd8dcd406ce514ab3b4f576a5343d42">   31</a></span><span class="preprocessor">#define SIGKILL                 32</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="group__api__signal.html#ga069e358bc9a864b7dc4fed2440eda14c">   32</a></span><span class="preprocessor">#define SIGSTOP                 33</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="group__api__signal.html#ga024f43063003e753afc6cca1acd6e104">   33</a></span><span class="preprocessor">#define SIGCONT                 34</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="group__api__signal.html#gae20b4f7171a09516ea73c9d2745bd596">   34</a></span><span class="preprocessor">#define SIGSEGV                 35</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">int</span> <a class="code hl_function" href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a>(<span class="keywordtype">int</span> signo, <span class="keywordtype">void</span> (*sighandler)(uint32_t));</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">int</span> <a class="code hl_function" href="group__api__signal.html#ga31cb184e9e6351ce176c3324b7b49a24">kill</a>(<span class="keywordtype">int</span> thread, uint32_t <a class="code hl_function" href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a>);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="ttc" id="agroup__api__signal_html_ga31cb184e9e6351ce176c3324b7b49a24"><div class="ttname"><a href="group__api__signal.html#ga31cb184e9e6351ce176c3324b7b49a24">kill</a></div><div class="ttdeci">__SYSCALL int kill(int thread, uint32_t signal)</div><div class="ttdoc">Send thread a signal.</div><div class="ttdef"><b>Definition</b> signal.c:14</div></div>
-<div class="ttc" id="agroup__api__signal_html_gaca5040b15e7a554d7d6a99a0b89efcd8"><div class="ttname"><a href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a></div><div class="ttdeci">__SYSCALL int signal(int signo, void(*sighandler)(uint32_t))</div><div class="ttdoc">Register function as current thread signal handler.</div><div class="ttdef"><b>Definition</b> signal.c:7</div></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;arch/sysenter.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="group__api__signal.html#gaa6946723c6b7a86ec3c33caaf832840b">   30</a></span><span class="preprocessor">#define SIGALRM                 0</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="group__api__signal.html#gaddd8dcd406ce514ab3b4f576a5343d42">   32</a></span><span class="preprocessor">#define SIGKILL                 32</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="group__api__signal.html#ga069e358bc9a864b7dc4fed2440eda14c">   33</a></span><span class="preprocessor">#define SIGSTOP                 33</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="group__api__signal.html#ga024f43063003e753afc6cca1acd6e104">   34</a></span><span class="preprocessor">#define SIGCONT                 34</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="group__api__signal.html#gae20b4f7171a09516ea73c9d2745bd596">   35</a></span><span class="preprocessor">#define SIGSEGV                 35</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">int</span> <a class="code hl_function" href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a>(<span class="keywordtype">int</span> signo, <span class="keywordtype">void</span> (*sighandler)(uint32_t));</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">int</span> <a class="code hl_function" href="group__api__signal.html#ga31cb184e9e6351ce176c3324b7b49a24">kill</a>(<span class="keywordtype">int</span> thread, uint32_t <a class="code hl_function" href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a>);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="ttc" id="agroup__api__signal_html_ga31cb184e9e6351ce176c3324b7b49a24"><div class="ttname"><a href="group__api__signal.html#ga31cb184e9e6351ce176c3324b7b49a24">kill</a></div><div class="ttdeci">__SYSCALL int kill(int thread, uint32_t signal)</div><div class="ttdoc">Send thread a signal.</div><div class="ttdef"><b>Definition</b> signal.c:11</div></div>
+<div class="ttc" id="agroup__api__signal_html_gaca5040b15e7a554d7d6a99a0b89efcd8"><div class="ttname"><a href="group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8">signal</a></div><div class="ttdeci">__SYSCALL int signal(int signo, void(*sighandler)(uint32_t))</div><div class="ttdoc">Register function as current thread signal handler.</div><div class="ttdef"><b>Definition</b> signal.c:4</div></div>
 <div class="ttc" id="agroup__os__syscall_html_ga6c52288e9645b2cd2c4ada0577669340"><div class="ttname"><a href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a></div><div class="ttdeci">#define __SYSCALL</div><div class="ttdoc">Mark function as syscall entrypoint in userspace.</div><div class="ttdef"><b>Definition</b> sysenter.h:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

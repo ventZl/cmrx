@@ -192,7 +192,7 @@ Functions</h2></td></tr>
 <p>Setup the timing provider. </p>
 <p>This function shall be called by the main() function during hardware bringup. Its purpose is to configure whatever peripheral or combination of peripherals that provides kernel timing services. These peripherals shall be configured and prepared, but not launched yet.</p>
 <p>Kernel never calls this function on its own. The prototype of this function can be modified by the integrator to suit all the needs.</p>
-<p>This function shall be called before the <a class="el" href="group__os.html#ga1e67d0545de716571a189e81ae619f37">os_start()</a> function is called and can therefore be called in any suitable context.</p>
+<p>This function shall be called before the <a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start()</a> function is called and can therefore be called in any suitable context.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">interval_ms</td><td>how often the systick ISR shall be called. </td></tr>

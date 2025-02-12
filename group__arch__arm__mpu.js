@@ -5,10 +5,15 @@ var group__arch__arm__mpu =
     [ "ARM MPU RBAR fields", "group__arm__mpu__rbar.html", "group__arm__mpu__rbar" ],
     [ "ARM MPU register aliases", "group__arm__mpu__registers.html", "group__arm__mpu__registers" ],
     [ "MPU region names", "group__mpu__region__names.html", "group__mpu__region__names" ],
+    [ "MPU_Registers", "structMPU__Registers.html", [
+      [ "_MPU_RASR", "structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343", null ],
+      [ "_MPU_RBAR", "structMPU__Registers.html#af192544722f6e65244f494cdbf934a49", null ]
+    ] ],
     [ "MPU_AP_MASK", "group__arch__arm__mpu.html#gad165405d8b7780b3dc9f0bc945925cbc", null ],
     [ "MPU_EXECUTE_SHIFT", "group__arch__arm__mpu.html#gab726d0bcd26965e81af2fcbcae650469", null ],
     [ "MPU_RNR_REGION", "group__arch__arm__mpu.html#ga2f22ba6a7bec09dc599be801b1e5f9d5", null ],
     [ "MPU_RNR_REGION_LSB", "group__arch__arm__mpu.html#ga98123943c5d9a71e1d06ae7eff10807a", null ],
+    [ "MPU_State", "group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a", null ],
     [ "__mpu_expand_class", "group__arch__arm__mpu.html#ga4e796735b3c15d3a8bb3e8f7c72bf746", null ],
     [ "hard_fault_handler", "group__arch__arm__mpu.html#ga80b8e496817c48aab711bab6cb8a148d", null ],
     [ "log_2", "group__arch__arm__mpu.html#ga0cc61c07f2641c9564f3b2e08340e692", null ],

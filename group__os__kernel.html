@@ -103,8 +103,6 @@ $(document).ready(function(){initNavTree('group__os__kernel.html',''); initResiz
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#enumval-members">Enumerator</a> &#124;
-<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Kernel core<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
 </div><!--header-->
@@ -146,8 +144,6 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga86c1d9def4919aa07143abede7baa08e" id="r_ga86c1d9def4919aa07143abede7baa08e"><td class="memItemLeft" align="right" valign="top">typedef void()&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e">WaitHandler_t</a>(const void *, <a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a>)</td></tr>
 <tr class="memdesc:ga86c1d9def4919aa07143abede7baa08e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for function that handles thread wakeup on notification.  <br /></td></tr>
 <tr class="separator:ga86c1d9def4919aa07143abede7baa08e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac01e3878510de719773a39e4333a84f4" id="r_gac01e3878510de719773a39e4333a84f4"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a></td></tr>
-<tr class="separator:gac01e3878510de719773a39e4333a84f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -165,26 +161,6 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gab3804a8a4369184ad46dadf8e54957b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of states in which thread can be.  <a href="group__os__kernel.html#gab3804a8a4369184ad46dadf8e54957b6">More...</a><br /></td></tr>
 <tr class="separator:gab3804a8a4369184ad46dadf8e54957b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga171384e518db04097e0f3e6750129a2a" id="r_ga171384e518db04097e0f3e6750129a2a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#ga171384e518db04097e0f3e6750129a2a">TxnType</a> { <a class="el" href="group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f">TXN_READONLY</a>
-, <a class="el" href="group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50">TXN_READWRITE</a>
- }</td></tr>
-<tr class="memdesc:ga171384e518db04097e0f3e6750129a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the transaction performed.  <a href="group__os__kernel.html#ga171384e518db04097e0f3e6750129a2a">More...</a><br /></td></tr>
-<tr class="separator:ga171384e518db04097e0f3e6750129a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga6835c2c092a489fb9a24dce9e2b4c3ac" id="r_ga6835c2c092a489fb9a24dce9e2b4c3ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#ga6835c2c092a489fb9a24dce9e2b4c3ac">os_txn_start</a> ()</td></tr>
-<tr class="memdesc:ga6835c2c092a489fb9a24dce9e2b4c3ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a transaction.  <br /></td></tr>
-<tr class="separator:ga6835c2c092a489fb9a24dce9e2b4c3ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacbfa20536e7c7fc317d57022ee00d471" id="r_gacbfa20536e7c7fc317d57022ee00d471"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#gacbfa20536e7c7fc317d57022ee00d471">os_txn_commit</a> (<a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> transaction, enum <a class="el" href="group__os__kernel.html#ga171384e518db04097e0f3e6750129a2a">TxnType</a> type)</td></tr>
-<tr class="memdesc:gacbfa20536e7c7fc317d57022ee00d471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to commit the transaction.  <br /></td></tr>
-<tr class="separator:gacbfa20536e7c7fc317d57022ee00d471"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf10efb77e984671b520a403ede9ce8c2" id="r_gaf10efb77e984671b520a403ede9ce8c2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#gaf10efb77e984671b520a403ede9ce8c2">os_txn_start_commit</a> ()</td></tr>
-<tr class="memdesc:gaf10efb77e984671b520a403ede9ce8c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start new transaction and commit it immediately.  <br /></td></tr>
-<tr class="separator:gaf10efb77e984671b520a403ede9ce8c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d718af22b206b311f22c214bda9387a" id="r_ga1d718af22b206b311f22c214bda9387a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__kernel.html#ga1d718af22b206b311f22c214bda9387a">os_txn_done</a> ()</td></tr>
-<tr class="memdesc:ga1d718af22b206b311f22c214bda9387a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish the transaction commit.  <br /></td></tr>
-<tr class="separator:ga1d718af22b206b311f22c214bda9387a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -200,7 +176,7 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Basic structures that contain the internal state of kernel. </p>
-<p>Kernel is built around minimalistic core, which consists of prioritized thread scheduler. Scheduler can be started up after basic HW setup is done by calling <a class="el" href="group__os.html#ga1e67d0545de716571a189e81ae619f37">os_start()</a>. This will collect all auto-started threads, prepare them and start thread scheduler. All other mechanisms are built around thread scheduler. </p>
+<p>Kernel is built around minimalistic core, which consists of prioritized thread scheduler. Scheduler can be started up after basic HW setup is done by calling <a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start()</a>. This will collect all auto-started threads, prepare them and start thread scheduler. All other mechanisms are built around thread scheduler. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gacb3141cb0632564896b1cd9cc0a32f06" name="gacb3141cb0632564896b1cd9cc0a32f06"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gacb3141cb0632564896b1cd9cc0a32f06">&#9670;&#160;</a></span>OS_STACK_DWORD</h2>
@@ -265,20 +241,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gac01e3878510de719773a39e4333a84f4" name="gac01e3878510de719773a39e4333a84f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac01e3878510de719773a39e4333a84f4">&#9670;&#160;</a></span>Txn_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef uint8_t <a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ga86c1d9def4919aa07143abede7baa08e" name="ga86c1d9def4919aa07143abede7baa08e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga86c1d9def4919aa07143abede7baa08e">&#9670;&#160;</a></span>WaitHandler_t</h2>
 
@@ -319,7 +281,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6afb57d1df9b82dc0b35626e572b83a089" name="ggab3804a8a4369184ad46dadf8e54957b6afb57d1df9b82dc0b35626e572b83a089"></a>THREAD_STATE_CREATED&#160;</td><td class="fielddoc"><p>Thread was created, but does not have stack assigned. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf" name="ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf"></a>THREAD_STATE_STOPPED&#160;</td><td class="fielddoc"><p>Thread was running, but was forced to stop. </p>
-<p>It still has valid state so can't be disposed of without damage. Can be placed into ready/running state by calling thread_continue(). </p>
+<p>It still has valid state so can't be disposed of without damage. Can be placed into ready/running state by calling <a class="el" href="group__os__sched.html#ga7d13fca0696f3ab0fcf19b8d5503f31a">os_thread_continue()</a>. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96" name="ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96"></a>THREAD_STATE_FINISHED&#160;</td><td class="fielddoc"><p>Thread finished it's execution either explicitly by calling <a class="el" href="group__api__thread.html#ga189ee445e0ac8bf8fa112a2fa719d9b6">thread_exit()</a> or by returning from thread entrypoint. </p>
 <p>Nobody called <a class="el" href="group__api__thread.html#gafecb0503475d000bb26f547db0f54936">thread_join()</a> yet. This state is the same as "zombie" in Linux. </p>
@@ -329,130 +291,6 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b" name="ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b"></a>THREAD_STATE_MIGRATING&#160;</td><td class="fielddoc"><p>Thread has been stopped and is ready to migrate over to another core. </p>
 </td></tr>
 </table>
-
-</div>
-</div>
-<a id="ga171384e518db04097e0f3e6750129a2a" name="ga171384e518db04097e0f3e6750129a2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga171384e518db04097e0f3e6750129a2a">&#9670;&#160;</a></span>TxnType</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__os__kernel.html#ga171384e518db04097e0f3e6750129a2a">TxnType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Type of the transaction performed. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f" name="gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f"></a>TXN_READONLY&#160;</td><td class="fielddoc"><p>Read-only transaction. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50" name="gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50"></a>TXN_READWRITE&#160;</td><td class="fielddoc"><p>Read-write transaction. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="gacbfa20536e7c7fc317d57022ee00d471" name="gacbfa20536e7c7fc317d57022ee00d471"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacbfa20536e7c7fc317d57022ee00d471">&#9670;&#160;</a></span>os_txn_commit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int os_txn_commit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a>&#160;</td>
-          <td class="paramname"><em>transaction</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">enum <a class="el" href="group__os__kernel.html#ga171384e518db04097e0f3e6750129a2a">TxnType</a>&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Try to commit the transaction. </p>
-<p>This function will try to enter the critical section so that the code running afterwards has exclusive access to the shared resource. If another transaction has been commited meanwhile, then this call will fail as transaction couldn't be commited. Then the critical section is left immediately. If no other transaction conflicted with this one, the code remains in the critical section and can modify the shared context. After the code is done with modifying the shared context, it <em>must</em> call <a class="el" href="group__os__kernel.html#ga1d718af22b206b311f22c214bda9387a">os_txn_done</a> which will leave the critical section. No modification of the shared context is allowed outside of the critical section. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">transaction</td><td>the ID of transaction as obtained by the call to ox_txn_start() </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>the type of transaction </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>E_OK if transaction can be commited </dd>
-<dd>
-E_INVALID if transaction cannot be applied as different transaction has been commited meanwhile. </dd></dl>
-
-</div>
-</div>
-<a id="ga1d718af22b206b311f22c214bda9387a" name="ga1d718af22b206b311f22c214bda9387a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1d718af22b206b311f22c214bda9387a">&#9670;&#160;</a></span>os_txn_done()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void os_txn_done </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Finish the transaction commit. </p>
-<p>This function will leave the critical section related to the transaction. This function has to be called for read-write transaction after all the data changes in the transaction were commited. </p>
-
-</div>
-</div>
-<a id="ga6835c2c092a489fb9a24dce9e2b4c3ac" name="ga6835c2c092a489fb9a24dce9e2b4c3ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6835c2c092a489fb9a24dce9e2b4c3ac">&#9670;&#160;</a></span>os_txn_start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__os__kernel.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> os_txn_start </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start a transaction. </p>
-<p>This function will start a transaction. Starting a transaction means that the code will remember actual record version number (active rolling counter value). rolling counters are updated whenever read-write transaction is commited. </p><dl class="section note"><dt>Note</dt><dd>It is perfectly valid to start transaction and not commit it. This effectively equals to voluntarily aborting the transaction. Such abandonned transactions pose no overhead nor stall / corruption risk. </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>transaction ID </dd></dl>
-
-</div>
-</div>
-<a id="gaf10efb77e984671b520a403ede9ce8c2" name="gaf10efb77e984671b520a403ede9ce8c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf10efb77e984671b520a403ede9ce8c2">&#9670;&#160;</a></span>os_txn_start_commit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int os_txn_start_commit </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start new transaction and commit it immediately. </p>
-<p>This is a combination of <a class="el" href="group__os__kernel.html#ga6835c2c092a489fb9a24dce9e2b4c3ac">os_txn_start</a> and <a class="el" href="group__os__kernel.html#gacbfa20536e7c7fc317d57022ee00d471">os_txn_commit</a> for special cases where there is no intermediate computation needed. This is for cases, such as freeing memory, releasing handles, etc. In these cases no search for free entry or any similar action has to be done. Just a known-in-advance entry is freed and this change needs to be transacted. It will start new transaction and immediately commit it. As this is done atomically, the commit never fails. This function always returns E_OK, which means that the code is in commit mode, may change shared data and must call <a class="el" href="group__os__kernel.html#ga1d718af22b206b311f22c214bda9387a">os_txn_done</a> when all changes are written. </p><dl class="section return"><dt>Returns</dt><dd>E_OK as this action never fails. </dd></dl>
 
 </div>
 </div>

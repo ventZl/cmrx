@@ -12,6 +12,6 @@ var searchData=
   ['timer_5fperiodic_9',['TIMER_PERIODIC',['../group__os__timer.html#ggafd9f6f3e031b55953acdb227a28431c6a21b44bcff4202d25ac1a56331ab4f841',1,'timer.h']]],
   ['timer_5fsleep_10',['TIMER_SLEEP',['../group__os__timer.html#ggafd9f6f3e031b55953acdb227a28431c6a838720ad69f2a9be2796ad3749a36a7f',1,'timer.h']]],
   ['timer_5ftimeout_11',['TIMER_TIMEOUT',['../group__os__timer.html#ggafd9f6f3e031b55953acdb227a28431c6ac6e6a01a6b4fad4c8054e0065442bdf7',1,'timer.h']]],
-  ['txn_5freadonly_12',['TXN_READONLY',['../group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f',1,'txn.h']]],
-  ['txn_5freadwrite_13',['TXN_READWRITE',['../group__os__kernel.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50',1,'txn.h']]]
+  ['txn_5freadonly_12',['TXN_READONLY',['../group__os__txn.html#gga171384e518db04097e0f3e6750129a2aa6a3bd46a641c9be6b1495c66c69a115f',1,'txn.h']]],
+  ['txn_5freadwrite_13',['TXN_READWRITE',['../group__os__txn.html#gga171384e518db04097e0f3e6750129a2aaf9d6521627af7fdb507be74adbbade50',1,'txn.h']]]
 ];

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: barrier_t Struct Reference</title>
+<title>C Microkernel Realtime eXecutive: IRQ management</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structbarrier__t.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__api__irq.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -99,49 +99,82 @@ $(document).ready(function(){initNavTree('structbarrier__t.html',''); initResiza
 
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">barrier_t Struct Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">IRQ management<div class="ingroups"><a class="el" href="group__api.html">Kernel API</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Type to hold barrier used to synchronize normal code and checker.  
- <a href="structbarrier__t.html#details">More...</a></p>
+<p>CMRX offers a tiny set of hardware-oriented services that allow manipulating the status of interrupt request lines.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a1199ccc90143a129d29580af19f9b21c" id="r_a1199ccc90143a129d29580af19f9b21c"><td class="memItemLeft" align="right" valign="top">mtx_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbarrier__t.html#a1199ccc90143a129d29580af19f9b21c">mutex</a></td></tr>
-<tr class="separator:a1199ccc90143a129d29580af19f9b21c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae992f6ed73c243757e14a51f50c5d7e7" id="r_ae992f6ed73c243757e14a51f50c5d7e7"><td class="memItemLeft" align="right" valign="top">cnd_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbarrier__t.html#ae992f6ed73c243757e14a51f50c5d7e7">cv</a></td></tr>
-<tr class="separator:ae992f6ed73c243757e14a51f50c5d7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga8a318eb1486d9a157e128a92ef7a6c75" id="r_ga8a318eb1486d9a157e128a92ef7a6c75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__irq.html#ga8a318eb1486d9a157e128a92ef7a6c75">irq_enable</a> (uint32_t irq)</td></tr>
+<tr class="memdesc:ga8a318eb1486d9a157e128a92ef7a6c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable IRQ line.  <br /></td></tr>
+<tr class="separator:ga8a318eb1486d9a157e128a92ef7a6c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46328777c39260415d888507d2671c98" id="r_ga46328777c39260415d888507d2671c98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__irq.html#ga46328777c39260415d888507d2671c98">irq_disable</a> (uint32_t irq)</td></tr>
+<tr class="memdesc:ga46328777c39260415d888507d2671c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable IRQ line.  <br /></td></tr>
+<tr class="separator:ga46328777c39260415d888507d2671c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Type to hold barrier used to synchronize normal code and checker. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="ae992f6ed73c243757e14a51f50c5d7e7" name="ae992f6ed73c243757e14a51f50c5d7e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae992f6ed73c243757e14a51f50c5d7e7">&#9670;&#160;</a></span>cv</h2>
+<p>CMRX offers a tiny set of hardware-oriented services that allow manipulating the status of interrupt request lines. </p>
+<p>This is provided in order to give drivers access to IRQ configuration from userspace, which may otherwise be denied by the hardware. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga46328777c39260415d888507d2671c98" name="ga46328777c39260415d888507d2671c98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga46328777c39260415d888507d2671c98">&#9670;&#160;</a></span>irq_disable()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">cnd_t barrier_t::cv</td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int irq_disable </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Disable IRQ line. </p>
+<p>This syscall will disable IRQ line identified by the IRQ number. The implementation of this call is platform-specific and IRQ number has hardware-specific meaning. CMRX kernel does not perform any interpretation of these values.</p>
+<p>In general it is not an error trying to disable already disabled IRQ.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">irq</td><td>IRQ number of interrupt line to be disabled </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK if IRQ has been disabled, E_NOTAVAIL if IRQ couldn't be disabled. </dd></dl>
+
 </div>
 </div>
-<a id="a1199ccc90143a129d29580af19f9b21c" name="a1199ccc90143a129d29580af19f9b21c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1199ccc90143a129d29580af19f9b21c">&#9670;&#160;</a></span>mutex</h2>
+<a id="ga8a318eb1486d9a157e128a92ef7a6c75" name="ga8a318eb1486d9a157e128a92ef7a6c75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a318eb1486d9a157e128a92ef7a6c75">&#9670;&#160;</a></span>irq_enable()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mtx_t barrier_t::mutex</td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int irq_enable </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enable IRQ line. </p>
+<p>This syscall will enable IRQ line identified by the IRQ number. The implementation of this call is platform-specific and IRQ number has hardware-specific meaning. CMRX kernel does not perform any interpretation of these values.</p>
+<p>In general it is not an error trying to enable already enabled IRQ.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">irq</td><td>IRQ number of interrupt line to be enabled </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK if IRQ has been enabled, E_NOTAVAIL if IRQ couldn't be enabled. </dd></dl>
 
 </div>
 </div>
@@ -151,7 +184,6 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structbarrier__t.html">barrier_t</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

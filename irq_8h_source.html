@@ -103,15 +103,15 @@ $(document).ready(function(){initNavTree('irq_8h_source.html',''); initResizable
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &lt;arch/sysenter.h&gt;</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">int</span> <a class="code hl_function" href="group__api__notify.html#ga8a318eb1486d9a157e128a92ef7a6c75">irq_enable</a>(uint32_t irq);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">int</span> <a class="code hl_function" href="group__api__notify.html#ga46328777c39260415d888507d2671c98">irq_disable</a>(uint32_t irq);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment">/* @} */</span></div>
-<div class="ttc" id="agroup__api__notify_html_ga46328777c39260415d888507d2671c98"><div class="ttname"><a href="group__api__notify.html#ga46328777c39260415d888507d2671c98">irq_disable</a></div><div class="ttdeci">__SYSCALL int irq_disable(uint32_t irq)</div><div class="ttdoc">Wait for a notification on object.</div><div class="ttdef"><b>Definition</b> irq.c:13</div></div>
-<div class="ttc" id="agroup__api__notify_html_ga8a318eb1486d9a157e128a92ef7a6c75"><div class="ttname"><a href="group__api__notify.html#ga8a318eb1486d9a157e128a92ef7a6c75">irq_enable</a></div><div class="ttdeci">__SYSCALL int irq_enable(uint32_t irq)</div><div class="ttdoc">Notify waiter for object.</div><div class="ttdef"><b>Definition</b> irq.c:7</div></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;arch/sysenter.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">int</span> <a class="code hl_function" href="group__api__irq.html#ga8a318eb1486d9a157e128a92ef7a6c75">irq_enable</a>(uint32_t irq);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><a class="code hl_define" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> <span class="keywordtype">int</span> <a class="code hl_function" href="group__api__irq.html#ga46328777c39260415d888507d2671c98">irq_disable</a>(uint32_t irq);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="ttc" id="agroup__api__irq_html_ga46328777c39260415d888507d2671c98"><div class="ttname"><a href="group__api__irq.html#ga46328777c39260415d888507d2671c98">irq_disable</a></div><div class="ttdeci">__SYSCALL int irq_disable(uint32_t irq)</div><div class="ttdoc">Disable IRQ line.</div><div class="ttdef"><b>Definition</b> irq.c:10</div></div>
+<div class="ttc" id="agroup__api__irq_html_ga8a318eb1486d9a157e128a92ef7a6c75"><div class="ttname"><a href="group__api__irq.html#ga8a318eb1486d9a157e128a92ef7a6c75">irq_enable</a></div><div class="ttdeci">__SYSCALL int irq_enable(uint32_t irq)</div><div class="ttdoc">Enable IRQ line.</div><div class="ttdef"><b>Definition</b> irq.c:4</div></div>
 <div class="ttc" id="agroup__os__syscall_html_ga6c52288e9645b2cd2c4ada0577669340"><div class="ttname"><a href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a></div><div class="ttdeci">#define __SYSCALL</div><div class="ttdoc">Mark function as syscall entrypoint in userspace.</div><div class="ttdef"><b>Definition</b> sysenter.h:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

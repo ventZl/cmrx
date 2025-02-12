@@ -108,89 +108,6 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 <p>Mechanisms provided for application designer to statically initialize objects. </p>
 <p>These mechanisms are provided, so that various structures are generated into application image. These replace need to call os routines manually. Currently it is possible to statically initialize processes and threads. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga51afde51c723416910204d56135d784e" name="ga51afde51c723416910204d56135d784e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga51afde51c723416910204d56135d784e">&#9670;&#160;</a></span>__APPL_SYMBOL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define __APPL_SYMBOL</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">application, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">symbol&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;application ## _ ## symbol</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga55818cf77e57abe9bf2ad9fb5cffbd36" name="ga55818cf77e57abe9bf2ad9fb5cffbd36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga55818cf77e57abe9bf2ad9fb5cffbd36">&#9670;&#160;</a></span>_OS_THREAD_CREATE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _OS_THREAD_CREATE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">application, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">entrypoint, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">data, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">priority, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">__attribute__((externally_visible, used, section(<span class="stringliteral">&quot;.thread_create&quot;</span>) )) const struct <a class="code hl_struct" href="structOS__thread__create__t.html">OS_thread_create_t</a> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, thread_create_ <span class="preprocessor">## entrypoint) = {\</span></div>
-<div class="line"><span class="preprocessor">    &amp;__APPL_SYMBOL(application, instance),\</span></div>
-<div class="line"><span class="preprocessor">    entrypoint,\</span></div>
-<div class="line"><span class="preprocessor">    data,\</span></div>
-<div class="line"><span class="preprocessor">    priority,\</span></div>
-<div class="line"><span class="preprocessor">    core\</span></div>
-<div class="line"><span class="preprocessor">}</span></div>
-<div class="ttc" id="agroup__api__init_html_ga51afde51c723416910204d56135d784e"><div class="ttname"><a href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a></div><div class="ttdeci">#define __APPL_SYMBOL(application, symbol)</div><div class="ttdef"><b>Definition</b> application.h:19</div></div>
-<div class="ttc" id="astructOS__thread__create__t_html"><div class="ttname"><a href="structOS__thread__create__t.html">OS_thread_create_t</a></div><div class="ttdoc">Structure describing auto-spawned thread.</div><div class="ttdef"><b>Definition</b> runtime.h:45</div></div>
-</div><!-- fragment -->
-</div>
-</div>
 <a id="gab5f63b29702312bedfe955e8465891cd" name="gab5f63b29702312bedfe955e8465891cd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab5f63b29702312bedfe955e8465891cd">&#9670;&#160;</a></span>OS_APPLICATION</h2>
 
@@ -206,26 +123,26 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, data_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, data_end);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, bss_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, bss_end);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, vtable_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, vtable_end);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, __mmio_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, __mmio_end);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, shared_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, shared_end);\</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, data_start);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, data_end);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, bss_start);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, bss_end);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, vtable_start);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, vtable_end);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, __mmio_start);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, __mmio_end);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, shared_start);\</div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, shared_end);\</div>
 <div class="line">\</div>
-<div class="line">__attribute__((externally_visible, used, section(<span class="stringliteral">&quot;.applications&quot;</span>) )) const struct <a class="code hl_struct" href="structOS__process__definition__t.html">OS_process_definition_t</a> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, instance) = {\</div>
+<div class="line">__attribute__((externally_visible, used, section(<span class="stringliteral">&quot;.applications&quot;</span>) )) const struct <a class="code hl_struct" href="structOS__process__definition__t.html">OS_process_definition_t</a> __APPL_SYMBOL(application, instance) = {\</div>
 <div class="line">    {\</div>
-<div class="line">        { &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, data_start), &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, data_end) },\</div>
-<div class="line">        { &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, bss_start), &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, bss_end) },\</div>
-<div class="line">        { <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_start), <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_end) },\</div>
-<div class="line">        { <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_start), <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_end) },\</div>
-<div class="line">        { &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, shared_start), &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, shared_end) }\</div>
+<div class="line">        { &amp;__APPL_SYMBOL(application, data_start), &amp;__APPL_SYMBOL(application, data_end) },\</div>
+<div class="line">        { &amp;__APPL_SYMBOL(application, bss_start), &amp;__APPL_SYMBOL(application, bss_end) },\</div>
+<div class="line">        { __APPL_SYMBOL(application, mmio_start), __APPL_SYMBOL(application, mmio_end) },\</div>
+<div class="line">        { __APPL_SYMBOL(application, mmio_2_start), __APPL_SYMBOL(application, mmio_2_end) },\</div>
+<div class="line">        { &amp;__APPL_SYMBOL(application, shared_start), &amp;__APPL_SYMBOL(application, shared_end) }\</div>
 <div class="line">    },\</div>
-<div class="line">    { &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, vtable_start), &amp;<a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, vtable_end) }\</div>
+<div class="line">    { &amp;__APPL_SYMBOL(application, vtable_start), &amp;__APPL_SYMBOL(application, vtable_end) }\</div>
 <div class="line">    }</div>
 <div class="ttc" id="astructOS__process__definition__t_html"><div class="ttname"><a href="structOS__process__definition__t.html">OS_process_definition_t</a></div><div class="ttdoc">Static definition of process in firmware image.</div><div class="ttdef"><b>Definition</b> runtime.h:30</div></div>
 </div><!-- fragment -->
@@ -265,10 +182,10 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_start) = (<span class="keywordtype">void</span> *) (from);\</div>
-<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_end) = (<span class="keywordtype">void</span> *) (to);\</div>
-<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_start) = (<span class="keywordtype">void</span> *) 0;\</div>
-<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_end) = (<span class="keywordtype">void</span> *) 0;\</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_start) = (<span class="keywordtype">void</span> *) (from);\</div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_end) = (<span class="keywordtype">void</span> *) (to);\</div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_2_start) = (<span class="keywordtype">void</span> *) 0;\</div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_2_end) = (<span class="keywordtype">void</span> *) 0;\</div>
 <div class="line">    _Static_assert(from == 0 || to == 0 || from % (to - from) == 0, <span class="stringliteral">&quot;MMIO range not size-aligned&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
@@ -316,10 +233,10 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_start) = (<span class="keywordtype">void</span> *) (from);\</div>
-<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_end) = (<span class="keywordtype">void</span> *) (to);\</div>
-<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_start) = (<span class="keywordtype">void</span> *) (from2);\</div>
-<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> <a class="code hl_define" href="group__api__init.html#ga51afde51c723416910204d56135d784e">__APPL_SYMBOL</a>(application, mmio_2_end) = (<span class="keywordtype">void</span> *) (to2);\</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_start) = (<span class="keywordtype">void</span> *) (from);\</div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_end) = (<span class="keywordtype">void</span> *) (to);\</div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_2_start) = (<span class="keywordtype">void</span> *) (from2);\</div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_2_end) = (<span class="keywordtype">void</span> *) (to2);\</div>
 <div class="line">    _Static_assert(from == 0 || to == 0 || from % (to - from) == 0, <span class="stringliteral">&quot;MMIO range 1 not size-aligned&quot;</span>);\</div>
 <div class="line">    _Static_assert(from == 0 || to == 0 || from2 == 0 || to2 == 0 || from2 % (to2 - from2) == 0, <span class="stringliteral">&quot;MMIO range 2 not size-aligned&quot;</span>)</div>
 </div><!-- fragment -->
@@ -364,7 +281,7 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;    <a class="el" href="group__api__init.html#ga55818cf77e57abe9bf2ad9fb5cffbd36">_OS_THREAD_CREATE</a>(application, entrypoint, data, priority, <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td>
+          <td></td><td>&#160;&#160;&#160;    _OS_THREAD_CREATE(application, entrypoint, data, priority, <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">

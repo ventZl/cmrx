@@ -5,10 +5,6 @@ var group__api__signal =
     [ "SIGKILL", "group__api__signal.html#gaddd8dcd406ce514ab3b4f576a5343d42", null ],
     [ "SIGSEGV", "group__api__signal.html#gae20b4f7171a09516ea73c9d2745bd596", null ],
     [ "SIGSTOP", "group__api__signal.html#ga069e358bc9a864b7dc4fed2440eda14c", null ],
-    [ "irq_disable", "group__api__signal.html#ga46328777c39260415d888507d2671c98", null ],
-    [ "irq_enable", "group__api__signal.html#ga8a318eb1486d9a157e128a92ef7a6c75", null ],
     [ "kill", "group__api__signal.html#ga31cb184e9e6351ce176c3324b7b49a24", null ],
-    [ "notify_object", "group__api__signal.html#ga41864194fe48bd76519bcb27efcfb697", null ],
-    [ "signal", "group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8", null ],
-    [ "wait_for_object", "group__api__signal.html#ga8325d2dc00e1c2322bfa684221191452", null ]
+    [ "signal", "group__api__signal.html#gaca5040b15e7a554d7d6a99a0b89efcd8", null ]
 ];

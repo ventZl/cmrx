@@ -15,7 +15,7 @@ var searchData=
   ['e_5ftask_5frunning_12',['E_TASK_RUNNING',['../group__api__errors.html#ga4270da15c87c31b8b1bade2e37e82e44',1,'defines.h']]],
   ['e_5fvtable_5funknown_13',['E_VTABLE_UNKNOWN',['../group__os__rpc.html#gac23283a15be44b1f8451954379b2c723',1,'rpc.h']]],
   ['e_5fwrong_5fsize_14',['E_WRONG_SIZE',['../group__api__errors.html#ga17d4198ad1e2c2bd907d9ed7a36b77c6',1,'defines.h']]],
-  ['empty_15',['empty',['../structQueueInterface.html#a47320e4f2833075d64adc339db2f0e54',1,'QueueInterface::empty'],['../group__aux__queue.html#ga0aacd5630786ba373424343593e7755b',1,'Queue::empty']]],
+  ['empty_15',['empty',['../structQueueInterface.html#a47320e4f2833075d64adc339db2f0e54',1,'QueueInterface::empty'],['../structQueue.html#a0aacd5630786ba373424343593e7755b',1,'Queue::empty']]],
   ['enabling_20tracing_16',['Enabling tracing',['../group__os__tracing.html#os_tracing_enable',1,'']]],
   ['end_17',['end',['../structOS__MPU__region.html#ad764a379d4013b7559bd3286db398425',1,'OS_MPU_region']]],
   ['engine_20properties_18',['Transaction engine properties',['../txn_intro.html#autotoc_md34',1,'']]],

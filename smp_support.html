@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('smp_support.html',''); initResizable()
 <div class="contents">
 <div class="textblock"><p>CMRX kernel supports SMP-aware configuration. If SMP operation is enabled via <a class="el" href="group__os__config.html#ga54ec6c4dfec8397771e101eb023fd91a">CMRX_ARCH_SMP_SUPPORTED</a> then there are few changes in CMRX behavior:</p>
 <ul>
-<li>Kernel is started per-core. The prototype of function <a class="el" href="group__os.html#ga1e67d0545de716571a189e81ae619f37">os_start</a> changes. It now accepts an argument, which denotes, for which core the kernel is being started. This function can't be called from within thread and it won't return. The order in which cores are started is not important, just mind the order in which auto-started threads will begin execution.</li>
+<li>Kernel is started per-core. The prototype of function <a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start</a> changes. It now accepts an argument, which denotes, for which core the kernel is being started. This function can't be called from within thread and it won't return. The order in which cores are started is not important, just mind the order in which auto-started threads will begin execution.</li>
 <li>Thread auto-starting gets one additional argument which identifies core on which thread is meant to be started.</li>
 <li>Additional API <a class="el" href="group__os__sched.html#gaa1f37df2463307c3bbd30c193491d6aa">os_thread_migrate</a> is provided which allows to migrate thread between cores.</li>
 </ul>

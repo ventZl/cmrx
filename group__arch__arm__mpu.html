@@ -100,7 +100,9 @@ $(document).ready(function(){initNavTree('group__arch__arm__mpu.html',''); initR
 <div class="header">
   <div class="summary">
 <a href="#groups">Modules</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Memory protection<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__arm.html">ARM port</a></div></div></div>
 </div><!--header-->
@@ -123,6 +125,12 @@ Modules</h2></td></tr>
 <tr class="memdesc:group__mpu__region__names"><td class="mdescLeft">&#160;</td><td class="mdescRight">Names of ARM MPU regions as being used by CMRX. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPU__Registers.html">MPU_Registers</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience structure which groups RBAR and RASR register for one MPU region together.  <a href="structMPU__Registers.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga2f22ba6a7bec09dc599be801b1e5f9d5" id="r_ga2f22ba6a7bec09dc599be801b1e5f9d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga2f22ba6a7bec09dc599be801b1e5f9d5">MPU_RNR_REGION</a>&#160;&#160;&#160;(MPU_RNR_REGION_Msk)</td></tr>
@@ -134,6 +142,12 @@ Macros</h2></td></tr>
 <tr class="memitem:gab726d0bcd26965e81af2fcbcae650469" id="r_gab726d0bcd26965e81af2fcbcae650469"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#gab726d0bcd26965e81af2fcbcae650469">MPU_EXECUTE_SHIFT</a>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:gab726d0bcd26965e81af2fcbcae650469"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8fdd1416c938c54f8e1e9fca4b9f139a" id="r_ga8fdd1416c938c54f8e1e9fca4b9f139a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structMPU__Registers.html">MPU_Registers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a>[<a class="el" href="group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e">MPU_STATE_SIZE</a>]</td></tr>
+<tr class="memdesc:ga8fdd1416c938c54f8e1e9fca4b9f139a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type handling MPU state as remembered by CMRX thread switcher.  <br /></td></tr>
+<tr class="separator:ga8fdd1416c938c54f8e1e9fca4b9f139a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga2fcb7c5300d860acbb4c42673bc68e19" id="r_ga2fcb7c5300d860acbb4c42673bc68e19"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga2fcb7c5300d860acbb4c42673bc68e19">mpu_set_region</a> (uint8_t region, const void *base, uint32_t size, uint8_t cls)</td></tr>
@@ -142,7 +156,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2df3bcd565155fa841a09863ab02fca3" id="r_ga2df3bcd565155fa841a09863ab02fca3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga2df3bcd565155fa841a09863ab02fca3">mpu_clear_region</a> (uint8_t region)</td></tr>
 <tr class="memdesc:ga2df3bcd565155fa841a09863ab02fca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable MPU region.  <br /></td></tr>
 <tr class="separator:ga2df3bcd565155fa841a09863ab02fca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga057d8b71680702b99ab7e66764bde9c4" id="r_ga057d8b71680702b99ab7e66764bde9c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga057d8b71680702b99ab7e66764bde9c4">mpu_load</a> (const MPU_State *state, uint8_t base, uint8_t count)</td></tr>
+<tr class="memitem:ga057d8b71680702b99ab7e66764bde9c4" id="r_ga057d8b71680702b99ab7e66764bde9c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga057d8b71680702b99ab7e66764bde9c4">mpu_load</a> (const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *state, uint8_t base, uint8_t count)</td></tr>
 <tr class="separator:ga057d8b71680702b99ab7e66764bde9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -201,6 +215,23 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga8fdd1416c938c54f8e1e9fca4b9f139a" name="ga8fdd1416c938c54f8e1e9fca4b9f139a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8fdd1416c938c54f8e1e9fca4b9f139a">&#9670;&#160;</a></span>MPU_State</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structMPU__Registers.html">MPU_Registers</a> MPU_State[<a class="el" href="group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e">MPU_STATE_SIZE</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type handling MPU state as remembered by CMRX thread switcher. </p>
 
 </div>
 </div>
@@ -434,7 +465,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int mpu_load </td>
           <td>(</td>
-          <td class="paramtype">const MPU_State *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>
@@ -468,13 +499,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int mpu_restore </td>
           <td>(</td>
-          <td class="paramtype">const MPU_State *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>hosted_state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const MPU_State *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>parent_state</em>&#160;</td>
         </tr>
         <tr>
@@ -488,7 +519,8 @@ Functions</h2></td></tr>
 <p>Load MPU settings. </p>
 <p>Loads MPU settings for default amount of regions from off-CPU buffer. This is suitable for store-resume during task switching. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">state</td><td>MPU state buffer </td></tr>
+    <tr><td class="paramname">hosted_state</td><td>MPU state buffer for the current host process </td></tr>
+    <tr><td class="paramname">parent_state</td><td>MPU state buffer for the parent process </td></tr>
   </table>
   </dd>
 </dl>
@@ -539,7 +571,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">region</td><td>ID of region being activated (0-7) </td></tr>
     <tr><td class="paramname">base</td><td>base address of region </td></tr>
     <tr><td class="paramname">size</td><td>size of region (256B and more) </td></tr>
-    <tr><td class="paramname">cls</td><td>region access class, see MPU_class for available access classes </td></tr>
+    <tr><td class="paramname">cls</td><td>region access class, see <a class="el" href="group__arch__arm__mpu.html#ga89a1457e434f45f71b1310da937aeff7">__MPU_flags</a> for available access classes </td></tr>
   </table>
   </dd>
 </dl>
@@ -556,13 +588,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int mpu_store </td>
           <td>(</td>
-          <td class="paramtype">MPU_State *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>hosted_state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MPU_State *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>parent_state</em>&#160;</td>
         </tr>
         <tr>
@@ -576,7 +608,8 @@ Functions</h2></td></tr>
 <p>Store MPU settings. </p>
 <p>Stores MPU settings for default amount of regions into off-CPU buffer. This is suitable for store-resume during task switching. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">state</td><td>MPU state buffer </td></tr>
+    <tr><td class="paramname">hosted_state</td><td>MPU state buffer for the current host process </td></tr>
+    <tr><td class="paramname">parent_state</td><td>MPU state buffer for the parent process </td></tr>
   </table>
   </dd>
 </dl>
@@ -615,7 +648,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="agroup__arm__mpu__rars_html_ga8494f9fabba8af1e8f397fde1a5a76a8"><div class="ttname"><a href="group__arm__mpu__rars.html#ga8494f9fabba8af1e8f397fde1a5a76a8">MPU_RASR_ATTR_XN</a></div><div class="ttdeci">#define MPU_RASR_ATTR_XN</div><div class="ttdef"><b>Definition</b> mpu_priv.h:50</div></div>
 </div><!-- fragment -->
 <p>MPU region access rights. </p>
-<p>This array maps CMRX access modes to ARM access modes See enum MPU_Flags for meaning of individual indices. </p>
+<p>This array maps CMRX access modes to ARM access modes See <a class="el" href="group__os__mpu.html#gae35ef2b40da61cecee6e76bbac5fb3e2">MPU_Flags</a> for meaning of individual indices. </p>
 
 </div>
 </div>

@@ -1,5 +1,5 @@
 var group__api__notify =
 [
-    [ "irq_disable", "group__api__notify.html#ga46328777c39260415d888507d2671c98", null ],
-    [ "irq_enable", "group__api__notify.html#ga8a318eb1486d9a157e128a92ef7a6c75", null ]
+    [ "notify_object", "group__api__notify.html#ga41864194fe48bd76519bcb27efcfb697", null ],
+    [ "wait_for_object", "group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452", null ]
 ];

@@ -149,7 +149,7 @@ Functions</h2></td></tr>
 <tr class="memitem:gad1e98b6b913a67b51e041e4e9002a399" id="r_gad1e98b6b913a67b51e041e4e9002a399"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399">mpu_init_stack</a> (int thread_id)</td></tr>
 <tr class="memdesc:gad1e98b6b913a67b51e041e4e9002a399"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize MPU for stack of thread.  <br /></td></tr>
 <tr class="separator:gad1e98b6b913a67b51e041e4e9002a399"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaccaca933ccccec5a6f6808252b4a5fbc" id="r_gaccaca933ccccec5a6f6808252b4a5fbc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc">mpu_restore</a> (const MPU_State *hosted_state, const MPU_State *parent_state)</td></tr>
+<tr class="memitem:gaccaca933ccccec5a6f6808252b4a5fbc" id="r_gaccaca933ccccec5a6f6808252b4a5fbc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc">mpu_restore</a> (const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *hosted_state, const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *parent_state)</td></tr>
 <tr class="memdesc:gaccaca933ccccec5a6f6808252b4a5fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load MPU settings.  <br /></td></tr>
 <tr class="separator:gaccaca933ccccec5a6f6808252b4a5fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad478154133b190e328ee2cd65a4a8b20" id="r_gad478154133b190e328ee2cd65a4a8b20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gad478154133b190e328ee2cd65a4a8b20">os_memory_protection_stop</a> ()</td></tr>
@@ -288,13 +288,13 @@ Port implementation sources</h1>
         <tr>
           <td class="memname">int mpu_restore </td>
           <td>(</td>
-          <td class="paramtype">const MPU_State *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>hosted_state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const MPU_State *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>parent_state</em>&#160;</td>
         </tr>
         <tr>
@@ -308,7 +308,8 @@ Port implementation sources</h1>
 <p>Load MPU settings. </p>
 <p>Loads MPU settings for default amount of regions from off-CPU buffer. This is suitable for store-resume during task switching. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">state</td><td>MPU state buffer </td></tr>
+    <tr><td class="paramname">hosted_state</td><td>MPU state buffer for the current host process </td></tr>
+    <tr><td class="paramname">parent_state</td><td>MPU state buffer for the parent process </td></tr>
   </table>
   </dd>
 </dl>
@@ -711,10 +712,10 @@ Port implementation sources</h1>
       </table>
 </div><div class="memdoc">
 
-<p>Set return value of syscall on given stack. </p>
+<p>Set return value of syscall for given thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_id</td><td>Id of the stack thread has exception handler at </td></tr>
+    <tr><td class="paramname">thread_id</td><td>Id of the thread whose exception handler is being modified </td></tr>
     <tr><td class="paramname">retval</td><td>value to store on the stack </td></tr>
   </table>
   </dd>

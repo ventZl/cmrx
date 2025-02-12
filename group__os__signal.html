@@ -98,24 +98,12 @@ $(document).ready(function(){initNavTree('group__os__signal.html',''); initResiz
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Signal handling<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Kernel implementation of signal propagation mechanism.  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga43d8b1601032fa3f4457603fa6ea4dd1" id="r_ga43d8b1601032fa3f4457603fa6ea4dd1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__signal.html#ga43d8b1601032fa3f4457603fa6ea4dd1">os_signal</a> (int signo, void(*sighandler)(int))</td></tr>
-<tr class="memdesc:ga43d8b1601032fa3f4457603fa6ea4dd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of signal syscall.  <br /></td></tr>
-<tr class="separator:ga43d8b1601032fa3f4457603fa6ea4dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae560513b3ec5f91e8070efbadf0fa74c" id="r_gae560513b3ec5f91e8070efbadf0fa74c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__signal.html#gae560513b3ec5f91e8070efbadf0fa74c">os_kill</a> (uint8_t thread_id, uint8_t signal_id)</td></tr>
-<tr class="memdesc:gae560513b3ec5f91e8070efbadf0fa74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of kill syscall.  <br /></td></tr>
-<tr class="separator:gae560513b3ec5f91e8070efbadf0fa74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Kernel implementation of signal propagation mechanism. </p>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
@@ -167,23 +155,15 @@ Functions</h2></td></tr>
 <p>As this routine is only designed to be called from pend_sv handler, it has strict requirements on state of thread. It must be in state just before being resumed. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">thread</td><td>thread which gets signal handler injected </td></tr>
-    <tr><td class="paramname">signals</td><td>mask of signals being delivered</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Internal implementation of signal delivery into thread context.</p>
-<p>Modifies threads stack and registers to continue executing signal handler. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">thread</td><td>thread whose signal handler should be pushed onto stack </td></tr>
-    <tr><td class="paramname">signals</td><td>signal mask of signals being delivered </td></tr>
+    <tr><td class="paramname">signals</td><td>mask of signals being delivered </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="gae560513b3ec5f91e8070efbadf0fa74c" name="gae560513b3ec5f91e8070efbadf0fa74c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae560513b3ec5f91e8070efbadf0fa74c">&#9670;&#160;</a></span>os_kill()</h2>
+<a id="gaaf812da2deb5e7a342042df5f7768d3c" name="gaaf812da2deb5e7a342042df5f7768d3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaf812da2deb5e7a342042df5f7768d3c">&#9670;&#160;</a></span>os_kill()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -192,7 +172,7 @@ Functions</h2></td></tr>
           <td class="memname">int os_kill </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>thread_id</em>, </td>
+          <td class="paramname"><em>thread</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
