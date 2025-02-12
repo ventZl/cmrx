@@ -4,7 +4,7 @@ var searchData=
   ['sched_5fyield_1',['sched_yield',['../group__api__thread.html#ga98ad8277df91806691c7c51d1606861a',1,'sched_yield():&#160;thread.c'],['../group__api__thread.html#ga98ad8277df91806691c7c51d1606861a',1,'sched_yield():&#160;thread.c']]],
   ['set_5fexception_5fargument_2',['set_exception_argument',['../group__arch__arm__cortex.html#gaff50eeff9c1a2b472601ba02a2df18c0',1,'cortex.h']]],
   ['set_5fexception_5fpc_5flr_3',['set_exception_pc_lr',['../group__arch__arm__cortex.html#ga7d08b897734ba00f4ae1fee5fe2b2576',1,'cortex.h']]],
-  ['set_5ftimed_5fevent_4',['set_timed_event',['../group__os__timer.html#ga9e0dc7082cb04a6a9ed1176aea534609',1,'timer.c']]],
+  ['set_5ftimed_5fevent_4',['set_timed_event',['../group__os__timer.html#gaec8710b5e044f94721e76f945f9f35db',1,'timer.c']]],
   ['setitimer_5',['setitimer',['../group__api__timer.html#ga9f408bf7753a44225214c63f3285e440',1,'timer.c']]],
   ['setpriority_6',['setpriority',['../group__api__thread.html#gad14ed255ac7c3f9cfb0513c7d03e7cd8',1,'setpriority(uint8_t priority):&#160;thread.c'],['../group__api__thread.html#gad14ed255ac7c3f9cfb0513c7d03e7cd8',1,'setpriority(uint8_t priority):&#160;thread.c']]],
   ['shim_5fexception_5fframe_7',['shim_exception_frame',['../group__arch__arm__cortex.html#gad1633eddf5be0af585ff323da784c80c',1,'cortex.h']]],
