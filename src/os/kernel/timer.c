@@ -14,16 +14,6 @@
 #include <stdbool.h>
 #include <cmrx/clock.h>
 
-/** Description of one sleep request.
- * Contains details required to calculate when the next sleep interrupt shall happen
- * and to determine which request shall be the next.
- */
-struct TimerEntry_t {
-	uint32_t sleep_from;      ///< time at which sleep has been requested
-	uint32_t interval;        ///< amount of time sleep shall take
-	uint8_t thread_id;        ///< thread ID which requested the sleep
-};
-
 /** List of all delays requested from kernel.
  * This structure contains all scheduled sleeps requested by all threads.
  * Every thread can technically request one periodic timer and one one-shot
@@ -34,8 +24,8 @@ struct TimerEntry_t sleepers[SLEEPERS_MAX];
 /** Determine if interval in sleep entry is periodic or not.
  * @returns 1 if interval is periodic, 0 if interval is one-shot.
  */
-static bool is_periodic(unsigned interval) { 
-    return (interval >> 31) == 1; 
+static bool is_periodic(struct TimerEntry_t * entry) {
+    return entry->timer_type >= TIMER_PERIODIC;
 }
 
 /** Get how long the sleep should take.
@@ -43,7 +33,7 @@ static bool is_periodic(unsigned interval) {
  * @returns sleep time in microseconds.
  */
 static unsigned get_sleeptime(const unsigned interval) {
-    return (interval & (~(1 << 31)));
+    return interval;
 }
 
 /** Perform heavy lifting of setting timers
@@ -53,26 +43,31 @@ static unsigned get_sleeptime(const unsigned interval) {
  * @param txn transaction used to modify the table
  * @param slot number of slot in \ref sleepers list
  * @param interval amount of us for which thread should sleep
- * @param _periodic true if timer should be periodic, false otherwise
+ * @param type type of timer to set up
  * @return 0 if timer was set up properly
  */
-static int do_set_timed_event(Txn_t txn, unsigned slot, unsigned interval, bool _periodic)
+static int do_set_timed_event(Txn_t txn, unsigned slot, unsigned interval, enum eSleepType type)
 {
     if (os_txn_commit(txn, TXN_READWRITE) == E_OK) {
-        uint32_t periodic = (_periodic ? 1 : 0);
         Thread_t thread_id = os_get_current_thread();
         uint32_t microtime = os_get_micro_time();
         struct TimerEntry_t * sleeper = &sleepers[slot];
         sleeper->thread_id = thread_id;
         ASSERT(sleeper->thread_id < OS_THREADS);
         sleeper->sleep_from = microtime;
-        sleeper->interval = interval | (periodic << 31);
+        sleeper->interval = interval;
+		sleeper->timer_type = type;
         os_txn_done();
-        if (!_periodic)
-        {
-            os_thread_stop(thread_id);
-        }
-        return 0;
+
+		switch (type) {
+			case TIMER_SLEEP:
+				os_thread_stop(thread_id);
+				break;
+
+			default:
+				break;
+		}
+		return 0;
     } else {
         return 1;
     }
@@ -84,10 +79,10 @@ static int do_set_timed_event(Txn_t txn, unsigned slot, unsigned interval, bool 
  * functions. It will find free slot or slot already occupied by calling thread
  * and will set / update timeout values.
  * @param microseconds time for which thread should sleep / wait for event
- * @param periodic true if this event is periodic
+ * @param type type of timed event to set up
  * @returns error status. 0 means no error.
  */
-static int set_timed_event(unsigned microseconds, bool periodic)
+static int set_timed_event(unsigned microseconds, enum eSleepType type)
 {
     Txn_t txn = os_txn_start();
 	Thread_t thread_id = os_get_current_thread();
@@ -97,7 +92,7 @@ static int set_timed_event(unsigned microseconds, bool periodic)
         struct TimerEntry_t * sleeper = &sleepers[q];
 		if (sleeper->thread_id == 0xFF)
 		{
-			if (do_set_timed_event(txn, q, microseconds, periodic) == 0) {
+			if (do_set_timed_event(txn, q, microseconds, type) == 0) {
                 return 0;
             } else {
                 // Transaction has been aborted, restart search
@@ -115,9 +110,9 @@ static int set_timed_event(unsigned microseconds, bool periodic)
 				 * different kind than we are searching for. It is delay and
 				 * we are searching for interval timer or vice versa.
 				 */
-				if (periodic == is_periodic(sleepers->interval))
+				if (type == sleeper->timer_type)
 				{
-					if (do_set_timed_event(txn, q, microseconds, periodic) == 0) {
+					if (do_set_timed_event(txn, q, microseconds, type) == 0) {
                         return 0;
                     } else {
                         txn = os_txn_start();
@@ -136,10 +131,10 @@ static int set_timed_event(unsigned microseconds, bool periodic)
  * This function is only accessible for periodic timers externally. It
  * allows cancelling of interval timers set previously.
  * @param owner thread which shall own the interval timer
- * @param periodic true if periodic timer of given thread should be cancelled
+ * @param type type of the event to be cancelled
  * @return 0 if operation performed succesfully.
  */
-static int cancel_timed_event(Thread_t owner, bool periodic)
+static int cancel_timed_event(Thread_t owner, enum eSleepType type)
 {
     Txn_t txn = os_txn_start();
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
@@ -147,7 +142,7 @@ static int cancel_timed_event(Thread_t owner, bool periodic)
         struct TimerEntry_t * sleeper = &sleepers[q];
 		if (sleeper->thread_id == owner)
 		{
-			if (periodic == is_periodic(sleeper->interval))
+			if (type == sleeper->timer_type)
 			{
                 if (os_txn_commit(txn, TXN_READWRITE) == E_OK) {
     				sleeper->thread_id = 0xFF;
@@ -178,18 +173,18 @@ int os_usleep(unsigned microseconds)
 		delay_us(microseconds);
 		return 0;
 	}
-	return set_timed_event(microseconds, false);
+	return set_timed_event(microseconds, TIMER_SLEEP);
 }
 
 int os_setitimer(unsigned microseconds)
 {
 	if (microseconds > 0)
 	{
-		return set_timed_event(microseconds, true);
+		return set_timed_event(microseconds, TIMER_INTERVAL);
 	}
 	else
 	{
-		return cancel_timed_event(os_get_current_thread(), true);
+		return cancel_timed_event(os_get_current_thread(), TIMER_INTERVAL);
 	}
 }
 
@@ -274,9 +269,17 @@ void os_run_timer(uint32_t microtime)
             const unsigned sleeper_sleeptime = get_sleeptime(sleeper->interval);
 			if (get_sleep_time(sleeper->sleep_from, microtime) >= sleeper_sleeptime)
 			{
-				// restart usleep-ed thread
-				os_thread_continue(sleeper->thread_id);
-				if (is_periodic(sleeper->interval))
+				switch (sleeper->timer_type) {
+					case TIMER_SLEEP:
+					case TIMER_INTERVAL:
+						os_thread_continue(sleeper->thread_id);
+						break;
+
+					default:
+						break;
+				}
+
+				if (is_periodic(sleeper))
 				{
 					sleeper->sleep_from = sleeper->sleep_from + sleeper_sleeptime;
 				}

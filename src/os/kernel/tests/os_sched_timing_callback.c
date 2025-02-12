@@ -6,12 +6,6 @@
 #include <string.h>
 #include <arch/corelocal.h>
 
-struct TimerEntry_t {
-	uint32_t sleep_from;      ///< time at which sleep has been requested
-	uint32_t interval;        ///< amount of time sleep shall take
-	uint8_t thread_id;        ///< thread ID which requested the sleep
-};
-
 // Kernel private functions and variables, not part of any header
 extern struct OS_core_state_t core[OS_NUM_CORES];
 extern struct TimerEntry_t sleepers[SLEEPERS_MAX];
@@ -22,7 +16,7 @@ CTEST_DATA(os_sched_timing_callback) {
 CTEST_SETUP(os_sched_timing_callback) {
     memset(&os_threads, 0, sizeof(os_threads));
     core[0].thread_current = 0;
-    memset(&sleepers, 0, sizeof(sleepers));
+    memset(&sleepers, 0xFF, sizeof(sleepers));
 }
 
 CTEST2(os_sched_timing_callback, round_robin_same_prio) {
@@ -63,6 +57,7 @@ CTEST2(os_sched_timing_callback, set_itimer) {
     os_threads[0].priority = 32;
     os_threads[1].priority = 48;
 
+    // Nothing happens
     os_sched_timing_callback(2500);
 
     ASSERT_EQUAL(core[0].thread_current, 0);
