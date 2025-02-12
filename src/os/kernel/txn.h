@@ -2,7 +2,30 @@
 
 #include <stdint.h>
 
-/** @addtogroup os_kernel
+/** @defgroup os_txn Transcation subsystem
+ * @ingroup os
+ * CMRX kernel is mostly implemented as non-blocking. Where exclusivity is needed, transactions
+ * are used in place of mutexes. Transactions provide a means of ensuring that the internal
+ * state of program has been consistent thorough the execution of transaction.
+ *
+ * CMRX kernel provides two types of transactions:
+ * * read-only transactions - these provide guarantee that the internal state of the system
+ * did not change while the transaction was computing the result. If any modification to the
+ * system state happened during the transaction, an attempt to commit read-only transaction will
+ * fail.
+ *
+ * * read-write transactions - these provide means of gaining exclusive right to modify the
+ * system state. When code is ready to perform the modification, it attempts to commit the
+ * transaction. If there was no concurrent modification in between this transaction has been
+ * created, then commit is granted an code can perform the modification in exclusive state.
+ *
+ * This approach trades better SMP capabilities and less contention for a bit of complexity
+ * on the user side. Any code that uses transactions has to define what will happen if transaction
+ * commit fails.
+ *
+ * For most use cases the way to deal with transaction commit failure is to redo the action
+ * but some of them may figure out that the action is not needed anymore.
+ *
  * @{ 
  */
 
@@ -13,6 +36,7 @@ enum TxnType {
     TXN_READWRITE ///< Read-write transaction
 };
 
+/// Transaction handle type
 typedef uint8_t Txn_t;
 
 /** Start a transaction.
@@ -67,5 +91,5 @@ int os_txn_start_commit();
  */
 void os_txn_done();
 
-/** }@ */
+/** @} */
 

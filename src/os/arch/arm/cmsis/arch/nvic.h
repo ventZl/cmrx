@@ -19,4 +19,4 @@ int os_nvic_enable(uint32_t irq);
  * See @ref irq_disable for more details on arguments.*/
 int os_nvic_disable(uint32_t irq);
 
-/* @} */
+/** @} */

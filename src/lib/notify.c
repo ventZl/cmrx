@@ -1,6 +1,3 @@
-/** @ingroup api_signal
- * @{
- */
 #include <cmrx/ipc/signal.h>
 #include <cmrx/sys/syscalls.h>
 
@@ -16,5 +13,3 @@ __SYSCALL int wait_for_object(const void * object, uint32_t timeout)
 	(void) timeout;
 	__SVC(SYSCALL_WAIT_FOR_OBJECT);
 }
-
-/** @} */

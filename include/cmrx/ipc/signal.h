@@ -1,3 +1,8 @@
+#pragma once
+
+#include <stdint.h>
+#include <arch/sysenter.h>
+
 /** @defgroup api_signal Signals
  * @ingroup api
  * API for sending signals and handling incoming signals.
@@ -21,10 +26,6 @@
 /** @ingroup api_signal
  * @{
  */
-#pragma once
-
-#include <stdint.h>
-#include <arch/sysenter.h>
 
 #define SIGALRM					0
 

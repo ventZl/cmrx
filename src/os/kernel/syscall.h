@@ -1,3 +1,8 @@
+#pragma once
+
+#include <stdbool.h>
+#include <stdint.h>
+
 /** @defgroup os_syscall System calls
  *
  * @ingroup os
@@ -11,10 +16,6 @@
 /** @ingroup os_syscall
  * @{
  */
-#pragma once
-
-#include <stdbool.h>
-#include <stdint.h>
 
 /** Attribute used to publish syscall definitions in a way that
  * os_syscall can process them

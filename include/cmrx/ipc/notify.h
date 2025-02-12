@@ -1,3 +1,8 @@
+#pragma once
+
+#include <stdint.h>
+#include <arch/sysenter.h>
+
 /** @defgroup api_notify Notifications
  * @ingroup api
  * API for synchronization on shared objects.
@@ -8,15 +13,8 @@
  *
  * If multiple threads are waiting for single object, then waking up is performed
  * based on their priority. The highest-priority thread is going to be woken-up first.
- */
-
-/** @ingroup api_signal
  * @{
  */
-#pragma once
-
-#include <stdint.h>
-#include <arch/sysenter.h>
 
 /** Notify waiter for object
  *
@@ -52,3 +50,5 @@ __SYSCALL int notify_object(const void * object);
  * if timeout value other than 0 is supplied to the call.
  */
 __SYSCALL int wait_for_object(const void * object, uint32_t timeout);
+
+/** @} */

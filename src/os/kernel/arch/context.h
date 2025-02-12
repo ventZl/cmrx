@@ -14,3 +14,5 @@
  * CPU back to the userspace code.
  */
 void os_request_context_switch(bool activate);
+
+/** @} */

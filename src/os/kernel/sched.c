@@ -439,18 +439,6 @@ int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data
 	return thread_id;
 }
 
-/** Make thread runnable.
- *
- * This function will take previously allocated thread and will construct it's
- * internal state, so that it is runnable. This includes stack allocation and
- * filling in values, so that thread can be scheduled and run.
- * @param tid Thread ID of thread to be constructed
- * @param entrypoint pointer to thread entrypoint function
- * @param data pointer to thread data. pass NULL pointer if no thread data is used
- * @returns E_OK if thread was constructed, E_OUT_OF_STACKS if there is no free stack
- * available and E_TASK_RUNNING if thread is not in state suitable for construction
- * (either slot is free, or already constructed).
- */
 int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, uint8_t core_id)
 {
 	if (tid < OS_THREADS)

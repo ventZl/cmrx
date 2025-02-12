@@ -1,7 +1,3 @@
-/** @ingroup api_thread
- * @{
- */
-
 #include <cmrx/ipc/thread.h>
 #include <cmrx/sys/syscalls.h>
 #include <cmrx/assert.h>
@@ -41,6 +37,10 @@ __SYSCALL int setpriority(uint8_t priority)
     (void) priority;
 	__SVC(SYSCALL_SETPRIORITY);
 }
+
+/** @ingroup api_thread
+ * @{
+ */
 
 /** Internal function, which disposes of thread which called it.
  *

@@ -1,17 +1,18 @@
 #pragma once
+
+#include <stdbool.h>
+#include <stdint.h>
+#include <RTE_Components.h>
+#include CMSIS_device_header
+
 /** @defgroup arch_arm_cortex Cortex-M support routines
- * @ingroup arch_arm 
+ * @ingroup arch_arm
  * Routines supporting access to Cortex-M core facilities.
  *
  * These routines allow kernel to perform some cricital tasks that the
  * architecture support layer needs to be able to execute in order to support
  * CMRX on Cortex-M.
  * @{ */
-
-#include <stdbool.h>
-#include <stdint.h>
-#include <RTE_Components.h>
-#include CMSIS_device_header
 
 /** Exception frame *without* FPU context saved.
  */

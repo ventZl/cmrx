@@ -172,10 +172,6 @@ static SYSCALL_DEFINITION struct Syscall_Entry_t nvic_syscalls[] = {
  * method to service the system call. It is callable by executing the SVC
  * instruction. Code of SVC_Handler will retrieve the requested SVC ID and
  * let generic machinery to execute specified system call.
- * @param arg0 syscall argument
- * @param arg1 syscall argument
- * @param arg2 syscall argument
- * @param arg3 syscall argument
  */
 __attribute__((interrupt)) void SVC_Handler(void)
 {

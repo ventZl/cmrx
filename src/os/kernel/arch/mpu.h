@@ -36,7 +36,8 @@ int mpu_init_stack(int thread_id);
 /** Load MPU settings.
  * Loads MPU settings for default amount of regions from off-CPU
  * buffer. This is suitable for store-resume during task switching.
- * @param state MPU state buffer
+ * @param hosted_state MPU state buffer for the current host process
+ * @param parent_state MPU state buffer for the parent process
  */
 int mpu_restore(const MPU_State * hosted_state, const MPU_State * parent_state);
 

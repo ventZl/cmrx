@@ -66,5 +66,4 @@ typedef uint8_t Thread_t;
 typedef uint8_t Process_t;
 
 /** @} */
-/** @} */
 

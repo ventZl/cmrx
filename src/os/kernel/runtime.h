@@ -1,17 +1,18 @@
-/** @defgroup os_kernel Kernel core
- * @ingroup os
- * Basic structures that contain the internal state of kernel.
- * Kernel is built around minimalistic core, which consists of prioritized thread
- * scheduler. Scheduler can be started up after basic HW setup is done by calling 
- * @ref os_start(). This will collect all auto-started threads, prepare them and
- * start thread scheduler. All other mechanisms are built around thread scheduler.
- * @{
- */
 #pragma once
 
 #include <cmrx/sys/runtime.h>
 #include <cmrx/defines.h>
 #include <conf/kernel.h>
+
+/** @defgroup os_kernel Kernel core
+ * @ingroup os
+ * Basic structures that contain the internal state of kernel.
+ * Kernel is built around minimalistic core, which consists of prioritized thread
+ * scheduler. Scheduler can be started up after basic HW setup is done by calling
+ * @ref os_start(). This will collect all auto-started threads, prepare them and
+ * start thread scheduler. All other mechanisms are built around thread scheduler.
+ * @{
+ */
 
 /** List of states in which thread can be.
  */
@@ -26,7 +27,7 @@ enum ThreadState {
 	THREAD_STATE_CREATED,
 	/** Thread was running, but was forced to stop. It still has valid state so can't be
 	 * disposed of without damage. Can be placed into ready/running state by calling
-	 * @ref thread_continue().
+	 * @ref os_thread_continue().
 	 */
 	THREAD_STATE_STOPPED,
 	/** Thread finished it's execution either explicitly by calling @ref thread_exit()

@@ -1,6 +1,3 @@
-/** @addtogroup os_signal
- * @{ 
- */
 #include <cmrx/assert.h>
 #include <cmrx/ipc/signal.h>
 #include "sched.h"
@@ -63,5 +60,3 @@ int os_kill(uint8_t thread_id, uint8_t signal_id)
 	}
 	return E_INVALID;
 }
-
-/** @} */
