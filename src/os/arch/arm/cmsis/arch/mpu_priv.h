@@ -1,17 +1,17 @@
 #pragma once
 
-/** @defgroup arch_arm_mpu Memory protection
- *
- * @ingroup arch_arm 
- *
- * Memory protection support internals for ARM architecture
- * @{ 
- */
 #include <RTE_Components.h>
 #include CMSIS_device_header
 
 #include <kernel/arch/mpu.h>
 
+/** @defgroup arch_arm_mpu Memory protection
+ *
+ * @ingroup arch_arm
+ *
+ * Memory protection support internals for ARM architecture
+ * @{
+ */
 #ifdef __ARM_ARCH_6M__
 
 // ARM v6M doesn't have any of these
@@ -105,7 +105,7 @@
  * @param region ID of region being activated (0-7)
  * @param base base address of region
  * @param size size of region (256B and more)
- * @param cls region access class, see @ref MPU_class for available access classes
+ * @param cls region access class, see @ref __MPU_flags for available access classes
  * @return E_OK if region was configured, otherwise error code is returned
  */
 int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls);

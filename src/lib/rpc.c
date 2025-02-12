@@ -1,6 +1,3 @@
-/** @ingroup api_rpc
- * @{
- */
 #include <cmrx/ipc/rpc.h>
 #include <cmrx/sys/syscalls.h>
 #include <stdarg.h>
@@ -18,5 +15,3 @@ __SYSCALL int _rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned ar
     (void) canary;
 	__SVC(SYSCALL_RPC_CALL);
 }
-
-/** @} */

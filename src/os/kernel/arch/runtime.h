@@ -20,3 +20,4 @@ void os_thread_initialize_arch(struct OS_thread_t * thread);
 struct Arch_State_t {
 };
 
+/** @} */

@@ -145,3 +145,5 @@ bool queue_empty(struct Queue * queue);
  * @returns true if queue is full false otherwise
  */
 bool queue_full(struct Queue * queue);
+
+/** @} */

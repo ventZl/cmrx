@@ -1,3 +1,7 @@
+#pragma once
+
+#include <stdint.h>
+
 /** @defgroup os_signal Signal handling
  * @ingroup os
  * Kernel implementation of signal propagation mechanism.
@@ -6,9 +10,6 @@
 /** @ingroup os_signal
  * @{
  */
-#pragma once
-
-#include <stdint.h>
 
 enum Signals {
 	SIGALARM

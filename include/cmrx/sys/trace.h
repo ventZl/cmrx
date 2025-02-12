@@ -45,7 +45,6 @@
  * gdb/trace_log.gdb file. It provides dump_trace command. This command will dump
  * trace in human readable form into file `trace.log` into current working directory.
  *
- * @ingroup os_tracing
  * @{
  */
 
@@ -89,4 +88,4 @@ bool trace_init(void * start_addr, void * end_addr);
 void trace_event(enum TraceEventID event, uint32_t arg);
 #endif
 
-/// @}
+/** @} */

@@ -20,7 +20,6 @@
  * can serve as a building block for more advanced primitives such
  * as semaphores or queues.
  *
- * @ingroup arch_arch
  * @{
  */
 
@@ -51,3 +50,4 @@ void os_ipi_sync_release();
  */
 void os_ipi_sync_probe();
 
+/** @} */

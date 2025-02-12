@@ -19,7 +19,7 @@
 
 /** MPU region access rights.
  * This array maps CMRX access modes to ARM access modes
- * See @ref enum MPU_Flags for meaning of individual indices.
+ * See @ref MPU_Flags for meaning of individual indices.
  */
 static const uint32_t __MPU_flags[] = {
 	0,
@@ -84,7 +84,8 @@ static inline void mpu_disable()
 /** Store MPU settings.
  * Stores MPU settings for default amount of regions into off-CPU
  * buffer. This is suitable for store-resume during task switching.
- * @param state MPU state buffer
+ * @param hosted_state MPU state buffer for the current host process
+ * @param parent_state MPU state buffer for the parent process
  */
 int mpu_store(MPU_State * hosted_state, MPU_State * parent_state)
 {

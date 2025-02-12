@@ -41,7 +41,7 @@ __SYSCALL int sched_yield();
  * @param entrypoint function, which will be called upon thread startup to run the
  * thread
  * @param data user-defined data passed to the entrypoint as first argument
- * @priority priority of newly created thread. Lower numbers mean higher priorities.
+ * @param priority of newly created thread. Lower numbers mean higher priorities.
  * Thread with priority 0 has realtime priority, thread with priority 255 is an idle
  * thread. Note that there already is one idle thread and if you create another, 
  * then outcome most probably won't be as expected. Use priority 254 for custom
@@ -55,7 +55,6 @@ __SYSCALL int thread_create(int (*entrypoint)(void *), void * data, uint8_t prio
  * 
  * This function will block calling thread until other thread quits.
  * @param thread thread ID of other threads, which this thread wants to fair for
- * @param status place for return value from other thread to be written
  * @returns 0 on success (other thread quit and status value is written), error
  * code otherwise.
  */

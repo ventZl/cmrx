@@ -57,8 +57,8 @@ __attribute__((noreturn)) void os_kernel_shutdown();
  */
 __attribute__((noreturn)) void os_reset_cpu();
 
-/** Set return value of syscall on given stack.
- * @param stack_id Id of the stack thread has exception handler at
+/** Set return value of syscall for given thread.
+ * @param thread_id Id of the thread whose exception handler is being modified
  * @param retval value to store on the stack
  */
 int os_set_syscall_return_value(Thread_t thread_id, int32_t retval);

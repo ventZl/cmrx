@@ -1,3 +1,21 @@
+#pragma once
+
+//#include "os.h"
+#include <cmrx/sys/runtime.h>
+#include <conf/kernel.h>
+#include <stddef.h>
+
+#define __APPL_SYMBOL(application, symbol)	application ## _ ## symbol
+
+#define _OS_THREAD_CREATE(application, entrypoint, data, priority, core) \
+__attribute__((externally_visible, used, section(".thread_create") )) const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\
+	&__APPL_SYMBOL(application, instance),\
+	entrypoint,\
+	data,\
+	priority,\
+	core\
+}
+
 /** @defgroup api_init Static initialization
  * @ingroup api
  * Mechanisms provided for application designer to statically initialize objects.
@@ -9,14 +27,7 @@
 /** @ingroup api_init
  * @{
  */
-#pragma once
 
-//#include "os.h"
-#include <cmrx/sys/runtime.h>
-#include <conf/kernel.h>
-#include <stddef.h>
-
-#define __APPL_SYMBOL(application, symbol)	application ## _ ## symbol
 #define VTABLE __attribute__((section(".vtable."))) const
 //#define __VTABLE1(app_name) __VTABLE2(application_name)
 //#define VTABLE __VTABLE1(__COUNTER__)
@@ -85,13 +96,5 @@ __attribute__((externally_visible, used, section(".applications") )) const struc
     _OS_THREAD_CREATE(application, entrypoint, data, priority, 0)
 #endif
 
-#define _OS_THREAD_CREATE(application, entrypoint, data, priority, core) \
-__attribute__((externally_visible, used, section(".thread_create") )) const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\
-	&__APPL_SYMBOL(application, instance),\
-	entrypoint,\
-	data,\
-	priority,\
-    core\
-}
 
 /** @} */

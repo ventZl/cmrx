@@ -1,3 +1,7 @@
+#pragma once
+
+#include "runtime.h"
+
 /** @defgroup os_notify Notifications
  * Kernel internals supporting cross-process notifications.
  * Notifications are concept that can be used to notify other threads implicitly
@@ -10,9 +14,6 @@
  * @ingroup os
  * @{
  */
-#pragma once
-
-#include "runtime.h"
 
 struct NotificationObject {
 	const void * address;
@@ -74,14 +75,14 @@ int os_initialize_waitable_object(const void * object);
 /** Implementation of notify_object syscall.
  * This is a wrapper around os_notify_object system call. It does some additional
  * checking on arguments.
- * See @ref notify_object and @red os_notify_object for more info.
+ * See @ref notify_object and @ref os_notify_object for more info.
  */
 int os_sys_notify_object(const void * object);
 
 /** Implementation of wait_for_object syscall.
  * This is a wrapper around os_wait_for_object system call. It does some additional
  * checking on arguments.
- * See @ref wait_for_object and @red os_wait_for_object for more info.
+ * See @ref wait_for_object and @ref os_wait_for_object for more info.
  */
 int os_sys_wait_for_object(const void * object, uint32_t timeout);
 

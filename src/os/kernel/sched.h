@@ -1,13 +1,14 @@
-/** @defgroup os_sched Thread scheduling
- * @ingroup os
- * Kernel primitives for manipulating threads.
- * @{
- */
 #pragma once
 
 #include "runtime.h"
 #include <stdbool.h>
 #include <arch/corelocal.h>
+
+/** @defgroup os_sched Thread scheduling
+ * @ingroup os
+ * Kernel primitives for manipulating threads.
+ * @{
+ */
 
 extern struct OS_core_state_t core[OS_NUM_CORES];
 

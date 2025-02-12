@@ -79,7 +79,7 @@ void timing_provider_schedule(long delay_us);
  * of microseconds, then it usually makes no sense to yield or try to do anything else
  * because the overhead of thread switching will consume all the time. Timing timing 
  * provider shall perform busy-wait delay, waiting for given amount of microseconds.
- * @param [in] delays_ns amount of microseconds to wait before resuming execution
+ * @param [in] delay_us amount of microseconds to wait before resuming execution
  * @note This function is guarranteed to be called from kernel context.
  */
 void timing_provider_delay(long delay_us);

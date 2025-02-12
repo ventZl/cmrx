@@ -14,7 +14,7 @@
 
 /** Perform signal delivery in thread's userspace.
  * This "function" is ever only called from os_deliver_signal(). It stores
- * original values of LR and R0 - R3 registers and PC onto stack. 
+ * original values of LR and R0 - R3 registers and PC onto stack.
  * @param sighandler address of signal handler function. Guarranteed to be non-NULL. Yet not to be valid.
  * @param signal_mask Bitmask of activated (pending) signals, which are catchable by the application.
  */

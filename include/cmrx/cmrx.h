@@ -25,7 +25,7 @@
 #endif
 
 // Declaring this as noreturn will break HIL tests
-extern void _os_start(uint8_t core);
+extern void _os_start(uint8_t start_core);
 
 /** @} */
 

@@ -3,6 +3,13 @@
 #include <conf/kernel.h>
 #include <stdint.h>
 
+/** @defgroup arch_arm_mpu Memory protection
+ *
+ * @ingroup arch_arm
+ *
+ * Memory protection support internals for ARM architecture
+ * @{
+ */
 /** Convenience structure which groups RBAR and RASR register 
  * for one MPU region together
  */

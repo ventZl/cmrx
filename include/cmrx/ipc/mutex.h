@@ -7,7 +7,6 @@
  * supported. There is also an implementation of mutex (driven by kernel), but
  * this might get deprecated anytime soon.
  *
- * @ingroup api_mutexes 
  * @{
  */
 #pragma once

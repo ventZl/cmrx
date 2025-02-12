@@ -52,3 +52,6 @@ void os_core_lock();
  * Unlocks exclusive access to the current core. Usually it boils down to enabling interrupts.
  */
 void os_core_unlock();
+
+/** @} */
+

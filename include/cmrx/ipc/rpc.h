@@ -117,11 +117,18 @@
  * that this signature takes method number instead it's name. Macro rpc_call will figure this
  * out automatically.
  *
+ * @note Don't use this call directly, use @ref rpc_call macro that performs some essential type checking before performing the call.
+ *
  * @param service address of service instance
  * @param method offset of method in VMT of service
+ * @param arg0 1st argument to the RPC call
+ * @param arg1 2nd argument to the RPC call
+ * @param arg2 3rd argument to the RPC call
+ * @param arg3 4th argument to the RPC call
+ * @param canary canary value passed to the call
  * @return whatever service method returns
  */
-__SYSCALL int _rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned artg3, void * service, unsigned method, unsigned canary);
+__SYSCALL int _rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3, void * service, unsigned method, unsigned canary);
 
 /** The way how RPC returns. Used automatically.
  *
