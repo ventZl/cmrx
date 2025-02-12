@@ -3,7 +3,7 @@
 
 #include <arch/sysenter.h>
 
-/** @defgroup api_irq ARM IRQ management
+/** @defgroup api_irq IRQ management
  *
  * @ingroup api
  *
