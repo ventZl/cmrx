@@ -47,6 +47,10 @@
 #define E_IN_TOO_DEEP			11
 /// Too many pending notifications for differnt objects
 #define E_OUT_OF_NOTIFICATIONS  12
+/// Scheduler yield is required
+#define E_YIELD                 13
+/// Operation timed out
+#define E_TIMEOUT               14
 /// Internal error. No more free threads
 #define E_OUT_OF_THREADS        0xFF
 /** @} */

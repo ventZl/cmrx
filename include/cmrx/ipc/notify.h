@@ -46,8 +46,6 @@ __SYSCALL int notify_object(const void * object);
  *                disables timeout and the call waits indefinitely.
  * @returns E_OK if notification has arrived. E_TIMEOUT if notification
  * did not arrive before the timeout interval has passed.
- * @note Timeouts are not supported as of now. Syscall returns E_NOTAVAIL
- * if timeout value other than 0 is supplied to the call.
  */
 __SYSCALL int wait_for_object(const void * object, uint32_t timeout);
 
