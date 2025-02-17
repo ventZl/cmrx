@@ -137,9 +137,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0b39109a0cec8cb801afeb993057e171" id="r_ga0b39109a0cec8cb801afeb993057e171"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga0b39109a0cec8cb801afeb993057e171">queue_send_silent</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, const void *data)</td></tr>
 <tr class="memdesc:ga0b39109a0cec8cb801afeb993057e171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills queue without notifying receivers.  <br /></td></tr>
 <tr class="separator:ga0b39109a0cec8cb801afeb993057e171"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaffea499b06610861dca5a2ea58c9f3c5" id="r_gaffea499b06610861dca5a2ea58c9f3c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gaffea499b06610861dca5a2ea58c9f3c5">queue_receive</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, void *data)</td></tr>
-<tr class="memdesc:gaffea499b06610861dca5a2ea58c9f3c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data from queue.  <br /></td></tr>
-<tr class="separator:gaffea499b06610861dca5a2ea58c9f3c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89f16741916b51f47ff0f5e154613fc8" id="r_ga89f16741916b51f47ff0f5e154613fc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga89f16741916b51f47ff0f5e154613fc8">queue_receive_timeout</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, void *data, uint32_t timeout_us)</td></tr>
+<tr class="memdesc:ga89f16741916b51f47ff0f5e154613fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data from queue with timeout.  <br /></td></tr>
+<tr class="separator:ga89f16741916b51f47ff0f5e154613fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a42b170d904edd0c6d9ec37a616a6cf" id="r_ga6a42b170d904edd0c6d9ec37a616a6cf"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga6a42b170d904edd0c6d9ec37a616a6cf">queue_receive</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue, void *data)</td></tr>
+<tr class="memdesc:ga6a42b170d904edd0c6d9ec37a616a6cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data from queue.  <br /></td></tr>
+<tr class="separator:ga6a42b170d904edd0c6d9ec37a616a6cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4eb65aa97addc979fe4486b7456682d9" id="r_ga4eb65aa97addc979fe4486b7456682d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga4eb65aa97addc979fe4486b7456682d9">queue_empty</a> (struct <a class="el" href="structQueue.html">Queue</a> *queue)</td></tr>
 <tr class="memdesc:ga4eb65aa97addc979fe4486b7456682d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns queue status.  <br /></td></tr>
 <tr class="separator:ga4eb65aa97addc979fe4486b7456682d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -314,14 +317,17 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gaffea499b06610861dca5a2ea58c9f3c5" name="gaffea499b06610861dca5a2ea58c9f3c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaffea499b06610861dca5a2ea58c9f3c5">&#9670;&#160;</a></span>queue_receive()</h2>
+<a id="ga6a42b170d904edd0c6d9ec37a616a6cf" name="ga6a42b170d904edd0c6d9ec37a616a6cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6a42b170d904edd0c6d9ec37a616a6cf">&#9670;&#160;</a></span>queue_receive()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool queue_receive </td>
+          <td class="memname">static bool queue_receive </td>
           <td>(</td>
           <td class="paramtype">struct <a class="el" href="structQueue.html">Queue</a> *&#160;</td>
           <td class="paramname"><em>queue</em>, </td>
@@ -338,6 +344,11 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Receive data from queue. </p>
@@ -350,6 +361,52 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true. Returns false in case spurious interrupt occurred and queue is still empty. </dd></dl>
+
+</div>
+</div>
+<a id="ga89f16741916b51f47ff0f5e154613fc8" name="ga89f16741916b51f47ff0f5e154613fc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga89f16741916b51f47ff0f5e154613fc8">&#9670;&#160;</a></span>queue_receive_timeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool queue_receive_timeout </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structQueue.html">Queue</a> *&#160;</td>
+          <td class="paramname"><em>queue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout_us</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Receive data from queue with timeout. </p>
+<p>This will copy the oldest data out of the queue. If queue is empty then this call will block until queue is filled with data or until specified amount of time passed with no new data in the queue.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue</td><td>pointer to queue data is retrieved from </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>pointer to place where data will be written </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_us</td><td>amount of time to wait for the data. If 0 is passed as timeout, then the function will wait indefinitely. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if data were read from queue. Returns false in case specified amount of time elapsed and no new data is available. </dd></dl>
 
 </div>
 </div>

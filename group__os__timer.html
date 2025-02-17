@@ -136,12 +136,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaef90c3e49cedd75a22cf512bad8c149f" id="r_gaef90c3e49cedd75a22cf512bad8c149f"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gaef90c3e49cedd75a22cf512bad8c149f">do_set_timed_event</a> (<a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> txn, unsigned slot, unsigned interval, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
 <tr class="memdesc:gaef90c3e49cedd75a22cf512bad8c149f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform heavy lifting of setting timers This routine will store timed event into list of timed events.  <br /></td></tr>
 <tr class="separator:gaef90c3e49cedd75a22cf512bad8c149f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaec8710b5e044f94721e76f945f9f35db" id="r_gaec8710b5e044f94721e76f945f9f35db"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gaec8710b5e044f94721e76f945f9f35db">set_timed_event</a> (unsigned microseconds, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
-<tr class="memdesc:gaec8710b5e044f94721e76f945f9f35db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a slot for timed event and store it.  <br /></td></tr>
-<tr class="separator:gaec8710b5e044f94721e76f945f9f35db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71b8644d6ba7eec3e03baf9c86960143" id="r_ga71b8644d6ba7eec3e03baf9c86960143"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga71b8644d6ba7eec3e03baf9c86960143">cancel_timed_event</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> owner, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
-<tr class="memdesc:ga71b8644d6ba7eec3e03baf9c86960143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels existing timed event.  <br /></td></tr>
-<tr class="separator:ga71b8644d6ba7eec3e03baf9c86960143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7fba7ebc76c20159e6d1337d659fcb34" id="r_ga7fba7ebc76c20159e6d1337d659fcb34"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga7fba7ebc76c20159e6d1337d659fcb34">os_set_timed_event</a> (unsigned microseconds, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
+<tr class="memdesc:ga7fba7ebc76c20159e6d1337d659fcb34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a slot for timed event and store it.  <br /></td></tr>
+<tr class="separator:ga7fba7ebc76c20159e6d1337d659fcb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc1843d72b011bfcd0eb0cc93b92f091" id="r_gabc1843d72b011bfcd0eb0cc93b92f091"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gabc1843d72b011bfcd0eb0cc93b92f091">os_cancel_timed_event</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> owner, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
+<tr class="memdesc:gabc1843d72b011bfcd0eb0cc93b92f091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels existing timed event.  <br /></td></tr>
+<tr class="separator:gabc1843d72b011bfcd0eb0cc93b92f091"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a54481fa8804be03b96cbc5d85ec03b" id="r_ga5a54481fa8804be03b96cbc5d85ec03b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a> (uint32_t period_us)</td></tr>
 <tr class="memdesc:ga5a54481fa8804be03b96cbc5d85ec03b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform short busy wait.  <br /></td></tr>
 <tr class="separator:ga5a54481fa8804be03b96cbc5d85ec03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -197,52 +197,6 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga71b8644d6ba7eec3e03baf9c86960143" name="ga71b8644d6ba7eec3e03baf9c86960143"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga71b8644d6ba7eec3e03baf9c86960143">&#9670;&#160;</a></span>cancel_timed_event()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int cancel_timed_event </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a>&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Cancels existing timed event. </p>
-<p>This function is only accessible for periodic timers externally. It allows cancelling of interval timers set previously. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">owner</td><td>thread which shall own the interval timer </td></tr>
-    <tr><td class="paramname">type</td><td>type of the event to be cancelled </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 if operation performed succesfully. </dd></dl>
-
-</div>
-</div>
 <a id="ga5a54481fa8804be03b96cbc5d85ec03b" name="ga5a54481fa8804be03b96cbc5d85ec03b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga5a54481fa8804be03b96cbc5d85ec03b">&#9670;&#160;</a></span>delay_us()</h2>
 
@@ -442,6 +396,44 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="gabc1843d72b011bfcd0eb0cc93b92f091" name="gabc1843d72b011bfcd0eb0cc93b92f091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabc1843d72b011bfcd0eb0cc93b92f091">&#9670;&#160;</a></span>os_cancel_timed_event()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_cancel_timed_event </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a>&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cancels existing timed event. </p>
+<p>This function is only accessible for periodic timers externally. It allows cancelling of interval timers set previously. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">owner</td><td>thread which shall own the interval timer </td></tr>
+    <tr><td class="paramname">type</td><td>type of the event to be cancelled </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if operation performed succesfully. </dd></dl>
+
+</div>
+</div>
 <a id="ga7790e1b47e7589223de470f32523408d" name="ga7790e1b47e7589223de470f32523408d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga7790e1b47e7589223de470f32523408d">&#9670;&#160;</a></span>os_cpu_freq_get()</h2>
 
@@ -516,6 +508,44 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ga7fba7ebc76c20159e6d1337d659fcb34" name="ga7fba7ebc76c20159e6d1337d659fcb34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7fba7ebc76c20159e6d1337d659fcb34">&#9670;&#160;</a></span>os_set_timed_event()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_set_timed_event </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>microseconds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a>&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find a slot for timed event and store it. </p>
+<p>This is actual execution core for both <a class="el" href="group__os__timer.html#ga579228f0ea6911563f3c09d50b0f441d">os_usleep</a> and <a class="el" href="group__os__timer.html#gad144032be21d6335801e51f3668d62d7">os_setitimer</a> functions. It will find free slot or slot already occupied by calling thread and will set / update timeout values. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">microseconds</td><td>time for which thread should sleep / wait for event </td></tr>
+    <tr><td class="paramname">type</td><td>type of timed event to set up </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>error status. 0 means no error. </dd></dl>
+
+</div>
+</div>
 <a id="gad144032be21d6335801e51f3668d62d7" name="gad144032be21d6335801e51f3668d62d7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad144032be21d6335801e51f3668d62d7">&#9670;&#160;</a></span>os_setitimer()</h2>
 
@@ -575,52 +605,6 @@ Variables</h2></td></tr>
 
 <p>Kernel implementation of <a class="el" href="group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a" title="Suspend thread execution for short time.">usleep()</a> syscall. </p>
 <p>See <a class="el" href="group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a">usleep</a> for details on arguments. </p>
-
-</div>
-</div>
-<a id="gaec8710b5e044f94721e76f945f9f35db" name="gaec8710b5e044f94721e76f945f9f35db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaec8710b5e044f94721e76f945f9f35db">&#9670;&#160;</a></span>set_timed_event()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int set_timed_event </td>
-          <td>(</td>
-          <td class="paramtype">unsigned&#160;</td>
-          <td class="paramname"><em>microseconds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a>&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Find a slot for timed event and store it. </p>
-<p>This is actual execution core for both <a class="el" href="group__os__timer.html#ga579228f0ea6911563f3c09d50b0f441d">os_usleep</a> and <a class="el" href="group__os__timer.html#gad144032be21d6335801e51f3668d62d7">os_setitimer</a> functions. It will find free slot or slot already occupied by calling thread and will set / update timeout values. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">microseconds</td><td>time for which thread should sleep / wait for event </td></tr>
-    <tr><td class="paramname">type</td><td>type of timed event to set up </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>error status. 0 means no error. </dd></dl>
 
 </div>
 </div>

@@ -17,7 +17,8 @@ var group__aux__queue =
     [ "queue_empty", "group__aux__queue.html#ga4eb65aa97addc979fe4486b7456682d9", null ],
     [ "queue_full", "group__aux__queue.html#gaf2bde6f72ff0cc4a047ee99454ac3dd6", null ],
     [ "queue_init", "group__aux__queue.html#gaa7d1e0d4ea7e93ad6af453ebabd644d2", null ],
-    [ "queue_receive", "group__aux__queue.html#gaffea499b06610861dca5a2ea58c9f3c5", null ],
+    [ "queue_receive", "group__aux__queue.html#ga6a42b170d904edd0c6d9ec37a616a6cf", null ],
+    [ "queue_receive_timeout", "group__aux__queue.html#ga89f16741916b51f47ff0f5e154613fc8", null ],
     [ "queue_send", "group__aux__queue.html#gab7fe4467c0404b3ff715b0c359d0188f", null ],
     [ "queue_send_silent", "group__aux__queue.html#ga0b39109a0cec8cb801afeb993057e171", null ]
 ];

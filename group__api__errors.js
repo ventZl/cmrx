@@ -13,5 +13,7 @@ var group__api__errors =
     [ "E_OUT_OF_STACKS", "group__api__errors.html#ga49a829e1fc284d59d6f2fe11af98e44c", null ],
     [ "E_OUT_OF_THREADS", "group__api__errors.html#ga6b9005faf912d6a521fdce0a0ecbcbb9", null ],
     [ "E_TASK_RUNNING", "group__api__errors.html#ga4270da15c87c31b8b1bade2e37e82e44", null ],
-    [ "E_WRONG_SIZE", "group__api__errors.html#ga17d4198ad1e2c2bd907d9ed7a36b77c6", null ]
+    [ "E_TIMEOUT", "group__api__errors.html#ga1ffb2899b56235563ff47de8478b9864", null ],
+    [ "E_WRONG_SIZE", "group__api__errors.html#ga17d4198ad1e2c2bd907d9ed7a36b77c6", null ],
+    [ "E_YIELD", "group__api__errors.html#gaab3127be18777269e4b499d1c3c8d0ac", null ]
 ];

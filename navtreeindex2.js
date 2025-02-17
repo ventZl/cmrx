@@ -1,5 +1,8 @@
 var NAVTREEINDEX2 =
 {
+"structComChannelVMT.html":[3,3,0,6],
+"structComChannelVMT.html#a12120a6d16294b9092756a5dfa3623c0":[3,3,0,6,3],
+"structComChannelVMT.html#a38ab70634468ed478c2827397d2ac816":[3,3,0,6,2],
 "structComChannelVMT.html#a747071b4cb78b127049872fd3adaae4f":[3,3,0,6,4],
 "structComChannelVMT.html#af92f2222ca758d8c04449c9f7a0e7dab":[3,3,0,6,1],
 "structComChannelVMT.html#afc32bb16e1ea8bac8cd76d1757e94a47":[3,3,0,6,0],

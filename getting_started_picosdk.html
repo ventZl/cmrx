@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('getting_started_picosdk.html',''); ini
 <div class="textblock"><p>Following is a step-by-step how to guide on creating a blinky project using CMRX RTOS. It will cover all steps and lists all tools needed to complete the integration. This guide assumes previous hands-on experience with creating embedded firmware, including the process of flashing and debugging. Basic understanding of CMake is assumed.</p>
 <p>As an example, this howto will demonstrate the process of integrating CMRX into project using Raspberry Pi Pico-SDK on RP2040 microcontroller. CMRX is flexible and supports virtually all microcontrollers with CMSIS headers available in their SDK/HAL. Thus this howto will avoid using vendor-specific build tools / IDEs to make the guide as portable as possible.</p>
 <p>This example will demonstrate creation of basic blinky example using SysTick timer as the kernel timing provider.</p>
-<h1><a class="anchor" id="autotoc_md33"></a>
+<h1><a class="anchor" id="autotoc_md38"></a>
 Prerequisites</h1>
 <p>In order to generate and build the project, following tools are required: </p><table class="markdownTable">
 <tr class="markdownTableHead">
@@ -134,7 +134,7 @@ Prerequisites</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">GDB   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">must be a multiarch build supporting AArch32   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md37"></a>
+<h1><a class="anchor" id="autotoc_md39"></a>
 Creating Project Skeleton</h1>
 <p>Pico-SDK is CMake-based SDK for the range of microcontrollers designed by the Raspberry Pi Foundation. So for the skeleton, we have to create the CMakeLists.txt file. Yet, before we do so, lets first clone the CMRX source tree so we know some of paths we'll need in the folling process. This how-to will assume that the path where project is stored is <code>$HOME/projects/pico-sdk-example</code>.</p>
 <div class="fragment"><div class="line">mkdir -p ~/projects/pico-sdk-example</div>
@@ -160,10 +160,10 @@ Creating Project Skeleton</h1>
 <div class="line">)</div>
 <div class="line">pico_add_extra_outputs(pico-sdk-example)</div>
 <div class="line">target_link_libraries(pico-sdk-example pico_stdlib)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md39"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md40"></a>
 Integrating CMRX into Pico-SDK project</h1>
 <p>Following steps will integrate CMRX RTOS into project we just created, make sure that CMRX will use the Pico-SDK and we will add a simply blinky application.</p>
-<h2><a class="anchor" id="autotoc_md40"></a>
+<h2><a class="anchor" id="autotoc_md41"></a>
 1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path</h2>
 <p>First, we'll set some paths to make things more convenient. While we know that we submoduled both CMRX and Pico-SDK, we can add following lines to put both Pico-SDK and CMRX cmake subdirectories into CMake module search path:</p>
 <div class="fragment"><div class="line">set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)</div>
@@ -318,7 +318,7 @@ Creating the blinky application</h1>
 <div class="ttc" id="agroup__api__init_html_gab5f63b29702312bedfe955e8465891cd"><div class="ttname"><a href="group__api__init.html#gab5f63b29702312bedfe955e8465891cd">OS_APPLICATION</a></div><div class="ttdeci">#define OS_APPLICATION(application)</div><div class="ttdoc">Declare userspace process.</div><div class="ttdef"><b>Definition</b> application.h:58</div></div>
 <div class="ttc" id="agroup__api__init_html_gaef7fd4ff3de50fb8b7bb9d5b51363278"><div class="ttname"><a href="group__api__init.html#gaef7fd4ff3de50fb8b7bb9d5b51363278">OS_APPLICATION_MMIO_RANGES</a></div><div class="ttdeci">#define OS_APPLICATION_MMIO_RANGES(application, from, to, from2, to2)</div><div class="ttdef"><b>Definition</b> application.h:43</div></div>
 <div class="ttc" id="agroup__api__timer_html_ga6987ccb3233088dddefcf26bb39f249a"><div class="ttname"><a href="group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a">usleep</a></div><div class="ttdeci">__SYSCALL int usleep(unsigned microseconds)</div><div class="ttdoc">Suspend thread execution for short time.</div><div class="ttdef"><b>Definition</b> timer.c:4</div></div>
-<div class="ttc" id="agroup__api_html_ga070d2ce7b6bb7e5c05602aa8c308d0c4"><div class="ttname"><a href="group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></div><div class="ttdeci">#define NULL</div><div class="ttdoc">Name the null pointer.</div><div class="ttdef"><b>Definition</b> defines.h:59</div></div>
+<div class="ttc" id="agroup__api_html_ga070d2ce7b6bb7e5c05602aa8c308d0c4"><div class="ttname"><a href="group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></div><div class="ttdeci">#define NULL</div><div class="ttdoc">Name the null pointer.</div><div class="ttdef"><b>Definition</b> defines.h:63</div></div>
 </div><!-- fragment --><p>Note that the name <code>blinky</code> used in macros inside <code>blinky.c</code> must be the same as the name <code>blinky</code> used in the <code>add_application()</code> function in CMakeLists.txt.</p>
 <p>If the name differs then the build will fail as CMRX expects that these two names match.</p>
 <p>The macro <code>OS_APPLICATION_MMIO_RANGES</code> allows to define up to two arbitrary ranges of memory accessible to the application. These ranges are defined by a pair of starting and ending address. Without specifying the address range of GPIO peripherals blinky won't be able to blink the LED.</p>
