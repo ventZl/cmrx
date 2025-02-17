@@ -123,7 +123,7 @@ CTEST2(queue_server, queue_write_read) {
 
     rv = queue_receive(&queue.q, buffer2);
 
-    ASSERT_EQUAL(wait_for_object_called, false);
+    ASSERT_EQUAL(wait_for_object_called, true);
     ASSERT_EQUAL(rv, true);
 
     cmp = memcmp(buffer, buffer2, TEST_QUEUE_ITEM_SIZE);
