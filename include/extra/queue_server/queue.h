@@ -119,6 +119,23 @@ bool queue_send(struct Queue * queue, const void * data);
 bool queue_send_silent(struct Queue * queue, const void * data);
 
 
+/** Receive data from queue with timeout.
+ *
+ * This will copy the oldest data out of the queue. If queue is
+ * empty then this call will block until queue is filled with data
+ * or until specified amount of time passed with no new data in the
+ * queue.
+ *
+ * @param [in] queue pointer to queue data is retrieved from
+ * @param [out] data pointer to place where data will be written
+ * @param [in] timeout_us amount of time to wait for the data. If 0
+ * is passed as timeout, then the function will wait indefinitely.
+ * @returns true if data were read from queue. Returns false in
+ * case specified amount of time elapsed and no new data is available.
+ */
+
+bool queue_receive_timeout(struct Queue * queue, void * data, uint32_t timeout_us);
+
 /** Receive data from queue.
  *
  * This will copy the oldest data out of the queue. If queue is
@@ -130,7 +147,10 @@ bool queue_send_silent(struct Queue * queue, const void * data);
  * @returns true. Returns false in case spurious interrupt occurred
  * and queue is still empty.
  */
-bool queue_receive(struct Queue * queue, void * data);
+static inline bool queue_receive(struct Queue * queue, void * data)
+{
+  return queue_receive_timeout(queue, data, 0);
+}
 
 /** Returns queue status.
  *
