@@ -21,16 +21,26 @@ struct NotificationObject {
 };
 
 /** List of possible notification types.
+ * Notification subsystem allows for several notification types.
+ * Normally, the "default" notification is delivered to the waiting
+ * thread.
+ * Kernel can internally generate another types of notifications
+ * which can only be served by an actual waiting thread and cannot
+ * be stored into pending notification list.
  */
 enum EventTypes {
-	/// Plain userspace notification done via notify_object syscall
-	EVT_USERSPACE_NOTIFICATION = 0,
+	/** The default notification
+	 * Notification delivering the information that event waiting
+	 * thread was waiting for has happened.
+	 */
+	EVT_DEFAULT = 0,
 
-	/// Waitable object has been re-initialized
-	EVT_INITIALIZED,
+	/** Timeout notification
+	 * Notification delivering the information that waiting for
+	 * notification has timed out.
+	 */
+	EVT_TIMEOUT,
 
-    /// Emitted in case thread is terminated
-    EVT_THREAD_DONE,
 	_EVT_COUNT
 };
 
@@ -41,6 +51,16 @@ enum EventTypes {
  * unused state.
  */
 void os_notify_init();
+
+/** Notify specific thread waiting for object
+ * Delivers notification to a specific thread.
+ * @param thread_id ID of thread notification has to be delivered to
+ * @param event event the thread is notified of
+ * @returns E_OK if thread was notified and no further action is needed;
+ * E_NOTAVAIL if thread is not waiting for *any* object and E_YIELD if
+ * scheduler yield may be required.
+ */
+int os_notify_thread(Thread_t thread_id, Event_t event);
 
 /** Resume one thread that are waiting for this object.
  * This function will find one single thread which is waiting for this particular
@@ -60,7 +80,7 @@ int os_notify_object(const void * object, Event_t event);
  * @param object address of the object that is being waited for
  * @param callback address of the callback function that handles wakeup
  * @returns E_OK if thread is capable of waiting, E_BUSY if thread is already
- * waiting for something.
+ * waiting for something, E_INVALID if callback is a NULL pointer
  */
 int os_wait_for_object(const void * object, WaitHandler_t callback);
 

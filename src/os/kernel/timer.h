@@ -8,6 +8,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "runtime.h"
 
 /* List of various timer types supported by this framework.
  * For most part, the most important characteristic is if
@@ -50,6 +51,27 @@ int os_setitimer(unsigned microseconds);
  * things will go wrong.
  */
 void os_timer_init();
+
+/** Find a slot for timed event and store it.
+ *
+ * This is actual execution core for both \ref os_usleep and \ref os_setitimer
+ * functions. It will find free slot or slot already occupied by calling thread
+ * and will set / update timeout values.
+ * @param microseconds time for which thread should sleep / wait for event
+ * @param type type of timed event to set up
+ * @returns error status. 0 means no error.
+ */
+int os_set_timed_event(unsigned microseconds, enum eSleepType type);
+
+/** Cancels existing timed event.
+ *
+ * This function is only accessible for periodic timers externally. It
+ * allows cancelling of interval timers set previously.
+ * @param owner thread which shall own the interval timer
+ * @param type type of the event to be cancelled
+ * @return 0 if operation performed succesfully.
+ */
+int os_cancel_timed_event(Thread_t owner, enum eSleepType type);
 
 /** Provide information on next scheduled event.
  *

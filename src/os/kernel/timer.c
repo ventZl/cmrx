@@ -4,6 +4,7 @@
 #include "timer.h"
 #include "sched.h"
 #include "signal.h"
+#include "notify.h"
 #include "txn.h"
 #include <conf/kernel.h>
 
@@ -73,16 +74,8 @@ static int do_set_timed_event(Txn_t txn, unsigned slot, unsigned interval, enum 
     }
 }
 
-/** Find a slot for timed event and store it.
- *
- * This is actual execution core for both \ref os_usleep and \ref os_setitimer 
- * functions. It will find free slot or slot already occupied by calling thread
- * and will set / update timeout values.
- * @param microseconds time for which thread should sleep / wait for event
- * @param type type of timed event to set up
- * @returns error status. 0 means no error.
- */
-static int set_timed_event(unsigned microseconds, enum eSleepType type)
+
+int os_set_timed_event(unsigned microseconds, enum eSleepType type)
 {
     Txn_t txn = os_txn_start();
 	Thread_t thread_id = os_get_current_thread();
@@ -126,15 +119,7 @@ static int set_timed_event(unsigned microseconds, enum eSleepType type)
 	return E_NOTAVAIL;
 }
 
-/** Cancels existing timed event.
- *
- * This function is only accessible for periodic timers externally. It
- * allows cancelling of interval timers set previously.
- * @param owner thread which shall own the interval timer
- * @param type type of the event to be cancelled
- * @return 0 if operation performed succesfully.
- */
-static int cancel_timed_event(Thread_t owner, enum eSleepType type)
+int os_cancel_timed_event(Thread_t owner, enum eSleepType type)
 {
     Txn_t txn = os_txn_start();
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
@@ -173,18 +158,18 @@ int os_usleep(unsigned microseconds)
 		delay_us(microseconds);
 		return 0;
 	}
-	return set_timed_event(microseconds, TIMER_SLEEP);
+	return os_set_timed_event(microseconds, TIMER_SLEEP);
 }
 
 int os_setitimer(unsigned microseconds)
 {
 	if (microseconds > 0)
 	{
-		return set_timed_event(microseconds, TIMER_INTERVAL);
+		return os_set_timed_event(microseconds, TIMER_INTERVAL);
 	}
 	else
 	{
-		return cancel_timed_event(os_get_current_thread(), TIMER_INTERVAL);
+		return os_cancel_timed_event(os_get_current_thread(), TIMER_INTERVAL);
 	}
 }
 
@@ -273,6 +258,10 @@ void os_run_timer(uint32_t microtime)
 					case TIMER_SLEEP:
 					case TIMER_INTERVAL:
 						os_thread_continue(sleeper->thread_id);
+						break;
+
+					case TIMER_TIMEOUT:
+						os_notify_thread(sleeper->thread_id, EVT_TIMEOUT);
 						break;
 
 					default:

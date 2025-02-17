@@ -388,7 +388,7 @@ static void cb_thread_join_notify(const void * object, Thread_t thread, Event_t 
     if (os_threads[thread].state == THREAD_STATE_WAITING
         && os_threads[thread].wait_object == object)
     {
-        if (event == EVT_THREAD_DONE)
+        if (event == EVT_DEFAULT)
         {
             os_set_syscall_return_value(thread, dead_thread->exit_status);
         }
@@ -406,7 +406,7 @@ int os_thread_join(uint8_t thread_id)
             os_threads[thread_id].state = THREAD_STATE_EMPTY;
             os_txn_done();
             return rv;
-           }
+        }
         else
         {
             uint8_t current_thread_id = os_get_current_thread();

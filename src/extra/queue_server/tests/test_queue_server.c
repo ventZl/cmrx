@@ -1,6 +1,7 @@
 #include <ctest.h>
 #include <extra/queue_server/queue.h>
 #include <string.h>
+#include <cmrx/defines.h>
 
 STATIC_QUEUE(queue, 256);
 
@@ -9,6 +10,10 @@ STATIC_QUEUE(queue, 256);
 
 static bool wait_for_object_called = false;
 static void * wait_for_object_addr = NULL;
+/// How long will it take to notification to arrive?
+/// If set to 0 (default), it will arrive immediately
+static uint32_t wait_for_object_notified_after = 0;
+static void (*wait_for_object_notified_worker_func)() = NULL;
 
 static bool notify_object_called = false;
 static void * notify_object_addr = NULL;
@@ -19,10 +24,35 @@ int notify_object(void * addr) {
     return 0;
 }
 
-int wait_for_object(void * addr, int timeout) {
+int wait_for_object(void * addr, uint32_t timeout) {
     wait_for_object_called = true;
     wait_for_object_addr = addr;
-    return 0;
+    if (timeout == 0)
+    {
+        return E_OK;
+    }
+    else
+    {
+        if (timeout > wait_for_object_notified_after)
+        {
+            if (wait_for_object_notified_worker_func != NULL)
+            {
+                wait_for_object_notified_worker_func();
+            }
+            else
+            {
+                // Asserted here? Your test is wrong! You need to pass a function
+                // to this variable that gets called to simulate late arriving
+                // notification!
+                ASSERT_NOT_EQUAL((unsigned long) wait_for_object_notified_worker_func, 0);
+            }
+            return E_OK;
+        }
+        else
+        {
+            return E_TIMEOUT;
+        }
+    }
 }
 
 CTEST_DATA(queue_server) {
@@ -93,7 +123,7 @@ CTEST2(queue_server, queue_write_read) {
 
     rv = queue_receive(&queue.q, buffer2);
 
-    ASSERT_EQUAL(wait_for_object_called, false);
+    ASSERT_EQUAL(wait_for_object_called, true);
     ASSERT_EQUAL(rv, true);
 
     cmp = memcmp(buffer, buffer2, TEST_QUEUE_ITEM_SIZE);
@@ -217,4 +247,55 @@ CTEST2(queue_server, queue_not_full_when_not_full) {
 
     rv = queue_full(&queue.q);
     ASSERT_EQUAL(rv, false);
+}
+
+static void queue_timeout_late_data_arrival()
+{
+    unsigned char buffer[TEST_QUEUE_ITEM_SIZE] = { 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5 };
+
+    (void) queue_send(&queue.q, buffer);
+}
+
+static void queue_timeout_no_data_arrival()
+{
+    // this function intentionally left blank
+}
+
+CTEST2(queue_server, queue_timeout_times_out_with_data) {
+    unsigned char buffer[TEST_QUEUE_ITEM_SIZE] = { 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5 };
+
+    // Fake notification to be received after 50ms
+    wait_for_object_notified_after = 50000;
+    wait_for_object_notified_worker_func = queue_timeout_late_data_arrival;
+
+    // Wait for the notification for 25ms
+    int rv = queue_receive_timeout(&queue.q, buffer, 25000);
+
+    ASSERT_EQUAL(rv, false);
+}
+
+CTEST2(queue_server, queue_timeout_times_out_no_data) {
+    unsigned char buffer[TEST_QUEUE_ITEM_SIZE] = { 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5 };
+
+    // Fake notification to be received after 50ms
+    wait_for_object_notified_after = 50000;
+    wait_for_object_notified_worker_func = queue_timeout_no_data_arrival;
+
+    // Wait for the notification for 25ms
+    int rv = queue_receive_timeout(&queue.q, buffer, 25000);
+
+    ASSERT_EQUAL(rv, false);
+}
+
+CTEST2(queue_server, queue_timeout_data_arrives) {
+    unsigned char buffer[TEST_QUEUE_ITEM_SIZE] = { 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5, 0xA5 };
+
+    // Fake notification to be received after 25ms
+    wait_for_object_notified_after = 25000;
+    wait_for_object_notified_worker_func = queue_timeout_late_data_arrival;
+
+    // Wait for the notification for 50ms
+    int rv = queue_receive_timeout(&queue.q, buffer, 50000);
+
+    ASSERT_EQUAL(rv, true);
 }

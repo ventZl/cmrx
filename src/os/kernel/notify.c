@@ -1,7 +1,9 @@
 #include "notify.h"
 #include "runtime.h"
 #include "sched.h"
+#include "arch/sched.h"
 #include "txn.h"
+#include "timer.h"
 #include <cmrx/assert.h>
 #include <conf/kernel.h>
 
@@ -27,16 +29,11 @@ int os_initialize_waitable_object(const void* object)
         {
             if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK)
             {
-                struct OS_thread_t * notified_thread = &os_threads[thread_id];
-                awaken = true;
-                notified_thread->state = THREAD_STATE_READY;
-                if (notified_thread->wait_callback != NULL)
+                if (os_notify_thread(thread_id, EVT_DEFAULT) == E_YIELD)
                 {
-                    notified_thread->wait_callback(object, thread_id, EVT_USERSPACE_NOTIFICATION);
-                    notified_thread->wait_callback = NULL;
+                    awaken = true;
                 }
 
-                notified_thread->wait_object = NULL;
                 os_txn_done();
             }
 
@@ -79,6 +76,67 @@ int os_initialize_waitable_object(const void* object)
     return E_OK;
 }
 
+int os_notify_thread(Thread_t thread_id, Event_t event)
+{
+    struct OS_thread_t * notified_thread = &os_threads[thread_id];
+    int retval = E_OK;
+
+    if (notified_thread->wait_object == NULL)
+    {
+        return E_NOTAVAIL;
+    }
+
+
+    if (notified_thread->wait_callback != NULL)
+    {
+        notified_thread->wait_callback(notified_thread->wait_object, thread_id, event);
+        notified_thread->wait_callback = NULL;
+    }
+
+    notified_thread->wait_object = NULL;
+
+    return retval;
+}
+
+static int os_notify_queue_event(const void * object)
+{
+    struct NotificationObject * first_free_entry = NULL;
+    struct NotificationObject * current_object_entry = NULL;
+
+    for (uint8_t entry_id = 0; entry_id < OS_NOTIFICATION_BUFFER_SIZE; ++entry_id)
+    {
+        struct NotificationObject * current_entry = &os_notification_buffer[entry_id];
+        if (current_entry->address == (void *) OS_NOTIFY_INVALID)
+        {
+            if (first_free_entry == NULL)
+            {
+                first_free_entry = current_entry;
+            }
+        }
+        if (current_entry->address == object)
+        {
+            current_object_entry = current_entry;
+            break;
+        }
+    }
+    if (current_object_entry == NULL && first_free_entry != NULL)
+    {
+        first_free_entry->address = object;
+        ASSERT(first_free_entry->pending_notifications == 0);
+        current_object_entry = first_free_entry;
+    }
+
+    if (current_object_entry != NULL)
+    {
+        current_object_entry->pending_notifications += 1;
+    }
+    else
+    {
+        return E_OUT_OF_NOTIFICATIONS;
+    }
+
+    return E_OK;
+}
 
 int os_notify_object(const void * object, Event_t event)
 {
@@ -108,61 +166,17 @@ int os_notify_object(const void * object, Event_t event)
     // Quirk: only idle thread should have this priority
     if (candidate_priority != 0xFF)
     {
-        struct OS_thread_t * notified_thread = &os_threads[candidate_thread];
-
-        if (core[coreid()].thread_current != candidate_thread)
+        if (os_notify_thread(candidate_thread, event) == E_OK)
         {
-            notified_thread->state = THREAD_STATE_READY;
-            perform_thread_switch = true;
+            if (os_threads[candidate_thread].priority < os_threads[os_get_current_thread()].priority)
+            {
+                perform_thread_switch = true;
+            }
         }
-        else
-        {
-            notified_thread->state = THREAD_STATE_RUNNING;
-        }
-
-        if (notified_thread->wait_callback != NULL)
-        {
-            notified_thread->wait_callback(object, candidate_thread, event);
-            notified_thread->wait_callback = NULL;
-        }
-
-        notified_thread->wait_object = NULL;
     }
     else
     {
-        struct NotificationObject * first_free_entry = NULL;
-        struct NotificationObject * current_object_entry = NULL;
-
-        for (uint8_t entry_id = 0; entry_id < OS_NOTIFICATION_BUFFER_SIZE; ++entry_id)
-        {
-            struct NotificationObject * current_entry = &os_notification_buffer[entry_id];
-            if (current_entry->address == (void *) OS_NOTIFY_INVALID)
-            {
-                if (first_free_entry == NULL)
-                {
-                    first_free_entry = current_entry;
-                }
-            }
-            if (current_entry->address == object)
-            {
-                current_object_entry = current_entry;
-                break;
-            }
-        }
-        if (current_object_entry == NULL && first_free_entry != NULL)
-        {
-            first_free_entry->address = object;
-            ASSERT(first_free_entry->pending_notifications == 0);
-            current_object_entry = first_free_entry;
-        }
-        if (current_object_entry != NULL)
-        {
-            current_object_entry->pending_notifications += 1;
-        }
-        else
-        {
-            retval = E_OUT_OF_NOTIFICATIONS;
-        }
+        retval = os_notify_queue_event(object);
 
     }
     os_txn_done();
@@ -176,39 +190,68 @@ int os_notify_object(const void * object, Event_t event)
 
 int os_sys_notify_object(const void * object)
 {
-    return os_notify_object(object, EVT_USERSPACE_NOTIFICATION);
+    return os_notify_object(object, EVT_DEFAULT);
 }
 
 /**
 * @ingroup os_notify
 * @{
 */
-/** Callback on receiving a notification.
+/** Callback implementing reception of a userspace notification
  * @warning This callback is not executed within the context of the notified
  * thread, rather in the context of notifying thread. The state of notified
  * thread is largely pre-notification at this point.
  *
- * Callback can not assume anything about the future state of the thread
- * post this notification other than the thread will become READY for
- * scheduling.
+ * This callback will manipulate thread state when notification is received.
+ * Handling is different when notification is received via @ref notify_object
+ * and wait reaching timeout value.
  */
-void cb_syscall_notify_object(const void * object, Thread_t thread, Event_t event);
+void cb_syscall_notify_object(const void * object, Thread_t thread, Event_t event)
+{
+    (void) object;
+
+    struct OS_thread_t * notified_thread = &os_threads[thread];
+
+    // Notification may have arrived before the thread has been scheduled out
+    // and from the scheduler's point of view it is still running.
+    // Keep its state as "running" so it won't be swapped out. It is apparently
+    // the thread with the highest priority.
+    if (core[coreid()].thread_current != thread)
+    {
+        notified_thread->state = THREAD_STATE_READY;
+    }
+    else
+    {
+        notified_thread->state = THREAD_STATE_RUNNING;
+    }
+
+    switch (event) {
+        case EVT_DEFAULT:
+            os_cancel_timed_event(thread, TIMER_TIMEOUT);
+            break;
+
+        case EVT_TIMEOUT:
+            os_set_syscall_return_value(thread, E_TIMEOUT);
+            break;
+    }
+}
 /** @} */
 
 int os_sys_wait_for_object(const void * object, uint32_t timeout)
 {
     if (timeout != 0)
     {
-        // Timeouts are not supported yet.
-        // Doing so will most probably require switching the timer
-        // subsystem from signals to notifications internally.
-        return E_NOTAVAIL;
+        os_set_timed_event(timeout, TIMER_TIMEOUT);
     }
-    return os_wait_for_object(object, NULL);
+    return os_wait_for_object(object, cb_syscall_notify_object);
 }
 
 int os_wait_for_object(const void * object, WaitHandler_t callback)
 {
+    if (callback == NULL)
+    {
+        return E_INVALID;
+    }
 
     Txn_t txn_id = os_txn_start();
 

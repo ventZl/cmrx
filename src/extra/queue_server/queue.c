@@ -1,5 +1,7 @@
 #include <extra/queue_server/queue.h>
 #include <cmrx/ipc/notify.h>
+#include <cmrx/defines.h>
+#include <cmrx/assert.h>
 #include <limits.h>
 
 bool queue_send_silent(struct Queue * queue, const void * data)
@@ -33,17 +35,19 @@ bool queue_send(struct Queue * queue, const void * data)
     return rv;
 }
 
-bool queue_receive(struct Queue * queue, void * data)
+bool queue_receive_timeout(struct Queue * queue, void * data, uint32_t timeout_us)
 {
 
-    if (queue->empty)
+    int rv = wait_for_object(queue, timeout_us);
+    if (rv == E_TIMEOUT)
     {
-        wait_for_object(queue, 0);
-        if (queue->empty)
-        {
-            // Spurious interrupt?
-            return false;
-        }
+        return false;
+    }
+
+    if (queue_empty(queue))
+    {
+        // Spurious interrupt?
+        return false;
     }
 
     const unsigned size_limit = queue->depth * queue->item_size;
@@ -67,7 +71,7 @@ bool queue_receive(struct Queue * queue, void * data)
 
 bool queue_empty(struct Queue * queue)
 {
-    return queue->empty;
+    return (queue->write_cursor == queue->read_cursor) && queue->empty;
 }
 
 bool queue_full(struct Queue * queue)
