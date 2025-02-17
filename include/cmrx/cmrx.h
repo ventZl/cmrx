@@ -79,4 +79,18 @@ __SYSCALL uint32_t getmicrotime(void);
 
 __SYSCALL uint32_t shutdown(void);
 
+/** Calculate a distance of two timestamps
+ * Small helper function to calculate the time between two timestamps.
+ * It will calculate the distance of two timestamps taking possible time counter
+ * wraparound. It assumes the order of timestamps is older first, newer last.
+ * @note This function only returns correct results for timestamps that are
+ * less than ~4000 seconds apart. For timestamps more than ~4000 seconds apart
+ * two (or even more) timestamp wraparounds happen and the distance calculation
+ * returns invalid values.
+ * @param [in] older_timestamp timestamp of event that happened first
+ * @param [in] newer_timestamp timestamp of event that happened last
+ * @returns distance of timestamps in microseconds
+ */
+uint32_t diff_microtime(uint32_t older_timestamp, uint32_t newer_timestamp);
+
 /** @} */

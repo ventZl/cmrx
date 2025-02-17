@@ -17,3 +17,15 @@ __SYSCALL uint32_t shutdown(void)
 {
     __SVC(SYSCALL_SHUTDOWN);
 }
+
+uint32_t diff_microtime(uint32_t older_timestamp, uint32_t newer_timestamp)
+{
+    if (older_timestamp <= newer_timestamp)
+    {
+        return newer_timestamp - older_timestamp;
+    }
+    else
+    {
+        return ~0 - (older_timestamp - newer_timestamp);
+    }
+}
