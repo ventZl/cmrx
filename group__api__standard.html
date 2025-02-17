@@ -107,6 +107,45 @@ $(document).ready(function(){initNavTree('group__api__standard.html',''); initRe
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API providing standardized access to various aspects required by userland. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga821cccfa3f3ac511dd361a3544715944" name="ga821cccfa3f3ac511dd361a3544715944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga821cccfa3f3ac511dd361a3544715944">&#9670;&#160;</a></span>diff_microtime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t diff_microtime </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>older_timestamp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>newer_timestamp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate a distance of two timestamps Small helper function to calculate the time between two timestamps. </p>
+<p>It will calculate the distance of two timestamps taking possible time counter wraparound. It assumes the order of timestamps is older first, newer last. </p><dl class="section note"><dt>Note</dt><dd>This function only returns correct results for timestamps that are less than ~4000 seconds apart. For timestamps more than ~4000 seconds apart two (or even more) timestamp wraparounds happen and the distance calculation returns invalid values. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">older_timestamp</td><td>timestamp of event that happened first </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">newer_timestamp</td><td>timestamp of event that happened last </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>distance of timestamps in microseconds </dd></dl>
+
+</div>
+</div>
 <a id="ga3237021168ac3f0aa996c3c97b51e323" name="ga3237021168ac3f0aa996c3c97b51e323"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3237021168ac3f0aa996c3c97b51e323">&#9670;&#160;</a></span>get_cpu_freq()</h2>
 

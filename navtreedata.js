@@ -40,35 +40,35 @@ var NAVTREE =
     [ "Getting started", "getting_started.html", [
       [ "HOWTO: Integrating CMRX into CubeMX project", "getting_started_cubemx.html", [
         [ "Prerequisites", "getting_started_cubemx.html#autotoc_md0", null ],
-        [ "Creating project skeleton with CubeMX", "getting_started_cubemx.html#autotoc_md3", null ],
-        [ "Basic CubeMX project settings", "getting_started_cubemx.html#autotoc_md5", null ],
-        [ "Configuring the core", "getting_started_cubemx.html#autotoc_md7", null ],
-        [ "Configuring GPIOs", "getting_started_cubemx.html#autotoc_md9", null ],
-        [ "Generating project and getting CMRX source", "getting_started_cubemx.html#autotoc_md11", null ],
-        [ "Integrating CMRX into CubeMX project", "getting_started_cubemx.html#autotoc_md12", [
-          [ "1. Add CMake modules provided by CMRX into CMake module path", "getting_started_cubemx.html#autotoc_md14", null ],
-          [ "2. Configure CubeMX integration", "getting_started_cubemx.html#autotoc_md16", null ],
-          [ "3. Configure the CMRX kernel to use CubeMX", "getting_started_cubemx.html#autotoc_md20", null ]
+        [ "Creating project skeleton with CubeMX", "getting_started_cubemx.html#autotoc_md1", null ],
+        [ "Basic CubeMX project settings", "getting_started_cubemx.html#autotoc_md3", null ],
+        [ "Configuring the core", "getting_started_cubemx.html#autotoc_md5", null ],
+        [ "Configuring GPIOs", "getting_started_cubemx.html#autotoc_md6", null ],
+        [ "Generating project and getting CMRX source", "getting_started_cubemx.html#autotoc_md8", null ],
+        [ "Integrating CMRX into CubeMX project", "getting_started_cubemx.html#autotoc_md10", [
+          [ "1. Add CMake modules provided by CMRX into CMake module path", "getting_started_cubemx.html#autotoc_md12", null ],
+          [ "2. Configure CubeMX integration", "getting_started_cubemx.html#autotoc_md14", null ],
+          [ "3. Configure the CMRX kernel to use CubeMX", "getting_started_cubemx.html#autotoc_md16", null ]
         ] ],
-        [ "Linking CMRX to the project", "getting_started_cubemx.html#autotoc_md24", null ],
-        [ "Creating the blinky application", "getting_started_cubemx.html#autotoc_md29", null ],
-        [ "CubeMX HAL tweaks", "getting_started_cubemx.html#autotoc_md33", null ],
-        [ "Adding blinky application to the build", "getting_started_cubemx.html#autotoc_md35", null ],
-        [ "Flashing the application", "getting_started_cubemx.html#autotoc_md37", null ]
+        [ "Linking CMRX to the project", "getting_started_cubemx.html#autotoc_md19", null ],
+        [ "Creating the blinky application", "getting_started_cubemx.html#autotoc_md22", null ],
+        [ "CubeMX HAL tweaks", "getting_started_cubemx.html#autotoc_md25", null ],
+        [ "Adding blinky application to the build", "getting_started_cubemx.html#autotoc_md27", null ],
+        [ "Flashing the application", "getting_started_cubemx.html#autotoc_md29", null ]
       ] ],
       [ "HOWTO: Integrating CMRX into Pico-SDK project", "getting_started_picosdk.html", [
-        [ "Prerequisites", "getting_started_picosdk.html#autotoc_md38", null ],
-        [ "Creating Project Skeleton", "getting_started_picosdk.html#autotoc_md39", null ],
-        [ "Integrating CMRX into Pico-SDK project", "getting_started_picosdk.html#autotoc_md40", [
-          [ "1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path", "getting_started_picosdk.html#autotoc_md41", null ],
-          [ "2. Configuring Pico-SDK integration", "getting_started_picosdk.html#autotoc_md42", null ],
-          [ "3. Configuring CMRX kernel to use Pico-SDK", "getting_started_picosdk.html#autotoc_md43", null ]
+        [ "Prerequisites", "getting_started_picosdk.html#autotoc_md31", null ],
+        [ "Creating Project Skeleton", "getting_started_picosdk.html#autotoc_md35", null ],
+        [ "Integrating CMRX into Pico-SDK project", "getting_started_picosdk.html#autotoc_md36", [
+          [ "1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path", "getting_started_picosdk.html#autotoc_md37", null ],
+          [ "2. Configuring Pico-SDK integration", "getting_started_picosdk.html#autotoc_md38", null ],
+          [ "3. Configuring CMRX kernel to use Pico-SDK", "getting_started_picosdk.html#autotoc_md41", null ]
         ] ],
-        [ "Linking CMRX to the project", "getting_started_picosdk.html#autotoc_md44", null ],
-        [ "Creating main.c file", "getting_started_picosdk.html#autotoc_md45", null ],
-        [ "Creating the blinky application", "getting_started_picosdk.html#autotoc_md46", null ],
-        [ "Adding blinky application to the build", "getting_started_picosdk.html#autotoc_md47", null ],
-        [ "Flashing the application", "getting_started_picosdk.html#autotoc_md48", null ]
+        [ "Linking CMRX to the project", "getting_started_picosdk.html#autotoc_md43", null ],
+        [ "Creating main.c file", "getting_started_picosdk.html#autotoc_md44", null ],
+        [ "Creating the blinky application", "getting_started_picosdk.html#autotoc_md45", null ],
+        [ "Adding blinky application to the build", "getting_started_picosdk.html#autotoc_md46", null ],
+        [ "Flashing the application", "getting_started_picosdk.html#autotoc_md47", null ]
       ] ]
     ] ],
     [ "Topics", "topics.html", "topics" ],
@@ -86,8 +86,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__aux__cm__ipi.html",
-"structComChannelVMT.html"
+"group__arm__mpu__registers.html#gac59c1bae8f9382e6becd1c655b38506c",
+"structComChannel.html#a39754a6862ae6d0d4450ca575b02df05"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

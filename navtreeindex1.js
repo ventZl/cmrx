@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__arm__mpu__registers.html#gac59c1bae8f9382e6becd1c655b38506c":[3,1,0,0,1,3,0],
 "group__aux__cm__ipi.html":[3,3,1],
 "group__aux__cm__ipi.html#ga406768807186211937d0ae289490231d":[3,3,1,2],
 "group__aux__cm__ipi.html#gaf2a18c9a690c0de3735ef1f78abe1554":[3,3,1,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "structBasicQueue.html":[3,3,3,1],
 "structBasicQueue.html#a8ad0c0e100f40b8ba03f80bc0754892c":[3,3,3,1,0],
 "structBasicQueue.html#ad239d4315bc1e98249fc5d7ab7c34a09":[3,3,3,1,1],
-"structComChannel.html":[3,3,0,7],
-"structComChannel.html#a39754a6862ae6d0d4450ca575b02df05":[3,3,0,7,0]
+"structComChannel.html":[3,3,0,7]
 };
