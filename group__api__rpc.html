@@ -236,6 +236,43 @@ Due to the API of RPC calls, you <em>HAVE</em> to use this macro on 1st argument
 
 </div>
 </div>
+<a id="ga81ba1a4a057e20afe2dff72090f8193d" name="ga81ba1a4a057e20afe2dff72090f8193d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga81ba1a4a057e20afe2dff72090f8193d">&#9670;&#160;</a></span>interface_cast</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define interface_cast</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">service&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;_Generic(((service)-&gt;vtable), typeof((*((type*) 0))-&gt;vtable) : (type) service, default: service)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform typecast of the service if and only if both services implement the same interface. </p>
+<p>This macro performs conditional typecasting of service type to another service type. Type cast will only be performed if both services implement the same interface type (which means that both services contain vtable member and both these vtable members are of the same type). If service types don't match the typecast won't be made, most probably leading to a compilation warning that pointer types don't match. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>resulting service type </td></tr>
+    <tr><td class="paramname">service</td><td>pointer to service </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga896b17abf6ce670f5000ac4a0852393f" name="ga896b17abf6ce670f5000ac4a0852393f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga896b17abf6ce670f5000ac4a0852393f">&#9670;&#160;</a></span>rpc_call</h2>
 

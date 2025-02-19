@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__arm__mpu__registers.html#ga32d5201e7d796b21783202e5a8e33fea":[3,1,0,0,1,3,1],
 "group__arm__mpu__registers.html#gac59c1bae8f9382e6becd1c655b38506c":[3,1,0,0,1,3,0],
 "group__aux__cm__ipi.html":[3,3,1],
 "group__aux__cm__ipi.html#ga406768807186211937d0ae289490231d":[3,3,1,2],
@@ -108,8 +109,8 @@ var NAVTREEINDEX1 =
 "group__os__sched.html#ga0f6f80faa1ed7029bfb94e7f32f3a994":[3,1,9,33],
 "group__os__sched.html#ga1750d7e1f559518be7c25ed323065cf4":[3,1,9,4],
 "group__os__sched.html#ga1c0157588be40efb99fc590662e237ae":[3,1,9,1],
-"group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,34],
 "group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,35],
+"group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,34],
 "group__os__sched.html#ga26ea9f0ec722697387ee9deca8230844":[3,1,9,0],
 "group__os__sched.html#ga3115342bb54e0e857c6a566334dcb76b":[3,1,9,19],
 "group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195":[3,1,9,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "structArch__State__t.html":[3,1,0,1,0],
 "structBasicQueue.html":[3,3,3,1],
 "structBasicQueue.html#a8ad0c0e100f40b8ba03f80bc0754892c":[3,3,3,1,0],
-"structBasicQueue.html#ad239d4315bc1e98249fc5d7ab7c34a09":[3,3,3,1,1],
-"structComChannel.html":[3,3,0,7]
+"structBasicQueue.html#ad239d4315bc1e98249fc5d7ab7c34a09":[3,3,3,1,1]
 };
