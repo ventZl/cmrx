@@ -94,6 +94,16 @@
  * @{
  */
 
+/** Perform typecast of the service if and only if both services implement the same interface.
+ * This macro performs conditional typecasting of service type to another service type. Type cast
+ * will only be performed if both services implement the same interface type (which means that both
+ * services contain vtable member and both these vtable members are of the same type). If service
+ * types don't match the typecast won't be made, most probably leading to a compilation warning that
+ * pointer types don't match.
+ * @param type resulting service type
+ * @param service pointer to service
+ */
+#define interface_cast(type, service) _Generic(((service)->vtable), typeof((*((type*) 0))->vtable) : (type) service, default: service)
 
 /** User-visible way to perform remote procedure call.
  *
