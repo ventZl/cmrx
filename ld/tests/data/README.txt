@@ -1,0 +1,1 @@
+Linker scripts collected from various HALs published on the Internet
