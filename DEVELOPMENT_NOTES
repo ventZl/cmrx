@@ -1,0 +1,31 @@
+1. Consider renaming files that must be manipulated by cmake to produce .h files
+   as filename.h.in (similar to the cmake documentation for configure_file)
+
+2. As awesome as the CMAKE system is, I believe that the CMRX build process should
+   be able to run independent of the build system. To make that happen we need a bit
+   more information as to how CMRX expects the library/application module link
+   mechanism to work to ensure that the developer understands how the linker enforces
+   memory protection and hides knowledge of symbols across library instances.
+
+   The key to all of this is the genlink-cmsis.py script that is smart enough to
+   take a GNU linker script and insert includes in all the right places.
+
+
+python src/third_party/cmrx/ld/genlink-cmsis.py --create src/blinky/config/max32690/max32690.ld src/blinky/config/max32690/fibblesnork.ld fart
+python src/third_party/cmrx/ld/genlink-cmsis.py --add-application biff  fart src/blinky/config/max32690
+
+
+python src/third_party/cmrx/ld/genlink-cmsis.py --create src/foo/config/STM32H7A3ZI/linker_script.ld src/foo/config/STM32H7A3ZI/fibblesnork.ld   fart
+python src/third_party/cmrx/ld/genlink-cmsis.py --add-application biff  fart src/foo/config/STM32H7A3ZI
+
+
+
+python src/third_party/cmrx/ld/genlink-cmsis.py --realign fart src/blinky/config/max32690
+
+                        [--add-application library_name binary_name linker_script_directory]
+
+
+General Notes for modifying a GNU LD linker script
+--------------------------------------------------
+
+GNU LD allows a linker script to include snippets of a linker script 
