@@ -28,7 +28,7 @@ function(add_firmware FW_NAME)
 	endif()
 	add_executable(${FW_NAME} ${EXCL} ${ARGN})
     add_custom_command(TARGET ${FW_NAME} POST_BUILD
-        COMMAND python ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --realign
+        COMMAND ${PYTHON_EXE} ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --realign
             ${CMAKE_CURRENT_BINARY_DIR}/$<TARGET_FILE_NAME:${FW_NAME}>.map 
             ${FW_NAME}
             ${CMAKE_CURRENT_BINARY_DIR}
@@ -41,7 +41,7 @@ function(add_firmware FW_NAME)
     # callouts to different included sub-linker scripts.
     # file(COPY_FILE ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld ${CMAKE_BINARY_DIR}/gen.${FW_NAME}.${DEVICE}.ld)
     execute_process(
-        COMMAND python ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --create 
+        COMMAND ${PYTHON_EXE} ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --create
         ${DEVICE_LINKER_SCRIPT}
         ${BINARY_LINKER_SCRIPT}
         ${FW_NAME}
@@ -74,7 +74,7 @@ function(target_add_applications TGT_NAME)
             if ("${IS_APPLICATION}" EQUAL "1")
                 #       message(STATUS "${LIBRARY} is an application, adding into linker script")
                 execute_process(
-                    COMMAND python ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --add-application 
+                    COMMAND ${PYTHON_EXE} ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --add-application
                         ${OUT_DIR}lib${LIBRARY}.a
                         ${TGT_NAME}
                         ${CMAKE_CURRENT_BINARY_DIR} 

@@ -43,7 +43,7 @@ else()
     # This IS the root source directory of the current build and we have
     # -DTESTING=1 passed on the CMake commandline. Either this is a nested run
     # of CMake or CMRX source tree is used to run unit tests.
-    cmake_minimum_required(VERSION 3.5)
+    cmake_minimum_required(VERSION 3.18)
     project(CMRX_unit_tests LANGUAGES C)
 
     cmake_policy(SET CMP0079 NEW)

@@ -1,3 +1,7 @@
+cmake_minimum_required(VERSION 3.18)
+
+find_program(PYTHON_EXE NAMES python3 python REQUIRED DOC "Python 3 executable")
+
 if ("${CMRX_ARCH}" STREQUAL "")
     message(FATAL_ERROR "CMRX_ARCH not defined! Please define target architecture to be used!")
 endif()
@@ -20,8 +24,6 @@ if (SW_TESTING_BUILD)
 else()
     if (EXISTS ${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/${CMRX_HAL}/CMRX.cmake)
         include(${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/${CMRX_HAL}/CMRX.cmake)
-        #else()
-        #message("File ${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/${CMRX_HAL}/CMRX.cmake not found, skipping!")
     endif()
 endif()
 
