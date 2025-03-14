@@ -27,9 +27,10 @@ int os_initialize_waitable_object(const void* object)
         if (os_threads[thread_id].state == THREAD_STATE_WAITING
             &&  os_threads[thread_id].wait_object == object)
         {
+            int sleeper_id = os_find_timer(thread_id, TIMER_TIMEOUT);
             if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK)
             {
-                if (os_notify_thread(thread_id, EVT_DEFAULT) == E_YIELD)
+                if (os_notify_thread(thread_id, sleeper_id, EVT_DEFAULT) == E_YIELD)
                 {
                     awaken = true;
                 }
@@ -76,7 +77,7 @@ int os_initialize_waitable_object(const void* object)
     return E_OK;
 }
 
-int os_notify_thread(Thread_t thread_id, Event_t event)
+int os_notify_thread(Thread_t thread_id, int candidate_timer, Event_t event)
 {
     struct OS_thread_t * notified_thread = &os_threads[thread_id];
     int retval = E_OK;
@@ -89,7 +90,7 @@ int os_notify_thread(Thread_t thread_id, Event_t event)
 
     if (notified_thread->wait_callback != NULL)
     {
-        notified_thread->wait_callback(notified_thread->wait_object, thread_id, event);
+        notified_thread->wait_callback(notified_thread->wait_object, thread_id, candidate_timer, event);
         notified_thread->wait_callback = NULL;
     }
 
@@ -138,10 +139,30 @@ static int os_notify_queue_event(const void * object)
     return E_OK;
 }
 
+Thread_t os_find_notified_thread(const void * object)
+{
+    Thread_t candidate_thread = 0xFF;
+    uint8_t candidate_priority = 0xFF;
+    for (int q = 0; q < OS_THREADS; ++q)
+    {
+        if (os_threads[q].state == THREAD_STATE_WAITING
+            &&  os_threads[q].wait_object == object)
+        {
+            if (os_threads[q].priority < candidate_priority)
+            {
+                candidate_thread = q;
+                candidate_priority = os_threads[q].priority;
+            }
+        }
+    }
+
+    return candidate_thread;
+}
+
 int os_notify_object(const void * object, Event_t event)
 {
     Thread_t candidate_thread = 0;
-    uint8_t candidate_priority = 0xFF;
+    int candidate_timer = 0;
     bool perform_thread_switch = false;
 
     int retval = E_OK;
@@ -149,24 +170,15 @@ int os_notify_object(const void * object, Event_t event)
     Txn_t txn_id = 0;
     do {
         txn_id = os_txn_start();
-        for (int q = 0; q < OS_THREADS; ++q)
-        {
-            if (os_threads[q].state == THREAD_STATE_WAITING
-                &&  os_threads[q].wait_object == object)
-            {
-                if (os_threads[q].priority < candidate_priority)
-                {
-                    candidate_thread = q;
-                    candidate_priority = os_threads[q].priority;
-                }
-            }
-        }
+
+        candidate_thread = os_find_notified_thread(object);
+        candidate_timer = os_find_timer(candidate_thread, TIMER_TIMEOUT);
     } while (os_txn_commit(txn_id, TXN_READWRITE) != E_OK);
 
     // Quirk: only idle thread should have this priority
-    if (candidate_priority != 0xFF)
+    if (candidate_thread < OS_THREADS)
     {
-        if (os_notify_thread(candidate_thread, event) == E_OK)
+        if (os_notify_thread(candidate_thread, candidate_timer, event) == E_OK)
         {
             if (os_threads[candidate_thread].priority < os_threads[os_get_current_thread()].priority)
             {
@@ -206,7 +218,7 @@ int os_sys_notify_object(const void * object)
  * Handling is different when notification is received via @ref notify_object
  * and wait reaching timeout value.
  */
-void cb_syscall_notify_object(const void * object, Thread_t thread, Event_t event)
+void cb_syscall_notify_object(const void * object, Thread_t thread, int sleeper, Event_t event)
 {
     (void) object;
 
@@ -227,7 +239,7 @@ void cb_syscall_notify_object(const void * object, Thread_t thread, Event_t even
 
     switch (event) {
         case EVT_DEFAULT:
-            os_cancel_timed_event(thread, TIMER_TIMEOUT);
+            os_cancel_sleeper(sleeper);
             break;
 
         case EVT_TIMEOUT:

@@ -60,7 +60,7 @@ void os_notify_init();
  * E_NOTAVAIL if thread is not waiting for *any* object and E_YIELD if
  * scheduler yield may be required.
  */
-int os_notify_thread(Thread_t thread_id, Event_t event);
+int os_notify_thread(Thread_t thread_id, int candidate_timer, Event_t event);
 
 /** Resume one thread that are waiting for this object.
  * This function will find one single thread which is waiting for this particular

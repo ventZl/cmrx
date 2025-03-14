@@ -119,27 +119,56 @@ int os_set_timed_event(unsigned microseconds, enum eSleepType type)
 	return E_NOTAVAIL;
 }
 
-int os_cancel_timed_event(Thread_t owner, enum eSleepType type)
+int os_find_timer(Thread_t owner, enum eSleepType type)
 {
-    Txn_t txn = os_txn_start();
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
-        struct TimerEntry_t * sleeper = &sleepers[q];
+		struct TimerEntry_t * sleeper = &sleepers[q];
 		if (sleeper->thread_id == owner)
 		{
 			if (type == sleeper->timer_type)
 			{
-                if (os_txn_commit(txn, TXN_READWRITE) == E_OK) {
-    				sleeper->thread_id = 0xFF;
-                    os_txn_done();
-	    			return 0;
-                }
+				return q;
 			}
 		}
 	}
-
-	return E_NOTAVAIL;
+	return TIMER_INVALID_ID;
 }
+
+
+int os_cancel_timed_event(Thread_t owner, enum eSleepType type)
+{
+	Txn_t txn;
+	int timer_id = 0xFF;
+	int rv;
+	do {
+		txn = os_txn_start();
+		timer_id = os_find_timer(owner, type);
+		if (timer_id == TIMER_INVALID_ID)
+		{
+			return E_NOTAVAIL;
+		}
+	} while (os_txn_commit(txn, TXN_READWRITE) != E_OK);
+
+	rv = os_cancel_sleeper(timer_id);
+	os_txn_done();
+
+	return rv;
+}
+
+int os_cancel_sleeper(int sleeper_id)
+{
+	if (sleeper_id >= SLEEPERS_MAX)
+	{
+		return E_INVALID;
+	}
+
+	struct TimerEntry_t * sleeper = &sleepers[sleeper_id];
+	sleeper->thread_id = 0xFF;
+
+	return 0;
+}
+
 
 /** Perform short busy wait.
  * This will perform busywait in the context of current thread.
@@ -243,41 +272,65 @@ bool os_schedule_timer(unsigned * delay)
 	return rv;
 }
 
+
+
 void os_run_timer(uint32_t microtime)
 {
-
+	bool yield_needed = false;
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
+		Txn_t txn = os_txn_start();
+
         struct TimerEntry_t * sleeper = &sleepers[q];
 		if (sleeper->thread_id != 0xFF)
 		{
             const unsigned sleeper_sleeptime = get_sleeptime(sleeper->interval);
 			if (get_sleep_time(sleeper->sleep_from, microtime) >= sleeper_sleeptime)
 			{
-				switch (sleeper->timer_type) {
-					case TIMER_SLEEP:
-					case TIMER_INTERVAL:
-						os_thread_continue(sleeper->thread_id);
-						break;
-
-					case TIMER_TIMEOUT:
-						os_notify_thread(sleeper->thread_id, EVT_TIMEOUT);
-						break;
-
-					default:
-						break;
-				}
-
-				if (is_periodic(sleeper))
+				if (os_txn_commit(txn, TXN_READWRITE) == E_OK)
 				{
-					sleeper->sleep_from = sleeper->sleep_from + sleeper_sleeptime;
+					switch (sleeper->timer_type) {
+						case TIMER_SLEEP:
+						case TIMER_INTERVAL:
+							{
+								struct OS_thread_t * thread = os_thread_by_id(sleeper->thread_id);
+								os_thread_set_ready(thread);
+								yield_needed = true;
+								break;
+							}
+
+						case TIMER_TIMEOUT:
+							os_notify_thread(sleeper->thread_id, q, EVT_TIMEOUT);
+							break;
+
+						default:
+							break;
+					}
+
+					if (is_periodic(sleeper))
+					{
+						sleeper->sleep_from = sleeper->sleep_from + sleeper_sleeptime;
+					}
+					else
+					{
+						sleeper->thread_id = 0xFF;
+					}
+					os_txn_done();
+					txn = os_txn_start();
 				}
 				else
 				{
-					sleeper->thread_id = 0xFF;
+					// Restart the current iteration
+					q = q - 1;
+					txn = os_txn_start();
+					continue;
 				}
 			}
 		}
+	}
+	if (yield_needed)
+	{
+		os_sched_yield();
 	}
 }
 

@@ -17,7 +17,7 @@ static Thread_t notify_thread = 0;
 static Event_t notify_event = 0;
 extern struct TimerEntry_t sleepers[SLEEPERS_MAX];
 
-extern void cb_syscall_notify_object(const void * object, Thread_t thread, Event_t event);
+extern void cb_syscall_notify_object(const void * object, Thread_t thread, int sleeper_id, Event_t event);
 
 #define DEFAULT_CALLBACK    cb_syscall_notify_object
 
@@ -112,7 +112,7 @@ CTEST2(os_notify_wait_object, os_wait_object_multiple) {
     ASSERT_EQUAL((long) os_threads[3].wait_callback, (long) DEFAULT_CALLBACK);
 }
 
-static void cb_object_notify(const void * object, Thread_t thread, Event_t event)
+static void cb_object_notify(const void * object, Thread_t thread, int sleeper_id, Event_t event)
 {
     notify_called = true;
     notify_object = object;

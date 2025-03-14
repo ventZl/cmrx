@@ -347,6 +347,22 @@ int os_thread_stop(uint8_t thread)
 	return E_INVALID;
 }
 
+struct OS_thread_t * os_thread_by_id(Thread_t id)
+{
+    if (id < OS_THREADS)
+    {
+        return &os_threads[id];
+    }
+
+    return NULL;
+}
+
+int os_thread_set_ready(struct OS_thread_t * thread)
+{
+    thread->state = THREAD_STATE_READY;
+    return 0;
+}
+
 int os_thread_continue(uint8_t thread)
 {
 	if (thread < OS_THREADS)
@@ -358,7 +374,7 @@ int os_thread_continue(uint8_t thread)
             {
                 if (os_txn_commit(txn, TXN_READWRITE) == E_OK) 
                 {
-                    os_threads[thread].state = THREAD_STATE_READY;
+                    os_thread_set_ready(&os_threads[thread]);
                     os_txn_done();
                 }
                 os_sched_yield();
@@ -382,7 +398,7 @@ int os_setpriority(uint8_t priority)
 	return 0;
 }
 
-static void cb_thread_join_notify(const void * object, Thread_t thread, Event_t event)
+static void cb_thread_join_notify(const void * object, Thread_t thread, int sleeper_id, Event_t event)
 {
     struct OS_thread_t * dead_thread = (struct OS_thread_t *) object;
     if (os_threads[thread].state == THREAD_STATE_WAITING

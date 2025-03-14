@@ -58,7 +58,7 @@ typedef int Event_t;
 
 /** Prototype for function that handles thread wakeup on notification.
  */
-typedef void (WaitHandler_t)(const void *, Thread_t, Event_t);
+typedef void (WaitHandler_t)(const void *, Thread_t, int, Event_t);
 
 
 
