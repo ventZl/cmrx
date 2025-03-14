@@ -5,7 +5,7 @@
  */
 #pragma once
 
-#include <cmrx/intrinsics.h>
+#include <stddef.h>
 
 /** @ingroup util
  * @{
@@ -30,5 +30,22 @@
  * @returns amount of items contained in an array
  */
 #define LENGTH(obj)	(sizeof(obj)/sizeof(obj[0]))
+
+/** Return pointer to enclosing container.
+ *
+ * This macro will provide a pointer to container enclosing
+ * the member of certain type. Useful for traversing up the data
+ * structure without having back-pointers.
+ * @param ptr pointer to known container member
+ * @param type type of the enclosing container
+ * @param member name of the member inside enclosing container
+ * @return pointer to the enclosing container
+ */
+#define CONTAINER_OF(ptr, type, member) ({\
+        const typeof(((type *) 0)->member) * member_ptr = (ptr);\
+        (type *) ((char *) member_ptr - offsetof(type, member));\
+})
+
+
 
 /** @} */
