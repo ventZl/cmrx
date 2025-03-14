@@ -129,12 +129,12 @@ From critical section to transaction</h2>
 <p>When the code makes an attempt to commit the transaction created in step 1, the transaction engine checks, if there was another transaction committed in between this transaction was created and the commit attempt has been made. It does not matter if this transaction happened inside ISR or on another core.</p>
 <p>If another transaction has been <b>committed</b> while the computation of this transaction computation ran, then the computation is considered inconsistent. It is then up on the calling code to decide on what to do now. In some cases, transaction can be dismissed entirely. In other cases it has to be computed again.</p>
 <p>If there was no conflict and commit is allowed, then critical section is entered and the code has exclusive access to the resources and can modify the shared kernel data. Here the <b>atomicity</b> is ensured.</p>
-<h2><a class="anchor" id="autotoc_md34"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
 Transaction caveats</h2>
 <p>Unlike transactional databases, the transactional processing inside the kernel is not fully isolated. While computation of transactions happens outside of critical sections, it may happen that code running one core will read the data while critical section running on another core will update it.</p>
 <p>This could be avoided by processing in isolation, creating a local copy of data being processed upon starting transaction. This would be extremely expensive as such kind of conflicts only happens rarely. In most cases, the effect of modification done inside the transaction only affects the local core. Thus the decision here is to make sure that changes made while committing transactions are made in a way that there won't be any transient hazard state generated.</p>
 <p>Transient hazard state happens when the current state of data in shared kernel structures, if interpreted by another piece of code, could lead to an unexpected and unwanted behavior.</p>
-<h2><a class="anchor" id="autotoc_md38"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 Transaction engine properties</h2>
 <p>The transaction engine provides level of guarantees roughly at the level "read committed".</p>
 <p>There are two types of transactions supported:</p><ul>

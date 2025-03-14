@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"pages.html":[],
 "rpc_intro.html":[1,3],
 "smp_support.html":[1,8],
 "structArch__State__t.html":[3,1,0,1,0],

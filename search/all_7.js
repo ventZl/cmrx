@@ -9,11 +9,11 @@ var searchData=
   ['delays_6',['Precise synchronous delays',['../group__api__timing.html#sync_delay',1,'']]],
   ['delays_20involving_20power_20management_7',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
   ['depth_8',['depth',['../structQueue.html#a37e4b62f3fa7794622481dba035f3b12',1,'Queue']]],
-  ['design_20of_20rpc_20mechanism_9',['High level design of RPC mechanism',['../rpc_intro.html#autotoc_md10',1,'']]],
+  ['design_20of_20rpc_20mechanism_9',['High level design of RPC mechanism',['../rpc_intro.html#autotoc_md11',1,'']]],
   ['destroy_10',['destroy',['../structQueueInterface.html#ad826f2ff621e2220098e591056b4a42c',1,'QueueInterface']]],
   ['development_20environment_11',['Development Environment',['../dev_env.html',1,'overview']]],
   ['diff_5fmicrotime_12',['diff_microtime',['../group__api__standard.html#ga821cccfa3f3ac511dd361a3544715944',1,'std.c']]],
-  ['directories_13',['Source and header directories',['../dev_env.html#autotoc_md42',1,'']]],
+  ['directories_13',['Source and header directories',['../dev_env.html#autotoc_md38',1,'']]],
   ['do_5fset_5ftimed_5fevent_14',['do_set_timed_event',['../group__os__timer.html#gaef90c3e49cedd75a22cf512bad8c149f',1,'timer.c']]],
   ['documentation_15',['Kernel documentation',['../group__os.html',1,'']]]
 ];

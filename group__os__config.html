@@ -145,6 +145,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga46a3ec2ee0c0ead945b1185c467024c5" id="r_ga46a3ec2ee0c0ead945b1185c467024c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga46a3ec2ee0c0ead945b1185c467024c5">CMRX_KERNEL_TRACING</a></td></tr>
 <tr class="memdesc:ga46a3ec2ee0c0ead945b1185c467024c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable kernel tracing.  <br /></td></tr>
 <tr class="separator:ga46a3ec2ee0c0ead945b1185c467024c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c5bc87a9ca14dd3e95ed7525a60089e" id="r_ga4c5bc87a9ca14dd3e95ed7525a60089e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga4c5bc87a9ca14dd3e95ed7525a60089e">CMRX_KERNEL_TRANSACTION_VERIFICATION</a></td></tr>
+<tr class="memdesc:ga4c5bc87a9ca14dd3e95ed7525a60089e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable kernel transaction verification.  <br /></td></tr>
+<tr class="separator:ga4c5bc87a9ca14dd3e95ed7525a60089e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Compile-time configuration of kernel runtime parameters. </p>
@@ -177,6 +180,23 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enable / disable kernel tracing. </p>
+
+</div>
+</div>
+<a id="ga4c5bc87a9ca14dd3e95ed7525a60089e" name="ga4c5bc87a9ca14dd3e95ed7525a60089e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4c5bc87a9ca14dd3e95ed7525a60089e">&#9670;&#160;</a></span>CMRX_KERNEL_TRANSACTION_VERIFICATION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMRX_KERNEL_TRANSACTION_VERIFICATION</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable / disable kernel transaction verification. </p>
+<p>Transaction verification is a potentially expensive function. It mostly only needs to be activated whenever kernel code is changed in order to verify that the modified code is not executing nested commits. </p>
 
 </div>
 </div>
