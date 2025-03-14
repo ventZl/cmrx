@@ -30,7 +30,7 @@ var group__os__kernel =
     [ "OS_TASK_NO_STACK", "group__os__kernel.html#ga5ed1a3a4c42bd97febc5e1dab288a0f5", null ],
     [ "Event_t", "group__os__kernel.html#ga680eadb82b6578f258791cef85501af2", null ],
     [ "OS_RPC_stack", "group__os__kernel.html#ga59b9ffdaff162b7deb5f6d34348513d9", null ],
-    [ "WaitHandler_t", "group__os__kernel.html#ga86c1d9def4919aa07143abede7baa08e", null ],
+    [ "WaitHandler_t", "group__os__kernel.html#gabc7393f4b316cb35167cd4de7ba83be8", null ],
     [ "ThreadState", "group__os__kernel.html#gab3804a8a4369184ad46dadf8e54957b6", [
       [ "THREAD_STATE_EMPTY", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7fa9cec9c302fe0bfbf03b37a6abc480", null ],
       [ "THREAD_STATE_READY", "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a327b504fcea41a280d9c9d25a530321d", null ],

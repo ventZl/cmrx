@@ -6,6 +6,7 @@ var group__os__timer =
       [ "thread_id", "structTimerEntry__t.html#af581a4f03b2ff0ca3042f23f9634b994", null ],
       [ "timer_type", "structTimerEntry__t.html#a9d5ed7a0637620f0d1b4e5e6cb56829f", null ]
     ] ],
+    [ "TIMER_INVALID_ID", "group__os__timer.html#ga4d069cdc857a5c07fb77aa308c72a904", null ],
     [ "eSleepType", "group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6", [
       [ "TIMER_SLEEP", "group__os__timer.html#ggafd9f6f3e031b55953acdb227a28431c6a838720ad69f2a9be2796ad3749a36a7f", null ],
       [ "TIMER_TIMEOUT", "group__os__timer.html#ggafd9f6f3e031b55953acdb227a28431c6ac6e6a01a6b4fad4c8054e0065442bdf7", null ],
@@ -17,8 +18,10 @@ var group__os__timer =
     [ "get_sleep_time", "group__os__timer.html#ga298a4922fb4180235c76c8cc8fecb6f5", null ],
     [ "get_sleeptime", "group__os__timer.html#gacee9648cc90be455d550756ca473a56f", null ],
     [ "is_periodic", "group__os__timer.html#gabc0c9f6d25c5678e6c4c9d88d1edb9bd", null ],
+    [ "os_cancel_sleeper", "group__os__timer.html#ga335e80741d1439574aabd5bfc5d8a890", null ],
     [ "os_cancel_timed_event", "group__os__timer.html#gabc1843d72b011bfcd0eb0cc93b92f091", null ],
     [ "os_cpu_freq_get", "group__os__timer.html#ga7790e1b47e7589223de470f32523408d", null ],
+    [ "os_find_timer", "group__os__timer.html#ga15d707dc009ae2f4232e53ce97149dda", null ],
     [ "os_run_timer", "group__os__timer.html#ga807091ac93d2fe8f891d40f39b49b7da", null ],
     [ "os_schedule_timer", "group__os__timer.html#gac6a7c0053f7960e97d395651f4d08fad", null ],
     [ "os_set_timed_event", "group__os__timer.html#ga7fba7ebc76c20159e6d1337d659fcb34", null ],
