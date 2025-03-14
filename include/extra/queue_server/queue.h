@@ -56,20 +56,20 @@ struct BasicQueue {
   };
 };
 
-/** Create queue with custom storage allocation size.
- * This is a helper macro that defines queue with developer-specified size
+/** Create queue type with custom storage allocation size.
+ * This is a helper macro that defines type for queue with developer-specified size
  * of the queue data storage. Suitable for cases where fixed allocation size
  * of 256 bytes of @ref BasicQueue is either too much or too little.
  * @param name resulting name of queue variable
  * @param size size of the buffer in bytes
  */
-#define STATIC_QUEUE(name, size) \
-struct {\
+#define STATIC_QUEUE_T(name, size) \
+typedef struct {\
     union {\
         struct Queue q;\
         unsigned char buffer[sizeof(struct Queue) + size];\
     };\
-} name;
+} name
 #pragma GCC diagnostic pop
 
 //#define unpack_queue(__q) _Generic((__q), struct Queue * : (__q), default: ((__q)->q))

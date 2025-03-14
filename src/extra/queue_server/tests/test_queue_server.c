@@ -3,7 +3,8 @@
 #include <string.h>
 #include <cmrx/defines.h>
 
-STATIC_QUEUE(queue, 256);
+STATIC_QUEUE_T(Queue_t, 256);
+Queue_t queue;
 
 #define TEST_QUEUE_DEPTH 16
 #define TEST_QUEUE_ITEM_SIZE 12
