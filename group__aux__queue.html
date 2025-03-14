@@ -122,9 +122,9 @@ Data Structures</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:ga055729a37bf543876e2ce9d57b95ab7b" id="r_ga055729a37bf543876e2ce9d57b95ab7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga055729a37bf543876e2ce9d57b95ab7b">QUEUE_LENGTH</a>&#160;&#160;&#160;256</td></tr>
 <tr class="separator:ga055729a37bf543876e2ce9d57b95ab7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga185265efed6cb953257ad32f811cfe23" id="r_ga185265efed6cb953257ad32f811cfe23"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#ga185265efed6cb953257ad32f811cfe23">STATIC_QUEUE</a>(name,  size)</td></tr>
-<tr class="memdesc:ga185265efed6cb953257ad32f811cfe23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create queue with custom storage allocation size.  <br /></td></tr>
-<tr class="separator:ga185265efed6cb953257ad32f811cfe23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf8d5555d8b3e3291300bb75f99ae0fa" id="r_gadf8d5555d8b3e3291300bb75f99ae0fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__aux__queue.html#gadf8d5555d8b3e3291300bb75f99ae0fa">STATIC_QUEUE_T</a>(name,  size)</td></tr>
+<tr class="memdesc:gadf8d5555d8b3e3291300bb75f99ae0fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create queue type with custom storage allocation size.  <br /></td></tr>
+<tr class="separator:gadf8d5555d8b3e3291300bb75f99ae0fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -172,14 +172,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga185265efed6cb953257ad32f811cfe23" name="ga185265efed6cb953257ad32f811cfe23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga185265efed6cb953257ad32f811cfe23">&#9670;&#160;</a></span>STATIC_QUEUE</h2>
+<a id="gadf8d5555d8b3e3291300bb75f99ae0fa" name="gadf8d5555d8b3e3291300bb75f99ae0fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadf8d5555d8b3e3291300bb75f99ae0fa">&#9670;&#160;</a></span>STATIC_QUEUE_T</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define STATIC_QUEUE</td>
+          <td class="memname">#define STATIC_QUEUE_T</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">name, </td>
@@ -197,16 +197,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">struct </span>{\</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{\</div>
 <div class="line">    <span class="keyword">union </span>{\</div>
 <div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structQueue.html">Queue</a> q;\</div>
 <div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> buffer[<span class="keyword">sizeof</span>(<span class="keyword">struct </span><a class="code hl_struct" href="structQueue.html">Queue</a>) + size];\</div>
 <div class="line">    };\</div>
-<div class="line">} name;</div>
+<div class="line">} name</div>
 <div class="ttc" id="astructQueue_html"><div class="ttname"><a href="structQueue.html">Queue</a></div><div class="ttdoc">Generic queue structure.</div><div class="ttdef"><b>Definition</b> queue.h:36</div></div>
 </div><!-- fragment -->
-<p>Create queue with custom storage allocation size. </p>
-<p>This is a helper macro that defines queue with developer-specified size of the queue data storage. Suitable for cases where fixed allocation size of 256 bytes of <a class="el" href="structBasicQueue.html">BasicQueue</a> is either too much or too little. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Create queue type with custom storage allocation size. </p>
+<p>This is a helper macro that defines type for queue with developer-specified size of the queue data storage. Suitable for cases where fixed allocation size of 256 bytes of <a class="el" href="structBasicQueue.html">BasicQueue</a> is either too much or too little. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>resulting name of queue variable </td></tr>
     <tr><td class="paramname">size</td><td>size of the buffer in bytes </td></tr>

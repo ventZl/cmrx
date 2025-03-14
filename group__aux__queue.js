@@ -13,7 +13,7 @@ var group__aux__queue =
       [ "q", "structBasicQueue.html#ad239d4315bc1e98249fc5d7ab7c34a09", null ]
     ] ],
     [ "QUEUE_LENGTH", "group__aux__queue.html#ga055729a37bf543876e2ce9d57b95ab7b", null ],
-    [ "STATIC_QUEUE", "group__aux__queue.html#ga185265efed6cb953257ad32f811cfe23", null ],
+    [ "STATIC_QUEUE_T", "group__aux__queue.html#gadf8d5555d8b3e3291300bb75f99ae0fa", null ],
     [ "queue_empty", "group__aux__queue.html#ga4eb65aa97addc979fe4486b7456682d9", null ],
     [ "queue_full", "group__aux__queue.html#gaf2bde6f72ff0cc4a047ee99454ac3dd6", null ],
     [ "queue_init", "group__aux__queue.html#gaa7d1e0d4ea7e93ad6af453ebabd644d2", null ],

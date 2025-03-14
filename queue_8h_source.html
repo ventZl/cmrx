@@ -133,13 +133,13 @@ $(document).ready(function(){initNavTree('queue_8h_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="foldopen" id="foldopen00066" data-start="" data-end="">
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="group__aux__queue.html#ga185265efed6cb953257ad32f811cfe23">   66</a></span><span class="preprocessor">#define STATIC_QUEUE(name, size) \</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">struct {\</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="group__aux__queue.html#gadf8d5555d8b3e3291300bb75f99ae0fa">   66</a></span><span class="preprocessor">#define STATIC_QUEUE_T(name, size) \</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">typedef struct {\</span></div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">    union {\</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">        struct Queue q;\</span></div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">        unsigned char buffer[sizeof(struct Queue) + size];\</span></div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">    };\</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">} name;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">} name</span></div>
 </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">#pragma GCC diagnostic pop</span></div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
