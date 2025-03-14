@@ -50,4 +50,12 @@
 /** Enable / disable kernel tracing */
 #cmakedefine CMRX_KERNEL_TRACING
 
+/** Enable / disable kernel transaction verification.
+ * Transaction verification is a potentially expensive function.
+ * It mostly only needs to be activated whenever kernel code is changed
+ * in order to verify that the modified code is not executing nested
+ * commits.
+ */
+#cmakedefine CMRX_KERNEL_TRANSACTION_VERIFICATION
+
 /** @} */
