@@ -159,4 +159,8 @@ int os_thread_migrate(uint8_t thread_id, int target_core);
  */
 uint32_t os_shutdown();
 
+struct OS_thread_t * os_thread_by_id(Thread_t id);
+
+int os_thread_set_ready(struct OS_thread_t * thread);
+
 /** @} */

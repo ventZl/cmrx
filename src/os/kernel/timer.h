@@ -35,6 +35,9 @@ struct TimerEntry_t {
     uint8_t timer_type;       ///< type of sleep performed
 };
 
+#define TIMER_INVALID_ID 0xFF
+
+
 /** Kernel implementation of usleep() syscall.
  * See \ref usleep for details on arguments.
  */
@@ -63,15 +66,33 @@ void os_timer_init();
  */
 int os_set_timed_event(unsigned microseconds, enum eSleepType type);
 
+/** Find a timer slot matchin owner thread and timer type.
+ *
+ * This will find a slot which bears the timer of given type for given thread.
+ * @param [in] owner thread ID which should own the timer
+ * @param [in] type type of the timer.
+ */
+int os_find_timer(Thread_t owner, enum eSleepType type);
+
 /** Cancels existing timed event.
  *
  * This function is only accessible for periodic timers externally. It
  * allows cancelling of interval timers set previously.
  * @param owner thread which shall own the interval timer
  * @param type type of the event to be cancelled
- * @return 0 if operation performed succesfully.
+ * @return 0 if operation performed successfully.
  */
 int os_cancel_timed_event(Thread_t owner, enum eSleepType type);
+
+/** Cancel existing sleeper.
+ *
+ * This function will cancel existing sleeper. It is useful
+ * for cases where you already know the identity of the sleeper
+ * in advance.
+ * @param sleeper ID of the sleeper being cancelled
+ * @return 0 is operation performed successfully
+ */
+int os_cancel_sleeper(int sleeper);
 
 /** Provide information on next scheduled event.
  *
