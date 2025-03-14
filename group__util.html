@@ -116,6 +116,55 @@ Modules</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>This is set of small and generally "one can live without" utilities, which may make one's life easier. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga818b9cca761fe7bc18e4e417da772976" name="ga818b9cca761fe7bc18e4e417da772976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga818b9cca761fe7bc18e4e417da772976">&#9670;&#160;</a></span>CONTAINER_OF</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONTAINER_OF</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ptr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">member&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">        ({\</div>
+<div class="line">        <span class="keyword">const</span> typeof(((type *) 0)-&gt;member) * member_ptr = (ptr);\</div>
+<div class="line">        (type *) ((<span class="keywordtype">char</span> *) member_ptr - offsetof(type, member));\</div>
+<div class="line">})</div>
+</div><!-- fragment -->
+<p>Return pointer to enclosing container. </p>
+<p>This macro will provide a pointer to container enclosing the member of certain type. Useful for traversing up the data structure without having back-pointers. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>pointer to known container member </td></tr>
+    <tr><td class="paramname">type</td><td>type of the enclosing container </td></tr>
+    <tr><td class="paramname">member</td><td>name of the member inside enclosing container </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to the enclosing container </dd></dl>
+
+</div>
+</div>
 <a id="gafedd38df23e9c9f801b82b8cdf210dae" name="gafedd38df23e9c9f801b82b8cdf210dae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gafedd38df23e9c9f801b82b8cdf210dae">&#9670;&#160;</a></span>LENGTH</h2>
 

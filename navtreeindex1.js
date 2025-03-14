@@ -235,12 +235,13 @@ var NAVTREEINDEX1 =
 "group__queue__server.html#ga7cdee7d946456cd856f5168b529cd315":[3,3,2,5],
 "group__queue__server.html#ga9b5f9ede422d927d87e796a898bc55a7":[3,3,2,4],
 "group__util.html":[3,4],
-"group__util.html#ga40805b5dd56ee36df59a7bbe403ddf33":[3,4,2],
-"group__util.html#gafedd38df23e9c9f801b82b8cdf210dae":[3,4,1],
+"group__util.html#ga40805b5dd56ee36df59a7bbe403ddf33":[3,4,3],
+"group__util.html#ga818b9cca761fe7bc18e4e417da772976":[3,4,1],
+"group__util.html#gafedd38df23e9c9f801b82b8cdf210dae":[3,4,2],
 "group__util__assert.html":[3,4,0],
 "hal_integration.html":[1,7],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "mem_model.html":[1,1],
 "overview.html":[1],
 "pages.html":[],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "smp_support.html":[1,8],
 "structArch__State__t.html":[3,1,0,1,0],
 "structBasicQueue.html":[3,3,3,1],
-"structBasicQueue.html#a8ad0c0e100f40b8ba03f80bc0754892c":[3,3,3,1,0],
-"structBasicQueue.html#ad239d4315bc1e98249fc5d7ab7c34a09":[3,3,3,1,1]
+"structBasicQueue.html#a8ad0c0e100f40b8ba03f80bc0754892c":[3,3,3,1,0]
 };

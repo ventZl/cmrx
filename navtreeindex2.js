@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"structBasicQueue.html#ad239d4315bc1e98249fc5d7ab7c34a09":[3,3,3,1,1],
 "structComChannel.html":[3,3,0,7],
 "structComChannel.html#a39754a6862ae6d0d4450ca575b02df05":[3,3,0,7,0],
 "structComChannelVMT.html":[3,3,0,6],
