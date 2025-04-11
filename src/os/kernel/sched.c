@@ -225,7 +225,11 @@ __attribute__((noreturn))
 int os_idle_thread(void * data)
 {
     (void) data;
-	while (1);
+	while (1) {
+#ifdef CMRX_IDLE_THREAD_SHUTDOWN_CPU
+        __WFI();
+#endif
+    }
 }
 
 /** Find free stack slot and allocate it.

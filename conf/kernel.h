@@ -58,4 +58,11 @@
  */
 #cmakedefine CMRX_KERNEL_TRANSACTION_VERIFICATION
 
+/** Enable / disable stopping CPU if idle thread is executed.
+ * Idle thread can call WFI instruction to halt the CPU.
+ * Do not enable this if your timing provider is timed by clocksource
+ * that gets stopped while CPU is in WFI.
+ */
+#cmakedefine CMRX_IDLE_THREAD_SHUTDOWN_CPU
+
 /** @} */
