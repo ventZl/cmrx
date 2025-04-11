@@ -6,6 +6,7 @@
 
 #define os_core_lock() __disable_irq()
 #define os_core_unlock() __enable_irq()
+extern void os_core_sleep();
 
 #ifndef CMRX_ARCH_SMP_SUPPORTED
 

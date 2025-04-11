@@ -191,4 +191,8 @@ __attribute__((interrupt)) void SVC_Handler(void)
     return; /*asm volatile("BX lr");*/
 }
 
+void os_core_sleep()
+{
+	__WFI();
+}
 /** @} */

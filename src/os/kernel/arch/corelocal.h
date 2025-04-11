@@ -53,5 +53,11 @@ void os_core_lock();
  */
 void os_core_unlock();
 
+/** Park current core
+ * This function is free to park current core in whatever way that will still allow the
+ * core to be woken up by external interrupts.
+ */
+void os_core_sleep();
+
 /** @} */
 

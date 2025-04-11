@@ -227,7 +227,7 @@ int os_idle_thread(void * data)
     (void) data;
 	while (1) {
 #ifdef CMRX_IDLE_THREAD_SHUTDOWN_CPU
-        __WFI();
+        os_core_sleep();
 #endif
     }
 }
