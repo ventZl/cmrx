@@ -6,6 +6,7 @@ var group__arch__arch =
     [ "mpu_restore", "group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc", null ],
     [ "os_boot_thread", "group__arch__arch.html#ga1efbfe606317fd469d8fc187a4cb9a79", null ],
     [ "os_core_lock", "group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289", null ],
+    [ "os_core_sleep", "group__arch__arch.html#gaeb3a0773a5b5be08c7e685cfad452648", null ],
     [ "os_core_unlock", "group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea", null ],
     [ "os_ipi_sync_probe", "group__arch__arch.html#gaf2a18c9a690c0de3735ef1f78abe1554", null ],
     [ "os_ipi_sync_release", "group__arch__arch.html#gaf585a2c2059dfbdc1bad79c7f370ea36", null ],

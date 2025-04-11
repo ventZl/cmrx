@@ -103,21 +103,21 @@ $(document).ready(function(){initNavTree('kernel_2arch_2corelocal_8h_source.html
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345">   16</a></span><span class="keywordtype">unsigned</span> <a class="code hl_function" href="group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345">coreid</a>();</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345">   16</a></span><span class="keywordtype">unsigned</span> coreid();</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826">   30</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826">os_smp_lock</a>();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826">   30</a></span><span class="keywordtype">void</span> os_smp_lock();</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="group__arch__arch.html#gad026c280d52436bedf3e3643900d735f">   41</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#gad026c280d52436bedf3e3643900d735f">os_smp_unlock</a>();</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="group__arch__arch.html#gad026c280d52436bedf3e3643900d735f">   41</a></span><span class="keywordtype">void</span> os_smp_unlock();</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">   49</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">os_core_lock</a>();</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea">   54</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea">os_core_unlock</a>();</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="ttc" id="agroup__arch__arch_html_ga08c83fbec4a92bba591402c53805f345"><div class="ttname"><a href="group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345">coreid</a></div><div class="ttdeci">unsigned coreid()</div><div class="ttdoc">Provide kernel with identification of current CPU core.</div></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arm__syscall.html#gaeb3a0773a5b5be08c7e685cfad452648">os_core_sleep</a>();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="ttc" id="agroup__arch__arch_html_ga4c0d351c7f2f49293fe5907c2ac5d289"><div class="ttname"><a href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">os_core_lock</a></div><div class="ttdeci">void os_core_lock()</div><div class="ttdoc">Lock the current core This function ensures that no other code will interrupt the currently running c...</div></div>
 <div class="ttc" id="agroup__arch__arch_html_ga7b7c981ccf3a59d00d3424fa768c71ea"><div class="ttname"><a href="group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea">os_core_unlock</a></div><div class="ttdeci">void os_core_unlock()</div><div class="ttdoc">Unlock the current core Unlocks exclusive access to the current core.</div></div>
-<div class="ttc" id="agroup__arch__arch_html_gac579ea1044d56f3f04887b8b21118826"><div class="ttname"><a href="group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826">os_smp_lock</a></div><div class="ttdeci">void os_smp_lock()</div><div class="ttdoc">Lock the &quot;big kernel lock&quot;.</div></div>
-<div class="ttc" id="agroup__arch__arch_html_gad026c280d52436bedf3e3643900d735f"><div class="ttname"><a href="group__arch__arch.html#gad026c280d52436bedf3e3643900d735f">os_smp_unlock</a></div><div class="ttdeci">void os_smp_unlock()</div><div class="ttdoc">Unlock the &quot;big kernel lock&quot;.</div></div>
+<div class="ttc" id="agroup__arch__arm__syscall_html_gaeb3a0773a5b5be08c7e685cfad452648"><div class="ttname"><a href="group__arch__arm__syscall.html#gaeb3a0773a5b5be08c7e685cfad452648">os_core_sleep</a></div><div class="ttdeci">void os_core_sleep()</div><div class="ttdef"><b>Definition</b> cortex.c:194</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->

@@ -143,6 +143,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7b7c981ccf3a59d00d3424fa768c71ea" id="r_ga7b7c981ccf3a59d00d3424fa768c71ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea">os_core_unlock</a> ()</td></tr>
 <tr class="memdesc:ga7b7c981ccf3a59d00d3424fa768c71ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock the current core Unlocks exclusive access to the current core.  <br /></td></tr>
 <tr class="separator:ga7b7c981ccf3a59d00d3424fa768c71ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb3a0773a5b5be08c7e685cfad452648" id="r_gaeb3a0773a5b5be08c7e685cfad452648"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaeb3a0773a5b5be08c7e685cfad452648">os_core_sleep</a> ()</td></tr>
+<tr class="memdesc:gaeb3a0773a5b5be08c7e685cfad452648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Park current core This function is free to park current core in whatever way that will still allow the core to be woken up by external interrupts.  <br /></td></tr>
+<tr class="separator:gaeb3a0773a5b5be08c7e685cfad452648"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b816407f1b57d532407988a5da92716" id="r_ga2b816407f1b57d532407988a5da92716"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b816407f1b57d532407988a5da92716">os_memory_protection_start</a> ()</td></tr>
 <tr class="memdesc:ga2b816407f1b57d532407988a5da92716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start memory protection.  <br /></td></tr>
 <tr class="separator:ga2b816407f1b57d532407988a5da92716"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -359,6 +362,25 @@ Port implementation sources</h1>
 
 <p>Lock the current core This function ensures that no other code will interrupt the currently running core. </p>
 <p>It usually boils down to disabling interrupts. </p><dl class="section note"><dt>Note</dt><dd>Calling this function does <em>NOT</em> prevent another core from running code which will manipulate kernel data structures. If you want this behavior, use os_smp_lock(). </dd></dl>
+
+</div>
+</div>
+<a id="gaeb3a0773a5b5be08c7e685cfad452648" name="gaeb3a0773a5b5be08c7e685cfad452648"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeb3a0773a5b5be08c7e685cfad452648">&#9670;&#160;</a></span>os_core_sleep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_core_sleep </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Park current core This function is free to park current core in whatever way that will still allow the core to be woken up by external interrupts. </p>
 
 </div>
 </div>

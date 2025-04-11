@@ -148,6 +148,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga4c5bc87a9ca14dd3e95ed7525a60089e" id="r_ga4c5bc87a9ca14dd3e95ed7525a60089e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga4c5bc87a9ca14dd3e95ed7525a60089e">CMRX_KERNEL_TRANSACTION_VERIFICATION</a></td></tr>
 <tr class="memdesc:ga4c5bc87a9ca14dd3e95ed7525a60089e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable kernel transaction verification.  <br /></td></tr>
 <tr class="separator:ga4c5bc87a9ca14dd3e95ed7525a60089e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2722f702ab9637ad9e7f7e8be042f693" id="r_ga2722f702ab9637ad9e7f7e8be042f693"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga2722f702ab9637ad9e7f7e8be042f693">CMRX_IDLE_THREAD_SHUTDOWN_CPU</a></td></tr>
+<tr class="memdesc:ga2722f702ab9637ad9e7f7e8be042f693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable stopping CPU if idle thread is executed.  <br /></td></tr>
+<tr class="separator:ga2722f702ab9637ad9e7f7e8be042f693"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Compile-time configuration of kernel runtime parameters. </p>
@@ -164,6 +167,23 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga2722f702ab9637ad9e7f7e8be042f693" name="ga2722f702ab9637ad9e7f7e8be042f693"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2722f702ab9637ad9e7f7e8be042f693">&#9670;&#160;</a></span>CMRX_IDLE_THREAD_SHUTDOWN_CPU</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMRX_IDLE_THREAD_SHUTDOWN_CPU</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable / disable stopping CPU if idle thread is executed. </p>
+<p>Idle thread can call WFI instruction to halt the CPU. Do not enable this if your timing provider is timed by clocksource that gets stopped while CPU is in WFI. </p>
 
 </div>
 </div>
