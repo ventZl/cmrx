@@ -14,11 +14,29 @@ struct OS_thread_t;
  */
 #ifdef __FPU_USED
 void os_thread_initialize_arch(struct OS_thread_t * thread);
+void os_save_fpu_context(struct OS_thread_t * thread);
+void os_load_fpu_context(struct OS_thread_t * thread);
+
+#define os_save_exc_return(thread)      thread->arch.exc_return = (uint32_t) __get_LR()
+#define os_load_exc_return(thread)      __set_LR(thread->arch.exc_return)
+
+
+/* Implementation of the porting layer API. */
+void os_init_arch(void);
+void os_init_core(unsigned core_id);
+
 #else
+// These functions are not needed if FPU is not enabled, turn them into no-op
 #   define os_thread_initialize_arch(x)
+#   define os_save_fpu_context(x)
+#   define os_load_fpu_context(x)
+#   define os_save_exc_return(thread)
+#   define os_load_exc_return(thread)
+
+
+#   define os_init_arch(x)
+#   define os_init_core(x)
 #endif
-
-
 
 /** ARM-specific architecture state of a thread.
  * This structure holds additional state needed by the
@@ -31,15 +49,8 @@ void os_thread_initialize_arch(struct OS_thread_t * thread);
 
 struct Arch_State_t {
 #ifdef __FPU_USED
-    /** A bitmask carrying information if any of RPC levels was actively using FPU. */
-    uint8_t fp_active;
+    /** Exception return saved at the point PendSV switches tasks. Used to figure out how to restore the thread. */
+    uint32_t exc_return;
 #endif
 };
 
-/** Provide information on if FPU is used by certain thread.
- * This provides information on if FPU is used by certain thread and
- * RPC call level. In CMRX the ABI boundary between the caller and callee
- * is integer only. FPU context is not carried over the rpc_call/rpc_return boundary.
- * @returns true if topmost execution context within thread is using FPU. False otherwise.
- */
-bool os_is_fpu_active_in_thread(Thread_t thread_id);

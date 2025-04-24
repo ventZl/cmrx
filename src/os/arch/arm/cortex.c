@@ -98,17 +98,23 @@ __attribute__((interrupt)) void PendSV_Handler(void)
     // handler. If you assert here, then your interrupt handler priority
     // is messed up. You need to configure PendSV to be the handler with
     // absolutely the lowest priority.
-    ASSERT(__get_LR() == (void *) EXC_RETURN_THREAD_PSP);
+    ASSERT(__get_LR() == (void *) EXC_RETURN_THREAD_PSP || __get_LR() == (void *) EXC_RETURN_THREAD_PSP_FPU);
 
 	sanitize_psp(cpu_context.old_task->sp);
 
 	struct OS_core_state_t * cpu_state = &core[coreid()];
+
+	os_save_exc_return(cpu_context.old_task);
+	os_save_fpu_context(cpu_context.old_task);
 
 	if (cpu_context.old_parent_process != cpu_context.new_parent_process
         || cpu_context.old_host_process != cpu_context.new_host_process)
 	{
 		mpu_restore((const MPU_State *) &cpu_context.new_host_process->mpu, (const MPU_State *) &cpu_context.new_parent_process->mpu);
 	}
+
+	os_load_exc_return(cpu_context.old_task);
+	os_load_fpu_context(cpu_context.new_task);
 
 	// Configure stack for incoming process
     // This assumes that all stacks are of same size
