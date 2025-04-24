@@ -297,14 +297,27 @@ static inline ExceptionFrame * pop_exception_frame(ExceptionFrame * frame, unsig
  */
 ALWAYS_INLINE void * __get_LR(void)
 {
-	void * psp;
+	void * lr;
 	asm volatile(
 			".syntax unified\n\t"
 			"MOV %0, LR\n\t"
-			: "=r" (psp) 
+			: "=r" (lr)
 			);
 
-	return psp;
+	return lr;
+}
+
+/** Set value of process LR
+ * @param lr The new value of LR to set
+ */
+ALWAYS_INLINE void __set_LR(void * lr)
+{
+	asm volatile(
+		".syntax unified\n\t"
+		"MOV LR, %0\n\t"
+		:
+		: "r" (lr)
+	);
 }
 
 /** Forges shutdown exception frame.

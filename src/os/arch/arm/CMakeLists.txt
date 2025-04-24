@@ -2,6 +2,7 @@ set(cmrx_arm_SRCS
     cortex.c
     static.c 
     mpu.c
+    runtime.c
     sanitize.c 
     sched.c 
     signal.c 
