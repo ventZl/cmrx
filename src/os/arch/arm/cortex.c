@@ -79,26 +79,58 @@ ALWAYS_INLINE void * __get_SP(void)
 	return sp;
 }
 
+uint32_t os_perform_thread_switch(uint32_t LR);
+
+/** Wrapper for for Pending service interrupt handler.
+ * CMRX uses pending service to handle heavy lifting of thread switching.
+ * At the time PendSV is scheduled, the decision on which thread to run next
+ * has already been made. This code just performs the switch.
+ *
+ * This assembly stub makes sure that all thread registers are properly saved
+ * and restored during thread switch, so the actual implementation may be written
+ * as plain C function without involving surprises.
+ */
+__attribute__((interrupt, naked)) void PendSV_Handler(void)
+{
+	// Disable interrupts and save the remaining thread registers not saved by the CPU
+	asm volatile("CPSID I\n\t");
+	SAVE_CONTEXT();
+	// Performs: __set_LR(os_perform_thread_switch((uint32_t) __get_LR()));
+	asm volatile(
+		"MOV r0, LR\n\t"
+		"BL %0\n\t"
+		"MOV LR, r0\n\t"
+		:
+		: "i" (os_perform_thread_switch)
+		: "r0"
+	);
+	// Load registers not loaded by the CPU, enable interrupts and return from exception
+	LOAD_CONTEXT();
+	asm volatile(
+		"CPSIE I\n\t"
+		"BX LR");
+}
+
 /** Handle task switch.
  * This function performs the heavy lifting of context switching
  * when CPU is switched from one task to another.
- * As of now, it stores outgoing task's application context onto stack
- * and restores incoming task's context from its stack.
- * It then sets PSP to point to incoming task's stack and resumes
- * normal operation.
+ * It saves the SP of suspended  thread, then modifies the PSP to match the saved
+ * value of incoming thread and if needed it performs signal handler injection
+ * and/or MPU register reconfiguration.
+ * Saving and restoring of registers is performed by the wrapper to avoid
+ * C function preamble interference.
+ * @param [in] LR copy of the LR value of the PendSV_Handler
+ * @returns value that has to be used as new LR before PendSV_Handler quits
  */
-__attribute__((interrupt)) void PendSV_Handler(void)
+uint32_t os_perform_thread_switch(uint32_t LR)
 {
-	/* Do NOT put anything here. You will clobber context being stored! */
-	cortex_disable_interrupts();
-	/* Do NOT put anything here. You will clobber context being stored! */
-	cpu_context.old_task->sp = save_context();
+	cpu_context.old_task->sp = (uint32_t *) __get_PSP();
 
     // This assert checks that we are not preempting some other interrupt
     // handler. If you assert here, then your interrupt handler priority
     // is messed up. You need to configure PendSV to be the handler with
     // absolutely the lowest priority.
-    ASSERT(__get_LR() == (void *) EXC_RETURN_THREAD_PSP);
+    ASSERT(LR == EXC_RETURN_THREAD_PSP);
 
 	sanitize_psp(cpu_context.old_task->sp);
 
@@ -134,18 +166,14 @@ __attribute__((interrupt)) void PendSV_Handler(void)
 	/* Clear any PendSV requests that might have been made by ISR handlers
 	 * preempting PendSV handler before it disabled interrupts
 	 */
-	SCB->ICSR = SCB_ICSR_PENDSVCLR;
+	os_request_context_switch(false);
 
-	load_context(cpu_context.new_task->sp);
-	/* Do NOT put anything here. You will clobber context just restored! */
+	__set_PSP((uint32_t) cpu_context.new_task->sp);
 	__ISB();
 	__DSB();
-	/* Clear any potential stale pending service requests */
-	os_request_context_switch(false);
-	/* Do NOT put anything here. You will clobber context just restored! */
+	sanitize_psp((uint32_t *) __get_PSP());
 
-	cortex_enable_interrupts();
-	/* Do NOT put anything here. You will clobber context just restored! */
+	return LR;
 }
 
 /** @} */
