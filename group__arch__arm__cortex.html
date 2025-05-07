@@ -119,6 +119,12 @@ Data Structures</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:gaa1dec568e79152c892dcf63f445cbd7a" id="r_gaa1dec568e79152c892dcf63f445cbd7a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a>&#160;&#160;&#160;__STATIC_FORCEINLINE</td></tr>
 <tr class="separator:gaa1dec568e79152c892dcf63f445cbd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1004218aa9f9303e92bc8c76b34467ad" id="r_ga1004218aa9f9303e92bc8c76b34467ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#ga1004218aa9f9303e92bc8c76b34467ad">SAVE_CONTEXT</a>()</td></tr>
+<tr class="memdesc:ga1004218aa9f9303e92bc8c76b34467ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save application context.  <br /></td></tr>
+<tr class="separator:ga1004218aa9f9303e92bc8c76b34467ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f0ecd71a6265dddd9f66c09cdf570fe" id="r_ga4f0ecd71a6265dddd9f66c09cdf570fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#ga4f0ecd71a6265dddd9f66c09cdf570fe">LOAD_CONTEXT</a>()</td></tr>
+<tr class="memdesc:ga4f0ecd71a6265dddd9f66c09cdf570fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load application context.  <br /></td></tr>
+<tr class="separator:ga4f0ecd71a6265dddd9f66c09cdf570fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacf4dbaf7327b08d6a31c584b1aa200b8" id="r_gacf4dbaf7327b08d6a31c584b1aa200b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gacf4dbaf7327b08d6a31c584b1aa200b8">EXCEPTION_FRAME_SIZE</a>&#160;&#160;&#160;8</td></tr>
 <tr class="separator:gacf4dbaf7327b08d6a31c584b1aa200b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -127,12 +133,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gabe1c8e0b0ce8425aa5eaadc6c7715a86" id="r_gabe1c8e0b0ce8425aa5eaadc6c7715a86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86">__ISR_return</a> ()</td></tr>
 <tr class="memdesc:gabe1c8e0b0ce8425aa5eaadc6c7715a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform same actions as normal ISR return does.  <br /></td></tr>
 <tr class="separator:gabe1c8e0b0ce8425aa5eaadc6c7715a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7d319ef3237c279150083fe5944dc19" id="r_gac7d319ef3237c279150083fe5944dc19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gac7d319ef3237c279150083fe5944dc19">save_context</a> ()</td></tr>
-<tr class="memdesc:gac7d319ef3237c279150083fe5944dc19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save application context.  <br /></td></tr>
-<tr class="separator:gac7d319ef3237c279150083fe5944dc19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3f11bf6495679261169947a65655d16" id="r_gaf3f11bf6495679261169947a65655d16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gaf3f11bf6495679261169947a65655d16">load_context</a> (uint32_t *sp)</td></tr>
-<tr class="memdesc:gaf3f11bf6495679261169947a65655d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load application context saved by save_context from address sp.  <br /></td></tr>
-<tr class="separator:gaf3f11bf6495679261169947a65655d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb8ca1a0c49221cc753e1621f5029911" id="r_gabb8ca1a0c49221cc753e1621f5029911"><td class="memItemLeft" align="right" valign="top">static uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gabb8ca1a0c49221cc753e1621f5029911">get_exception_arg_addr</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, unsigned argno)</td></tr>
 <tr class="memdesc:gabb8ca1a0c49221cc753e1621f5029911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve address of n-th argument from exception frame.  <br /></td></tr>
 <tr class="separator:gabb8ca1a0c49221cc753e1621f5029911"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,6 +190,79 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga4f0ecd71a6265dddd9f66c09cdf570fe" name="ga4f0ecd71a6265dddd9f66c09cdf570fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4f0ecd71a6265dddd9f66c09cdf570fe">&#9670;&#160;</a></span>LOAD_CONTEXT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOAD_CONTEXT</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">asm</span> ( \</div>
+<div class="line">    <span class="stringliteral">&quot;.syntax unified\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MRS r0, PSP\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;LDMFD r0!, {r4 - r7}\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MOV r8, r4\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MOV r9, r5\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MOV r10, r6\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MOV r11, r7\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;LDMFD r0!, {r4 - r7}\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MSR PSP, r0\n\t&quot;</span> \</div>
+<div class="line">    : : : <span class="stringliteral">&quot;r0&quot;</span>, <span class="stringliteral">&quot;r4&quot;</span>, <span class="stringliteral">&quot;r5&quot;</span>, <span class="stringliteral">&quot;r6&quot;</span>, <span class="stringliteral">&quot;r7&quot;</span>, <span class="stringliteral">&quot;memory&quot;</span> \</div>
+<div class="line">)</div>
+</div><!-- fragment -->
+<p>Load application context. </p>
+<p>This function will grab process SP and load 8 registers from memory location pointed by the PSP. Process SP is updated to point to the new top of the stack. This operation will pop 32 bytes (8 registers * 4 bytes) from stack. </p><dl class="section note"><dt>Note</dt><dd>This is defined as a macro so it can live inside naked functions.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sp</td><td>address where top of the stack containing application context is </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga1004218aa9f9303e92bc8c76b34467ad" name="ga1004218aa9f9303e92bc8c76b34467ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1004218aa9f9303e92bc8c76b34467ad">&#9670;&#160;</a></span>SAVE_CONTEXT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SAVE_CONTEXT</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">asm</span> <span class="keyword">volatile</span>( \</div>
+<div class="line">    <span class="stringliteral">&quot;.syntax unified\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MRS r0, PSP\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;SUBS r0, #16\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;STMEA r0!, {r4 - r7}\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;SUBS r0, #32\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MOV r4, r8\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MOV r5, r9\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MOV r6, r10\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MOV r7, r11\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;STMEA r0!, {r4 - r7}\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;SUBS r0, #16\n\t&quot;</span> \</div>
+<div class="line">    <span class="stringliteral">&quot;MSR PSP, r0\n\t&quot;</span> \</div>
+<div class="line">    : : : <span class="stringliteral">&quot;r0&quot;</span>, <span class="stringliteral">&quot;r4&quot;</span>, <span class="stringliteral">&quot;r5&quot;</span>, <span class="stringliteral">&quot;r6&quot;</span>, <span class="stringliteral">&quot;r7&quot;</span>, <span class="stringliteral">&quot;memory&quot;</span> \</div>
+<div class="line">)</div>
+</div><!-- fragment -->
+<p>Save application context. </p>
+<p>This function will grab process SP and save 8 registers at the memory location pointed by the PSP. Process SP is updated to point to the new top of stack. This operation will push 32 bytes (8 registers * 4 bytes) on stack. </p><dl class="section note"><dt>Note</dt><dd>This is defined as a macro so it can live inside naked functions. </dd></dl>
 
 </div>
 </div>
@@ -348,32 +421,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gaf3f11bf6495679261169947a65655d16" name="gaf3f11bf6495679261169947a65655d16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf3f11bf6495679261169947a65655d16">&#9670;&#160;</a></span>load_context()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void load_context </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>sp</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Load application context saved by save_context from address sp. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sp</td><td>address where top of the stack containing application context is </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga0deb287bdcb87be51cdb7440df6ad7e5" name="ga0deb287bdcb87be51cdb7440df6ad7e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga0deb287bdcb87be51cdb7440df6ad7e5">&#9670;&#160;</a></span>pop_exception_frame()</h2>
 
@@ -463,26 +510,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>address of duplicated exception frame </dd></dl>
-
-</div>
-</div>
-<a id="gac7d319ef3237c279150083fe5944dc19" name="gac7d319ef3237c279150083fe5944dc19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac7d319ef3237c279150083fe5944dc19">&#9670;&#160;</a></span>save_context()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void * save_context </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Save application context. </p>
-<p>This function will grab process SP This operation will claim 32 bytes (8 registers * 4 bytes) on stack. </p><dl class="section return"><dt>Returns</dt><dd>top of application stack after application context was saved </dd></dl>
 
 </div>
 </div>

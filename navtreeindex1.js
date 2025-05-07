@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__arm__mpu__registers.html":[3,1,0,0,1,3],
 "group__arm__mpu__registers.html#ga10e61f0488920fe60665b3d608a27c29":[3,1,0,0,1,3,3],
 "group__arm__mpu__registers.html#ga13d89764ff1b4c817123808df9aa7562":[3,1,0,0,1,3,2],
 "group__arm__mpu__registers.html#ga32d5201e7d796b21783202e5a8e33fea":[3,1,0,0,1,3,1],
@@ -114,8 +115,8 @@ var NAVTREEINDEX1 =
 "group__os__sched.html#ga1433d27a18d08c82f5e12383997009c4":[3,1,9,34],
 "group__os__sched.html#ga1750d7e1f559518be7c25ed323065cf4":[3,1,9,4],
 "group__os__sched.html#ga1c0157588be40efb99fc590662e237ae":[3,1,9,1],
-"group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,36],
 "group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,37],
+"group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106":[3,1,9,36],
 "group__os__sched.html#ga26ea9f0ec722697387ee9deca8230844":[3,1,9,0],
 "group__os__sched.html#ga3115342bb54e0e857c6a566334dcb76b":[3,1,9,19],
 "group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195":[3,1,9,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "group__util.html#ga818b9cca761fe7bc18e4e417da772976":[3,4,1],
 "group__util.html#gafedd38df23e9c9f801b82b8cdf210dae":[3,4,2],
 "group__util__assert.html":[3,4,0],
-"hal_integration.html":[1,7],
-"index.html":[]
+"hal_integration.html":[1,7]
 };

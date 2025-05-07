@@ -112,8 +112,11 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa4cf099935c9747600b47a462131e023" id="r_gaa4cf099935c9747600b47a462131e023"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaa4cf099935c9747600b47a462131e023">__get_SP</a> (void)</td></tr>
 <tr class="memdesc:gaa4cf099935c9747600b47a462131e023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of process LR.  <br /></td></tr>
 <tr class="separator:gaa4cf099935c9747600b47a462131e023"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9cfd40d6d666aac139df5763d7f5252" id="r_gaf9cfd40d6d666aac139df5763d7f5252"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaf9cfd40d6d666aac139df5763d7f5252">os_perform_thread_switch</a> (uint32_t LR)</td></tr>
+<tr class="memdesc:gaf9cfd40d6d666aac139df5763d7f5252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle task switch.  <br /></td></tr>
+<tr class="separator:gaf9cfd40d6d666aac139df5763d7f5252"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6303e1f258cbdc1f970ce579cc015623" id="r_ga6303e1f258cbdc1f970ce579cc015623"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga6303e1f258cbdc1f970ce579cc015623">PendSV_Handler</a> (void)</td></tr>
-<tr class="memdesc:ga6303e1f258cbdc1f970ce579cc015623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle task switch.  <br /></td></tr>
+<tr class="memdesc:ga6303e1f258cbdc1f970ce579cc015623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for for Pending service interrupt handler.  <br /></td></tr>
 <tr class="separator:ga6303e1f258cbdc1f970ce579cc015623"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -136,6 +139,33 @@ Functions</h2></td></tr>
 
 <p>Get value of process LR. </p>
 <dl class="section return"><dt>Returns</dt><dd>top of application stack </dd></dl>
+
+</div>
+</div>
+<a id="gaf9cfd40d6d666aac139df5763d7f5252" name="gaf9cfd40d6d666aac139df5763d7f5252"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf9cfd40d6d666aac139df5763d7f5252">&#9670;&#160;</a></span>os_perform_thread_switch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t os_perform_thread_switch </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>LR</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle task switch. </p>
+<p>This function performs the heavy lifting of context switching when CPU is switched from one task to another. It saves the SP of suspended thread, then modifies the PSP to match the saved value of incoming thread and if needed it performs signal handler injection and/or MPU register reconfiguration. Saving and restoring of registers is performed by the wrapper to avoid C function preamble interference. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">LR</td><td>copy of the LR value of the PendSV_Handler </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>value that has to be used as new LR before PendSV_Handler quits </dd></dl>
 
 </div>
 </div>
@@ -184,8 +214,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Handle task switch. </p>
-<p>This function performs the heavy lifting of context switching when CPU is switched from one task to another. As of now, it stores outgoing task's application context onto stack and restores incoming task's context from its stack. It then sets PSP to point to incoming task's stack and resumes normal operation. </p>
+<p>Wrapper for for Pending service interrupt handler. </p>
+<p>CMRX uses pending service to handle heavy lifting of thread switching. At the time PendSV is scheduled, the decision on which thread to run next has already been made. This code just performs the switch.</p>
+<p>This assembly stub makes sure that all thread registers are properly saved and restored during thread switch, so the actual implementation may be written as plain C function without involving surprises. </p>
 
 </div>
 </div>
