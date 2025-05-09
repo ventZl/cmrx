@@ -18,7 +18,7 @@ void os_save_fpu_context(struct OS_thread_t * thread);
 void os_load_fpu_context(struct OS_thread_t * thread);
 
 #define os_save_exc_return(thread)      thread->arch.exc_return = (uint32_t) __get_LR()
-#define os_load_exc_return(thread)      __set_LR(thread->arch.exc_return)
+#define os_load_exc_return(thread)      __set_LR((void *) thread->arch.exc_return)
 
 
 /* Implementation of the porting layer API. */

@@ -14,11 +14,15 @@ void os_thread_initialize_arch(struct OS_thread_t * thread)
 
 void os_save_fpu_context(struct OS_thread_t * thread)
 {
+    ASSERT(thread->arch.exc_return == EXC_RETURN_THREAD_PSP || thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU);
     if (thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU)
     {
+        uint32_t * sp = thread->sp;
         asm volatile(
-            "VSTM R0!,{S16-S31}"
+            "VSTMIA sp!,{S16-S31}"
+            : [sp] "+r" (sp)
         );
+        thread->sp = sp;
     }
 }
 
@@ -26,9 +30,12 @@ void os_load_fpu_context(struct OS_thread_t * thread)
 {
     if (thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU)
     {
+        uint32_t * sp = thread->sp;
         asm volatile(
-            "VLDM R0,{S16-S31}"
+            "VLDMDB sp!,{S16-S31}"
+            : [sp] "+r" (sp)
         );
+        thread->sp = sp;
     }
 }
 #endif

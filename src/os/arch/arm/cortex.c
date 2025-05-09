@@ -93,6 +93,8 @@ __attribute__((interrupt)) void PendSV_Handler(void)
 	cortex_disable_interrupts();
 	/* Do NOT put anything here. You will clobber context being stored! */
 	cpu_context.old_task->sp = save_context();
+	/* Do NOT put anything here. You will clobber context being stored! */
+	os_save_exc_return(cpu_context.old_task);
 
     // This assert checks that we are not preempting some other interrupt
     // handler. If you assert here, then your interrupt handler priority
@@ -104,7 +106,6 @@ __attribute__((interrupt)) void PendSV_Handler(void)
 
 	struct OS_core_state_t * cpu_state = &core[coreid()];
 
-	os_save_exc_return(cpu_context.old_task);
 	os_save_fpu_context(cpu_context.old_task);
 
 	if (cpu_context.old_parent_process != cpu_context.new_parent_process
@@ -113,7 +114,6 @@ __attribute__((interrupt)) void PendSV_Handler(void)
 		mpu_restore((const MPU_State *) &cpu_context.new_host_process->mpu, (const MPU_State *) &cpu_context.new_parent_process->mpu);
 	}
 
-	os_load_exc_return(cpu_context.old_task);
 	os_load_fpu_context(cpu_context.new_task);
 
 	// Configure stack for incoming process
@@ -142,6 +142,8 @@ __attribute__((interrupt)) void PendSV_Handler(void)
 	 */
 	SCB->ICSR = SCB_ICSR_PENDSVCLR;
 
+	os_load_exc_return(cpu_context.old_task);
+	/* Do NOT put anything here. You will clobber context just restored! */
 	load_context(cpu_context.new_task->sp);
 	/* Do NOT put anything here. You will clobber context just restored! */
 	__ISB();
