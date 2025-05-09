@@ -6,14 +6,29 @@
 
 static uint32_t systick_us = 0;
 
-static inline void SysTick_Enable()
+static inline void SysTick_Enable(void)
 {
     SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 }
 
-static inline void SysTick_Disable()
+static inline void SysTick_Disable(void)
 {
     SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+}
+
+static inline uint32_t SysTick_SetTimeout(uint32_t ticks)
+{
+    if ((ticks - 1UL) > SysTick_LOAD_RELOAD_Msk)
+    {
+        return (1UL);                                                   /* Reload value impossible */
+    }
+
+    SysTick->LOAD  = (uint32_t)(ticks - 1UL);                         /* set reload register */
+    NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
+    SysTick->VAL   = 0UL;                                             /* Load the SysTick Counter Value */
+    SysTick->CTRL  = SysTick_CTRL_CLKSOURCE_Msk |
+    SysTick_CTRL_TICKINT_Msk;                         /* Enable SysTick IRQ and SysTick Timer */
+    return (0UL);
 }
 
 void timing_provider_setup(int interval_ms)
@@ -23,7 +38,7 @@ void timing_provider_setup(int interval_ms)
     // immediately and that won't do any good to the state of
     // the program.
     NVIC_SetPriority(PendSV_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);
-    SysTick_Config(SystemCoreClock / (interval_ms * 1000));
+    SysTick_SetTimeout(SystemCoreClock / (interval_ms * 1000));
     // SysTick_Config will enable the systick automatically
     SysTick_Disable();
     systick_us = interval_ms * 1000;
