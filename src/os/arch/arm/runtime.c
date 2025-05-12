@@ -19,10 +19,9 @@ void os_save_fpu_context(struct OS_thread_t * thread)
     {
         uint32_t * sp = thread->sp;
         asm volatile(
-            "VSTMIA sp!,{S16-S31}"
-            : [sp] "+r" (sp)
+            "VSTMDB %0!,{S16-S31}"
+            : "+r" (sp)
         );
-        thread->sp = sp;
     }
 }
 
@@ -31,11 +30,11 @@ void os_load_fpu_context(struct OS_thread_t * thread)
     if (thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU)
     {
         uint32_t * sp = thread->sp;
+        sp -= 15;
         asm volatile(
-            "VLDMDB sp!,{S16-S31}"
-            : [sp] "+r" (sp)
+            "VLDMIA %0!,{S16-S31}"
+            : "+r" (sp)
         );
-        thread->sp = sp;
     }
 }
 #endif

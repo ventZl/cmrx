@@ -70,52 +70,52 @@ ALWAYS_INLINE void __ISR_return()
 #endif
 
 /** Save application context.
- * This function will grab process SP
- * This operation will claim 32 bytes (8 registers * 4 bytes) on stack.
- * @return top of application stack after application context was saved
+ * This function will grab process SP and save 8 registers at the memory
+ * location pointed by the PSP. Process SP is updated to point to the new
+ * top of stack.
+ * This operation will push 32 bytes (8 registers * 4 bytes) on stack.
+ * @note This is defined as a macro so it can live inside naked functions.
  */
-ALWAYS_INLINE void * save_context()
-{
-	uint32_t * scratch;
-	asm (
-			".syntax unified\n\t"
-			"MRS %0, PSP\n\t"
-			"SUBS %0, #16\n\t"
-			"STMEA %0!, {r4 - r7}\n\t"
-			"SUBS %0, #32\n\t"
-			"MOV r4, r8\n\t"
-			"MOV r5, r9\n\t"
-			"MOV r6, r10\n\t"
-			"MOV r7, r11\n\t"
-			"STMEA %0!, {r4 - r7}\n\t"
-			"SUBS %0, #16\n\t"
-			: "=r" (scratch)
-			:
-			: 
-	);
+#define SAVE_CONTEXT() \
+asm volatile( \
+	".syntax unified\n\t" \
+	"MRS r0, PSP\n\t" \
+	"SUBS r0, #16\n\t" \
+	"STMEA r0!, {r4 - r7}\n\t" \
+	"SUBS r0, #32\n\t" \
+	"MOV r4, r8\n\t" \
+	"MOV r5, r9\n\t" \
+	"MOV r6, r10\n\t" \
+	"MOV r7, r11\n\t" \
+	"STMEA r0!, {r4 - r7}\n\t" \
+	"SUBS r0, #16\n\t" \
+	"MSR PSP, r0\n\t" \
+	: : : "r0", "r4", "r5", "r6", "r7", "memory" \
+)
 
-	return scratch;
-}
 
-/** Load application context saved by save_context
- * from address sp.
+/** Load application context.
+ * This function will grab process SP and load 8 registers from memory location
+ * pointed by the PSP. Process SP is updated to point to the new top of the
+ * stack.
+ * This operation will pop 32 bytes (8 registers * 4 bytes) from stack.
+ * @note This is defined as a macro so it can live inside naked functions.
+ *
  * @param sp address where top of the stack containing application context is
  */
-ALWAYS_INLINE void load_context(uint32_t * sp)
-{
-	asm (
-			"LDMFD %0!, {r4 - r7}\n\t"
-			"MOV r8, r4\n\t"
-			"MOV r9, r5\n\t"
-			"MOV r10, r6\n\t"
-			"MOV r11, r7\n\t"
-			"LDMFD %0!, {r4 - r7}\n\t"
-			"MSR PSP, %0\n\t"
-			:
-			: [scratch] "r" (sp)
-			: 
-	);
-}
+#define LOAD_CONTEXT() \
+asm ( \
+	".syntax unified\n\t" \
+	"MRS r0, PSP\n\t" \
+	"LDMFD r0!, {r4 - r7}\n\t" \
+	"MOV r8, r4\n\t" \
+	"MOV r9, r5\n\t" \
+	"MOV r10, r6\n\t" \
+	"MOV r11, r7\n\t" \
+	"LDMFD r0!, {r4 - r7}\n\t" \
+	"MSR PSP, r0\n\t" \
+	: : : "r0", "r4", "r5", "r6", "r7", "memory" \
+)
 
 /** Retrieve address of n-th argument from exception frame.
  *
