@@ -2,6 +2,13 @@
 #include <arch/runtime.h>
 #include <arch/cortex.h>
 #include <cmrx/assert.h>
+#include <kernel/sched.h>
+#include <arch/corelocal.h>
+
+bool os_is_thread_using_fpu(Thread_t thread_id)
+{
+    return (os_threads[thread_id].arch.exc_return == EXC_RETURN_THREAD_PSP_FPU);
+}
 
 #ifdef __FPU_USED
 void os_thread_initialize_arch(struct OS_thread_t * thread)
@@ -23,10 +30,16 @@ void os_save_fpu_context(struct OS_thread_t * thread)
             : "+r" (sp)
         );
     }
+    // Here the lazy saving of FPU is active
+    // This should not happen as we either triggered the save by above if block
+    // or it shouldn't be active at all
+    ASSERT((FPU->FPCCR & FPU_FPCCR_LSPACT_Msk) == 0);
 }
 
 void os_load_fpu_context(struct OS_thread_t * thread)
 {
+    // Here the lazy saving of FPU is still active
+    ASSERT((FPU->FPCCR & FPU_FPCCR_LSPACT_Msk) == 0);
     if (thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU)
     {
         uint32_t * sp = thread->sp;
@@ -54,4 +67,9 @@ void os_init_core(unsigned core_id)
     (void) core_id;
     // Here we assume that FP coprocessor was enabled by the SystemInit from within HAL.
     FPU->FPCCR |= FPU_FPCCR_ASPEN_Msk | FPU_FPCCR_LSPEN_Msk;
+}
+
+bool os_fpu_exception_frame(void)
+{
+    return os_is_thread_using_fpu(os_get_current_thread());
 }

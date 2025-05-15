@@ -25,6 +25,7 @@
 #include <arch/nvic.h>
 
 #include "signal.h"
+#include <stddef.h>
 
 int os_nvic_enable(uint32_t irq)
 {
@@ -42,6 +43,34 @@ int os_nvic_disable(uint32_t irq)
  * @ingroup arch_arm
  * @{
  */
+
+uint32_t * get_exception_arg_addr(uint32_t * frame, unsigned argno, bool fp_active)
+{
+	ExceptionFrame * frame_alias = (ExceptionFrame *) frame;
+	if (argno < 4)
+	{
+		return &(frame_alias->r0123[argno]);
+	}
+	else
+	{
+		uint32_t * base = &frame_alias->xpsr;
+		if ((((*base) >> 9) & 1) == 1)
+		{
+			base += 2;
+		}
+		else
+		{
+			base += 1;
+		}
+
+		if (fp_active)
+		{
+			base += 16;
+		}
+		return &(base[argno - 4]);
+	}
+}
+
 
 inline void os_request_context_switch(bool activate)
 {
@@ -124,7 +153,9 @@ __attribute__((interrupt, naked)) void PendSV_Handler(void)
  */
 uint32_t os_perform_thread_switch(uint32_t LR)
 {
+#ifdef __FPU_USED
 	cpu_context.old_task->arch.exc_return = LR;
+#endif
 	cpu_context.old_task->sp = (uint32_t *) __get_PSP();
 
     // This assert checks that we are not preempting some other interrupt
@@ -149,12 +180,12 @@ uint32_t os_perform_thread_switch(uint32_t LR)
 		mpu_restore((const MPU_State *) &cpu_context.new_host_process->mpu, (const MPU_State *) &cpu_context.new_parent_process->mpu);
 	}
 
-	os_load_fpu_context(cpu_context.new_task);
-
 	// Configure stack for incoming process
     // This assumes that all stacks are of same size
 	mpu_set_region(OS_MPU_REGION_STACK, cpu_context.new_stack, sizeof(os_stacks.stacks[0]), MPU_RW);
 	sanitize_psp_for_thread(cpu_context.new_task->sp, cpu_state->thread_next);
+
+	os_load_fpu_context(cpu_context.new_task);
 
 	if (cpu_context.new_task->signals != 0 && cpu_context.new_task->signal_handler != NULL)
 	{
@@ -177,7 +208,10 @@ uint32_t os_perform_thread_switch(uint32_t LR)
 	 */
 	os_request_context_switch(false);
 
+#ifdef __FPU_USED
 	LR = cpu_context.new_task->arch.exc_return;
+#endif
+
 	__set_PSP((uint32_t) cpu_context.new_task->sp);
 	__ISB();
 	__DSB();
@@ -211,16 +245,18 @@ static SYSCALL_DEFINITION struct Syscall_Entry_t nvic_syscalls[] = {
  * instruction. Code of SVC_Handler will retrieve the requested SVC ID and
  * let generic machinery to execute specified system call.
  */
-__attribute__((interrupt)) void SVC_Handler(void)
+uint32_t os_dispatch_system_call(uint32_t LR)
 {
+	Thread_t current_thread = os_get_current_thread();
+	os_threads[current_thread].arch.exc_return = LR;
 	// This assert checks that we are not preempting some other interrupt
 	// handler. If you assert here, then your interrupt handler priority
 	// is messed up. You need to configure PendSV to be the handler with
 	// absolutely the lowest priority.
 #ifdef __FPU_USED
-	ASSERT(__get_LR() == (uint32_t *) EXC_RETURN_THREAD_PSP || __get_LR() == (uint32_t *) EXC_RETURN_THREAD_PSP_FPU);
+	ASSERT(LR == EXC_RETURN_THREAD_PSP || LR == EXC_RETURN_THREAD_PSP_FPU);
 #else
-	ASSERT(__get_LR() == (uint32_t *) EXC_RETURN_THREAD_PSP);
+	ASSERT(LR == EXC_RETURN_THREAD_PSP);
 #endif
 
 	uint32_t * psp = (uint32_t *) __get_PSP();
@@ -230,11 +266,96 @@ __attribute__((interrupt)) void SVC_Handler(void)
 	uint8_t syscall_id = *(lra - 1);
     uint32_t rv = os_system_call(frame->r0123[0], frame->r0123[1], frame->r0123[2], frame->r0123[3], syscall_id);
     *(psp) = rv;
-    return; /*asm volatile("BX lr");*/
+    return os_threads[current_thread].arch.exc_return; /*asm volatile("BX lr");*/
 }
 
-void os_core_sleep()
+__attribute__((naked)) void SVC_Handler(void)
+{
+	asm volatile(
+		"MOV r0, lr\n\t"
+		"BL %0\n\t"
+		"BX r0\n\t"
+		:
+		: "i" (os_dispatch_system_call)
+		: "r0"
+	);
+}
+
+void os_core_sleep(void)
 {
 	__WFI();
 }
+
+static unsigned os_exception_frame_size(bool fp_used)
+{
+	return fp_used ? EXCEPTION_FRAME_FP_ENTRIES : EXCEPTION_FRAME_ENTRIES;
+}
+
+uint32_t * push_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
+{
+
+	ExceptionFrame * frame_alias = (ExceptionFrame *) frame;
+	ExceptionFrame * outframe = (ExceptionFrame *) ((frame) - (os_exception_frame_size(fp_active) + args));
+	bool padding = false;
+
+	// Check if forged frame is 8-byte aligned, or not
+	if ((((uint32_t) outframe) & 7) != 0)
+	{
+		// Frame needs padding
+		outframe = (ExceptionFrame *) (((uint32_t *) outframe) - 1);
+		padding = true;
+	}
+
+	outframe->xpsr = frame_alias->xpsr;
+
+	if (padding)
+	{
+		// we have padded the stack frame, clear STKALIGN in order to let
+		// CPU know that original SP was 4-byte aligned
+		outframe->xpsr |= 1 << 9;
+	}
+	else
+	{
+		// we didn't pad the stack frame, set STKALIGN in order to let
+		// CPU know that original SP was 8-byte aligned
+		outframe->xpsr &= ~(1 << 9);
+	}
+
+	return (uint32_t *) outframe;
+}
+
+uint32_t * shim_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
+{
+
+	uint32_t * outframe = push_exception_frame(frame, args, fp_active);
+
+	// - 1 here reserves the xpsr value which has been copied by push_exception_frame
+	for (unsigned int q = 0; q < os_exception_frame_size(fp_active); ++q)
+	{
+		if (q == (offsetof(ExceptionFrame, xpsr) / sizeof(uint32_t)))
+		{
+			// XPSR has been dealt with by push_exception_frame()
+			continue;
+		}
+		outframe[q] = ((uint32_t*) frame)[q];
+	}
+
+	return outframe;
+}
+
+uint32_t * pop_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
+{
+	ExceptionFrame * frame_alias = (ExceptionFrame *) frame;
+	ExceptionFrame * outframe = (ExceptionFrame *) ((frame) + (os_exception_frame_size(fp_active) + args));
+	if (((frame_alias->xpsr >> 9) & 1) == 1)
+	{
+		outframe = (ExceptionFrame *) (((uint32_t *) outframe) + 1);
+	}
+
+	// rewrite xPSR from pop-ped frame, retain value of bit 9
+	outframe->xpsr = (outframe->xpsr & (1 << 9)) | (frame_alias->xpsr & ~(1 << 9));
+
+	return (uint32_t *) outframe;
+}
+
 /** @} */

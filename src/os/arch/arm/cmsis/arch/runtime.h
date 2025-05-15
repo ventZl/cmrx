@@ -20,6 +20,10 @@ void os_load_fpu_context(struct OS_thread_t * thread);
 #define os_save_exc_return(thread)      thread->arch.exc_return = (uint32_t) __get_LR()
 #define os_load_exc_return(thread)      __set_LR((void *) thread->arch.exc_return)
 
+/* Figure out if thread is using FPU.
+ * @return true if thread has FPU active, false otherwise
+ */
+bool os_is_thread_using_fpu(Thread_t thread_id);
 
 /* Implementation of the porting layer API. */
 void os_init_arch(void);
@@ -32,6 +36,8 @@ void os_init_core(unsigned core_id);
 #   define os_load_fpu_context(x)
 #   define os_save_exc_return(thread)
 #   define os_load_exc_return(thread)
+
+#   define os_is_thread_using_fpu(thread) (false)
 
 
 #   define os_init_arch(x)
@@ -53,4 +59,5 @@ struct Arch_State_t {
     uint32_t exc_return;
 #endif
 };
+
 

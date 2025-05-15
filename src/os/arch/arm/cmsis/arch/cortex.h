@@ -22,7 +22,7 @@ typedef struct {
 	uint32_t r2;
 	uint32_t r3;*/
 	uint32_t r12;
-	void (*lr)();
+	void (*lr)(void);
 	void *pc;
 	uint32_t xpsr;
 /*	uint32_t arg4;
@@ -31,6 +31,27 @@ typedef struct {
 	uint32_t arg7;*/
 } ExceptionFrame;
 
+_Static_assert(sizeof(ExceptionFrame) % 8 == 0, "The size of ExceptionFrame structure is not divisible by 8!");
+
+/** Exception frame *with* FPU context saved.
+ */
+typedef struct {
+	uint32_t r0123[4];
+	uint32_t r12;
+	void (*lr)(void);
+	void *pc;
+	uint32_t xpsr;
+	uint32_t fpu_regs[16];
+	uint32_t fpscr;
+	uint32_t __spacer;
+} ExceptionFrameFP;
+
+_Static_assert(sizeof(ExceptionFrameFP) % 8 == 0, "The size of ExceptionFrameFP structure is not divisible by 8!");
+
+/** How many stack slots does exception frame without FPU occupy */
+#define EXCEPTION_FRAME_ENTRIES			(sizeof(ExceptionFrame) / sizeof(uint32_t))
+/** How many stack slots does exception frame with FPU occupy */
+#define EXCEPTION_FRAME_FP_ENTRIES		(sizeof(ExceptionFrameFP) / sizeof(uint32_t))
 
 #define ALWAYS_INLINE __STATIC_FORCEINLINE
 
@@ -126,26 +147,8 @@ asm ( \
  * @param argno number of argument retrieved
  * @returns address of argument relative to exception frame
  */
-static inline uint32_t * get_exception_arg_addr(ExceptionFrame * frame, unsigned argno)
-{
-	if (argno < 4)
-	{
-		return &(frame->r0123[argno]);
-	}
-	else
-	{
-		uint32_t * base = &frame->xpsr;
-		if ((((*base) >> 9) & 1) == 1)
-		{
-			base += 2;
-		}
-		else
-		{
-			base += 1;
-		}
-		return &(base[argno - 4]);
-	}
-}
+
+uint32_t * get_exception_arg_addr(uint32_t * frame, unsigned argno, bool fp_active);
 
 /** Retrieve value of exception frame function call argument.
  *
@@ -154,9 +157,9 @@ static inline uint32_t * get_exception_arg_addr(ExceptionFrame * frame, unsigned
  * @param argno number of argument retrieved
  * @returns value of function argument
  */
-static inline unsigned get_exception_argument(ExceptionFrame * frame, unsigned argno)
+static inline unsigned get_exception_argument(uint32_t * frame, unsigned argno, bool fp_active)
 {
-	uint32_t * arg_addr = get_exception_arg_addr(frame, argno);
+	uint32_t * arg_addr = get_exception_arg_addr(frame, argno, fp_active);
 	return *arg_addr;
 }
 
@@ -167,9 +170,9 @@ static inline unsigned get_exception_argument(ExceptionFrame * frame, unsigned a
  * @param argno number of argument retrieved
  * @param value new value of function argument
  */
-static inline void set_exception_argument(ExceptionFrame * frame, unsigned argno, unsigned value)
+static inline void set_exception_argument(uint32_t * frame, unsigned argno, unsigned value, bool fp_active)
 {
-	uint32_t * arg_addr = get_exception_arg_addr(frame, argno);
+	uint32_t * arg_addr = get_exception_arg_addr(frame, argno, fp_active);
 	*arg_addr = value;
 }
 
@@ -180,49 +183,19 @@ static inline void set_exception_argument(ExceptionFrame * frame, unsigned argno
  * @param pc new value for PC register in exception frame
  * @param lr new value for LR register in exception frame
  */
-static inline void set_exception_pc_lr(ExceptionFrame * frame, void * pc, void (* lr)())
+static inline void set_exception_pc_lr(ExceptionFrame * frame, void * pc, void (* lr)(void))
 {
 	frame->pc = pc;
 	frame->lr = lr;
 }
 
-#define EXCEPTION_FRAME_SIZE			8
-
 /** Duplicate exception frame on thread's stack.
  * @param frame pointer of frame currently residing on top of process' stack
  * @param args amount of arguments pushed onto stack (first four come into R0-R3, fifth and following are pushed onto stack)
+ * @param fp_active if true then floating point unit is actively used in the thread exception is for
  * @return address of duplicated exception frame
  */
-static inline ExceptionFrame * push_exception_frame(ExceptionFrame * frame, unsigned args)
-{
-	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) - (EXCEPTION_FRAME_SIZE + args));
-	bool padding = false;
-
-	// Check if forged frame is 8-byte aligned, or not
-	if ((((uint32_t) outframe) % 8) != 0)
-	{
-		// Frame needs padding
-		outframe = (ExceptionFrame *) (((uint32_t *) outframe) - 1);
-		padding = true;
-	}
-
-	outframe->xpsr = frame->xpsr;
-
-	if (padding)
-	{
-		// we have padded the stack frame, clear STKALIGN in order to let
-		// CPU know that original SP was 4-byte aligned
-		outframe->xpsr |= 1 << 9;
-	}
-	else
-	{
-		// we didn't pad the stack frame, set STKALIGN in order to let
-		// CPU know that original SP was 8-byte aligned
-		outframe->xpsr &= ~(1 << 9);
-	}
-
-	return outframe;
-}
+uint32_t * push_exception_frame(uint32_t * frame, unsigned args, bool fp_active);
 
 /** Creates space for additional arguments under exception frame.
  *
@@ -231,44 +204,10 @@ static inline ExceptionFrame * push_exception_frame(ExceptionFrame * frame, unsi
  * Content of exception frame is copied automatically.
  * @param frame address of exception frame in memory
  * @param args amount of additional arguments for which space should be created under exception frame
+ * @param fp_active if true then floating point unit is actively used in the thread exception is for
  * @returns address of shimmed exception frame.
  */
-static inline ExceptionFrame * shim_exception_frame(ExceptionFrame * frame, unsigned args)
-{
-	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) - args);
-	bool padding = false;
-
-	// Check if forged frame is 8-byte aligned, or not
-	if ((((uint32_t) outframe) % 8) != 0)
-	{
-		// Frame needs padding
-		outframe = (ExceptionFrame *) (((uint32_t *) outframe) - 1);
-		padding = true;
-	}
-
-	/* This has to be done from lowest address to highest to avoid
-	 * overwriting usable data.
-	 */
-	
-	for (unsigned int q = 0; q < sizeof(ExceptionFrame) / 4; ++q)
-	{
-		((uint32_t*) outframe)[q] = ((uint32_t*) frame)[q];
-	}
-	if (padding)
-	{
-		// we have padded the stack frame, clear STKALIGN in order to let
-		// CPU know that original SP was 4-byte aligned
-		outframe->xpsr |= 1 << 9;
-	}
-	else
-	{
-		// we didn't pad the stack frame, set STKALIGN in order to let
-		// CPU know that original SP was 8-byte aligned
-		outframe->xpsr &= ~(1 << 9);
-	}
-
-	return outframe;
-}
+uint32_t * shim_exception_frame(uint32_t * frame, unsigned args, bool fp_active);
 
 /** Remove exception frame from thread's stack.
  *
@@ -276,21 +215,10 @@ static inline ExceptionFrame * shim_exception_frame(ExceptionFrame * frame, unsi
  * frame padding automatically.
  * @param frame exception frame base address
  * @param args number of function arguments passed onto stack (function args - 4)
+ * @param fp_active if true then floating point unit is actively used in the thread exception is for
  * @return new address of stack top after frame has been removed from it
  */
-static inline ExceptionFrame * pop_exception_frame(ExceptionFrame * frame, unsigned args)
-{
-	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) + (EXCEPTION_FRAME_SIZE + args));
-	if (((frame->xpsr >> 9) & 1) == 1)
-	{
-		outframe = (ExceptionFrame *) (((uint32_t *) outframe) + 1);
-	}
-
-	// rewrite xPSR from pop-ped frame, retain value of bit 9
-	outframe->xpsr = (outframe->xpsr & (1 << 9)) | (frame->xpsr & ~(1 << 9));
-
-	return outframe;
-}
+uint32_t * pop_exception_frame(uint32_t * frame, unsigned args, bool fp_active);
 
 /** Get value of process LR
  * @return top of application stack
