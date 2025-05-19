@@ -47,13 +47,23 @@ int os_nvic_disable(uint32_t irq)
 uint32_t * get_exception_arg_addr(uint32_t * frame, unsigned argno, bool fp_active)
 {
 	ExceptionFrame * frame_alias = (ExceptionFrame *) frame;
+	ExceptionFrameFP * fp_frame_alias = (ExceptionFrameFP *) frame;
 	if (argno < 4)
 	{
 		return &(frame_alias->r0123[argno]);
 	}
 	else
 	{
-		uint32_t * base = &frame_alias->xpsr;
+		uint32_t * base;
+		if (fp_active)
+		{
+			base = &fp_frame_alias->__spacer;
+		}
+		else
+		{
+			base = &frame_alias->xpsr;
+		}
+
 		if ((((*base) >> 9) & 1) == 1)
 		{
 			base += 2;
@@ -63,10 +73,6 @@ uint32_t * get_exception_arg_addr(uint32_t * frame, unsigned argno, bool fp_acti
 			base += 1;
 		}
 
-		if (fp_active)
-		{
-			base += 16;
-		}
 		return &(base[argno - 4]);
 	}
 }
