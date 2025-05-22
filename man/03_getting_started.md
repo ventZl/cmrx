@@ -893,7 +893,7 @@ add_firmware(
     pico-sdk-example src/main.c
 )
 
-pico_add_extra_outputs(test)
+pico_add_extra_outputs(pico-sdk-example)
 target_link_libraries(pico-sdk-example cmrx aux_systick pico_stdlib cmsis_core)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
