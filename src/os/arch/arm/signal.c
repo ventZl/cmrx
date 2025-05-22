@@ -35,8 +35,9 @@ __attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *si
 
 void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 {
-	ExceptionFrame * frame;
+	uint32_t * frame;
 	uint32_t * new_sp;
+	bool fpu_used = os_fpu_exception_frame();
 
 	/* Signal handler being NULL means, that thread ignores signals. No delivery is performed. */
 	if (thread->signal_handler == NULL)
@@ -50,7 +51,7 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 		 * Thread state record is basically just an exception frame, which has
 		 * additional registers placed on top of it. 
 		 */
-		frame = (ExceptionFrame *) (thread->sp + 8);
+		frame = thread->sp + 8;
 		uint32_t * old_sp = thread->sp;
 		new_sp = old_sp - 6;
 		for (int q = 0; q < 8; ++q)
@@ -66,16 +67,16 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 	}
 	
 	/* Create space for 5 values: R0 - R3, PC */
-	ExceptionFrame * signal_frame = shim_exception_frame(frame, 6);
+	ExceptionFrame * signal_frame = (ExceptionFrame *) shim_exception_frame(frame, 6, fpu_used);
 
 #define STACK_BASE	5
 
-	set_exception_argument(signal_frame, STACK_BASE - 1, (uint32_t) signal_frame->lr);
+	set_exception_argument(signal_frame, STACK_BASE - 1, (uint32_t) signal_frame->lr, fpu_used);
 
 	/* Save R0 - R4 */
 	for (int q = 0; q < 4; ++q)
 	{
-		set_exception_argument(signal_frame, STACK_BASE + q, get_exception_argument(signal_frame, q));
+		set_exception_argument(signal_frame, STACK_BASE + q, get_exception_argument(signal_frame, q, fpu_used), fpu_used);
 	}
 	/* Save PC */
 	/* Note that bit 0 is programmatically set to 1. Otherwise CPU will freak out during
@@ -83,12 +84,12 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 	 * other way than loading from exception frame, then CPU attempts to switch into ARM
 	 * mode, which makes Cortex-M sad panda.
 	 */
-	set_exception_argument(signal_frame, STACK_BASE + 4, (uint32_t) signal_frame->pc | 1);
+	set_exception_argument(signal_frame, STACK_BASE + 4, (uint32_t) signal_frame->pc | 1, fpu_used);
 	/* R0 - arg[0] - signal_mask */
-	set_exception_argument(signal_frame, 0, signals);
+	set_exception_argument(signal_frame, 0, signals, fpu_used);
 
 	/* R1 - arg[1] - sighandler */
-	set_exception_argument(signal_frame, 1, (uint32_t) thread->signal_handler);
+	set_exception_argument(signal_frame, 1, (uint32_t) thread->signal_handler, fpu_used);
 
 	/* PC - os_fire_signal */
 	*((void (**)()) &signal_frame->pc) = os_fire_signal;
