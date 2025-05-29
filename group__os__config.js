@@ -4,6 +4,7 @@ var group__os__config =
     [ "CMRX_IDLE_THREAD_SHUTDOWN_CPU", "group__os__config.html#ga2722f702ab9637ad9e7f7e8be042f693", null ],
     [ "CMRX_KERNEL_TRACING", "group__os__config.html#ga46a3ec2ee0c0ead945b1185c467024c5", null ],
     [ "CMRX_KERNEL_TRANSACTION_VERIFICATION", "group__os__config.html#ga4c5bc87a9ca14dd3e95ed7525a60089e", null ],
+    [ "CMRX_RPC_CANARY", "group__os__config.html#gab7da05f2a002e2d9ec8811a1a4112c08", null ],
     [ "KERNEL_HAS_MEMORY_PROTECTION", "group__os__config.html#gaf7702691bbc4eaf9070b56a3b8d53c82", null ],
     [ "MPU_HOSTED_STATE_SIZE", "group__os__config.html#ga50b141877ee78028195328399caf0d6a", null ],
     [ "MPU_STATE_SIZE", "group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e", null ],

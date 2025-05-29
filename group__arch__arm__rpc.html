@@ -109,13 +109,13 @@ $(document).ready(function(){initNavTree('group__arch__arm__rpc.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga30f5f272c937c4cd50a75784e56d2606" id="r_ga30f5f272c937c4cd50a75784e56d2606"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__rpc.html#ga30f5f272c937c4cd50a75784e56d2606">rpc_return</a> ()</td></tr>
-<tr class="separator:ga30f5f272c937c4cd50a75784e56d2606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga691fc796895989b3612d53c524d18535" id="r_ga691fc796895989b3612d53c524d18535"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__rpc.html#ga691fc796895989b3612d53c524d18535">rpc_return</a> (void)</td></tr>
+<tr class="separator:ga691fc796895989b3612d53c524d18535"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9ee8f29f3009ad125af02a612603504f" id="r_ga9ee8f29f3009ad125af02a612603504f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__rpc.html#ga9ee8f29f3009ad125af02a612603504f">os_rpc_call</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
 <tr class="memdesc:ga9ee8f29f3009ad125af02a612603504f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_call syscall.  <br /></td></tr>
 <tr class="separator:ga9ee8f29f3009ad125af02a612603504f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga241bd76bc39dd9597dd818fc530bec57" id="r_ga241bd76bc39dd9597dd818fc530bec57"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__rpc.html#ga241bd76bc39dd9597dd818fc530bec57">_rpc_call</a> ()</td></tr>
-<tr class="separator:ga241bd76bc39dd9597dd818fc530bec57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadddafb544211d9ec664b57660a5a26eb" id="r_gadddafb544211d9ec664b57660a5a26eb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb">_rpc_call</a> (void)</td></tr>
+<tr class="separator:gadddafb544211d9ec664b57660a5a26eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b0268c1c8ecd0d6e3194f0f52be350c" id="r_ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__rpc.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
 <tr class="memdesc:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_return syscall.  <br /></td></tr>
 <tr class="separator:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,8 +124,8 @@ Functions</h2></td></tr>
 <p>Implementation of RPC mechanism for ARM Cortex-M processors. </p>
 <p>When running on Cortex-M, remote procedure call is performed by injecting an artificial exception frame which causes code to jump to the called routine instead of returning to where it came from. Returning will then jump into specially crafted routine, that injects rpc_return system call. This restores the previous state of caller's stack while copying the return value. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga241bd76bc39dd9597dd818fc530bec57" name="ga241bd76bc39dd9597dd818fc530bec57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga241bd76bc39dd9597dd818fc530bec57">&#9670;&#160;</a></span>_rpc_call()</h2>
+<a id="gadddafb544211d9ec664b57660a5a26eb" name="gadddafb544211d9ec664b57660a5a26eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadddafb544211d9ec664b57660a5a26eb">&#9670;&#160;</a></span>_rpc_call()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,6 +133,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int _rpc_call </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -231,8 +232,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga30f5f272c937c4cd50a75784e56d2606" name="ga30f5f272c937c4cd50a75784e56d2606"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga30f5f272c937c4cd50a75784e56d2606">&#9670;&#160;</a></span>rpc_return()</h2>
+<a id="ga691fc796895989b3612d53c524d18535" name="ga691fc796895989b3612d53c524d18535"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga691fc796895989b3612d53c524d18535">&#9670;&#160;</a></span>rpc_return()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,6 +241,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void rpc_return </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>

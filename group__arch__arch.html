@@ -167,6 +167,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga439fecf5da5136ef742a9a568c0f197d" id="r_ga439fecf5da5136ef742a9a568c0f197d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga439fecf5da5136ef742a9a568c0f197d">os_thread_initialize_arch</a> (struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *thread)</td></tr>
 <tr class="memdesc:ga439fecf5da5136ef742a9a568c0f197d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize architecture-specific initialization of thread.  <br /></td></tr>
 <tr class="separator:ga439fecf5da5136ef742a9a568c0f197d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa60b9768d8ca80f05db8e96e43845ccf" id="r_gaa60b9768d8ca80f05db8e96e43845ccf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaa60b9768d8ca80f05db8e96e43845ccf">os_init_arch</a> (void)</td></tr>
+<tr class="memdesc:gaa60b9768d8ca80f05db8e96e43845ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform architecture-specific initialization during kernel startup.  <br /></td></tr>
+<tr class="separator:gaa60b9768d8ca80f05db8e96e43845ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4d8d766787bcd40cde70cf61bc628da" id="r_gaa4d8d766787bcd40cde70cf61bc628da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaa4d8d766787bcd40cde70cf61bc628da">os_init_core</a> (unsigned core_id)</td></tr>
+<tr class="memdesc:gaa4d8d766787bcd40cde70cf61bc628da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform architecture-specific initialization of core during boot.  <br /></td></tr>
+<tr class="separator:gaa4d8d766787bcd40cde70cf61bc628da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1e4c4f6735a5acd050873acdb00cdbf" id="r_gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf">static_init_thread_count</a> ()</td></tr>
 <tr class="memdesc:gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides count of statically initialized threads.  <br /></td></tr>
 <tr class="separator:gaa1e4c4f6735a5acd050873acdb00cdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -401,6 +407,64 @@ Port implementation sources</h1>
 
 <p>Unlock the current core Unlocks exclusive access to the current core. </p>
 <p>Usually it boils down to enabling interrupts. </p>
+
+</div>
+</div>
+<a id="gaa60b9768d8ca80f05db8e96e43845ccf" name="gaa60b9768d8ca80f05db8e96e43845ccf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa60b9768d8ca80f05db8e96e43845ccf">&#9670;&#160;</a></span>os_init_arch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_init_arch </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform architecture-specific initialization during kernel startup. </p>
+<p>This can be used to perform system-wide initialization that has to be done once per whole system. Kernel guarantees that this function will be called exactly once </p>
+
+</div>
+</div>
+<a id="gaa4d8d766787bcd40cde70cf61bc628da" name="gaa4d8d766787bcd40cde70cf61bc628da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa4d8d766787bcd40cde70cf61bc628da">&#9670;&#160;</a></span>os_init_core()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_init_core </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>core_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform architecture-specific initialization of core during boot. </p>
+<p>This can be used to perform architecture specific initialization of CPU core before kernel starts executing on the core. Note that you shall not use this function to initialize memory protection unless some very specific steps have to be taken as there is API to initialize MPU elsewhere in the porting layer. This function will be called once per core managed by the kernel before kernel starts initialization of the kernel structures for that core. </p>
 
 </div>
 </div>
@@ -792,6 +856,9 @@ Port implementation sources</h1>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void os_thread_initialize_arch </td>
@@ -801,6 +868,11 @@ Port implementation sources</h1>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Finalize architecture-specific initialization of thread. </p>

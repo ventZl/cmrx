@@ -17,10 +17,10 @@ var searchData=
   ['e_5fvtable_5funknown_14',['E_VTABLE_UNKNOWN',['../group__os__rpc.html#gac23283a15be44b1f8451954379b2c723',1,'rpc.h']]],
   ['e_5fwrong_5fsize_15',['E_WRONG_SIZE',['../group__api__errors.html#ga17d4198ad1e2c2bd907d9ed7a36b77c6',1,'defines.h']]],
   ['e_5fyield_16',['E_YIELD',['../group__api__errors.html#gaab3127be18777269e4b499d1c3c8d0ac',1,'defines.h']]],
-  ['empty_17',['empty',['../structQueue.html#a0aacd5630786ba373424343593e7755b',1,'Queue::empty'],['../structQueueInterface.html#a47320e4f2833075d64adc339db2f0e54',1,'QueueInterface::empty']]],
+  ['empty_17',['empty',['../structQueueInterface.html#a47320e4f2833075d64adc339db2f0e54',1,'QueueInterface::empty'],['../structQueue.html#a0aacd5630786ba373424343593e7755b',1,'Queue::empty']]],
   ['enabling_20tracing_18',['Enabling tracing',['../group__os__tracing.html#os_tracing_enable',1,'']]],
   ['end_19',['end',['../structOS__MPU__region.html#ad764a379d4013b7559bd3286db398425',1,'OS_MPU_region']]],
-  ['engine_20properties_20',['Transaction engine properties',['../txn_intro.html#autotoc_md41',1,'']]],
+  ['engine_20properties_20',['Transaction engine properties',['../txn_intro.html#autotoc_md31',1,'']]],
   ['entrypoint_21',['entrypoint',['../structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c',1,'OS_thread_create_t']]],
   ['environment_22',['Development Environment',['../dev_env.html',1,'overview']]],
   ['errors_23',['Named constants for errors',['../group__api__errors.html',1,'']]],
@@ -44,8 +44,10 @@ var searchData=
   ['eventtypes_41',['EventTypes',['../group__os__notify.html#ga914d2da0ec9f0e22cd5e400bc1f968b8',1,'notify.h']]],
   ['evt_5fdefault_42',['EVT_DEFAULT',['../group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8af26d45c30cec42a1f812d81772c5caff',1,'notify.h']]],
   ['evt_5ftimeout_43',['EVT_TIMEOUT',['../group__os__notify.html#gga914d2da0ec9f0e22cd5e400bc1f968b8a0ecc520b70216915975ec9e13cfff3f3',1,'notify.h']]],
-  ['exception_5fframe_5fsize_44',['EXCEPTION_FRAME_SIZE',['../group__arch__arm__cortex.html#gacf4dbaf7327b08d6a31c584b1aa200b8',1,'cortex.h']]],
-  ['exceptionframe_45',['ExceptionFrame',['../structExceptionFrame.html',1,'']]],
-  ['execution_20model_46',['Execution Model',['../exec_model.html',1,'overview']]],
-  ['exit_5fstatus_47',['exit_status',['../structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf',1,'OS_thread_t']]]
+  ['exception_5fframe_5fentries_44',['EXCEPTION_FRAME_ENTRIES',['../group__arch__arm__cortex.html#gac32271dcfe50f5d7f991fd27d1a23e35',1,'cortex.h']]],
+  ['exception_5fframe_5ffp_5fentries_45',['EXCEPTION_FRAME_FP_ENTRIES',['../group__arch__arm__cortex.html#ga588cfd41cae610934c3470a20025a822',1,'cortex.h']]],
+  ['exceptionframe_46',['ExceptionFrame',['../structExceptionFrame.html',1,'']]],
+  ['exceptionframefp_47',['ExceptionFrameFP',['../structExceptionFrameFP.html',1,'']]],
+  ['execution_20model_48',['Execution Model',['../exec_model.html',1,'overview']]],
+  ['exit_5fstatus_49',['exit_status',['../structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf',1,'OS_thread_t']]]
 ];

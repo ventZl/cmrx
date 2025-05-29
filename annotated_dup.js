@@ -11,6 +11,7 @@ var annotated_dup =
     [ "ComSource", "structComSource.html", "structComSource" ],
     [ "ComSourceVMT", "structComSourceVMT.html", "structComSourceVMT" ],
     [ "ExceptionFrame", "structExceptionFrame.html", "structExceptionFrame" ],
+    [ "ExceptionFrameFP", "structExceptionFrameFP.html", "structExceptionFrameFP" ],
     [ "futex_t", "structfutex__t.html", "structfutex__t" ],
     [ "MPU_Registers", "structMPU__Registers.html", "structMPU__Registers" ],
     [ "NotificationObject", "structNotificationObject.html", "structNotificationObject" ],

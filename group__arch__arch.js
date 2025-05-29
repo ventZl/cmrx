@@ -8,6 +8,8 @@ var group__arch__arch =
     [ "os_core_lock", "group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289", null ],
     [ "os_core_sleep", "group__arch__arch.html#gaeb3a0773a5b5be08c7e685cfad452648", null ],
     [ "os_core_unlock", "group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea", null ],
+    [ "os_init_arch", "group__arch__arch.html#gaa60b9768d8ca80f05db8e96e43845ccf", null ],
+    [ "os_init_core", "group__arch__arch.html#gaa4d8d766787bcd40cde70cf61bc628da", null ],
     [ "os_ipi_sync_probe", "group__arch__arch.html#gaf2a18c9a690c0de3735ef1f78abe1554", null ],
     [ "os_ipi_sync_release", "group__arch__arch.html#gaf585a2c2059dfbdc1bad79c7f370ea36", null ],
     [ "os_ipi_sync_request", "group__arch__arch.html#ga406768807186211937d0ae289490231d", null ],

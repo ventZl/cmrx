@@ -151,6 +151,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga2722f702ab9637ad9e7f7e8be042f693" id="r_ga2722f702ab9637ad9e7f7e8be042f693"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga2722f702ab9637ad9e7f7e8be042f693">CMRX_IDLE_THREAD_SHUTDOWN_CPU</a></td></tr>
 <tr class="memdesc:ga2722f702ab9637ad9e7f7e8be042f693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable stopping CPU if idle thread is executed.  <br /></td></tr>
 <tr class="separator:ga2722f702ab9637ad9e7f7e8be042f693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7da05f2a002e2d9ec8811a1a4112c08" id="r_gab7da05f2a002e2d9ec8811a1a4112c08"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#gab7da05f2a002e2d9ec8811a1a4112c08">CMRX_RPC_CANARY</a></td></tr>
+<tr class="memdesc:gab7da05f2a002e2d9ec8811a1a4112c08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable RPC canaries.  <br /></td></tr>
+<tr class="separator:gab7da05f2a002e2d9ec8811a1a4112c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Compile-time configuration of kernel runtime parameters. </p>
@@ -217,6 +220,23 @@ Macros</h2></td></tr>
 
 <p>Enable / disable kernel transaction verification. </p>
 <p>Transaction verification is a potentially expensive function. It mostly only needs to be activated whenever kernel code is changed in order to verify that the modified code is not executing nested commits. </p>
+
+</div>
+</div>
+<a id="gab7da05f2a002e2d9ec8811a1a4112c08" name="gab7da05f2a002e2d9ec8811a1a4112c08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab7da05f2a002e2d9ec8811a1a4112c08">&#9670;&#160;</a></span>CMRX_RPC_CANARY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMRX_RPC_CANARY</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable / disable RPC canaries. </p>
+<p>RPC canaries are values put on stack to ensure consistent state is retained across RPC calls and returns. These values can detect stack corruption caused by accident / bug but are trivial to bypass by an attacker. </p>
 
 </div>
 </div>

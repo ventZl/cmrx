@@ -106,6 +106,9 @@ $(document).ready(function(){initNavTree('group__arch__arm__os.html',''); initRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga9418e3b724b321cd2d2401383196db9e" id="r_ga9418e3b724b321cd2d2401383196db9e"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga9418e3b724b321cd2d2401383196db9e">get_exception_arg_addr</a> (uint32_t *frame, unsigned argno, bool fp_active)</td></tr>
+<tr class="memdesc:ga9418e3b724b321cd2d2401383196db9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve address of n-th argument from exception frame.  <br /></td></tr>
+<tr class="separator:ga9418e3b724b321cd2d2401383196db9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b1827c66da610023e93a6ad404bd38f" id="r_ga8b1827c66da610023e93a6ad404bd38f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga8b1827c66da610023e93a6ad404bd38f">os_request_context_switch</a> (bool activate)</td></tr>
 <tr class="memdesc:ga8b1827c66da610023e93a6ad404bd38f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
 <tr class="separator:ga8b1827c66da610023e93a6ad404bd38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,6 +142,50 @@ Functions</h2></td></tr>
 
 <p>Get value of process LR. </p>
 <dl class="section return"><dt>Returns</dt><dd>top of application stack </dd></dl>
+
+</div>
+</div>
+<a id="ga9418e3b724b321cd2d2401383196db9e" name="ga9418e3b724b321cd2d2401383196db9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9418e3b724b321cd2d2401383196db9e">&#9670;&#160;</a></span>get_exception_arg_addr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t * get_exception_arg_addr </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>argno</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fp_active</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieve address of n-th argument from exception frame. </p>
+<p>This function calculates address of n-th argument of function call from exception frame. This is used whenever it is known, that exception frame was stored as an effect of <a class="el" href="group__os__syscall.html#ga7b1388f7bd14b83bd3f8f773fbf3375b" title="Perform syscall.">__SVC()</a> call. It will automatically handle exception frame padding. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>exception frame base address (usually value of SP) </td></tr>
+    <tr><td class="paramname">argno</td><td>number of argument retrieved </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>address of argument relative to exception frame </dd></dl>
 
 </div>
 </div>
