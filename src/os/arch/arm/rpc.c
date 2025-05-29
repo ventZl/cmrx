@@ -25,8 +25,7 @@
 #include <conf/kernel.h>
 #include <cmrx/assert.h>
 
-
-void rpc_return();
+void rpc_return(void);
 
 int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
@@ -34,9 +33,12 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
     (void) arg1;
     (void) arg2;
     (void) arg3;
-	ExceptionFrame * local_frame = (ExceptionFrame *) __get_PSP();
+	Thread_t current_thread = os_get_current_thread();
+	bool fpu_used = os_is_thread_using_fpu(current_thread);
+
+	uint32_t * local_frame = (uint32_t *) __get_PSP();
 	sanitize_psp((uint32_t *) local_frame);
-	RPC_Service_t * service = (void *) get_exception_argument(local_frame, 4);
+	RPC_Service_t * service = (RPC_Service_t *) get_exception_argument(local_frame, 4, fpu_used);
 	VTable_t * vtable = service->vtable;
 
 	Process_t process_id = get_vtable_process(vtable);
@@ -52,36 +54,49 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	mpu_load((const MPU_State *) &os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
 
-	unsigned method_id = get_exception_argument(local_frame, 5); 
+	unsigned method_id = get_exception_argument(local_frame, 5, fpu_used);
 	RPC_Method_t * method = vtable[method_id];
-/*	unsigned canary = get_exception_argument(local_frame, 6);
 
-	ASSERT(canary == 0xAA55AA55);*/
+#ifdef CMRX_RPC_CANARY
+	unsigned canary = get_exception_argument(local_frame, 6, fpu_used);
+	ASSERT(canary == 0xAA55AA55);
+#endif
 
-	ExceptionFrame * remote_frame = push_exception_frame(local_frame, 2);
+	uint32_t * remote_frame = push_exception_frame(local_frame, 2, fpu_used);
 	sanitize_psp((uint32_t *) remote_frame);
 
 	// remote frame arg [1 .. 4] = local frame arg [0 .. 3]
 	for (int q = 0; q < 4; ++q)
 	{
 		set_exception_argument(remote_frame, q + 1,
-				get_exception_argument(local_frame, q)
+				get_exception_argument(local_frame, q, fpu_used),
+				fpu_used
 				);
 	}
 
-	set_exception_argument(remote_frame, 0, (uint32_t) service);
-	set_exception_argument(remote_frame, 5, 0xAA55AA55);
+	set_exception_argument(remote_frame, 0, (uint32_t) service, fpu_used);
+
+#ifdef CMRX_RPC_CANARY
+	methods->set_exception_argument(remote_frame, 5, 0xAA55AA55, fpu_used);
+#endif
 	set_exception_pc_lr(remote_frame, method, rpc_return);
 	
 	__set_PSP((uint32_t) remote_frame);
 
 	// we have manipulated PSP, but sv_call_handler doesn't know
-	// about it. we will let rewrite R0 position in exception
+	// about it.
+#if __FPU_USED
+	// Store LR into r0 image inside exception frame on stack
+	// It will be rewritten by the return value from RPC anyway
+	return os_threads[current_thread].arch.exc_return;
+#else
+	// we will let rewrite R0 position in exception
 	// stack frame by arg0 value, which actually is the same value
 	return arg0;
+#endif
 }
 
-int _rpc_call();
+int _rpc_call(void);
 
 int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
@@ -89,14 +104,34 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
     (void) arg1;
     (void) arg2;
     (void) arg3;
-	ExceptionFrame * remote_frame = (ExceptionFrame *) __get_PSP();
+	Thread_t current_thread = os_get_current_thread();
+	bool fpu_used = os_is_thread_using_fpu(current_thread);
+
+	uint32_t * remote_frame = (uint32_t *) __get_PSP();
 	sanitize_psp((uint32_t *) remote_frame);
-/*	uint32_t canary = get_exception_argument(remote_frame, 5);
+#ifdef CMRX_RPC_CANARY
+	uint32_t canary = get_exception_argument(remote_frame, 5, fpu_used);
 
-	ASSERT(canary == 0xAA55AA55);*/
+	ASSERT(canary == 0xAA55AA55);
+#endif
 
-	ExceptionFrame * local_frame = pop_exception_frame(remote_frame, 2);
-	
+	uint32_t * local_frame = pop_exception_frame(remote_frame, 2, fpu_used);
+
+#if __FPU_USED
+	// Restore LR value saved into exception frame r0 slot
+	// before the value in r0 slot will be overwritten by the return value
+	// from the RPC call
+	const uint32_t saved_exc_return = get_exception_argument(local_frame, 0, fpu_used);
+	os_threads[current_thread].arch.exc_return = saved_exc_return;
+	ASSERT(saved_exc_return == EXC_RETURN_THREAD_PSP || saved_exc_return == EXC_RETURN_THREAD_PSP_FPU);
+	bool orig_fpu_used = os_is_thread_using_fpu(current_thread);
+	if (fpu_used & !orig_fpu_used)
+	{
+		FPU->FPCCR &= ~(FPU_FPCCR_LSPACT_Msk);
+	}
+	fpu_used = orig_fpu_used;
+#endif
+
 	int pstack_depth = rpc_stack_pop();
 	Process_t process_id;
 
@@ -128,11 +163,9 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	typeof(&_rpc_call) p_rpc_call = _rpc_call;
 	p_rpc_call++;
 	ASSERT(local_frame->pc == p_rpc_call);
-	canary = get_exception_argument(local_frame, 6);
-	ASSERT(canary == 0xAA55AA55);
-
 	sanitize_psp((uint32_t *) local_frame);
 #endif
+
 	__set_PSP((uint32_t) local_frame);
 
 	// we have manipulated PSP, but sv_call_handler doesn't know
@@ -141,7 +174,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	// won't get return value written by sv_call_handler, so we have to
 	// do it on our own.
 	
-	set_exception_argument(local_frame, 0, arg0);
+	set_exception_argument(local_frame, 0, arg0, fpu_used);
 	__ISB();
 	
 	return arg0;

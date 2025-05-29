@@ -65,4 +65,12 @@
  */
 #cmakedefine CMRX_IDLE_THREAD_SHUTDOWN_CPU
 
+/** Enable / disable RPC canaries.
+ * RPC canaries are values put on stack to ensure consistent state
+ * is retained across RPC calls and returns. These values can detect
+ * stack corruption caused by accident / bug but are trivial to bypass
+ * by an attacker.
+ */
+#cmakedefine CMRX_RPC_CANARY
+
 /** @} */

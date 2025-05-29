@@ -3,6 +3,7 @@
 #include <cmrx/sys/runtime.h>
 #include <cmrx/defines.h>
 #include <conf/kernel.h>
+#include <arch/runtime.h>
 
 /** @defgroup os_kernel Kernel core
  * @ingroup os
@@ -92,6 +93,8 @@ struct OS_thread_t {
 	 */
 
 	uint32_t signals;
+
+	struct Arch_State_t arch;
 
 	/** Exit status after thread quit. */
 	int exit_status;

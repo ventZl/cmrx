@@ -453,6 +453,7 @@ int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data
 	uint8_t thread_id = os_thread_alloc(process, priority);
     if (thread_id < OS_THREADS)
     {
+        os_thread_initialize_arch(&os_threads[thread_id]);
     	os_thread_construct(thread_id, entrypoint, data, core);
     }
     ASSERT(thread_id < OS_THREADS);
@@ -556,10 +557,13 @@ void _os_start(uint8_t start_core)
     {
         kernel_structs_initialized = KERNEL_STRUCTS_INITIALIZED_SIGNATURE;
         memset(&os_threads, 0, sizeof(os_threads));
+        os_init_arch();
         os_timer_init();
         os_notify_init();
     }
     os_smp_unlock();
+
+    os_init_core(start_core);
 
 	for (unsigned q = 0; q < applications; ++q)
 	{
