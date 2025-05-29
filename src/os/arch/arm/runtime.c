@@ -5,12 +5,7 @@
 #include <kernel/sched.h>
 #include <arch/corelocal.h>
 
-bool os_is_thread_using_fpu(Thread_t thread_id)
-{
-    return (os_threads[thread_id].arch.exc_return == EXC_RETURN_THREAD_PSP_FPU);
-}
-
-#ifdef __FPU_USED
+#if __FPU_USED
 void os_thread_initialize_arch(struct OS_thread_t * thread)
 {
     // By default, thread is restored into
@@ -50,7 +45,6 @@ void os_load_fpu_context(struct OS_thread_t * thread)
         );
     }
 }
-#endif
 
 /* FPU initialization routines for Cortex-M architecture */
 
@@ -65,9 +59,18 @@ void os_init_arch(void)
 void os_init_core(unsigned core_id)
 {
     (void) core_id;
+#if __FPU_USED
     // Here we assume that FP coprocessor was enabled by the SystemInit from within HAL.
     FPU->FPCCR |= FPU_FPCCR_ASPEN_Msk | FPU_FPCCR_LSPEN_Msk;
+#endif
 }
+
+bool os_is_thread_using_fpu(Thread_t thread_id)
+{
+    return (os_threads[thread_id].arch.exc_return == EXC_RETURN_THREAD_PSP_FPU);
+}
+
+#endif
 
 bool os_fpu_exception_frame(void)
 {

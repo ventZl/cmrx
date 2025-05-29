@@ -133,10 +133,10 @@ __attribute__((interrupt, naked)) void PendSV_Handler(void)
 	// Performs: __set_LR(os_perform_thread_switch((uint32_t) __get_LR()));
 	asm volatile(
 		"MOV r0, LR\n\t"
-		"BL %0\n\t"
+		"BL os_perform_thread_switch\n\t"
 		"MOV LR, r0\n\t"
 		:
-		: "i" (os_perform_thread_switch)
+		:
 		: "r0"
 	);
 	// Load registers not loaded by the CPU, enable interrupts and return from exception
@@ -159,7 +159,7 @@ __attribute__((interrupt, naked)) void PendSV_Handler(void)
  */
 uint32_t os_perform_thread_switch(uint32_t LR)
 {
-#ifdef __FPU_USED
+#if __FPU_USED
 	cpu_context.old_task->arch.exc_return = LR;
 #endif
 	cpu_context.old_task->sp = (uint32_t *) __get_PSP();
@@ -168,7 +168,7 @@ uint32_t os_perform_thread_switch(uint32_t LR)
     // handler. If you assert here, then your interrupt handler priority
     // is messed up. You need to configure PendSV to be the handler with
     // absolutely the lowest priority.
-#ifdef __FPU_USED
+#if __FPU_USED
 	ASSERT(LR == EXC_RETURN_THREAD_PSP || LR == EXC_RETURN_THREAD_PSP_FPU);
 #else
 	ASSERT(LR == EXC_RETURN_THREAD_PSP);
@@ -214,7 +214,7 @@ uint32_t os_perform_thread_switch(uint32_t LR)
 	 */
 	os_request_context_switch(false);
 
-#ifdef __FPU_USED
+#if __FPU_USED
 	LR = cpu_context.new_task->arch.exc_return;
 #endif
 
@@ -253,13 +253,15 @@ static SYSCALL_DEFINITION struct Syscall_Entry_t nvic_syscalls[] = {
  */
 uint32_t os_dispatch_system_call(uint32_t LR)
 {
+#if __FPU_USED
 	Thread_t current_thread = os_get_current_thread();
 	os_threads[current_thread].arch.exc_return = LR;
+#endif
 	// This assert checks that we are not preempting some other interrupt
 	// handler. If you assert here, then your interrupt handler priority
 	// is messed up. You need to configure PendSV to be the handler with
 	// absolutely the lowest priority.
-#ifdef __FPU_USED
+#if __FPU_USED
 	ASSERT(LR == EXC_RETURN_THREAD_PSP || LR == EXC_RETURN_THREAD_PSP_FPU);
 #else
 	ASSERT(LR == EXC_RETURN_THREAD_PSP);
@@ -272,17 +274,21 @@ uint32_t os_dispatch_system_call(uint32_t LR)
 	uint8_t syscall_id = *(lra - 1);
     uint32_t rv = os_system_call(frame->r0123[0], frame->r0123[1], frame->r0123[2], frame->r0123[3], syscall_id);
     *(psp) = rv;
+#if __FPU_USED
     return os_threads[current_thread].arch.exc_return; /*asm volatile("BX lr");*/
+#else
+	return LR;
+#endif
 }
 
 __attribute__((naked)) void SVC_Handler(void)
 {
 	asm volatile(
 		"MOV r0, lr\n\t"
-		"BL %0\n\t"
+		"BL os_dispatch_system_call\n\t"
 		"BX r0\n\t"
 		:
-		: "i" (os_dispatch_system_call)
+		:
 		: "r0"
 	);
 }

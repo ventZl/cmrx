@@ -85,7 +85,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	// we have manipulated PSP, but sv_call_handler doesn't know
 	// about it.
-#ifdef __FPU_USED
+#if __FPU_USED
 	// Store LR into r0 image inside exception frame on stack
 	// It will be rewritten by the return value from RPC anyway
 	return os_threads[current_thread].arch.exc_return;
@@ -117,7 +117,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 	uint32_t * local_frame = pop_exception_frame(remote_frame, 2, fpu_used);
 
-#ifdef __FPU_USED
+#if __FPU_USED
 	// Restore LR value saved into exception frame r0 slot
 	// before the value in r0 slot will be overwritten by the return value
 	// from the RPC call

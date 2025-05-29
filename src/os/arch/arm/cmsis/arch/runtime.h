@@ -12,7 +12,7 @@ struct OS_thread_t;
  * creation so bulk of threads won't consume stack by reserving
  * space for FPU state being saved.
  */
-#ifdef __FPU_USED
+#if __FPU_USED
 void os_thread_initialize_arch(struct OS_thread_t * thread);
 void os_save_fpu_context(struct OS_thread_t * thread);
 void os_load_fpu_context(struct OS_thread_t * thread);
@@ -54,7 +54,7 @@ void os_init_core(unsigned core_id);
  */
 
 struct Arch_State_t {
-#ifdef __FPU_USED
+#if __FPU_USED
     /** Exception return saved at the point PendSV switches tasks. Used to figure out how to restore the thread. */
     uint32_t exc_return;
 #endif
