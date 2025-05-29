@@ -8,6 +8,14 @@ function(__cmrx_get_linker_script_for_binary DEVICE FW_NAME OUTPUT)
     set(${OUTPUT} "${CMAKE_CURRENT_BINARY_DIR}/gen.${DEVICE}.${FW_NAME}.ld" PARENT_SCOPE)
 endfunction()
 
+function(__cmrx_get_map_file_for_binary FW_NAME OUTPUT)
+    if (CMRX_MAP_FILE_WITH_EXTENSION)
+        set(${OUTPUT} "${FW_NAME}.elf.map" PARENT_SCOPE)
+    else()
+        set(${OUTPUT} "${FW_NAME}.map" PARENT_SCOPE)
+    endif()
+endfunction()
+
 ## Add firmware binary definition 
 # This function is a wrapper around add_executable, which will augment the firmware binary 
 # with both necessary and useful attachments:
@@ -17,6 +25,7 @@ endfunction()
 function(add_firmware FW_NAME)
     __cmrx_get_linker_script_for_device(${DEVICE} DEVICE_LINKER_SCRIPT)
     __cmrx_get_linker_script_for_binary(${DEVICE} ${FW_NAME} BINARY_LINKER_SCRIPT)
+    __cmrx_get_map_file_for_binary(${FW_NAME} BINARY_MAP_FILE)
 
     get_property(CMRX_ROOT_DIR GLOBAL PROPERTY CMRX_ROOT_DIR)
     if ("${CMRX_ROOT_DIR}" STREQUAL "")
@@ -29,7 +38,7 @@ function(add_firmware FW_NAME)
 	add_executable(${FW_NAME} ${EXCL} ${ARGN})
     add_custom_command(TARGET ${FW_NAME} POST_BUILD
         COMMAND ${PYTHON_EXE} ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --realign
-            ${CMAKE_CURRENT_BINARY_DIR}/$<TARGET_FILE_NAME:${FW_NAME}>.map 
+            ${CMAKE_CURRENT_BINARY_DIR}/${BINARY_MAP_FILE}
             ${FW_NAME}
             ${CMAKE_CURRENT_BINARY_DIR}
 
@@ -46,8 +55,7 @@ function(add_firmware FW_NAME)
         ${BINARY_LINKER_SCRIPT}
         ${FW_NAME}
         )
-    target_link_options(${FW_NAME} PUBLIC -Wl,-Map=${FW_NAME}.map)
-    file(CREATE_LINK ${CMAKE_CURRENT_BINARY_DIR}/${FW_NAME}.map ${CMAKE_CURRENT_BINARY_DIR}/${FW_NAME}.elf.map SYMBOLIC)
+    target_link_options(${FW_NAME} PUBLIC -Wl,-Map=${BINARY_MAP_FILE})
     # TODO: CMake will de-duplicate any incoming interface
     if (NOT CMRX_SKIP_LINKER_FILE_USE)
         target_link_options(${FW_NAME} PUBLIC LINKER:--script=${BINARY_LINKER_SCRIPT})

@@ -1,6 +1,10 @@
 message(STATUS "CMSIS root is: ${CMSIS_ROOT}")
 message(STATUS "DEVICE is: ${DEVICE}")
 
+if (NOT DEFINED CMSIS_ROOT)
+    message(FATAL_ERROR "CMSIS_ROOT vairable not defined! Set this variable to contain path to where CMSIS headers are stored within your vendor SDK!")
+endif()
+
 if (NOT DEFINED DEVICE_INCLUDE_FILENAME)
     set(DEVICE_INCLUDE_FILENAME "${DEVICE}.h")
 else()
