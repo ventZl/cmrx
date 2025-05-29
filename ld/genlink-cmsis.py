@@ -1280,7 +1280,12 @@ elif (todo.realign is not None):
 
     if (not binary_layout_correct):
         elf_file_name = todo.realign[0][0: todo.realign[0].rfind('.')]
-        os.remove(elf_file_name)
+        elf_file_suffix = elf_file_name[elf_file_name.rfind('.') : ]
+
+        if (elf_file_suffix == ".elf"):
+            os.remove(elf_file_name)
+        else:
+            os.remove(elf_file_name + ".elf")
         print("Linker script updated, please rebuild the target...")
     else:
         print("Target up to date")
