@@ -7,7 +7,7 @@ CMRX - Microkernel RTOS for microcontrollers
 
 ![unit tests](https://github.com/ventZl/cmrx/actions/workflows/unit_tests.yml/badge.svg) ![stm32h7 build](https://github.com/ventZl/cmrx/actions/workflows/stm32h7-build.yml/badge.svg) ![stm32g4 build](https://github.com/ventZl/cmrx/actions/workflows/stm32g4-build.yml/badge.svg) ![rp2040 build](https://github.com/ventZl/cmrx/actions/workflows/rp2040-build.yml/badge.svg)
 
-** Table of Contents**
+**Table of Contents**
 - [About](#about)
 - [Quickstart](#quickstart)
 - [Features](#features)
@@ -19,21 +19,21 @@ CMRX - Microkernel RTOS for microcontrollers
 
 # About
 
-CMRX is a microkernel-based realtime operating system providing full memory isolation of userspace.
+CMRX is a microkernel-based realtime operating system providing full memory isolation of userspace running on low-power microcontrollers.
 
 Main goal of this project is to create runtime environment with full memory isolation as a non-negotiable feature that is always active while providing all the features users are used to have in RTOS systems without things breaking randomly.
 
 We want remove the opportunity to say "it is complicated" as an excuse to avoid memory isolation in embedded systems.
 
-Operating system supports fully static operation with compile-time configuration of all important aspects.
+CMRX RTOS supports fully static operation with compile-time configuration of all important aspects.
 
-The footprint of the operating system is small. Fully featured kernel occupies roughly 13 kB of FLASH and needs around 2kB of RAM. RAM consumption depends on compile-time configuration, especially amount of threads and processes supported.
+The footprint of the CMRX RTOS is small. Fully featured kernel occupies roughly 13 kB of FLASH and needs around 2kB of RAM. RAM consumption depends on compile-time configuration, especially amount of threads and processes configured.
 
 CMRX RTOS supports Cortex-M microcontrollers with Cortex-M MPU peripheral present. Microcontrollers based on Cortex-M0+, Cortex-M3, Cortex-M4 and Cortex-M7 cores are supported.
 
 # Quickstart
 
-See [step-by-step guide](man/03_getting_started.md) on how to integrate CMRX into your project.
+See [step-by-step guide](https://ventzl.github.io/cmrx/getting_started.html) on how to integrate CMRX into your project.
 
 # Features
 
@@ -52,7 +52,7 @@ See [step-by-step guide](man/03_getting_started.md) on how to integrate CMRX int
  * (customizable) timing provider based on SysTick timer
  * userspace mutexes
  * notification API
- * queue library and queue server for cross-process queues
+ * queues API
  * C11 clean
  * compatible with all vendor SDKs providing CMSIS headers
  
@@ -64,7 +64,7 @@ There is [documentation available online](https://ventZl.github.io/cmrx/). You c
 doxygen
 ~~~~~
 
-in the root directory of this repository. HTML documentation will be generated into `doc/html` subdirectory.
+in the root directory of this repository. HTML documentation will be generated into `doc/html` subdirectory. This requires Doxygen to be installed on your machine.
 
 # Using CMRX
 
@@ -76,17 +76,18 @@ All the user code has to be organized into processes. While this may sound compl
 
 To break out of the container created by the process the remote procedure calling service is provided by the kernel. This allows connecting code living in various processes without compromising the memory protection mechanism and without the developer having to understand how memory isolation works.
 
+CMRX is using features of the CMake build system. This allows certain actions to be taken fully automatically guaranteeing that the state of the build is fully consistent.
+
 # Contributing
 
-CMRX is an open project and any contributions are welcome. You can help even if you don't feel like developing an operating system is your cup of coffee:
+CMRX is an open project and any external contributions are welcome. You can help even if you don't feel like developing an operating system is your cup of coffee:
 
 * provide feedback on your experience testing CMRX on real hardware - Have you tried to make CMRX run with your board? Let us know that if it works or not.
 * improve the documentation - Is the documentation missing something? Help to improve it!
 * reporting bugs - Did you find a bug? Did CMRX crash on you? Fill in a bug.
 * suggesting enhancements - Do you think some feature is missing? Propose a feature.
 * improve tests - Even though kernel does have some tests, the test suite can always be better.
-* contribute code - Contributions in the form of pull requests that resolve issues, implement enhancements or feature requests are welcome as long as they
-  adhere to the basic concept and mission of this project.
+* contribute code - Contributions in the form of pull requests that resolve issues, implement enhancements or feature requests are welcome as long as they adhere to the basic concept and mission of this project.
 
 # Reporting bugs
 
