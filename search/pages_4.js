@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getting_20started_0',['Getting started',['../getting_started.html',1,'']]]
+  ['findcmsis_20cmake_20module_0',['FindCMSIS CMake module',['../findcmsis.html',1,'build_system']]]
 ];

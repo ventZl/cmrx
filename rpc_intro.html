@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('rpc_intro.html',''); initResizable(); 
 <div class="contents">
 <div class="textblock"><p>Remote procedure calls are one of few existing ways of communicating between processes. While threads can use mutexes (as all threads of same process have access to same memory and therefore to same mutexes), threads of different processes can't all access the same memory regions all the time.</p>
 <p>Remote procedure calling has, as pretty much any IPC mechanism two ends. The callee end and the caller end. Callee end is the end which ends up being called as a result of RPC and we will call it "server" in further text. Caller is the one, who will perform the call, once it decides it is right time to do so. We will call it "client" for short.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md38"></a>
 High level design of RPC mechanism</h2>
 <p>From high level perspective, RPC interface works in a way similar to C++ objects. Server process can declare one or more services, which are composed of methods. Methods are callable via the instance of the service.</p>
 <div class="dotgraph">
@@ -115,7 +115,7 @@ Hierarchy of RPC components</div>
 <p>From the caller perspective, the service instance is an opaque pointer. This pointer, once obtained, can be used to call service methods. Internally, the object pointed to contains link to service method table. If caller uses this pointer to call service method, this call gets resolved on compile time. If method with requested name does not exist in target service, the compilation fails.</p>
 <p>Despite the fact, that the called method is resolved during the compile time, the call itself is performed based on the service status during the runtime. Compile time resolution makes sure that target method actually exists within referenced service and composes kernel call to perform RPC call.</p>
 <p>Later, during the runtime, kernel resolves service method address and passes control to the provided address. At no time, the calling process has access to service object, despite it's ability to call service methods. Runtime resolution is done by the kernel.</p>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md40"></a>
 RPC interface</h2>
 <p>RPC interface is a structure, which lists pointer-to-function kind of members. This is a typical way of writing "C classes". There are no special requirements for internal organization of this structure except of typical best practices in writing reusable interfaces.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmrx/rpc/interface.h&gt;</span></div>
@@ -127,26 +127,26 @@ RPC interface</h2>
 <div class="line">};</div>
 <div class="ttc" id="agroup__api__rpc_html_gac79f9e6f9c7223d603a5ac7365617ea7"><div class="ttname"><a href="group__api__rpc.html#gac79f9e6f9c7223d603a5ac7365617ea7">INSTANCE</a></div><div class="ttdeci">#define INSTANCE(a)</div><div class="ttdoc">Mark function argument as reference to current service instance.</div><div class="ttdef"><b>Definition</b> implementation.h:115</div></div>
 </div><!-- fragment --><p>There are limitations given by RPC mechanism in CMRX though. Any method of RPC interface has to have 1 up to 5 arguments. First arguments <b>must</b> be pointer to instance. This semantics is same as used in Python methods. Remaining four arguments can be of any scalar type. Method can return any scalar type, but does not need to return anything.</p>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md42"></a>
 RPC service</h2>
 <p>RPC service holds the data, RPC service provides access to. It is plain C structure with only one requirement. First member of this struct <b>must</b> be a pointer to the RPC service, which provides access to this object and this member <b>must</b> be called <code>vtable</code>. Amount, types, structure and order of remaining items is completely up to application developer. Even removal or reordering of items within structure won't compromise binary compatibility, as long as your service can cope with it.</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>RPC_service {</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">struct </span>RPC_interface vtable;</div>
 <div class="line">    <span class="keywordtype">long</span> <span class="keywordtype">long</span> service_data;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md43"></a>
 Becoming a RPC server</h2>
 <p>In order for some application to define a RPC server, it has to do quite a few things:</p>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md45"></a>
 Declare interfaces</h2>
 <p>Very first step is to define the interface. Interface is a structure visible both to the server and the client, which defines what actions some type of service supports. Interface is purely procedural and does not support publishing of data members. Interface has a form of structure containing pointer-to-function members. Interfaces shall be as abstract as possible, creating contracts between the caller and the callee rather than describe manipulation methods specific to one single interface. This facilitates interface reuse. If your service has possible actions similar to some other service, then both services shall implement the same interface. If they do then these services are interchangeable. Caller can call an instance of both without actually knowing what specific service it is calling or that they are in fact different.</p>
 <p>This step can be skipped if there is suitable interface available somewhere in your project. You can reuse it rather than defining your own interface.</p>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 Declare services</h2>
 <p>After interfaces were defined (or adopted), the structure of the service itself has to be provided. This is typically a structure, which holds all the state of the service. This structure must contain a link to the interface, this service implements.</p>
 <p>In CMRX, the internals of the structure are never accessible outside the owning process. So in practice, it is possible to provide two declarations of the service: One, fully specified with all the data members. This one is used internally while writing the service implementation. Another, containing only the reference to interface implemented may be provided for callers.</p>
 <p>Above is not a must, even if caller knows the internal structure of the interface, it is not possible to access it. Not even in read-only manner.</p>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 Define service implementation</h2>
 <p>Next, it is necessary to provide implementation of all functions declared in the interface this service implements. Once these functions are implemented, they can be put together into interface implementation table. This is an instance of interface, where function pointers point to actual functions just created.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmrx/rpc/implementation.h&gt;</span></div>
@@ -184,13 +184,13 @@ Define service implementation</h2>
 <li>Only RPC services, which were intentionally provided as such, can be used to perform legitimate RPC call. No random data put together which resemble pointer-to-function array can be used as a RPC service.</li>
 <li>Presence of VTABLE address in some particular process' VTABLE region established relationship between RPC service and owning process. This is also important from memory protection perspective, as it allows kernel to determine, how to set up memory protection during the RPC call.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md21"></a>
+<h2><a class="anchor" id="autotoc_md49"></a>
 Calling RPC service</h2>
 <p>Once RPC service has been established having its own implementation it is possible to perform calls of this service. Service instance lives in the address space of the process, which instantiated it. It is not possible to place the service instance into some globally-accessible place as no such space exists. It is not even needed. All that any potential caller needs is the address of the service. Call of this service can then be performed using the following code:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> retval = <a class="code hl_define" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a>(service_ptr, method_2, 0x42, 0xF00F);</div>
 <div class="ttc" id="agroup__api__rpc_html_ga896b17abf6ce670f5000ac4a0852393f"><div class="ttname"><a href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a></div><div class="ttdeci">#define rpc_call(service_instance, method_name,...)</div><div class="ttdoc">User-visible way to perform remote procedure call.</div><div class="ttdef"><b>Definition</b> rpc.h:122</div></div>
 </div><!-- fragment --><p>This call will perform the call of method_2 from within service using CMRX RPC mechanism.</p>
-<h2><a class="anchor" id="autotoc_md22"></a>
+<h2><a class="anchor" id="autotoc_md50"></a>
 Advantages of RPC mechanism</h2>
 <p>Why mechanism so complicated?</p>
 <p>Despite looking complicated, this mechanism has a few advantages over directly calling functions, or calling functions via pointer-to-function table indirection. If we first consider the simplest case of calling specific service functions via their names directly, such as:</p>

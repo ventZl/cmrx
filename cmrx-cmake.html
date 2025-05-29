@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: Execution Model</title>
+<title>C Microkernel Realtime eXecutive: CMRX CMake module</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('exec_model.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('cmrx-cmake.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,20 +98,34 @@ $(document).ready(function(){initNavTree('exec_model.html',''); initResizable();
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Execution Model</div></div>
+  <div class="headertitle"><div class="title">CMRX CMake module</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>As long as memory is concerned, the entity governing access is a process. As long as scheduling is concern, the governing entity is a thread. CMRX contains prioritized, multi-threaded, preemptive scheduler. As of now, this scheduler is not SMP-capable.</p>
-<h2><a class="anchor" id="autotoc_md53"></a>
-Scheduler</h2>
-<p>Scheduler of CMRX RTOS offers 256 different priorities of threads, with priority 0 being the highest and priority 255 being the lowest, reserved for the idle task use. Scheduler is prioritized, so whenever a thread has to be selected for execution, the thread with the highest priority (the lowest numerical value of priority) is selected that is ready to execute.</p>
-<p>Priorities are assigned per-thread, not per-process. So it is possible for one process to have multiple threads having different priorities. Threads with higher priorities might be used to handle external events, while threads with lower priorities might be used to crunch asynchronous work.</p>
-<p>Scheduler is preemptive, which means that whenever there are two threads ready to execute having same priority, they will share the CPU time. Scheduler will periodically switch from one thread to another so that both threads can run "simultaneously". This is something to consider when designing event handler thread priorities. If two event handler threads have the same priority, then it may happen that arrival of event handled by some of these threads, while other thread is already running may preempt one thread by another. This may introduce non-determinism or unacceptably long latencies.</p>
-<p>There is no per-process prioritization. Whenever a thread has to be selected, all threads from all processes are considered. Process switch occurs automatically if the next thread to be executed belongs to different process than the thread being swapped out. There is no fairness in CPU time allocated to threads or processes. CPU time is always allocated to thread(s) with highest priority that are runnable. If there is more than one such thread, then CPU time is divided between these processes evenly.</p>
-<h2><a class="anchor" id="autotoc_md55"></a>
-Interrupts</h2>
-<p>All the code running in the userspace, even the code of threads with priority 0 has lower priority than any interrupt that may happen. This way any code registered as an interrupt handler will preempt any thread running. Device interrupt handlers have priority higher than the kernel service handler. The effect of such setup is, that hardware interrupts will preempt even running kernel system call. This has the consequence, that it is not possible to call system calls from within interrupt service routines. There is special set of <a class="el" href="group__api__isr.html">Interrupt Service Routines</a> minimalistic API which allows to run limited subset of kernel services from within interrupt service handler. The goal of this design is to make ISRs as lean as possible to they won't disturb thread execution much.</p>
-<p>Only perform time-sensitive work in the context of an ISR and defer all remaining work to designated thread. </p>
+<div class="textblock"><p>This module performs kernel configuration, generates runtime configuration header and includes platform-specific components.</p>
+<p>Usage: </p><div class="fragment"><div class="line">set(CMRX_ARCH architecture)</div>
+<div class="line">set(CMRX_HAL hal)</div>
+<div class="line"> </div>
+<div class="line">include(CMRX)</div>
+</div><!-- fragment --><p>As of now the only supported target architecture is <code>arm</code> and the only supported HAL is <code>cmsis</code>.</p>
+<h2><a class="anchor" id="autotoc_md20"></a>
+CMRX_ARCH</h2>
+<p><b>Mandatory!</b> Specifies the architecture of the target microcontroller to be used. There must be architecture support layer provided for this architecture.</p>
+<h2><a class="anchor" id="autotoc_md21"></a>
+CMRX_HAL</h2>
+<p><b>Mandatory!</b> Specifies the HAL CMRX should use to access the target platform. One architecture may provide support for multiple HALs.</p>
+<p>This module provides some commands that shall be used to automate actions that enable memory isolation support:</p>
+<h1><a class="anchor" id="autotoc_md22"></a>
+add_firmware()</h1>
+<p>Usage: </p><div class="fragment"><div class="line">add_firmware(&lt;binary_name&gt; ...)</div>
+</div><!-- fragment --><p>This command is a wrapper around <code>add_executable()</code> CMake command. It works the same way. The only difference is that it automatically calls the GenLink script to generate binary-specific linker script. This is necessary to support memory protection.</p>
+<h1><a class="anchor" id="autotoc_md23"></a>
+add_application()</h1>
+<p>Usage: </p><div class="fragment"><div class="line">add_application(&lt;library_name&gt; ...)</div>
+</div><!-- fragment --><p>This command is a wrapper around <code>add_library()</code> CMake command. When called, it will create a static library named <code>&lt;library_name&gt;</code> the same way as <code>add_library()</code> would do. Additionally it will call GenLink to create application-specific includes for the main include file. This dynamically adjusts application layout to support the memory protection.</p>
+<h1><a class="anchor" id="autotoc_md24"></a>
+target_add_applications()</h1>
+<p>Usage: </p><div class="fragment"><div class="line">target_add_applications(&lt;binary_name&gt; &lt;library_name&gt; ...)</div>
+</div><!-- fragment --><p>This command is a wrapper around <code>target_link_libraries()</code> CMake command. It will link the library containing application to the main executable. Aside from this it will modify the linker script of the firmware to include application instance into the build. Without this command being called the application won't be present in the firmware. Library linked this way must have been created using the <code>add_application()</code> command otherwise the call to <code>target_add_applications()</code> will fail. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
