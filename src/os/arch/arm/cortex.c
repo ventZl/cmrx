@@ -99,21 +99,6 @@ inline void os_request_context_switch(bool activate)
 	__DSB();
 }
 
-/** Get value of process LR
- * @return top of application stack
- */
-ALWAYS_INLINE void * __get_SP(void)
-{
-	void * sp;
-	asm volatile(
-		".syntax unified\n\t"
-		"MOV %0, SP\n\t"
-		: "=r" (sp)
-	);
-
-	return sp;
-}
-
 uint32_t os_perform_thread_switch(uint32_t LR);
 
 /** Wrapper for for Pending service interrupt handler.
