@@ -148,7 +148,7 @@ asm ( \
  * @returns address of argument relative to exception frame
  */
 
-uint32_t * get_exception_arg_addr(uint32_t * frame, unsigned argno, bool fp_active);
+uint32_t * get_exception_arg_addr(ExceptionFrame * frame, unsigned argno, bool fp_active);
 
 /** Retrieve value of exception frame function call argument.
  *
@@ -157,7 +157,7 @@ uint32_t * get_exception_arg_addr(uint32_t * frame, unsigned argno, bool fp_acti
  * @param argno number of argument retrieved
  * @returns value of function argument
  */
-static inline unsigned get_exception_argument(uint32_t * frame, unsigned argno, bool fp_active)
+static inline unsigned get_exception_argument(ExceptionFrame * frame, unsigned argno, bool fp_active)
 {
 	uint32_t * arg_addr = get_exception_arg_addr(frame, argno, fp_active);
 	return *arg_addr;
@@ -170,7 +170,7 @@ static inline unsigned get_exception_argument(uint32_t * frame, unsigned argno, 
  * @param argno number of argument retrieved
  * @param value new value of function argument
  */
-static inline void set_exception_argument(uint32_t * frame, unsigned argno, unsigned value, bool fp_active)
+static inline void set_exception_argument(ExceptionFrame * frame, unsigned argno, unsigned value, bool fp_active)
 {
 	uint32_t * arg_addr = get_exception_arg_addr(frame, argno, fp_active);
 	*arg_addr = value;
@@ -195,7 +195,7 @@ static inline void set_exception_pc_lr(ExceptionFrame * frame, void * pc, void (
  * @param fp_active if true then floating point unit is actively used in the thread exception is for
  * @return address of duplicated exception frame
  */
-uint32_t * push_exception_frame(uint32_t * frame, unsigned args, bool fp_active);
+ExceptionFrame * push_exception_frame(ExceptionFrame * frame, unsigned args, bool fp_active);
 
 /** Creates space for additional arguments under exception frame.
  *
@@ -207,7 +207,7 @@ uint32_t * push_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
  * @param fp_active if true then floating point unit is actively used in the thread exception is for
  * @returns address of shimmed exception frame.
  */
-uint32_t * shim_exception_frame(uint32_t * frame, unsigned args, bool fp_active);
+ExceptionFrame * shim_exception_frame(ExceptionFrame * frame, unsigned args, bool fp_active);
 
 /** Remove exception frame from thread's stack.
  *
@@ -218,7 +218,7 @@ uint32_t * shim_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
  * @param fp_active if true then floating point unit is actively used in the thread exception is for
  * @return new address of stack top after frame has been removed from it
  */
-uint32_t * pop_exception_frame(uint32_t * frame, unsigned args, bool fp_active);
+ExceptionFrame * pop_exception_frame(ExceptionFrame * frame, unsigned args, bool fp_active);
 
 /** Get value of process LR
  * @return top of application stack
