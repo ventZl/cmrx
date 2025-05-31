@@ -70,9 +70,10 @@ bool os_is_thread_using_fpu(Thread_t thread_id)
     return (os_threads[thread_id].arch.exc_return == EXC_RETURN_THREAD_PSP_FPU);
 }
 
-#endif
-
 bool os_fpu_exception_frame(void)
 {
     return os_is_thread_using_fpu(os_get_current_thread());
 }
+
+#endif
+
