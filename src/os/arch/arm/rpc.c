@@ -33,8 +33,12 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
     (void) arg1;
     (void) arg2;
     (void) arg3;
-	const bool fpu_used = os_is_thread_using_fpu(os_get_current_thread());
-
+	#if __FPU_USED
+	Thread_t current_thread = os_get_current_thread();
+	const bool fpu_used = os_is_thread_using_fpu(current_thread);
+	#else
+	const bool fpu_used = false;
+	#endif
 	ExceptionFrame * local_frame = (ExceptionFrame *) __get_PSP();
 	sanitize_psp((uint32_t *) local_frame);
 	RPC_Service_t * service = (RPC_Service_t *) get_exception_argument(local_frame, 4, fpu_used);
@@ -103,7 +107,12 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
     (void) arg1;
     (void) arg2;
     (void) arg3;
-	const bool fpu_used = os_is_thread_using_fpu(os_get_current_thread());
+#if __FPU_USED
+	Thread_t current_thread = os_get_current_thread();
+	const bool fpu_used = os_is_thread_using_fpu(current_thread);
+#else
+	const bool fpu_used = false;
+#endif
 
 	ExceptionFrame * remote_frame = (ExceptionFrame *) __get_PSP();
 	sanitize_psp((uint32_t *) remote_frame);
