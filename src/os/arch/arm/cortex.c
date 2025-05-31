@@ -44,9 +44,9 @@ int os_nvic_disable(uint32_t irq)
  * @{
  */
 
-uint32_t * get_exception_arg_addr(uint32_t * frame, unsigned argno, bool fp_active)
+uint32_t * get_exception_arg_addr(ExceptionFrame * frame, unsigned argno, bool fp_active)
 {
-	ExceptionFrame * frame_alias = (ExceptionFrame *) frame;
+	ExceptionFrame * frame_alias = frame;
 	ExceptionFrameFP * fp_frame_alias = (ExceptionFrameFP *) frame;
 	if (argno < 4)
 	{
@@ -97,21 +97,6 @@ inline void os_request_context_switch(bool activate)
 
 	__ISB();
 	__DSB();
-}
-
-/** Get value of process LR
- * @return top of application stack
- */
-ALWAYS_INLINE void * __get_SP(void)
-{
-	void * sp;
-	asm volatile(
-		".syntax unified\n\t"
-		"MOV %0, SP\n\t"
-		: "=r" (sp)
-	);
-
-	return sp;
 }
 
 uint32_t os_perform_thread_switch(uint32_t LR);
@@ -303,11 +288,11 @@ static unsigned os_exception_frame_size(bool fp_used)
 	return fp_used ? EXCEPTION_FRAME_FP_ENTRIES : EXCEPTION_FRAME_ENTRIES;
 }
 
-uint32_t * push_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
+ExceptionFrame * push_exception_frame(ExceptionFrame * frame, unsigned args, bool fp_active)
 {
 
-	ExceptionFrame * frame_alias = (ExceptionFrame *) frame;
-	ExceptionFrame * outframe = (ExceptionFrame *) ((frame) - (os_exception_frame_size(fp_active) + args));
+	ExceptionFrame * frame_alias = frame;
+	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) - (os_exception_frame_size(fp_active) + args));
 	bool padding = false;
 
 	// Check if forged frame is 8-byte aligned, or not
@@ -333,32 +318,35 @@ uint32_t * push_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
 		outframe->xpsr &= ~(1 << 9);
 	}
 
-	return (uint32_t *) outframe;
+	return outframe;
 }
 
-uint32_t * shim_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
+ExceptionFrame * shim_exception_frame(ExceptionFrame * frame, unsigned args, bool fp_active)
 {
+	uint32_t * frame_alias = (uint32_t *) frame;
 
-	uint32_t * outframe = push_exception_frame(frame, args, fp_active);
+	ExceptionFrame * outframe = push_exception_frame(frame, args, fp_active);
+	uint32_t * outframe_alias = (uint32_t *) outframe;
 
-	// - 1 here reserves the xpsr value which has been copied by push_exception_frame
+	const unsigned xpsr_offset = (offsetof(ExceptionFrame, xpsr) / sizeof(uint32_t));
+
 	for (unsigned int q = 0; q < os_exception_frame_size(fp_active); ++q)
 	{
-		if (q == (offsetof(ExceptionFrame, xpsr) / sizeof(uint32_t)))
+		if (q == xpsr_offset)
 		{
 			// XPSR has been dealt with by push_exception_frame()
 			continue;
 		}
-		outframe[q] = ((uint32_t*) frame)[q];
+		outframe_alias[q] = frame_alias[q];
 	}
 
 	return outframe;
 }
 
-uint32_t * pop_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
+ExceptionFrame * pop_exception_frame(ExceptionFrame * frame, unsigned args, bool fp_active)
 {
-	ExceptionFrame * frame_alias = (ExceptionFrame *) frame;
-	ExceptionFrame * outframe = (ExceptionFrame *) ((frame) + (os_exception_frame_size(fp_active) + args));
+	ExceptionFrame * frame_alias = frame;
+	ExceptionFrame * outframe = (ExceptionFrame *) (((uint32_t *) frame) + (os_exception_frame_size(fp_active) + args));
 	if (((frame_alias->xpsr >> 9) & 1) == 1)
 	{
 		outframe = (ExceptionFrame *) (((uint32_t *) outframe) + 1);
@@ -367,7 +355,7 @@ uint32_t * pop_exception_frame(uint32_t * frame, unsigned args, bool fp_active)
 	// rewrite xPSR from pop-ped frame, retain value of bit 9
 	outframe->xpsr = (outframe->xpsr & (1 << 9)) | (frame_alias->xpsr & ~(1 << 9));
 
-	return (uint32_t *) outframe;
+	return outframe;
 }
 
 /** @} */

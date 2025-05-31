@@ -33,10 +33,13 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
     (void) arg1;
     (void) arg2;
     (void) arg3;
+	#if __FPU_USED
 	Thread_t current_thread = os_get_current_thread();
-	bool fpu_used = os_is_thread_using_fpu(current_thread);
-
-	uint32_t * local_frame = (uint32_t *) __get_PSP();
+	const bool fpu_used = os_is_thread_using_fpu(current_thread);
+	#else
+	const bool fpu_used = false;
+	#endif
+	ExceptionFrame * local_frame = (ExceptionFrame *) __get_PSP();
 	sanitize_psp((uint32_t *) local_frame);
 	RPC_Service_t * service = (RPC_Service_t *) get_exception_argument(local_frame, 4, fpu_used);
 	VTable_t * vtable = service->vtable;
@@ -62,7 +65,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	ASSERT(canary == 0xAA55AA55);
 #endif
 
-	uint32_t * remote_frame = push_exception_frame(local_frame, 2, fpu_used);
+	ExceptionFrame * remote_frame = push_exception_frame(local_frame, 2, fpu_used);
 	sanitize_psp((uint32_t *) remote_frame);
 
 	// remote frame arg [1 .. 4] = local frame arg [0 .. 3]
@@ -104,10 +107,14 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
     (void) arg1;
     (void) arg2;
     (void) arg3;
+#if __FPU_USED
 	Thread_t current_thread = os_get_current_thread();
 	bool fpu_used = os_is_thread_using_fpu(current_thread);
+#else
+	const bool fpu_used = false;
+#endif
 
-	uint32_t * remote_frame = (uint32_t *) __get_PSP();
+	ExceptionFrame * remote_frame = (ExceptionFrame *) __get_PSP();
 	sanitize_psp((uint32_t *) remote_frame);
 #ifdef CMRX_RPC_CANARY
 	uint32_t canary = get_exception_argument(remote_frame, 5, fpu_used);
@@ -115,7 +122,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	ASSERT(canary == 0xAA55AA55);
 #endif
 
-	uint32_t * local_frame = pop_exception_frame(remote_frame, 2, fpu_used);
+	ExceptionFrame * local_frame = pop_exception_frame(remote_frame, 2, fpu_used);
 
 #if __FPU_USED
 	// Restore LR value saved into exception frame r0 slot

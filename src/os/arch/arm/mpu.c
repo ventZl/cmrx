@@ -50,16 +50,6 @@ void hard_fault_handler(void)
 	ASSERT(0);
 }
 
-void mem_manage_handler(void)
-{
-	ASSERT(0);
-}
-
-static inline uint8_t log_2(uint32_t num)
-{
-	return __builtin_ctz(num);
-}
-
 /** Enable memory protection.
  * This routine enables memory protection with standard memory setup
  * for kernel purposes. This means that any privileged code has full

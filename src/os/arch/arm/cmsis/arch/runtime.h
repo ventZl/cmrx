@@ -13,9 +13,11 @@ struct OS_thread_t;
  * space for FPU state being saved.
  */
 #if __FPU_USED
+
 void os_thread_initialize_arch(struct OS_thread_t * thread);
 void os_save_fpu_context(struct OS_thread_t * thread);
 void os_load_fpu_context(struct OS_thread_t * thread);
+bool os_fpu_exception_frame(void);
 
 #define os_save_exc_return(thread)      thread->arch.exc_return = (uint32_t) __get_LR()
 #define os_load_exc_return(thread)      __set_LR((void *) thread->arch.exc_return)
@@ -38,11 +40,13 @@ void os_init_core(unsigned core_id);
 #   define os_load_exc_return(thread)
 
 #   define os_is_thread_using_fpu(thread) (false)
+#   define os_fpu_exception_frame() (false)
 
 
 #   define os_init_arch(x)
 #   define os_init_core(x)
 #endif
+
 
 /** ARM-specific architecture state of a thread.
  * This structure holds additional state needed by the

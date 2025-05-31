@@ -35,7 +35,7 @@ __attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *si
 
 void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 {
-	uint32_t * frame;
+	ExceptionFrame * frame;
 	uint32_t * new_sp;
 	bool fpu_used = os_fpu_exception_frame();
 
@@ -51,7 +51,7 @@ void os_deliver_signal(struct OS_thread_t * thread, uint32_t signals)
 		 * Thread state record is basically just an exception frame, which has
 		 * additional registers placed on top of it. 
 		 */
-		frame = thread->sp + 8;
+		frame = (ExceptionFrame *) (thread->sp + 8);
 		uint32_t * old_sp = thread->sp;
 		new_sp = old_sp - 6;
 		for (int q = 0; q < 8; ++q)
