@@ -109,7 +109,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
     (void) arg3;
 #if __FPU_USED
 	Thread_t current_thread = os_get_current_thread();
-	const bool fpu_used = os_is_thread_using_fpu(current_thread);
+	bool fpu_used = os_is_thread_using_fpu(current_thread);
 #else
 	const bool fpu_used = false;
 #endif
