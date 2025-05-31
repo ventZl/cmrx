@@ -106,15 +106,12 @@ $(document).ready(function(){initNavTree('group__arch__arm__os.html',''); initRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9418e3b724b321cd2d2401383196db9e" id="r_ga9418e3b724b321cd2d2401383196db9e"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga9418e3b724b321cd2d2401383196db9e">get_exception_arg_addr</a> (uint32_t *frame, unsigned argno, bool fp_active)</td></tr>
-<tr class="memdesc:ga9418e3b724b321cd2d2401383196db9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve address of n-th argument from exception frame.  <br /></td></tr>
-<tr class="separator:ga9418e3b724b321cd2d2401383196db9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ae6451ce266ac64b1839748e597ae87" id="r_ga2ae6451ce266ac64b1839748e597ae87"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga2ae6451ce266ac64b1839748e597ae87">get_exception_arg_addr</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, unsigned argno, bool fp_active)</td></tr>
+<tr class="memdesc:ga2ae6451ce266ac64b1839748e597ae87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve address of n-th argument from exception frame.  <br /></td></tr>
+<tr class="separator:ga2ae6451ce266ac64b1839748e597ae87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b1827c66da610023e93a6ad404bd38f" id="r_ga8b1827c66da610023e93a6ad404bd38f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#ga8b1827c66da610023e93a6ad404bd38f">os_request_context_switch</a> (bool activate)</td></tr>
 <tr class="memdesc:ga8b1827c66da610023e93a6ad404bd38f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request context switch.  <br /></td></tr>
 <tr class="separator:ga8b1827c66da610023e93a6ad404bd38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4cf099935c9747600b47a462131e023" id="r_gaa4cf099935c9747600b47a462131e023"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaa4cf099935c9747600b47a462131e023">__get_SP</a> (void)</td></tr>
-<tr class="memdesc:gaa4cf099935c9747600b47a462131e023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of process LR.  <br /></td></tr>
-<tr class="separator:gaa4cf099935c9747600b47a462131e023"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf9cfd40d6d666aac139df5763d7f5252" id="r_gaf9cfd40d6d666aac139df5763d7f5252"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__os.html#gaf9cfd40d6d666aac139df5763d7f5252">os_perform_thread_switch</a> (uint32_t LR)</td></tr>
 <tr class="memdesc:gaf9cfd40d6d666aac139df5763d7f5252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle task switch.  <br /></td></tr>
 <tr class="separator:gaf9cfd40d6d666aac139df5763d7f5252"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,29 +121,8 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gaa4cf099935c9747600b47a462131e023" name="gaa4cf099935c9747600b47a462131e023"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa4cf099935c9747600b47a462131e023">&#9670;&#160;</a></span>__get_SP()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void * __get_SP </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get value of process LR. </p>
-<dl class="section return"><dt>Returns</dt><dd>top of application stack </dd></dl>
-
-</div>
-</div>
-<a id="ga9418e3b724b321cd2d2401383196db9e" name="ga9418e3b724b321cd2d2401383196db9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9418e3b724b321cd2d2401383196db9e">&#9670;&#160;</a></span>get_exception_arg_addr()</h2>
+<a id="ga2ae6451ce266ac64b1839748e597ae87" name="ga2ae6451ce266ac64b1839748e597ae87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2ae6451ce266ac64b1839748e597ae87">&#9670;&#160;</a></span>get_exception_arg_addr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -154,7 +130,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint32_t * get_exception_arg_addr </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td>
           <td class="paramname"><em>frame</em>, </td>
         </tr>
         <tr>

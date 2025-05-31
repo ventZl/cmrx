@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['usleep_0',['usleep',['../group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a',1,'usleep(unsigned microseconds):&#160;timer.c'],['../group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a',1,'usleep(unsigned microseconds):&#160;timer.c']]]
+  ['wait_5ffor_5fobject_0',['wait_for_object',['../group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452',1,'wait_for_object(const void *object, uint32_t timeout):&#160;notify.c'],['../group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452',1,'wait_for_object(const void *object, uint32_t timeout):&#160;notify.c']]]
 ];

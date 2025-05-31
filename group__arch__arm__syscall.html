@@ -117,15 +117,15 @@ Functions</h2></td></tr>
 <tr class="separator:ga64a7c03c4ca89b1a8dd86496495707f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0951838222a5c86294984e6b29ae87c9" id="r_ga0951838222a5c86294984e6b29ae87c9"><td class="memItemLeft" align="right" valign="top">static unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#ga0951838222a5c86294984e6b29ae87c9">os_exception_frame_size</a> (bool fp_used)</td></tr>
 <tr class="separator:ga0951838222a5c86294984e6b29ae87c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65d218aceb9c8a6ca83918efb1188857" id="r_ga65d218aceb9c8a6ca83918efb1188857"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#ga65d218aceb9c8a6ca83918efb1188857">push_exception_frame</a> (uint32_t *frame, unsigned args, bool fp_active)</td></tr>
-<tr class="memdesc:ga65d218aceb9c8a6ca83918efb1188857"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicate exception frame on thread's stack.  <br /></td></tr>
-<tr class="separator:ga65d218aceb9c8a6ca83918efb1188857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b5355ba529f6bb818475e67ca4ab850" id="r_ga5b5355ba529f6bb818475e67ca4ab850"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#ga5b5355ba529f6bb818475e67ca4ab850">shim_exception_frame</a> (uint32_t *frame, unsigned args, bool fp_active)</td></tr>
-<tr class="memdesc:ga5b5355ba529f6bb818475e67ca4ab850"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates space for additional arguments under exception frame.  <br /></td></tr>
-<tr class="separator:ga5b5355ba529f6bb818475e67ca4ab850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga362700fee7c4b459d572e6986dbf301a" id="r_ga362700fee7c4b459d572e6986dbf301a"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#ga362700fee7c4b459d572e6986dbf301a">pop_exception_frame</a> (uint32_t *frame, unsigned args, bool fp_active)</td></tr>
-<tr class="memdesc:ga362700fee7c4b459d572e6986dbf301a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove exception frame from thread's stack.  <br /></td></tr>
-<tr class="separator:ga362700fee7c4b459d572e6986dbf301a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae810f95e12c75c23d3b87ee2199c9436" id="r_gae810f95e12c75c23d3b87ee2199c9436"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#gae810f95e12c75c23d3b87ee2199c9436">push_exception_frame</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, unsigned args, bool fp_active)</td></tr>
+<tr class="memdesc:gae810f95e12c75c23d3b87ee2199c9436"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicate exception frame on thread's stack.  <br /></td></tr>
+<tr class="separator:gae810f95e12c75c23d3b87ee2199c9436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac470240d0e3c9bfe8229063bd1428bbc" id="r_gac470240d0e3c9bfe8229063bd1428bbc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#gac470240d0e3c9bfe8229063bd1428bbc">shim_exception_frame</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, unsigned args, bool fp_active)</td></tr>
+<tr class="memdesc:gac470240d0e3c9bfe8229063bd1428bbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates space for additional arguments under exception frame.  <br /></td></tr>
+<tr class="separator:gac470240d0e3c9bfe8229063bd1428bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4a222a4d28fa7a5cfff3a7660353361" id="r_gad4a222a4d28fa7a5cfff3a7660353361"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__syscall.html#gad4a222a4d28fa7a5cfff3a7660353361">pop_exception_frame</a> (<a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *frame, unsigned args, bool fp_active)</td></tr>
+<tr class="memdesc:gad4a222a4d28fa7a5cfff3a7660353361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove exception frame from thread's stack.  <br /></td></tr>
+<tr class="separator:gad4a222a4d28fa7a5cfff3a7660353361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -201,16 +201,16 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga362700fee7c4b459d572e6986dbf301a" name="ga362700fee7c4b459d572e6986dbf301a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga362700fee7c4b459d572e6986dbf301a">&#9670;&#160;</a></span>pop_exception_frame()</h2>
+<a id="gad4a222a4d28fa7a5cfff3a7660353361" name="gad4a222a4d28fa7a5cfff3a7660353361"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad4a222a4d28fa7a5cfff3a7660353361">&#9670;&#160;</a></span>pop_exception_frame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t * pop_exception_frame </td>
+          <td class="memname"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> * pop_exception_frame </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td>
           <td class="paramname"><em>frame</em>, </td>
         </tr>
         <tr>
@@ -234,7 +234,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Remove exception frame from thread's stack. </p>
-<p>This function will revert effects of calling <a class="el" href="group__arch__arm__cortex.html#ga65d218aceb9c8a6ca83918efb1188857">push_exception_frame</a>. It will handle frame padding automatically. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This function will revert effects of calling <a class="el" href="group__arch__arm__cortex.html#gae810f95e12c75c23d3b87ee2199c9436">push_exception_frame</a>. It will handle frame padding automatically. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">frame</td><td>exception frame base address </td></tr>
     <tr><td class="paramname">args</td><td>number of function arguments passed onto stack (function args - 4) </td></tr>
@@ -246,16 +246,16 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga65d218aceb9c8a6ca83918efb1188857" name="ga65d218aceb9c8a6ca83918efb1188857"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga65d218aceb9c8a6ca83918efb1188857">&#9670;&#160;</a></span>push_exception_frame()</h2>
+<a id="gae810f95e12c75c23d3b87ee2199c9436" name="gae810f95e12c75c23d3b87ee2199c9436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae810f95e12c75c23d3b87ee2199c9436">&#9670;&#160;</a></span>push_exception_frame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t * push_exception_frame </td>
+          <td class="memname"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> * push_exception_frame </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td>
           <td class="paramname"><em>frame</em>, </td>
         </tr>
         <tr>
@@ -291,16 +291,16 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga5b5355ba529f6bb818475e67ca4ab850" name="ga5b5355ba529f6bb818475e67ca4ab850"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5b5355ba529f6bb818475e67ca4ab850">&#9670;&#160;</a></span>shim_exception_frame()</h2>
+<a id="gac470240d0e3c9bfe8229063bd1428bbc" name="gac470240d0e3c9bfe8229063bd1428bbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac470240d0e3c9bfe8229063bd1428bbc">&#9670;&#160;</a></span>shim_exception_frame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t * shim_exception_frame </td>
+          <td class="memname"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> * shim_exception_frame </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="structExceptionFrame.html">ExceptionFrame</a> *&#160;</td>
           <td class="paramname"><em>frame</em>, </td>
         </tr>
         <tr>

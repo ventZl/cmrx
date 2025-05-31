@@ -16,8 +16,6 @@ var group__arch__arm__mpu =
     [ "MPU_State", "group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a", null ],
     [ "__mpu_expand_class", "group__arch__arm__mpu.html#ga4e796735b3c15d3a8bb3e8f7c72bf746", null ],
     [ "hard_fault_handler", "group__arch__arm__mpu.html#ga80b8e496817c48aab711bab6cb8a148d", null ],
-    [ "log_2", "group__arch__arm__mpu.html#ga0cc61c07f2641c9564f3b2e08340e692", null ],
-    [ "mem_manage_handler", "group__arch__arm__mpu.html#ga291b6baa172cdfff1b7f482b65d69541", null ],
     [ "mpu_clear_region", "group__arch__arm__mpu.html#ga2df3bcd565155fa841a09863ab02fca3", null ],
     [ "mpu_configure_region", "group__arch__arm__mpu.html#ga0b9475c0820f93b5eaffcc99d04fe765", null ],
     [ "mpu_disable", "group__arch__arm__mpu.html#gadd23e0b89a691bc82db8504ce7b9df0d", null ],

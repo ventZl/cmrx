@@ -26,11 +26,11 @@ var group__arch__arm__cortex =
     [ "__get_LR", "group__arch__arm__cortex.html#gad2e17ebf5c6096d178a9816f7339703d", null ],
     [ "__ISR_return", "group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86", null ],
     [ "__set_LR", "group__arch__arm__cortex.html#ga3b996e99f9bcb08dc8219e0e21806769", null ],
-    [ "get_exception_arg_addr", "group__arch__arm__cortex.html#ga9418e3b724b321cd2d2401383196db9e", null ],
-    [ "get_exception_argument", "group__arch__arm__cortex.html#ga1253c78af282a24c5ded1730da41c49a", null ],
-    [ "pop_exception_frame", "group__arch__arm__cortex.html#ga362700fee7c4b459d572e6986dbf301a", null ],
-    [ "push_exception_frame", "group__arch__arm__cortex.html#ga65d218aceb9c8a6ca83918efb1188857", null ],
-    [ "set_exception_argument", "group__arch__arm__cortex.html#gae5685c47b112ee3e6c112a487e61dfa0", null ],
+    [ "get_exception_arg_addr", "group__arch__arm__cortex.html#ga2ae6451ce266ac64b1839748e597ae87", null ],
+    [ "get_exception_argument", "group__arch__arm__cortex.html#ga33c3e222f575df5864ca025a3b73f165", null ],
+    [ "pop_exception_frame", "group__arch__arm__cortex.html#gad4a222a4d28fa7a5cfff3a7660353361", null ],
+    [ "push_exception_frame", "group__arch__arm__cortex.html#gae810f95e12c75c23d3b87ee2199c9436", null ],
+    [ "set_exception_argument", "group__arch__arm__cortex.html#ga7753106298a2f7639e0ee3c2a8804b40", null ],
     [ "set_exception_pc_lr", "group__arch__arm__cortex.html#ga2bd0234ec5d398042702d9526d9d75e1", null ],
-    [ "shim_exception_frame", "group__arch__arm__cortex.html#ga5b5355ba529f6bb818475e67ca4ab850", null ]
+    [ "shim_exception_frame", "group__arch__arm__cortex.html#gac470240d0e3c9bfe8229063bd1428bbc", null ]
 ];

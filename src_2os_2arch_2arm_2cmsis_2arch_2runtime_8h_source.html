@@ -110,49 +110,53 @@ $(document).ready(function(){initNavTree('src_2os_2arch_2arm_2cmsis_2arch_2runti
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">struct </span><a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a>;</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#if __FPU_USED</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keywordtype">void</span> os_thread_initialize_arch(<span class="keyword">struct</span> <a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a> * thread);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">void</span> os_save_fpu_context(<span class="keyword">struct</span> <a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a> * thread);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> os_load_fpu_context(<span class="keyword">struct</span> <a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a> * thread);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#define os_save_exc_return(thread)      thread-&gt;arch.exc_return = (uint32_t) __get_LR()</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#define os_load_exc_return(thread)      __set_LR((void *) thread-&gt;arch.exc_return)</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">/* Figure out if thread is using FPU.</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * @return true if thread has FPU active, false otherwise</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">bool</span> os_is_thread_using_fpu(<a class="code hl_typedef" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">/* Implementation of the porting layer API. */</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#gaa60b9768d8ca80f05db8e96e43845ccf">os_init_arch</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">void</span> os_init_core(<span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92">core_id</a>);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment">// These functions are not needed if FPU is not enabled, turn them into no-op</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#   define os_thread_initialize_arch(x)</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#   define os_save_fpu_context(x)</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#   define os_load_fpu_context(x)</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#   define os_save_exc_return(thread)</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#   define os_load_exc_return(thread)</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#   define os_is_thread_using_fpu(thread) (false)</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">void</span> os_thread_initialize_arch(<span class="keyword">struct</span> <a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a> * thread);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> os_save_fpu_context(<span class="keyword">struct</span> <a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a> * thread);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">void</span> os_load_fpu_context(<span class="keyword">struct</span> <a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a> * thread);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keywordtype">bool</span> os_fpu_exception_frame(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#define os_save_exc_return(thread)      thread-&gt;arch.exc_return = (uint32_t) __get_LR()</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#define os_load_exc_return(thread)      __set_LR((void *) thread-&gt;arch.exc_return)</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">/* Figure out if thread is using FPU.</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * @return true if thread has FPU active, false otherwise</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">bool</span> os_is_thread_using_fpu(<a class="code hl_typedef" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">/* Implementation of the porting layer API. */</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#gaa60b9768d8ca80f05db8e96e43845ccf">os_init_arch</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keywordtype">void</span> os_init_core(<span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92">core_id</a>);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">// These functions are not needed if FPU is not enabled, turn them into no-op</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#   define os_thread_initialize_arch(x)</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#   define os_save_fpu_context(x)</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#   define os_load_fpu_context(x)</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#   define os_save_exc_return(thread)</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#   define os_load_exc_return(thread)</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#   define os_init_arch(x)</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#   define os_init_core(x)</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="foldopen" id="foldopen00056" data-start="{" data-end="};">
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="structArch__State__t.html">   56</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structArch__State__t.html">Arch_State_t</a> {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#if __FPU_USED</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    uint32_t exc_return;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>};</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#   define os_is_thread_using_fpu(thread) (false)</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#   define os_fpu_exception_frame() (false)</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#   define os_init_arch(x)</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#   define os_init_core(x)</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="foldopen" id="foldopen00060" data-start="{" data-end="};">
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="structArch__State__t.html">   60</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structArch__State__t.html">Arch_State_t</a> {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#if __FPU_USED</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    uint32_t exc_return;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>};</div>
 </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
 <div class="ttc" id="agroup__api_html_gaae12e635a9412afabedb95620d3e2ffe"><div class="ttname"><a href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a></div><div class="ttdeci">uint8_t Thread_t</div><div class="ttdoc">Data type used for thread IDs.</div><div class="ttdef"><b>Definition</b> defines.h:67</div></div>
 <div class="ttc" id="agroup__arch__arch_html_gaa60b9768d8ca80f05db8e96e43845ccf"><div class="ttname"><a href="group__arch__arch.html#gaa60b9768d8ca80f05db8e96e43845ccf">os_init_arch</a></div><div class="ttdeci">void os_init_arch(void)</div><div class="ttdoc">Perform architecture-specific initialization during kernel startup.</div></div>
-<div class="ttc" id="astructArch__State__t_html"><div class="ttname"><a href="structArch__State__t.html">Arch_State_t</a></div><div class="ttdoc">ARM-specific architecture state of a thread.</div><div class="ttdef"><b>Definition</b> runtime.h:56</div></div>
+<div class="ttc" id="astructArch__State__t_html"><div class="ttname"><a href="structArch__State__t.html">Arch_State_t</a></div><div class="ttdoc">ARM-specific architecture state of a thread.</div><div class="ttdef"><b>Definition</b> runtime.h:60</div></div>
 <div class="ttc" id="astructOS__thread__t_html"><div class="ttname"><a href="structOS__thread__t.html">OS_thread_t</a></div><div class="ttdoc">Thread control block.</div><div class="ttdef"><b>Definition</b> runtime.h:72</div></div>
 <div class="ttc" id="astructOS__thread__t_html_a92a48d3f33bbb1d5bac8fa215bfb2b92"><div class="ttname"><a href="structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92">OS_thread_t::core_id</a></div><div class="ttdeci">uint8_t core_id</div><div class="ttdoc">Core at which this thread is running.</div><div class="ttdef"><b>Definition</b> runtime.h:120</div></div>
 </div><!-- fragment --></div><!-- contents -->

@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['queue_5fempty_0',['queue_empty',['../group__aux__queue.html#ga4eb65aa97addc979fe4486b7456682d9',1,'queue_empty(struct Queue *queue):&#160;queue.c'],['../group__aux__queue.html#ga4eb65aa97addc979fe4486b7456682d9',1,'queue_empty(struct Queue *queue):&#160;queue.c']]],
-  ['queue_5ffull_1',['queue_full',['../group__aux__queue.html#gaf2bde6f72ff0cc4a047ee99454ac3dd6',1,'queue_full(struct Queue *queue):&#160;queue.c'],['../group__aux__queue.html#gaf2bde6f72ff0cc4a047ee99454ac3dd6',1,'queue_full(struct Queue *queue):&#160;queue.c']]],
-  ['queue_5finit_2',['queue_init',['../group__aux__queue.html#gaa7d1e0d4ea7e93ad6af453ebabd644d2',1,'queue_init(struct Queue *queue, uint8_t depth, uint8_t item_size):&#160;queue.c'],['../group__aux__queue.html#gaa7d1e0d4ea7e93ad6af453ebabd644d2',1,'queue_init(struct Queue *queue, uint8_t depth, uint8_t item_size):&#160;queue.c']]],
-  ['queue_5freceive_3',['queue_receive',['../group__aux__queue.html#ga6a42b170d904edd0c6d9ec37a616a6cf',1,'queue.h']]],
-  ['queue_5freceive_5ftimeout_4',['queue_receive_timeout',['../group__aux__queue.html#ga89f16741916b51f47ff0f5e154613fc8',1,'queue_receive_timeout(struct Queue *queue, void *data, uint32_t timeout_us):&#160;queue.c'],['../group__aux__queue.html#ga89f16741916b51f47ff0f5e154613fc8',1,'queue_receive_timeout(struct Queue *queue, void *data, uint32_t timeout_us):&#160;queue.c']]],
-  ['queue_5fsend_5',['queue_send',['../group__aux__queue.html#gab7fe4467c0404b3ff715b0c359d0188f',1,'queue_send(struct Queue *queue, const void *data):&#160;queue.c'],['../group__aux__queue.html#gab7fe4467c0404b3ff715b0c359d0188f',1,'queue_send(struct Queue *queue, const void *data):&#160;queue.c']]],
-  ['queue_5fsend_5fsilent_6',['queue_send_silent',['../group__aux__queue.html#ga0b39109a0cec8cb801afeb993057e171',1,'queue_send_silent(struct Queue *queue, const void *data):&#160;queue.c'],['../group__aux__queue.html#ga0b39109a0cec8cb801afeb993057e171',1,'queue_send_silent(struct Queue *queue, const void *data):&#160;queue.c']]]
+  ['rpc_5freturn_0',['rpc_return',['../group__api__rpc.html#gaf78e5f7fb20b02cbff061e5ea6daaed3',1,'rpc_return(void):&#160;rpc.h'],['../group__arch__arm__rpc.html#ga691fc796895989b3612d53c524d18535',1,'rpc_return(void):&#160;rpc.c']]],
+  ['rpc_5fstack_5fpop_1',['rpc_stack_pop',['../group__os__rpc.html#gae6cf8081b66bf611d61c09b161af5501',1,'rpc.c']]],
+  ['rpc_5fstack_5fpush_2',['rpc_stack_push',['../group__os__rpc.html#ga26f43d83332c3aca17beb91973e59156',1,'rpc.c']]],
+  ['rpc_5fstack_5ftop_3',['rpc_stack_top',['../group__os__rpc.html#ga34f4075561574cff1c35a7b4913f2105',1,'rpc.c']]]
 ];
