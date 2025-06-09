@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdbool.h>
+
 /** @addtogroup arch_arch
  * @{ 
  */
