@@ -6,6 +6,7 @@
 #include "syscall.h"
 #include <cmrx/assert.h>
 #include <arch/sysenter.h>
+#include <arch/syscall.h>
 
 #include "rpc.h"
 #include "sched.h"
@@ -27,10 +28,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-function-type"
 
-extern struct Syscall_Entry_t __syscall_start;
-extern struct Syscall_Entry_t __syscall_end;
-
-static SYSCALL_DEFINITION struct Syscall_Entry_t syscalls[] = {
+REGISTER_SYSCALLS(
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
 	{ SYSCALL_RPC_CALL, (Syscall_Handler_t) &os_rpc_call },
@@ -49,14 +47,13 @@ static SYSCALL_DEFINITION struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_CPUFREQ_GET, (Syscall_Handler_t) &os_cpu_freq_get },
 	{ SYSCALL_GET_MICROTIME, (Syscall_Handler_t) &os_get_micro_time },
 	{ SYSCALL_SHUTDOWN, (Syscall_Handler_t) &os_shutdown }
-
-};
+);
 
 #pragma GCC diagnostic pop
 
 int os_system_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3, uint8_t syscall_id)
 {
-	for (struct Syscall_Entry_t * syscall = &__syscall_start; syscall < &__syscall_end; ++syscall)
+	for (struct Syscall_Entry_t * syscall = os_syscalls_start(); syscall < os_syscalls_end(); ++syscall)
 	{
 		if (syscall->id == syscall_id)
 		{

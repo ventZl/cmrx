@@ -38,6 +38,7 @@ struct Syscall_Entry_t {
 	Syscall_Handler_t handler;
 };
 
+
 /** Find and execute a system call.
  * 
  * Execution of system call is a portable action. It translates into calling a function
