@@ -14,7 +14,6 @@ struct OS_thread_t;
  */
 #if __FPU_USED
 
-void os_thread_initialize_arch(struct OS_thread_t * thread);
 void os_save_fpu_context(struct OS_thread_t * thread);
 void os_load_fpu_context(struct OS_thread_t * thread);
 bool os_fpu_exception_frame(void);
@@ -33,7 +32,6 @@ void os_init_core(unsigned core_id);
 
 #else
 // These functions are not needed if FPU is not enabled, turn them into no-op
-#   define os_thread_initialize_arch(x)
 #   define os_save_fpu_context(x)
 #   define os_load_fpu_context(x)
 #   define os_save_exc_return(thread)

@@ -6,14 +6,6 @@
 #include <arch/corelocal.h>
 
 #if __FPU_USED
-void os_thread_initialize_arch(struct OS_thread_t * thread)
-{
-    // By default, thread is restored into
-    // Thread mode, using PSP as a stack and
-    // without FPU
-    thread->arch.exc_return = EXC_RETURN_THREAD_PSP;
-}
-
 void os_save_fpu_context(struct OS_thread_t * thread)
 {
     ASSERT(thread->arch.exc_return == EXC_RETURN_THREAD_PSP || thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU);
