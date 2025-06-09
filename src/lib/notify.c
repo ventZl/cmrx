@@ -4,7 +4,7 @@
 __SYSCALL int notify_object(const void * object)
 {
 	(void) object;
-	__SVC(SYSCALL_NOTIFY_OBJECT);
+	__SVC(SYSCALL_NOTIFY_OBJECT, object);
 }
 
 __SYSCALL int notify_object2(const void * object, uint32_t flags)
@@ -17,7 +17,7 @@ __SYSCALL int wait_for_object(const void * object, uint32_t timeout)
 {
 	(void) object;
 	(void) timeout;
-	__SVC(SYSCALL_WAIT_FOR_OBJECT);
+	__SVC(SYSCALL_WAIT_FOR_OBJECT, object, timeout);
 }
 
 __SYSCALL int wait_for_object_value(uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags)
