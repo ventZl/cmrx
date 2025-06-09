@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdint.h>
 #include <arch/mpu.h>
 #include <conf/kernel.h>
 

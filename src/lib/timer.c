@@ -4,11 +4,11 @@
 __SYSCALL int usleep(unsigned microseconds)
 {
     (void) microseconds;
-	__SVC(SYSCALL_USLEEP);
+	__SVC(SYSCALL_USLEEP, microseconds);
 }
 
 __SYSCALL int setitimer(unsigned microseconds)
 {
     (void) microseconds;
-	__SVC(SYSCALL_SETITIMER);
+	__SVC(SYSCALL_SETITIMER, microseconds);
 }

@@ -1,20 +1,14 @@
 #pragma once
 
-//#include "os.h"
 #include <cmrx/sys/runtime.h>
 #include <conf/kernel.h>
+#include <arch/application.h>
 #include <stddef.h>
 
 #define __APPL_SYMBOL(application, symbol)	application ## _ ## symbol
 
 #define _OS_THREAD_CREATE(application, entrypoint, data, priority, core) \
-__attribute__((externally_visible, used, section(".thread_create") )) const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\
-	&__APPL_SYMBOL(application, instance),\
-	entrypoint,\
-	data,\
-	priority,\
-	core\
-}
+CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core)
 
 /** @defgroup api_init Static initialization
  * @ingroup api
@@ -28,10 +22,20 @@ __attribute__((externally_visible, used, section(".thread_create") )) const stru
  * @{
  */
 
+/** Define structure to be a VTABLE definition.
+ * CMRX only allows remote procedure calls to objects whose vtable
+ * pointers point to structures that are considered VTable definitions.
+ *
+ * Mark every VTABLE structure instance with this macro to make it work
+ * for remote procedure calls.
+ */
 #define VTABLE __attribute__((section(".vtable."))) const
-//#define __VTABLE1(app_name) __VTABLE2(application_name)
-//#define VTABLE __VTABLE1(__COUNTER__)
 
+/** Define the MMIO range accessible by the said application.
+ * This macro allows to define a range of addresses accessible by the application
+ * code. Typical use is when user-space drivers are given access to certain
+ * address range where a peripheral resides.
+ */
 #define OS_APPLICATION_MMIO_RANGE(application, from, to)\
 	static void * const __APPL_SYMBOL(application, mmio_start) = (void *) (from);\
 	static void * const __APPL_SYMBOL(application, mmio_end) = (void *) (to);\
@@ -39,6 +43,14 @@ __attribute__((externally_visible, used, section(".thread_create") )) const stru
 	static void * const __APPL_SYMBOL(application, mmio_2_end) = (void *) 0;\
 	_Static_assert(from == 0 || to == 0 || from % (to - from) == 0, "MMIO range not size-aligned")
 
+/** Define two MMIO range accessible by the said application.
+ * This macro allows to define a range of addresses accessible by the application
+ * code. Typical use is when user-space drivers are given access to certain
+ * address range where a peripheral resides.
+ *
+ * This macro differs from @ref OS_APPLICATION_MMIO_RANGE only by the fact
+ * that it allows to pass two ranges instead of one.
+ */
 
 #define OS_APPLICATION_MMIO_RANGES(application, from, to, from2, to2)\
 	static void * const __APPL_SYMBOL(application, mmio_start) = (void *) (from);\
@@ -56,27 +68,7 @@ __attribute__((externally_visible, used, section(".thread_create") )) const stru
  * bound to this process can use.
  */
 #define OS_APPLICATION(application) \
-extern void * __APPL_SYMBOL(application, data_start);\
-extern void * __APPL_SYMBOL(application, data_end);\
-extern void * __APPL_SYMBOL(application, bss_start);\
-extern void * __APPL_SYMBOL(application, bss_end);\
-extern void * __APPL_SYMBOL(application, vtable_start);\
-extern void * __APPL_SYMBOL(application, vtable_end);\
-extern void * __APPL_SYMBOL(application, __mmio_start);\
-extern void * __APPL_SYMBOL(application, __mmio_end);\
-extern void * __APPL_SYMBOL(application, shared_start);\
-extern void * __APPL_SYMBOL(application, shared_end);\
-\
-__attribute__((externally_visible, used, section(".applications") )) const struct OS_process_definition_t __APPL_SYMBOL(application, instance) = {\
-	{\
-		{ &__APPL_SYMBOL(application, data_start), &__APPL_SYMBOL(application, data_end) },\
-		{ &__APPL_SYMBOL(application, bss_start), &__APPL_SYMBOL(application, bss_end) },\
-		{ __APPL_SYMBOL(application, mmio_start), __APPL_SYMBOL(application, mmio_end) },\
-		{ __APPL_SYMBOL(application, mmio_2_start), __APPL_SYMBOL(application, mmio_2_end) },\
-		{ &__APPL_SYMBOL(application, shared_start), &__APPL_SYMBOL(application, shared_end) }\
-	},\
-	{ &__APPL_SYMBOL(application, vtable_start), &__APPL_SYMBOL(application, vtable_end) }\
-	}
+CMRX_APPLICATION_INSTANCE_CONSTRUCTOR(application)
 
 /** Thread autostart facility.
  *
