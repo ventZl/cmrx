@@ -4,6 +4,7 @@
 #include "arch/sched.h"
 #include "txn.h"
 #include "timer.h"
+#include "access.h"
 #include <cmrx/assert.h>
 #include <conf/kernel.h>
 
@@ -159,7 +160,7 @@ Thread_t os_find_notified_thread(const void * object)
     return candidate_thread;
 }
 
-int os_notify_object(const void * object, Event_t event)
+int os_notify_object(const void * object, Event_t event, bool queue_notification)
 {
     Thread_t candidate_thread = 0;
     int candidate_timer = 0;
@@ -188,7 +189,10 @@ int os_notify_object(const void * object, Event_t event)
     }
     else
     {
-        retval = os_notify_queue_event(object);
+        if (queue_notification)
+        {
+            retval = os_notify_queue_event(object);
+        }
 
     }
     os_txn_done();
@@ -202,7 +206,12 @@ int os_notify_object(const void * object, Event_t event)
 
 int os_sys_notify_object(const void * object)
 {
-    return os_notify_object(object, EVT_DEFAULT);
+    return os_notify_object(object, EVT_DEFAULT, true);
+}
+
+int os_sys_notify_object_immediate(const void * object)
+{
+    return os_notify_object(object, EVT_DEFAULT, false);
 }
 
 /**
@@ -255,6 +264,20 @@ int os_sys_wait_for_object(const void * object, uint32_t timeout)
     {
         os_set_timed_event(timeout, TIMER_TIMEOUT);
     }
+    return os_wait_for_object(object, cb_syscall_notify_object);
+}
+
+int os_sys_wait_for_object_value(const uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags)
+{
+    if (!os_thread_check_access(os_get_current_thread(), (uint32_t *) object, ACCESS_READ_WRITE))
+    {
+        return E_ACCESS;
+    }
+    if (*object == value)
+    {
+        return E_OK;
+    }
+
     return os_wait_for_object(object, cb_syscall_notify_object);
 }
 

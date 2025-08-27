@@ -51,6 +51,8 @@
 #define E_YIELD                 13
 /// Operation timed out
 #define E_TIMEOUT               14
+/// Access denied
+#define E_ACCESS                15
 /// Internal error. No more free threads
 #define E_OUT_OF_THREADS        0xFF
 /** @} */

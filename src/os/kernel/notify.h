@@ -2,6 +2,8 @@
 
 #include "runtime.h"
 
+#include <stdbool.h>
+
 /** @defgroup os_notify Notifications
  * Kernel internals supporting cross-process notifications.
  * Notifications are concept that can be used to notify other threads implicitly
@@ -72,7 +74,7 @@ int os_notify_thread(Thread_t thread_id, int candidate_timer, Event_t event);
  * @note The object address is mostly meaningless. It allows threads to synchronize
  * on any objects both externally from the userspace and internally in the kernel.
  */
-int os_notify_object(const void * object, Event_t event);
+int os_notify_object(const void * object, Event_t event, bool queue_notification);
 
 /** Wait for object.
  * This function will block thread until some other thread notifies the object.
@@ -99,11 +101,25 @@ int os_initialize_waitable_object(const void * object);
  */
 int os_sys_notify_object(const void * object);
 
+/** Implementation of notify_object_immediate syscall.
+ * This is a wrapper around os_notify_object system call. It does some additional
+ * checking on arguments.
+ * See @ref notify_object and @ref os_notify_object for more info.
+ */
+int os_sys_notify_object_immediate(const void * object);
+
 /** Implementation of wait_for_object syscall.
  * This is a wrapper around os_wait_for_object system call. It does some additional
  * checking on arguments.
  * See @ref wait_for_object and @ref os_wait_for_object for more info.
  */
 int os_sys_wait_for_object(const void * object, uint32_t timeout);
+
+/** Implementation of wait_for_object_value syscall.
+ * This is a wrapper around os_wait_for_object system call. It does some additional
+ * checking on arguments.
+ * See @ref wait_for_object and @ref os_wait_for_object for more info.
+ */
+int os_sys_wait_for_object_value(const uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags);
 
 /** @} */

@@ -130,7 +130,7 @@ CTEST2(os_notify_wait_object, os_wait_object_callback) {
 }
 
 CTEST2(os_notify_wait_object, os_notify_none) {
-    int rv = os_notify_object(object_magic, 42);
+    int rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
@@ -161,7 +161,7 @@ CTEST2(os_notify_wait_object, os_notify_higher_priority) {
     // as notify will call os_sched_yield
     core[0].thread_current = 3;
 
-    rv = os_notify_object(object_magic, 42);
+    rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
@@ -186,7 +186,7 @@ CTEST2(os_notify_wait_object, os_notify_multiple) {
     // as notify will call os_sched_yield
     core[0].thread_current = 3;
 
-    rv = os_notify_object(object_magic, 42);
+    rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
@@ -195,7 +195,7 @@ CTEST2(os_notify_wait_object, os_notify_multiple) {
     ASSERT_EQUAL(os_threads[4].state, THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[4].wait_object, (long) object_magic);
 
-    rv = os_notify_object(object_magic, 42);
+    rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
@@ -210,7 +210,7 @@ CTEST2(os_notify_wait_object, os_notify_callback) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    rv = os_notify_object(object_magic, 42);
+    rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
@@ -224,7 +224,7 @@ CTEST2(os_notify_wait_object, os_notify_different_object) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    rv = os_notify_object(another_object_magic, 42);
+    rv = os_notify_object(another_object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
@@ -234,7 +234,7 @@ CTEST2(os_notify_wait_object, os_notify_different_object) {
 
 CTEST2(os_notify_wait_object, os_notify_missed) {
     // Notification, that aims at object nobody is waiting for right now
-    int rv = os_notify_object(object_magic, 42);
+    int rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -248,7 +248,7 @@ CTEST2(os_notify_wait_object, os_notify_missed) {
 
 CTEST2(os_notify_wait_object, os_notify_missed_different_object) {
     // Notification, that aims at object nobody is waiting for right now
-    int rv = os_notify_object(object_magic, 42);
+    int rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -262,7 +262,7 @@ CTEST2(os_notify_wait_object, os_notify_missed_different_object) {
 
 CTEST2(os_notify_wait_object, os_notify_missed_acts_once) {
     // Notification, that aims at object nobody is waiting for right now
-    int rv = os_notify_object(object_magic, 42);
+    int rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -304,7 +304,7 @@ CTEST2(os_notify_wait_object, wait_notify_same_thread_running) {
 
     // This notification should make the thread running again without
     // actually executing thread switch
-    rv = os_notify_object(object_magic, 42);
+    rv = os_notify_object(object_magic, 42, true);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(schedule_context_switch_called, false);

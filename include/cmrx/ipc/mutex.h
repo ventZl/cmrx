@@ -29,6 +29,8 @@
  * This is fast userspace mutex, which avoids calling kernel.
  * It provides basic functionality for locking, unlocking and
  * non-blocking lock. It can be single-issue, or recursive.
+ *
+ * @note This structure is shared between the kernel and the userspace to implement futex semantics
  */
 typedef struct {
 	uint8_t state;

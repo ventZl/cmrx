@@ -52,7 +52,7 @@ void isr_kill(Thread_t thread_id, uint32_t signal)
 
 void isr_notify_object(const void * object)
 {
-	os_notify_object(object, EVT_DEFAULT);
+	os_notify_object(object, EVT_DEFAULT, true);
 }
 
 /** @} */

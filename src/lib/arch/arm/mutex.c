@@ -6,6 +6,7 @@
 #include CMSIS_device_header
 #include <cmrx/ipc/mutex.h>
 #include <cmrx/ipc/thread.h>
+#include <cmrx/ipc/notify.h>
 #include <arch/cortex.h>
 #include <cmrx/defines.h>
 #include <cmrx/assert.h>
@@ -116,7 +117,7 @@ int futex_lock(futex_t * futex)
 		success = __futex_fast_lock(futex, thread_id, 0);
 		if (success != 0)
 		{
-			sched_yield();
+			wait_for_object_value(&futex->state, 0, 0, 0);
 		}
 	} while (success != 0);
 	futex->owner = thread_id;
@@ -136,6 +137,7 @@ int futex_unlock(futex_t * futex)
 	int success;
 	do {
 		success = __futex_fast_unlock(futex, thread_id);
+		notify_object(&futex->state);
 		ASSERT(success == 0 || futex->owner == thread_id);
 	} while (success != 0);
 	return success;
