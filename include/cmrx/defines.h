@@ -53,6 +53,9 @@
 #define E_TIMEOUT               14
 /// Access denied
 #define E_ACCESS                15
+/// No error. Operation completed successfully with no waiting.
+/// @note This error code is only reported where there is possibility of waiting and it makes sense to report waited/not waited state.
+#define E_OK_NO_WAIT            16
 /// Internal error. No more free threads
 #define E_OUT_OF_THREADS        0xFF
 /** @} */

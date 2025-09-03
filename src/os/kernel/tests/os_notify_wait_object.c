@@ -1,6 +1,7 @@
 #include <kernel/notify.h>
 #include <kernel/sched.h>
 #include <kernel/timer.h>
+#include <cmrx/sys/notify.h>
 #include <ctest.h>
 #include <arch/corelocal.h>
 extern struct OS_core_state_t core[OS_NUM_CORES];
@@ -71,7 +72,7 @@ static void * const object_magic = (void *) 0x12345678;
 static void * const another_object_magic = (void *) 0x87654321;
 
 CTEST2(os_notify_wait_object, os_wait_object) {
-    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
@@ -84,7 +85,7 @@ CTEST2(os_notify_wait_object, os_wait_object) {
 CTEST2(os_notify_wait_object, os_wait_object_stopped) {
     core[0].thread_current = 1;
 
-    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_BUSY);
     ASSERT_EQUAL(os_threads[1].state, THREAD_STATE_STOPPED);
@@ -95,7 +96,7 @@ CTEST2(os_notify_wait_object, os_wait_object_stopped) {
 }
 
 CTEST2(os_notify_wait_object, os_wait_object_multiple) {
-    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
@@ -104,7 +105,7 @@ CTEST2(os_notify_wait_object, os_wait_object_multiple) {
 
     core[0].thread_current = 3;
 
-    rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(os_threads[3].state, THREAD_STATE_WAITING);
@@ -121,7 +122,7 @@ static void cb_object_notify(const void * object, Thread_t thread, int sleeper_i
 }
 
 CTEST2(os_notify_wait_object, os_wait_object_callback) {
-    int rv = os_wait_for_object(object_magic, cb_object_notify);
+    int rv = os_wait_for_object(object_magic, cb_object_notify, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
@@ -137,7 +138,7 @@ CTEST2(os_notify_wait_object, os_notify_none) {
 }
 
 CTEST2(os_notify_wait_object, os_notify_no_callback) {
-    int rv = os_wait_for_object(object_magic, NULL);
+    int rv = os_wait_for_object(object_magic, NULL, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_INVALID);
 
@@ -147,13 +148,13 @@ CTEST2(os_notify_wait_object, os_notify_no_callback) {
 }
 
 CTEST2(os_notify_wait_object, os_notify_higher_priority) {
-    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
     core[0].thread_current = 4;
 
-    rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -172,13 +173,13 @@ CTEST2(os_notify_wait_object, os_notify_higher_priority) {
 }
 
 CTEST2(os_notify_wait_object, os_notify_multiple) {
-    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
     core[0].thread_current = 4;
 
-    rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -206,7 +207,7 @@ CTEST2(os_notify_wait_object, os_notify_multiple) {
 }
 
 CTEST2(os_notify_wait_object, os_notify_callback) {
-    int rv = os_wait_for_object(object_magic, cb_object_notify);
+    int rv = os_wait_for_object(object_magic, cb_object_notify, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -220,7 +221,7 @@ CTEST2(os_notify_wait_object, os_notify_callback) {
 }
 
 CTEST2(os_notify_wait_object, os_notify_different_object) {
-    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -238,7 +239,7 @@ CTEST2(os_notify_wait_object, os_notify_missed) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    rv = os_wait_for_object(object_magic, cb_object_notify);
+    rv = os_wait_for_object(object_magic, cb_object_notify, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -252,7 +253,7 @@ CTEST2(os_notify_wait_object, os_notify_missed_different_object) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    rv = os_wait_for_object(another_object_magic, cb_object_notify);
+    rv = os_wait_for_object(another_object_magic, cb_object_notify, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -266,14 +267,14 @@ CTEST2(os_notify_wait_object, os_notify_missed_acts_once) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    rv = os_wait_for_object(object_magic, cb_object_notify);
+    rv = os_wait_for_object(object_magic, cb_object_notify, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
     ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
 
-    rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -293,7 +294,7 @@ CTEST2(os_notify_wait_object, wait_notify_same_thread_running) {
     schedule_context_switch_perform_switch = false;
 
     // Here thread will be suspended but thread switch won't happen
-    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK);
+    int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 

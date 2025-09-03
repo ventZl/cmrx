@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <arch/sysenter.h>
+#include <cmrx/sys/notify.h>
 
 /** @defgroup api_notify Notifications
  * @ingroup api
@@ -34,15 +35,15 @@ __SYSCALL int notify_object(const void * object);
 /** Notify current waiter for object
  *
  * This syscall performs action similar to @ref notify_object with
- * one behavior change:
+ * possibility of changing the call behavior using flags.
  *
- * If there is no thread waiting for the object, this call does nothing.
  * @param object object used to determine waiters to be notified
+ * @param flags optional flags changing call behavior
  * @returns E_OK if notification has been sent. E_OUT_OF_NOTIFICATIONS
  * if there is too many different pending notifications and there is
  * nobody waiting for a notification on this particular object.
  */
-__SYSCALL int notify_object_immediate(const void * object);
+__SYSCALL int notify_object2(const void * object, uint32_t flags);
 
 /** Wait for a notification on object
  *
@@ -77,6 +78,10 @@ __SYSCALL int wait_for_object(const void * object, uint32_t timeout);
  *                resumes operation. Value of 0 disables timeout and call waits
  *                indefinitely.
  * @param flags flags optional specifiers for behavior of the wait action
+ * @returns E_OK or E_OK_NO_WAIT depending on if wait did or didn't occur if operation completed successfully.
+ * Error E_ACCESS may be returned if the address provided is not accessible by the thread that made the call.
+ * Error E_INVALID_ADDRESS is reported if address is otherwise invalid (out of memory range, etc.).
+ * Error E_INVALID is reported if unsupported flag is requested.
  */
 __SYSCALL int wait_for_object_value(const uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags);
 

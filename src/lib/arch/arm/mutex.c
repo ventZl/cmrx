@@ -7,6 +7,7 @@
 #include <cmrx/ipc/mutex.h>
 #include <cmrx/ipc/thread.h>
 #include <cmrx/ipc/notify.h>
+#include <cmrx/sys/notify.h>
 #include <arch/cortex.h>
 #include <cmrx/defines.h>
 #include <cmrx/assert.h>
@@ -111,21 +112,30 @@ int futex_init(futex_t * restrict futex)
 
 int futex_lock(futex_t * futex)
 {
+	if (futex == NULL)
+	{
+		return E_INVALID_ADDRESS;
+	}
+
 	uint8_t thread_id = get_tid();
 	int success;
 	do {
 		success = __futex_fast_lock(futex, thread_id, 0);
 		if (success != 0)
 		{
-			wait_for_object_value(&futex->state, 0, 0, 0);
+			wait_for_object_value(&futex->state, 0, 0, NOTIFY_PRIORITY_INHERIT(futex->owner));
 		}
 	} while (success != 0);
-	futex->owner = thread_id;
 	return 0;
 }
 
 int futex_trylock(futex_t * futex)
 {
+	if (futex == NULL)
+	{
+		return E_INVALID_ADDRESS;
+	}
+
 	uint8_t thread_id = get_tid();
 	int success = __futex_fast_lock(futex, thread_id, 0);
 	return success;
@@ -133,18 +143,26 @@ int futex_trylock(futex_t * futex)
 
 int futex_unlock(futex_t * futex)
 {
+	if (futex == NULL)
+	{
+		return E_INVALID_ADDRESS;
+	}
 	uint8_t thread_id = get_tid();
 	int success;
 	do {
 		success = __futex_fast_unlock(futex, thread_id);
-		notify_object(&futex->state);
+		notify_object2(&futex->state, NOTIFY_PRIORITY_DROP);
 		ASSERT(success == 0 || futex->owner == thread_id);
 	} while (success != 0);
-	return success;
+	return 0;
 }
 
 int futex_destroy(futex_t* futex)
 {
+	if (futex == NULL)
+	{
+		return E_INVALID_ADDRESS;
+	}
 	futex->state = 0;
 	futex->owner = 0xFF;
 	futex->flags = 0;

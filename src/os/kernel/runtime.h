@@ -118,6 +118,12 @@ struct OS_thread_t {
 
     /** Core at which this thread is running */
     uint8_t core_id;
+
+	/** Configured priority.
+	 * This is base priority configured by the thread. This is the lowest priority at which the thread will run. It may run at higher priority
+	 * due to priority inversion resolve or another mechanism.
+	 */
+	uint8_t base_priority;
 };
 
 #define OS_TASK_NO_STACK		(~0)

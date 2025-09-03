@@ -7,7 +7,7 @@ __SYSCALL int notify_object(const void * object)
 	__SVC(SYSCALL_NOTIFY_OBJECT);
 }
 
-__SYSCALL int notify_object_immediate(const void * object)
+__SYSCALL int notify_object2(const void * object, uint32_t flags)
 {
 	(void) object;
 	__SVC(SYSCALL_NOTIFY_OBJECT_IMMEDIATE);
