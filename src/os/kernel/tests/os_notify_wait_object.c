@@ -4,6 +4,8 @@
 #include <cmrx/sys/notify.h>
 #include <ctest.h>
 #include <arch/corelocal.h>
+#include "test_traits.h"
+
 extern struct OS_core_state_t core[OS_NUM_CORES];
 extern bool schedule_context_switch_perform_switch;
 extern bool schedule_context_switch_called;
@@ -75,7 +77,7 @@ CTEST2(os_notify_wait_object, os_wait_object) {
     int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) object_magic);
     ASSERT_EQUAL((long) os_threads[0].wait_callback, (long) DEFAULT_CALLBACK);
 
@@ -88,7 +90,7 @@ CTEST2(os_notify_wait_object, os_wait_object_stopped) {
     int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_BUSY);
-    ASSERT_EQUAL(os_threads[1].state, THREAD_STATE_STOPPED);
+    ASSERT_EQUAL(thread_state(1), THREAD_STATE_STOPPED);
     ASSERT_EQUAL((long) os_threads[1].wait_object, (long) NULL);
     ASSERT_EQUAL((long) os_threads[1].wait_callback, (long) NULL);
 
@@ -99,7 +101,7 @@ CTEST2(os_notify_wait_object, os_wait_object_multiple) {
     int rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) object_magic);
     ASSERT_EQUAL((long) os_threads[0].wait_callback, (long) DEFAULT_CALLBACK);
 
@@ -108,7 +110,7 @@ CTEST2(os_notify_wait_object, os_wait_object_multiple) {
     rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
-    ASSERT_EQUAL(os_threads[3].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(3), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[3].wait_object, (long) object_magic);
     ASSERT_EQUAL((long) os_threads[3].wait_callback, (long) DEFAULT_CALLBACK);
 }
@@ -125,13 +127,13 @@ CTEST2(os_notify_wait_object, os_wait_object_callback) {
     int rv = os_wait_for_object(object_magic, cb_object_notify, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) object_magic);
     ASSERT_EQUAL((long) os_threads[0].wait_callback, (long) cb_object_notify);
 }
 
 CTEST2(os_notify_wait_object, os_notify_none) {
-    int rv = os_notify_object(object_magic, 42, true);
+    int rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
@@ -142,7 +144,7 @@ CTEST2(os_notify_wait_object, os_notify_no_callback) {
 
     ASSERT_EQUAL(rv, E_INVALID);
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
     ASSERT_EQUAL((long) os_threads[0].wait_callback, (long) NULL);
 }
@@ -162,13 +164,13 @@ CTEST2(os_notify_wait_object, os_notify_higher_priority) {
     // as notify will call os_sched_yield
     core[0].thread_current = 3;
 
-    rv = os_notify_object(object_magic, 42, true);
+    rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
-    ASSERT_EQUAL(os_threads[4].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(4), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[4].wait_object, (long) object_magic);
 }
 
@@ -187,22 +189,22 @@ CTEST2(os_notify_wait_object, os_notify_multiple) {
     // as notify will call os_sched_yield
     core[0].thread_current = 3;
 
-    rv = os_notify_object(object_magic, 42, true);
+    rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
-    ASSERT_EQUAL(os_threads[4].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(4), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[4].wait_object, (long) object_magic);
 
-    rv = os_notify_object(object_magic, 42, true);
+    rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
-    ASSERT_EQUAL(os_threads[4].state, THREAD_STATE_READY);
+    ASSERT_EQUAL(thread_state(4), THREAD_STATE_READY);
     ASSERT_EQUAL((long) os_threads[4].wait_object, (long) NULL);
 }
 
@@ -211,7 +213,7 @@ CTEST2(os_notify_wait_object, os_notify_callback) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    rv = os_notify_object(object_magic, 42, true);
+    rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
@@ -225,17 +227,17 @@ CTEST2(os_notify_wait_object, os_notify_different_object) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    rv = os_notify_object(another_object_magic, 42, true);
+    rv = os_notify_object(another_object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(notify_called, false);
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) object_magic);
 }
 
 CTEST2(os_notify_wait_object, os_notify_missed) {
     // Notification, that aims at object nobody is waiting for right now
-    int rv = os_notify_object(object_magic, 42, true);
+    int rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -243,13 +245,13 @@ CTEST2(os_notify_wait_object, os_notify_missed) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
 }
 
 CTEST2(os_notify_wait_object, os_notify_missed_different_object) {
     // Notification, that aims at object nobody is waiting for right now
-    int rv = os_notify_object(object_magic, 42, true);
+    int rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -257,13 +259,13 @@ CTEST2(os_notify_wait_object, os_notify_missed_different_object) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) another_object_magic);
 }
 
 CTEST2(os_notify_wait_object, os_notify_missed_acts_once) {
     // Notification, that aims at object nobody is waiting for right now
-    int rv = os_notify_object(object_magic, 42, true);
+    int rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
 
@@ -271,14 +273,14 @@ CTEST2(os_notify_wait_object, os_notify_missed_acts_once) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) NULL);
 
     rv = os_wait_for_object(object_magic, DEFAULT_CALLBACK, NOTIFY_NO_FLAGS);
 
     ASSERT_EQUAL(rv, E_OK);
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
     ASSERT_EQUAL((long) os_threads[0].wait_object, (long) object_magic);
 }
 
@@ -305,7 +307,7 @@ CTEST2(os_notify_wait_object, wait_notify_same_thread_running) {
 
     // This notification should make the thread running again without
     // actually executing thread switch
-    rv = os_notify_object(object_magic, 42, true);
+    rv = os_notify_object(object_magic, 42, NOTIFY_QUEUE_NOTIFICATION);
 
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(schedule_context_switch_called, false);
@@ -323,19 +325,19 @@ CTEST2(os_notify_wait_object, sys_wait_timeout_timed_out) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
 
     uint32_t current_time = os_get_micro_time();
 
     os_run_timer(current_time + 3990);
     os_sched_yield();
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
 
     os_run_timer(current_time + 4000);
     os_sched_yield();
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     ASSERT_EQUAL(updated_syscall_return_called, true);
     ASSERT_EQUAL(updated_syscall_return_thread, 0);
     ASSERT_EQUAL(updated_syscall_return_value, E_TIMEOUT);
@@ -347,18 +349,18 @@ CTEST2(os_notify_wait_object, sys_wait_timeout_notification) {
 
     ASSERT_EQUAL(rv, E_OK);
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
 
     uint32_t current_time = os_get_micro_time();
 
     os_run_timer(current_time + 3990);
     os_sched_yield();
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_WAITING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
 
     os_sys_notify_object(object_magic);
 
-    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     ASSERT_EQUAL(updated_syscall_return_called, false);
 
 }

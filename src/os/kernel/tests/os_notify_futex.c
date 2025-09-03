@@ -63,7 +63,7 @@ extern void cb_syscall_notify_object(const void * object, Thread_t thread, int s
 CTEST2(os_notify_futex, os_wait_object_same_value) {
     int rv = os_sys_wait_for_object_value(&futex, 0, 0, 0);
 
-    ASSERT_EQUAL(rv, E_OK);
+    ASSERT_EQUAL(rv, E_OK_NO_WAIT);
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
 }
 
@@ -123,12 +123,12 @@ CTEST2(os_notify_futex, os_wait_object_value_different_objects) {
 CTEST2(os_notify_futex, os_wait_object_value_boundary_values) {
     futex = 0;
     int rv1 = os_sys_wait_for_object_value(&futex, 0, 0, 0);
-    ASSERT_EQUAL(rv1, E_OK);
+    ASSERT_EQUAL(rv1, E_OK_NO_WAIT);
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     
     futex = 255;
     int rv2 = os_sys_wait_for_object_value(&futex, 255, 0, 0);
-    ASSERT_EQUAL(rv2, E_OK);
+    ASSERT_EQUAL(rv2, E_OK_NO_WAIT);
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
     
     int rv3 = os_sys_wait_for_object_value(&futex, 0, 0, 0);
@@ -250,6 +250,6 @@ CTEST2(os_notify_futex, os_wait_object_value_flags_parameter) {
     core[0].thread_current = 0;
 
     int rv2 = os_sys_wait_for_object_value(&futex, 0, 0, 0xFFFFFFFF);
-    ASSERT_EQUAL(rv2, E_OK);
-    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
+    ASSERT_EQUAL(rv2, E_INVALID);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
 }
