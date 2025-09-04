@@ -102,7 +102,7 @@ int os_initialize_waitable_object(const void * object);
  */
 int os_sys_notify_object(const void * object);
 
-/** Implementation of notify_object_immediate syscall.
+/** Implementation of notify_object2 syscall.
  * This is a wrapper around os_notify_object system call. It does some additional
  * checking on arguments.
  * @param object address of the object that is being waited for
