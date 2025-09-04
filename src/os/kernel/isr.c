@@ -15,6 +15,7 @@
  * @{ 
  */
 #include <cmrx/ipc/isr.h>
+#include <cmrx/sys/notify.h>
 #include <conf/kernel.h>
 #include "runtime.h"
 #include "sched.h"
@@ -52,7 +53,7 @@ void isr_kill(Thread_t thread_id, uint32_t signal)
 
 void isr_notify_object(const void * object)
 {
-	os_notify_object(object, EVT_DEFAULT, true);
+	os_notify_object(object, EVT_DEFAULT, NOTIFY_QUEUE_NOTIFICATION);
 }
 
 /** @} */
