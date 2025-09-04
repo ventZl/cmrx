@@ -253,3 +253,21 @@ CTEST2(os_notify_futex, os_wait_object_value_flags_parameter) {
     ASSERT_EQUAL(rv2, E_INVALID);
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
 }
+
+CTEST2(os_notify_futex, os_wait_object_value_increment_match) {
+    // Test different flag values (currently unused but should not cause errors)
+    futex = 1;
+    int rv = os_sys_wait_for_object_value(&futex, 1, 0, NOTIFY_VALUE_INCREMENT);
+    ASSERT_EQUAL(rv, E_OK_NO_WAIT);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(futex, 2);
+}
+
+CTEST2(os_notify_futex, os_wait_object_value_increment_fail) {
+    // Test different flag values (currently unused but should not cause errors)
+    futex = 1;
+    int rv = os_sys_wait_for_object_value(&futex, 0, 0, NOTIFY_VALUE_INCREMENT);
+    ASSERT_EQUAL(rv, E_OK);
+    ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
+    ASSERT_EQUAL(futex, 1);
+}
