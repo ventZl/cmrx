@@ -293,6 +293,13 @@ int os_sys_wait_for_object_value(uint8_t * object, uint8_t value, uint32_t timeo
 
     if (*object == value)
     {
+        if (flags & NOTIFY_VALUE_INCREMENT)
+        {
+            os_txn_start_commit();
+            // @TODO: This needs to be atomic
+            *object+=1;
+            os_txn_done();
+        }
         return E_OK_NO_WAIT;
     }
 
