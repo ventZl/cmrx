@@ -83,11 +83,19 @@ int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 
 int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
 {
-    (void) futex;
-    (void) thread_id;
-    (void) max_depth;
+	// Here we don't support nested mutex at all
+    if (max_depth > 0)
+	{
+		return FUTEX_FAILURE;
+	}
 
-    return FUTEX_FAILURE;
+	int rv = wait_for_object_value(&futex->state, 0, 0, NOTIFY_VALUE_INCREMENT);
+	if (rv == E_OK_NO_WAIT)
+	{
+		futex->owner = thread_id;
+		return FUTEX_SUCCESS;
+	}
+	return FUTEX_FAILURE;
 }
 
 int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
@@ -131,7 +139,7 @@ int futex_lock(futex_t * futex)
 		success = __futex_fast_lock(futex, thread_id, 0);
 		if (success != FUTEX_SUCCESS)
 		{
-			wait_for_object_value(&futex->state, 0, 0, NOTIFY_PRIORITY_INHERIT(futex->owner) | NOTIFY_VALUE_INCREMENT);
+			wait_for_object_value(&futex->state, 0, 0, NOTIFY_PRIORITY_INHERIT(futex->owner));
 		}
 	} while (success != FUTEX_SUCCESS);
 	return 0;
