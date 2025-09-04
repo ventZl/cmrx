@@ -339,8 +339,23 @@ int os_wait_for_object(const void * object, WaitHandler_t callback, uint32_t fla
                 struct OS_thread_t * curr_thread = &os_threads[current_thread];
                 if (flags & NOTIFY_PRIORITY_INHERIT_FLAG)
                 {
-                    struct OS_thread_t * inherit_thread = &os_threads[NOTIFY_PRIORITY_INHERIT_THREAD(flags)];
-                    inherit_thread->priority = curr_thread->priority;
+                    uint8_t inherit_id = NOTIFY_PRIORITY_INHERIT_THREAD(flags);
+                    if (inherit_id < OS_THREADS
+                        && (os_threads[inherit_id].state == THREAD_STATE_READY
+                            || os_threads[inherit_id].state == THREAD_STATE_WAITING
+                            || os_threads[inherit_id].state == THREAD_STATE_RUNNING
+                            || os_threads[inherit_id].state == THREAD_STATE_STOPPED
+                            || os_threads[inherit_id].state == THREAD_STATE_MIGRATING)
+                        )
+                    {
+                        struct OS_thread_t * inherit_thread = &os_threads[inherit_id];
+                        inherit_thread->priority = curr_thread->priority;
+                    }
+                    else
+                    {
+                        os_txn_done();
+                        return E_INVALID;
+                    }
                 }
                 curr_thread->state = THREAD_STATE_WAITING;
                 curr_thread->wait_object = object;
