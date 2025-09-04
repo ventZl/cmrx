@@ -81,23 +81,31 @@ int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 
 #ifdef __ARM_ARCH_6M__
 
-#include <arch/sysenter.h>
-
-__SYSCALL int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
+int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
 {
     (void) futex;
     (void) thread_id;
     (void) max_depth;
-    /* TODO: Kernel doesn't support LDREX emulation */
-    return E_NOTAVAIL;
+
+    return FUTEX_FAILURE;
 }
 
-__SYSCALL int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
+int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 {
-    (void) futex;
-    (void) thread_id;
-    /* TODO: Kernel doesn't support LDREX emulation */
-    return E_NOTAVAIL;
+	unsigned state = futex->state;
+	int success = FUTEX_FAILURE;
+	ASSERT(state > 0);
+	if (state > 0)
+	{
+		if (futex->owner == thread_id)
+		{
+			futex->owner = 0xFF;
+			state--;
+			futex->state = state;
+			success = FUTEX_SUCCESS;
+		}
+	}
+	return success;
 }
 
 #endif
@@ -121,11 +129,11 @@ int futex_lock(futex_t * futex)
 	int success;
 	do {
 		success = __futex_fast_lock(futex, thread_id, 0);
-		if (success != 0)
+		if (success != FUTEX_SUCCESS)
 		{
-			wait_for_object_value(&futex->state, 0, 0, NOTIFY_PRIORITY_INHERIT(futex->owner));
+			wait_for_object_value(&futex->state, 0, 0, NOTIFY_PRIORITY_INHERIT(futex->owner) | NOTIFY_VALUE_INCREMENT);
 		}
-	} while (success != 0);
+	} while (success != FUTEX_SUCCESS);
 	return 0;
 }
 
@@ -152,8 +160,8 @@ int futex_unlock(futex_t * futex)
 	do {
 		success = __futex_fast_unlock(futex, thread_id);
 		notify_object2(&futex->state, NOTIFY_PRIORITY_DROP);
-		ASSERT(success == 0 || futex->owner == thread_id);
-	} while (success != 0);
+		ASSERT(success == FUTEX_SUCCESS || futex->owner == thread_id);
+	} while (success != FUTEX_SUCCESS);
 	return 0;
 }
 

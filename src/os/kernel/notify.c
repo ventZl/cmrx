@@ -279,7 +279,7 @@ int os_sys_wait_for_object(const void * object, uint32_t timeout)
     return os_wait_for_object(object, cb_syscall_notify_object, 0);
 }
 
-int os_sys_wait_for_object_value(const uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags)
+int os_sys_wait_for_object_value(uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags)
 {
     if (object == NULL)
     {

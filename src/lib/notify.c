@@ -1,4 +1,4 @@
-#include <cmrx/ipc/signal.h>
+#include <cmrx/ipc/notify.h>
 #include <cmrx/sys/syscalls.h>
 
 __SYSCALL int notify_object(const void * object)
@@ -20,7 +20,7 @@ __SYSCALL int wait_for_object(const void * object, uint32_t timeout)
 	__SVC(SYSCALL_WAIT_FOR_OBJECT);
 }
 
-__SYSCALL int wait_for_object_value(const uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags)
+__SYSCALL int wait_for_object_value(uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags)
 {
 	(void) object;
 	(void) timeout;

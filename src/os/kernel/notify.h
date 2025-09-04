@@ -123,6 +123,6 @@ int os_sys_wait_for_object(const void * object, uint32_t timeout);
  * checking on arguments.
  * See @ref wait_for_object and @ref os_wait_for_object for more info.
  */
-int os_sys_wait_for_object_value(const uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags);
+int os_sys_wait_for_object_value(uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags);
 
 /** @} */

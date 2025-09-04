@@ -83,6 +83,6 @@ __SYSCALL int wait_for_object(const void * object, uint32_t timeout);
  * Error E_INVALID_ADDRESS is reported if address is otherwise invalid (out of memory range, etc.).
  * Error E_INVALID is reported if unsupported flag is requested.
  */
-__SYSCALL int wait_for_object_value(const uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags);
+__SYSCALL int wait_for_object_value(uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags);
 
 /** @} */
