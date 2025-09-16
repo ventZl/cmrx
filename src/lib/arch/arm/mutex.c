@@ -33,7 +33,7 @@ int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
 	if (state == 0 || (futex->owner == thread_id && state < max_depth))
 	{
 		state++;
-		if ((success = __STREXB(state, &futex->state)) == 0)
+		if ((success = __STREXB(state, &futex->state)) == FUTEX_SUCCESS)
 		{
 			// futex is claimed, mark us as the owner
 			futex->owner = thread_id;
@@ -120,6 +120,7 @@ int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 
 int futex_init(futex_t * restrict futex)
 {
+	ASSERT(futex != NULL);
 	futex->owner = 0xFF;
 	futex->state = 0;
 	futex->flags = 0;
@@ -128,11 +129,7 @@ int futex_init(futex_t * restrict futex)
 
 int futex_lock(futex_t * futex)
 {
-	if (futex == NULL)
-	{
-		return E_INVALID_ADDRESS;
-	}
-
+	ASSERT(futex != NULL);
 	uint8_t thread_id = get_tid();
 	int success;
 	do {
@@ -147,11 +144,7 @@ int futex_lock(futex_t * futex)
 
 int futex_trylock(futex_t * futex)
 {
-	if (futex == NULL)
-	{
-		return E_INVALID_ADDRESS;
-	}
-
+	ASSERT(futex != NULL);
 	uint8_t thread_id = get_tid();
 	int success = __futex_fast_lock(futex, thread_id, 0);
 	return success;
@@ -159,26 +152,22 @@ int futex_trylock(futex_t * futex)
 
 int futex_unlock(futex_t * futex)
 {
-	if (futex == NULL)
-	{
-		return E_INVALID_ADDRESS;
-	}
+	ASSERT(futex != NULL);
 	uint8_t thread_id = get_tid();
 	int success;
 	do {
 		success = __futex_fast_unlock(futex, thread_id);
-		notify_object2(&futex->state, NOTIFY_PRIORITY_DROP);
-		ASSERT(success == FUTEX_SUCCESS || futex->owner == thread_id);
+		if (success == FUTEX_SUCCESS)
+		{
+			notify_object2(&futex->state, NOTIFY_PRIORITY_DROP);
+		}
 	} while (success != FUTEX_SUCCESS);
 	return 0;
 }
 
 int futex_destroy(futex_t* futex)
 {
-	if (futex == NULL)
-	{
-		return E_INVALID_ADDRESS;
-	}
+	ASSERT(futex != NULL);
 	futex->state = 0;
 	futex->owner = 0xFF;
 	futex->flags = 0;
