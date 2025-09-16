@@ -7,4 +7,4 @@ set(cmrx_testing_SRCS
     pendsv.c
     )
 target_sources(os PRIVATE ${cmrx_testing_SRCS})
-
+target_link_libraries(os PRIVATE ctest)

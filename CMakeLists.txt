@@ -10,9 +10,17 @@ cmake_policy(SET CMP0077 NEW)
 message(DEBUG "CMRX root dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 set_property(GLOBAL PROPERTY CMRX_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
+include(cmake/CPM.cmake)
 include(cmake/options.cmake)
 include(cmake/unit_test_build.cmake)
 include(cmake/clang-tidy.cmake)
+
+CPMAddPackage(
+    NAME ctest
+    GIT_REPOSITORY "https://github.com/bvdberg/ctest"
+    GIT_TAG master
+    DOWNLOAD_ONLY YES
+    )
 
 include_directories(include)
 include_directories(${CMAKE_BINARY_DIR})
@@ -49,7 +57,6 @@ else()
     cmake_policy(SET CMP0079 NEW)
     cmake_policy(SET CMP0076 NEW)
 
-    include_directories(ctest)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/os/arch/testing)
 
     add_definitions(-DUNIT_TESTING=1)
