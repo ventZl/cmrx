@@ -21,6 +21,7 @@
  * or a recursive futex, which has still some space left for locking. During locking, it is
  * checked if futex owner matches. If futex lock level is too deep or futex is owned by someone
  * else, then futex lock fails.
+ * @note Recursive mutexes are not allowed by outer layers and are generally not supported as of now.
  * @param futex futex to be locked
  * @param thread_id identification of calling thread
  * @param max_depth maximum depth futex can already be locked in order to be still able to lock it
@@ -57,20 +58,13 @@ int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 {
 	unsigned state = __LDREXB(&futex->state);
 	int success = FUTEX_FAILURE;
-	ASSERT(state > 0);
 	if (state > 0)
 	{
+		ASSERT(futex->owner == thread_id);
 		if (futex->owner == thread_id)
 		{
 			state--;
-			if ((success = __STREXB(state, &futex->state)) == 0)
-			{
-				if (state == 0)
-				{
-					// here the futex was entirely unlocked
-					futex->owner = 0xFF;
-				}
-			}
+			success = __STREXB(state, &futex->state);
 		}
 	}
 	__CLREX();
@@ -102,12 +96,11 @@ int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 {
 	unsigned state = futex->state;
 	int success = FUTEX_FAILURE;
-	ASSERT(state > 0);
 	if (state > 0)
 	{
+		ASSERT(futex->owner == thread_id);
 		if (futex->owner == thread_id)
 		{
-			futex->owner = 0xFF;
 			state--;
 			futex->state = state;
 			success = FUTEX_SUCCESS;
