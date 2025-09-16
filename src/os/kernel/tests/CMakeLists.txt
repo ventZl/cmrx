@@ -16,8 +16,10 @@ set(test_kernel_SRCS
     os_sched_timing_callback.c
     os_txn.c
     os_notify_wait_object.c
+    os_notify_futex.c
     os_shutdown.c
     stubs.c
+    test_traits.c
     )
 
 

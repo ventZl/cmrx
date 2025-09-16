@@ -12,6 +12,7 @@
 #include "timer.h"
 #include "signal.h"
 #include "notify.h"
+#include "txn.h"
 
 /** @defgroup os_syscall System calls
  * @ingroup os
@@ -48,8 +49,9 @@ static SYSCALL_DEFINITION struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_WAIT_FOR_OBJECT, (Syscall_Handler_t) &os_sys_wait_for_object },
 	{ SYSCALL_CPUFREQ_GET, (Syscall_Handler_t) &os_cpu_freq_get },
 	{ SYSCALL_GET_MICROTIME, (Syscall_Handler_t) &os_get_micro_time },
-	{ SYSCALL_SHUTDOWN, (Syscall_Handler_t) &os_shutdown }
-
+	{ SYSCALL_SHUTDOWN, (Syscall_Handler_t) &os_shutdown },
+	{ SYSCALL_NOTIFY_OBJECT2, (Syscall_Handler_t) &os_sys_notify_object2 },
+	{ SYSCALL_WAIT_FOR_OBJECT_VALUE, (Syscall_Handler_t) &os_sys_wait_for_object_value },
 };
 
 #pragma GCC diagnostic pop

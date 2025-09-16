@@ -83,13 +83,33 @@ int os_txn_commit(Txn_t transaction, enum TxnType type);
  */
 int os_txn_start_commit();
 
-
 /** Finish the transaction commit.
  * This function will leave the critical section related to the transaction.
  * This function has to be called for read-write transaction after all the data changes
  * in the transaction were commited.
  */
 void os_txn_done();
+
+/** Implementation of txn_start syscall.
+ * This function performs some additional argument checking.
+ * @param domain domain in which transactions are allocated
+ * @return transaction identifier within given domain
+ */
+Txn_t os_sys_txn_start(Txn_t * domain);
+
+/** Implementation of txn_commit syscall.
+ * This function performs some additional argument checking.
+ * @param domain domain in which transactions are allocated
+ * @param txn identifier of transaction to be committed
+ * @param type identifies if transaction is read-only or read-write
+ * @returns E_OK if transaction was committed. E_INVALID if transaction cannot be applied
+ * as different transaction has been committed meanwhile.
+ */
+int os_sys_txn_commit(Txn_t * domain, Txn_t txn, enum TxnType type);
+
+/** Implementation of txn_done syscall.
+ * This function performs some additional argument checking.
+ * @param */
 
 /** @} */
 

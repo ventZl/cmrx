@@ -19,6 +19,7 @@
 #include "arch/mpu.h"
 #include "timer.h"
 #include <cmrx/sys/syscalls.h>
+#include <cmrx/sys/notify.h>
 #include <cmrx/clock.h>
 #include <string.h>
 
@@ -396,7 +397,11 @@ int os_thread_continue(uint8_t thread)
 int os_setpriority(uint8_t priority)
 {
     os_txn_start_commit();
-	os_threads[os_get_current_thread()].priority = priority;
+	os_threads[os_get_current_thread()].base_priority = priority;
+    if (os_threads[os_get_current_thread()].priority < priority)
+    {
+        os_threads[os_get_current_thread()].priority = priority;
+    }
     os_txn_done();
 	os_sched_yield();
 	return 0;
@@ -431,7 +436,7 @@ int os_thread_join(uint8_t thread_id)
         {
             uint8_t current_thread_id = os_get_current_thread();
             os_txn_done();
-            os_wait_for_object(&os_threads[current_thread_id], cb_thread_join_notify);
+            os_wait_for_object(&os_threads[current_thread_id], cb_thread_join_notify, NOTIFY_NO_FLAGS);
         }
 	}
 	return E_INVALID;
@@ -513,6 +518,7 @@ int os_thread_alloc(Process_t process, uint8_t priority)
                 new_thread->signals = 0;
                 new_thread->signal_handler = NULL;
                 new_thread->priority = priority;
+                new_thread->base_priority = priority;
                 os_txn_done();
                 return q;
             }

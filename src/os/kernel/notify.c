@@ -4,8 +4,10 @@
 #include "arch/sched.h"
 #include "txn.h"
 #include "timer.h"
+#include "access.h"
 #include <cmrx/assert.h>
 #include <conf/kernel.h>
+#include <cmrx/sys/notify.h>
 
 struct NotificationObject os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
 
@@ -159,7 +161,7 @@ Thread_t os_find_notified_thread(const void * object)
     return candidate_thread;
 }
 
-int os_notify_object(const void * object, Event_t event)
+int os_notify_object(const void * object, Event_t event, uint32_t flags)
 {
     Thread_t candidate_thread = 0;
     int candidate_timer = 0;
@@ -175,20 +177,29 @@ int os_notify_object(const void * object, Event_t event)
         candidate_timer = os_find_timer(candidate_thread, TIMER_TIMEOUT);
     } while (os_txn_commit(txn_id, TXN_READWRITE) != E_OK);
 
-    // Quirk: only idle thread should have this priority
     if (candidate_thread < OS_THREADS)
     {
         if (os_notify_thread(candidate_thread, candidate_timer, event) == E_OK)
         {
+            if (flags & NOTIFY_PRIORITY_DROP)
+            {
+                os_threads[os_get_current_thread()].priority = os_threads[os_get_current_thread()].base_priority;
+                perform_thread_switch = true;
+            }
+
             if (os_threads[candidate_thread].priority < os_threads[os_get_current_thread()].priority)
             {
                 perform_thread_switch = true;
             }
+
         }
     }
     else
     {
-        retval = os_notify_queue_event(object);
+        if (flags & NOTIFY_QUEUE_NOTIFICATION)
+        {
+            retval = os_notify_queue_event(object);
+        }
 
     }
     os_txn_done();
@@ -202,7 +213,17 @@ int os_notify_object(const void * object, Event_t event)
 
 int os_sys_notify_object(const void * object)
 {
-    return os_notify_object(object, EVT_DEFAULT);
+    return os_notify_object(object, EVT_DEFAULT, NOTIFY_QUEUE_NOTIFICATION);
+}
+
+int os_sys_notify_object2(const void * object, uint32_t flags)
+{
+    if ((flags & 0xFF & ~NOTIFY_OBJECT_FLAGS_MASK) != 0)
+    {
+        return E_INVALID;
+    }
+
+    return os_notify_object(object, EVT_DEFAULT, flags);
 }
 
 /**
@@ -255,10 +276,42 @@ int os_sys_wait_for_object(const void * object, uint32_t timeout)
     {
         os_set_timed_event(timeout, TIMER_TIMEOUT);
     }
-    return os_wait_for_object(object, cb_syscall_notify_object);
+    return os_wait_for_object(object, cb_syscall_notify_object, 0);
 }
 
-int os_wait_for_object(const void * object, WaitHandler_t callback)
+int os_sys_wait_for_object_value(uint8_t * object, uint8_t value, uint32_t timeout, uint32_t flags)
+{
+    if (object == NULL)
+    {
+        return E_INVALID_ADDRESS;
+    }
+
+    if (!os_thread_check_access(os_get_current_thread(), (uint32_t *) object, ACCESS_READ_WRITE))
+    {
+        return E_ACCESS;
+    }
+
+    if (*object == value)
+    {
+        if (flags & NOTIFY_VALUE_INCREMENT)
+        {
+            os_txn_start_commit();
+            // @TODO: This needs to be atomic
+            *object+=1;
+            os_txn_done();
+        }
+        return E_OK_NO_WAIT;
+    }
+
+    if ((flags & 0xFF & ~WAIT_FOR_OBJECT_FLAGS_MASK) != 0)
+    {
+        return E_INVALID;
+    }
+
+    return os_wait_for_object(object, cb_syscall_notify_object, flags);
+}
+
+int os_wait_for_object(const void * object, WaitHandler_t callback, uint32_t flags)
 {
     if (callback == NULL)
     {
@@ -290,9 +343,30 @@ int os_wait_for_object(const void * object, WaitHandler_t callback)
             }
             if (!pending)
             {
-                os_threads[current_thread].state = THREAD_STATE_WAITING;
-                os_threads[current_thread].wait_object = object;
-                os_threads[current_thread].wait_callback = callback;
+                struct OS_thread_t * curr_thread = &os_threads[current_thread];
+                if (flags & NOTIFY_PRIORITY_INHERIT_FLAG)
+                {
+                    uint8_t inherit_id = NOTIFY_PRIORITY_INHERIT_THREAD(flags);
+                    if (inherit_id < OS_THREADS
+                        && (os_threads[inherit_id].state == THREAD_STATE_READY
+                            || os_threads[inherit_id].state == THREAD_STATE_WAITING
+                            || os_threads[inherit_id].state == THREAD_STATE_RUNNING
+                            || os_threads[inherit_id].state == THREAD_STATE_STOPPED
+                            || os_threads[inherit_id].state == THREAD_STATE_MIGRATING)
+                        )
+                    {
+                        struct OS_thread_t * inherit_thread = &os_threads[inherit_id];
+                        inherit_thread->priority = curr_thread->priority;
+                    }
+                    else
+                    {
+                        os_txn_done();
+                        return E_INVALID;
+                    }
+                }
+                curr_thread->state = THREAD_STATE_WAITING;
+                curr_thread->wait_object = object;
+                curr_thread->wait_callback = callback;
             }
             os_txn_done();
             if (!pending)

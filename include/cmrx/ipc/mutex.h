@@ -29,6 +29,8 @@
  * This is fast userspace mutex, which avoids calling kernel.
  * It provides basic functionality for locking, unlocking and
  * non-blocking lock. It can be single-issue, or recursive.
+ *
+ * @note This structure is shared between the kernel and the userspace to implement futex semantics
  */
 typedef struct {
 	uint8_t state;
@@ -56,17 +58,5 @@ int futex_destroy(futex_t * futex);
 int futex_lock(futex_t * futex);
 int futex_unlock(futex_t * futex);
 int futex_trylock(futex_t * futex);
-
-/** Mutexes
- * Mutexes are fully features inter-process locking primitive.
- * They are implemented as kernel system calls, so they are 
- * bit heavier to use than futexes. On the other hand, they can
- * be shared accross processes.
- */
-__SYSCALL int mutex_init(mutex_t * restrict mutex);
-__SYSCALL int mutex_destroy(mutex_t * mutex);
-__SYSCALL int mutex_lock(mutex_t * mutex);
-__SYSCALL int mutex_unlock(mutex_t * mutex);
-__SYSCALL int mutex_trylock(mutex_t * mutex);
 
 /** @} */
