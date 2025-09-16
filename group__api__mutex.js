@@ -14,10 +14,5 @@ var group__api__mutex =
     [ "futex_init", "group__api__mutex.html#ga29d155f0ec6824a9bbf99d301a91fa43", null ],
     [ "futex_lock", "group__api__mutex.html#ga95f34ae7e2f76249680fa5eba45822f2", null ],
     [ "futex_trylock", "group__api__mutex.html#ga74f3090e90f2bed16e323430714c7591", null ],
-    [ "futex_unlock", "group__api__mutex.html#ga5b5ed0f811abd4507e34ef34f3d11991", null ],
-    [ "mutex_destroy", "group__api__mutex.html#gac787843daa42238e05f5904de1197b07", null ],
-    [ "mutex_init", "group__api__mutex.html#ga53eed2a9b2bb211075216b34b2647411", null ],
-    [ "mutex_lock", "group__api__mutex.html#gad7aa73f20ff86216a2707070804428f8", null ],
-    [ "mutex_trylock", "group__api__mutex.html#gaf7726276e55f0ba4e3c307b9e45b7d37", null ],
-    [ "mutex_unlock", "group__api__mutex.html#ga89f2ee1da6185f2f38933da191db136e", null ]
+    [ "futex_unlock", "group__api__mutex.html#ga5b5ed0f811abd4507e34ef34f3d11991", null ]
 ];

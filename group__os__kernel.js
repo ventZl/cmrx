@@ -2,6 +2,7 @@ var group__os__kernel =
 [
     [ "OS_thread_t", "structOS__thread__t.html", [
       [ "arch", "structOS__thread__t.html#a333d54de491449262dd86a09227dc7f9", null ],
+      [ "base_priority", "structOS__thread__t.html#a28ea50f899d058388a7f03c67caaebd8", null ],
       [ "core_id", "structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92", null ],
       [ "exit_status", "structOS__thread__t.html#a2424a7be713fbc3a61887ed4429c64bf", null ],
       [ "priority", "structOS__thread__t.html#abde22ec841a589ba96cc6bc54f9eabb5", null ],

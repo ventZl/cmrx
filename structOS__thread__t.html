@@ -146,6 +146,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a92a48d3f33bbb1d5bac8fa215bfb2b92" id="r_a92a48d3f33bbb1d5bac8fa215bfb2b92"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92">core_id</a></td></tr>
 <tr class="memdesc:a92a48d3f33bbb1d5bac8fa215bfb2b92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core at which this thread is running.  <br /></td></tr>
 <tr class="separator:a92a48d3f33bbb1d5bac8fa215bfb2b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28ea50f899d058388a7f03c67caaebd8" id="r_a28ea50f899d058388a7f03c67caaebd8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOS__thread__t.html#a28ea50f899d058388a7f03c67caaebd8">base_priority</a></td></tr>
+<tr class="memdesc:a28ea50f899d058388a7f03c67caaebd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configured priority.  <br /></td></tr>
+<tr class="separator:a28ea50f899d058388a7f03c67caaebd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Thread control block. </p>
@@ -162,6 +165,23 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a28ea50f899d058388a7f03c67caaebd8" name="a28ea50f899d058388a7f03c67caaebd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28ea50f899d058388a7f03c67caaebd8">&#9670;&#160;</a></span>base_priority</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t OS_thread_t::base_priority</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configured priority. </p>
+<p>This is base priority configured by the thread. This is the lowest priority at which the thread will run. It may run at higher priority due to priority inversion resolve or another mechanism. </p>
 
 </div>
 </div>

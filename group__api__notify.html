@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('group__api__notify.html',''); initResi
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Modules</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Notifications<div class="ingroups"><a class="el" href="group__api.html">Kernel API</a></div></div></div>
 </div><!--header-->
@@ -107,14 +108,26 @@ $(document).ready(function(){initNavTree('group__api__notify.html',''); initResi
 <p>API for synchronization on shared objects.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:group__notify__flags" id="r_group__notify__flags"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__notify__flags.html">Notify_flags</a></td></tr>
+<tr class="memdesc:group__notify__flags"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags that further specify the behavior of calls in notification group. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga41864194fe48bd76519bcb27efcfb697" id="r_ga41864194fe48bd76519bcb27efcfb697"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__notify.html#ga41864194fe48bd76519bcb27efcfb697">notify_object</a> (const void *object)</td></tr>
 <tr class="memdesc:ga41864194fe48bd76519bcb27efcfb697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify waiter for object.  <br /></td></tr>
 <tr class="separator:ga41864194fe48bd76519bcb27efcfb697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed066fa5a49810f920e3bd163afed82a" id="r_gaed066fa5a49810f920e3bd163afed82a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__notify.html#gaed066fa5a49810f920e3bd163afed82a">notify_object2</a> (const void *object, uint32_t flags)</td></tr>
+<tr class="memdesc:gaed066fa5a49810f920e3bd163afed82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify current waiter for object.  <br /></td></tr>
+<tr class="separator:gaed066fa5a49810f920e3bd163afed82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8325d2dc00e1c2322bfa684221191452" id="r_ga8325d2dc00e1c2322bfa684221191452"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452">wait_for_object</a> (const void *object, uint32_t timeout)</td></tr>
 <tr class="memdesc:ga8325d2dc00e1c2322bfa684221191452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a notification on object.  <br /></td></tr>
 <tr class="separator:ga8325d2dc00e1c2322bfa684221191452"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5efd2526a520a129d49c77ccd251804" id="r_gac5efd2526a520a129d49c77ccd251804"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__notify.html#gac5efd2526a520a129d49c77ccd251804">wait_for_object_value</a> (uint8_t *object, uint8_t value, uint32_t timeout, uint32_t flags)</td></tr>
+<tr class="memdesc:gac5efd2526a520a129d49c77ccd251804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait if value stored at the address is different than one expected.  <br /></td></tr>
+<tr class="separator:gac5efd2526a520a129d49c77ccd251804"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API for synchronization on shared objects. </p>
@@ -138,10 +151,49 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Notify waiter for object. </p>
-<p>This syscall will send a notification to the highest priority thread waiting for this specific object. Only one thread is notified, the one with highest priority. If no thread is waiting for this specific object, then the call does nothing.</p>
+<p>This syscall will send a notification to the highest priority thread waiting for this specific object. Only one thread is notified, the one with highest priority. If no thread is waiting for this specific object, then the notification is recorded and notifying thread returns immediately.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">object</td><td>object used to determine waiters to be notified </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK if notification has been sent. E_OUT_OF_NOTIFICATIONS if there is too many different pending notifications and there is nobody waiting for a notification on this particular object. </dd></dl>
+
+</div>
+</div>
+<a id="gaed066fa5a49810f920e3bd163afed82a" name="gaed066fa5a49810f920e3bd163afed82a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaed066fa5a49810f920e3bd163afed82a">&#9670;&#160;</a></span>notify_object2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int notify_object2 </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Notify current waiter for object. </p>
+<p>This syscall performs action similar to <a class="el" href="group__api__notify.html#ga41864194fe48bd76519bcb27efcfb697">notify_object</a> with possibility of changing the call behavior using flags.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td>object used to determine waiters to be notified </td></tr>
+    <tr><td class="paramname">flags</td><td>optional flags changing call behavior </td></tr>
   </table>
   </dd>
 </dl>
@@ -185,6 +237,60 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>E_OK if notification has arrived. E_TIMEOUT if notification did not arrive before the timeout interval has passed. </dd></dl>
+
+</div>
+</div>
+<a id="gac5efd2526a520a129d49c77ccd251804" name="gac5efd2526a520a129d49c77ccd251804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac5efd2526a520a129d49c77ccd251804">&#9670;&#160;</a></span>wait_for_object_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int wait_for_object_value </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Wait if value stored at the address is different than one expected. </p>
+<p>This syscall behaves similarly like <a class="el" href="group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452">wait_for_object</a> with one difference:</p>
+<p>Thread will be blocked if and only if the value at address pointed to is different than expected value provided. The check-and-lock sequence is atomic even if value is modified concurrently from within another thread.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td>memory area storing the value to be compared with expected value </td></tr>
+    <tr><td class="paramname">value</td><td>expected value of the memory area </td></tr>
+    <tr><td class="paramname">timeout</td><td>timeout (in us) after which waiting is aborted and thread resumes operation. Value of 0 disables timeout and call waits indefinitely. </td></tr>
+    <tr><td class="paramname">flags</td><td>flags optional specifiers for behavior of the wait action </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK or E_OK_NO_WAIT depending on if wait did or didn't occur if operation completed successfully. Error E_ACCESS may be returned if the address provided is not accessible by the thread that made the call. Error E_INVALID_ADDRESS is reported if address is otherwise invalid (out of memory range, etc.). Error E_INVALID is reported if unsupported flag is requested. </dd></dl>
 
 </div>
 </div>

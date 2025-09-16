@@ -154,6 +154,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ga1ffb2899b56235563ff47de8478b9864" id="r_ga1ffb2899b56235563ff47de8478b9864"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__errors.html#ga1ffb2899b56235563ff47de8478b9864">E_TIMEOUT</a>&#160;&#160;&#160;14</td></tr>
 <tr class="memdesc:ga1ffb2899b56235563ff47de8478b9864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation timed out.  <br /></td></tr>
 <tr class="separator:ga1ffb2899b56235563ff47de8478b9864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c9545b5dd3b53496757843f962e8556" id="r_ga3c9545b5dd3b53496757843f962e8556"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__errors.html#ga3c9545b5dd3b53496757843f962e8556">E_ACCESS</a>&#160;&#160;&#160;15</td></tr>
+<tr class="memdesc:ga3c9545b5dd3b53496757843f962e8556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access denied.  <br /></td></tr>
+<tr class="separator:ga3c9545b5dd3b53496757843f962e8556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga262abba653e77b17b0c78c5f4af56eda" id="r_ga262abba653e77b17b0c78c5f4af56eda"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__errors.html#ga262abba653e77b17b0c78c5f4af56eda">E_OK_NO_WAIT</a>&#160;&#160;&#160;16</td></tr>
+<tr class="memdesc:ga262abba653e77b17b0c78c5f4af56eda"><td class="mdescLeft">&#160;</td><td class="mdescRight">No error.  <br /></td></tr>
+<tr class="separator:ga262abba653e77b17b0c78c5f4af56eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6b9005faf912d6a521fdce0a0ecbcbb9" id="r_ga6b9005faf912d6a521fdce0a0ecbcbb9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__api__errors.html#ga6b9005faf912d6a521fdce0a0ecbcbb9">E_OUT_OF_THREADS</a>&#160;&#160;&#160;0xFF</td></tr>
 <tr class="memdesc:ga6b9005faf912d6a521fdce0a0ecbcbb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal error. No more free threads.  <br /></td></tr>
 <tr class="separator:ga6b9005faf912d6a521fdce0a0ecbcbb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,6 +167,22 @@ Macros</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Types of errors system calls in CMRX can return. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga3c9545b5dd3b53496757843f962e8556" name="ga3c9545b5dd3b53496757843f962e8556"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3c9545b5dd3b53496757843f962e8556">&#9670;&#160;</a></span>E_ACCESS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define E_ACCESS&#160;&#160;&#160;15</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Access denied. </p>
+
+</div>
+</div>
 <a id="ga12289e8715fd56a16034f610666d900c" name="ga12289e8715fd56a16034f610666d900c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga12289e8715fd56a16034f610666d900c">&#9670;&#160;</a></span>E_BUSY</h2>
 
@@ -286,6 +308,23 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>No error. Operation completed successfully. </p>
+
+</div>
+</div>
+<a id="ga262abba653e77b17b0c78c5f4af56eda" name="ga262abba653e77b17b0c78c5f4af56eda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga262abba653e77b17b0c78c5f4af56eda">&#9670;&#160;</a></span>E_OK_NO_WAIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define E_OK_NO_WAIT&#160;&#160;&#160;16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>No error. </p>
+<p>Operation completed successfully with no waiting. </p><dl class="section note"><dt>Note</dt><dd>This error code is only reported where there is possibility of waiting and it makes sense to report waited/not waited state. </dd></dl>
 
 </div>
 </div>

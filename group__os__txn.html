@@ -137,6 +137,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1d718af22b206b311f22c214bda9387a" id="r_ga1d718af22b206b311f22c214bda9387a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__txn.html#ga1d718af22b206b311f22c214bda9387a">os_txn_done</a> ()</td></tr>
 <tr class="memdesc:ga1d718af22b206b311f22c214bda9387a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish the transaction commit.  <br /></td></tr>
 <tr class="separator:ga1d718af22b206b311f22c214bda9387a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga850d4412f59410f1e27fe0f1541e807e" id="r_ga850d4412f59410f1e27fe0f1541e807e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__txn.html#ga850d4412f59410f1e27fe0f1541e807e">os_sys_txn_start</a> (<a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> *domain)</td></tr>
+<tr class="memdesc:ga850d4412f59410f1e27fe0f1541e807e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of txn_start syscall.  <br /></td></tr>
+<tr class="separator:ga850d4412f59410f1e27fe0f1541e807e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a00a4ac7ffcc3e344961b597c5b5fe9" id="r_ga5a00a4ac7ffcc3e344961b597c5b5fe9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__txn.html#ga5a00a4ac7ffcc3e344961b597c5b5fe9">os_sys_txn_commit</a> (<a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> *domain, <a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> txn, enum <a class="el" href="group__os__txn.html#ga171384e518db04097e0f3e6750129a2a">TxnType</a> type)</td></tr>
+<tr class="memdesc:ga5a00a4ac7ffcc3e344961b597c5b5fe9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of txn_commit syscall.  <br /></td></tr>
+<tr class="separator:ga5a00a4ac7ffcc3e344961b597c5b5fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>CMRX kernel is mostly implemented as non-blocking. </p>
@@ -188,6 +194,78 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga5a00a4ac7ffcc3e344961b597c5b5fe9" name="ga5a00a4ac7ffcc3e344961b597c5b5fe9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5a00a4ac7ffcc3e344961b597c5b5fe9">&#9670;&#160;</a></span>os_sys_txn_commit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_sys_txn_commit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> *&#160;</td>
+          <td class="paramname"><em>domain</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a>&#160;</td>
+          <td class="paramname"><em>txn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">enum <a class="el" href="group__os__txn.html#ga171384e518db04097e0f3e6750129a2a">TxnType</a>&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implementation of txn_commit syscall. </p>
+<p>This function performs some additional argument checking. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">domain</td><td>domain in which transactions are allocated </td></tr>
+    <tr><td class="paramname">txn</td><td>identifier of transaction to be committed </td></tr>
+    <tr><td class="paramname">type</td><td>identifies if transaction is read-only or read-write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E_OK if transaction was committed. E_INVALID if transaction cannot be applied as different transaction has been committed meanwhile. </dd></dl>
+
+</div>
+</div>
+<a id="ga850d4412f59410f1e27fe0f1541e807e" name="ga850d4412f59410f1e27fe0f1541e807e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga850d4412f59410f1e27fe0f1541e807e">&#9670;&#160;</a></span>os_sys_txn_start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> os_sys_txn_start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> *&#160;</td>
+          <td class="paramname"><em>domain</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implementation of txn_start syscall. </p>
+<p>This function performs some additional argument checking. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">domain</td><td>domain in which transactions are allocated </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>transaction identifier within given domain </dd></dl>
+
+</div>
+</div>
 <a id="gacbfa20536e7c7fc317d57022ee00d471" name="gacbfa20536e7c7fc317d57022ee00d471"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gacbfa20536e7c7fc317d57022ee00d471">&#9670;&#160;</a></span>os_txn_commit()</h2>
 

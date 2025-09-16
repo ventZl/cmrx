@@ -1,5 +1,6 @@
 var group__api__errors =
 [
+    [ "E_ACCESS", "group__api__errors.html#ga3c9545b5dd3b53496757843f962e8556", null ],
     [ "E_BUSY", "group__api__errors.html#ga12289e8715fd56a16034f610666d900c", null ],
     [ "E_DEADLK", "group__api__errors.html#gaa9680e974c2acfe3813ca5dfefe99fcc", null ],
     [ "E_IN_TOO_DEEP", "group__api__errors.html#gae10f885fade690c86f820e2e0af359d1", null ],
@@ -8,6 +9,7 @@ var group__api__errors =
     [ "E_MISALIGNED", "group__api__errors.html#ga435a26cc047372abcc3bb46c380f3c1f", null ],
     [ "E_NOTAVAIL", "group__api__errors.html#ga25a33917a19693d071b4bfd2c1a0f5ce", null ],
     [ "E_OK", "group__api__errors.html#ga1e7cc741c56207a8872ea58373276925", null ],
+    [ "E_OK_NO_WAIT", "group__api__errors.html#ga262abba653e77b17b0c78c5f4af56eda", null ],
     [ "E_OUT_OF_NOTIFICATIONS", "group__api__errors.html#gab216a4558e7bb2fe1a9d00dd8883ff58", null ],
     [ "E_OUT_OF_RANGE", "group__api__errors.html#ga5e7e68944cce7c2ff8c4286db2a058bc", null ],
     [ "E_OUT_OF_STACKS", "group__api__errors.html#ga49a829e1fc284d59d6f2fe11af98e44c", null ],

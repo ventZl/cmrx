@@ -137,21 +137,27 @@ Functions</h2></td></tr>
 <tr class="memitem:ga94b2912bc09239d4eaab26b590e0da66" id="r_ga94b2912bc09239d4eaab26b590e0da66"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga94b2912bc09239d4eaab26b590e0da66">os_notify_thread</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> thread_id, int candidate_timer, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a> event)</td></tr>
 <tr class="memdesc:ga94b2912bc09239d4eaab26b590e0da66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify specific thread waiting for object Delivers notification to a specific thread.  <br /></td></tr>
 <tr class="separator:ga94b2912bc09239d4eaab26b590e0da66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5979f2a094569c177e9e69da6a655dc1" id="r_ga5979f2a094569c177e9e69da6a655dc1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga5979f2a094569c177e9e69da6a655dc1">os_notify_object</a> (const void *object, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a> event)</td></tr>
-<tr class="memdesc:ga5979f2a094569c177e9e69da6a655dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume one thread that are waiting for this object.  <br /></td></tr>
-<tr class="separator:ga5979f2a094569c177e9e69da6a655dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b959b83e59e9d0ec11c42099e34be24" id="r_ga1b959b83e59e9d0ec11c42099e34be24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga1b959b83e59e9d0ec11c42099e34be24">os_wait_for_object</a> (const void *object, <a class="el" href="group__os__kernel.html#gabc7393f4b316cb35167cd4de7ba83be8">WaitHandler_t</a> callback)</td></tr>
-<tr class="memdesc:ga1b959b83e59e9d0ec11c42099e34be24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for object.  <br /></td></tr>
-<tr class="separator:ga1b959b83e59e9d0ec11c42099e34be24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7501716bc3698c60cf331a72052a4098" id="r_ga7501716bc3698c60cf331a72052a4098"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga7501716bc3698c60cf331a72052a4098">os_notify_object</a> (const void *object, <a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a> event, uint32_t flags)</td></tr>
+<tr class="memdesc:ga7501716bc3698c60cf331a72052a4098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume one thread that are waiting for this object.  <br /></td></tr>
+<tr class="separator:ga7501716bc3698c60cf331a72052a4098"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e092abec7150668ed085bd881997100" id="r_ga7e092abec7150668ed085bd881997100"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga7e092abec7150668ed085bd881997100">os_wait_for_object</a> (const void *object, <a class="el" href="group__os__kernel.html#gabc7393f4b316cb35167cd4de7ba83be8">WaitHandler_t</a> callback, uint32_t flags)</td></tr>
+<tr class="memdesc:ga7e092abec7150668ed085bd881997100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for object.  <br /></td></tr>
+<tr class="separator:ga7e092abec7150668ed085bd881997100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga64fe2129fb7405446b74a9821bb85ee1" id="r_ga64fe2129fb7405446b74a9821bb85ee1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga64fe2129fb7405446b74a9821bb85ee1">os_initialize_waitable_object</a> (const void *object)</td></tr>
 <tr class="memdesc:ga64fe2129fb7405446b74a9821bb85ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize waitable object.  <br /></td></tr>
 <tr class="separator:ga64fe2129fb7405446b74a9821bb85ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacaf7a04c1911b5a8637485aaa5189b52" id="r_gacaf7a04c1911b5a8637485aaa5189b52"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#gacaf7a04c1911b5a8637485aaa5189b52">os_sys_notify_object</a> (const void *object)</td></tr>
 <tr class="memdesc:gacaf7a04c1911b5a8637485aaa5189b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of notify_object syscall.  <br /></td></tr>
 <tr class="separator:gacaf7a04c1911b5a8637485aaa5189b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga804bd7eacfc3360badecdcdc59499551" id="r_ga804bd7eacfc3360badecdcdc59499551"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#ga804bd7eacfc3360badecdcdc59499551">os_sys_notify_object2</a> (const void *object, uint32_t flags)</td></tr>
+<tr class="memdesc:ga804bd7eacfc3360badecdcdc59499551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of notify_object2 syscall.  <br /></td></tr>
+<tr class="separator:ga804bd7eacfc3360badecdcdc59499551"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad43f88a4c3d7f3a842f13edfd8318004" id="r_gad43f88a4c3d7f3a842f13edfd8318004"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#gad43f88a4c3d7f3a842f13edfd8318004">os_sys_wait_for_object</a> (const void *object, uint32_t timeout)</td></tr>
 <tr class="memdesc:gad43f88a4c3d7f3a842f13edfd8318004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of wait_for_object syscall.  <br /></td></tr>
 <tr class="separator:gad43f88a4c3d7f3a842f13edfd8318004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac011cf51e3fb090c812216a283f135e4" id="r_gac011cf51e3fb090c812216a283f135e4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__notify.html#gac011cf51e3fb090c812216a283f135e4">os_sys_wait_for_object_value</a> (uint8_t *object, uint8_t value, uint32_t timeout, uint32_t flags)</td></tr>
+<tr class="memdesc:gac011cf51e3fb090c812216a283f135e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of wait_for_object_value syscall.  <br /></td></tr>
+<tr class="separator:gac011cf51e3fb090c812216a283f135e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Kernel internals supporting cross-process notifications. </p>
@@ -287,8 +293,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga5979f2a094569c177e9e69da6a655dc1" name="ga5979f2a094569c177e9e69da6a655dc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5979f2a094569c177e9e69da6a655dc1">&#9670;&#160;</a></span>os_notify_object()</h2>
+<a id="ga7501716bc3698c60cf331a72052a4098" name="ga7501716bc3698c60cf331a72052a4098"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7501716bc3698c60cf331a72052a4098">&#9670;&#160;</a></span>os_notify_object()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -303,7 +309,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__os__kernel.html#ga680eadb82b6578f258791cef85501af2">Event_t</a>&#160;</td>
-          <td class="paramname"><em>event</em>&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -387,7 +399,44 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implementation of notify_object syscall. </p>
-<p>This is a wrapper around os_notify_object system call. It does some additional checking on arguments. See <a class="el" href="group__api__notify.html#ga41864194fe48bd76519bcb27efcfb697">notify_object</a> and <a class="el" href="group__os__notify.html#ga5979f2a094569c177e9e69da6a655dc1">os_notify_object</a> for more info. </p>
+<p>This is a wrapper around os_notify_object system call. It does some additional checking on arguments. See <a class="el" href="group__api__notify.html#ga41864194fe48bd76519bcb27efcfb697">notify_object</a> and <a class="el" href="group__os__notify.html#ga7501716bc3698c60cf331a72052a4098">os_notify_object</a> for more info. </p>
+
+</div>
+</div>
+<a id="ga804bd7eacfc3360badecdcdc59499551" name="ga804bd7eacfc3360badecdcdc59499551"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga804bd7eacfc3360badecdcdc59499551">&#9670;&#160;</a></span>os_sys_notify_object2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_sys_notify_object2 </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implementation of notify_object2 syscall. </p>
+<p>This is a wrapper around os_notify_object system call. It does some additional checking on arguments. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td>address of the object that is being waited for </td></tr>
+    <tr><td class="paramname">flags</td><td>optional flags affecting function behavior See <a class="el" href="group__api__notify.html#ga41864194fe48bd76519bcb27efcfb697">notify_object</a> and <a class="el" href="group__os__notify.html#ga7501716bc3698c60cf331a72052a4098">os_notify_object</a> for more info. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -418,12 +467,55 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implementation of wait_for_object syscall. </p>
-<p>This is a wrapper around os_wait_for_object system call. It does some additional checking on arguments. See <a class="el" href="group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452">wait_for_object</a> and <a class="el" href="group__os__notify.html#ga1b959b83e59e9d0ec11c42099e34be24">os_wait_for_object</a> for more info. </p>
+<p>This is a wrapper around os_wait_for_object system call. It does some additional checking on arguments. See <a class="el" href="group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452">wait_for_object</a> and <a class="el" href="group__os__notify.html#ga7e092abec7150668ed085bd881997100">os_wait_for_object</a> for more info. </p>
 
 </div>
 </div>
-<a id="ga1b959b83e59e9d0ec11c42099e34be24" name="ga1b959b83e59e9d0ec11c42099e34be24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1b959b83e59e9d0ec11c42099e34be24">&#9670;&#160;</a></span>os_wait_for_object()</h2>
+<a id="gac011cf51e3fb090c812216a283f135e4" name="gac011cf51e3fb090c812216a283f135e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac011cf51e3fb090c812216a283f135e4">&#9670;&#160;</a></span>os_sys_wait_for_object_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_sys_wait_for_object_value </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implementation of wait_for_object_value syscall. </p>
+<p>This is a wrapper around os_wait_for_object system call. It does some additional checking on arguments. See <a class="el" href="group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452">wait_for_object</a> and <a class="el" href="group__os__notify.html#ga7e092abec7150668ed085bd881997100">os_wait_for_object</a> for more info. </p>
+
+</div>
+</div>
+<a id="ga7e092abec7150668ed085bd881997100" name="ga7e092abec7150668ed085bd881997100"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7e092abec7150668ed085bd881997100">&#9670;&#160;</a></span>os_wait_for_object()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -438,7 +530,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__os__kernel.html#gabc7393f4b316cb35167cd4de7ba83be8">WaitHandler_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -453,6 +551,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">object</td><td>address of the object that is being waited for </td></tr>
     <tr><td class="paramname">callback</td><td>address of the callback function that handles wakeup </td></tr>
+    <tr><td class="paramname">flags</td><td>optional flags affecting function behavior </td></tr>
   </table>
   </dd>
 </dl>
