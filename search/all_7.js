@@ -3,7 +3,7 @@ var searchData=
   ['data_0',['data',['../mem_model.html#autotoc_md25',1,'Code and read-only data'],['../structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22',1,'OS_thread_create_t::data'],['../group__os__tracing.html#os_tracing_retrieving',1,'Retrieving trace data']]],
   ['declare_20interfaces_1',['Declare interfaces',['../rpc_intro.html#autotoc_md40',1,'']]],
   ['declare_20services_2',['Declare services',['../rpc_intro.html#autotoc_md42',1,'']]],
-  ['define_20service_20implementation_3',['Define service implementation',['../rpc_intro.html#autotoc_md45',1,'']]],
+  ['define_20service_20implementation_3',['Define service implementation',['../rpc_intro.html#autotoc_md44',1,'']]],
   ['definition_4',['definition',['../structOS__process__t.html#a0159c1ff60b0227b8f3a66674c92006d',1,'OS_process_t']]],
   ['delay_5fus_5',['delay_us',['../group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b',1,'timer.c']]],
   ['delays_6',['Precise synchronous delays',['../group__api__timing.html#sync_delay',1,'']]],

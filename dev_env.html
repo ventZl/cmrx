@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('dev_env.html',''); initResizable(); })
 <li>CMRX source and header directories - here, the code and headers of CMRX are stored. CMRX is distributed as a source and is compiled during the build of the firmware. Build of CMRX results in creation of library named <code>os</code> which you have to link to the final executable. Include paths to headers are automatically propagated to each target which links to the <code>os</code> library.</li>
 <li>Linker script adjustment tool - for seamless operation of memory protection, it is necessary to calculate alignment values for private data of each process. This mechanism takes the original linker script and injects per-process include blocks into it. These blocks are then adjusted based on map file analysis. This altered linker script is then used to link the binary.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md58"></a>
+<h2><a class="anchor" id="autotoc_md59"></a>
 CMake functions</h2>
 <p>While firmware built using CMRX is pretty much standard binary, there are certain tasks done after the binary is built. Similarly, every CMRX process is wrapped into fairly standard static library, yet there are some tasks done after the library is built. In order for things to work correctly, CMRX is also maintaining a set of properties bound to either firmware images or process libraries. There are three main CMake functions available for use:</p>
 <div class="fragment"><div class="line">add_firmware(&lt;firmware name&gt; &lt;source file(s)&gt;)</div>
@@ -124,7 +124,7 @@ Source and header directories</h2>
 <li>library <code>stdlib</code> - this library contains functions that call system calls. These functions are callable from processes. See <a class="el" href="group__api.html">Kernel API</a> to learn on what functions are available.</li>
 <li>library <code>aux_systick</code> - this is an auxiliary library which implements SysTick-based timing provider. This optional library can be used to quickly bootstrap the kernel before more comprehensive hardware- and task-specific timing provider is developed.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md61"></a>
+<h2><a class="anchor" id="autotoc_md62"></a>
 Linker script adjustment tool</h2>
 <p>This tool makes the use of memory protection seamless. The main purpose of this tool is to recalculate alignment of data regions of each process based on its size. This is necessary, because memory protection units on most microcontrollers have a limitation, that a region which has access rights defined by MPU must have it's base address aligned at least to its size. So if the region is 256 bytes large, it has to start at address aligned to 256 bytes. Due to this, the size of data segments has to be determined after build and then new alignments have to be determined. To save the RAM, regions are ordered descending based on their alignment.</p>
 <p>One side effect of this mechanism is, that sometimes, the binary has to be linked twice. This happens when the size of data block causes that the alignment value used to link it is not valid anymore. In such case, you have to link the binary again using new, up to date linker script. If linker script adjustment tool detects this case, it will delete the firmware binary. This behavior is to prevent use of incorrectly linked binary which won't run. </p>
