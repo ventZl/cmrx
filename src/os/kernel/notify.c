@@ -308,6 +308,10 @@ int os_sys_wait_for_object_value(uint8_t * object, uint8_t value, uint32_t timeo
         return E_INVALID;
     }
 
+    if (timeout != 0)
+    {
+        os_set_timed_event(timeout, TIMER_TIMEOUT);
+    }
     return os_wait_for_object(object, cb_syscall_notify_object, flags);
 }
 
