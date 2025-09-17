@@ -37,7 +37,7 @@
  */
 uint32_t * os_thread_populate_stack(int stack_id, unsigned stack_size, entrypoint_t * entrypoint, void * data)
 {
-    unsigned long * stack = os_stack_get(stack_id);
+    uint32_t * stack = os_stack_get(stack_id);
     stack[stack_size - 8] = (unsigned long) data; // R0
     stack[stack_size - 3] = (unsigned long) os_thread_dispose; // LR
     stack[stack_size - 2] = (unsigned long) entrypoint; // PC
@@ -83,7 +83,7 @@ void os_boot_thread(Thread_t boot_thread)
     // purpose registers here. But there is nothing useful there, so we simply skip it.
     // Code belog then restores what would normally be restored by return from handler.
     struct OS_thread_t * thread = os_thread_get(boot_thread);
-    unsigned long * thread_sp = thread->sp + 8;
+    uint32_t * thread_sp = thread->sp + 8;
     __set_PSP((uint32_t) thread_sp);
     __set_CONTROL(0x03); 	// SPSEL = 1 | nPRIV = 1: use PSP and unpriveldged thread mode
 
