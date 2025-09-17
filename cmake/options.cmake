@@ -12,6 +12,7 @@ option(CMRX_KERNEL_TRANSACTION_VERIFICATION "Enable checking for nested transact
 option(CMRX_IDLE_THREAD_SHUTDOWN_CPU "Idle thread stops CPU" OFF)
 option(CMRX_RPC_CANARY "Enable RPC canaries" OFF)
 option(CMRX_MAP_FILE_WITH_EXTENSION "MAP file contains full name of binary with ELF extension (.elf.map)" OFF)
+option(CMRX_CLANG_TIDY_LIBC_PATH "Path to standard C library used while linting" /usr/include)
 set(OS_STACK_SIZE 1024 CACHE STRING "Stack allocated per thread in bytes")
 set(OS_THREADS 8 CACHE STRING "Amount of entries in the thread table")
 set(OS_PROCESSES 8 CACHE STRING "Amount of entries in the process table")

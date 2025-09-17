@@ -13,7 +13,7 @@ jobs:
      - name: Install development packages
        run: |
           sudo apt-get update
-          sudo apt-get install -y libc6-dev
+          sudo apt-get install -y libnewlib-dev
 
      - name: Checkout
        uses: actions/checkout@v4.1.6
@@ -30,6 +30,7 @@ jobs:
         options: |
           CMRX_TARGET_PLATFORM=ARMv6M
           CMRX_UNIT_TESTS=OFF
+          CMRX_CLANG_TIDY_LIBC_PATH=/usr/include/newlib
 
      - name: Run Static Analysis
        run: cmake --build static_analysis -- clang-tidy
@@ -41,7 +42,7 @@ jobs:
      - name: Install development packages
        run: |
           sudo apt-get update
-          sudo apt-get install -y libc6-dev
+          sudo apt-get install -y libnewlib-dev
 
      - name: Checkout
        uses: actions/checkout@v4.1.6
@@ -58,6 +59,7 @@ jobs:
         options: |
           CMRX_TARGET_PLATFORM=ARMv7M
           CMRX_UNIT_TESTS=OFF
+          CMRX_CLANG_TIDY_LIBC_PATH=/usr/include/newlib
 
      - name: Run Static Analysis
        run: cmake --build static_analysis -- clang-tidy
@@ -69,7 +71,7 @@ jobs:
      - name: Install development packages
        run: |
           sudo apt-get update
-          sudo apt-get install -y libc6-dev
+          sudo apt-get install -y libnewlib-dev
 
      - name: Checkout
        uses: actions/checkout@v4.1.6
@@ -86,6 +88,7 @@ jobs:
         options: |
           CMRX_TARGET_PLATFORM=ARMv7MF
           CMRX_UNIT_TESTS=OFF
+          CMRX_CLANG_TIDY_LIBC_PATH=/usr/include/newlib
 
      - name: Run Static Analysis
        run: cmake --build static_analysis -- clang-tidy
