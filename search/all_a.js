@@ -12,5 +12,5 @@ var searchData=
   ['getmicrotime_9',['getmicrotime',['../group__api__standard.html#gab9090f01493a7759cdd3dd5bf4d917d2',1,'std.c']]],
   ['getting_20cmrx_20source_10',['Generating project and getting CMRX source',['../getting_started_cubemx.html#autotoc_md36',1,'']]],
   ['getting_20started_11',['Getting started',['../getting_started.html',1,'']]],
-  ['gpios_12',['Configuring GPIOs',['../getting_started_cubemx.html#autotoc_md35',1,'']]]
+  ['gpios_12',['Configuring GPIOs',['../getting_started_cubemx.html#autotoc_md34',1,'']]]
 ];
