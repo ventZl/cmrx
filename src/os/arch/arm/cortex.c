@@ -110,7 +110,7 @@ uint32_t os_perform_thread_switch(uint32_t LR);
  * and restored during thread switch, so the actual implementation may be written
  * as plain C function without involving surprises.
  */
-__attribute__((interrupt, naked)) void PendSV_Handler(void)
+__attribute__((interrupt, naked)) void PendSV_Handler(void) // NOLINT - FPU register use is disabled via compiler flag
 {
 	// Disable interrupts and save the remaining thread registers not saved by the CPU
 	asm volatile("CPSID I\n\t");

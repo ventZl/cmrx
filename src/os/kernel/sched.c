@@ -409,6 +409,7 @@ int os_setpriority(uint8_t priority)
 
 static void cb_thread_join_notify(const void * object, Thread_t thread, int sleeper_id, Event_t event)
 {
+    (void) sleeper_id;
     struct OS_thread_t * dead_thread = (struct OS_thread_t *) object;
     if (os_threads[thread].state == THREAD_STATE_WAITING
         && os_threads[thread].wait_object == object)
@@ -510,7 +511,7 @@ int os_thread_alloc(Process_t process, uint8_t priority)
             if (os_txn_commit(txn, TXN_READWRITE) == E_OK)
             {
                 struct OS_thread_t * new_thread = &os_threads[q];
-                memset(new_thread, 0, sizeof(struct OS_thread_t));
+                memset(new_thread, 0, sizeof(struct OS_thread_t));  // NOLINT - size of area is fixed here
                 new_thread->stack_id = OS_TASK_NO_STACK;
                 new_thread->process_id = process;
                 new_thread->sp = (uint32_t *) ~0;
@@ -562,7 +563,7 @@ void _os_start(uint8_t start_core)
     if (kernel_structs_initialized != KERNEL_STRUCTS_INITIALIZED_SIGNATURE)
     {
         kernel_structs_initialized = KERNEL_STRUCTS_INITIALIZED_SIGNATURE;
-        memset(&os_threads, 0, sizeof(os_threads));
+        memset(&os_threads, 0, sizeof(os_threads));  // NOLINT - count is a compile-time constant
         os_init_arch();
         os_timer_init();
         os_notify_init();
