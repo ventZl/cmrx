@@ -74,7 +74,7 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 }
 
 /// @cond IGNORE
-__attribute__((naked,noreturn))
+__attribute__((noreturn))
 /// @endcond
 void os_boot_thread(Thread_t boot_thread)
 {
@@ -122,7 +122,7 @@ __attribute__((weak)) void cmrx_shutdown_handler(void)
  * privileged thread mode and will be using MSP.
  */
 /// @cond IGNORE
-__attribute__((noreturn, naked))
+__attribute__((noreturn))
 /// @endcond
 void os_kernel_shutdown()
 {

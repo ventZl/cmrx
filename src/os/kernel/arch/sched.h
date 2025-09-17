@@ -36,7 +36,7 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
  * switching mechanism on this platform.
  * @param boot_thread ID of thread that shall be started
  */
-__attribute__((naked,noreturn)) void os_boot_thread(Thread_t boot_thread);
+__attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread);
 
 /** Stop running the kernel.
  * Return to bare metal execution mode similar to one after CPU reset.
