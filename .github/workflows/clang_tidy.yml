@@ -14,20 +14,22 @@ jobs:
        with:
         submodules: 'true'
 
-     - name: Configure and Build Unit Tests
+     - name: Configure the Build
        uses: threeal/cmake-action@main
        with:
         c-compiler: gcc
-        run-build: true
+        run-build: false
         build-dir: static_analysis
         source-dir: testing/clang-tidy
-        options: CMRX_TARGET_PLATFORM=ARMv6M
+        options: |
+          CMRX_TARGET_PLATFORM=ARMv6M
+          CMRX_UNIT_TESTS=OFF
 
-     - name: Run unit Tests
+     - name: Run Static Analysis
        run: cmake --build static_analysis -- clang-tidy
 
   clang-tidy-v7m:
-    name: Clang-Tidy ARMv6M
+    name: Clang-Tidy ARMv7M
     runs-on: ubuntu-latest
     steps:
      - name: Checkout
@@ -35,20 +37,22 @@ jobs:
        with:
         submodules: 'true'
 
-     - name: Configure and Build Unit Tests
+     - name: Configure the Build
        uses: threeal/cmake-action@main
        with:
         c-compiler: gcc
-        run-build: true
+        run-build: false
         build-dir: static_analysis
         source-dir: testing/clang-tidy
-        options: CMRX_TARGET_PLATFORM=ARMv7M
+        options: |
+          CMRX_TARGET_PLATFORM=ARMv7M
+          CMRX_UNIT_TESTS=OFF
 
-     - name: Run unit Tests
+     - name: Run Static Analysis
        run: cmake --build static_analysis -- clang-tidy
 
   clang-tidy-v7mf:
-    name: Clang-Tidy ARMv6M
+    name: Clang-Tidy ARMv7M-F
     runs-on: ubuntu-latest
     steps:
      - name: Checkout
@@ -56,14 +60,16 @@ jobs:
        with:
         submodules: 'true'
 
-     - name: Configure and Build Unit Tests
+     - name: Configure the Build
        uses: threeal/cmake-action@main
        with:
         c-compiler: gcc
-        run-build: true
+        run-build: false
         build-dir: static_analysis
         source-dir: testing/clang-tidy
-        options: CMRX_TARGET_PLATFORM=ARMv7MF
+        options: |
+          CMRX_TARGET_PLATFORM=ARMv7MF
+          CMRX_UNIT_TESTS=OFF
 
-     - name: Run unit Tests
+     - name: Run Static Analysis
        run: cmake --build static_analysis -- clang-tidy
