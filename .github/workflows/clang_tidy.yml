@@ -23,7 +23,7 @@ jobs:
      - name: Configure the Build
        uses: threeal/cmake-action@main
        with:
-        c-compiler: gcc
+        c-compiler: clang
         run-build: false
         build-dir: static_analysis
         source-dir: testing/clang-tidy
@@ -52,7 +52,7 @@ jobs:
      - name: Configure the Build
        uses: threeal/cmake-action@main
        with:
-        c-compiler: gcc
+        c-compiler: clang
         run-build: false
         build-dir: static_analysis
         source-dir: testing/clang-tidy
@@ -81,7 +81,7 @@ jobs:
      - name: Configure the Build
        uses: threeal/cmake-action@main
        with:
-        c-compiler: gcc
+        c-compiler: clang
         run-build: false
         build-dir: static_analysis
         source-dir: testing/clang-tidy
