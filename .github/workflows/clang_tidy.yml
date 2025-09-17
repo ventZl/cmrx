@@ -20,6 +20,7 @@ jobs:
         c-compiler: gcc
         run-build: true
         build-dir: static_analysis
+        source-dir: testing/clang-tidy
         options: CMRX_TARGET_PLATFORM=ARMv6M
 
      - name: Run unit Tests
@@ -40,6 +41,7 @@ jobs:
         c-compiler: gcc
         run-build: true
         build-dir: static_analysis
+        source-dir: testing/clang-tidy
         options: CMRX_TARGET_PLATFORM=ARMv7M
 
      - name: Run unit Tests
@@ -60,6 +62,7 @@ jobs:
         c-compiler: gcc
         run-build: true
         build-dir: static_analysis
+        source-dir: testing/clang-tidy
         options: CMRX_TARGET_PLATFORM=ARMv7MF
 
      - name: Run unit Tests
