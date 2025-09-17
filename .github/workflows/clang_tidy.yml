@@ -1,6 +1,6 @@
 name: Clang-Tidy
 on:
-  workflow-run:
+  workflow_run:
     workflows: [Unit Tests, Pull Request Unit Tests]
 
 jobs:
