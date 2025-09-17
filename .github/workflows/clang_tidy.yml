@@ -10,6 +10,9 @@ jobs:
     name: Clang-Tidy ARMv6M
     runs-on: ubuntu-latest
     steps:
+     - name: Install development packages
+        run: sudo apt-get install -y libc6-dev
+
      - name: Checkout
        uses: actions/checkout@v4.1.6
        with:
@@ -33,6 +36,9 @@ jobs:
     name: Clang-Tidy ARMv7M
     runs-on: ubuntu-latest
     steps:
+     - name: Install development packages
+        run: sudo apt-get install -y libc6-dev
+
      - name: Checkout
        uses: actions/checkout@v4.1.6
        with:
@@ -56,6 +62,9 @@ jobs:
     name: Clang-Tidy ARMv7M-F
     runs-on: ubuntu-latest
     steps:
+     - name: Install development packages
+        run: sudo apt-get install -y libc6-dev
+
      - name: Checkout
        uses: actions/checkout@v4.1.6
        with:
