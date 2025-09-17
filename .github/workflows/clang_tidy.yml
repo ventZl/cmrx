@@ -1,0 +1,66 @@
+name: Clang-Tidy
+on:
+  workflow_run:
+    workflows: [ Unit Tests, Pull Request Unit Tests ]
+    types: [ completed ]
+
+jobs:
+  clang-tidy-v6m:
+    name: Clang-Tidy ARMv6M
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v4.1.6
+       with:
+        submodules: 'true'
+
+     - name: Configure and Build Unit Tests
+       uses: threeal/cmake-action@main
+       with:
+        c-compiler: gcc
+        run-build: true
+        build-dir: static_analysis
+        options: CMRX_TARGET_PLATFORM=ARMv6M
+
+     - name: Run unit Tests
+       run: cmake --build static_analysis -- clang-tidy
+
+  clang-tidy-v7m:
+    name: Clang-Tidy ARMv6M
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v4.1.6
+       with:
+        submodules: 'true'
+
+     - name: Configure and Build Unit Tests
+       uses: threeal/cmake-action@main
+       with:
+        c-compiler: gcc
+        run-build: true
+        build-dir: static_analysis
+        options: CMRX_TARGET_PLATFORM=ARMv7M
+
+     - name: Run unit Tests
+       run: cmake --build static_analysis -- clang-tidy
+
+  clang-tidy-v7mf:
+    name: Clang-Tidy ARMv6M
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v4.1.6
+       with:
+        submodules: 'true'
+
+     - name: Configure and Build Unit Tests
+       uses: threeal/cmake-action@main
+       with:
+        c-compiler: gcc
+        run-build: true
+        build-dir: static_analysis
+        options: CMRX_TARGET_PLATFORM=ARMv7MF
+
+     - name: Run unit Tests
+       run: cmake --build static_analysis -- clang-tidy

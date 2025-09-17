@@ -29,6 +29,8 @@ function(apply_clang_tidy TARGET)
 
     add_custom_target(tidy-${TARGET}
         COMMAND ${CLANGTIDY_EXECUTABLE}
+        --extra-arg=-I
+        --extra-arg=/usr/include
         -config-file=${CMRX_ROOT_DIR}/.clang-tidy
         -p ${CMAKE_BINARY_DIR}
         ${TARGET_SOURCES}
