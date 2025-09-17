@@ -1,8 +1,9 @@
 name: Clang-Tidy
 on:
-  workflow_run:
-    workflows: [ Unit Tests, Pull Request Unit Tests ]
-    types: [ completed ]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   clang-tidy-v6m:
