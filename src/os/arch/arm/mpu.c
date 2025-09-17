@@ -321,6 +321,10 @@ int mpu_init_stack(int thread_id)
 
 bool mpu_check_bounds(const MPU_State * state, uint8_t region, uint32_t * address)
 {
-
+	// TODO: Make use of this
+	(void) state;
+	(void) region;
+	(void) address;
+	return false;
 }
 

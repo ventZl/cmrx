@@ -284,7 +284,7 @@ ALWAYS_INLINE  void __forge_shutdown_exception_frame(void (*continue_here)(void)
 
 #else
 
-ALWAYS_INLINE  void __forge_shutdown_exception_frame(void (*continue_here)(void))
+ALWAYS_INLINE  __attribute__((noreturn)) void __forge_shutdown_exception_frame(void (*continue_here)(void))
 {
 	asm volatile(
 		".syntax unified\n\t"

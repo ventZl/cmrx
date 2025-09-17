@@ -18,7 +18,7 @@
  * @param sighandler address of signal handler function. Guarranteed to be non-NULL. Yet not to be valid.
  * @param signal_mask Bitmask of activated (pending) signals, which are catchable by the application.
  */
-__attribute__((naked)) static void os_fire_signal(uint32_t signal_mask, void *sighandler(void))
+static void os_fire_signal(uint32_t signal_mask, void *sighandler(void))
 {
     (void) signal_mask;
 

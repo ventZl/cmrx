@@ -13,7 +13,7 @@ extern const struct OS_thread_create_t __thread_create_end;
 
 unsigned static_init_thread_count()
 {
-    return &__thread_create_end - &__thread_create_start;
+    return &__thread_create_end - &__thread_create_start;    // NOLINT - these are linker-generated symbols that mark boundaries of one array
 }
 
 const struct OS_thread_create_t * static_init_thread_table()
@@ -24,7 +24,7 @@ const struct OS_thread_create_t * static_init_thread_table()
 
 unsigned static_init_process_count()
 {
-    return &__applications_end - &__applications_start;
+    return &__applications_end - &__applications_start;    // NOLINT - these are linker-generated symbols that mark boundaries of one array
 
 }
 

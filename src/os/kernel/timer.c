@@ -316,13 +316,11 @@ void os_run_timer(uint32_t microtime)
 						sleeper->thread_id = 0xFF;
 					}
 					os_txn_done();
-					txn = os_txn_start();
 				}
 				else
 				{
 					// Restart the current iteration
 					q = q - 1;
-					txn = os_txn_start();
 					continue;
 				}
 			}
