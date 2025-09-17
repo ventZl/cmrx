@@ -62,7 +62,7 @@ extern SCB_Type * SCB;
 #if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M__
 
 #define SCB_CFSR_IACCVIOL_Pos              (SCB_CFSR_MEMFAULTSR_Pos + 0U)
-#define SCB_CFSR_IACCVIOL_Msk              (1UL
+#define SCB_CFSR_IACCVIOL_Msk              (1UL)
 
 #define SCB_CFSR_DACCVIOL_Pos              (SCB_CFSR_MEMFAULTSR_Pos + 1U)
 #define SCB_CFSR_DACCVIOL_Msk              (1UL << SCB_CFSR_DACCVIOL_Pos)
