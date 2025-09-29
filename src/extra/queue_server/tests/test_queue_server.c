@@ -9,6 +9,12 @@ Queue_t queue;
 #define TEST_QUEUE_DEPTH 16
 #define TEST_QUEUE_ITEM_SIZE 12
 
+#define TEST_LARGE_QUEUE_DEPTH 200
+#define TEST_LARGE_QUEUE_ITEM_SIZE 200
+
+STATIC_QUEUE_T(Large_Queue_t, TEST_LARGE_QUEUE_DEPTH * TEST_LARGE_QUEUE_ITEM_SIZE);
+static Large_Queue_t queue2;
+
 static bool wait_for_object_called = false;
 static void * wait_for_object_addr = NULL;
 /// How long will it take to notification to arrive?
@@ -300,3 +306,37 @@ CTEST2(queue_server, queue_timeout_data_arrives) {
 
     ASSERT_EQUAL(rv, true);
 }
+
+CTEST_DATA(large_queue) {
+
+};
+
+CTEST_SETUP(large_queue) {
+    wait_for_object_called = false;
+    notify_object_called = false;
+    wait_for_object_addr = NULL;
+    notify_object_addr = NULL;
+    bool rv = queue_init(&queue2.q, TEST_LARGE_QUEUE_DEPTH, TEST_LARGE_QUEUE_ITEM_SIZE);
+    ASSERT_EQUAL(rv, true);
+}
+
+CTEST2(large_queue, regression_queue_cursor_ranges) {
+    unsigned char buffer[TEST_LARGE_QUEUE_ITEM_SIZE] = { 0x42 };
+
+    bool rv = queue_send(&queue2.q, buffer);
+    ASSERT_EQUAL(rv, true);
+
+    rv = queue_send(&queue2.q, buffer);
+    ASSERT_EQUAL(rv, true);
+    ASSERT_EQUAL(queue2.q.write_cursor, (2 * TEST_LARGE_QUEUE_ITEM_SIZE));
+
+    rv = queue_receive(&queue2.q, buffer);
+    ASSERT_EQUAL(rv, true);
+
+    rv = queue_receive(&queue2.q, buffer);
+    ASSERT_EQUAL(rv, true);
+
+    ASSERT_EQUAL(queue2.q.read_cursor, (2 * TEST_LARGE_QUEUE_ITEM_SIZE));
+
+}
+

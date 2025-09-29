@@ -13,7 +13,7 @@ bool queue_send_silent(struct Queue * queue, const void * data)
 
     const unsigned size_limit = queue->depth * queue->item_size;
 
-    uint8_t cursor = queue->write_cursor;
+    unsigned cursor = queue->write_cursor;
     for (uint8_t q = 0; q < queue->item_size; ++q) {
         queue->content[cursor] = ((unsigned char *)data)[q];
         cursor = (cursor + 1) % size_limit;
@@ -52,7 +52,7 @@ bool queue_receive_timeout(struct Queue * queue, void * data, uint32_t timeout_u
 
     const unsigned size_limit = queue->depth * queue->item_size;
 
-    uint8_t cursor = queue->read_cursor;
+    unsigned cursor = queue->read_cursor;
     for (uint8_t q = 0; q < queue->item_size; ++q) {
         ((unsigned char *)data)[q] = queue->content[cursor];
         cursor = (cursor + 1) % size_limit;
