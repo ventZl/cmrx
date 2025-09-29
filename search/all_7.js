@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['data_0',['data',['../mem_model.html#autotoc_md26',1,'Code and read-only data'],['../structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22',1,'OS_thread_create_t::data'],['../group__os__tracing.html#os_tracing_retrieving',1,'Retrieving trace data']]],
+  ['data_0',['data',['../mem_model.html#autotoc_md25',1,'Code and read-only data'],['../structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22',1,'OS_thread_create_t::data'],['../group__os__tracing.html#os_tracing_retrieving',1,'Retrieving trace data']]],
   ['declare_20interfaces_1',['Declare interfaces',['../rpc_intro.html#autotoc_md43',1,'']]],
-  ['declare_20services_2',['Declare services',['../rpc_intro.html#autotoc_md44',1,'']]],
+  ['declare_20services_2',['Declare services',['../rpc_intro.html#autotoc_md45',1,'']]],
   ['define_20service_20implementation_3',['Define service implementation',['../rpc_intro.html#autotoc_md46',1,'']]],
   ['definition_4',['definition',['../structOS__process__t.html#a0159c1ff60b0227b8f3a66674c92006d',1,'OS_process_t']]],
   ['delay_5fus_5',['delay_us',['../group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b',1,'timer.c']]],
@@ -15,7 +15,7 @@ var searchData=
   ['device_12',['DEVICE',['../findcmsis.html#autotoc_md16',1,'']]],
   ['device_5finclude_5ffilename_13',['DEVICE_INCLUDE_FILENAME',['../findcmsis.html#autotoc_md18',1,'']]],
   ['diff_5fmicrotime_14',['diff_microtime',['../group__api__standard.html#ga821cccfa3f3ac511dd361a3544715944',1,'std.c']]],
-  ['directories_15',['Source and header directories',['../dev_env.html#autotoc_md61',1,'']]],
+  ['directories_15',['Source and header directories',['../dev_env.html#autotoc_md71',1,'']]],
   ['do_5fset_5ftimed_5fevent_16',['do_set_timed_event',['../group__os__timer.html#gaef90c3e49cedd75a22cf512bad8c149f',1,'timer.c']]],
   ['documentation_17',['Kernel documentation',['../group__os.html',1,'']]]
 ];
