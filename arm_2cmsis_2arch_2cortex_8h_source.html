@@ -152,10 +152,10 @@ $(document).ready(function(){initNavTree('arm_2cmsis_2arch_2cortex_8h_source.htm
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><a class="code hl_define" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> <span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86">__ISR_return</a>()</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>{</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keyword">asm</span> <span class="keyword">volatile</span>(</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                <span class="stringliteral">&quot;POP {R0, R1}\n\t&quot;</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                <span class="stringliteral">&quot;MOV R12, R0\n\t&quot;</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                <span class="stringliteral">&quot;MOV LR, R1\n\t&quot;</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="stringliteral">&quot;POP {R0, R1, R2, R3}\n\t&quot;</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                <span class="stringliteral">&quot;POP {R0, R1, R2, R3}\n\t&quot;</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                <span class="stringliteral">&quot;POP {R6, R7}\n\t&quot;</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                <span class="stringliteral">&quot;MOV R12, R6\n\t&quot;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="stringliteral">&quot;MOV LR, R7\n\t&quot;</span></div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                <span class="stringliteral">&quot;POP {R6, R7}\n\t&quot;</span></div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                <span class="stringliteral">&quot;BX R6\n\t&quot;</span></div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                );</div>
@@ -168,8 +168,8 @@ $(document).ready(function(){initNavTree('arm_2cmsis_2arch_2cortex_8h_source.htm
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86">   81</a></span><a class="code hl_define" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> <span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86">__ISR_return</a>()</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>{</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="keyword">asm</span> <span class="keyword">volatile</span>(</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                <span class="stringliteral">&quot;POP {R12, LR}\n\t&quot;</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                <span class="stringliteral">&quot;POP {R0, R1, R2, R3}\n\t&quot;</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                <span class="stringliteral">&quot;POP {R0, R1, R2, R3}\n\t&quot;</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                <span class="stringliteral">&quot;POP {R12, LR}\n\t&quot;</span></div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                <span class="stringliteral">&quot;POP {R6, R7}\n\t&quot;</span></div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                <span class="stringliteral">&quot;BX R6\n\t&quot;</span></div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                );</div>
