@@ -7,5 +7,6 @@ if (NOT UNIT_TESTING_BUILD)
 endif()
 
 if (UNIT_TESTING_BUILD)
+    apply_gcov(queue)
     add_subdirectory(tests)
 endif()

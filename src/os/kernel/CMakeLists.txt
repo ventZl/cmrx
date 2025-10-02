@@ -30,5 +30,6 @@ target_include_directories(os INTERFACE ${CMRX_ROOT_DIR}/include ${CMAKE_BINARY_
 # Just an alias
 add_library(cmrx ALIAS os)
 if (UNIT_TESTING_BUILD)
+    apply_gcov(os)
     add_subdirectory(tests)
 endif()

@@ -81,3 +81,4 @@ if (BUILD_TESTING)
 endif()
 
 apply_clang_tidy(os)
+generate_coverage()
