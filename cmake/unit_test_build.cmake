@@ -27,7 +27,11 @@ if (__UNIT_TESTING_BUILD)
     endif()
     set(UNIT_TESTING_BUILD 1)
     set(UNIT_TESTING 1)
+
+    list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 endif()
+
+include(gcov)
 
 # Enable the build of CMRX kernel unit tests
 if (CMRX_UNIT_TESTS)
