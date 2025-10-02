@@ -66,10 +66,10 @@ _Static_assert(sizeof(ExceptionFrameFP) % 8 == 0, "The size of ExceptionFrameFP 
 ALWAYS_INLINE void __ISR_return()
 {
 		asm volatile(
-				"POP {R0, R1}\n\t"
-				"MOV R12, R0\n\t"
-				"MOV LR, R1\n\t"
 				"POP {R0, R1, R2, R3}\n\t"
+				"POP {R6, R7}\n\t"
+				"MOV R12, R6\n\t"
+				"MOV LR, R7\n\t"
 				"POP {R6, R7}\n\t"
 				"BX R6\n\t"
 				);
@@ -81,8 +81,8 @@ ALWAYS_INLINE void __ISR_return()
 ALWAYS_INLINE void __ISR_return()
 {
 		asm volatile(
-				"POP {R12, LR}\n\t"
 				"POP {R0, R1, R2, R3}\n\t"
+				"POP {R12, LR}\n\t"
 				"POP {R6, R7}\n\t"
 				"BX R6\n\t"
 				);
