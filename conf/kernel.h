@@ -79,7 +79,6 @@
  * can be used to hash keys to avoid one multiplication and speed up
  * hash-based lookups.
  */
-
 #cmakedefine CMRX_USE_FAST_HASH
 
 /** Enable / disable prefixing system call API with `cmrx_`.
@@ -97,4 +96,12 @@
  * non-secure mode.
  */
 #cmakedefine CMRX_ARCH_ARMV8M_SECURE_MODE
+
+#cmakedefine CMRX_CUSTOM_FLASH_RANGE
+
+#ifdef CMRX_CUSTOM_FLASH_RANGE
+#   define CMRX_CUSTOM_FLASH_START @CMRX_CUSTOM_FLASH_START@
+#   define CMRX_CUSTOM_FLASH_SIZE @CMRX_CUSTOM_FLASH_SIZE@
+#endif
+
 /** @} */
