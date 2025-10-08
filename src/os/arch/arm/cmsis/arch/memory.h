@@ -2,7 +2,7 @@
 
 #include <conf/kernel.h>
 
-#ifdef CMRX_CUSTOM_FLASH_RANGE
+#ifndef CMRX_CUSTOM_FLASH_RANGE
 /** This symbol is placed exactly at the address where FLASH starts by the linker script */
 extern void * __cmrx_flash_origin;
 
