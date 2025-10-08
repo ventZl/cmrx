@@ -10,6 +10,11 @@ option(CMRX_KERNEL_TRACING "Enable tracing of kernel events" OFF)
 option(CMRX_CLANG_TIDY "Enable linting using Clang-tidy" ON)
 option(CMRX_KERNEL_TRANSACTION_VERIFICATION "Enable checking for nested transaction commits" OFF)
 option(CMRX_IDLE_THREAD_SHUTDOWN_CPU "Idle thread stops CPU" OFF)
+
+option(CMRX_CUSTOM_FLASH_RANGE "If set to ON then developer SHALL provide custom range that covers all readable and executable area. If set to OFF then kernel will determine this automatically based on linker file, if possible" OFF)
+option(CMRX_CUSTOM_FLASH_START "Custom start address of FLASH region. FLASH region includes this address" 0)
+option(CMRX_CUSTOM_FLASH_SIZE "Custom size of FLASH region" 0)
+
 option(CMRX_RPC_CANARY "Enable RPC canaries" OFF)
 option(CMRX_MAP_FILE_WITH_EXTENSION "MAP file contains full name of binary with ELF extension (.elf.map)" OFF)
 option(CMRX_CLANG_TIDY_LIBC_PATH "Path to standard C library used while linting" /usr/include)
