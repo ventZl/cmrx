@@ -44,11 +44,12 @@ static const struct {
 	/* MPU_NONE */  { 0, 0 },
 	/* MPU_RX */    { MPU_RBAR_AP_RW_RO, MPU_ATTR_NORMAL_WB },                    /* Priv RW, User RO, executable */
 	/* MPU_RWX */   { MPU_RBAR_AP_RW_RW, MPU_ATTR_NORMAL_WB },                    /* Priv RW, User RW, executable */
-	/* MPU_R */     { MPU_RBAR_XN | MPU_RBAR_AP_RW_RO, MPU_ATTR_NORMAL_WB },     /* Priv RW, User RO, no-execute */
+	/* MPU_RO */     { MPU_RBAR_XN | MPU_RBAR_AP_RW_RO, MPU_ATTR_NORMAL_WB },     /* Priv RW, User RO, no-execute */
 	/* MPU_RW */    { MPU_RBAR_XN | MPU_RBAR_AP_RW_RW, MPU_ATTR_NORMAL_WB },     /* Priv RW, User RW, no-execute */
 };
 
 #endif
+_Static_assert(sizeof(__MPU_flags)/sizeof(__MPU_flags[0]) == MPU_FLAGS_COUNT, "Missing or extra entries in MPU flag mapping table");
 
 /** Handler for hard fault.
  */
