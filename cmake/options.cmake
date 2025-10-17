@@ -5,6 +5,8 @@ if (CMAKE_HOST_WIN32)
 else()
     set(UNIT_TESTS_DEFAULT ON)
 endif()
+option(CMRX_PLATFOM "Specific platform within architecture to build for" "generic")
+
 option(CMRX_UNIT_TESTS "Enable build of kernel unit tests" ${UNIT_TESTS_DEFAULT})
 option(CMRX_KERNEL_TRACING "Enable tracing of kernel events" OFF)
 option(CMRX_CLANG_TIDY "Enable linting using Clang-tidy" ON)
