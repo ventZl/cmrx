@@ -88,10 +88,10 @@
 #define OS_MPU_REGION_MMIO2 		3
 /// Currently unused region (reserved)
 #define OS_MPU_REGION_SHARED		4
-/// Currently unused region (reserved)
-#define OS_MPU_REGION_UNUSED2		5
 /// Region covering thread's stack
-#define OS_MPU_REGION_STACK			6
+#define OS_MPU_REGION_STACK			5
+/// Currently unused region (reserved)
+#define OS_MPU_REGION_UNUSED2		6
 /// Region covering executable RAM (?)
 #define OS_MPU_REGION_EXECUTABLE	7
 

@@ -21,6 +21,7 @@
 #include <cmrx/sys/syscalls.h>
 #include <cmrx/sys/notify.h>
 #include <cmrx/clock.h>
+#include <platform.h>
 #include <string.h>
 
 #define STACK_ALIGN 
@@ -460,6 +461,7 @@ int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data
     if (thread_id < OS_THREADS)
     {
         os_thread_initialize_arch(&os_threads[thread_id]);
+        os_thread_initialize_platform(&os_threads[thread_id]);
     	os_thread_construct(thread_id, entrypoint, data, core);
     }
     ASSERT(thread_id < OS_THREADS);
@@ -565,6 +567,7 @@ void _os_start(uint8_t start_core)
         kernel_structs_initialized = KERNEL_STRUCTS_INITIALIZED_SIGNATURE;
         memset(&os_threads, 0, sizeof(os_threads));  // NOLINT - count is a compile-time constant
         os_init_arch();
+        os_init_platform();
         os_timer_init();
         os_notify_init();
     }

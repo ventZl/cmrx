@@ -14,7 +14,7 @@
 #define KERNEL_HAS_MEMORY_PROTECTION
 
 /** How many MPU regions are saved per thread */
-#define MPU_STATE_SIZE			7
+#define MPU_STATE_SIZE			6
 
 /** How many MPU regions are always used based on in which process thread is hosted */
 #define MPU_HOSTED_STATE_SIZE	4
@@ -72,5 +72,12 @@
  * by an attacker.
  */
 #cmakedefine CMRX_RPC_CANARY
+
+#cmakedefine CMRX_CUSTOM_FLASH_RANGE
+
+#ifdef CMRX_CUSTOM_FLASH_RANGE
+#   define CMRX_CUSTOM_FLASH_START @CMRX_CUSTOM_FLASH_START@
+#   define CMRX_CUSTOM_FLASH_SIZE @CMRX_CUSTOM_FLASH_SIZE@
+#endif
 
 /** @} */
