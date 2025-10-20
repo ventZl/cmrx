@@ -25,6 +25,9 @@ else()
     if (EXISTS ${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/${CMRX_HAL}/CMRX.cmake)
         include(${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/${CMRX_HAL}/CMRX.cmake)
     endif()
+    if (EXISTS ${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/platform/${CMRX_PLATFORM}/CMRX.cmake)
+        include(${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/platform/${CMRX_PLATFORM}/CMRX.cmake)
+    endif()
 endif()
 
 ## Add firmware application definition
