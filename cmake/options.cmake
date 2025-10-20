@@ -5,7 +5,10 @@ if (CMAKE_HOST_WIN32)
 else()
     set(UNIT_TESTS_DEFAULT ON)
 endif()
-set(CMRX_PLATFORM "generic" CACHE STRING "Specific platform within architecture to build for")
+
+if (NOT CMRX_PLATFORM)
+    set(CMRX_PLATFORM "generic" CACHE STRING "Specific platform within architecture to build for")
+endif()
 
 option(CMRX_UNIT_TESTS "Enable build of kernel unit tests" ${UNIT_TESTS_DEFAULT})
 option(CMRX_KERNEL_TRACING "Enable tracing of kernel events" OFF)
