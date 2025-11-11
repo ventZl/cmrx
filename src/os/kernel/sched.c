@@ -459,7 +459,6 @@ int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data
 	uint8_t thread_id = os_thread_alloc(process, priority);
     if (thread_id < OS_THREADS)
     {
-        os_thread_initialize_arch(&os_threads[thread_id]);
     	os_thread_construct(thread_id, entrypoint, data, core);
     }
     ASSERT(thread_id < OS_THREADS);
@@ -477,7 +476,7 @@ int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, ui
 			if (stack_id != 0xFFFFFFFF)
 			{
 				new_thread->stack_id = stack_id;
-                new_thread->sp = os_thread_populate_stack(stack_id, OS_STACK_DWORD, entrypoint, data);
+                os_thread_initialize_arch(new_thread, OS_STACK_DWORD, entrypoint, data);
                 new_thread->core_id = core_id;
 
 				new_thread->state = THREAD_STATE_READY;

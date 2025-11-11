@@ -26,25 +26,21 @@
 
 #include <cmrx/assert.h>
 
-/** Populate stack of new thread so it can be executed.
- * Populates stack of new thread so that it can be executed with no
- * other actions required. Returns the address where SP shall point to.
- * @param stack_id ID of stack to be populated
- * @param stack_size size of stack in 32-bit quantities
- * @param entrypoint address of thread entrypoint function
- * @param data address of data passed to the thread as its 1st argument
- * @returns Address to which the SP shall be set.
- */
-uint32_t * os_thread_populate_stack(int stack_id, unsigned stack_size, entrypoint_t * entrypoint, void * data)
+void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size, entrypoint_t * entrypoint, void * data)
 {
-    uint32_t * stack = os_stack_get(stack_id);
+    uint32_t * stack = os_stack_get(thread->stack_id);
     stack[stack_size - 8] = (unsigned long) data; // R0
     stack[stack_size - 3] = (unsigned long) os_thread_dispose; // LR
     stack[stack_size - 2] = (unsigned long) entrypoint; // PC
     stack[stack_size - 1] = 0x01000000; // xPSR
 
-    return &stack[stack_size - 16];
-
+    thread->sp = &stack[stack_size - 16];
+#ifdef __FPU_USED
+	// By default, thread is restored into
+	// Thread mode, using PSP as a stack and
+	// without FPU
+	thread->arch.exc_return = EXC_RETURN_THREAD_PSP;
+#endif
 }
 
 int os_process_create(Process_t process_id, const struct OS_process_definition_t * definition)
