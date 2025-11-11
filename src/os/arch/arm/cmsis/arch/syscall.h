@@ -3,7 +3,7 @@
 extern struct Syscall_Entry_t __syscall_start;
 extern struct Syscall_Entry_t __syscall_end;
 
-Syscall_Entry_t * os_syscalls_start(void)
+struct Syscall_Entry_t * os_syscalls_start(void)
 {
     return &__syscall_start;
 }

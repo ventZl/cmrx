@@ -47,7 +47,7 @@ __attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread);
  * This is a point of no return. Code here is free to destroy any previous
  * context.
  */
-__attribute__((noreturn)) void os_kernel_shutdown();
+void os_kernel_shutdown();
 
 /** Reset the CPU.
  * This is architecture- (and possibly HAL-) specific way to reset the CPU.
