@@ -21,10 +21,13 @@
  *
  */
 
-/** @defgroup arch_arch Porting layer 
+/** @defgroup arch_arch Abstract machine
  * @ingroup arch
- * Description of CMRX porting layer. CMRX expects that the following functions are provided
- * by architecture support layer. If creating new layer, these functions have to be implemented.
+ * Description of CMRX abstract machine. CMRX expects to run on abstract machine providing
+ * functionality that can be accessed by API described here. CMRX doesn't care nor access the
+ * underlying platform by any other means and makes no strong assumptions on the target
+ * platform other than assumptions presented here. The target plaform described by the abstract
+ * machine can be whatever that meets requirements stated here.
  *
  * This list is by no means definitive. Each architecture will require its own mechanisms to
  * be implemented so the kernel can actually work. Mechanisms CMRX requires to be present in
@@ -32,6 +35,7 @@
  *  * service / system call mechanism that allows to call the kernel from usermode code
  *  * memory protection mechanism 
  *  * mechanism allowing to schedule and then perform thread switching
+ *  * mechanisms to define and collect system call lists and lists of processes/tasks
  *
  * Similarly, some of kernel syscalls are directly implemented by the architecture support 
  * layer as there is no way for kernel to know how platform will implement given mechanisms.
@@ -62,7 +66,7 @@ In the following text, several terms will be used:
   solution available that does not require port creation, it should be avoided. In CMRX
   terminology port refers to the same thing as term "HAL" does.
 
-@section anatomy Anatomy of CMRX port
+@section anatomy Anatomy of CMRX abstract machine
 
 CMRX kernel is divided into two parts which are interconnected and together form a full CMRX
 kernel. One part is the platform-independent code that mostly covers the CMRX API and
@@ -70,13 +74,13 @@ common functionality, like scheduler, timer implementation, etc. Another part pr
 architecture- and platform-specific functionality needed for the former part to be able to
 execute.
 
-Following text describes the latter, the porting layer. Porting layer basically consists
+Following text describes the latter, the abtract machine. Abstract machine API basically consists
 of three (possibly four) parts:
 
 * CMake script to define actions specific to correctly support the target architecture
 * C headers containing definitions both required by platform-independent part and required
   internally by the port itself.
-* C sources containing implementation of the port.
+* C sources containing implementation of the abstract machine on given platform.
 * Optionally, there might be some scripts required to support architecture-specific
   features.
 
@@ -105,13 +109,29 @@ The platform-independent part of CMRX expects just a few files to exist in this 
 They will be directly included by the platform-independent part so they shall only contain
 entities described below and shall not include any other headers, if possible.
 
+@subsection context_h context.h
+
+This file contains API to request context switch to happen. This has to be implemented as
+a function.
+
+* @ref os_request_context_switch() - initiates or cancells context switch. In certain situations
+  kernel may decide that it wants to cancel a pending request to perform context switch. Request
+  shall not be performed immediately, yet after the current system call or interrupt handler is
+  done.
+
 @subsection corelocal_h corelocal.h
 
 This file has to contain two entities. They might be implemented as macros, static inline
 functions or any other kind of function, as needed by the platform.
 
-* coreid() - provides ID of the currently running core. For uni-processor systems, this
+* @ref coreid() - provides ID of the currently running core. For uni-processor systems, this
   can be a macro hardcoded to return value of 0.
+* @ref os_smp_lock() / @ref os_smp_unlock() - provides SMP-aware locking mechanism to instantiate
+  system-wide critical section.
+* @ref os_core_lock() / @ref os_core_unlock() - provides core-local locking mechanism to instantiate
+  local critical section.
+* @ref os_core_sleep() - halt the current core in order to save power. Core must be restartable
+  by the means of interrupt.
 * OS_NUM_CORES - usually a macro, that provides information on amount of cores present in 
   the system.
 
@@ -125,6 +145,45 @@ existence:
   that the porting layer for the architecture will be able to store memory protection unit
   state of CPU when swapping threads in and out. The design of this structure is entirely
   up on the designed of the port. Portable part of CMRX doesn't use the data stored there.
+
+* @ref os_memory_protection_start() - configure the underlying hardware to enforce memory proctecion.
+* @ref mpu_init_stack() - adjust internal MPU-related structures to support the stack of given thread.
+* @ref mpu_restore() - restore MPU hardware into state suitable for given thread to run.
+* @ref os_memory_protection_stop() - configure the underlying hardware to not enforce memory protection.
+  This is used just before the kernel reboots to disable  memory protection in user mode.
+
+@subsection rpc_h rpc.h
+
+This file implements two of the syscalls which are related to the RPC mechanism: Entering and
+leaving the RPC calls.
+
+* @ref os_rpc_call() - perform RPC call
+* @ref os_rpc_return() - return from RPC call back to the caller context
+
+@subsection runtime_h runtime.h
+
+This file implements some architecture-specific callbacks and structures. It allows the architecture
+to customize the thread control block and react to certain events.
+
+* struct @ref Arch_State_t - this structure allows the port to put additional architecture-specific data into TCB.
+* @ref os_init_arch() - called when operating system boots. Once per boot.
+* @ref os_init_core() - called when the core is initialized during boot. Once per each core that is
+  being booted by the OS.
+
+@subsection sched_h sched.h
+
+This file implements primitives that are used to perform certain architecture specific tasks related
+to scheduling.
+
+* @ref os_thread_initialize_arch() - perform architecture-specific way of initializing the freshly-created thread
+* @ref os_process_create() - perform architecture-specific way of initializing the freshly-created process
+* @ref os_boot_thread() - boot the kernel userspace by starting executing the given thread in the
+  user mode of the CPU being protected by the MPU.
+* @ref os_kernel_shutdown() - return to the privileged user mode execution similar to one before the
+  kernel was started up.
+* @ref os_reset_cpu() - perform CPU reset. This should make sure the software starts executing again in
+  known "clean" state of the CPU.
+* @ref os_set_syscall_return_value() - set system call return value
 
 @subsection sysenter_h sysenter.h 
 
