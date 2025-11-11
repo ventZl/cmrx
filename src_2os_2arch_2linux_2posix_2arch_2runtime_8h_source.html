@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: src/os/kernel/arch/context.h Source File</title>
+<title>C Microkernel Realtime eXecutive: src/os/arch/linux/posix/arch/runtime.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('arch_2context_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('src_2os_2arch_2linux_2posix_2arch_2runtime_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,23 +98,35 @@ $(document).ready(function(){initNavTree('arch_2context_8h_source.html',''); ini
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">context.h</div></div>
+  <div class="headertitle"><div class="title">runtime.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;ucontext.h&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga8b1827c66da610023e93a6ad404bd38f">os_request_context_switch</a>(<span class="keywordtype">bool</span> activate);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="ttc" id="agroup__arch__arch_html_ga8b1827c66da610023e93a6ad404bd38f"><div class="ttname"><a href="group__arch__arch.html#ga8b1827c66da610023e93a6ad404bd38f">os_request_context_switch</a></div><div class="ttdeci">void os_request_context_switch(bool activate)</div><div class="ttdoc">Request context switch.</div><div class="ttdef"><b>Definition</b> cortex.c:81</div></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#define os_init_core(x)</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">struct </span><a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a>;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arm__sched.html#ga22edc1a4b8311885fceefba6b73f77af">os_thread_initialize_arch</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a> * thread, <span class="keywordtype">unsigned</span> stack_size, entrypoint_t * entrypoint, <span class="keywordtype">void</span> * data);</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keywordtype">void</span> os_init_arch(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">struct </span><a class="code hl_struct" href="structArch__State__t.html">Arch_State_t</a> {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structArch__State__t.html#ae82fe2bd37f3d2fdd3211271cea241bc">   13</a></span>    ucontext_t <a class="code hl_variable" href="structArch__State__t.html#ae82fe2bd37f3d2fdd3211271cea241bc">thread_context</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>};</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="ttc" id="agroup__arch__arm__sched_html_ga22edc1a4b8311885fceefba6b73f77af"><div class="ttname"><a href="group__arch__arm__sched.html#ga22edc1a4b8311885fceefba6b73f77af">os_thread_initialize_arch</a></div><div class="ttdeci">void os_thread_initialize_arch(struct OS_thread_t *thread, unsigned stack_size, entrypoint_t *entrypoint, void *data)</div><div class="ttdef"><b>Definition</b> sched.c:29</div></div>
+<div class="ttc" id="astructArch__State__t_html"><div class="ttname"><a href="structArch__State__t.html">Arch_State_t</a></div><div class="ttdoc">ARM-specific architecture state of a thread.</div><div class="ttdef"><b>Definition</b> runtime.h:58</div></div>
+<div class="ttc" id="astructArch__State__t_html_ae82fe2bd37f3d2fdd3211271cea241bc"><div class="ttname"><a href="structArch__State__t.html#ae82fe2bd37f3d2fdd3211271cea241bc">Arch_State_t::thread_context</a></div><div class="ttdeci">ucontext_t thread_context</div><div class="ttdef"><b>Definition</b> runtime.h:13</div></div>
+<div class="ttc" id="astructOS__thread__t_html"><div class="ttname"><a href="structOS__thread__t.html">OS_thread_t</a></div><div class="ttdoc">Thread control block.</div><div class="ttdef"><b>Definition</b> runtime.h:72</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><a class="el" href="dir_f3913cdb192a60ecaf3e841b502083ba.html">arch</a></li><li class="navelem"><b>context.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_f4f836dbb47c7c2a6355e2b51fb79a34.html">arch</a></li><li class="navelem"><a class="el" href="dir_2be9baecef342b8b8c87f53c9fec8927.html">linux</a></li><li class="navelem"><a class="el" href="dir_c8f80f32757d03a31e0d59f792d47e34.html">posix</a></li><li class="navelem"><a class="el" href="dir_7f0724b6d79d08e8270eeae9b7163b16.html">arch</a></li><li class="navelem"><b>runtime.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

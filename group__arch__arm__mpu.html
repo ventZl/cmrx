@@ -156,7 +156,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2df3bcd565155fa841a09863ab02fca3" id="r_ga2df3bcd565155fa841a09863ab02fca3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga2df3bcd565155fa841a09863ab02fca3">mpu_clear_region</a> (uint8_t region)</td></tr>
 <tr class="memdesc:ga2df3bcd565155fa841a09863ab02fca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable MPU region.  <br /></td></tr>
 <tr class="separator:ga2df3bcd565155fa841a09863ab02fca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga057d8b71680702b99ab7e66764bde9c4" id="r_ga057d8b71680702b99ab7e66764bde9c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga057d8b71680702b99ab7e66764bde9c4">mpu_load</a> (const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *state, uint8_t base, uint8_t count)</td></tr>
+<tr class="memitem:ga057d8b71680702b99ab7e66764bde9c4" id="r_ga057d8b71680702b99ab7e66764bde9c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga057d8b71680702b99ab7e66764bde9c4">mpu_load</a> (const <a class="el" href="structMPU__Configuration.html">MPU_State</a> *state, uint8_t base, uint8_t count)</td></tr>
 <tr class="separator:ga057d8b71680702b99ab7e66764bde9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -226,7 +226,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="structMPU__Registers.html">MPU_Registers</a> MPU_State[<a class="el" href="group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e">MPU_STATE_SIZE</a>]</td>
+          <td class="memname">typedef struct <a class="el" href="structMPU__Registers.html">MPU_Registers</a> <a class="el" href="structMPU__Configuration.html">MPU_State</a>[<a class="el" href="group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e">MPU_STATE_SIZE</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -421,7 +421,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int mpu_load </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="structMPU__Configuration.html">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>
@@ -455,13 +455,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int mpu_restore </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="structMPU__Configuration.html">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>hosted_state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="structMPU__Configuration.html">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>parent_state</em>&#160;</td>
         </tr>
         <tr>
@@ -544,13 +544,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int mpu_store </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structMPU__Configuration.html">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>hosted_state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structMPU__Configuration.html">MPU_State</a> *&#160;</td>
           <td class="paramname"><em>parent_state</em>&#160;</td>
         </tr>
         <tr>

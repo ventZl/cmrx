@@ -1,6 +1,8 @@
 var group__arch__arch =
 [
-    [ "Arch_State_t", "structArch__State__t.html", null ],
+    [ "Arch_State_t", "structArch__State__t.html", [
+      [ "thread_context", "structArch__State__t.html#ae82fe2bd37f3d2fdd3211271cea241bc", null ]
+    ] ],
     [ "coreid", "group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345", null ],
     [ "mpu_init_stack", "group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399", null ],
     [ "mpu_restore", "group__arch__arch.html#gaccaca933ccccec5a6f6808252b4a5fbc", null ],

@@ -98,19 +98,42 @@ $(document).ready(function(){initNavTree('structArch__State__t.html',''); initRe
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle"><div class="title">Arch_State_t Struct Reference<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__arch.html">Porting layer</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>ARM-specific architecture state of a thread.  
  <a href="structArch__State__t.html#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:ae82fe2bd37f3d2fdd3211271cea241bc" id="r_ae82fe2bd37f3d2fdd3211271cea241bc"><td class="memItemLeft" align="right" valign="top">ucontext_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#ae82fe2bd37f3d2fdd3211271cea241bc">thread_context</a></td></tr>
+<tr class="separator:ae82fe2bd37f3d2fdd3211271cea241bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>ARM-specific architecture state of a thread. </p>
 <p>Architecture code-private part of thread record.</p>
 <p>This structure holds additional state needed by the ARM Cortex M CPUs to properly store/restore thread state.</p>
 <p>As of now the floating point usage information is stored here. This is provided only if FPU is available and activated.</p>
 <p>This structure holds the CPU-specific part of thread state. It can be empty if architecture does not need any specific information saved in the CPU state. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="ae82fe2bd37f3d2fdd3211271cea241bc" name="ae82fe2bd37f3d2fdd3211271cea241bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae82fe2bd37f3d2fdd3211271cea241bc">&#9670;&#160;</a></span>thread_context</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ucontext_t Arch_State_t::thread_context</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->

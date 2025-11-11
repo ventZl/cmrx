@@ -1,6 +1,6 @@
 var annotated_dup =
 [
-    [ "Arch_State_t", "structArch__State__t.html", null ],
+    [ "Arch_State_t", "structArch__State__t.html", "structArch__State__t" ],
     [ "BasicQueue", "structBasicQueue.html", "structBasicQueue" ],
     [ "ComChannel", "structComChannel.html", "structComChannel" ],
     [ "ComChannelVMT", "structComChannelVMT.html", "structComChannelVMT" ],
@@ -13,6 +13,7 @@ var annotated_dup =
     [ "ExceptionFrame", "structExceptionFrame.html", "structExceptionFrame" ],
     [ "ExceptionFrameFP", "structExceptionFrameFP.html", "structExceptionFrameFP" ],
     [ "futex_t", "structfutex__t.html", "structfutex__t" ],
+    [ "MPU_Configuration", "structMPU__Configuration.html", "structMPU__Configuration" ],
     [ "MPU_Registers", "structMPU__Registers.html", "structMPU__Registers" ],
     [ "NotificationObject", "structNotificationObject.html", "structNotificationObject" ],
     [ "OS_core_state_t", "structOS__core__state__t.html", "structOS__core__state__t" ],
