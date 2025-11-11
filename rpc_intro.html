@@ -137,7 +137,7 @@ RPC service</h2>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md37"></a>
 Becoming a RPC server</h2>
 <p>In order for some application to define a RPC server, it has to do quite a few things:</p>
-<h2><a class="anchor" id="autotoc_md38"></a>
+<h2><a class="anchor" id="autotoc_md39"></a>
 Declare interfaces</h2>
 <p>Very first step is to define the interface. Interface is a structure visible both to the server and the client, which defines what actions some type of service supports. Interface is purely procedural and does not support publishing of data members. Interface has a form of structure containing pointer-to-function members. Interfaces shall be as abstract as possible, creating contracts between the caller and the callee rather than describe manipulation methods specific to one single interface. This facilitates interface reuse. If your service has possible actions similar to some other service, then both services shall implement the same interface. If they do then these services are interchangeable. Caller can call an instance of both without actually knowing what specific service it is calling or that they are in fact different.</p>
 <p>This step can be skipped if there is suitable interface available somewhere in your project. You can reuse it rather than defining your own interface.</p>
@@ -177,20 +177,20 @@ Define service implementation</h2>
 <div class="line">    &amp;service_vtable,</div>
 <div class="line">    0x42</div>
 <div class="line">};</div>
-<div class="ttc" id="agroup__api__init_html_gaa4a137442c139400b647ac62b40ea51a"><div class="ttname"><a href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a></div><div class="ttdeci">#define VTABLE</div><div class="ttdef"><b>Definition</b> application.h:31</div></div>
+<div class="ttc" id="agroup__api__init_html_gaa4a137442c139400b647ac62b40ea51a"><div class="ttname"><a href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a></div><div class="ttdeci">#define VTABLE</div><div class="ttdoc">Define structure to be a VTABLE definition.</div><div class="ttdef"><b>Definition</b> application.h:32</div></div>
 <div class="ttc" id="agroup__api__rpc_html_ga3467c0dc3f1f95bb00289609f2ce35f8"><div class="ttname"><a href="group__api__rpc.html#ga3467c0dc3f1f95bb00289609f2ce35f8">IMPLEMENTATION_OF</a></div><div class="ttdeci">#define IMPLEMENTATION_OF(service, interface)</div><div class="ttdoc">Extended version of IMPLEMENTATION macro.</div><div class="ttdef"><b>Definition</b> implementation.h:103</div></div>
 </div><!-- fragment --><p>If any interface provides some function, then it is mandatory to implement it. No pointer in interface can point to NULL. Doing so will crash any caller which attempts to call such interface method.</p>
 <p>Instances of interfaces have to be marked by special keyword <a class="el" href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">VTABLE</a>. This keyword serves the purpose of putting such variable into VTABLE "region" of the process. Only those interface implementations residing in VTABLE regions can be called. Net effects of this limitation are two:</p><ol type="1">
 <li>Only RPC services, which were intentionally provided as such, can be used to perform legitimate RPC call. No random data put together which resemble pointer-to-function array can be used as a RPC service.</li>
 <li>Presence of VTABLE address in some particular process' VTABLE region established relationship between RPC service and owning process. This is also important from memory protection perspective, as it allows kernel to determine, how to set up memory protection during the RPC call.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md44"></a>
+<h2><a class="anchor" id="autotoc_md45"></a>
 Calling RPC service</h2>
 <p>Once RPC service has been established having its own implementation it is possible to perform calls of this service. Service instance lives in the address space of the process, which instantiated it. It is not possible to place the service instance into some globally-accessible place as no such space exists. It is not even needed. All that any potential caller needs is the address of the service. Call of this service can then be performed using the following code:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> retval = <a class="code hl_define" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a>(service_ptr, method_2, 0x42, 0xF00F);</div>
 <div class="ttc" id="agroup__api__rpc_html_ga896b17abf6ce670f5000ac4a0852393f"><div class="ttname"><a href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a></div><div class="ttdeci">#define rpc_call(service_instance, method_name,...)</div><div class="ttdoc">User-visible way to perform remote procedure call.</div><div class="ttdef"><b>Definition</b> rpc.h:122</div></div>
 </div><!-- fragment --><p>This call will perform the call of method_2 from within service using CMRX RPC mechanism.</p>
-<h2><a class="anchor" id="autotoc_md46"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 Advantages of RPC mechanism</h2>
 <p>Why mechanism so complicated?</p>
 <p>Despite looking complicated, this mechanism has a few advantages over directly calling functions, or calling functions via pointer-to-function table indirection. If we first consider the simplest case of calling specific service functions via their names directly, such as:</p>

@@ -119,33 +119,11 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">application</td><td>)</td>
-          <td></td>
+          <td>&#160;&#160;&#160;CMRX_APPLICATION_INSTANCE_CONSTRUCTOR(application)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, data_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, data_end);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, bss_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, bss_end);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, vtable_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, vtable_end);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, __mmio_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, __mmio_end);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, shared_start);\</div>
-<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> * __APPL_SYMBOL(application, shared_end);\</div>
-<div class="line">\</div>
-<div class="line">__attribute__((externally_visible, used, section(<span class="stringliteral">&quot;.applications&quot;</span>) )) const struct <a class="code hl_struct" href="structOS__process__definition__t.html">OS_process_definition_t</a> __APPL_SYMBOL(application, instance) = {\</div>
-<div class="line">    {\</div>
-<div class="line">        { &amp;__APPL_SYMBOL(application, data_start), &amp;__APPL_SYMBOL(application, data_end) },\</div>
-<div class="line">        { &amp;__APPL_SYMBOL(application, bss_start), &amp;__APPL_SYMBOL(application, bss_end) },\</div>
-<div class="line">        { __APPL_SYMBOL(application, mmio_start), __APPL_SYMBOL(application, mmio_end) },\</div>
-<div class="line">        { __APPL_SYMBOL(application, mmio_2_start), __APPL_SYMBOL(application, mmio_2_end) },\</div>
-<div class="line">        { &amp;__APPL_SYMBOL(application, shared_start), &amp;__APPL_SYMBOL(application, shared_end) }\</div>
-<div class="line">    },\</div>
-<div class="line">    { &amp;__APPL_SYMBOL(application, vtable_start), &amp;__APPL_SYMBOL(application, vtable_end) }\</div>
-<div class="line">    }</div>
-<div class="ttc" id="astructOS__process__definition__t_html"><div class="ttname"><a href="structOS__process__definition__t.html">OS_process_definition_t</a></div><div class="ttdoc">Static definition of process in firmware image.</div><div class="ttdef"><b>Definition</b> runtime.h:30</div></div>
-</div><!-- fragment -->
+
 <p>Declare userspace process. </p>
 <p>This will create userspace process entry in process table. Process is used to contain information on MPU configuration all threads bound to this process can use. </p>
 
@@ -188,6 +166,9 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> * <span class="keyword">const</span> __APPL_SYMBOL(application, mmio_2_end) = (<span class="keywordtype">void</span> *) 0;\</div>
 <div class="line">    _Static_assert(from == 0 || to == 0 || from % (to - from) == 0, <span class="stringliteral">&quot;MMIO range not size-aligned&quot;</span>)</div>
 </div><!-- fragment -->
+<p>Define the MMIO range accessible by the said application. </p>
+<p>This macro allows to define a range of addresses accessible by the application code. Typical use is when user-space drivers are given access to certain address range where a peripheral resides. </p>
+
 </div>
 </div>
 <a id="gaef7fd4ff3de50fb8b7bb9d5b51363278" name="gaef7fd4ff3de50fb8b7bb9d5b51363278"></a>
@@ -240,6 +221,10 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 <div class="line">    _Static_assert(from == 0 || to == 0 || from % (to - from) == 0, <span class="stringliteral">&quot;MMIO range 1 not size-aligned&quot;</span>);\</div>
 <div class="line">    _Static_assert(from == 0 || to == 0 || from2 == 0 || to2 == 0 || from2 % (to2 - from2) == 0, <span class="stringliteral">&quot;MMIO range 2 not size-aligned&quot;</span>)</div>
 </div><!-- fragment -->
+<p>Define two MMIO range accessible by the said application. </p>
+<p>This macro allows to define a range of addresses accessible by the application code. Typical use is when user-space drivers are given access to certain address range where a peripheral resides.</p>
+<p>This macro differs from <a class="el" href="group__api__init.html#gaac9006478e1f1b60bc348f45b4eb0575">OS_APPLICATION_MMIO_RANGE</a> only by the fact that it allows to pass two ranges instead of one. </p>
+
 </div>
 </div>
 <a id="gab0cfed2a7b7800c9b487db972328ef5d" name="gab0cfed2a7b7800c9b487db972328ef5d"></a>
@@ -310,6 +295,10 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Define structure to be a VTABLE definition. </p>
+<p>CMRX only allows remote procedure calls to objects whose vtable pointers point to structures that are considered VTable definitions.</p>
+<p>Mark every VTABLE structure instance with this macro to make it work for remote procedure calls. </p>
 
 </div>
 </div>

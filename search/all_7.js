@@ -1,7 +1,7 @@
 var searchData=
 [
   ['data_0',['data',['../mem_model.html#autotoc_md25',1,'Code and read-only data'],['../structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22',1,'OS_thread_create_t::data'],['../group__os__tracing.html#os_tracing_retrieving',1,'Retrieving trace data']]],
-  ['declare_20interfaces_1',['Declare interfaces',['../rpc_intro.html#autotoc_md38',1,'']]],
+  ['declare_20interfaces_1',['Declare interfaces',['../rpc_intro.html#autotoc_md39',1,'']]],
   ['declare_20services_2',['Declare services',['../rpc_intro.html#autotoc_md41',1,'']]],
   ['define_20service_20implementation_3',['Define service implementation',['../rpc_intro.html#autotoc_md42',1,'']]],
   ['definition_4',['definition',['../structOS__process__t.html#a0159c1ff60b0227b8f3a66674c92006d',1,'OS_process_t']]],

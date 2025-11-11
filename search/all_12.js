@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['path_0',['path',['../getting_started_picosdk.html#autotoc_md66',1,'1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path'],['../getting_started_cubemx.html#autotoc_md45',1,'1. Add CMake modules provided by CMRX into CMake module path']]],
+  ['path_0',['path',['../getting_started_picosdk.html#autotoc_md66',1,'1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path'],['../getting_started_cubemx.html#autotoc_md44',1,'1. Add CMake modules provided by CMRX into CMake module path']]],
   ['pc_1',['pc',['../structExceptionFrameFP.html#a2284e86b5e94105fc506cbf0079131df',1,'ExceptionFrameFP::pc'],['../structExceptionFrame.html#a0eefca46cfc007207520ff8a7b23f332',1,'ExceptionFrame::pc']]],
   ['pending_5fnotifications_2',['pending_notifications',['../structNotificationObject.html#a314f4b8525154216bbbdc1cfc67476b9',1,'NotificationObject']]],
   ['pendsv_5fhandler_3',['PendSV_Handler',['../group__arch__arm__os.html#ga6303e1f258cbdc1f970ce579cc015623',1,'cortex.c']]],
@@ -14,7 +14,7 @@ var searchData=
   ['porting_20layer_11',['Porting layer',['../group__arch__arch.html',1,'']]],
   ['power_20management_12',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
   ['precise_20synchronous_20delays_13',['Precise synchronous delays',['../group__api__timing.html#sync_delay',1,'']]],
-  ['prerequisites_14',['prerequisites',['../getting_started_picosdk.html#autotoc_md63',1,'Prerequisites'],['../getting_started_cubemx.html#autotoc_md29',1,'Prerequisites']]],
+  ['prerequisites_14',['prerequisites',['../getting_started_picosdk.html#autotoc_md63',1,'Prerequisites'],['../getting_started_cubemx.html#autotoc_md28',1,'Prerequisites']]],
   ['priority_15',['priority',['../structOS__thread__create__t.html#a101f5f58e48c5b90a973d0f63c2a5b0b',1,'OS_thread_create_t::priority'],['../structOS__thread__t.html#abde22ec841a589ba96cc6bc54f9eabb5',1,'OS_thread_t::priority']]],
   ['priority_5finvalid_16',['PRIORITY_INVALID',['../group__os__sched.html#ga1c0157588be40efb99fc590662e237ae',1,'sched.c']]],
   ['priority_5fmax_17',['PRIORITY_MAX',['../group__os__sched.html#gaa95d03c8fe4c7467a8e475748cbf67e1',1,'sched.c']]],
@@ -31,7 +31,7 @@ var searchData=
   ['properties_28',['Transaction engine properties',['../txn_intro.html#autotoc_md55',1,'']]],
   ['protection_29',['protection',['../group__arch__arm__mpu.html',1,'Memory protection'],['../group__arch__arm__nvic.html',1,'Memory protection'],['../group__os__mpu.html',1,'Memory protection']]],
   ['provided_20by_20cmrx_20and_20pico_20sdk_20into_20cmake_20module_20path_30',['1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path',['../getting_started_picosdk.html#autotoc_md66',1,'']]],
-  ['provided_20by_20cmrx_20into_20cmake_20module_20path_31',['1. Add CMake modules provided by CMRX into CMake module path',['../getting_started_cubemx.html#autotoc_md45',1,'']]],
+  ['provided_20by_20cmrx_20into_20cmake_20module_20path_31',['1. Add CMake modules provided by CMRX into CMake module path',['../getting_started_cubemx.html#autotoc_md44',1,'']]],
   ['provider_32',['provider',['../group__aux__cm__ipi.html',1,'Cortex-M generic IPI provider'],['../group__aux__systick.html',1,'SysTick-Based Timing Provider']]],
   ['provider_20api_33',['Timing provider API',['../group__api__timing.html',1,'']]],
   ['push_5fexception_5fframe_34',['push_exception_frame',['../group__arch__arm__cortex.html#gae810f95e12c75c23d3b87ee2199c9436',1,'push_exception_frame(ExceptionFrame *frame, unsigned args, bool fp_active):&#160;cortex.c'],['../group__arch__arm__syscall.html#gae810f95e12c75c23d3b87ee2199c9436',1,'push_exception_frame(ExceptionFrame *frame, unsigned args, bool fp_active):&#160;cortex.c']]]

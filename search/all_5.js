@@ -13,5 +13,5 @@ var searchData=
   ['build_20system_10',['Build system',['../build_system.html',1,'']]],
   ['build_20time_20options_11',['Build-time options',['../build_system.html#autotoc_md1',1,'']]],
   ['by_20cmrx_20and_20pico_20sdk_20into_20cmake_20module_20path_12',['1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path',['../getting_started_picosdk.html#autotoc_md66',1,'']]],
-  ['by_20cmrx_20into_20cmake_20module_20path_13',['1. Add CMake modules provided by CMRX into CMake module path',['../getting_started_cubemx.html#autotoc_md45',1,'']]]
+  ['by_20cmrx_20into_20cmake_20module_20path_13',['1. Add CMake modules provided by CMRX into CMake module path',['../getting_started_cubemx.html#autotoc_md44',1,'']]]
 ];
