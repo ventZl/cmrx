@@ -164,9 +164,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2b0268c1c8ecd0d6e3194f0f52be350c" id="r_ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
 <tr class="memdesc:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_return syscall.  <br /></td></tr>
 <tr class="separator:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga439fecf5da5136ef742a9a568c0f197d" id="r_ga439fecf5da5136ef742a9a568c0f197d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga439fecf5da5136ef742a9a568c0f197d">os_thread_initialize_arch</a> (struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *thread)</td></tr>
-<tr class="memdesc:ga439fecf5da5136ef742a9a568c0f197d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize architecture-specific initialization of thread.  <br /></td></tr>
-<tr class="separator:ga439fecf5da5136ef742a9a568c0f197d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa60b9768d8ca80f05db8e96e43845ccf" id="r_gaa60b9768d8ca80f05db8e96e43845ccf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gaa60b9768d8ca80f05db8e96e43845ccf">os_init_arch</a> (void)</td></tr>
 <tr class="memdesc:gaa60b9768d8ca80f05db8e96e43845ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform architecture-specific initialization during kernel startup.  <br /></td></tr>
 <tr class="separator:gaa60b9768d8ca80f05db8e96e43845ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -851,46 +848,17 @@ Port implementation sources</h1>
 
 </div>
 </div>
-<a id="ga439fecf5da5136ef742a9a568c0f197d" name="ga439fecf5da5136ef742a9a568c0f197d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga439fecf5da5136ef742a9a568c0f197d">&#9670;&#160;</a></span>os_thread_initialize_arch()</h2>
+<a id="ga22edc1a4b8311885fceefba6b73f77af" name="ga22edc1a4b8311885fceefba6b73f77af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga22edc1a4b8311885fceefba6b73f77af">&#9670;&#160;</a></span>os_thread_initialize_arch()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void os_thread_initialize_arch </td>
           <td>(</td>
           <td class="paramtype">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td>
-          <td class="paramname"><em>thread</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Finalize architecture-specific initialization of thread. </p>
-<p>This routine is called when thread has been created. It has opportunity to perform architecture-specific default-initialization of the thread. </p><dl class="section note"><dt>Note</dt><dd>To save some CPU cycles, you can define this function as an empty macro if it is not used. In that case the <a class="el" href="structArch__State__t.html">Arch_State_t</a> should be an empty structure. </dd></dl>
-
-</div>
-</div>
-<a id="ga1f714f6892c35a090439a7071ddadf46" name="ga1f714f6892c35a090439a7071ddadf46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1f714f6892c35a090439a7071ddadf46">&#9670;&#160;</a></span>os_thread_populate_stack()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t * os_thread_populate_stack </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>stack_id</em>, </td>
+          <td class="paramname"><em>thread</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -918,10 +886,14 @@ Port implementation sources</h1>
       </table>
 </div><div class="memdoc">
 
-<p>Populate stack of new thread so it can be executed. </p>
-<p>Populates stack of new thread so that it can be executed with no other actions required. Returns the address where SP shall point to. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Perform architecture-specific thread initialization This function should perform the following actions: </p>
+<ul>
+<li>Configure thread state so it can be executed immediately after this function is done</li>
+<li>Set valid value into SP member, so the stack pointer can be set to valid value</li>
+<li>Perform any architecture-specific steps needed to make thread executable</li>
+<li>Set any architecture-specific settings <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_id</td><td>ID of stack to be populated </td></tr>
+    <tr><td class="paramname">thread</td><td>pointer to structure describing the thread just being created </td></tr>
     <tr><td class="paramname">stack_size</td><td>size of stack in 32-bit quantities </td></tr>
     <tr><td class="paramname">entrypoint</td><td>address of thread entrypoint function </td></tr>
     <tr><td class="paramname">data</td><td>address of data passed to the thread as its 1st argument </td></tr>
@@ -929,6 +901,8 @@ Port implementation sources</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Address to which the SP shall be set. </dd></dl>
+</li>
+</ul>
 
 </div>
 </div>

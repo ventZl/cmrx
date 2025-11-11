@@ -7,5 +7,5 @@ var group__arch__arm__sched =
     [ "os_process_create", "group__arch__arm__sched.html#ga770860e52c205dc2a7e865b80b0fca11", null ],
     [ "os_reset_cpu", "group__arch__arm__sched.html#ga0ef00a0f1fe50bb0af3bbf05cbdddfe3", null ],
     [ "os_set_syscall_return_value", "group__arch__arm__sched.html#gabb3070fe93f5997763b5685b81288f5c", null ],
-    [ "os_thread_populate_stack", "group__arch__arm__sched.html#ga1f714f6892c35a090439a7071ddadf46", null ]
+    [ "os_thread_initialize_arch", "group__arch__arm__sched.html#ga22edc1a4b8311885fceefba6b73f77af", null ]
 ];

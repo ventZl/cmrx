@@ -115,9 +115,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1f714f6892c35a090439a7071ddadf46" id="r_ga1f714f6892c35a090439a7071ddadf46"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#ga1f714f6892c35a090439a7071ddadf46">os_thread_populate_stack</a> (int stack_id, unsigned stack_size, entrypoint_t *entrypoint, void *data)</td></tr>
-<tr class="memdesc:ga1f714f6892c35a090439a7071ddadf46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populate stack of new thread so it can be executed.  <br /></td></tr>
-<tr class="separator:ga1f714f6892c35a090439a7071ddadf46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22edc1a4b8311885fceefba6b73f77af" id="r_ga22edc1a4b8311885fceefba6b73f77af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#ga22edc1a4b8311885fceefba6b73f77af">os_thread_initialize_arch</a> (struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *thread, unsigned stack_size, entrypoint_t *entrypoint, void *data)</td></tr>
+<tr class="memdesc:ga22edc1a4b8311885fceefba6b73f77af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform architecture-specific thread initialization This function should perform the following actions:  <br /></td></tr>
+<tr class="separator:ga22edc1a4b8311885fceefba6b73f77af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga770860e52c205dc2a7e865b80b0fca11" id="r_ga770860e52c205dc2a7e865b80b0fca11"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__sched.html#ga770860e52c205dc2a7e865b80b0fca11">os_process_create</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process_id, const struct <a class="el" href="structOS__process__definition__t.html">OS_process_definition_t</a> *definition)</td></tr>
 <tr class="memdesc:ga770860e52c205dc2a7e865b80b0fca11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create process using process definition.  <br /></td></tr>
 <tr class="separator:ga770860e52c205dc2a7e865b80b0fca11"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -318,17 +318,17 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga1f714f6892c35a090439a7071ddadf46" name="ga1f714f6892c35a090439a7071ddadf46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1f714f6892c35a090439a7071ddadf46">&#9670;&#160;</a></span>os_thread_populate_stack()</h2>
+<a id="ga22edc1a4b8311885fceefba6b73f77af" name="ga22edc1a4b8311885fceefba6b73f77af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga22edc1a4b8311885fceefba6b73f77af">&#9670;&#160;</a></span>os_thread_initialize_arch()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t * os_thread_populate_stack </td>
+          <td class="memname">void os_thread_initialize_arch </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>stack_id</em>, </td>
+          <td class="paramtype">struct <a class="el" href="structOS__thread__t.html">OS_thread_t</a> *&#160;</td>
+          <td class="paramname"><em>thread</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -356,10 +356,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Populate stack of new thread so it can be executed. </p>
-<p>Populates stack of new thread so that it can be executed with no other actions required. Returns the address where SP shall point to. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Perform architecture-specific thread initialization This function should perform the following actions: </p>
+<ul>
+<li>Configure thread state so it can be executed immediately after this function is done</li>
+<li>Set valid value into SP member, so the stack pointer can be set to valid value</li>
+<li>Perform any architecture-specific steps needed to make thread executable</li>
+<li>Set any architecture-specific settings <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_id</td><td>ID of stack to be populated </td></tr>
+    <tr><td class="paramname">thread</td><td>pointer to structure describing the thread just being created </td></tr>
     <tr><td class="paramname">stack_size</td><td>size of stack in 32-bit quantities </td></tr>
     <tr><td class="paramname">entrypoint</td><td>address of thread entrypoint function </td></tr>
     <tr><td class="paramname">data</td><td>address of data passed to the thread as its 1st argument </td></tr>
@@ -367,6 +371,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Address to which the SP shall be set. </dd></dl>
+</li>
+</ul>
 
 </div>
 </div>
