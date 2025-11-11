@@ -13,5 +13,5 @@ __SYSCALL int _rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned ar
     (void) service;
     (void) method;
     (void) canary;
-	__SVC(SYSCALL_RPC_CALL);
+	__SVC(SYSCALL_RPC_CALL, arg0, arg1, arg2, arg3, service, method);
 }
