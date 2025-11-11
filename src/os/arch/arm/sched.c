@@ -35,7 +35,7 @@ void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size,
     stack[stack_size - 1] = 0x01000000; // xPSR
 
     thread->sp = &stack[stack_size - 16];
-#ifdef __FPU_USED
+#if __FPU_USED
 	// By default, thread is restored into
 	// Thread mode, using PSP as a stack and
 	// without FPU
