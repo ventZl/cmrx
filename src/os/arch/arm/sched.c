@@ -121,9 +121,6 @@ __attribute__((weak)) void cmrx_shutdown_handler(void)
  * this function will be that the processor leaves the handler mode, enters
  * privileged thread mode and will be using MSP.
  */
-/// @cond IGNORE
-__attribute__((noreturn))
-/// @endcond
 void os_kernel_shutdown()
 {
 	__set_CONTROL(0); // SPSEL = 0 | nPRIV = 0; use MSP and privileged thread mode
