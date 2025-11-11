@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: src/os/kernel/syscall.h Source File</title>
+<title>C Microkernel Realtime eXecutive: src/os/arch/linux/posix/arch/syscall.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('syscall_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('arch_2linux_2posix_2arch_2syscall_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,35 +103,27 @@ $(document).ready(function(){initNavTree('syscall_8h_source.html',''); initResiz
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="group__os__syscall.html#ga8c3ef3b8ba8d29b49370620dc656c3b7">   23</a></span><span class="preprocessor">#define SYSCALL_DEFINITION __attribute__((section(&quot;.syscall&quot;), used)) const</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">   25</a></span><span class="keyword">typedef</span> int (* <a class="code hl_typedef" href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">Syscall_Handler_t</a>)(int, int, int, int);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="foldopen" id="foldopen00031" data-start="{" data-end="};">
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structSyscall__Entry__t.html">   31</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="structSyscall__Entry__t.html#ac3473bf96a2024c57cf6fdafd216ac6b">   34</a></span>    uint8_t <a class="code hl_variable" href="structSyscall__Entry__t.html#ac3473bf96a2024c57cf6fdafd216ac6b">id</a>;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="structSyscall__Entry__t.html#ace65d18a0d600d65292f949c52b1937a">   38</a></span>    <a class="code hl_typedef" href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">Syscall_Handler_t</a> <a class="code hl_variable" href="structSyscall__Entry__t.html#ace65d18a0d600d65292f949c52b1937a">handler</a>;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
-</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keywordtype">int</span> <a class="code hl_function" href="group__os__syscall.html#ga16718b58a2540d2e22ca17fe8ce11aab">os_system_call</a>(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3, uint8_t syscall_id);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="ttc" id="agroup__os__syscall_html_ga16718b58a2540d2e22ca17fe8ce11aab"><div class="ttname"><a href="group__os__syscall.html#ga16718b58a2540d2e22ca17fe8ce11aab">os_system_call</a></div><div class="ttdeci">int os_system_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3, uint8_t syscall_id)</div><div class="ttdoc">Find and execute a system call.</div><div class="ttdef"><b>Definition</b> syscall.c:59</div></div>
-<div class="ttc" id="agroup__os__syscall_html_gada41dc2b7ccf9df17f433b5d5893cfcf"><div class="ttname"><a href="group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf">Syscall_Handler_t</a></div><div class="ttdeci">int(* Syscall_Handler_t)(int, int, int, int)</div><div class="ttdef"><b>Definition</b> syscall.h:25</div></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;kernel/syscall.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> * os_syscalls_start(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> * os_syscalls_end(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">extern</span> <span class="keywordtype">void</span> cmrx_posix_register_syscalls(<span class="keyword">struct</span> <a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> * syscalls);</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define REGISTER_SYSCALLS(...) \</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">static struct Syscall_Entry_t syscalls[] = { __VA_ARGS__, { 0, 0} };\</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">__attribute__((constructor)) void register_syscalls_ ## __COUNTER__(void)\</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">{\</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">    cmrx_posix_register_syscalls(syscalls);\</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">}</span></div>
 <div class="ttc" id="astructSyscall__Entry__t_html"><div class="ttname"><a href="structSyscall__Entry__t.html">Syscall_Entry_t</a></div><div class="ttdoc">Entry in syscall table.</div><div class="ttdef"><b>Definition</b> syscall.h:31</div></div>
-<div class="ttc" id="astructSyscall__Entry__t_html_ac3473bf96a2024c57cf6fdafd216ac6b"><div class="ttname"><a href="structSyscall__Entry__t.html#ac3473bf96a2024c57cf6fdafd216ac6b">Syscall_Entry_t::id</a></div><div class="ttdeci">uint8_t id</div><div class="ttdoc">Syscall ID.</div><div class="ttdef"><b>Definition</b> syscall.h:34</div></div>
-<div class="ttc" id="astructSyscall__Entry__t_html_ace65d18a0d600d65292f949c52b1937a"><div class="ttname"><a href="structSyscall__Entry__t.html#ace65d18a0d600d65292f949c52b1937a">Syscall_Entry_t::handler</a></div><div class="ttdeci">Syscall_Handler_t handler</div><div class="ttdoc">Address of handler function.</div><div class="ttdef"><b>Definition</b> syscall.h:38</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><b>syscall.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_f4f836dbb47c7c2a6355e2b51fb79a34.html">arch</a></li><li class="navelem"><a class="el" href="dir_2be9baecef342b8b8c87f53c9fec8927.html">linux</a></li><li class="navelem"><a class="el" href="dir_c8f80f32757d03a31e0d59f792d47e34.html">posix</a></li><li class="navelem"><a class="el" href="dir_7f0724b6d79d08e8270eeae9b7163b16.html">arch</a></li><li class="navelem"><b>syscall.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

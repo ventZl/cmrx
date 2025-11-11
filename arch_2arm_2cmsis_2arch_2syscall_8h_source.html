@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: Integrating vendor SDKs</title>
+<title>C Microkernel Realtime eXecutive: src/os/arch/arm/cmsis/arch/syscall.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('hal_integration.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('arch_2arm_2cmsis_2arch_2syscall_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -97,36 +97,37 @@ $(document).ready(function(){initNavTree('hal_integration.html',''); initResizab
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Integrating vendor SDKs</div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">syscall.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>As mentioned before, CMRX does not provide any OS-specific HAL or SDK. You have to integrate vendor-provided HAL. This way, the use of CMRX is as non-intrusive as technically possible. CMRX itself - being a microkernel - uses only minimalistic set of peripherals, almost exclusively only peripherals residing on Cortex core itself. Only architecture dependent part of the kernel code is ever using these peripherals. This part is always written with some HAL in mind. For example the default ARM port is written using CMSIS standard. CMSIS standard is quite broad but minimalistic needs of CMRX kernel can usually be satisfied by the basic CMSIS device header. This header is often present in vendor SDK for a microcontroller in some form usable by the CMRX.</p>
-<p>Second part usually present in the vendor SDK is the linker script for your target device which declares base addresses of RAM and FLASH and defines regions for code, data, bss and others. This script is needed to link the binary correctly. CMRX needs this scriupt to be manipulated in order to enable memory protection.</p>
-<p>Third part of vendor SDK are the startup and system source files. They might or might not be present, or may be present in slightly different organization. Here vendors are creative and mostly ignore CMSIS standard.</p>
-<p>As long as the CMRX kernel itself is concerned, this is all that is needed from the vendor SDK. Your application's need will usually be bigger as you might want to use peripheral drivers and utility libraries provided by the SDK. While the range and way of using these vary from project to project, CMRX does not deal with these at all. It is up to integrator to include them into project.</p>
-<h2><a class="anchor" id="autotoc_md62"></a>
-CMSIS helper</h2>
-<p>To make integration of CMSIS HAL for needs of the CMRX easier, there is small CMake module which helps to find various CMSIS components and set up defines. This module is called <code>FindCMSIS.cmake</code>. This module will determine include paths for core CMSIS headers and try to find startup and system components of CMSIS, if available. It will copy the linker file to location CMRX expects to find one.</p>
-<p>The basic use of <code>FindCMSIS</code> is like:</p>
-<div class="fragment"><div class="line">set(CMSIS_ROOT &lt;path to where CMSIS is located in vendor SDK&gt;)</div>
-<div class="line">set(DEVICE &lt;device name recognized by the vendor SDK&gt;)</div>
-<div class="line">set(CMSIS_LINKER_FILE &lt;location of the linker file&gt;)</div>
-<div class="line">include(FindCMSIS)</div>
-</div><!-- fragment --><p>If necessary CMSIS components are found, then following is done:</p>
-<ul>
-<li>library <code>cmsis_core_lib</code> is created. This is an interface library that propagates include paths to all headers of CMSIS core. This ensures that the CMSIS headers can be included into CMRX source. ARM port based on CMSIS HAL expects this library to exist while compiling.</li>
-<li>file <code>RTE_Components.h</code> is creates in <code>CMAKE_BINARY_DIR</code>. This file contains an alias to device file as per CMSIS specs, so the CMRX kernel code is device-independent. ARM port based on CMSIS HAL expects this file to exist.</li>
-<li>linker file is copied into file named <code>gen.&lt;DEVICE&gt;.ld</code> into <code>CMAKE_BINARY_DIR</code>. This is where CMRX expects to find the device linker script. If linker script provided in variable <code>CMSIS_LINKER_FILE</code> does not exist, then FindCMSIS will fail with error.</li>
-<li>variable <code>CMSIS_SRCS</code> is defined which contains list of files found that compose the CMSIS core. Only files named according to CMSIS specs are detected. These files are not handled automatically, rather it is the integrator's task to handle them in a way the vendor SDK is designed to do. </li>
-</ul>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">extern</span> <span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> __syscall_start;</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">extern</span> <span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> __syscall_end;</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> * os_syscalls_start(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keywordflow">return</span> &amp;__syscall_start;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>}</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> * os_syscalls_end(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordflow">return</span> &amp;__syscall_end;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>}</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define REGISTER_SYSCALLS(...) \</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">static SYSCALL_DEFINITION struct Syscall_Entry_t syscalls_ ## __COUNTER__[] = { __VA_ARGS__ }</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="ttc" id="astructSyscall__Entry__t_html"><div class="ttname"><a href="structSyscall__Entry__t.html">Syscall_Entry_t</a></div><div class="ttdoc">Entry in syscall table.</div><div class="ttdef"><b>Definition</b> syscall.h:31</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_f4f836dbb47c7c2a6355e2b51fb79a34.html">arch</a></li><li class="navelem"><a class="el" href="dir_0bc241ef12895fab207e0a67b6bfe3d2.html">arm</a></li><li class="navelem"><a class="el" href="dir_c5c3670afafcac96a569e3a8cec95dc1.html">cmsis</a></li><li class="navelem"><a class="el" href="dir_a73f0409a4bca182b6a36ab1f0de8f66.html">arch</a></li><li class="navelem"><b>syscall.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
