@@ -1,7 +1,7 @@
 var group__os__syscall =
 [
     [ "___SVC", "group__os__syscall.html#gae074ff178f562a3742a23bdd56e08122", null ],
-    [ "__SVC", "group__os__syscall.html#ga7b1388f7bd14b83bd3f8f773fbf3375b", null ],
+    [ "__SVC", "group__os__syscall.html#gaf741b6307278209709f17275ed53ba82", null ],
     [ "__SYSCALL", "group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340", null ],
     [ "SYSCALL_DEFINITION", "group__os__syscall.html#ga8c3ef3b8ba8d29b49370620dc656c3b7", null ],
     [ "Syscall_Handler_t", "group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf", null ],

@@ -11,7 +11,7 @@ var searchData=
   ['_5f_5fos_5fthread_5fcreate_8',['__os_thread_create',['../group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195',1,'sched.c']]],
   ['_5f_5fset_5flr_9',['__set_LR',['../group__arch__arm__cortex.html#ga3b996e99f9bcb08dc8219e0e21806769',1,'cortex.h']]],
   ['_5f_5fspacer_10',['__spacer',['../structExceptionFrameFP.html#ad74420b90caa350c80646833ca07a777',1,'ExceptionFrameFP']]],
-  ['_5f_5fsvc_11',['__SVC',['../group__os__syscall.html#ga7b1388f7bd14b83bd3f8f773fbf3375b',1,'sysenter.h']]],
+  ['_5f_5fsvc_11',['__SVC',['../group__os__syscall.html#gaf741b6307278209709f17275ed53ba82',1,'sysenter.h']]],
   ['_5f_5fsyscall_12',['__SYSCALL',['../group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340',1,'sysenter.h']]],
   ['_5f_5fthread_5fcreate_5fend_13',['__thread_create_end',['../group__arch__arm__static.html#ga37a6f5b096d4a2034b067d73b5570640',1,'static.c']]],
   ['_5f_5fthread_5fcreate_5fstart_14',['__thread_create_start',['../group__arch__arm__static.html#ga3fa4519144a8f937ee0d04cce8d90211',1,'static.c']]],

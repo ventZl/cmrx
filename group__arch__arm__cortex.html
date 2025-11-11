@@ -416,7 +416,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieve address of n-th argument from exception frame. </p>
-<p>This function calculates address of n-th argument of function call from exception frame. This is used whenever it is known, that exception frame was stored as an effect of <a class="el" href="group__os__syscall.html#ga7b1388f7bd14b83bd3f8f773fbf3375b" title="Perform syscall.">__SVC()</a> call. It will automatically handle exception frame padding. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This function calculates address of n-th argument of function call from exception frame. This is used whenever it is known, that exception frame was stored as an effect of <a class="el" href="group__os__syscall.html#gaf741b6307278209709f17275ed53ba82" title="Perform syscall.">__SVC()</a> call. It will automatically handle exception frame padding. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">frame</td><td>exception frame base address (usually value of SP) </td></tr>
     <tr><td class="paramname">argno</td><td>number of argument retrieved </td></tr>
@@ -468,7 +468,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieve value of exception frame function call argument. </p>
-<p>Retrieves value of n-th argument of function call calling <a class="el" href="group__os__syscall.html#ga7b1388f7bd14b83bd3f8f773fbf3375b" title="Perform syscall.">__SVC()</a> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Retrieves value of n-th argument of function call calling <a class="el" href="group__os__syscall.html#gaf741b6307278209709f17275ed53ba82" title="Perform syscall.">__SVC()</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">frame</td><td>exception frame base address </td></tr>
     <tr><td class="paramname">argno</td><td>number of argument retrieved </td></tr>

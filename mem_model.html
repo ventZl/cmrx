@@ -115,10 +115,10 @@ Static variables region</h2>
 Shared variables region</h2>
 <p>This region is composed of variables defined in compilation units belonging to some specific process, which has their definition prefixed by keyword <code>SHARED</code>. Doing so will relocate given variable into shared region. Under normal conditions, access rules to shared variables are same as for static variables. All the code of all compilation units belonging to the owning process can access all the shared variables.</p>
 <p>The situation changes, when a <a class="el" href="rpc_intro.html">Remote Procedure Calls</a> is performed. While remote procedure call is in flight, called procedure has access to shared memory of calling process. This is effectively the only way of passing larger amount of data between processes.</p>
-<h2><a class="anchor" id="autotoc_md28"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 Stack</h2>
 <p>Stack is automatically allocated for each and every thread running in system. Stack is thread-private and even no two threads of same process cant access each other's stack. Stack is automatically reclaimed by the kernel, once thread ends.</p>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 Memory-mapped IO</h2>
 <p>There is one region, which is custom-defined by the process designer. Common use case of this region happens, when the process is a device driver of some kind and needs to access the hardware directly. As device drivers are just userspace processess in microkernel world, any such process needs to gain access to memory region which allows control of given peripheral. </p>
 </div></div><!-- contents -->
