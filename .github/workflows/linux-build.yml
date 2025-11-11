@@ -1,4 +1,4 @@
-name: 'Build: rp2040'
+name: 'Build: Linux'
 on:
   push:
     branches: [ master ]
