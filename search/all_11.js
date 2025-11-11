@@ -3,7 +3,7 @@ var searchData=
   ['objects_20services_0',['RPC objects (services)',['../group__api__rpc.html#api_rpc_objects',1,'']]],
   ['of_20cmrx_20port_1',['Anatomy of CMRX port',['../group__arch__arch.html#anatomy',1,'']]],
   ['of_20rpc_20interfaces_2',['Implementation of RPC interfaces',['../group__api__rpc.html#api_rpc_implementation',1,'']]],
-  ['of_20rpc_20mechanism_3',['of rpc mechanism',['../rpc_intro.html#autotoc_md47',1,'Advantages of RPC mechanism'],['../rpc_intro.html#autotoc_md31',1,'High level design of RPC mechanism']]],
+  ['of_20rpc_20mechanism_3',['of rpc mechanism',['../rpc_intro.html#autotoc_md49',1,'Advantages of RPC mechanism'],['../rpc_intro.html#autotoc_md33',1,'High level design of RPC mechanism']]],
   ['of_20the_20code_4',['Organization of the Code',['../dev_code_organization.html',1,'overview']]],
   ['old_5fhost_5fprocess_5',['old_host_process',['../structOS__scheduling__context__t.html#aaf7a388185d2c43369ea6a4406bbc328',1,'OS_scheduling_context_t']]],
   ['old_5fparent_5fprocess_6',['old_parent_process',['../structOS__scheduling__context__t.html#aa6dc648f2190e10113c57f41de97e2f4',1,'OS_scheduling_context_t']]],
