@@ -112,14 +112,14 @@ Modules</h2></td></tr>
 <tr class="memitem:group__arch__arm" id="r_group__arch__arm"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm.html">ARM port</a></td></tr>
 <tr class="memdesc:group__arch__arm"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documentation for the ARM Cortex-M architecture port of the CMRX. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__arch__arch" id="r_group__arch__arch"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html">Porting layer</a></td></tr>
-<tr class="memdesc:group__arch__arch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Description of CMRX porting layer. <br /></td></tr>
+<tr class="memitem:group__arch__arch" id="r_group__arch__arch"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html">Abstract machine</a></td></tr>
+<tr class="memdesc:group__arch__arch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Description of CMRX abstract machine. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Layer containing bits that are specific to each supported architecture. </p>
 <p>Most of the kernel is written in platform-independent style. Still this platform-indepentent kernel has to have architecture support layer that does the low level work. Here is the documentation of these parts.</p>
-<p>Section <a class="el" href="group__arch__arch.html">Porting layer</a> documents the API you have to provide if you want to port CMRX to a new architecture. This usually translates to new <b>CPU</b> architecture as different platforms using some already supported CPU don't need kernel to be ported again.</p>
+<p>Section <a class="el" href="group__arch__arch.html">Abstract machine</a> documents the API you have to provide if you want to port CMRX to a new architecture. This usually translates to new <b>CPU</b> architecture as different platforms using some already supported CPU don't need kernel to be ported again.</p>
 <p>Other sections describe port(s) already done.</p>
 <p>Architecture layer linked to the kernel depends on setting of CMake variable CMRX_ARCH. The architecture layer updates the <code>os</code> target to provide portions which are necessary to support desired architecture. </p>
 </div><!-- contents -->
