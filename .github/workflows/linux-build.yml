@@ -1,0 +1,36 @@
+name: 'Build: Linux'
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-project:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout Test Sources
+       uses: actions/checkout@v4.1.6
+       with:
+         repository: ventZl/cmrx-integration-tests
+         submodules: 'false'
+
+     - name: Checkout Latest CMRX Kernel
+       uses: actions/checkout@v4.1.6
+       with:
+         repository: ventZl/cmrx
+         path: linux-posix/cmrx
+         submodules: 'false'
+
+     - name: Configure Integration Test Build
+       uses: threeal/cmake-action@main
+       with:
+        run-build: false
+        source-dir: linux-posix
+        build-dir: build
+        args: -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug
+
+     - name: Pre-build Integration Test
+       run: make -C build
+       continue-on-error: true
+
+     - name: Build Integration Test
+       run: make -C build
