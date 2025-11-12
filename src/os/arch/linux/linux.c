@@ -146,9 +146,10 @@ static unsigned syscalls_count = 0;
 
 void cmrx_posix_register_syscalls(struct Syscall_Entry_t * added_syscalls)
 {
-    while (added_syscalls->handler != 0 && added_syscalls->id != 0 )
+    while (!(added_syscalls->handler == 0 && added_syscalls->id == 0))
     {
         syscalls[syscalls_count++] = *added_syscalls;
+        added_syscalls++;
     }
 }
 
