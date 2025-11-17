@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['timerentry_5ft_0',['TimerEntry_t',['../structTimerEntry__t.html',1,'']]],
-  ['timeval_1',['timeval',['../structtimeval.html',1,'']]],
-  ['tracebuffer_2',['TraceBuffer',['../structTraceBuffer.html',1,'']]],
-  ['traceevent_3',['TraceEvent',['../structTraceEvent.html',1,'']]]
+  ['thread_5fstartup_5ft_0',['thread_startup_t',['../structthread__startup__t.html',1,'']]],
+  ['timerentry_5ft_1',['TimerEntry_t',['../structTimerEntry__t.html',1,'']]],
+  ['timeval_2',['timeval',['../structtimeval.html',1,'']]],
+  ['tracebuffer_3',['TraceBuffer',['../structTraceBuffer.html',1,'']]],
+  ['traceevent_4',['TraceEvent',['../structTraceEvent.html',1,'']]]
 ];

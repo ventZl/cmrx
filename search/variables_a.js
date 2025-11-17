@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['magic_0',['magic',['../structTraceBuffer.html#a957af347ebb9d920d5fc281bd1053530',1,'TraceBuffer']]],
-  ['most_5frecent_5fevent_1',['most_recent_event',['../structTraceBuffer.html#acdf3d964b3934ca6f39d22ecfdc0ef53',1,'TraceBuffer']]],
-  ['mpu_5fregions_2',['mpu_regions',['../structOS__process__definition__t.html#ace13b242a85ec9b654965d72b9249e69',1,'OS_process_definition_t']]]
+  ['last_5fpossible_5fevent_0',['last_possible_event',['../structTraceBuffer.html#a313796a790d9cc8da37d771f6b0a34b0',1,'TraceBuffer']]],
+  ['lr_1',['lr',['../structExceptionFrame.html#a00f9fffab2003c92039309a634072c93',1,'ExceptionFrame::lr'],['../structExceptionFrameFP.html#ae7fe95c677298cd9a968dcf66a3e213d',1,'ExceptionFrameFP::lr']]]
 ];

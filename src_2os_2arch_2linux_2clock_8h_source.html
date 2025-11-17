@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: src/os/arch/linux/linux.h Source File</title>
+<title>C Microkernel Realtime eXecutive: src/os/arch/linux/clock.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('linux_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('src_2os_2arch_2linux_2clock_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,35 +98,21 @@ $(document).ready(function(){initNavTree('linux_8h_source.html',''); initResizab
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">linux.h</div></div>
+  <div class="headertitle"><div class="title">clock.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;kernel/runtime.h&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="structthread__startup__t.html">   15</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structthread__startup__t.html">thread_startup_t</a> {</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="structthread__startup__t.html#a4e44b485c73e604a85fe405701699408">   16</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structthread__startup__t.html#a4e44b485c73e604a85fe405701699408">thread_id</a>;              </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structthread__startup__t.html#af408ca9ec762445637e4d587b74642f0">   17</a></span>    entrypoint_t * <a class="code hl_variable" href="structthread__startup__t.html#af408ca9ec762445637e4d587b74642f0">entry_point</a>; </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="structthread__startup__t.html#acb49e240395d272cf764f713f10041f7">   18</a></span>    <span class="keywordtype">void</span> * <a class="code hl_variable" href="structthread__startup__t.html#acb49e240395d272cf764f713f10041f7">entry_arg</a>;           </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
-</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__linux__impl.html#ga883fd2b09ba21d087075a822d98158a4">trigger_pendsv_if_needed</a>();</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="ttc" id="agroup__arch__linux__impl_html_ga883fd2b09ba21d087075a822d98158a4"><div class="ttname"><a href="group__arch__linux__impl.html#ga883fd2b09ba21d087075a822d98158a4">trigger_pendsv_if_needed</a></div><div class="ttdeci">void trigger_pendsv_if_needed()</div><div class="ttdoc">Initiate thread switch sequence if it was requested.</div><div class="ttdef"><b>Definition</b> linux.c:81</div></div>
-<div class="ttc" id="astructthread__startup__t_html"><div class="ttname"><a href="structthread__startup__t.html">thread_startup_t</a></div><div class="ttdoc">Internal thread startup data structure.</div><div class="ttdef"><b>Definition</b> linux.h:15</div></div>
-<div class="ttc" id="astructthread__startup__t_html_a4e44b485c73e604a85fe405701699408"><div class="ttname"><a href="structthread__startup__t.html#a4e44b485c73e604a85fe405701699408">thread_startup_t::thread_id</a></div><div class="ttdeci">int thread_id</div><div class="ttdoc">CMRX thread ID.</div><div class="ttdef"><b>Definition</b> linux.h:16</div></div>
-<div class="ttc" id="astructthread__startup__t_html_acb49e240395d272cf764f713f10041f7"><div class="ttname"><a href="structthread__startup__t.html#acb49e240395d272cf764f713f10041f7">thread_startup_t::entry_arg</a></div><div class="ttdeci">void * entry_arg</div><div class="ttdoc">argument to the entry function</div><div class="ttdef"><b>Definition</b> linux.h:18</div></div>
-<div class="ttc" id="astructthread__startup__t_html_af408ca9ec762445637e4d587b74642f0"><div class="ttname"><a href="structthread__startup__t.html#af408ca9ec762445637e4d587b74642f0">thread_startup_t::entry_point</a></div><div class="ttdeci">entrypoint_t * entry_point</div><div class="ttdoc">thread entry function as CMRX userspace sees it</div><div class="ttdef"><b>Definition</b> linux.h:17</div></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__linux__timing.html#ga74573251c13c5718ef5ecce89db72430">sigalrm_handler</a>(<span class="keywordtype">int</span> signo);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="ttc" id="agroup__arch__linux__timing_html_ga74573251c13c5718ef5ecce89db72430"><div class="ttname"><a href="group__arch__linux__timing.html#ga74573251c13c5718ef5ecce89db72430">sigalrm_handler</a></div><div class="ttdeci">void sigalrm_handler(int signo)</div><div class="ttdoc">Timer handler.</div><div class="ttdef"><b>Definition</b> clock.c:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_f4f836dbb47c7c2a6355e2b51fb79a34.html">arch</a></li><li class="navelem"><a class="el" href="dir_2be9baecef342b8b8c87f53c9fec8927.html">linux</a></li><li class="navelem"><b>linux.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_f4f836dbb47c7c2a6355e2b51fb79a34.html">arch</a></li><li class="navelem"><a class="el" href="dir_2be9baecef342b8b8c87f53c9fec8927.html">linux</a></li><li class="navelem"><b>clock.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

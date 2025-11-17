@@ -1,16 +1,12 @@
 var searchData=
 [
-  ['sched_5fmicrotime_0',['sched_microtime',['../group__os__sched.html#ga6611cb1ff80f54abebb06a818d0a1ce2',1,'sched.c']]],
-  ['sched_5ftick_5fincrement_1',['sched_tick_increment',['../group__os__sched.html#ga575ede15b4fe0a42c29b7167d0822745',1,'sched.c']]],
-  ['send_2',['send',['../structQueueInterface.html#a4ff121beeea33992a2e1eebab4a65a72',1,'QueueInterface']]],
-  ['set_5fnotify_3',['set_notify',['../structComSourceVMT.html#aca6266264577e2f6e2c8e6dfcacc461e',1,'ComSourceVMT::set_notify'],['../structComChannelVMT.html#a12120a6d16294b9092756a5dfa3623c0',1,'ComChannelVMT::set_notify']]],
-  ['signal_5fhandler_4',['signal_handler',['../structOS__thread__t.html#a6e3cdaf8f549f44f9dbbb9450c00fe67',1,'OS_thread_t']]],
-  ['signals_5',['signals',['../structOS__thread__t.html#a07cea510f30eafa336c112e630cb2542',1,'OS_thread_t']]],
-  ['sleep_5ffrom_6',['sleep_from',['../structTimerEntry__t.html#a95a419fabe89c0d94edd540788e48e96',1,'TimerEntry_t']]],
-  ['sleepers_7',['sleepers',['../group__os__timer.html#gaa0e811d6349480297cbad82c700077de',1,'timer.c']]],
-  ['sp_8',['sp',['../structOS__thread__t.html#a402b571dc6672000a6f56eccff94b78e',1,'OS_thread_t']]],
-  ['stack_5fid_9',['stack_id',['../structOS__thread__t.html#a7ea5132f358b5e6003cf6c480b1f9177',1,'OS_thread_t']]],
-  ['stacks_10',['stacks',['../structOS__stack__t.html#ac64b6bed80c0329e43aba6903453ed95',1,'OS_stack_t']]],
-  ['start_11',['start',['../structOS__MPU__region.html#a0642cc60aaf53cce8d66b4070802b19e',1,'OS_MPU_region']]],
-  ['state_12',['state',['../structfutex__t.html#acf924c6402369f5b0479148d65d9a306',1,'futex_t::state'],['../structOS__thread__t.html#a3316dfeb2de5d7b03f7e0f6842f7c256',1,'OS_thread_t::state']]]
+  ['r0123_0',['r0123',['../structExceptionFrame.html#a3f8e2361eacf1838e304497c12883da1',1,'ExceptionFrame::r0123'],['../structExceptionFrameFP.html#ab0623dfdfa5d4742afab579c5248154b',1,'ExceptionFrameFP::r0123']]],
+  ['r12_1',['r12',['../structExceptionFrame.html#af04a8ef4941698926515527bf3ce1c40',1,'ExceptionFrame::r12'],['../structExceptionFrameFP.html#ab3d47592ac653c5e74dcaa933e0ed640',1,'ExceptionFrameFP::r12']]],
+  ['read_2',['read',['../structComSourceVMT.html#afa8d81d3914e95471ab4d927a5296970',1,'ComSourceVMT::read'],['../structComChannelVMT.html#af92f2222ca758d8c04449c9f7a0e7dab',1,'ComChannelVMT::read']]],
+  ['read_5fcursor_3',['read_cursor',['../structQueue.html#ac72a9f364bebedad5630ba56ef52aa7c',1,'Queue']]],
+  ['readable_5fnotify_4',['readable_notify',['../structComNotificationVMT.html#a011e798d6130972953dd0c45bca156ce',1,'ComNotificationVMT']]],
+  ['ready_5',['ready',['../structComSourceVMT.html#ae225575afd2d840418a51c1d93d497a0',1,'ComSourceVMT::ready'],['../structComChannelVMT.html#a38ab70634468ed478c2827397d2ac816',1,'ComChannelVMT::ready']]],
+  ['receive_6',['receive',['../structQueueInterface.html#a381a76c9615f0a71569daea71af31f49',1,'QueueInterface']]],
+  ['rpc_5finterface_7',['rpc_interface',['../structOS__process__definition__t.html#a60479915c51d1fceacf4ea6ca72cb415',1,'OS_process_definition_t']]],
+  ['rpc_5fstack_8',['rpc_stack',['../structOS__thread__t.html#ac38a8ca09c98ad92cecefcd716534920',1,'OS_thread_t']]]
 ];

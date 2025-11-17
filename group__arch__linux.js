@@ -1,0 +1,31 @@
+var group__arch__linux =
+[
+    [ "Implementation details", "group__arch__linux__impl.html", "group__arch__linux__impl" ],
+    [ "Linux timing provider", "group__arch__linux__timing.html", "group__arch__linux__timing" ],
+    [ "thread_startup_t", "structthread__startup__t.html", [
+      [ "entry_arg", "structthread__startup__t.html#acb49e240395d272cf764f713f10041f7", null ],
+      [ "entry_point", "structthread__startup__t.html#af408ca9ec762445637e4d587b74642f0", null ],
+      [ "thread_id", "structthread__startup__t.html#a4e44b485c73e604a85fe405701699408", null ]
+    ] ],
+    [ "CMRX_APPLICATION_INSTANCE_CONSTRUCTOR", "group__arch__linux.html#gae33886ca29f6dc847f8103f69a8e424d", null ],
+    [ "CMRX_THREAD_AUTOCREATE_CONSTRUCTOR", "group__arch__linux.html#ga750bda6ec872a28db4ac92c1d1516a5a", null ],
+    [ "mpu_init_stack", "group__arch__linux.html#gad1e98b6b913a67b51e041e4e9002a399", null ],
+    [ "mpu_restore", "group__arch__linux.html#gaccaca933ccccec5a6f6808252b4a5fbc", null ],
+    [ "os_boot_thread", "group__arch__linux.html#ga1efbfe606317fd469d8fc187a4cb9a79", null ],
+    [ "os_init_arch", "group__arch__linux.html#gaa60b9768d8ca80f05db8e96e43845ccf", null ],
+    [ "os_kernel_shutdown", "group__arch__linux.html#ga6e29c6b6f3e6e761c076a0b28490da0e", null ],
+    [ "os_memory_protection_start", "group__arch__linux.html#ga2b816407f1b57d532407988a5da92716", null ],
+    [ "os_memory_protection_stop", "group__arch__linux.html#gad478154133b190e328ee2cd65a4a8b20", null ],
+    [ "os_process_create", "group__arch__linux.html#ga770860e52c205dc2a7e865b80b0fca11", null ],
+    [ "os_request_context_switch", "group__arch__linux.html#ga8b1827c66da610023e93a6ad404bd38f", null ],
+    [ "os_rpc_call", "group__arch__linux.html#ga9ee8f29f3009ad125af02a612603504f", null ],
+    [ "os_rpc_return", "group__arch__linux.html#ga2b0268c1c8ecd0d6e3194f0f52be350c", null ],
+    [ "os_set_syscall_return_value", "group__arch__linux.html#gabb3070fe93f5997763b5685b81288f5c", null ],
+    [ "os_syscalls_end", "group__arch__linux.html#ga4bb936343b653311d18d5cdb82f4cc0d", null ],
+    [ "os_syscalls_start", "group__arch__linux.html#ga245830d9d288050516b91c0d89fd920d", null ],
+    [ "os_thread_initialize_arch", "group__arch__linux.html#ga22edc1a4b8311885fceefba6b73f77af", null ],
+    [ "static_init_process_count", "group__arch__linux.html#gad4128fe30c4eef560ae2dc025e89abf2", null ],
+    [ "static_init_process_table", "group__arch__linux.html#ga40ff64621b791a06874bb7ca27a9164e", null ],
+    [ "static_init_thread_count", "group__arch__linux.html#gaa1e4c4f6735a5acd050873acdb00cdbf", null ],
+    [ "static_init_thread_table", "group__arch__linux.html#gab06a63362ae820b797a3bf0b1c6386a0", null ]
+];

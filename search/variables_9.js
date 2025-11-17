@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['last_5fpossible_5fevent_0',['last_possible_event',['../structTraceBuffer.html#a313796a790d9cc8da37d771f6b0a34b0',1,'TraceBuffer']]],
-  ['lr_1',['lr',['../structExceptionFrame.html#a00f9fffab2003c92039309a634072c93',1,'ExceptionFrame::lr'],['../structExceptionFrameFP.html#ae7fe95c677298cd9a968dcf66a3e213d',1,'ExceptionFrameFP::lr']]]
+  ['kernel_5fexecute_5fthread_5fswitch_0',['kernel_execute_thread_switch',['../group__arch__linux__impl.html#gaf755bea0ee650e391e9ae2775b7131f4',1,'linux.c']]],
+  ['kernel_5fthread_1',['kernel_thread',['../group__arch__linux__impl.html#gade1193dcfcd53b9f7595339abce5a551',1,'linux.c']]]
 ];

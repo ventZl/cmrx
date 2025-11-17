@@ -1,7 +1,10 @@
 var group__arch__arch =
 [
     [ "Arch_State_t", "structArch__State__t.html", [
-      [ "thread_context", "structArch__State__t.html#ae82fe2bd37f3d2fdd3211271cea241bc", null ]
+      [ "block_pipe", "structArch__State__t.html#ad935c55237c6bbd29aaeace9615fafda", null ],
+      [ "is_suspended", "structArch__State__t.html#acae038fb3118503f8892f30f98662804", null ],
+      [ "sched_thread", "structArch__State__t.html#ab8b71a1cc792a6c50c15fc5f9b0857e3", null ],
+      [ "sched_thread_id", "structArch__State__t.html#a2bf7d26220c2bde068cf67f469a3082e", null ]
     ] ],
     [ "coreid", "group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345", null ],
     [ "mpu_init_stack", "group__arch__arch.html#gad1e98b6b913a67b51e041e4e9002a399", null ],
