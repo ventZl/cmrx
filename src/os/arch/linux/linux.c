@@ -9,18 +9,86 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <string.h>
+#include <threads.h>
+#include <pthread.h>
+#include <assert.h>
+#include "linux.h"
+#include "clock.h"
 
-ucontext_t kernel_context;
-volatile bool kernel_execute_thread_switch = false;
+/** @defgroup arch_linux_impl Implementation details
+ * @ingroup arch_linux
+ *
+ * This group contains platform-specific routines that implement
+ * internal behavior of this port.
+ *
+ * Each CMRX thread is backed by one Linux thread. CMRX kernel is using
+ * signals and blocking syscalls to enforce preemption on threads.
+ *
+ * Internally the architecture of the port is similar to the ARM Cortex-M
+ * one. Kernel is using timers "interrupt" and "thread switch interrupt".
+ * These "interrupts" are serviced by kernel thread synchronously, so they
+ * never preempt each other. This makes sure that threads are never
+ * switched while inside syscall.
+ * @{
+ */
 
+/** Current CMRX thread ID
+ *
+ * This is a thread-local variable, so each thread has its own copy
+ * It contains CMRX thread ID of the current Linux thread
+ */
+__thread int current_thread_id = -1;
+
+/** Shall thread switch be performed?
+ * While kernel timer is called periodically, it doesn't perform
+ * thread switch inside the handler. Rather it schedules thread
+ * switch interrupt which is then executed synchronously by the
+ * "kernel" thread.
+ * This flag holds information if this thread switch should be
+ * requested or not. Due to the semantics of CMRX it is possible
+ * that this flag will be activated and then deactivated before
+ * thread switch happens (e.g. because interrupt caused thread
+ * wakeup before thread managed to be scheduled out of CPU).
+ */
+static volatile bool kernel_execute_thread_switch = false;
+
+/** ID of the kernel thread.
+ *
+ * It contains Pthread thread ID of where kernel syscalls are handled.
+ * This is used to dispatch emulated interrupts.
+ */
+static pthread_t kernel_thread;
+
+/** List of registered syscalls.
+ *
+ * This list contains syscall definitions that were registered with
+ * kernel. The registration happens automatically if @ref REGISTER_SYSCALLS
+ * macro was used.
+ */
+static struct Syscall_Entry_t syscalls[256] = { 0 };
+/** Counter for known syscalls.
+ * This counter holds amount of syscalls known to the kernel.
+ * @note This does not relate to syscall number, where highest syscall number
+ * may be higher than this count. It should never be lower though.
+ */
+static unsigned syscalls_count = 0;
+
+/** Trigger thread switch if requested.
+ *
+ * Triggers thread switch interrupt if requested and clears the flag.
+ */
 void trigger_pendsv_if_needed()
 {
     if (kernel_execute_thread_switch)
     {
-        raise(SIGUSR1);
+        pthread_kill(kernel_thread, SIGUSR1);
+        kernel_execute_thread_switch = false;
     }
 }
 
+/** Entrypoint into system call machinery.
+ */
 int system_call_entrypoint(unsigned long arg0,
                             unsigned long arg1,
                             unsigned long arg2,
@@ -29,70 +97,250 @@ int system_call_entrypoint(unsigned long arg0,
                             unsigned long arg5,
                             unsigned char syscall_id)
 {
+    (void) arg4;
+    (void) arg5;
+
     int rv = os_system_call(arg0, arg1, arg2, arg3, syscall_id);
     trigger_pendsv_if_needed();
     return rv;
 }
 
-void PendSV_Handler(int signo, siginfo_t *info, void *context)
+/** This function handles the heavy lifting of thread switching.
+ *
+ * It dispatches signal to the running thread which makes it pause.
+ * Then another thread is woken-up by unblocking it.
+ */
+void thread_switch_handler(int signo)
 {
+    (void) signo;
+
     struct OS_core_state_t * cpu_state = &core[coreid()];
 
     if (os_threads[cpu_state->thread_current].state == THREAD_STATE_RUNNING)
     {
+        // actually stop the thread here
+        pthread_kill(os_threads[cpu_state->thread_current].arch.sched_thread_id, SIGUSR2);
+
         // only mark leaving thread as ready, if it was runnig before
         // if leaving thread was, for example, quit before calling
         // os_sched_yield, then this would return it back to life
         os_threads[cpu_state->thread_current].state = THREAD_STATE_READY;
     }
 
-    	cpu_state->thread_current = cpu_state->thread_next;
+    cpu_state->thread_current = cpu_state->thread_next;
 
-        os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
+    // unblock resumed thread now
+    char byte = 0;
+    os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
+    write(os_threads[cpu_state->thread_current].arch.block_pipe[1], &byte, 1);
 
-    printf("Switching into thread %d...", cpu_state->thread_current);
-    int rv = setcontext(&(os_threads[cpu_state->thread_current].arch.thread_context));
-    printf("%d\n", rv);
 }
 
-void os_init_arch(void)
+/** Thread stopping/resuming handler.
+ *
+ * This function handles stopping and restarting the thread without
+ * thread cooperating voluntarily in the action. It does so by installing
+ * itself as a signal handler. If signal is sent which causes this handler
+ * to be activated, then this function blocks on a read on thread's private
+ * pipe.
+ *
+ * When something is written into the pipe, then this handler unblocks and
+ * normal thread operation is resumed.
+ */
+void thread_preempt_handler(int signo, siginfo_t *info, void * context)
 {
-    getcontext(&kernel_context);
+    (void) signo;
+    (void) info;
+    (void) context;
 
-    struct sigaction act = { 0 };
-    act.sa_flags = SA_SIGINFO;
-    act.sa_sigaction = &PendSV_Handler;
+    assert(current_thread_id != -1);
+    char byte;
+    // This is the synchronization point, thread is forced to wait
+    read(os_threads[current_thread_id].arch.block_pipe[0], &byte, 1);
 
-    sigaction(SIGUSR1, &act, NULL);
+    // At this point the thread was resumed!
+    os_threads[current_thread_id].arch.is_suspended = 0;
 }
 
-void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size, entrypoint_t * entrypoint, void * data)
+/** Routine to jump-start guest thread host.
+ *
+ * This routine will configure the Linux thread to act as a host
+ * for CMRX thread. We don't want '
+ * This is a Linux thread that hosts guest thread.
+ * We don't want these threads to process timer signals.
+ * These are basically ever only sensitive to SIGUSR1 which
+ * is used to force preemption.
+ */
+int thread_startup_handler(void * arg)
 {
-    uint32_t * stack = os_stack_get(thread->stack_id);
-    thread->sp = stack; //&stack[stack_size - 16];
+    struct thread_startup_t * startup_data = (struct thread_startup_t *) arg;
+    assert(startup_data != NULL);
+    assert(startup_data->thread_id >= 0 && startup_data->thread_id <= OS_THREADS);
 
-    getcontext(&thread->arch.thread_context);
-    thread->arch.thread_context.uc_link = &kernel_context;
-    thread->arch.thread_context.uc_stack.ss_sp = thread->sp;
-    thread->arch.thread_context.uc_stack.ss_size = OS_STACK_SIZE;
-    makecontext(&thread->arch.thread_context, (void (*)()) entrypoint, 1, data);
+    current_thread_id = startup_data->thread_id;
+
+    os_threads[current_thread_id].arch.sched_thread_id = pthread_self();
+
+    // Perform initial thread block, so we can create all threads up and front
+    // without having any of them being actually executed
+    char byte;
+    read(os_threads[current_thread_id].arch.block_pipe[0], &byte, 1);
+
+    int thread_rv = startup_data->entry_point(startup_data->entry_arg);
+    free(startup_data);
+
+    return thread_rv;
 }
 
-int os_process_create(Process_t process_id, const struct OS_process_definition_t * definition)
+/** Register syscall with kernel.
+ *
+ * The call to this function is arranged by each block where
+ * syscalls are defined. It registers all syscalls provided in
+ * syscall registration request.
+ *
+ * This function is called during constructor phase, before
+ * main was executed.
+ */
+void cmrx_posix_register_syscalls(struct Syscall_Entry_t * added_syscalls)
 {
-    return 0;
-}
-
-__attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread)
-{
-    setcontext(&(os_threads[boot_thread].arch.thread_context));
-    while (1)
+    while (!(added_syscalls->handler == 0 && added_syscalls->id == 0))
     {
-        sleep(1);
-        printf("Wadda wadda\n");
+        syscalls[syscalls_count++] = *added_syscalls;
+        added_syscalls++;
     }
 }
 
+/**
+ * @}
+ */
+
+/** @ingroup arch_linux
+ * @{
+ */
+
+/** Configure Linux architecture behavior.
+ * We will use SIGUSR1 handler as a machinery to actually switch threads.
+ * This routine will find the next thread, pause current one and then restart the other.
+ *
+ * The SIGUSR2 handler serves the purpose of forcing the thread to cooperate
+ * on thread switching. Whenever a thread is commanded SIGUSR2, it will enter waiting
+ * and will remain waiting until there is a command to resume execution.
+ *
+ * This is the next best thing that can be done in order to simulate thread scheduling.
+ */
+void os_init_arch(void)
+{
+    struct sigaction pendsv_emulation = { 0 };
+    sigemptyset(&pendsv_emulation.sa_mask);
+    pendsv_emulation.sa_flags = 0;
+    pendsv_emulation.sa_handler = &thread_switch_handler;
+
+    struct sigaction thread_preemption = { 0 };
+    sigemptyset(&thread_preemption.sa_mask);
+    thread_preemption.sa_flags = SA_SIGINFO;
+    thread_preemption.sa_sigaction = &thread_preempt_handler;
+
+    if (sigaction(SIGUSR1, &pendsv_emulation, NULL) != 0)
+    {
+        perror("Unable to install SIGUSR1 handler: ");
+        abort();
+    }
+
+    if (sigaction(SIGUSR2, &thread_preemption, NULL) != 0)
+    {
+        perror("Unable to install SIGUSR2 handler: ");
+        abort();
+    }
+
+    sigset_t set;
+
+    /* We want to receive SIGALRM and SIGUSR1 synchronously
+     * in the main thread. SIGUSR2 will ever only be sent to
+     * the specific thread to suspend it.
+     */
+    sigemptyset(&set);
+    sigaddset(&set, SIGALRM);
+    sigaddset(&set, SIGUSR1);
+    pthread_sigmask(SIG_BLOCK, &set, NULL);
+
+    kernel_thread = pthread_self();
+}
+
+/** Perform platform-specific initialization of thread.
+ *
+ * This will initialize facilities for thread synchronization.
+ * Here we will create pipe pair used to block the thread
+ * on external request and the Linux thread is created for the
+ * CMRX thread.
+ */
+void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size, entrypoint_t * entrypoint, void * data)
+{
+    (void) stack_size;
+
+    uint32_t * stack = os_stack_get(thread->stack_id);
+    thread->sp = stack; //&stack[stack_size - 16];
+
+    int rv = pipe(thread->arch.block_pipe);
+    assert(rv == 0);
+
+    struct thread_startup_t * startup_data = malloc(sizeof(struct thread_startup_t));
+    memset(startup_data, 0, sizeof(struct thread_startup_t));
+    startup_data->thread_id = thread - os_threads;
+    startup_data->entry_point = entrypoint;
+    startup_data->entry_arg = data;
+    rv = thrd_create(&thread->arch.sched_thread, &thread_startup_handler, startup_data);
+    assert(rv == thrd_success);
+}
+
+/** Platform-specific way of initializing threads.
+ * Nothing is done here. No special facilities for
+ * processes in this port.
+ */
+int os_process_create(Process_t process_id, const struct OS_process_definition_t * definition)
+{
+    (void) process_id;
+    (void) definition;
+    return 0;
+}
+
+/** Will unblock the boot thread.
+ *
+ * Unblock the boot thread. Then this function continues listening for
+ * signals for timer and thread switching requests.
+ */
+__attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread)
+{
+    char byte;
+    write(os_threads[boot_thread].arch.block_pipe[1], &byte, 1);
+
+    while (1)
+    {
+        int sig_caught;
+        sigset_t set;
+        sigemptyset(&set);
+        sigaddset(&set, SIGALRM);
+        sigaddset(&set, SIGUSR1);
+        sigwait(&set, &sig_caught);
+        switch (sig_caught) {
+            case SIGALRM:
+                sigalrm_handler(SIGALRM);
+                break;
+
+            case SIGUSR1:
+                thread_switch_handler(SIGUSR1);
+                break;
+
+            default:
+                printf("Unknown signal caught\n");
+                abort();
+                break;
+        }
+    }
+}
+
+/** Set/clear thread switch request flag.
+ * @param activate new value of the flag
+ */
 void os_request_context_switch(bool activate)
 {
     kernel_execute_thread_switch = activate;
@@ -101,28 +349,29 @@ void os_request_context_switch(bool activate)
 
 int os_set_syscall_return_value(Thread_t thread_id, int32_t retval)
 {
+    /* TODO */
     return 0;
 }
 
 void os_memory_protection_start()
 {
-    /* This function intentionally left blank */
+    /* TODO */
 }
 
 void os_memory_protection_stop()
 {
-    /* This function intentionally left blank */
+    /* TODO */
 }
 
 int mpu_restore(const MPU_State * hosted_state, const MPU_State * parent_state)
 {
-    /* This function intentionally left blank */
+    /* TODO */
     return 0;
 }
 
 int mpu_init_stack(int thread_id)
 {
-    /* This function intentionally left blank */
+    /* TODO */
     return 0;
 }
 
@@ -133,24 +382,14 @@ __attribute__((noreturn)) void os_kernel_shutdown()
 
 int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
+    /* TODO */
     return E_NOTAVAIL;
 }
 
 int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
+    /* TODO */
     return E_NOTAVAIL;
-}
-
-static struct Syscall_Entry_t syscalls[256] = { 0 };
-static unsigned syscalls_count = 0;
-
-void cmrx_posix_register_syscalls(struct Syscall_Entry_t * added_syscalls)
-{
-    while (!(added_syscalls->handler == 0 && added_syscalls->id == 0))
-    {
-        syscalls[syscalls_count++] = *added_syscalls;
-        added_syscalls++;
-    }
 }
 
 struct Syscall_Entry_t * os_syscalls_start(void)
