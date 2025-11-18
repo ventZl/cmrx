@@ -2,7 +2,7 @@
 
 #include <kernel/runtime.h>
 
-/** @ingroup arch_linux
+/** @ingroup arch_linux_impl
  * @{
  */
 
@@ -17,6 +17,7 @@ struct thread_startup_t {
     entrypoint_t * entry_point; ///< thread entry function as CMRX userspace sees it
     void * entry_arg;           ///< argument to the entry function
 };
+
 
 /** Initiate thread switch sequence if it was requested.
  * This function will initiate the thread switch sequence.

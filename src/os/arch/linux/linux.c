@@ -88,6 +88,9 @@ void trigger_pendsv_if_needed()
 }
 
 /** Entrypoint into system call machinery.
+ *
+ * This function will fill thread-private buffer for system call data
+ * and will dispatch the system call handler to be called.
  */
 int system_call_entrypoint(unsigned long arg0,
                             unsigned long arg1,
@@ -100,8 +103,18 @@ int system_call_entrypoint(unsigned long arg0,
     (void) arg4;
     (void) arg5;
 
-    int rv = os_system_call(arg0, arg1, arg2, arg3, syscall_id);
-    trigger_pendsv_if_needed();
+    struct syscall_dispatch_t * syscall = &os_threads[current_thread_id].arch.syscall;
+    memset(syscall, 0, sizeof(struct syscall_dispatch_t));
+    syscall->args[0] = arg0;
+    syscall->args[1] = arg1;
+    syscall->args[2] = arg2;
+    syscall->args[3] = arg3;
+    syscall->syscall_id = syscall_id;
+    syscall->retval = E_NOTAVAIL;
+    pthread_kill(kernel_thread, SIGURG);
+    char byte;
+    read(os_threads[current_thread_id].arch.syscall_pipe[0], &byte, 1);
+    int rv = syscall->retval;
     return rv;
 }
 
@@ -160,6 +173,27 @@ void thread_preempt_handler(int signo, siginfo_t *info, void * context)
 
     // At this point the thread was resumed!
     os_threads[current_thread_id].arch.is_suspended = 0;
+}
+
+/** Handler for kernel service call.
+ *
+ * This handler handles kernel syscall execution. The fact that kernel
+ * syscalls are called via this handler makes sure that:
+ * 1. kernel syscall is never interrupted via timer
+ * 2. only one thread is ever inside syscall
+ */
+void kernel_service_handler(int signo)
+{
+    (void) signo;
+    int thread = os_get_current_thread();
+    struct syscall_dispatch_t * syscall = &os_threads[thread].arch.syscall;
+    assert(syscall != NULL);
+
+    syscall->retval = os_system_call(syscall->args[0], syscall->args[1], syscall->args[2], syscall->args[3], syscall->syscall_id);
+
+    trigger_pendsv_if_needed();
+    char byte = 0;
+    write(os_threads[thread].arch.syscall_pipe[1], &byte, 1);
 }
 
 /** Routine to jump-start guest thread host.
@@ -240,6 +274,11 @@ void os_init_arch(void)
     thread_preemption.sa_flags = SA_SIGINFO;
     thread_preemption.sa_sigaction = &thread_preempt_handler;
 
+    struct sigaction kernel_entry = { 0 };
+    sigemptyset(&kernel_entry.sa_mask);
+    kernel_entry.sa_flags = 0;
+    kernel_entry.sa_handler = &kernel_service_handler;
+
     if (sigaction(SIGUSR1, &pendsv_emulation, NULL) != 0)
     {
         perror("Unable to install SIGUSR1 handler: ");
@@ -252,6 +291,12 @@ void os_init_arch(void)
         abort();
     }
 
+    if (sigaction(SIGURG, &kernel_entry, NULL) != 0)
+    {
+        perror("Unable to install SIGURG handler: ");
+        abort();
+    }
+
     sigset_t set;
 
     /* We want to receive SIGALRM and SIGUSR1 synchronously
@@ -261,6 +306,7 @@ void os_init_arch(void)
     sigemptyset(&set);
     sigaddset(&set, SIGALRM);
     sigaddset(&set, SIGUSR1);
+    sigaddset(&set, SIGURG);
     pthread_sigmask(SIG_BLOCK, &set, NULL);
 
     kernel_thread = pthread_self();
@@ -281,6 +327,9 @@ void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size,
     thread->sp = stack; //&stack[stack_size - 16];
 
     int rv = pipe(thread->arch.block_pipe);
+    assert(rv == 0);
+
+    rv = pipe(thread->arch.syscall_pipe);
     assert(rv == 0);
 
     struct thread_startup_t * startup_data = malloc(sizeof(struct thread_startup_t));
@@ -310,7 +359,7 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
  */
 __attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread)
 {
-    char byte;
+    char byte = 0;
     write(os_threads[boot_thread].arch.block_pipe[1], &byte, 1);
 
     while (1)
@@ -320,6 +369,7 @@ __attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread)
         sigemptyset(&set);
         sigaddset(&set, SIGALRM);
         sigaddset(&set, SIGUSR1);
+        sigaddset(&set, SIGURG);
         sigwait(&set, &sig_caught);
         switch (sig_caught) {
             case SIGALRM:
@@ -328,6 +378,10 @@ __attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread)
 
             case SIGUSR1:
                 thread_switch_handler(SIGUSR1);
+                break;
+
+            case SIGURG:
+                kernel_service_handler(SIGURG);
                 break;
 
             default:
