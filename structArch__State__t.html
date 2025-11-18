@@ -110,19 +110,31 @@ $(document).ready(function(){initNavTree('structArch__State__t.html',''); initRe
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:ad935c55237c6bbd29aaeace9615fafda" id="r_ad935c55237c6bbd29aaeace9615fafda"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#ad935c55237c6bbd29aaeace9615fafda">block_pipe</a> [2]</td></tr>
+<tr class="memdesc:ad935c55237c6bbd29aaeace9615fafda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends of pipe that is used to simulate thread preemption.  <br /></td></tr>
 <tr class="separator:ad935c55237c6bbd29aaeace9615fafda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90a36d9db97bc468ef70f7e0358a117d" id="r_a90a36d9db97bc468ef70f7e0358a117d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#a90a36d9db97bc468ef70f7e0358a117d">syscall_pipe</a> [2]</td></tr>
+<tr class="memdesc:a90a36d9db97bc468ef70f7e0358a117d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends of pipe that is used to synchronize thread and syscall.  <br /></td></tr>
+<tr class="separator:a90a36d9db97bc468ef70f7e0358a117d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acae038fb3118503f8892f30f98662804" id="r_acae038fb3118503f8892f30f98662804"><td class="memItemLeft" align="right" valign="top">volatile atomic_int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#acae038fb3118503f8892f30f98662804">is_suspended</a></td></tr>
+<tr class="memdesc:acae038fb3118503f8892f30f98662804"><td class="mdescLeft">&#160;</td><td class="mdescRight">State information on if thread is suspended or not (unused)  <br /></td></tr>
 <tr class="separator:acae038fb3118503f8892f30f98662804"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8b71a1cc792a6c50c15fc5f9b0857e3" id="r_ab8b71a1cc792a6c50c15fc5f9b0857e3"><td class="memItemLeft" align="right" valign="top">thrd_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#ab8b71a1cc792a6c50c15fc5f9b0857e3">sched_thread</a></td></tr>
+<tr class="memdesc:ab8b71a1cc792a6c50c15fc5f9b0857e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">C11 thread identifier of the Linux thread that supports this CMRX thread.  <br /></td></tr>
 <tr class="separator:ab8b71a1cc792a6c50c15fc5f9b0857e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bf7d26220c2bde068cf67f469a3082e" id="r_a2bf7d26220c2bde068cf67f469a3082e"><td class="memItemLeft" align="right" valign="top">pthread_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#a2bf7d26220c2bde068cf67f469a3082e">sched_thread_id</a></td></tr>
+<tr class="memdesc:a2bf7d26220c2bde068cf67f469a3082e"><td class="mdescLeft">&#160;</td><td class="mdescRight">POSIX thread identifier of the Linux thread that support this CMRX thread.  <br /></td></tr>
 <tr class="separator:a2bf7d26220c2bde068cf67f469a3082e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18857e0041e85531b72310430a7c3e4f" id="r_a18857e0041e85531b72310430a7c3e4f"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structsyscall__dispatch__t.html">syscall_dispatch_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#a18857e0041e85531b72310430a7c3e4f">syscall</a></td></tr>
+<tr class="memdesc:a18857e0041e85531b72310430a7c3e4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer for dispatching system calls to the kernel and return values back to the userspace.  <br /></td></tr>
+<tr class="separator:a18857e0041e85531b72310430a7c3e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>ARM-specific architecture state of a thread. </p>
 <p>Architecture code-private part of thread record.</p>
+<p>Linux port internal architecture state.</p>
 <p>This structure holds additional state needed by the ARM Cortex M CPUs to properly store/restore thread state.</p>
 <p>As of now the floating point usage information is stored here. This is provided only if FPU is available and activated.</p>
+<p>This structure records thread state private to the Linux port. Here blocking primitives for synchronization of threads and system calls are recorded as well as block where information is passed down to the syscall and back from it.</p>
 <p>This structure holds the CPU-specific part of thread state. It can be empty if architecture does not need any specific information saved in the CPU state. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="ad935c55237c6bbd29aaeace9615fafda" name="ad935c55237c6bbd29aaeace9615fafda"></a>
@@ -136,6 +148,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Ends of pipe that is used to simulate thread preemption. </p>
 
 </div>
 </div>
@@ -151,6 +165,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>State information on if thread is suspended or not (unused) </p>
+
 </div>
 </div>
 <a id="ab8b71a1cc792a6c50c15fc5f9b0857e3" name="ab8b71a1cc792a6c50c15fc5f9b0857e3"></a>
@@ -165,6 +181,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>C11 thread identifier of the Linux thread that supports this CMRX thread. </p>
+
 </div>
 </div>
 <a id="a2bf7d26220c2bde068cf67f469a3082e" name="a2bf7d26220c2bde068cf67f469a3082e"></a>
@@ -178,6 +196,40 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>POSIX thread identifier of the Linux thread that support this CMRX thread. </p>
+
+</div>
+</div>
+<a id="a18857e0041e85531b72310430a7c3e4f" name="a18857e0041e85531b72310430a7c3e4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18857e0041e85531b72310430a7c3e4f">&#9670;&#160;</a></span>syscall</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structsyscall__dispatch__t.html">syscall_dispatch_t</a> Arch_State_t::syscall</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Buffer for dispatching system calls to the kernel and return values back to the userspace. </p>
+
+</div>
+</div>
+<a id="a90a36d9db97bc468ef70f7e0358a117d" name="a90a36d9db97bc468ef70f7e0358a117d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90a36d9db97bc468ef70f7e0358a117d">&#9670;&#160;</a></span>syscall_pipe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Arch_State_t::syscall_pipe[2]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ends of pipe that is used to synchronize thread and syscall. </p>
 
 </div>
 </div>

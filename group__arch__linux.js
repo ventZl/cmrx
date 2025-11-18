@@ -2,11 +2,6 @@ var group__arch__linux =
 [
     [ "Implementation details", "group__arch__linux__impl.html", "group__arch__linux__impl" ],
     [ "Linux timing provider", "group__arch__linux__timing.html", "group__arch__linux__timing" ],
-    [ "thread_startup_t", "structthread__startup__t.html", [
-      [ "entry_arg", "structthread__startup__t.html#acb49e240395d272cf764f713f10041f7", null ],
-      [ "entry_point", "structthread__startup__t.html#af408ca9ec762445637e4d587b74642f0", null ],
-      [ "thread_id", "structthread__startup__t.html#a4e44b485c73e604a85fe405701699408", null ]
-    ] ],
     [ "CMRX_APPLICATION_INSTANCE_CONSTRUCTOR", "group__arch__linux.html#gae33886ca29f6dc847f8103f69a8e424d", null ],
     [ "CMRX_THREAD_AUTOCREATE_CONSTRUCTOR", "group__arch__linux.html#ga750bda6ec872a28db4ac92c1d1516a5a", null ],
     [ "mpu_init_stack", "group__arch__linux.html#gad1e98b6b913a67b51e041e4e9002a399", null ],

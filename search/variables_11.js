@@ -15,6 +15,9 @@ var searchData=
   ['stacks_12',['stacks',['../structOS__stack__t.html#ac64b6bed80c0329e43aba6903453ed95',1,'OS_stack_t']]],
   ['start_13',['start',['../structOS__MPU__region.html#a0642cc60aaf53cce8d66b4070802b19e',1,'OS_MPU_region']]],
   ['state_14',['state',['../structOS__thread__t.html#a3316dfeb2de5d7b03f7e0f6842f7c256',1,'OS_thread_t::state'],['../structfutex__t.html#acf924c6402369f5b0479148d65d9a306',1,'futex_t::state']]],
-  ['syscalls_15',['syscalls',['../group__arch__linux__impl.html#ga2270ed6c370218d82eed7be5845f1718',1,'linux.c']]],
-  ['syscalls_5fcount_16',['syscalls_count',['../group__arch__linux__impl.html#ga18ed810d4a83aa447a3c4b2a1842de62',1,'linux.c']]]
+  ['syscall_15',['syscall',['../structArch__State__t.html#a18857e0041e85531b72310430a7c3e4f',1,'Arch_State_t']]],
+  ['syscall_5fid_16',['syscall_id',['../structsyscall__dispatch__t.html#aee4d642b9d3ab8ca615b720b24b95755',1,'syscall_dispatch_t']]],
+  ['syscall_5fpipe_17',['syscall_pipe',['../structArch__State__t.html#a90a36d9db97bc468ef70f7e0358a117d',1,'Arch_State_t']]],
+  ['syscalls_18',['syscalls',['../group__arch__linux__impl.html#ga2270ed6c370218d82eed7be5845f1718',1,'linux.c']]],
+  ['syscalls_5fcount_19',['syscalls_count',['../group__arch__linux__impl.html#ga18ed810d4a83aa447a3c4b2a1842de62',1,'linux.c']]]
 ];

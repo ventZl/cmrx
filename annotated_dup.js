@@ -30,6 +30,7 @@ var annotated_dup =
     [ "QueueService", "structQueueService.html", "structQueueService" ],
     [ "QueueServiceInterface", "structQueueServiceInterface.html", "structQueueServiceInterface" ],
     [ "RPC_Service_t_", "structRPC__Service__t__.html", "structRPC__Service__t__" ],
+    [ "syscall_dispatch_t", "structsyscall__dispatch__t.html", "structsyscall__dispatch__t" ],
     [ "Syscall_Entry_t", "structSyscall__Entry__t.html", "structSyscall__Entry__t" ],
     [ "thread_startup_t", "structthread__startup__t.html", "structthread__startup__t" ],
     [ "TimerEntry_t", "structTimerEntry__t.html", "structTimerEntry__t" ],

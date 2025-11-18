@@ -1,8 +1,14 @@
 var group__arch__linux__impl =
 [
+    [ "thread_startup_t", "structthread__startup__t.html", [
+      [ "entry_arg", "structthread__startup__t.html#acb49e240395d272cf764f713f10041f7", null ],
+      [ "entry_point", "structthread__startup__t.html#af408ca9ec762445637e4d587b74642f0", null ],
+      [ "thread_id", "structthread__startup__t.html#a4e44b485c73e604a85fe405701699408", null ]
+    ] ],
     [ "cmrx_posix_register_application", "group__arch__linux__impl.html#gaebe45632e3c7e1241ab83d9738cf37fa", null ],
     [ "cmrx_posix_register_syscalls", "group__arch__linux__impl.html#ga469c6b96a6ac6b12bc7eb93514e37c67", null ],
     [ "cmrx_posix_register_thread", "group__arch__linux__impl.html#gaa7a0ab90572f51e2abea738e291fc0a0", null ],
+    [ "kernel_service_handler", "group__arch__linux__impl.html#ga0b8366627990f55eac34dfb7fe36a099", null ],
     [ "system_call_entrypoint", "group__arch__linux__impl.html#ga81c247bf7d6d7c6f4badbbf40607c2d5", null ],
     [ "thread_preempt_handler", "group__arch__linux__impl.html#ga55e4d992a8bd4d9e4b368bdec57a999d", null ],
     [ "thread_startup_handler", "group__arch__linux__impl.html#ga7aa1e323243992dc3c2b91db8b0b771a", null ],

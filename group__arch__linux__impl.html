@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('group__arch__linux__impl.html',''); in
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Implementation details<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__linux.html">Linux port</a></div></div></div>
@@ -108,6 +109,12 @@ $(document).ready(function(){initNavTree('group__arch__linux__impl.html',''); in
 <p>This group contains platform-specific routines that implement internal behavior of this port.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structthread__startup__t.html">thread_startup_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal thread startup data structure.  <a href="structthread__startup__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga883fd2b09ba21d087075a822d98158a4" id="r_ga883fd2b09ba21d087075a822d98158a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga883fd2b09ba21d087075a822d98158a4">trigger_pendsv_if_needed</a> ()</td></tr>
@@ -122,6 +129,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga55e4d992a8bd4d9e4b368bdec57a999d" id="r_ga55e4d992a8bd4d9e4b368bdec57a999d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga55e4d992a8bd4d9e4b368bdec57a999d">thread_preempt_handler</a> (int signo, siginfo_t *info, void *context)</td></tr>
 <tr class="memdesc:ga55e4d992a8bd4d9e4b368bdec57a999d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread stopping/resuming handler.  <br /></td></tr>
 <tr class="separator:ga55e4d992a8bd4d9e4b368bdec57a999d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b8366627990f55eac34dfb7fe36a099" id="r_ga0b8366627990f55eac34dfb7fe36a099"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga0b8366627990f55eac34dfb7fe36a099">kernel_service_handler</a> (int signo)</td></tr>
+<tr class="memdesc:ga0b8366627990f55eac34dfb7fe36a099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handler for kernel service call.  <br /></td></tr>
+<tr class="separator:ga0b8366627990f55eac34dfb7fe36a099"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7aa1e323243992dc3c2b91db8b0b771a" id="r_ga7aa1e323243992dc3c2b91db8b0b771a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga7aa1e323243992dc3c2b91db8b0b771a">thread_startup_handler</a> (void *arg)</td></tr>
 <tr class="memdesc:ga7aa1e323243992dc3c2b91db8b0b771a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to jump-start guest thread host.  <br /></td></tr>
 <tr class="separator:ga7aa1e323243992dc3c2b91db8b0b771a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -244,6 +254,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ga0b8366627990f55eac34dfb7fe36a099" name="ga0b8366627990f55eac34dfb7fe36a099"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0b8366627990f55eac34dfb7fe36a099">&#9670;&#160;</a></span>kernel_service_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kernel_service_handler </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>signo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handler for kernel service call. </p>
+<p>This handler handles kernel syscall execution. The fact that kernel syscalls are called via this handler makes sure that:</p><ol type="1">
+<li>kernel syscall is never interrupted via timer</li>
+<li>only one thread is ever inside syscall </li>
+</ol>
+
+</div>
+</div>
 <a id="ga81c247bf7d6d7c6f4badbbf40607c2d5" name="ga81c247bf7d6d7c6f4badbbf40607c2d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga81c247bf7d6d7c6f4badbbf40607c2d5">&#9670;&#160;</a></span>system_call_entrypoint()</h2>
 
@@ -301,6 +335,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Entrypoint into system call machinery. </p>
+<p>This function will fill thread-private buffer for system call data and will dispatch the system call handler to be called. </p>
 
 </div>
 </div>
