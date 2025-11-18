@@ -25,6 +25,7 @@ static timer_t systick_timer;
 
 void sigalrm_handler(int signo)
 {
+    (void) signo;
     os_sched_timing_callback(systick_us);
 }
 
