@@ -3,6 +3,7 @@
 #include <kernel/arch/context.h>
 #include <kernel/rpc.h>
 #include <kernel/syscall.h>
+#include <cmrx/sys/syscalls.h>
 #include <kernel/sched.h>
 #include <conf/kernel.h>
 
@@ -124,13 +125,14 @@ int system_call_entrypoint(unsigned long arg0,
             break;
 
         case SYSCALL_OUTCOME_RPC_CALL:
-            syscall->dispatch_target(
+            rv = syscall->dispatch_target(
                 (RPC_Service_t *) syscall->dispatch_args[1],
                 syscall->dispatch_args[2],
                 syscall->dispatch_args[3],
                 syscall->dispatch_args[4],
                 syscall->dispatch_args[5]
             );
+            system_call_entrypoint(rv, 0, 0, 0, 0, 0, SYSCALL_RPC_RETURN);
             break;
 
         default:
@@ -503,8 +505,31 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 
 int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
-    /* TODO */
-    return E_NOTAVAIL;
+    int pstack_depth = rpc_stack_pop();
+    Process_t process_id;
+
+    if (pstack_depth > 0)
+    {
+        process_id = rpc_stack_top();
+    }
+    else
+    {
+        /* Warning for future wanderers: as of now, this returns
+         * process_id of current thread, which stores parent process.
+         * If I ever decide to change semantics to return current process
+         * ID, this may fail miserably.
+         */
+        process_id = os_get_current_process();
+    }
+
+
+    if (process_id == E_VTABLE_UNKNOWN)
+    {
+        // here the process should probably die in segfault
+        assert(0);
+    }
+
+    return arg0;
 }
 
 struct Syscall_Entry_t * os_syscalls_start(void)
