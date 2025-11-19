@@ -371,7 +371,20 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 {
     (void) process_id;
     (void) definition;
-    return 0;
+    if (process_id >= OS_PROCESSES)
+    {
+        return E_OUT_OF_RANGE;
+    }
+
+    if (os_processes[process_id].definition != NULL)
+    {
+        return E_INVALID;
+    }
+
+    /* TODO: Deal with memory protection */
+
+    os_processes[process_id].definition = definition;
+    return E_OK;
 }
 
 /** Will unblock the boot thread.
