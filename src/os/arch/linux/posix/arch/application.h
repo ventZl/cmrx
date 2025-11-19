@@ -45,6 +45,27 @@ extern void cmrx_posix_register_thread(const struct OS_thread_create_t * thread)
  * @{
  */
 
+/** Linux port specifier for vtables */
+#ifndef APPLICATION_NAME
+#   error "Application header included from something that is not an application!"
+#endif
+
+#define CMRX_VTABLE_SECTION_STR3(section_symbol) # section_symbol
+#define CMRX_VTABLE_SECTION_STR2(application_name) CMRX_VTABLE_SECTION_STR3(vtable_ ## application_name)
+#define CMRX_VTABLE_SECTION_STR(application_name) CMRX_VTABLE_SECTION_STR2(application_name)
+
+#define CMRX_VTABLE_SECTION_START2(application_name) __start_vtable_ ## application_name
+#define CMRX_VTABLE_SECTION_START(application_name) CMRX_VTABLE_SECTION_START2(application_name)
+
+#define CMRX_VTABLE_SECTION_STOP2(application_name) __start_vtable_ ## application_name
+#define CMRX_VTABLE_SECTION_STOP(application_name) CMRX_VTABLE_SECTION_STOP2(application_name)
+
+#define CMRX_VTABLE_SECTION  CMRX_VTABLE_SECTION_STR(APPLICATION_NAME)
+#define CMRX_VTABLE_SPECIFIER __attribute__((section(CMRX_VTABLE_SECTION))) const
+
+extern long CMRX_VTABLE_SECTION_START(APPLICATION_NAME) __attribute__((weak));
+extern long CMRX_VTABLE_SECTION_STOP(APPLICATION_NAME) __attribute__((weak));
+
 /** Linux port implementation of application creation macro.
  *
  * As of now this macro does nothing. It is here just to make
@@ -68,7 +89,7 @@ const struct OS_process_definition_t __APPL_SYMBOL(application, instance) = {\
         { __APPL_SYMBOL(application, mmio_2_start), __APPL_SYMBOL(application, mmio_2_end) },\
         { &__APPL_SYMBOL(application, shared_start), &__APPL_SYMBOL(application, shared_end) }\
     },\
-    { &__APPL_SYMBOL(application, vtable_start), &__APPL_SYMBOL(application, vtable_end) }\
+    { &CMRX_VTABLE_SECTION_START(application), &CMRX_VTABLE_SECTION_STOP(application) }\
 };\
 __attribute__((constructor)) void __APPL_SYMBOL(application, inst_construct)(void)\
 {\

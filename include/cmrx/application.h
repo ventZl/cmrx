@@ -29,7 +29,7 @@ CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core
  * Mark every VTABLE structure instance with this macro to make it work
  * for remote procedure calls.
  */
-#define VTABLE __attribute__((section(".vtable."))) const
+#define VTABLE CMRX_VTABLE_SPECIFIER
 
 /** Define the MMIO range accessible by the said application.
  * This macro allows to define a range of addresses accessible by the application
