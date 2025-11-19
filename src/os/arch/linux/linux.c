@@ -1,6 +1,7 @@
 #include <kernel/arch/mpu.h>
 #include <kernel/arch/sched.h>
 #include <kernel/arch/context.h>
+#include <kernel/rpc.h>
 #include <kernel/syscall.h>
 #include <kernel/sched.h>
 #include <conf/kernel.h>
@@ -109,12 +110,32 @@ int system_call_entrypoint(unsigned long arg0,
     syscall->args[1] = arg1;
     syscall->args[2] = arg2;
     syscall->args[3] = arg3;
+    syscall->args[4] = arg4;
+    syscall->args[5] = arg5;
     syscall->syscall_id = syscall_id;
     syscall->retval = E_NOTAVAIL;
     pthread_kill(kernel_thread, SIGURG);
     char byte;
     read(os_threads[current_thread_id].arch.syscall_pipe[0], &byte, 1);
     int rv = syscall->retval;
+    switch (syscall->outcome) {
+        case SYSCALL_OUTCOME_RETURN:
+            return rv;
+            break;
+
+        case SYSCALL_OUTCOME_RPC_CALL:
+            syscall->dispatch_target(
+                (RPC_Service_t *) syscall->dispatch_args[1],
+                syscall->dispatch_args[2],
+                syscall->dispatch_args[3],
+                syscall->dispatch_args[4],
+                syscall->dispatch_args[5]
+            );
+            break;
+
+        default:
+            assert(0);
+    }
     return rv;
 }
 
@@ -189,6 +210,7 @@ void kernel_service_handler(int signo)
     struct syscall_dispatch_t * syscall = &os_threads[thread].arch.syscall;
     assert(syscall != NULL);
 
+    syscall->outcome = SYSCALL_OUTCOME_RETURN;
     syscall->retval = os_system_call(syscall->args[0], syscall->args[1], syscall->args[2], syscall->args[3], syscall->syscall_id);
 
     trigger_pendsv_if_needed();
@@ -403,7 +425,7 @@ void os_request_context_switch(bool activate)
 
 int os_set_syscall_return_value(Thread_t thread_id, int32_t retval)
 {
-    /* TODO */
+    os_threads[thread_id].arch.syscall.retval = retval;
     return 0;
 }
 
@@ -436,8 +458,34 @@ __attribute__((noreturn)) void os_kernel_shutdown()
 
 int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
-    /* TODO */
-    return E_NOTAVAIL;
+    int thread = os_get_current_thread();
+    struct syscall_dispatch_t * syscall = &os_threads[thread].arch.syscall;
+
+    RPC_Service_t * service = (RPC_Service_t *) syscall->args[4];
+    VTable_t vtable = service->vtable;
+    Process_t process_id = get_vtable_process(vtable);
+    if (process_id == E_VTABLE_UNKNOWN)
+    {
+        return E_INVALID_ADDRESS;
+    }
+
+    if (!rpc_stack_push(process_id))
+    {
+        return E_IN_TOO_DEEP;
+    }
+
+    unsigned method_id = syscall->args[5];
+    RPC_Method_t method = vtable[method_id];
+
+    syscall->outcome = SYSCALL_OUTCOME_RPC_CALL;
+    syscall->dispatch_target = method;
+    for (int q = 0; q < 4; ++q)
+    {
+        syscall->dispatch_args[q+1] = syscall->args[q];
+    }
+    syscall-> dispatch_args[0] = (long) service;
+
+    return E_OK;
 }
 
 int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
