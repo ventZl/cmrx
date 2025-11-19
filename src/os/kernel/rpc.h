@@ -39,7 +39,7 @@ typedef int (*RPC_Method_t)(RPC_Service_t * service, unsigned arg0, unsigned arg
  * usually a structures whose members are pointers to functions. The memory
  * layout of both cases is the same but structures allows for named members.
  */
-typedef RPC_Method_t * VTable_t ;
+typedef RPC_Method_t * VTable_t;
 
 /** Basic structure of any RPC object.
  * The RPC API requires, that the first member of any RPC callable service
@@ -52,7 +52,7 @@ struct RPC_Service_t_ {
     /** Address of the VTable which contains pointers to functions that
      * implement this service.
      */
-	VTable_t * vtable;
+	VTable_t vtable;
 };
 
 /** Identify process which owns the VTable.
@@ -61,7 +61,7 @@ struct RPC_Service_t_ {
  * @returns process ID of the owning process or @ref E_VTABLE_UNKNOWN 
  * if vtable address does not belong to any known process.
  */
-Process_t get_vtable_process(VTable_t * vtable);
+Process_t get_vtable_process(VTable_t vtable);
 
 /** Add new process ID to the stack of RPC calls.
  * Registers new process ID in thread's stack of RPC call owning processes.

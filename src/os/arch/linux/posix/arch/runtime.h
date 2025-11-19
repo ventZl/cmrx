@@ -3,6 +3,7 @@
 #include <threads.h>
 #include <stdatomic.h>
 #include <pthread.h>
+#include <kernel/rpc.h>
 
 #define os_init_core(x)
 
@@ -10,6 +11,15 @@ struct OS_thread_t;
 
 void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size, entrypoint_t * entrypoint, void * data);
 void os_init_arch(void);
+
+/** The outcome of the system call
+ */
+enum SyscallOutcome {
+    /// Return normally
+    SYSCALL_OUTCOME_RETURN,
+    /// Call some specific code
+    SYSCALL_OUTCOME_RPC_CALL
+};
 
 /** Syscall dispatch data structure
  *
@@ -20,6 +30,9 @@ struct syscall_dispatch_t {
     long args[6];
     long retval;
     unsigned char syscall_id;
+    enum SyscallOutcome outcome;
+    RPC_Method_t dispatch_target;
+    long dispatch_args[5];
 };
 
 /** Linux port internal architecture state.
