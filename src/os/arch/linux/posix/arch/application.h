@@ -57,7 +57,7 @@ extern void cmrx_posix_register_thread(const struct OS_thread_create_t * thread)
 #define CMRX_VTABLE_SECTION_START2(application_name) __start_vtable_ ## application_name
 #define CMRX_VTABLE_SECTION_START(application_name) CMRX_VTABLE_SECTION_START2(application_name)
 
-#define CMRX_VTABLE_SECTION_STOP2(application_name) __start_vtable_ ## application_name
+#define CMRX_VTABLE_SECTION_STOP2(application_name) __stop_vtable_ ## application_name
 #define CMRX_VTABLE_SECTION_STOP(application_name) CMRX_VTABLE_SECTION_STOP2(application_name)
 
 #define CMRX_VTABLE_SECTION  CMRX_VTABLE_SECTION_STR(APPLICATION_NAME)
