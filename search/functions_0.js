@@ -7,5 +7,5 @@ var searchData=
   ['_5f_5fos_5fthread_5fcreate_4',['__os_thread_create',['../group__os__sched.html#ga33ba16e9e99099ad4a6831478774e195',1,'sched.c']]],
   ['_5f_5fset_5flr_5',['__set_LR',['../group__arch__arm__cortex.html#ga3b996e99f9bcb08dc8219e0e21806769',1,'cortex.h']]],
   ['_5fos_5fstart_6',['_os_start',['../group__os.html#gab30027c97dc034137c00192f28c6e178',1,'_os_start(uint8_t start_core):&#160;sched.c'],['../group__os__sched.html#gab30027c97dc034137c00192f28c6e178',1,'_os_start(uint8_t start_core):&#160;sched.c']]],
-  ['_5frpc_5fcall_7',['_rpc_call',['../group__api__rpc.html#ga3be07e9a9f65c1035242a7c62863b58d',1,'_rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3, void *service, unsigned method, unsigned canary):&#160;rpc.c'],['../group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb',1,'_rpc_call(void):&#160;rpc.c']]]
+  ['_5frpc_5fcall_7',['_rpc_call',['../group__api__rpc.html#ga3067a4b52c94b272ea467cc46470f804',1,'_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3, void *service, unsigned method, unsigned canary):&#160;rpc.c'],['../group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb',1,'_rpc_call(void):&#160;rpc.c']]]
 ];

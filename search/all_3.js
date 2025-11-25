@@ -19,6 +19,6 @@ var searchData=
   ['_5fmpu_5frasr_16',['_MPU_RASR',['../structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343',1,'MPU_Registers']]],
   ['_5fmpu_5frbar_17',['_MPU_RBAR',['../structMPU__Registers.html#af192544722f6e65244f494cdbf934a49',1,'MPU_Registers']]],
   ['_5fos_5fstart_18',['_os_start',['../group__os.html#gab30027c97dc034137c00192f28c6e178',1,'_os_start(uint8_t start_core):&#160;sched.c'],['../group__os__sched.html#gab30027c97dc034137c00192f28c6e178',1,'_os_start(uint8_t start_core):&#160;sched.c']]],
-  ['_5frpc_5fcall_19',['_rpc_call',['../group__api__rpc.html#ga3be07e9a9f65c1035242a7c62863b58d',1,'_rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3, void *service, unsigned method, unsigned canary):&#160;rpc.c'],['../group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb',1,'_rpc_call(void):&#160;rpc.c']]],
+  ['_5frpc_5fcall_19',['_rpc_call',['../group__api__rpc.html#ga3067a4b52c94b272ea467cc46470f804',1,'_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3, void *service, unsigned method, unsigned canary):&#160;rpc.c'],['../group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb',1,'_rpc_call(void):&#160;rpc.c']]],
   ['_5fsyscall_5fcount_20',['_SYSCALL_COUNT',['../group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca4ca0c68f905e31ed3c06d15fde068f7e',1,'syscalls.h']]]
 ];

@@ -109,14 +109,14 @@ $(document).ready(function(){initNavTree('group__api__thread.html',''); initResi
 <p>It is possible to create new threads, wait for other threads to finish or finish currently running thread.</p>
 <p>Threads are defined by their entry function, which treated similarly to main() function of a C program. If thread entry function returns, then it's return value is used as thread return status. This is not interpreted by kernel in any way, but it is available for others. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga52f86ad5da2364f17909fcb76bf84d71" name="ga52f86ad5da2364f17909fcb76bf84d71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga52f86ad5da2364f17909fcb76bf84d71">&#9670;&#160;</a></span>get_tid()</h2>
+<a id="ga24a2718919c2ae4cbca6560ca7ebebc9" name="ga24a2718919c2ae4cbca6560ca7ebebc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga24a2718919c2ae4cbca6560ca7ebebc9">&#9670;&#160;</a></span>get_tid()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int get_tid </td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() get_tid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -155,14 +155,14 @@ $(document).ready(function(){initNavTree('group__api__thread.html',''); initResi
 
 </div>
 </div>
-<a id="ga98ad8277df91806691c7c51d1606861a" name="ga98ad8277df91806691c7c51d1606861a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga98ad8277df91806691c7c51d1606861a">&#9670;&#160;</a></span>sched_yield()</h2>
+<a id="ga3f9aa3e3b18af17647ea2545e8a7cc87" name="ga3f9aa3e3b18af17647ea2545e8a7cc87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3f9aa3e3b18af17647ea2545e8a7cc87">&#9670;&#160;</a></span>sched_yield()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int sched_yield </td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() sched_yield </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -175,14 +175,14 @@ $(document).ready(function(){initNavTree('group__api__thread.html',''); initResi
 
 </div>
 </div>
-<a id="gad14ed255ac7c3f9cfb0513c7d03e7cd8" name="gad14ed255ac7c3f9cfb0513c7d03e7cd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad14ed255ac7c3f9cfb0513c7d03e7cd8">&#9670;&#160;</a></span>setpriority()</h2>
+<a id="gab13bfc45ea05bc055136cae96968ce48" name="gab13bfc45ea05bc055136cae96968ce48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab13bfc45ea05bc055136cae96968ce48">&#9670;&#160;</a></span>setpriority()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int setpriority </td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() setpriority </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>priority</em></td><td>)</td>
@@ -201,14 +201,14 @@ $(document).ready(function(){initNavTree('group__api__thread.html',''); initResi
 
 </div>
 </div>
-<a id="gab8850314cd6f6c4738a61cc3294dbbe0" name="gab8850314cd6f6c4738a61cc3294dbbe0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab8850314cd6f6c4738a61cc3294dbbe0">&#9670;&#160;</a></span>thread_create()</h2>
+<a id="ga4a769fc4930db67b88da6abbad4ca2d2" name="ga4a769fc4930db67b88da6abbad4ca2d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a769fc4930db67b88da6abbad4ca2d2">&#9670;&#160;</a></span>thread_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int thread_create </td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() thread_create </td>
           <td>(</td>
           <td class="paramtype">int(*)(void *)&#160;</td>
           <td class="paramname"><em>entrypoint</em>, </td>
@@ -246,14 +246,14 @@ $(document).ready(function(){initNavTree('group__api__thread.html',''); initResi
 
 </div>
 </div>
-<a id="ga189ee445e0ac8bf8fa112a2fa719d9b6" name="ga189ee445e0ac8bf8fa112a2fa719d9b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga189ee445e0ac8bf8fa112a2fa719d9b6">&#9670;&#160;</a></span>thread_exit()</h2>
+<a id="ga42bca223c54b5ae35e2bb03074ea7de0" name="ga42bca223c54b5ae35e2bb03074ea7de0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga42bca223c54b5ae35e2bb03074ea7de0">&#9670;&#160;</a></span>thread_exit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int thread_exit </td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() thread_exit </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>status</em></td><td>)</td>
@@ -273,14 +273,14 @@ $(document).ready(function(){initNavTree('group__api__thread.html',''); initResi
 
 </div>
 </div>
-<a id="gafecb0503475d000bb26f547db0f54936" name="gafecb0503475d000bb26f547db0f54936"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafecb0503475d000bb26f547db0f54936">&#9670;&#160;</a></span>thread_join()</h2>
+<a id="ga4248273472541bcba9429b03d727955e" name="ga4248273472541bcba9429b03d727955e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4248273472541bcba9429b03d727955e">&#9670;&#160;</a></span>thread_join()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int thread_join </td>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() thread_join </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>thread</em></td><td>)</td>

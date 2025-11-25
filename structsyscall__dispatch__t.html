@@ -115,6 +115,12 @@ Data Fields</h2></td></tr>
 <tr class="separator:ac407493f01bd59f014a0b20901b606b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee4d642b9d3ab8ca615b720b24b95755" id="r_aee4d642b9d3ab8ca615b720b24b95755"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsyscall__dispatch__t.html#aee4d642b9d3ab8ca615b720b24b95755">syscall_id</a></td></tr>
 <tr class="separator:aee4d642b9d3ab8ca615b720b24b95755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99901041b52cd5e3dd55fb9ea609deb5" id="r_a99901041b52cd5e3dd55fb9ea609deb5"><td class="memItemLeft" align="right" valign="top">enum SyscallOutcome&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsyscall__dispatch__t.html#a99901041b52cd5e3dd55fb9ea609deb5">outcome</a></td></tr>
+<tr class="separator:a99901041b52cd5e3dd55fb9ea609deb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5684536818cdbc428d1689b3195a52c" id="r_ab5684536818cdbc428d1689b3195a52c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__rpc.html#ga49d7bb281167b3db63e39057c10d1345">RPC_Method_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsyscall__dispatch__t.html#ab5684536818cdbc428d1689b3195a52c">dispatch_target</a></td></tr>
+<tr class="separator:ab5684536818cdbc428d1689b3195a52c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38c4c9617d66066d5386da2ce3a513a9" id="r_a38c4c9617d66066d5386da2ce3a513a9"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsyscall__dispatch__t.html#a38c4c9617d66066d5386da2ce3a513a9">dispatch_args</a> [5]</td></tr>
+<tr class="separator:a38c4c9617d66066d5386da2ce3a513a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Syscall dispatch data structure. </p>
@@ -128,6 +134,48 @@ Data Fields</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">long syscall_dispatch_t::args[6]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a38c4c9617d66066d5386da2ce3a513a9" name="a38c4c9617d66066d5386da2ce3a513a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38c4c9617d66066d5386da2ce3a513a9">&#9670;&#160;</a></span>dispatch_args</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long syscall_dispatch_t::dispatch_args[5]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab5684536818cdbc428d1689b3195a52c" name="ab5684536818cdbc428d1689b3195a52c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5684536818cdbc428d1689b3195a52c">&#9670;&#160;</a></span>dispatch_target</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__rpc.html#ga49d7bb281167b3db63e39057c10d1345">RPC_Method_t</a> syscall_dispatch_t::dispatch_target</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a99901041b52cd5e3dd55fb9ea609deb5" name="a99901041b52cd5e3dd55fb9ea609deb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99901041b52cd5e3dd55fb9ea609deb5">&#9670;&#160;</a></span>outcome</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum SyscallOutcome syscall_dispatch_t::outcome</td>
         </tr>
       </table>
 </div><div class="memdoc">

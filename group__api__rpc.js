@@ -6,6 +6,6 @@ var group__api__rpc =
     [ "interface_cast", "group__api__rpc.html#ga81ba1a4a057e20afe2dff72090f8193d", null ],
     [ "rpc_call", "group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f", null ],
     [ "this", "group__api__rpc.html#ga50383951d2a9d4f1a855b2cec5e03274", null ],
-    [ "_rpc_call", "group__api__rpc.html#ga3be07e9a9f65c1035242a7c62863b58d", null ],
+    [ "_rpc_call", "group__api__rpc.html#ga3067a4b52c94b272ea467cc46470f804", null ],
     [ "rpc_return", "group__api__rpc.html#gaf78e5f7fb20b02cbff061e5ea6daaed3", null ]
 ];

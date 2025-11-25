@@ -4,7 +4,7 @@ var group__os__syscall =
     [ "__SVC", "group__os__syscall.html#gaf741b6307278209709f17275ed53ba82", null ],
     [ "__SYSCALL", "group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340", null ],
     [ "SYSCALL_DEFINITION", "group__os__syscall.html#ga8c3ef3b8ba8d29b49370620dc656c3b7", null ],
-    [ "Syscall_Handler_t", "group__os__syscall.html#gada41dc2b7ccf9df17f433b5d5893cfcf", null ],
+    [ "Syscall_Handler_t", "group__os__syscall.html#gaadcfedb9171c68018e352c776895fc1b", null ],
     [ "eSysCalls", "group__os__syscall.html#ga31e8f196f246216d32eec552c2640f8c", [
       [ "SYSCALL_GET_TID", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8cafcd682b1eda938618ae36dc8e128ecab", null ],
       [ "SYSCALL_SCHED_YIELD", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca0f4a1b65b37b05187900f2c1343a93a2", null ],
@@ -35,5 +35,5 @@ var group__os__syscall =
       [ "SYSCALL_WAIT_FOR_OBJECT_VALUE", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca8b4711342be2c394f2d0887d5030aeab", null ],
       [ "_SYSCALL_COUNT", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca4ca0c68f905e31ed3c06d15fde068f7e", null ]
     ] ],
-    [ "os_system_call", "group__os__syscall.html#ga16718b58a2540d2e22ca17fe8ce11aab", null ]
+    [ "os_system_call", "group__os__syscall.html#ga01e5db115c1c1c75381ffbfd55c811d6", null ]
 ];

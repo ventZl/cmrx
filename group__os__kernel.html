@@ -283,8 +283,8 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf" name="ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf"></a>THREAD_STATE_STOPPED&#160;</td><td class="fielddoc"><p>Thread was running, but was forced to stop. </p>
 <p>It still has valid state so can't be disposed of without damage. Can be placed into ready/running state by calling <a class="el" href="group__os__sched.html#ga7d13fca0696f3ab0fcf19b8d5503f31a">os_thread_continue()</a>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96" name="ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96"></a>THREAD_STATE_FINISHED&#160;</td><td class="fielddoc"><p>Thread finished it's execution either explicitly by calling <a class="el" href="group__api__thread.html#ga189ee445e0ac8bf8fa112a2fa719d9b6">thread_exit()</a> or by returning from thread entrypoint. </p>
-<p>Nobody called <a class="el" href="group__api__thread.html#gafecb0503475d000bb26f547db0f54936">thread_join()</a> yet. This state is the same as "zombie" in Linux. </p>
+<tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96" name="ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96"></a>THREAD_STATE_FINISHED&#160;</td><td class="fielddoc"><p>Thread finished it's execution either explicitly by calling <a class="el" href="group__api__thread.html#ga42bca223c54b5ae35e2bb03074ea7de0">thread_exit()</a> or by returning from thread entrypoint. </p>
+<p>Nobody called <a class="el" href="group__api__thread.html#ga4248273472541bcba9429b03d727955e">thread_join()</a> yet. This state is the same as "zombie" in Linux. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab3804a8a4369184ad46dadf8e54957b6ac754775b8c91b7fa7de29fd8eb731bbf" name="ggab3804a8a4369184ad46dadf8e54957b6ac754775b8c91b7fa7de29fd8eb731bbf"></a>THREAD_STATE_WAITING&#160;</td><td class="fielddoc"><p>Thread is waitihg for object to be notified. </p>
 </td></tr>

@@ -126,18 +126,18 @@ Macros</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga1c1678be361051059ce59465b10e1c39" id="r_ga1c1678be361051059ce59465b10e1c39"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structRPC__Service__t__.html">RPC_Service_t_</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#ga1c1678be361051059ce59465b10e1c39">RPC_Service_t</a></td></tr>
 <tr class="separator:ga1c1678be361051059ce59465b10e1c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac47babdf383d8e134907594b7205796e" id="r_gac47babdf383d8e134907594b7205796e"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#gac47babdf383d8e134907594b7205796e">RPC_Method_t</a>) (<a class="el" href="group__os__rpc.html#ga1c1678be361051059ce59465b10e1c39">RPC_Service_t</a> *service, unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3)</td></tr>
-<tr class="memdesc:gac47babdf383d8e134907594b7205796e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calling signature of a RPC call.  <br /></td></tr>
-<tr class="separator:gac47babdf383d8e134907594b7205796e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadcd71cb246a9a05989ca78eb79175239" id="r_gadcd71cb246a9a05989ca78eb79175239"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="group__os__rpc.html#gac47babdf383d8e134907594b7205796e">RPC_Method_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a></td></tr>
+<tr class="memitem:ga49d7bb281167b3db63e39057c10d1345" id="r_ga49d7bb281167b3db63e39057c10d1345"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#ga49d7bb281167b3db63e39057c10d1345">RPC_Method_t</a>) (<a class="el" href="group__os__rpc.html#ga1c1678be361051059ce59465b10e1c39">RPC_Service_t</a> *service, unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long zarg3)</td></tr>
+<tr class="memdesc:ga49d7bb281167b3db63e39057c10d1345"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calling signature of a RPC call.  <br /></td></tr>
+<tr class="separator:ga49d7bb281167b3db63e39057c10d1345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcd71cb246a9a05989ca78eb79175239" id="r_gadcd71cb246a9a05989ca78eb79175239"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="group__os__rpc.html#ga49d7bb281167b3db63e39057c10d1345">RPC_Method_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a></td></tr>
 <tr class="memdesc:gadcd71cb246a9a05989ca78eb79175239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition of VTable.  <br /></td></tr>
 <tr class="separator:gadcd71cb246a9a05989ca78eb79175239"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gab6a04c90d0385e2685fb5e494af298ff" id="r_gab6a04c90d0385e2685fb5e494af298ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#gab6a04c90d0385e2685fb5e494af298ff">get_vtable_process</a> (<a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a> *vtable)</td></tr>
-<tr class="memdesc:gab6a04c90d0385e2685fb5e494af298ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identify process which owns the VTable.  <br /></td></tr>
-<tr class="separator:gab6a04c90d0385e2685fb5e494af298ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad892fea0588b9995ed3d07a279549da2" id="r_gad892fea0588b9995ed3d07a279549da2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#gad892fea0588b9995ed3d07a279549da2">get_vtable_process</a> (<a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a> vtable)</td></tr>
+<tr class="memdesc:gad892fea0588b9995ed3d07a279549da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identify process which owns the VTable.  <br /></td></tr>
+<tr class="separator:gad892fea0588b9995ed3d07a279549da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga26f43d83332c3aca17beb91973e59156" id="r_ga26f43d83332c3aca17beb91973e59156"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#ga26f43d83332c3aca17beb91973e59156">rpc_stack_push</a> (<a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> process_id)</td></tr>
 <tr class="memdesc:ga26f43d83332c3aca17beb91973e59156"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new process ID to the stack of RPC calls.  <br /></td></tr>
 <tr class="separator:ga26f43d83332c3aca17beb91973e59156"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,9 +147,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga34f4075561574cff1c35a7b4913f2105" id="r_ga34f4075561574cff1c35a7b4913f2105"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#ga34f4075561574cff1c35a7b4913f2105">rpc_stack_top</a> ()</td></tr>
 <tr class="memdesc:ga34f4075561574cff1c35a7b4913f2105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the topmost process ID in thread's RPC call stack.  <br /></td></tr>
 <tr class="separator:ga34f4075561574cff1c35a7b4913f2105"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ee8f29f3009ad125af02a612603504f" id="r_ga9ee8f29f3009ad125af02a612603504f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#ga9ee8f29f3009ad125af02a612603504f">os_rpc_call</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
-<tr class="memdesc:ga9ee8f29f3009ad125af02a612603504f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_call syscall.  <br /></td></tr>
-<tr class="separator:ga9ee8f29f3009ad125af02a612603504f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8854252fa6004476c67eb3f2e29bcf5" id="r_gad8854252fa6004476c67eb3f2e29bcf5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#gad8854252fa6004476c67eb3f2e29bcf5">os_rpc_call</a> (unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3)</td></tr>
+<tr class="memdesc:gad8854252fa6004476c67eb3f2e29bcf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_call syscall.  <br /></td></tr>
+<tr class="separator:gad8854252fa6004476c67eb3f2e29bcf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b0268c1c8ecd0d6e3194f0f52be350c" id="r_ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__rpc.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
 <tr class="memdesc:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_return syscall.  <br /></td></tr>
 <tr class="separator:ga2b0268c1c8ecd0d6e3194f0f52be350c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,14 +174,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="gac47babdf383d8e134907594b7205796e" name="gac47babdf383d8e134907594b7205796e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac47babdf383d8e134907594b7205796e">&#9670;&#160;</a></span>RPC_Method_t</h2>
+<a id="ga49d7bb281167b3db63e39057c10d1345" name="ga49d7bb281167b3db63e39057c10d1345"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga49d7bb281167b3db63e39057c10d1345">&#9670;&#160;</a></span>RPC_Method_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef int(* RPC_Method_t) (<a class="el" href="group__os__rpc.html#ga1c1678be361051059ce59465b10e1c39">RPC_Service_t</a> *service, unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3)</td>
+          <td class="memname">typedef int(* RPC_Method_t) (<a class="el" href="group__os__rpc.html#ga1c1678be361051059ce59465b10e1c39">RPC_Service_t</a> *service, unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long zarg3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -221,7 +221,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="group__os__rpc.html#gac47babdf383d8e134907594b7205796e">RPC_Method_t</a>* <a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a></td>
+          <td class="memname">typedef <a class="el" href="group__os__rpc.html#ga49d7bb281167b3db63e39057c10d1345">RPC_Method_t</a>* <a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -232,8 +232,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gab6a04c90d0385e2685fb5e494af298ff" name="gab6a04c90d0385e2685fb5e494af298ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab6a04c90d0385e2685fb5e494af298ff">&#9670;&#160;</a></span>get_vtable_process()</h2>
+<a id="gad892fea0588b9995ed3d07a279549da2" name="gad892fea0588b9995ed3d07a279549da2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad892fea0588b9995ed3d07a279549da2">&#9670;&#160;</a></span>get_vtable_process()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -241,7 +241,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__api.html#ga36958e2082eecb09f367fa4aa3a9a84d">Process_t</a> get_vtable_process </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a>&#160;</td>
           <td class="paramname"><em>vtable</em></td><td>)</td>
           <td></td>
         </tr>
@@ -259,8 +259,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga9ee8f29f3009ad125af02a612603504f" name="ga9ee8f29f3009ad125af02a612603504f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9ee8f29f3009ad125af02a612603504f">&#9670;&#160;</a></span>os_rpc_call()</h2>
+<a id="gad8854252fa6004476c67eb3f2e29bcf5" name="gad8854252fa6004476c67eb3f2e29bcf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad8854252fa6004476c67eb3f2e29bcf5">&#9670;&#160;</a></span>os_rpc_call()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -268,25 +268,25 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int os_rpc_call </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">unsigned long&#160;</td>
           <td class="paramname"><em>arg0</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">unsigned long&#160;</td>
           <td class="paramname"><em>arg1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">unsigned long&#160;</td>
           <td class="paramname"><em>arg2</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">unsigned long&#160;</td>
           <td class="paramname"><em>arg3</em>&#160;</td>
         </tr>
         <tr>
@@ -298,12 +298,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Kernel implementation of rpc_call syscall. </p>
-<p>This routine performs remote procedure call. It digs for 5th and 6th argument passed to <a class="el" href="group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb">_rpc_call()</a> on thread stack. Retrieves address of called method from service VMT and synthesizes stack frame for jumping into this method. Arguments used to call <a class="el" href="group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb">_rpc_call()</a> are passed to callee.</p>
-<p>This syscall has to validate the RPC service and method IDs, determine the address of RPC method and owning process. Then it has to transfer the control to RPC method in a manner that:</p><ul>
-<li>method called will be able to access the first four arguments given to the <a class="el" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call()</a> call.</li>
-<li>when method returns, the <a class="el" href="group__arch__arm__rpc.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return()</a> is triggered and will transfer the control back</li>
-<li>to the calling code and process. </li>
-</ul>
+<p>This routine performs remote procedure call. It digs for 5th and 6th argument passed to <a class="el" href="group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb">_rpc_call()</a> on thread stack. Retrieves address of called method from service VMT and synthesizes stack frame for jumping into this method. Arguments used to call <a class="el" href="group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb">_rpc_call()</a> are passed to callee. </p>
 
 </div>
 </div>

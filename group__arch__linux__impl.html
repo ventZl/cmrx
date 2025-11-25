@@ -126,9 +126,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga088ad6d4933a22b4b65cea8982274b25" id="r_ga088ad6d4933a22b4b65cea8982274b25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga088ad6d4933a22b4b65cea8982274b25">thread_switch_handler</a> (int signo)</td></tr>
 <tr class="memdesc:ga088ad6d4933a22b4b65cea8982274b25"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function handles the heavy lifting of thread switching.  <br /></td></tr>
 <tr class="separator:ga088ad6d4933a22b4b65cea8982274b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga55e4d992a8bd4d9e4b368bdec57a999d" id="r_ga55e4d992a8bd4d9e4b368bdec57a999d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga55e4d992a8bd4d9e4b368bdec57a999d">thread_preempt_handler</a> (int signo, siginfo_t *info, void *context)</td></tr>
-<tr class="memdesc:ga55e4d992a8bd4d9e4b368bdec57a999d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread stopping/resuming handler.  <br /></td></tr>
-<tr class="separator:ga55e4d992a8bd4d9e4b368bdec57a999d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0b8366627990f55eac34dfb7fe36a099" id="r_ga0b8366627990f55eac34dfb7fe36a099"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga0b8366627990f55eac34dfb7fe36a099">kernel_service_handler</a> (int signo)</td></tr>
 <tr class="memdesc:ga0b8366627990f55eac34dfb7fe36a099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handler for kernel service call.  <br /></td></tr>
 <tr class="separator:ga0b8366627990f55eac34dfb7fe36a099"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,15 +138,9 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga950a17b93855339a83aa596636a0234d" id="r_ga950a17b93855339a83aa596636a0234d"><td class="memItemLeft" align="right" valign="top">__thread int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga950a17b93855339a83aa596636a0234d">current_thread_id</a> = -1</td></tr>
-<tr class="memdesc:ga950a17b93855339a83aa596636a0234d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current CMRX thread ID.  <br /></td></tr>
-<tr class="separator:ga950a17b93855339a83aa596636a0234d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf755bea0ee650e391e9ae2775b7131f4" id="r_gaf755bea0ee650e391e9ae2775b7131f4"><td class="memItemLeft" align="right" valign="top">static volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#gaf755bea0ee650e391e9ae2775b7131f4">kernel_execute_thread_switch</a> = false</td></tr>
 <tr class="memdesc:gaf755bea0ee650e391e9ae2775b7131f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shall thread switch be performed? While kernel timer is called periodically, it doesn't perform thread switch inside the handler.  <br /></td></tr>
 <tr class="separator:gaf755bea0ee650e391e9ae2775b7131f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade1193dcfcd53b9f7595339abce5a551" id="r_gade1193dcfcd53b9f7595339abce5a551"><td class="memItemLeft" align="right" valign="top">static pthread_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#gade1193dcfcd53b9f7595339abce5a551">kernel_thread</a></td></tr>
-<tr class="memdesc:gade1193dcfcd53b9f7595339abce5a551"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the kernel thread.  <br /></td></tr>
-<tr class="separator:gade1193dcfcd53b9f7595339abce5a551"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2270ed6c370218d82eed7be5845f1718" id="r_ga2270ed6c370218d82eed7be5845f1718"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structSyscall__Entry__t.html">Syscall_Entry_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux__impl.html#ga2270ed6c370218d82eed7be5845f1718">syscalls</a> [256] = { 0 }</td></tr>
 <tr class="memdesc:ga2270ed6c370218d82eed7be5845f1718"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of registered syscalls.  <br /></td></tr>
 <tr class="separator:ga2270ed6c370218d82eed7be5845f1718"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -339,44 +330,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga55e4d992a8bd4d9e4b368bdec57a999d" name="ga55e4d992a8bd4d9e4b368bdec57a999d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga55e4d992a8bd4d9e4b368bdec57a999d">&#9670;&#160;</a></span>thread_preempt_handler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void thread_preempt_handler </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>signo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">siginfo_t *&#160;</td>
-          <td class="paramname"><em>info</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>context</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Thread stopping/resuming handler. </p>
-<p>This function handles stopping and restarting the thread without thread cooperating voluntarily in the action. It does so by installing itself as a signal handler. If signal is sent which causes this handler to be activated, then this function blocks on a read on thread's private pipe.</p>
-<p>When something is written into the pipe, then this handler unblocks and normal thread operation is resumed. </p>
-
-</div>
-</div>
 <a id="ga7aa1e323243992dc3c2b91db8b0b771a" name="ga7aa1e323243992dc3c2b91db8b0b771a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga7aa1e323243992dc3c2b91db8b0b771a">&#9670;&#160;</a></span>thread_startup_handler()</h2>
 
@@ -395,6 +348,7 @@ Variables</h2></td></tr>
 
 <p>Routine to jump-start guest thread host. </p>
 <p>This routine will configure the Linux thread to act as a host for CMRX thread. We don't want ' This is a Linux thread that hosts guest thread. We don't want these threads to process timer signals. These are basically ever only sensitive to SIGUSR1 which is used to force preemption. </p>
+<p>Allow reception of SIGALRM, SIGUSR1 (PendSV) and SIGURG (SVCHandler) signals in CMRX thread hosting threads</p>
 
 </div>
 </div>
@@ -436,28 +390,17 @@ Variables</h2></td></tr>
 
 <p>Trigger thread switch if requested. </p>
 <p>Initiate thread switch sequence if it was requested.</p>
-<p>Triggers thread switch interrupt if requested and clears the flag. </p>
+<p>Triggers thread switch interrupt if requested and clears the flag. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">thread_stopped</td><td>true if thread is already stopped (e.g. due to entering system call) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This should always be ran in CMRX thread context </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="ga950a17b93855339a83aa596636a0234d" name="ga950a17b93855339a83aa596636a0234d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga950a17b93855339a83aa596636a0234d">&#9670;&#160;</a></span>current_thread_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__thread int current_thread_id = -1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Current CMRX thread ID. </p>
-<p>This is a thread-local variable, so each thread has its own copy It contains CMRX thread ID of the current Linux thread </p>
-
-</div>
-</div>
 <a id="gaf755bea0ee650e391e9ae2775b7131f4" name="gaf755bea0ee650e391e9ae2775b7131f4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf755bea0ee650e391e9ae2775b7131f4">&#9670;&#160;</a></span>kernel_execute_thread_switch</h2>
 
@@ -480,31 +423,6 @@ Variables</h2></td></tr>
 
 <p>Shall thread switch be performed? While kernel timer is called periodically, it doesn't perform thread switch inside the handler. </p>
 <p>Rather it schedules thread switch interrupt which is then executed synchronously by the "kernel" thread. This flag holds information if this thread switch should be requested or not. Due to the semantics of CMRX it is possible that this flag will be activated and then deactivated before thread switch happens (e.g. because interrupt caused thread wakeup before thread managed to be scheduled out of CPU). </p>
-
-</div>
-</div>
-<a id="gade1193dcfcd53b9f7595339abce5a551" name="gade1193dcfcd53b9f7595339abce5a551"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gade1193dcfcd53b9f7595339abce5a551">&#9670;&#160;</a></span>kernel_thread</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">pthread_t kernel_thread</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>ID of the kernel thread. </p>
-<p>It contains Pthread thread ID of where kernel syscalls are handled. This is used to dispatch emulated interrupts. </p>
 
 </div>
 </div>

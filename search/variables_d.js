@@ -8,5 +8,6 @@ var searchData=
   ['os_5fstacks_5',['os_stacks',['../group__os__sched.html#gaea74e023a260529e36ff7609c8a53555',1,'os_stacks:&#160;sched.c'],['../group__os__sched.html#gaea74e023a260529e36ff7609c8a53555',1,'os_stacks:&#160;sched.c'],['../group__os__kernel.html#gaea74e023a260529e36ff7609c8a53555',1,'os_stacks:&#160;sched.c'],['../group__os__sched.html#gaea74e023a260529e36ff7609c8a53555',1,'os_stacks:&#160;sched.c']]],
   ['os_5fthread_5fdefinitions_6',['os_thread_definitions',['../group__arch__linux__impl.html#ga72adc2af4b9efc69ab8b0439d311bc1e',1,'static.c']]],
   ['os_5fthreads_7',['os_threads',['../group__os__kernel.html#ga5bcb4dcf2afcf71f716d8dc85b18134d',1,'os_threads:&#160;sched.c'],['../group__os__sched.html#ga5bcb4dcf2afcf71f716d8dc85b18134d',1,'os_threads:&#160;sched.c']]],
-  ['owner_8',['owner',['../structfutex__t.html#a814958656e7c88124744564d9f8c0864',1,'futex_t']]]
+  ['outcome_8',['outcome',['../structsyscall__dispatch__t.html#a99901041b52cd5e3dd55fb9ea609deb5',1,'syscall_dispatch_t']]],
+  ['owner_9',['owner',['../structfutex__t.html#a814958656e7c88124744564d9f8c0864',1,'futex_t']]]
 ];

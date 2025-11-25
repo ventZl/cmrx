@@ -110,11 +110,8 @@ $(document).ready(function(){initNavTree('structArch__State__t.html',''); initRe
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:ad935c55237c6bbd29aaeace9615fafda" id="r_ad935c55237c6bbd29aaeace9615fafda"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#ad935c55237c6bbd29aaeace9615fafda">block_pipe</a> [2]</td></tr>
-<tr class="memdesc:ad935c55237c6bbd29aaeace9615fafda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends of pipe that is used to simulate thread preemption.  <br /></td></tr>
+<tr class="memdesc:ad935c55237c6bbd29aaeace9615fafda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipe used to force thread to stop.  <br /></td></tr>
 <tr class="separator:ad935c55237c6bbd29aaeace9615fafda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90a36d9db97bc468ef70f7e0358a117d" id="r_a90a36d9db97bc468ef70f7e0358a117d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#a90a36d9db97bc468ef70f7e0358a117d">syscall_pipe</a> [2]</td></tr>
-<tr class="memdesc:a90a36d9db97bc468ef70f7e0358a117d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends of pipe that is used to synchronize thread and syscall.  <br /></td></tr>
-<tr class="separator:a90a36d9db97bc468ef70f7e0358a117d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acae038fb3118503f8892f30f98662804" id="r_acae038fb3118503f8892f30f98662804"><td class="memItemLeft" align="right" valign="top">volatile atomic_int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#acae038fb3118503f8892f30f98662804">is_suspended</a></td></tr>
 <tr class="memdesc:acae038fb3118503f8892f30f98662804"><td class="mdescLeft">&#160;</td><td class="mdescRight">State information on if thread is suspended or not (unused)  <br /></td></tr>
 <tr class="separator:acae038fb3118503f8892f30f98662804"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,7 +146,10 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ends of pipe that is used to simulate thread preemption. </p>
+<p>Pipe used to force thread to stop. </p>
+<p>Underlying mechanism is using POSIX threads to host CMRX threads. These can't be stopped from outside, so we use this mechanism to inject synchronization points into threads.</p>
+<p>Use thread_suspend_execution() in whatever place you need to suspend thread execution for whatever reason other hardware would do so - e.g. switch into kernel context or interrupt.</p>
+<p>@Note Offset [1] is the write (unblock) end, offset [0] is the read (block) end. </p>
 
 </div>
 </div>
@@ -214,22 +214,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Buffer for dispatching system calls to the kernel and return values back to the userspace. </p>
-
-</div>
-</div>
-<a id="a90a36d9db97bc468ef70f7e0358a117d" name="a90a36d9db97bc468ef70f7e0358a117d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90a36d9db97bc468ef70f7e0358a117d">&#9670;&#160;</a></span>syscall_pipe</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Arch_State_t::syscall_pipe[2]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Ends of pipe that is used to synchronize thread and syscall. </p>
 
 </div>
 </div>

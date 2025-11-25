@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: Timers</title>
+<title>C Microkernel Realtime eXecutive: src/os/arch/linux/interrupt.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__api__timer.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('interrupt_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,76 +98,19 @@ $(document).ready(function(){initNavTree('group__api__timer.html',''); initResiz
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Timers<div class="ingroups"><a class="el" href="group__api.html">Kernel API</a></div></div></div>
+  <div class="headertitle"><div class="title">interrupt.h</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>API to interrupt, or periodically schedule execution of a thread.  
-<a href="#details">More...</a></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>API to interrupt, or periodically schedule execution of a thread. </p>
-<p>Kernel API provides two kinds of interruptions: one-time and periodic. one-time interruption is always synchronous - the thread won't be given control until delay elapses. Kernel is free to schedule any other thread in this time if delay is long enough.</p>
-<p>Periodic delays are always asynchronous - the thread won't be stopped after the delay is scheduled. Once the delay elapses, kernel will deliver a signal to the requesting thread. If thread has nothing to do until the delay elapses, it may stop itself via calling <a class="el" href="group__api__signal.html#ga0394525b701b25f379ac9869201323d1">kill()</a> using SIG_STOP signal. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="ga9f408bf7753a44225214c63f3285e440" name="ga9f408bf7753a44225214c63f3285e440"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9f408bf7753a44225214c63f3285e440">&#9670;&#160;</a></span>setitimer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int setitimer </td>
-          <td>(</td>
-          <td class="paramtype">unsigned&#160;</td>
-          <td class="paramname"><em>microseconds</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set interval timer to be called periodically. </p>
-<p>Configures interval timer, which will periodically be called, until cancelled. Timer is called by delivering the SIGTIMER signal to the thread. If thread is stopped, then SIGTIMER will resume it and call signal handler. If there is no signal handler configured, then thread will just be resumed. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">microseconds</td><td>period of timer signals received. If set to 0, then interval timer is cancelled. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga6987ccb3233088dddefcf26bb39f249a" name="ga6987ccb3233088dddefcf26bb39f249a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6987ccb3233088dddefcf26bb39f249a">&#9670;&#160;</a></span>usleep()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int usleep </td>
-          <td>(</td>
-          <td class="paramtype">unsigned&#160;</td>
-          <td class="paramname"><em>microseconds</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Suspend thread execution for short time. </p>
-<p>Suspends thread execution for given amount of time. After this amount of time elapses, thread execution is resumed. Suspend is one-time and <a class="el" href="group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a" title="Suspend thread execution for short time.">usleep()</a> has to be called again in order to sleep again. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">microseconds</td><td>amount of microseconds (1/100000 s) to sleep </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Actual amount of time which thread will be suspended depends on system tick granularity and status of scheduler at the time of wake-up. If there is another thread running/ready with equal/higher priority, then actual wake-up may be delayed by the time consumed by this high-priority thread. </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keywordtype">void</span> irq_init();</div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_f4f836dbb47c7c2a6355e2b51fb79a34.html">arch</a></li><li class="navelem"><a class="el" href="dir_2be9baecef342b8b8c87f53c9fec8927.html">linux</a></li><li class="navelem"><b>interrupt.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

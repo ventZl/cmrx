@@ -272,7 +272,7 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 </div><div class="memdoc">
 
 <p>Thread autostart facility. </p>
-<p>Use this to automatically create thread upon kernel start. With this you don't need to call <a class="el" href="group__api__thread.html#gab8850314cd6f6c4738a61cc3294dbbe0">thread_create()</a> explicitly. Kernel will create and initialize thread for you. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Use this to automatically create thread upon kernel start. With this you don't need to call <a class="el" href="group__api__thread.html#ga4a769fc4930db67b88da6abbad4ca2d2">thread_create()</a> explicitly. Kernel will create and initialize thread for you. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">application</td><td>name of process/application you want to bind your thread to. </td></tr>
     <tr><td class="paramname">entrypoint</td><td>entrypoint function name. This function will be given control once thread starts. </td></tr>
@@ -291,7 +291,7 @@ $(document).ready(function(){initNavTree('group__api__init.html',''); initResiza
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VTABLE&#160;&#160;&#160;__attribute__((section(&quot;.vtable.&quot;))) const</td>
+          <td class="memname">#define VTABLE&#160;&#160;&#160;CMRX_VTABLE_SPECIFIER</td>
         </tr>
       </table>
 </div><div class="memdoc">

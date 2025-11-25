@@ -185,7 +185,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Description of CMRX abstract machine. </p>
-<p>CMRX offers primitives to perform unaddressed synchronization unlike <a class="el" href="group__api__signal.html#ga31cb184e9e6351ce176c3324b7b49a24">kill()</a> call, which allows thread to send a signal to another thread, API in this group uses memory location as a designator, rather than specific thread.</p>
+<p>CMRX offers primitives to perform unaddressed synchronization unlike <a class="el" href="group__api__signal.html#ga0394525b701b25f379ac9869201323d1">kill()</a> call, which allows thread to send a signal to another thread, API in this group uses memory location as a designator, rather than specific thread.</p>
 <p>CMRX expects to run on abstract machine providing functionality that can be accessed by API described here. CMRX doesn't care nor access the underlying platform by any other means and makes no strong assumptions on the target platform other than assumptions presented here. The target plaform described by the abstract machine can be whatever that meets requirements stated here.</p>
 <p>This list is by no means definitive. Each architecture will require its own mechanisms to be implemented so the kernel can actually work. Mechanisms CMRX requires to be present in the architecture and be implemented are:</p><ul>
 <li>service / system call mechanism that allows to call the kernel from usermode code</li>
@@ -229,7 +229,7 @@ mpu.h</h2>
 <h2><a class="anchor" id="rpc_h"></a>
 rpc.h</h2>
 <p>This file implements two of the syscalls which are related to the RPC mechanism: Entering and leaving the RPC calls.</p>
-<p><a class="el" href="group__arch__arm__rpc.html#ga9ee8f29f3009ad125af02a612603504f">os_rpc_call()</a> - perform RPC call <a class="el" href="group__arch__arm__rpc.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return()</a> - return from RPC call back to the caller context</p>
+<p><a class="el" href="group__arch__arm__rpc.html#gad8854252fa6004476c67eb3f2e29bcf5">os_rpc_call()</a> - perform RPC call <a class="el" href="group__arch__arm__rpc.html#ga2b0268c1c8ecd0d6e3194f0f52be350c">os_rpc_return()</a> - return from RPC call back to the caller context</p>
 <h2><a class="anchor" id="runtime_h"></a>
 runtime.h</h2>
 <p>This file implements some architecture-specific callbacks and structures. It allows the architecture to customize the thread control block and react to certain events.</p>

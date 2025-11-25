@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('include_2cmrx_2application_8h_source.h
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define _OS_THREAD_CREATE(application, entrypoint, data, priority, core) \</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core)</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">   32</a></span><span class="preprocessor">#define VTABLE __attribute__((section(&quot;.vtable.&quot;))) const</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="group__api__init.html#gaa4a137442c139400b647ac62b40ea51a">   32</a></span><span class="preprocessor">#define VTABLE CMRX_VTABLE_SPECIFIER</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="foldopen" id="foldopen00039" data-start="" data-end="">
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="group__api__init.html#gaac9006478e1f1b60bc348f45b4eb0575">   39</a></span><span class="preprocessor">#define OS_APPLICATION_MMIO_RANGE(application, from, to)\</span></div>

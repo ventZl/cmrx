@@ -109,22 +109,22 @@ $(document).ready(function(){initNavTree('structRPC__Service__t__.html',''); ini
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aad89bf996ea0eeba4f7e3b8fb590766d" id="r_aad89bf996ea0eeba4f7e3b8fb590766d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPC__Service__t__.html#aad89bf996ea0eeba4f7e3b8fb590766d">vtable</a></td></tr>
-<tr class="memdesc:aad89bf996ea0eeba4f7e3b8fb590766d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of the VTable which contains pointers to functions that implement this service.  <br /></td></tr>
-<tr class="separator:aad89bf996ea0eeba4f7e3b8fb590766d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a202dd170ff2c2359e82d7a23f0a2f7ca" id="r_a202dd170ff2c2359e82d7a23f0a2f7ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPC__Service__t__.html#a202dd170ff2c2359e82d7a23f0a2f7ca">vtable</a></td></tr>
+<tr class="memdesc:a202dd170ff2c2359e82d7a23f0a2f7ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of the VTable which contains pointers to functions that implement this service.  <br /></td></tr>
+<tr class="separator:a202dd170ff2c2359e82d7a23f0a2f7ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Basic structure of any RPC object. </p>
 <p>The RPC API requires, that the first member of any RPC callable service is the pointer to the VTable. This is checked at compile time and build will fail if this requirement is not satisfied. Real world RPC object won't contain just the pointer to the VTable but members containin the state of the RPC object will follow. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="aad89bf996ea0eeba4f7e3b8fb590766d" name="aad89bf996ea0eeba4f7e3b8fb590766d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad89bf996ea0eeba4f7e3b8fb590766d">&#9670;&#160;</a></span>vtable</h2>
+<a id="a202dd170ff2c2359e82d7a23f0a2f7ca" name="a202dd170ff2c2359e82d7a23f0a2f7ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a202dd170ff2c2359e82d7a23f0a2f7ca">&#9670;&#160;</a></span>vtable</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a>* RPC_Service_t_::vtable</td>
+          <td class="memname"><a class="el" href="group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239">VTable_t</a> RPC_Service_t_::vtable</td>
         </tr>
       </table>
 </div><div class="memdoc">

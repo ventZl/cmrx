@@ -5,7 +5,7 @@ var searchData=
   ['get_5fexception_5fargument_2',['get_exception_argument',['../group__arch__arm__cortex.html#ga33c3e222f575df5864ca025a3b73f165',1,'cortex.h']]],
   ['get_5fsleep_5ftime_3',['get_sleep_time',['../group__os__timer.html#ga298a4922fb4180235c76c8cc8fecb6f5',1,'timer.c']]],
   ['get_5fsleeptime_4',['get_sleeptime',['../group__os__timer.html#gacee9648cc90be455d550756ca473a56f',1,'timer.c']]],
-  ['get_5ftid_5',['get_tid',['../group__api__thread.html#ga52f86ad5da2364f17909fcb76bf84d71',1,'get_tid():&#160;thread.c'],['../group__api__thread.html#ga52f86ad5da2364f17909fcb76bf84d71',1,'get_tid():&#160;thread.c']]],
-  ['get_5fvtable_5fprocess_6',['get_vtable_process',['../group__os__rpc.html#gab6a04c90d0385e2685fb5e494af298ff',1,'rpc.c']]],
+  ['get_5ftid_5',['get_tid',['../group__api__thread.html#ga24a2718919c2ae4cbca6560ca7ebebc9',1,'get_tid():&#160;thread.c'],['../group__api__thread.html#ga24a2718919c2ae4cbca6560ca7ebebc9',1,'get_tid():&#160;thread.c']]],
+  ['get_5fvtable_5fprocess_6',['get_vtable_process',['../group__os__rpc.html#gad892fea0588b9995ed3d07a279549da2',1,'rpc.c']]],
   ['getmicrotime_7',['getmicrotime',['../group__api__standard.html#gab9090f01493a7759cdd3dd5bf4d917d2',1,'std.c']]]
 ];
