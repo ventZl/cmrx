@@ -107,8 +107,8 @@ $(document).ready(function(){initNavTree('src_2os_2arch_2arm_2cmsis_2arch_2appli
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#define CMRX_VTABLE_SPECIFIER __attribute__((section(&quot;.vtable.&quot;))) const</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">/* File intentionally left blank */</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define CMRX_APPLICATION_INSTANCE_ATTRIBUTES __attribute__((sed, section(&quot;.applications&quot;) ))</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#define CMRX_THREAD_AUTOCREATE_ATTRIBUTES __attribute__((externally_visible, used, section(&quot;.thread_create&quot;) ))</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define CMRX_APPLICATION_INSTANCE_ATTRIBUTES __attribute__((used, section(&quot;.applications&quot;) ))</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#define CMRX_THREAD_AUTOCREATE_ATTRIBUTES __attribute__((used, section(&quot;.thread_create&quot;) ))</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define CMRX_APPLICATION_INSTANCE_CONSTRUCTOR(application) \</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">extern void * __APPL_SYMBOL(application, data_start);\</span></div>
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('src_2os_2arch_2arm_2cmsis_2arch_2appli
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">        { &amp;__APPL_SYMBOL(application, shared_start), &amp;__APPL_SYMBOL(application, shared_end) }\</span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">    },\</span></div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">    { &amp;__APPL_SYMBOL(application, vtable_start), &amp;__APPL_SYMBOL(application, vtable_end) }\</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">};</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">}</span></div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core) \</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">CMRX_THREAD_AUTOCREATE_ATTRIBUTES const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\</span></div>
@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('src_2os_2arch_2arm_2cmsis_2arch_2appli
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">    data,\</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">    priority,\</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">    core\</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">};</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">}</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->

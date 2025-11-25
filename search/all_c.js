@@ -1,7 +1,7 @@
 var searchData=
 [
   ['id_0',['id',['../structSyscall__Entry__t.html#ac3473bf96a2024c57cf6fdafd216ac6b',1,'Syscall_Entry_t']]],
-  ['implementation_1',['implementation',['../rpc_intro.html#autotoc_md39',1,'Define service implementation'],['../group__api__rpc.html#gaac2c999e12c83857c3437c413cb7d47c',1,'IMPLEMENTATION:&#160;implementation.h'],['../group__arch__arm__os.html',1,'OS services implementation'],['../group__arch__arm__rpc.html',1,'RPC implementation'],['../group__arch__arm__sched.html',1,'Scheduler implementation'],['../group__arch__arm__signal.html',1,'Signals implementation'],['../group__arch__arm__syscall.html',1,'System calls implementation']]],
+  ['implementation_1',['implementation',['../rpc_intro.html#autotoc_md40',1,'Define service implementation'],['../group__api__rpc.html#gaac2c999e12c83857c3437c413cb7d47c',1,'IMPLEMENTATION:&#160;implementation.h'],['../group__arch__arm__os.html',1,'OS services implementation'],['../group__arch__arm__rpc.html',1,'RPC implementation'],['../group__arch__arm__sched.html',1,'Scheduler implementation'],['../group__arch__arm__signal.html',1,'Signals implementation'],['../group__arch__arm__syscall.html',1,'System calls implementation']]],
   ['implementation_20details_2',['Implementation details',['../group__arch__linux__impl.html',1,'']]],
   ['implementation_20of_20rpc_20interfaces_3',['Implementation of RPC interfaces',['../group__api__rpc.html#api_rpc_implementation',1,'']]],
   ['implementation_20sources_4',['Port implementation sources',['../group__arch__arch.html#sources',1,'']]],
@@ -12,10 +12,10 @@ var searchData=
   ['integrating_20cmrx_20into_20cubemx_20project_9',['integrating cmrx into cubemx project',['../getting_started_cubemx.html',1,'HOWTO: Integrating CMRX into CubeMX project'],['../getting_started_cubemx.html#autotoc_md45',1,'Integrating CMRX into CubeMX project']]],
   ['integrating_20cmrx_20into_20pico_20sdk_20project_10',['integrating cmrx into pico sdk project',['../getting_started_picosdk.html',1,'HOWTO: Integrating CMRX into Pico-SDK project'],['../getting_started_picosdk.html#autotoc_md65',1,'Integrating CMRX into Pico-SDK project']]],
   ['integrating_20vendor_20sdks_11',['Integrating vendor SDKs',['../hal_integration.html',1,'overview']]],
-  ['integration_12',['integration',['../getting_started_cubemx.html#autotoc_md48',1,'2. Configure CubeMX integration'],['../getting_started_picosdk.html#autotoc_md67',1,'2. Configuring Pico-SDK integration']]],
+  ['integration_12',['integration',['../getting_started_cubemx.html#autotoc_md47',1,'2. Configure CubeMX integration'],['../getting_started_picosdk.html#autotoc_md67',1,'2. Configuring Pico-SDK integration']]],
   ['interface_13',['RPC interface',['../rpc_intro.html#autotoc_md32',1,'']]],
   ['interface_5fcast_14',['interface_cast',['../group__api__rpc.html#ga81ba1a4a057e20afe2dff72090f8193d',1,'rpc.h']]],
-  ['interfaces_15',['interfaces',['../rpc_intro.html#autotoc_md35',1,'Declare interfaces'],['../group__api__rpc.html#api_rpc_implementation',1,'Implementation of RPC interfaces']]],
+  ['interfaces_15',['interfaces',['../rpc_intro.html#autotoc_md36',1,'Declare interfaces'],['../group__api__rpc.html#api_rpc_implementation',1,'Implementation of RPC interfaces']]],
   ['interfaces_20vtables_16',['RPC interfaces (vtables)',['../group__api__rpc.html#api_rpc_interface',1,'']]],
   ['interrupt_20service_20routines_17',['interrupt service routines',['../group__os__isr.html',1,'Interrupt service routines'],['../group__api__isr.html',1,'Interrupt Service Routines']]],
   ['interrupts_18',['Interrupts',['../exec_model.html#autotoc_md49',1,'']]],
