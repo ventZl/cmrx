@@ -27,7 +27,12 @@
 
 void rpc_return(void);
 
-int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
+/* To verify that we are using the right type and compiler won't cull
+ * our data.
+ */
+_Static_assert(sizeof(unsigned long) == sizeof(void *), "Unsigned long type size differs from architecture pointer size.");
+
+int os_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3)
 {
     (void) arg0;
     (void) arg1;
