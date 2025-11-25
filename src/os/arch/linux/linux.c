@@ -147,19 +147,25 @@ int system_call_entrypoint(unsigned long arg0,
 
 /** This function handles the heavy lifting of thread switching.
  *
- * It dispatches signal to the running thread which makes it pause.
- * Then another thread is woken-up by unblocking it.
+ * Another thread is woken-up by unblocking it, then this thread is suspended.
  */
 void thread_switch_handler(int signo)
 {
     assert(signo == SIGUSR1);
-    assert(current_thread_id != -1);
+    is_cmrx_thread();
 
     /* Check that we are running in the context of thread that
      * CMRX considers the one that is currently running.
      */
     struct OS_core_state_t * cpu_state = &core[coreid()];
     assert(cpu_state->thread_current == current_thread_id);
+
+    // Spurious execution of this handler
+    // This may happen as signals don't behave the same as interrupts
+    if (cpu_state->thread_current == cpu_state->thread_next)
+    {
+        return;
+    }
 
     if (os_threads[cpu_state->thread_current].state == THREAD_STATE_RUNNING)
     {
