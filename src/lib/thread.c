@@ -1,5 +1,6 @@
 #include <cmrx/ipc/thread.h>
 #include <cmrx/sys/syscalls.h>
+#include <cmrx/api.h>
 #include <cmrx/assert.h>
 
 __SYSCALL int sched_yield()

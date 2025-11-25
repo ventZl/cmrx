@@ -1,5 +1,6 @@
 #include <cmrx/ipc/signal.h>
 #include <cmrx/sys/syscalls.h>
+#include <cmrx/api.h>
 
 __SYSCALL int signal(int signo, void (*sighandler)(uint32_t))
 {
