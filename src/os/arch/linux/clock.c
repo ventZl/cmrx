@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include "linux.h"
 #include <stdbool.h>
-
+#include "thread.h"
+#include <assert.h>
 
 /* Linux port of CMRX has one default timing provider bundled with kernel */
 
@@ -25,7 +26,9 @@ static timer_t systick_timer;
 
 void sigalrm_handler(int signo)
 {
-    (void) signo;
+    assert(signo == SIGALRM);
+    is_cmrx_thread();
+
     os_sched_timing_callback(systick_us);
     trigger_pendsv_if_needed();
 }

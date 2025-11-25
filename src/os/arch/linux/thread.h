@@ -31,3 +31,14 @@ void enter_system_call();
 /** Transfer control to pending service mechanism.
  */
 void request_pending_service();
+
+/** Verify that current thread is actually a CMRX thread context.
+ * This function will either do nothing or will abort.
+ * It will abort if it is detected that it is not executed from
+ * thread which bears CMRX thread.
+ *
+ * Use this function to check that your interrupt handlers
+ * are executed synchronously with CMRX threads (= CMRX thread
+ * is blocked while this is executed).
+ */
+void is_cmrx_thread();

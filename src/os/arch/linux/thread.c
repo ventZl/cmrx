@@ -16,7 +16,7 @@ __thread int current_thread_id = -1;
 
 void thread_suspend_execution(bool initial)
 {
-    assert(current_thread_id != -1);
+    is_cmrx_thread();
     assert(os_threads[current_thread_id].arch.is_suspended == 0);
 
     // At this point the thread was suspended!
@@ -47,7 +47,7 @@ void thread_suspend_execution(bool initial)
 void thread_resume_execution(Thread_t thread_id)
 {
     assert(thread_id < OS_THREADS);
-    assert(current_thread_id != -1);
+    is_cmrx_thread();
     assert(current_thread_id != thread_id);
     assert(os_threads[thread_id].arch.is_suspended == 1);
 
@@ -66,4 +66,9 @@ void enter_system_call()
 void request_pending_service()
 {
     pthread_kill(pthread_self(), SIGUSR1);
+}
+
+void is_cmrx_thread()
+{
+    assert(current_thread_id != -1);
 }

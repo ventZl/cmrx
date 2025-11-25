@@ -4,6 +4,7 @@
 #include <assert.h>
 
 #include "thread.h"
+#include "linux.h"
 
 typedef void (IRQ_Handler_t)();
 
@@ -64,6 +65,8 @@ void irq_handler(int signo)
         }
         interrupt_flags &= ~(1 << q);
     }
+
+    trigger_pendsv_if_needed();
 }
 
 void irq_init()
@@ -76,6 +79,6 @@ void irq_init()
 //    sigusr2_action.sa_flags = SA_NODEFER;
     sigusr2_action.sa_handler = &irq_handler;
     sigemptyset(&sigusr2_action.sa_mask);
-
+    sigaddset(&sigusr2_action.sa_mask, SIGALRM);
     sigaction(SIGUSR2, &sigusr2_action, NULL);
 }
