@@ -31,7 +31,7 @@ typedef struct RPC_Service_t_ RPC_Service_t;
  * @param arg2 optional argument to RPC call. Can only be of integral 32-bit large type
  * @param arg3 optional argument to RPC call. Can only be of integral 32-bit large type
  */
-typedef int (*RPC_Method_t)(RPC_Service_t * service, unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3);
+typedef int (*RPC_Method_t)(RPC_Service_t * service, unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long zarg3);
 
 /** Type definition of VTable.
  * VTable is technically just an array of pointers to functions.
@@ -97,7 +97,7 @@ Process_t rpc_stack_top();
  * jumping into this method. Arguments used to call _rpc_call() are passed to
  * callee.
  */
-int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3);
+int os_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3);
 
 /** Kernel implementation of rpc_return syscall.
  *

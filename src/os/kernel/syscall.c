@@ -54,7 +54,7 @@ REGISTER_SYSCALLS(
 
 #pragma GCC diagnostic pop
 
-int os_system_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3, uint8_t syscall_id)
+int os_system_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3, uint8_t syscall_id)
 {
 	for (struct Syscall_Entry_t * syscall = os_syscalls_start(); syscall < os_syscalls_end(); ++syscall)
 	{

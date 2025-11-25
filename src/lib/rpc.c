@@ -4,7 +4,7 @@
 #include <cmrx/assert.h>
 #include <arch/sysenter.h>
 
-__SYSCALL int _rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3, void * service, unsigned method, unsigned canary)
+__SYSCALL int _rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3, void * service, unsigned method, unsigned canary)
 {
     (void) arg0;
     (void) arg1;
