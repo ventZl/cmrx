@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: include/cmrx/clock.h Source File</title>
+<title>C Microkernel Realtime eXecutive: include/extra/emulator/peripheral.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('include_2cmrx_2clock_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('peripheral_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,31 +98,37 @@ $(document).ready(function(){initNavTree('include_2cmrx_2clock_8h_source.html','
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">clock.h</div></div>
+  <div class="headertitle"><div class="title">peripheral.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__api__timing.html#gaa382f230650e9c08f3d5dec13da6fbd4">timing_provider_schedule</a>(<span class="keywordtype">long</span> <a class="code hl_function" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__api__timing.html#ga32ca98f569fe077cd53c29a5417f80de">timing_provider_delay</a>(<span class="keywordtype">long</span> <a class="code hl_function" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="keywordtype">long</span> <a class="code hl_function" href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769">timing_get_current_cpu_freq</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="keyword">extern</span> <span class="keywordtype">long</span> <a class="code hl_function" href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback</a>(<span class="keywordtype">long</span> <a class="code hl_function" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>);</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="ttc" id="agroup__api__timing_html_ga32ca98f569fe077cd53c29a5417f80de"><div class="ttname"><a href="group__api__timing.html#ga32ca98f569fe077cd53c29a5417f80de">timing_provider_delay</a></div><div class="ttdeci">void timing_provider_delay(long delay_us)</div><div class="ttdoc">Perform tight busy-wait delay.</div><div class="ttdef"><b>Definition</b> systick.c:63</div></div>
-<div class="ttc" id="agroup__api__timing_html_gaa382f230650e9c08f3d5dec13da6fbd4"><div class="ttname"><a href="group__api__timing.html#gaa382f230650e9c08f3d5dec13da6fbd4">timing_provider_schedule</a></div><div class="ttdeci">void timing_provider_schedule(long delay_us)</div><div class="ttdoc">Schedule next timer callback to kernel.</div><div class="ttdef"><b>Definition</b> systick.c:52</div></div>
-<div class="ttc" id="agroup__api__timing_html_gaa7613a35fc20c795f3fcfe3042100769"><div class="ttname"><a href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769">timing_get_current_cpu_freq</a></div><div class="ttdeci">long timing_get_current_cpu_freq(void)</div><div class="ttdoc">Provide information on the current CPU speed.</div><div class="ttdef"><b>Definition</b> clock.c:78</div></div>
-<div class="ttc" id="agroup__api__timing_html_gad2eee99d75e6b65c227f65a6880f2e9f"><div class="ttname"><a href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback</a></div><div class="ttdeci">long os_sched_timing_callback(long delay_us)</div><div class="ttdoc">Kernel callback for timing provider.</div><div class="ttdef"><b>Definition</b> sched.c:158</div></div>
-<div class="ttc" id="agroup__os__timer_html_ga5a54481fa8804be03b96cbc5d85ec03b"><div class="ttname"><a href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a></div><div class="ttdeci">static void delay_us(uint32_t period_us)</div><div class="ttdoc">Perform short busy wait.</div><div class="ttdef"><b>Definition</b> timer.c:178</div></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define _R(instance, reg)   _Generic((instance-&gt;reg), \</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">uint8_t : cmrx_emu_reg_R8,\</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">uint16_t : cmrx_emu_reg_R16,\</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">uint32_t : cmrx_emu_reg_R32)(instance, &amp;instance-&gt;reg)</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#define _W(instance, reg, value)  _Generic((instance-&gt;reg), \</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">uint8_t : cmrx_emu_reg_W8,\</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">uint16_t : cmrx_emu_reg_W16,\</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">uint32_t : cmrx_emu_reg_W32)(instance, &amp;instance-&gt;reg, value)</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>uint8_t cmrx_emu_reg_R8(<span class="keywordtype">void</span> * instance, <span class="keyword">const</span> <span class="keyword">volatile</span> uint8_t * source);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>uint16_t cmrx_emu_reg_R16(<span class="keywordtype">void</span> * instance, <span class="keyword">const</span> <span class="keyword">volatile</span> uint16_t * source);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>uint32_t cmrx_emu_reg_R32(<span class="keywordtype">void</span> * instance, <span class="keyword">const</span> <span class="keyword">volatile</span> uint32_t * source);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">void</span> cmrx_emu_reg_W8(<span class="keywordtype">void</span> * instance, <span class="keyword">volatile</span> uint8_t * dest, uint8_t value);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keywordtype">void</span> cmrx_emu_reg_W16(<span class="keywordtype">void</span> * instance, <span class="keyword">volatile</span> uint16_t * dest, uint16_t value);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keywordtype">void</span> cmrx_emu_reg_W32(<span class="keywordtype">void</span> * instance, <span class="keyword">volatile</span> uint32_t * dest, uint32_t value);</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_98202475f9f46bced46f85653c1a7139.html">cmrx</a></li><li class="navelem"><b>clock.h</b></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_19c6994ae8f47c929da9d9850f36dcd3.html">extra</a></li><li class="navelem"><a class="el" href="dir_2f740f176a04c261db8484f8d75f6764.html">emulator</a></li><li class="navelem"><b>peripheral.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

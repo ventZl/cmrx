@@ -5,7 +5,7 @@ var searchData=
   ['kernel_20documentation_2',['Kernel documentation',['../group__os.html',1,'']]],
   ['kernel_20events_3',['Tracing Kernel Events',['../group__os__tracing.html',1,'']]],
   ['kernel_20runtime_20configuration_4',['Kernel runtime configuration',['../group__os__config.html',1,'']]],
-  ['kernel_20to_20use_20cubemx_5',['3. Configure the CMRX kernel to use CubeMX',['../getting_started_cubemx.html#autotoc_md50',1,'']]],
+  ['kernel_20to_20use_20cubemx_5',['3. Configure the CMRX kernel to use CubeMX',['../getting_started_cubemx.html#autotoc_md41',1,'']]],
   ['kernel_20to_20use_20pico_20sdk_6',['3. Configuring CMRX kernel to use Pico-SDK',['../getting_started_picosdk.html#autotoc_md68',1,'']]],
   ['kernel_5fexecute_5fthread_5fswitch_7',['kernel_execute_thread_switch',['../group__arch__linux__impl.html#gaf755bea0ee650e391e9ae2775b7131f4',1,'linux.c']]],
   ['kernel_5fhas_5fmemory_5fprotection_8',['KERNEL_HAS_MEMORY_PROTECTION',['../group__os__config.html#gaf7702691bbc4eaf9070b56a3b8d53c82',1,'kernel.h']]],

@@ -7,7 +7,8 @@ var searchData=
   ['readable_5fnotify_4',['readable_notify',['../structComNotificationVMT.html#a011e798d6130972953dd0c45bca156ce',1,'ComNotificationVMT']]],
   ['ready_5',['ready',['../structComSourceVMT.html#ae225575afd2d840418a51c1d93d497a0',1,'ComSourceVMT::ready'],['../structComChannelVMT.html#a38ab70634468ed478c2827397d2ac816',1,'ComChannelVMT::ready']]],
   ['receive_6',['receive',['../structQueueInterface.html#a381a76c9615f0a71569daea71af31f49',1,'QueueInterface']]],
-  ['retval_7',['retval',['../structsyscall__dispatch__t.html#ac407493f01bd59f014a0b20901b606b1',1,'syscall_dispatch_t']]],
-  ['rpc_5finterface_8',['rpc_interface',['../structOS__process__definition__t.html#a60479915c51d1fceacf4ea6ca72cb415',1,'OS_process_definition_t']]],
-  ['rpc_5fstack_9',['rpc_stack',['../structOS__thread__t.html#ac38a8ca09c98ad92cecefcd716534920',1,'OS_thread_t']]]
+  ['reg_7',['reg',['../structDummyPeripheral__t.html#aa2dcf66eb4f8f436add00b408d92c4c7',1,'DummyPeripheral_t']]],
+  ['retval_8',['retval',['../structsyscall__dispatch__t.html#ac407493f01bd59f014a0b20901b606b1',1,'syscall_dispatch_t']]],
+  ['rpc_5finterface_9',['rpc_interface',['../structOS__process__definition__t.html#a60479915c51d1fceacf4ea6ca72cb415',1,'OS_process_definition_t']]],
+  ['rpc_5fstack_10',['rpc_stack',['../structOS__thread__t.html#ac38a8ca09c98ad92cecefcd716534920',1,'OS_thread_t']]]
 ];

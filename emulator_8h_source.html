@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: src/os/arch/linux/posix/arch/syscall.h Source File</title>
+<title>C Microkernel Realtime eXecutive: include/extra/emulator.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('arch_2linux_2posix_2arch_2syscall_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('emulator_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,34 +98,43 @@ $(document).ready(function(){initNavTree('arch_2linux_2posix_2arch_2syscall_8h_s
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">syscall.h</div></div>
+  <div class="headertitle"><div class="title">emulator.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;kernel/syscall.h&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> * os_syscalls_start(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">struct </span><a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> * os_syscalls_end(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__linux__impl.html#ga469c6b96a6ac6b12bc7eb93514e37c67">cmrx_posix_register_syscalls</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structSyscall__Entry__t.html">Syscall_Entry_t</a> * <a class="code hl_variable" href="group__arch__linux__impl.html#ga2270ed6c370218d82eed7be5845f1718">syscalls</a>);</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define REGISTER_SYSCALLS(...) \</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">static struct Syscall_Entry_t syscalls[] = { __VA_ARGS__, { 0, 0} };\</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">__attribute__((constructor)) void register_syscalls_ ## __COUNTER__(void)\</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">{\</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">    cmrx_posix_register_syscalls(syscalls);\</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">}</span></div>
-<div class="ttc" id="agroup__arch__linux__impl_html_ga2270ed6c370218d82eed7be5845f1718"><div class="ttname"><a href="group__arch__linux__impl.html#ga2270ed6c370218d82eed7be5845f1718">syscalls</a></div><div class="ttdeci">static struct Syscall_Entry_t syscalls[256]</div><div class="ttdoc">List of registered syscalls.</div><div class="ttdef"><b>Definition</b> linux.c:62</div></div>
-<div class="ttc" id="agroup__arch__linux__impl_html_ga469c6b96a6ac6b12bc7eb93514e37c67"><div class="ttname"><a href="group__arch__linux__impl.html#ga469c6b96a6ac6b12bc7eb93514e37c67">cmrx_posix_register_syscalls</a></div><div class="ttdeci">void cmrx_posix_register_syscalls(struct Syscall_Entry_t *syscalls)</div><div class="ttdoc">Register syscall with kernel.</div><div class="ttdef"><b>Definition</b> linux.c:277</div></div>
-<div class="ttc" id="astructSyscall__Entry__t_html"><div class="ttname"><a href="structSyscall__Entry__t.html">Syscall_Entry_t</a></div><div class="ttdoc">Entry in syscall table.</div><div class="ttdef"><b>Definition</b> syscall.h:31</div></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">void</span> generate_interrupt(<span class="keywordtype">unsigned</span> irq_no);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="foldopen" id="foldopen00032" data-start="{" data-end="};">
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structCMRX__Peripheral__Emulator__t.html">   32</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="structCMRX__Peripheral__Emulator__t.html#a5a6f51fffe7b9e257f5e2d8726529351">   33</a></span>    void (*emu_write_cb)(<span class="keyword">volatile</span> <span class="keywordtype">void</span> * addr);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="structCMRX__Peripheral__Emulator__t.html#aa9455309d45cc9ba306fce8de822db0f">   34</a></span>    void (*emu_read_cb)(<span class="keyword">const</span> <span class="keyword">volatile</span> <span class="keywordtype">void</span> * addr);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>} <a class="code hl_struct" href="structCMRX__Peripheral__Emulator__t.html">CMRX_Peripheral_Emulator_t</a> ;</div>
+</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#define CMRX_PERIPHERAL_EMULATOR(peripheral_type, name, read_cb, write_cb) \</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">_Static_assert(sizeof(Full_ ## peripheral_type) == sizeof(peripheral_type), &quot;Type describing peripheral and type that gives full access to it must both have the same size!&quot;);\</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">typedef struct __attribute__((packed)) {\</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">    CMRX_Peripheral_Emulator_t emu;\</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">    union {\</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">        peripheral_type device;\</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">        Full_ ## peripheral_type device_full;\</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">    };\</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">} Emu_ ## peripheral_type;\</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">\</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">Emu_ ## peripheral_type name = {\</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">    .emu = { .emu_write_cb = write_cb, .emu_read_cb = read_cb }\</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">}</span></div>
+<div class="ttc" id="astructCMRX__Peripheral__Emulator__t_html"><div class="ttname"><a href="structCMRX__Peripheral__Emulator__t.html">CMRX_Peripheral_Emulator_t</a></div><div class="ttdef"><b>Definition</b> emulator.h:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_f4f836dbb47c7c2a6355e2b51fb79a34.html">arch</a></li><li class="navelem"><a class="el" href="dir_2be9baecef342b8b8c87f53c9fec8927.html">linux</a></li><li class="navelem"><a class="el" href="dir_c8f80f32757d03a31e0d59f792d47e34.html">posix</a></li><li class="navelem"><a class="el" href="dir_7f0724b6d79d08e8270eeae9b7163b16.html">arch</a></li><li class="navelem"><b>syscall.h</b></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_19c6994ae8f47c929da9d9850f36dcd3.html">extra</a></li><li class="navelem"><b>emulator.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

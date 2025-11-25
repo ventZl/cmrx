@@ -2,6 +2,7 @@ var annotated_dup =
 [
     [ "Arch_State_t", "structArch__State__t.html", "structArch__State__t" ],
     [ "BasicQueue", "structBasicQueue.html", "structBasicQueue" ],
+    [ "CMRX_Peripheral_Emulator_t", "structCMRX__Peripheral__Emulator__t.html", "structCMRX__Peripheral__Emulator__t" ],
     [ "ComChannel", "structComChannel.html", "structComChannel" ],
     [ "ComChannelVMT", "structComChannelVMT.html", "structComChannelVMT" ],
     [ "ComNotification", "structComNotification.html", "structComNotification" ],
@@ -10,6 +11,8 @@ var annotated_dup =
     [ "ComSinkVMT", "structComSinkVMT.html", "structComSinkVMT" ],
     [ "ComSource", "structComSource.html", "structComSource" ],
     [ "ComSourceVMT", "structComSourceVMT.html", "structComSourceVMT" ],
+    [ "DummyPeripheral_t", "structDummyPeripheral__t.html", "structDummyPeripheral__t" ],
+    [ "EmuDummyPeripheral_t", "structEmuDummyPeripheral__t.html", "structEmuDummyPeripheral__t" ],
     [ "ExceptionFrame", "structExceptionFrame.html", "structExceptionFrame" ],
     [ "ExceptionFrameFP", "structExceptionFrameFP.html", "structExceptionFrameFP" ],
     [ "futex_t", "structfutex__t.html", "structfutex__t" ],

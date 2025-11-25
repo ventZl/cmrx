@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: Memory Model</title>
+<title>C Microkernel Realtime eXecutive: include/extra/emulator Directory Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('mem_model.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('dir_2f740f176a04c261db8484f8d75f6764.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -97,37 +97,23 @@ $(document).ready(function(){initNavTree('mem_model.html',''); initResizable(); 
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Memory Model</div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">emulator Directory Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Code running in the context of process in CMRX environment is limited by memory protection. Therefore the application (or, better: process) can only access resources, which belong to it. In CMRX, the process is the governing entity when it comes to what resources can be accessed from within specific execution context. A process is thus a container which groups all accessible resources living in the user space.</p>
-<h2><a class="anchor" id="autotoc_md28"></a>
-Code and read-only data</h2>
-<p>All code, which doesn't belong to kernel itself (with some very specific exceptions) has to belong to one of processes declared at build time. Process has to have name and is given access to certain memory areas.</p>
-<p>Due to limitations of Cortex-M hardware, whole flash region is marked as read + execute. It would be extremely difficult to provide working implementation of memory protection which would allow use of library functions if process' code execution was explicitly allowed by the memory protection. And it would probably impossible to do that statically. This design decision has effect you have to be aware of as a developer: <b>every code can read everything in flash, including any possible secrets stored there</b>.</p>
-<p>When it comes to RAM, the situation is completely different. Any process can only access RAM claimed by variables being defined by process' code. Process RAM region is generally divided into three separate sections:</p>
-<h2><a class="anchor" id="autotoc_md30"></a>
-Static variables region</h2>
-<p>This region is composed of all variables defined in all compilation units belonging to some specific process. It is sufficient to define a variable in compilation unit, which ends up being compiled as a result of add_application() call and that variable will be part of process' memory space. Such memory can only be accessed by threads running in the context of owning process. This means, that all the code of all compilation units of given process can always access all such memory.</p>
-<p>You don't need to treat those variables in any special way in order for your code to work properly. If variables are non-static (i.e. globally visible), you can access them from every compilation unit belonging to owning process.</p>
-<h2><a class="anchor" id="autotoc_md32"></a>
-Shared variables region</h2>
-<p>This region is composed of variables defined in compilation units belonging to some specific process, which has their definition prefixed by keyword <code>SHARED</code>. Doing so will relocate given variable into shared region. Under normal conditions, access rules to shared variables are same as for static variables. All the code of all compilation units belonging to the owning process can access all the shared variables.</p>
-<p>The situation changes, when a <a class="el" href="rpc_intro.html">Remote Procedure Calls</a> is performed. While remote procedure call is in flight, called procedure has access to shared memory of calling process. This is effectively the only way of passing larger amount of data between processes.</p>
-<h2><a class="anchor" id="autotoc_md34"></a>
-Stack</h2>
-<p>Stack is automatically allocated for each and every thread running in system. Stack is thread-private and even no two threads of same process cant access each other's stack. Stack is automatically reclaimed by the kernel, once thread ends.</p>
-<h2><a class="anchor" id="autotoc_md35"></a>
-Memory-mapped IO</h2>
-<p>There is one region, which is custom-defined by the process designer. Common use case of this region happens, when the process is a device driver of some kind and needs to access the hardware directly. As device drivers are just userspace processess in microkernel world, any such process needs to gain access to memory region which allows control of given peripheral. </p>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="peripheral_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>peripheral.h</b></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_19c6994ae8f47c929da9d9850f36dcd3.html">extra</a></li><li class="navelem"><a class="el" href="dir_2f740f176a04c261db8484f8d75f6764.html">emulator</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
