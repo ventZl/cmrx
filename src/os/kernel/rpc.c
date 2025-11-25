@@ -15,14 +15,14 @@ __SYSCALL int rpc_return()
 }
 /// @endcond
 
-Process_t get_vtable_process(VTable_t * vtable)
+Process_t get_vtable_process(VTable_t vtable)
 {
 	for (int q = 0; q < OS_PROCESSES; ++q)
 	{
 		if (os_processes[q].definition != NULL)
 		{
-			if ((VTable_t *) os_processes[q].definition->rpc_interface.start <= vtable 
-					&& vtable < (VTable_t *) os_processes[q].definition->rpc_interface.end)
+			if ((VTable_t) os_processes[q].definition->rpc_interface.start <= vtable
+					&& vtable < (VTable_t) os_processes[q].definition->rpc_interface.end)
 			{
 				return q;
 			}

@@ -3,6 +3,7 @@
 #include <threads.h>
 #include <stdatomic.h>
 #include <pthread.h>
+#include <kernel/rpc.h>
 
 #define os_init_core(x)
 
@@ -10,6 +11,15 @@ struct OS_thread_t;
 
 void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size, entrypoint_t * entrypoint, void * data);
 void os_init_arch(void);
+
+/** The outcome of the system call
+ */
+enum SyscallOutcome {
+    /// Return normally
+    SYSCALL_OUTCOME_RETURN,
+    /// Call some specific code
+    SYSCALL_OUTCOME_RPC_CALL
+};
 
 /** Syscall dispatch data structure
  *
@@ -20,6 +30,9 @@ struct syscall_dispatch_t {
     long args[6];
     long retval;
     unsigned char syscall_id;
+    enum SyscallOutcome outcome;
+    RPC_Method_t dispatch_target;
+    long dispatch_args[5];
 };
 
 /** Linux port internal architecture state.
@@ -30,10 +43,20 @@ struct syscall_dispatch_t {
  * is passed down to the syscall and back from it.
  */
 struct Arch_State_t {
-    /// Ends of pipe that is used to simulate thread preemption
+    /** Pipe used to force thread to stop.
+     *
+     * Underlying mechanism is using POSIX threads to host CMRX threads.
+     * These can't be stopped from outside, so we use this mechanism to
+     * inject synchronization points into threads.
+     *
+     * Use @ref thread_suspend_execution() in whatever place you need
+     * to suspend thread execution for whatever reason other hardware would
+     * do so - e.g. switch into kernel context or interrupt.
+     *
+     * @Note Offset [1] is the write (unblock) end, offset [0] is the read
+     * (block) end.
+     */
     int block_pipe[2];  // [read_fd, write_fd]
-    /// Ends of pipe that is used to synchronize thread and syscall
-    int syscall_pipe[2]; // [read_fd, write_fd]
     /// State information on if thread is suspended or not (unused)
     volatile atomic_int is_suspended;
     /// C11 thread identifier of the Linux thread that supports this CMRX thread

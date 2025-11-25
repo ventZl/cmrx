@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <arch/sysenter.h>
+#include <cmrx/api.h>
 
 /** @defgroup api_signal Signals
  * @ingroup api
@@ -39,7 +40,7 @@
  * @param sighandler address of function which handles the signal
  * @returns 0. Mostly.
  */
-__SYSCALL int signal(int signo, void (*sighandler)(uint32_t));
+__SYSCALL int CMRX_API(signal)(int signo, void (*sighandler)(uint32_t));
 
 /** Send thread a signal.
  *
@@ -48,6 +49,11 @@ __SYSCALL int signal(int signo, void (*sighandler)(uint32_t));
  * @param signal signal number
  * @returns 0. Mostly.
  */
-__SYSCALL int kill(int thread, uint32_t signal);
+__SYSCALL int CMRX_API(kill)(int thread, uint32_t signal);
+
+#ifdef CMRX_VERBOSE_API_NAMES
+#define kill CMRX_API(kill)
+#define signal CMRX_API(signal)
+#endif
 
 /** @} */

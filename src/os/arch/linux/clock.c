@@ -27,6 +27,7 @@ void sigalrm_handler(int signo)
 {
     (void) signo;
     os_sched_timing_callback(systick_us);
+    trigger_pendsv_if_needed();
 }
 
 void timing_provider_setup(int interval_ms)
@@ -34,13 +35,15 @@ void timing_provider_setup(int interval_ms)
     systick_ns = interval_ms * 100000;
     systick_us = interval_ms * 1000;
 
-    struct sigaction act = { 0 };
-    act.sa_flags = 0;
-    act.sa_handler = &sigalrm_handler;
-    sigemptyset(&act.sa_mask);
-    sigaddset(&act.sa_mask, SIGUSR1);
+    /* SIGALRM has higher priority than SIGUSR1 (PendSV)
+     */
+    struct sigaction sigalrm_action = { 0 };
+    sigalrm_action.sa_flags = 0;
+    sigalrm_action.sa_handler = &sigalrm_handler;
+    sigemptyset(&sigalrm_action.sa_mask);
+    sigaddset(&sigalrm_action.sa_mask, SIGUSR1);
 
-    sigaction(SIGALRM, &act, NULL);
+    sigaction(SIGALRM, &sigalrm_action, NULL);
 }
 
 void timing_provider_schedule(long delay_us)

@@ -22,7 +22,7 @@
  */
 #define SYSCALL_DEFINITION __attribute__((section(".syscall"), used)) const
 
-typedef int (* Syscall_Handler_t)(int, int, int, int);
+typedef int (* Syscall_Handler_t)(unsigned long, unsigned long, unsigned long, unsigned long);
 
 /** Entry in syscall table.
  *
@@ -52,6 +52,6 @@ struct Syscall_Entry_t {
  * @returns value provided by the system call routine, if routine with given syscall_id exists.
  * Otherwise returns E_NOTAVAIL.
  */
-int os_system_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3, uint8_t syscall_id);
+int os_system_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3, uint8_t syscall_id);
 
 /** @} */

@@ -1,5 +1,8 @@
 #pragma once
 
+/* ARM Cortex-M specific way to define something a vtable */
+#define CMRX_VTABLE_SPECIFIER __attribute__((section(".vtable."))) const
+
 /* File intentionally left blank */
 #define CMRX_APPLICATION_INSTANCE_ATTRIBUTES __attribute__((sed, section(".applications") ))
 #define CMRX_THREAD_AUTOCREATE_ATTRIBUTES __attribute__((externally_visible, used, section(".thread_create") ))

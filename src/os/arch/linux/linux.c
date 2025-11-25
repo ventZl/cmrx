@@ -1,9 +1,13 @@
+#define _GNU_SOURCE
 #include <kernel/arch/mpu.h>
 #include <kernel/arch/sched.h>
 #include <kernel/arch/context.h>
+#include <kernel/rpc.h>
 #include <kernel/syscall.h>
+#include <cmrx/sys/syscalls.h>
 #include <kernel/sched.h>
 #include <conf/kernel.h>
+#include <sys/signalfd.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +19,8 @@
 #include <assert.h>
 #include "linux.h"
 #include "clock.h"
+#include "thread.h"
+#include "interrupt.h"
 
 /** @defgroup arch_linux_impl Implementation details
  * @ingroup arch_linux
@@ -33,12 +39,6 @@
  * @{
  */
 
-/** Current CMRX thread ID
- *
- * This is a thread-local variable, so each thread has its own copy
- * It contains CMRX thread ID of the current Linux thread
- */
-__thread int current_thread_id = -1;
 
 /** Shall thread switch be performed?
  * While kernel timer is called periodically, it doesn't perform
@@ -52,13 +52,6 @@ __thread int current_thread_id = -1;
  * wakeup before thread managed to be scheduled out of CPU).
  */
 static volatile bool kernel_execute_thread_switch = false;
-
-/** ID of the kernel thread.
- *
- * It contains Pthread thread ID of where kernel syscalls are handled.
- * This is used to dispatch emulated interrupts.
- */
-static pthread_t kernel_thread;
 
 /** List of registered syscalls.
  *
@@ -77,12 +70,17 @@ static unsigned syscalls_count = 0;
 /** Trigger thread switch if requested.
  *
  * Triggers thread switch interrupt if requested and clears the flag.
+ * @param thread_stopped true if thread is already stopped (e.g. due to entering system call)
+ * @note This should always be ran in CMRX thread context
  */
 void trigger_pendsv_if_needed()
 {
+    assert(current_thread_id != -1);
+    assert(os_threads[current_thread_id].arch.sched_thread_id == pthread_self());
+
     if (kernel_execute_thread_switch)
     {
-        pthread_kill(kernel_thread, SIGUSR1);
+        request_pending_service();
         kernel_execute_thread_switch = false;
     }
 }
@@ -109,12 +107,41 @@ int system_call_entrypoint(unsigned long arg0,
     syscall->args[1] = arg1;
     syscall->args[2] = arg2;
     syscall->args[3] = arg3;
+    syscall->args[4] = arg4;
+    syscall->args[5] = arg5;
+    syscall->retval = ~0;
     syscall->syscall_id = syscall_id;
     syscall->retval = E_NOTAVAIL;
-    pthread_kill(kernel_thread, SIGURG);
-    char byte;
-    read(os_threads[current_thread_id].arch.syscall_pipe[0], &byte, 1);
+
+    enter_system_call();
+
     int rv = syscall->retval;
+
+    /* Check that system call handler was actually called */
+    assert(rv != ~0);
+    if (syscall_id == SYSCALL_RPC_CALL)
+    {
+        assert(syscall->outcome == SYSCALL_OUTCOME_RPC_CALL);
+    }
+    switch (syscall->outcome) {
+        case SYSCALL_OUTCOME_RETURN:
+            return rv;
+            break;
+
+        case SYSCALL_OUTCOME_RPC_CALL:
+            rv = syscall->dispatch_target(
+                (RPC_Service_t *) syscall->dispatch_args[0],
+                syscall->dispatch_args[1],
+                syscall->dispatch_args[2],
+                syscall->dispatch_args[3],
+                syscall->dispatch_args[4]
+            );
+            system_call_entrypoint(rv, 0, 0, 0, 0, 0, SYSCALL_RPC_RETURN);
+            break;
+
+        default:
+            assert(0);
+    }
     return rv;
 }
 
@@ -125,15 +152,17 @@ int system_call_entrypoint(unsigned long arg0,
  */
 void thread_switch_handler(int signo)
 {
-    (void) signo;
+    assert(signo == SIGUSR1);
+    assert(current_thread_id != -1);
 
+    /* Check that we are running in the context of thread that
+     * CMRX considers the one that is currently running.
+     */
     struct OS_core_state_t * cpu_state = &core[coreid()];
+    assert(cpu_state->thread_current == current_thread_id);
 
     if (os_threads[cpu_state->thread_current].state == THREAD_STATE_RUNNING)
     {
-        // actually stop the thread here
-        pthread_kill(os_threads[cpu_state->thread_current].arch.sched_thread_id, SIGUSR2);
-
         // only mark leaving thread as ready, if it was runnig before
         // if leaving thread was, for example, quit before calling
         // os_sched_yield, then this would return it back to life
@@ -142,37 +171,10 @@ void thread_switch_handler(int signo)
 
     cpu_state->thread_current = cpu_state->thread_next;
 
-    // unblock resumed thread now
-    char byte = 0;
     os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
-    write(os_threads[cpu_state->thread_current].arch.block_pipe[1], &byte, 1);
 
-}
-
-/** Thread stopping/resuming handler.
- *
- * This function handles stopping and restarting the thread without
- * thread cooperating voluntarily in the action. It does so by installing
- * itself as a signal handler. If signal is sent which causes this handler
- * to be activated, then this function blocks on a read on thread's private
- * pipe.
- *
- * When something is written into the pipe, then this handler unblocks and
- * normal thread operation is resumed.
- */
-void thread_preempt_handler(int signo, siginfo_t *info, void * context)
-{
-    (void) signo;
-    (void) info;
-    (void) context;
-
-    assert(current_thread_id != -1);
-    char byte;
-    // This is the synchronization point, thread is forced to wait
-    read(os_threads[current_thread_id].arch.block_pipe[0], &byte, 1);
-
-    // At this point the thread was resumed!
-    os_threads[current_thread_id].arch.is_suspended = 0;
+    thread_resume_execution(cpu_state->thread_current);
+    thread_suspend_execution(false);
 }
 
 /** Handler for kernel service call.
@@ -184,16 +186,21 @@ void thread_preempt_handler(int signo, siginfo_t *info, void * context)
  */
 void kernel_service_handler(int signo)
 {
-    (void) signo;
-    int thread = os_get_current_thread();
-    struct syscall_dispatch_t * syscall = &os_threads[thread].arch.syscall;
-    assert(syscall != NULL);
+    assert(signo == SIGURG);
+    assert(current_thread_id != -1);
 
+    /* Check that we are running in the context of thread that
+     * CMRX considers the one that is currently running.
+     */
+    struct OS_core_state_t * cpu_state = &core[coreid()];
+    assert(cpu_state->thread_current == current_thread_id);
+
+    struct syscall_dispatch_t * syscall = &os_threads[current_thread_id].arch.syscall;
+
+    syscall->outcome = SYSCALL_OUTCOME_RETURN;
     syscall->retval = os_system_call(syscall->args[0], syscall->args[1], syscall->args[2], syscall->args[3], syscall->syscall_id);
 
     trigger_pendsv_if_needed();
-    char byte = 0;
-    write(os_threads[thread].arch.syscall_pipe[1], &byte, 1);
 }
 
 /** Routine to jump-start guest thread host.
@@ -212,13 +219,39 @@ int thread_startup_handler(void * arg)
     assert(startup_data->thread_id >= 0 && startup_data->thread_id <= OS_THREADS);
 
     current_thread_id = startup_data->thread_id;
+    assert(current_thread_id != -1);
 
     os_threads[current_thread_id].arch.sched_thread_id = pthread_self();
 
+    char thread_name[17];
+    snprintf(thread_name, 16, "CMRX thread: %d", startup_data->thread_id);
+    pthread_setname_np(os_threads[current_thread_id].arch.sched_thread_id, thread_name);
+
+    /** Allow reception of SIGALRM, SIGUSR1 (PendSV) and SIGURG (SVCHandler)
+     * signals in CMRX thread hosting threads */
+    sigset_t set;
+
     // Perform initial thread block, so we can create all threads up and front
     // without having any of them being actually executed
-    char byte;
-    read(os_threads[current_thread_id].arch.block_pipe[0], &byte, 1);
+    thread_suspend_execution(true);
+
+    // Check that this thread wasn't resumed spuriously
+    struct OS_core_state_t * cpu_state = &core[coreid()];
+    assert(cpu_state->thread_current == current_thread_id);
+
+    /* Now that the thread was unblocked by initial resume,
+     * we will enable signal arrival. Signals are configured
+     * to block each other out and once threads are inside
+     * signal handlers, they won't accept signal preempting another
+     * signal even if these are unblocked.
+     */
+    sigemptyset(&set);
+    sigaddset(&set, SIGALRM);
+    sigaddset(&set, SIGUSR1);
+    sigaddset(&set, SIGUSR2);
+    sigaddset(&set, SIGURG);
+
+    pthread_sigmask(SIG_UNBLOCK, &set, NULL);
 
     int thread_rv = startup_data->entry_point(startup_data->entry_arg);
     free(startup_data);
@@ -264,34 +297,33 @@ void cmrx_posix_register_syscalls(struct Syscall_Entry_t * added_syscalls)
  */
 void os_init_arch(void)
 {
-    struct sigaction pendsv_emulation = { 0 };
-    sigemptyset(&pendsv_emulation.sa_mask);
-    pendsv_emulation.sa_flags = 0;
-    pendsv_emulation.sa_handler = &thread_switch_handler;
+    /* PendSV should "disable interrupts", which means
+     * that it blocks SIGURG, SIGUSR1 and SIGALRM */
+    struct sigaction sigusr1_action = { 0 };
+    sigemptyset(&sigusr1_action.sa_mask);
+    sigaddset(&sigusr1_action.sa_mask, SIGURG);
+    sigaddset(&sigusr1_action.sa_mask, SIGUSR2);
+    sigaddset(&sigusr1_action.sa_mask, SIGALRM);
+    sigusr1_action.sa_flags = 0;
+    sigusr1_action.sa_handler = &thread_switch_handler;
 
-    struct sigaction thread_preemption = { 0 };
-    sigemptyset(&thread_preemption.sa_mask);
-    thread_preemption.sa_flags = SA_SIGINFO;
-    thread_preemption.sa_sigaction = &thread_preempt_handler;
+    /* SIGURG has higher priority than SIGUSR1 (PendSV)
+     */
+    struct sigaction sigurg_action = { 0 };
+    sigemptyset(&sigurg_action.sa_mask);
+    sigaddset(&sigurg_action.sa_mask, SIGUSR1);
+    // TODO: Timer should still be able to preempt the kernel
+    sigaddset(&sigurg_action.sa_mask, SIGALRM);
+    sigurg_action.sa_flags = 0;
+    sigurg_action.sa_handler = &kernel_service_handler;
 
-    struct sigaction kernel_entry = { 0 };
-    sigemptyset(&kernel_entry.sa_mask);
-    kernel_entry.sa_flags = 0;
-    kernel_entry.sa_handler = &kernel_service_handler;
-
-    if (sigaction(SIGUSR1, &pendsv_emulation, NULL) != 0)
+    if (sigaction(SIGUSR1, &sigusr1_action, NULL) != 0)
     {
         perror("Unable to install SIGUSR1 handler: ");
         abort();
     }
 
-    if (sigaction(SIGUSR2, &thread_preemption, NULL) != 0)
-    {
-        perror("Unable to install SIGUSR2 handler: ");
-        abort();
-    }
-
-    if (sigaction(SIGURG, &kernel_entry, NULL) != 0)
+    if (sigaction(SIGURG, &sigurg_action, NULL) != 0)
     {
         perror("Unable to install SIGURG handler: ");
         abort();
@@ -299,17 +331,20 @@ void os_init_arch(void)
 
     sigset_t set;
 
-    /* We want to receive SIGALRM and SIGUSR1 synchronously
-     * in the main thread. SIGUSR2 will ever only be sent to
-     * the specific thread to suspend it.
+    /* Disable delivery of these signals in all threads that are spawned from
+     * this thread onwards.
+     *
+     * We will selectively enable them in threads that host CMRX threads to
+     * recreate semantics similar to
      */
     sigemptyset(&set);
     sigaddset(&set, SIGALRM);
     sigaddset(&set, SIGUSR1);
     sigaddset(&set, SIGURG);
     pthread_sigmask(SIG_BLOCK, &set, NULL);
+    printf("SIGALRM, SIGUSR1 and SIGURG masked\n");
 
-    kernel_thread = pthread_self();
+    irq_init();
 }
 
 /** Perform platform-specific initialization of thread.
@@ -329,9 +364,6 @@ void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size,
     int rv = pipe(thread->arch.block_pipe);
     assert(rv == 0);
 
-    rv = pipe(thread->arch.syscall_pipe);
-    assert(rv == 0);
-
     struct thread_startup_t * startup_data = malloc(sizeof(struct thread_startup_t));
     memset(startup_data, 0, sizeof(struct thread_startup_t));
     startup_data->thread_id = thread - os_threads;
@@ -349,7 +381,20 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 {
     (void) process_id;
     (void) definition;
-    return 0;
+    if (process_id >= OS_PROCESSES)
+    {
+        return E_OUT_OF_RANGE;
+    }
+
+    if (os_processes[process_id].definition != NULL)
+    {
+        return E_INVALID;
+    }
+
+    /* TODO: Deal with memory protection */
+
+    os_processes[process_id].definition = definition;
+    return E_OK;
 }
 
 /** Will unblock the boot thread.
@@ -360,35 +405,14 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 __attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread)
 {
     char byte = 0;
+
     write(os_threads[boot_thread].arch.block_pipe[1], &byte, 1);
 
     while (1)
     {
-        int sig_caught;
-        sigset_t set;
-        sigemptyset(&set);
-        sigaddset(&set, SIGALRM);
-        sigaddset(&set, SIGUSR1);
-        sigaddset(&set, SIGURG);
-        sigwait(&set, &sig_caught);
-        switch (sig_caught) {
-            case SIGALRM:
-                sigalrm_handler(SIGALRM);
-                break;
-
-            case SIGUSR1:
-                thread_switch_handler(SIGUSR1);
-                break;
-
-            case SIGURG:
-                kernel_service_handler(SIGURG);
-                break;
-
-            default:
-                printf("Unknown signal caught\n");
-                abort();
-                break;
-        }
+        /* This is the main thread, we have to keep it running.
+         */
+        sleep(1);
     }
 }
 
@@ -403,7 +427,7 @@ void os_request_context_switch(bool activate)
 
 int os_set_syscall_return_value(Thread_t thread_id, int32_t retval)
 {
-    /* TODO */
+    os_threads[thread_id].arch.syscall.retval = retval;
     return 0;
 }
 
@@ -434,16 +458,75 @@ __attribute__((noreturn)) void os_kernel_shutdown()
     exit(0);
 }
 
-int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
+int os_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3)
 {
-    /* TODO */
-    return E_NOTAVAIL;
+    (void) arg0;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+
+    int thread = os_get_current_thread();
+    struct syscall_dispatch_t * syscall = &os_threads[thread].arch.syscall;
+
+    RPC_Service_t * service = (RPC_Service_t *) syscall->args[4];
+    VTable_t vtable = service->vtable;
+    Process_t process_id = get_vtable_process(vtable);
+    if (process_id == E_VTABLE_UNKNOWN)
+    {
+        return E_INVALID_ADDRESS;
+    }
+
+    if (!rpc_stack_push(process_id))
+    {
+        return E_IN_TOO_DEEP;
+    }
+
+    unsigned method_id = syscall->args[5];
+    RPC_Method_t method = vtable[method_id];
+
+    syscall->outcome = SYSCALL_OUTCOME_RPC_CALL;
+    syscall->dispatch_target = method;
+    for (int q = 0; q < 4; ++q)
+    {
+        syscall->dispatch_args[q+1] = syscall->args[q];
+    }
+    syscall->dispatch_args[0] = (unsigned long) service;
+
+    return E_OK;
 }
 
 int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
-    /* TODO */
-    return E_NOTAVAIL;
+    (void) arg0;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+
+    int pstack_depth = rpc_stack_pop();
+    Process_t process_id;
+
+    if (pstack_depth > 0)
+    {
+        process_id = rpc_stack_top();
+    }
+    else
+    {
+        /* Warning for future wanderers: as of now, this returns
+         * process_id of current thread, which stores parent process.
+         * If I ever decide to change semantics to return current process
+         * ID, this may fail miserably.
+         */
+        process_id = os_get_current_process();
+    }
+
+
+    if (process_id == E_VTABLE_UNKNOWN)
+    {
+        // here the process should probably die in segfault
+        assert(0);
+    }
+
+    return arg0;
 }
 
 struct Syscall_Entry_t * os_syscalls_start(void)

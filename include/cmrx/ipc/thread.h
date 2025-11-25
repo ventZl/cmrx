@@ -14,6 +14,7 @@
  */
 #pragma once
 
+#include <cmrx/api.h>
 #include <arch/sysenter.h>
 #include <stdint.h>
 
@@ -21,7 +22,7 @@
  *
  * @returns thread ID of currently running thread.
  */
-__SYSCALL int get_tid();
+__SYSCALL int CMRX_API(get_tid)();
 
 /** Give up processor.
  *
@@ -30,7 +31,7 @@ __SYSCALL int get_tid();
  * equal or higher priority than currently running thread, then switch won't occurr.
  * @returns 0. Mostly.
  */
-__SYSCALL int sched_yield();
+__SYSCALL int CMRX_API(sched_yield)();
 
 /** Create new thread.
  *
@@ -49,7 +50,7 @@ __SYSCALL int sched_yield();
  * @returns non-negative numbers carrying thread ID of newly created thread or 
  * negative numbers to signal error.
  */
-__SYSCALL int thread_create(int (*entrypoint)(void *), void * data, uint8_t priority);
+__SYSCALL int CMRX_API(thread_create)(int (*entrypoint)(void *), void * data, uint8_t priority);
 
 /** Wait for other thread to finish.
  * 
@@ -58,7 +59,7 @@ __SYSCALL int thread_create(int (*entrypoint)(void *), void * data, uint8_t prio
  * @returns 0 on success (other thread quit and status value is written), error
  * code otherwise.
  */
-__SYSCALL int thread_join(int thread);
+__SYSCALL int CMRX_API(thread_join)(int thread);
 
 /** Terminate currently running thread.
  *
@@ -70,7 +71,7 @@ __SYSCALL int thread_join(int thread);
  * @param status thread exit status
  * @return You don't want this function to return.
  */
-__SYSCALL int thread_exit(int status);
+__SYSCALL int CMRX_API(thread_exit)(int status);
 
 /** Change thread priority.
  *
@@ -81,7 +82,16 @@ __SYSCALL int thread_exit(int status);
  * @param priority new priority 
  */
 
-__SYSCALL int setpriority(uint8_t priority);
+__SYSCALL int CMRX_API(setpriority)(uint8_t priority);
+
+#ifdef CMRX_VERBOSE_API_NAMES
+#define setpriority CMRX_API(setpriority)
+#define thread_join CMRX_API(thread_join)
+#define thread_exit CMRX_API(thread_exit)
+#define thread_create CMRX_API(thread_create)
+#define sched_yield CMRX_API(sched_yield)
+#define get_tid CMRX_API(get_tid)
+#endif
 
 /** @} */
 

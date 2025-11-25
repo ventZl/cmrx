@@ -28,10 +28,10 @@
 
 #define CMRX_RPC_PASTER(argcount)	            CMRX_RPC_CALL_ ## argcount
 #define CMRX_RPC_EVALUATOR(argcount)	        CMRX_RPC_PASTER(argcount)
-#define CMRX_RPC_CALL_4(si, mi, _0, _1, _2, _3)	_rpc_call((unsigned) _0, (unsigned) _1, (unsigned) _2, (unsigned) _3, si, mi, 0xAA55AA55)
-#define CMRX_RPC_CALL_3(si, mi, _0, _1, _2)		_rpc_call((unsigned) _0, (unsigned) _1, (unsigned) _2, 0, si, mi, 0xAA55AA55)
-#define CMRX_RPC_CALL_2(si, mi, _0, _1)			_rpc_call((unsigned) _0, (unsigned) _1, 0, 0, si, mi, 0xAA55AA55)
-#define CMRX_RPC_CALL_1(si, mi, _0)				_rpc_call((unsigned) _0, 0, 0, 0, (void *) si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_4(si, mi, _0, _1, _2, _3)	_rpc_call((unsigned long) _0, (unsigned long) _1, (unsigned long) _2, (unsigned long) _3, si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_3(si, mi, _0, _1, _2)		_rpc_call((unsigned long) _0, (unsigned long) _1, (unsigned long) _2, 0, si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_2(si, mi, _0, _1)			_rpc_call((unsigned long) _0, (unsigned long) _1, 0, 0, si, mi, 0xAA55AA55)
+#define CMRX_RPC_CALL_1(si, mi, _0)				_rpc_call((unsigned long) _0, 0, 0, 0, (void *) si, mi, 0xAA55AA55)
 #define CMRX_RPC_CALL_0(si, mi)					_rpc_call(0, 0, 0, 0, si, mi, 0xAA55AA55)
 
 /*
@@ -138,7 +138,7 @@
  * @param canary canary value passed to the call
  * @return whatever service method returns
  */
-__SYSCALL int _rpc_call(unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3, void * service, unsigned method, unsigned canary);
+__SYSCALL int _rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3, void * service, unsigned method, unsigned canary);
 
 /** The way how RPC returns. Used automatically.
  *
