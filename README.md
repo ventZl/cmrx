@@ -13,6 +13,7 @@ CMRX - Microkernel RTOS for microcontrollers
 - [Features](#features)
 - [Documentation](#documentation)
 - [Using CMRX](#using-cmrx)
+- [Testing and Code Quality](#testing)
 - [Contributing](#contributing)
 - [Reporting bugs](#reporting-bugs)
 - [Examples](#examples)
@@ -49,12 +50,14 @@ See [step-by-step guide](https://ventzl.github.io/cmrx/getting_started.html) on 
  * priority-aware preemptive scheduler
  * basic POSIX-like API for managing threads, timers and signals
  * object-oriented remote procedure calling mechanism
- * (customizable) timing provider based on SysTick timer
+ * timing provider API for custom time sources
+ * Cortex-M timing provider based on SysTick timer
  * userspace mutexes
  * notification API
  * queues API
  * C11 clean
  * compatible with all vendor SDKs providing CMSIS headers
+ * runs hosted on Linux machine
  
 # Documentation
 
@@ -78,16 +81,35 @@ To break out of the container created by the process the remote procedure callin
 
 CMRX is using features of the CMake build system. This allows certain actions to be taken fully automatically guaranteeing that the state of the build is fully consistent.
 
+# Testing and Code Quality
+
+The portable nature of CMRX requires powerful testing infrastructure. CMRX comes with multi-layer testing infrastructure composed of [static code analysis](CLANG_TIDY.md), [unit tests](UNIT_TESTING.md) and HW/SW integration tests which ensure confidence in code quality. Unit tests check if the fundamental logic of the code in kernel is sound. These tests are always executed on host machine and are suitable for running in CI/CD pipeline as they don't need anything special to be built and run very fast (roughly 50ms per whole test suite run).
+
+Unit tests support code coverage information generation and coverage report generation using GCOV and LCOV tools.
+
+Static code analysis can be performed using Clang-tidy on fully configured source code of the kernel targeting specific microcontroller platform, such ARMv6M.
+
+Integration tests are always executed on target hardware. It is using [HIL testing harness](HIL_TESTING.md) to execute these tests. Integration tests check that the functionality provided by CMRX kernel is implemented correctly and behaves as expected using particular porting layer of your choice. These tests take much longer to execute and require physical hardware to be attached to the machine which executes these tests so it is less suitable for frequent execution in CI/CD pipeline.
+
+HIL testing harness can be used by your own tests to automate test execution. This can be combined with or without kernel's own integration tests. For more information see the [HIL_TESTING.md] file.
+
+
+
 # Contributing
 
-CMRX is an open project and any external contributions are welcome. You can help even if you don't feel like developing an operating system is your cup of coffee:
+CMRX is an open project and any external contributions are welcome. You can contribute in many ways:
+
+* Add support for new microcontrollers and platforms
+* Fix bugs
+* Optimize code
+* Add tests
+
+You can help even if you don't feel like developing an operating system is your cup of coffee:
 
 * provide feedback on your experience testing CMRX on real hardware - Have you tried to make CMRX run with your board? Let us know that if it works or not.
 * improve the documentation - Is the documentation missing something? Help to improve it!
 * reporting bugs - Did you find a bug? Did CMRX crash on you? Fill in a bug.
 * suggesting enhancements - Do you think some feature is missing? Propose a feature.
-* improve tests - Even though kernel does have some tests, the test suite can always be better.
-* contribute code - Contributions in the form of pull requests that resolve issues, implement enhancements or feature requests are welcome as long as they adhere to the basic concept and mission of this project.
 
 # Reporting bugs
 
