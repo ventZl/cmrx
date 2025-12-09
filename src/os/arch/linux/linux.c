@@ -21,6 +21,7 @@
 #include "clock.h"
 #include "thread.h"
 #include "interrupt.h"
+#include "relay.h"
 
 /** @defgroup arch_linux_impl Implementation details
  * @ingroup arch_linux
@@ -261,6 +262,8 @@ int thread_startup_handler(void * arg)
 
     int thread_rv = startup_data->entry_point(startup_data->entry_arg);
     free(startup_data);
+
+    linux_thread_exit(thread_rv);
 
     return thread_rv;
 }

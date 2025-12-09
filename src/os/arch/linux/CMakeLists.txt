@@ -4,6 +4,7 @@ set(cmrx_linux_SRCS
     static.c
     thread.c
     interrupt.c
+    relay.c
     )
 
 target_sources(os PRIVATE ${cmrx_linux_SRCS})
