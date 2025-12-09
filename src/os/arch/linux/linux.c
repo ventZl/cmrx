@@ -181,7 +181,17 @@ void thread_switch_handler(int signo)
     os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
 
     thread_resume_execution(cpu_state->thread_current);
+
+    // This thread is stopped now
     thread_suspend_execution(false);
+
+    // Here we were resumed by someone else.
+    // Check if there is a signal pending
+    if (os_threads[cpu_state->thread_current].signals != 0 && os_threads[cpu_state->thread_current].signal_handler != NULL)
+    {
+        os_threads[cpu_state->thread_current].signal_handler(os_threads[cpu_state->thread_current].signals);
+        os_threads[cpu_state->thread_current].signals = 0;
+    }
 }
 
 /** Handler for kernel service call.
