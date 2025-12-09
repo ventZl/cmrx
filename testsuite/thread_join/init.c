@@ -1,4 +1,3 @@
-#include "cmrx/os/runtime.h"
 #include <cmrx/application.h>
 #include <cmrx/ipc/thread.h>
 #include <debug.h>

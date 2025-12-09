@@ -1,7 +1,6 @@
 set $_TEST_STEP = 0
-target extended-remote localhost:3333
-monitor reset halt
-load
+
+set debuginfod enabled off
 
 break TEST_SUCCESS
 commands
@@ -27,6 +26,6 @@ commands
 end
 
 run
-detach
-disconnect
-quit 2
+#detach
+#disconnect
+#quit 2
