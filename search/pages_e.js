@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vendor_20sdks_0',['Integrating vendor SDKs',['../hal_integration.html',1,'overview']]]
+  ['remote_20procedure_20calls_0',['Remote Procedure Calls',['../rpc_intro.html',1,'overview']]]
 ];

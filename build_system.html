@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('build_system.html',''); initResizable(
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>CMRX is using CMake to build the kernel and applications. It works the best with vendor SDKs that also provide CMake-based build systems but can be integrated with SDKs that are based on Makefiles albeit this makes everything more complicated.</p>
-<h1><a class="anchor" id="autotoc_md0"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 CMake support for CMRX</h1>
 <p>CMRX support is currently provided as three more-less separate parts:</p>
 <ol type="1">
@@ -110,58 +110,66 @@ CMake support for CMRX</h1>
 <li><a class="el" href="cmrx-cmake.html">CMRX CMake module</a> that performe kernel configuration and provides some CMRX-specific commands.</li>
 <li>Inclusion of CMRX source tree to actually build the CMRX kernel.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Build-time options</h1>
 <p>CMRX kernel can be configured during the compile time. To do so, define any of the following variables before including CMRX.cmake module:</p>
-<h2><a class="anchor" id="autotoc_md2"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 CMRX_UNIT_TESTS</h2>
-<p>Default: ON (Windows: OFF)</p>
+<p>Default: OFF</p>
 <p>If enabled, CMRX kernel will automatically build unit test suite for the kernel. This requires the presence of GCC toolchain for the host machine.</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
+CMRX_HIL_TESTS</h2>
+<p>Default: OFF</p>
+<p>If enabled, calls of <code>add_hil_test</code> function from your CMakeLists.txt will add automatic tests using HIL tester infrastructure. With this option disabled, calls to <code>add_hil_tests</code> do nothing.</p>
+<h2><a class="anchor" id="autotoc_md9"></a>
+CMRX_INTEGRATION_TESTS</h2>
+<p>Default: OFF</p>
+<p>If enabled, will activate HIL tests (setting <code>CMRX_HIL_TESTS</code> to <code>ON</code>) and add set of kernel HW-SW integration tests.</p>
+<h2><a class="anchor" id="autotoc_md10"></a>
 CMRX_KERNEL_TRACING</h2>
 <p>Default: OFF</p>
 <p>If enabled, kernel tracing infrastructure is enabled. This will build callouts to tracing functions inside kernel. Tracing allows to trace certain events inside kernel into circular buffer that can be dumped via debugger and further analyzed.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md11"></a>
 CMRX_CLANG_TIDY</h2>
 <p>Default: ON</p>
 <p>If enabled, clang-tidy target is added into build system. This target runs clang-tidy on kernel sources. Running this target requires clang-tidy to be installed on host machine. Build won't fail if this option is enabled and clang-tidy is not installed as this target is not run automatically.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md12"></a>
 CMRX_KERNEL_TRANSACTION_VERIFICATION</h2>
 <p>Default: OFF</p>
 <p>This enables additional runtime checks of kernel transaction subsystem. If rules of transaction handling are violated then kernel will assert. This option is for kernel debugging purposes only as it will slow kernel down significantly.</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 CMRX_IDLE_THREAD_SHUTDOWN_CPU</h2>
 <p>Default: OFF</p>
 <p>If enabled, then idle core will be halted using platform-specific way to stop the CPU. Doing so can help to save energy as core that is halted consumes almost no power. In rare cases this may cause the clock used to power the timing provider to stop too. In such cases this option has to be set to OFF or different clock source has to be used to power the timing provider.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 CMRX_RPC_CANARY</h2>
 <p>Default: OFF</p>
 <p>This enabled putting a canary value on stack during RPC processing. This allows early detection of stack corruption during RPC processing. Canaries are fixed values put onto stack when calling RPC method and checked for presence when RPC method is returning. Adding them slows execution of RPC calls a bit.</p>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 CMRX_MAP_FILE_WITH_EXTENSION</h2>
 <p>Default: OFF</p>
 <p>If enabled, the MAP file name will contain both binary extension and ".map" suffix (forming firmware_name.elf.map). Otherwise the MAP file name only contains ".map" extension (forming firmware.map). This can be set to <code>ON</code> if vendor SDK forces the MAP file name to be ".elf.map" so all other tools will work with the correct file.</p>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md16"></a>
 OS_STACK_SIZE</h2>
 <p>Default: 1024</p>
 <p>Size of thread stack in bytes.</p>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 OS_THREADS</h2>
 <p>Default: 8</p>
 <p>Maximum amount of threads existing in system at any given time. No more threads can be created until some of threads quits.</p>
-<h2><a class="anchor" id="autotoc_md11"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 OS_PROCESSES</h2>
 <p>Default: 8</p>
 <p>Maximum amount of processes existing in system at any given time. If more processes are added during CMake configuration run, then resulting firmware will fail to start.</p>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 OS_STACKS</h2>
 <p>Default: 8</p>
 <p>Maximum amount of stacks allocated in the system. Currently, it should never be smaller than OS_THREADS as this may result in threads not having stack to run.</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 CMRX_ARCH_SMP_SUPPORTED</h2>
 <p>Default: OFF</p>
 <p>If enabled, the multi-core support is enabled for target platform. This enables per-core kernel startup and per-core thread allocation. <b>Experimental</b></p>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md21"></a>
 CMRX_OS_NUM_CORES</h2>
 <p>Default: 1</p>
 <p>Used to specify how many physical cores are there in package in case multi-core support has been enabled. This configures various in-kernel structures to have space for all required data. Note that it is possible to pass number lower than the actual core count if CMRX should not take care of all the cores in the system. For example, if the system contains four cores, this option may be configured to contain value 3. Then CMRX will manage only three cores, while the fourth core can be managed completely independently to CMRX kernel as long as it won't interfere with it. </p>

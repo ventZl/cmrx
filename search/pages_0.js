@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['basic_20concepts_0',['Basic concepts',['../concepts.html',1,'overview']]],
-  ['build_20system_1',['Build system',['../build_system.html',1,'']]]
+  ['analysis_0',['Static code analysis',['../md_CLANG__TIDY.html',1,'']]]
 ];

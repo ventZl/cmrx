@@ -107,22 +107,22 @@ $(document).ready(function(){initNavTree('cmrx-cmake.html',''); initResizable();
 <div class="line"> </div>
 <div class="line">include(CMRX)</div>
 </div><!-- fragment --><p>As of now the only supported target architecture is <code>arm</code> and the only supported HAL is <code>cmsis</code>.</p>
-<h2><a class="anchor" id="autotoc_md20"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 CMRX_ARCH</h2>
 <p><b>Mandatory!</b> Specifies the architecture of the target microcontroller to be used. There must be architecture support layer provided for this architecture.</p>
-<h2><a class="anchor" id="autotoc_md21"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 CMRX_HAL</h2>
 <p><b>Mandatory!</b> Specifies the HAL CMRX should use to access the target platform. One architecture may provide support for multiple HALs.</p>
 <p>This module provides some commands that shall be used to automate actions that enable memory isolation support:</p>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md29"></a>
 add_firmware()</h1>
 <p>Usage: </p><div class="fragment"><div class="line">add_firmware(&lt;binary_name&gt; ...)</div>
 </div><!-- fragment --><p>This command is a wrapper around <code>add_executable()</code> CMake command. It works the same way. The only difference is that it automatically calls the GenLink script to generate binary-specific linker script. This is necessary to support memory protection.</p>
-<h1><a class="anchor" id="autotoc_md23"></a>
+<h1><a class="anchor" id="autotoc_md30"></a>
 add_application()</h1>
 <p>Usage: </p><div class="fragment"><div class="line">add_application(&lt;library_name&gt; ...)</div>
 </div><!-- fragment --><p>This command is a wrapper around <code>add_library()</code> CMake command. When called, it will create a static library named <code>&lt;library_name&gt;</code> the same way as <code>add_library()</code> would do. Additionally it will call GenLink to create application-specific includes for the main include file. This dynamically adjusts application layout to support the memory protection.</p>
-<h1><a class="anchor" id="autotoc_md24"></a>
+<h1><a class="anchor" id="autotoc_md31"></a>
 target_add_applications()</h1>
 <p>Usage: </p><div class="fragment"><div class="line">target_add_applications(&lt;binary_name&gt; &lt;library_name&gt; ...)</div>
 </div><!-- fragment --><p>This command is a wrapper around <code>target_link_libraries()</code> CMake command. It will link the library containing application to the main executable. Aside from this it will modify the linker script of the firmware to include application instance into the build. Without this command being called the application won't be present in the firmware. Library linked this way must have been created using the <code>add_application()</code> command otherwise the call to <code>target_add_applications()</code> will fail. </p>

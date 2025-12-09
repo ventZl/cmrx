@@ -111,19 +111,19 @@ $(document).ready(function(){initNavTree('findcmsis.html',''); initResizable(); 
 <div class="line">include(FindCMSIS)</div>
 </div><!-- fragment --><p>This usage pattern assumes you added <code>cmake</code> subdirectory in CMRX source tree into <code>CMAKE_MODULE_PATH</code>. FindCMSIS will search the subtree of SDK for files that create the CMSIS headers. It will collect paths where these files are found and create target called <code>cmsis_headers</code> that exports these paths. It will also create <code>RTE_Components.h</code> file that can be included from any target linking <code>cmsis_headers</code> library. This way the platform header may be linked in a platform-independent way. CMRX kernel is using this mechanism for its CMSIS port supporting ARM Cortex-M platform. If any system or startup sources are found they are published in <code>CMSIS_SRCS</code> variable.</p>
 <p>The use of configuration variables is as follows:</p>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 CMSIS_ROOT</h2>
 <p><b>Mandatory!</b> Provides the FindCMSIS with path where CMSIS headers are stored within vendor SDK. This cannot be detected automatically as all vendor SDKs use different paths and searching the whole SDK could slow the CMake down a lot.</p>
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md23"></a>
 DEVICE</h2>
 <p><b>Mandatory!</b> Provides the device name recognized by the CMSIS headers in vendor SDK. This is used to configure CMSIS headers and create gate that can be used to include headers in a portable way. The name this variable is set to should be a device-specific define recognized by the system header file. It usually is the part name, but in certain rare cases it may be a wildcarded value. Consult the documentation of your SDK for valid values of this define.</p>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md24"></a>
 CMSIS_LINKER_FILE</h2>
 <p><b>Mandatory!</b> Path to the linker file used to build the firmware. It must exist at the time of calling the CMake. CMRX kernel will analyze and patch it in order to support the automatic configuration of the memory protection unit.</p>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 DEVICE_INCLUDE_FILENAME</h2>
 <p><b>Optional.</b> It can be used to explicitly specify the device include filename in case it does not follow the default pattern <code>${DEVICE}.h</code>. Can be omitted if there are no deviations and will be set to <code>${DEVICE}.h</code>.</p>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 SYSTEM_INCLUDE_FILENAME</h2>
 <p><b>Optional.</b> This option can be used to explicitly specify the system include filename. It can be used in cases when the system include file doesn't follow the pattern <code>system_${DEVICE}.h</code>. This often happens in cases where SDK supports more than one microcontroller. May be omitted if the pattern is followed. In such cases the default pattern will be set as a value of this variable automatically. </p>
 </div></div><!-- contents -->
