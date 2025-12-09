@@ -21,6 +21,7 @@
 #include "clock.h"
 #include "thread.h"
 #include "interrupt.h"
+#include "relay.h"
 
 /** @defgroup arch_linux_impl Implementation details
  * @ingroup arch_linux
@@ -180,7 +181,17 @@ void thread_switch_handler(int signo)
     os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
 
     thread_resume_execution(cpu_state->thread_current);
+
+    // This thread is stopped now
     thread_suspend_execution(false);
+
+    // Here we were resumed by someone else.
+    // Check if there is a signal pending
+    if (os_threads[cpu_state->thread_current].signals != 0 && os_threads[cpu_state->thread_current].signal_handler != NULL)
+    {
+        os_threads[cpu_state->thread_current].signal_handler(os_threads[cpu_state->thread_current].signals);
+        os_threads[cpu_state->thread_current].signals = 0;
+    }
 }
 
 /** Handler for kernel service call.
@@ -261,6 +272,8 @@ int thread_startup_handler(void * arg)
 
     int thread_rv = startup_data->entry_point(startup_data->entry_arg);
     free(startup_data);
+
+    linux_thread_exit(thread_rv);
 
     return thread_rv;
 }
