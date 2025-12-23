@@ -77,9 +77,16 @@ extern SCB_Type * SCB;
 
 typedef struct {
     volatile uint32_t CTRL;
-    volatile uint32_t RASR;
-    volatile uint32_t RBAR;
+    volatile uint32_t TYPE;
     volatile uint32_t RNR;
+    volatile uint32_t RBAR;
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+    volatile uint32_t RLAR;   /* ARMv8M: Region Limit Address Register */
+    volatile uint32_t MAIR0;  /* ARMv8M: Memory Attribute Indirection Register 0 */
+    volatile uint32_t MAIR1;  /* ARMv8M: Memory Attribute Indirection Register 1 */
+#else
+    volatile uint32_t RASR;   /* ARMv6M/ARMv7M: Region Attribute and Size Register */
+#endif
 } MPU_Type;
 
 extern MPU_Type * MPU;
@@ -155,6 +162,34 @@ extern MPU_Type * MPU;
 #define ARM_MPU_AP_FULL 3U
 #define ARM_MPU_AP_PRO  5U
 #define ARM_MPU_AP_RO   6U
+
+/* ARMv8M MPU RLAR register fields */
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+
+#define MPU_RLAR_LIMIT_Pos                  5U
+#define MPU_RLAR_LIMIT_Msk                 (0x7FFFFFFUL << MPU_RLAR_LIMIT_Pos)
+
+#define MPU_RLAR_AttrIndx_Pos               1U
+#define MPU_RLAR_AttrIndx_Msk              (0x7UL << MPU_RLAR_AttrIndx_Pos)
+
+#define MPU_RLAR_EN_Pos                     0U
+#define MPU_RLAR_EN_Msk                    (1UL)
+
+/* ARMv8M MPU RBAR additional fields (beyond base address) */
+#define MPU_RBAR_XN_Pos                     0U
+#define MPU_RBAR_XN_Msk                    (1UL)
+
+#define MPU_RBAR_AP_Pos                     1U
+#define MPU_RBAR_AP_Msk                    (0x3UL << MPU_RBAR_AP_Pos)
+
+#define MPU_RBAR_SH_Pos                     3U
+#define MPU_RBAR_SH_Msk                    (0x3UL << MPU_RBAR_SH_Pos)
+
+#undef MPU_RBAR_ADDR_Msk
+#define MPU_RBAR_ADDR_Pos                   5U
+#define MPU_RBAR_ADDR_Msk                  (0x7FFFFFFUL << MPU_RBAR_ADDR_Pos)
+
+#endif
 
 #define EXC_RETURN_THREAD_PSP 0xFFFFFFFE
 
