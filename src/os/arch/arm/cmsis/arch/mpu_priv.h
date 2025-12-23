@@ -12,9 +12,9 @@
  * Memory protection support internals for ARM architecture
  * @{
  */
-#ifdef __ARM_ARCH_6M__
+#if defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__)
 
-// ARM v6M doesn't have any of these
+// ARMv6M and ARMv8M-Baseline don't have detailed fault status registers
 // provide some defaults which will make the code happy
 
 #define SCB_CFSR			0
@@ -30,17 +30,27 @@
  */
 #define MPU_CTRL (MPU->CTRL)
 #define MPU_RNR (MPU->RNR)
-#define MPU_RASR (MPU->RASR)
 #define MPU_RBAR (MPU->RBAR)
+
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+/* ARMv8M MPU uses RLAR instead of RASR */
+#define MPU_RLAR (MPU->RLAR)
+#define MPU_MAIR0 (MPU->MAIR0)
+#define MPU_MAIR1 (MPU->MAIR1)
+#else
+/* ARMv6M/ARMv7M MPU uses RASR */
+#define MPU_RASR (MPU->RASR)
+#endif
 
 /** @} */
 
 #define MPU_RNR_REGION (MPU_RNR_REGION_Msk)
 #define MPU_RNR_REGION_LSB (MPU_RNR_REGION_Pos)
 
-/** @defgroup arm_mpu_rars ARM MPU RASR fields
- * @{ 
+/** @defgroup arm_mpu_rars ARM MPU RASR fields (ARMv6M/ARMv7M)
+ * @{
  */
+#if !defined(__ARM_ARCH_8M_BASE__) && !defined(__ARM_ARCH_8M_MAIN__)
 #define MPU_RASR_ENABLE (MPU_RASR_ENABLE_Msk)
 #define MPU_RASR_SIZE (MPU_RASR_SIZE_Msk)
 #define MPU_RASR_SIZE_LSB (MPU_RASR_SIZE_Pos)
@@ -51,6 +61,36 @@
 #define MPU_RASR_ATTR_AP (MPU_RASR_AP_Msk)
 #define MPU_RASR_ATTR_AP_PRW_URO (ARM_MPU_AP_URO << MPU_RASR_AP_Pos)
 #define MPU_RASR_ATTR_AP_PRW_URW (ARM_MPU_AP_FULL << MPU_RASR_AP_Pos)
+#endif
+/** @} */
+
+/** @defgroup arm_mpu_rlar ARM MPU RLAR fields (ARMv8M)
+ * @{
+ */
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+#define MPU_RLAR_ENABLE (MPU_RLAR_EN_Msk)
+#define MPU_RLAR_LIMIT (MPU_RLAR_LIMIT_Msk)
+#define MPU_RLAR_LIMIT_LSB (MPU_RLAR_LIMIT_Pos)
+#define MPU_RLAR_ATTRINDX (MPU_RLAR_AttrIndx_Msk)
+#define MPU_RLAR_ATTRINDX_LSB (MPU_RLAR_AttrIndx_Pos)
+
+/* Memory attribute indices for MAIR */
+#define MPU_ATTR_DEVICE_nGnRnE     0  /* Device memory, non-gathering, non-reordering, no early write ack */
+#define MPU_ATTR_NORMAL_WT         1  /* Normal memory, write-through, read-allocate */
+#define MPU_ATTR_NORMAL_WB         2  /* Normal memory, write-back, read/write-allocate */
+#define MPU_ATTR_NORMAL_NC         3  /* Normal memory, non-cacheable */
+
+/* Access permission encoding for RBAR */
+#define MPU_RBAR_AP (MPU_RBAR_AP_Msk)
+#define MPU_RBAR_AP_LSB (MPU_RBAR_AP_Pos)
+#define MPU_RBAR_AP_RW_RW (0x0 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged RW */
+#define MPU_RBAR_AP_RW_RO (0x2 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged RO */
+#define MPU_RBAR_AP_RW_NONE (0x1 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged None */
+
+#define MPU_RBAR_XN (MPU_RBAR_XN_Msk)  /* Execute Never */
+#define MPU_RBAR_SH (MPU_RBAR_SH_Msk)  /* Shareability */
+#define MPU_RBAR_SH_LSB (MPU_RBAR_SH_Pos)
+#endif
 /** @} */
 
 /** @defgroup arm_mpu_rbar ARM MPU RBAR fields
