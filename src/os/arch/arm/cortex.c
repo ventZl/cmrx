@@ -153,11 +153,7 @@ uint32_t os_perform_thread_switch(uint32_t LR)
     // handler. If you assert here, then your interrupt handler priority
     // is messed up. You need to configure PendSV to be the handler with
     // absolutely the lowest priority.
-#if __FPU_USED
-	ASSERT(LR == EXC_RETURN_THREAD_PSP || LR == EXC_RETURN_THREAD_PSP_FPU);
-#else
-	ASSERT(LR == EXC_RETURN_THREAD_PSP);
-#endif
+	ASSERT(cortex_is_thread_psp_used(LR));
 
 	sanitize_psp(cpu_context.old_task->sp);
 
@@ -246,11 +242,7 @@ uint32_t os_dispatch_system_call(uint32_t LR)
 	// handler. If you assert here, then your interrupt handler priority
 	// is messed up. You need to configure PendSV to be the handler with
 	// absolutely the lowest priority.
-#if __FPU_USED
-	ASSERT(LR == EXC_RETURN_THREAD_PSP || LR == EXC_RETURN_THREAD_PSP_FPU);
-#else
-	ASSERT(LR == EXC_RETURN_THREAD_PSP);
-#endif
+	ASSERT(cortex_is_thread_psp_used(LR));
 
 	uint32_t * psp = (uint32_t *) __get_PSP();
 	sanitize_psp(psp);

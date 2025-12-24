@@ -135,7 +135,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	// from the RPC call
 	const uint32_t saved_exc_return = get_exception_argument(local_frame, 0, fpu_used);
 	os_threads[current_thread].arch.exc_return = saved_exc_return;
-	ASSERT(saved_exc_return == EXC_RETURN_THREAD_PSP || saved_exc_return == EXC_RETURN_THREAD_PSP_FPU);
+	ASSERT(cortex_is_thread_psp_used(saved_exc_return));
 	bool orig_fpu_used = os_is_thread_using_fpu(current_thread);
 	if (fpu_used & !orig_fpu_used)
 	{

@@ -17,8 +17,10 @@
  * @{
  */
 
-/** MPU region access rights.
- * This array maps CMRX access modes to ARM access modes
+#if !defined(__ARM_ARCH_8M_BASE__) && !defined(__ARM_ARCH_8M_MAIN__)
+
+/** MPU region access rights for ARMv6M/ARMv7M.
+ * This array maps CMRX access modes to ARM RASR attributes
  * See @ref MPU_Flags for meaning of individual indices.
  */
 static const uint32_t __MPU_flags[] = {
@@ -28,6 +30,25 @@ static const uint32_t __MPU_flags[] = {
 	MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URO,
 	MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URW,
 };
+
+#else
+
+/** MPU region access rights for ARMv8M.
+ * Stores RBAR and attribute index for each access mode.
+ * See @ref MPU_Flags for meaning of individual indices.
+ */
+static const struct {
+	uint32_t rbar_flags;  /* AP, XN, SH bits for RBAR */
+	uint8_t attr_idx;     /* MAIR attribute index */
+} __MPU_v8m_flags[] = {
+	/* MPU_NONE */  { 0, 0 },
+	/* MPU_RX */    { MPU_RBAR_AP_RW_RO, MPU_ATTR_NORMAL_WB },                    /* Priv RW, User RO, executable */
+	/* MPU_RWX */   { MPU_RBAR_AP_RW_RW, MPU_ATTR_NORMAL_WB },                    /* Priv RW, User RW, executable */
+	/* MPU_R */     { MPU_RBAR_XN | MPU_RBAR_AP_RW_RO, MPU_ATTR_NORMAL_WB },     /* Priv RW, User RO, no-execute */
+	/* MPU_RW */    { MPU_RBAR_XN | MPU_RBAR_AP_RW_RW, MPU_ATTR_NORMAL_WB },     /* Priv RW, User RW, no-execute */
+};
+
+#endif
 
 /** Handler for hard fault.
  */
@@ -59,6 +80,15 @@ void hard_fault_handler(void)
  */
 static inline void mpu_enable()
 {
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	/* ARMv8M: Initialize MAIR registers with memory attributes */
+	MPU_MAIR0 =
+		(0x00 << (MPU_ATTR_DEVICE_nGnRnE * 8))  |  /* Device memory */
+		(0xAA << (MPU_ATTR_NORMAL_WT * 8))      |  /* Normal, Write-Through, RA */
+		(0xFF << (MPU_ATTR_NORMAL_WB * 8))      |  /* Normal, Write-Back, RWA */
+		(0x44 << (MPU_ATTR_NORMAL_NC * 8));        /* Normal, Non-Cacheable */
+	MPU_MAIR1 = 0;
+#endif
 	MPU_CTRL |= MPU_CTRL_PRIVDEFENA | MPU_CTRL_ENABLE;
 }
 
@@ -82,6 +112,22 @@ int mpu_store(MPU_State * hosted_state, MPU_State * parent_state)
 	if (hosted_state == NULL || parent_state == NULL)
 		return E_INVALID_ADDRESS;
 
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	/* ARMv8M: save RBAR and RLAR */
+	for (int q = 0; q < MPU_HOSTED_STATE_SIZE; ++q)
+	{
+		MPU_RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		(*hosted_state)[q]._MPU_RBAR = MPU_RBAR;
+		(*hosted_state)[q]._MPU_RLAR = MPU_RLAR;
+	}
+	for (int q = MPU_HOSTED_STATE_SIZE; q < MPU_STATE_SIZE; ++q)
+	{
+		MPU_RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		(*parent_state)[q]._MPU_RBAR = MPU_RBAR;
+		(*parent_state)[q]._MPU_RLAR = MPU_RLAR;
+	}
+#else
+	/* ARMv6M/ARMv7M: save RBAR and RASR */
 	for (int q = 0; q < MPU_HOSTED_STATE_SIZE; ++q)
 	{
 		MPU_RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
@@ -94,6 +140,7 @@ int mpu_store(MPU_State * hosted_state, MPU_State * parent_state)
 		(*parent_state)[q]._MPU_RBAR = MPU_RBAR;
 		(*parent_state)[q]._MPU_RASR = MPU_RASR;
 	}
+#endif
 
 	return E_OK;
 }
@@ -113,15 +160,28 @@ int mpu_load(const MPU_State * state, uint8_t base, uint8_t count)
 	if (state == NULL)
 		return E_INVALID_ADDRESS;
 
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	/* ARMv8M: restore RBAR and RLAR */
+	for (int q = 0; q < count; ++q)
+	{
+		MPU_RNR = (((base + q) << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		MPU_RBAR = (*state)[base + q]._MPU_RBAR;
+		MPU_RLAR = (*state)[base + q]._MPU_RLAR;
+	}
+#else
+	/* ARMv6M/ARMv7M: restore RBAR and RASR */
 	for (int q = 0; q < count; ++q)
 	{
 		MPU_RNR = (((base + q) << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
 		MPU_RBAR = (*state)[base + q]._MPU_RBAR;
 		MPU_RASR = (*state)[base + q]._MPU_RASR;
 	}
+#endif
 
 	return E_OK;
 }
+
+#if !defined(__ARM_ARCH_8M_BASE__) && !defined(__ARM_ARCH_8M_MAIN__)
 
 uint32_t __mpu_expand_class(uint8_t class)
 {
@@ -132,28 +192,47 @@ uint32_t __mpu_expand_class(uint8_t class)
 	return 0;
 }
 
-int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RASR);
+#endif
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, struct MPU_Registers * region_def);
 
 
 int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls)
 {
-	uint32_t RBAR, RASR;
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	struct MPU_Registers config;
 	int rv;
-	if ((rv = mpu_configure_region(region, base, size, cls, &RBAR, &RASR)) == E_OK)
+	if ((rv = mpu_configure_region(region, base, size, cls, &config)) == E_OK)
 	{
 		__ISB();
 		__DSB();
-		MPU_RBAR = RBAR;
-		MPU_RASR = RASR;
-        /* Those should not be needed. */
+		MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		MPU_RBAR = config._MPU_RBAR;
+		MPU_RLAR = config._MPU_RLAR;
 		__ISB();
 		__DSB();
-
 	}
+#else
+	struct MPU_Registers config;
+	int rv;
+	if ((rv = mpu_configure_region(region, base, size, cls, &config)) == E_OK)
+	{
+		__ISB();
+		__DSB();
+		MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		MPU_RBAR = config._MPU_RBAR;
+		MPU_RASR = config._MPU_RASR;
+		/* Those should not be needed. */
+		__ISB();
+		__DSB();
+	}
+#endif
 	return rv;
 }
 
-int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RASR)
+#if !defined(__ARM_ARCH_8M_BASE__) && !defined(__ARM_ARCH_8M_MAIN__)
+
+/* ARMv6M/ARMv7M MPU configuration using RBAR/RASR (base + size model) */
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, struct MPU_Registers * region_def)
 {
 	uint8_t regszbits = ((sizeof(uint32_t)*8) - 1) - __builtin_clz(size) - 1;
 	uint32_t subregions = 0xFF;
@@ -171,11 +250,11 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 	// bits above regszbits, because we know they are all zeroes.
 	if (size == 0)
 	{
-		*RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
+		region_def->_MPU_RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
 		| (((uint32_t) base) & MPU_RBAR_ADDR);
 
 //		MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		*RASR = 0;
+		region_def->_MPU_RASR = 0;
 		return E_OK;
 	}
 
@@ -278,10 +357,10 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 	subregions ^= 0xFF;
 
 	/* Configure region base address */
-	*RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
+	region_def->_MPU_RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
 		| (((uint32_t) base) & MPU_RBAR_ADDR) | MPU_RBAR_VALID;
 
-	*RASR = ((regszbits << MPU_RASR_SIZE_LSB) & MPU_RASR_SIZE)
+	region_def->_MPU_RASR = ((regszbits << MPU_RASR_SIZE_LSB) & MPU_RASR_SIZE)
 		| ((subregions << MPU_RASR_SRD_LSB) & MPU_RASR_SRD)
 		| (flags & (MPU_RASR_ATTR_AP | MPU_RASR_ATTR_XN))
 		| MPU_RASR_ATTR_C
@@ -291,10 +370,66 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 
 }
 
+#else
+
+/* ARMv8M MPU configuration using RBAR/RLAR (base + limit model) */
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, struct MPU_Registers * region_def)
+{
+	/* Validate class */
+	if (cls >= sizeof(__MPU_v8m_flags)/sizeof(__MPU_v8m_flags[0]))
+	{
+		return E_INVALID;
+	}
+
+	/* Handle disabled region */
+	if (size == 0)
+	{
+		region_def->_MPU_RBAR = 0; // AI put here: (((uint32_t) base) & MPU_RBAR_ADDR_Msk);
+		region_def->_MPU_RLAR = 0;  /* Disabled */
+		return E_OK;
+	}
+
+	/* ARMv8M requires 32-byte minimum alignment */
+	if (((uint32_t) base & 0x1F) != 0)
+	{
+		ASSERT(0);
+		return E_MISALIGNED;
+	}
+
+	/* Calculate limit address (base + size - 1), must be 32-byte aligned */
+	uint32_t limit = ((uint32_t) base) + size - 1;
+
+	/* Verify limit doesn't overflow and maintains alignment */
+	if (limit < (uint32_t) base || (limit & 0x1F) != 0x1F)
+	{
+		ASSERT(0);
+		return E_WRONG_SIZE;
+	}
+
+	/* Build RBAR: base address + access permissions + XN + shareability */
+	region_def->_MPU_RBAR = (((uint32_t) base) & MPU_RBAR_BASE_Msk)
+		| __MPU_v8m_flags[cls].rbar_flags;
+
+	/* Build RLAR: limit address + attribute index + enable */
+	region_def->_MPU_RLAR = (limit & MPU_RLAR_LIMIT)
+		| ((__MPU_v8m_flags[cls].attr_idx << MPU_RLAR_ATTRINDX_LSB) & MPU_RLAR_ATTRINDX)
+		| MPU_RLAR_ENABLE;
+
+	return E_OK;
+}
+
+#endif
+
 int mpu_clear_region(uint8_t region)
 {
 	MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	/* ARMv8M: clear enable bit in RLAR */
+	MPU_RLAR &= ~MPU_RLAR_ENABLE;
+#else
+	/* ARMv6M/ARMv7M: clear enable bit in RASR */
 	MPU_RASR &= ~MPU_RASR_ENABLE;
+#endif
 	return E_OK;
 }
 
