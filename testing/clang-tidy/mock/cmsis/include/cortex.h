@@ -191,5 +191,22 @@ extern MPU_Type * MPU;
 
 #endif
 
-#define EXC_RETURN_THREAD_PSP 0xFFFFFFFE
+/* ARMv8M: EXC_RETURN bit masks for evaluating LR (from CMSIS core_cm33.h) */
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+
+#define EXC_RETURN_PREFIX          (0xFF000000UL)     /* bits [31:24] set to indicate an EXC_RETURN value                     */
+#define EXC_RETURN_S               (0x00000040UL)     /* bit [6] stack used to push registers: 0=Non-secure 1=Secure          */
+#define EXC_RETURN_DCRS            (0x00000020UL)     /* bit [5] stacking rules for called registers: 0=skipped 1=saved       */
+#define EXC_RETURN_FTYPE           (0x00000010UL)     /* bit [4] allocate stack for floating-point context: 0=done 1=skipped  */
+#define EXC_RETURN_MODE            (0x00000008UL)     /* bit [3] processor mode for return: 0=Handler mode 1=Thread mode      */
+#define EXC_RETURN_SPSEL           (0x00000004UL)     /* bit [2] stack pointer used to restore context: 0=MSP 1=PSP           */
+#define EXC_RETURN_ES              (0x00000001UL)     /* bit [0] security state exception was taken to: 0=Non-secure 1=Secure */
+
+#else
+
+/* ARMv6M/ARMv7M: Specific EXC_RETURN constants (from CMSIS core_cm4.h) */
+#define EXC_RETURN_THREAD_PSP      (0xFFFFFFFDUL)
+#define EXC_RETURN_THREAD_PSP_FPU  (0xFFFFFFEDUL)
+
+#endif
 
