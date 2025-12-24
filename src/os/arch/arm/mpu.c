@@ -192,40 +192,35 @@ uint32_t __mpu_expand_class(uint8_t class)
 	return 0;
 }
 
-int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RASR);
-
-#else
-
-/* ARMv8M: forward declaration with RLAR instead of RASR */
-int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RLAR);
-
 #endif
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, struct MPU_Registers * region_def);
 
 
 int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls)
 {
 #if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
-	uint32_t RBAR, RLAR;
+	struct MPU_Registers config;
 	int rv;
-	if ((rv = mpu_configure_region(region, base, size, cls, &RBAR, &RLAR)) == E_OK)
+	if ((rv = mpu_configure_region(region, base, size, cls, &config)) == E_OK)
 	{
 		__ISB();
 		__DSB();
 		MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		MPU_RBAR = RBAR;
-		MPU_RLAR = RLAR;
+		MPU_RBAR = config._MPU_RBAR;
+		MPU_RLAR = config._MPU_RLAR;
 		__ISB();
 		__DSB();
 	}
 #else
-	uint32_t RBAR, RASR;
+	struct MPU_Registers config;
 	int rv;
-	if ((rv = mpu_configure_region(region, base, size, cls, &RBAR, &RASR)) == E_OK)
+	if ((rv = mpu_configure_region(region, base, size, cls, &config)) == E_OK)
 	{
 		__ISB();
 		__DSB();
-		MPU_RBAR = RBAR;
-		MPU_RASR = RASR;
+		MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		MPU_RBAR = config._MPU_RBAR;
+		MPU_RASR = config._MPU_RASR;
 		/* Those should not be needed. */
 		__ISB();
 		__DSB();
@@ -237,7 +232,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls
 #if !defined(__ARM_ARCH_8M_BASE__) && !defined(__ARM_ARCH_8M_MAIN__)
 
 /* ARMv6M/ARMv7M MPU configuration using RBAR/RASR (base + size model) */
-int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RASR)
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, struct MPU_Registers * region_def)
 {
 	uint8_t regszbits = ((sizeof(uint32_t)*8) - 1) - __builtin_clz(size) - 1;
 	uint32_t subregions = 0xFF;
@@ -255,11 +250,11 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 	// bits above regszbits, because we know they are all zeroes.
 	if (size == 0)
 	{
-		*RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
+		region_def->_MPU_RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
 		| (((uint32_t) base) & MPU_RBAR_ADDR);
 
 //		MPU_RNR = ((region << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		*RASR = 0;
+		region_def->_MPU_RASR = 0;
 		return E_OK;
 	}
 
@@ -362,10 +357,10 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 	subregions ^= 0xFF;
 
 	/* Configure region base address */
-	*RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
+	region_def->_MPU_RBAR = ((region << MPU_RBAR_REGION_LSB) & MPU_RBAR_REGION)
 		| (((uint32_t) base) & MPU_RBAR_ADDR) | MPU_RBAR_VALID;
 
-	*RASR = ((regszbits << MPU_RASR_SIZE_LSB) & MPU_RASR_SIZE)
+	region_def->_MPU_RASR = ((regszbits << MPU_RASR_SIZE_LSB) & MPU_RASR_SIZE)
 		| ((subregions << MPU_RASR_SRD_LSB) & MPU_RASR_SRD)
 		| (flags & (MPU_RASR_ATTR_AP | MPU_RASR_ATTR_XN))
 		| MPU_RASR_ATTR_C
@@ -378,7 +373,7 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 #else
 
 /* ARMv8M MPU configuration using RBAR/RLAR (base + limit model) */
-int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, uint32_t * RBAR, uint32_t * RLAR)
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, struct MPU_Registers * region_def)
 {
 	/* Validate class */
 	if (cls >= sizeof(__MPU_v8m_flags)/sizeof(__MPU_v8m_flags[0]))
@@ -389,8 +384,8 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 	/* Handle disabled region */
 	if (size == 0)
 	{
-		*RBAR = (((uint32_t) base) & MPU_RBAR_ADDR_Msk);
-		*RLAR = 0;  /* Disabled */
+		region_def->_MPU_RBAR = 0; // AI put here: (((uint32_t) base) & MPU_RBAR_ADDR_Msk);
+		region_def->_MPU_RLAR = 0;  /* Disabled */
 		return E_OK;
 	}
 
@@ -412,11 +407,11 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 	}
 
 	/* Build RBAR: base address + access permissions + XN + shareability */
-	*RBAR = (((uint32_t) base) & MPU_RBAR_ADDR_Msk)
+	region_def->_MPU_RBAR = (((uint32_t) base) & MPU_RBAR_BASE_Msk)
 		| __MPU_v8m_flags[cls].rbar_flags;
 
 	/* Build RLAR: limit address + attribute index + enable */
-	*RLAR = (limit & MPU_RLAR_LIMIT)
+	region_def->_MPU_RLAR = (limit & MPU_RLAR_LIMIT)
 		| ((__MPU_v8m_flags[cls].attr_idx << MPU_RLAR_ATTRINDX_LSB) & MPU_RLAR_ATTRINDX)
 		| MPU_RLAR_ENABLE;
 

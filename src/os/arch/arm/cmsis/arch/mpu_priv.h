@@ -154,7 +154,7 @@ int mpu_set_region(uint8_t region, const void * base, uint32_t size, uint8_t cls
  *
  * @TODO
  */
-int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t flags, uint32_t * RBAR, uint32_t * RASR);
+int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t flags, struct MPU_Registers * region_def);
 
 /** Disable MPU region.
  * This function will disable use of MPU region. Address and size

@@ -64,7 +64,7 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 	for (int q = 0; q < OS_TASK_MPU_REGIONS; ++q)
 	{
 		unsigned reg_size = (uint8_t *) definition->mpu_regions[q].end - (uint8_t *) definition->mpu_regions[q].start;
-		int rv = mpu_configure_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]._MPU_RBAR, &os_processes[process_id].mpu[q]._MPU_RASR);
+		int rv = mpu_configure_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]);
 		if (rv != E_OK)
 		{
 			os_processes[process_id].definition = NULL;
