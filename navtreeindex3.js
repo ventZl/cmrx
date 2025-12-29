@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"structQueueServiceInterface.html#ab2ff0a185bef735e1546727006fce031":[7,3,2,2,0],
 "structRPC__Service__t__.html":[7,1,6,0],
 "structRPC__Service__t__.html#a202dd170ff2c2359e82d7a23f0a2f7ca":[7,1,6,0,0],
 "structSyscall__Entry__t.html":[8,0,34],

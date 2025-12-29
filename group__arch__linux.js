@@ -18,6 +18,7 @@ var group__arch__linux =
     [ "mpu_init_stack", "group__arch__linux.html#gad1e98b6b913a67b51e041e4e9002a399", null ],
     [ "mpu_restore", "group__arch__linux.html#gaccaca933ccccec5a6f6808252b4a5fbc", null ],
     [ "os_boot_thread", "group__arch__linux.html#ga1efbfe606317fd469d8fc187a4cb9a79", null ],
+    [ "os_core_sleep", "group__arch__linux.html#gaeb3a0773a5b5be08c7e685cfad452648", null ],
     [ "os_init_arch", "group__arch__linux.html#gaa60b9768d8ca80f05db8e96e43845ccf", null ],
     [ "os_kernel_shutdown", "group__arch__linux.html#ga6e29c6b6f3e6e761c076a0b28490da0e", null ],
     [ "os_memory_protection_start", "group__arch__linux.html#ga2b816407f1b57d532407988a5da92716", null ],

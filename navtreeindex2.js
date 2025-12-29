@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__os__signal.html":[7,1,7],
 "group__os__signal.html#ga43d8b1601032fa3f4457603fa6ea4dd1":[7,1,7,3],
 "group__os__signal.html#gaa2d22243a5b2278963a3b6c4fa9c0f40":[7,1,7,1],
 "group__os__signal.html#gaaf812da2deb5e7a342042df5f7768d3c":[7,1,7,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structQueueService.html":[7,3,2,3],
 "structQueueService.html#aa2c3853c2f854d7801ddf6c24bee672d":[7,3,2,3,0],
 "structQueueService.html#ad6be36efc2848a190070a62bdb27b560":[7,3,2,3,1],
-"structQueueServiceInterface.html":[7,3,2,2],
-"structQueueServiceInterface.html#ab2ff0a185bef735e1546727006fce031":[7,3,2,2,0]
+"structQueueServiceInterface.html":[7,3,2,2]
 };
