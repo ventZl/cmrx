@@ -557,3 +557,8 @@ struct Syscall_Entry_t * os_syscalls_end(void)
 {
     return &syscalls[syscalls_count];
 }
+
+void os_core_sleep()
+{
+    sleep(1);
+}
