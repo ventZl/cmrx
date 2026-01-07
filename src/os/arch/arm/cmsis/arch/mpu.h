@@ -10,13 +10,25 @@
  * Memory protection support internals for ARM architecture
  * @{
  */
-/** Convenience structure which groups RBAR and RASR register 
- * for one MPU region together
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+
+/** ARMv8M MPU registers for one region (base + limit model)
  */
 struct MPU_Registers {
-	uint32_t _MPU_RBAR;
-	uint32_t _MPU_RASR;
+	uint32_t _MPU_RBAR;  /* Region Base Address Register */
+	uint32_t _MPU_RLAR;  /* Region Limit Address Register */
 };
+
+#else
+
+/** ARMv6M/ARMv7M MPU registers for one region (base + size model)
+ */
+struct MPU_Registers {
+	uint32_t _MPU_RBAR;  /* Region Base Address Register */
+	uint32_t _MPU_RASR;  /* Region Attribute and Size Register */
+};
+
+#endif
 
 /** Type handling MPU state as remembered by CMRX thread switcher
  */

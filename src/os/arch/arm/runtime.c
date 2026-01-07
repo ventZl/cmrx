@@ -8,8 +8,8 @@
 #if __FPU_USED
 void os_save_fpu_context(struct OS_thread_t * thread)
 {
-    ASSERT(thread->arch.exc_return == EXC_RETURN_THREAD_PSP || thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU);
-    if (thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU)
+    ASSERT(cortex_is_thread_psp_used(thread->arch.exc_return));
+    if (cortex_is_fpu_used(thread->arch.exc_return))
     {
         uint32_t * sp = thread->sp;
         asm volatile(
@@ -27,7 +27,7 @@ void os_load_fpu_context(struct OS_thread_t * thread)
 {
     // Here the lazy saving of FPU is still active
     ASSERT((FPU->FPCCR & FPU_FPCCR_LSPACT_Msk) == 0);
-    if (thread->arch.exc_return == EXC_RETURN_THREAD_PSP_FPU)
+    if (cortex_is_fpu_used(thread->arch.exc_return))
     {
         uint32_t * sp = thread->sp;
         sp -= 15;
@@ -59,7 +59,7 @@ void os_init_core(unsigned core_id)
 
 bool os_is_thread_using_fpu(Thread_t thread_id)
 {
-    return (os_threads[thread_id].arch.exc_return == EXC_RETURN_THREAD_PSP_FPU);
+    return cortex_is_fpu_used(os_threads[thread_id].arch.exc_return);
 }
 
 bool os_fpu_exception_frame(void)
