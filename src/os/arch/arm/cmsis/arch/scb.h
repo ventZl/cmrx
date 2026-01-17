@@ -2,12 +2,14 @@
 #include <RTE_Components.h>
 #include CMSIS_device_header
 
-#ifdef __ARM_ARCH_6M__
+#if defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__)
 
+/* ARMv6M and ARMv8M-Baseline: no detailed fault status registers */
 #   define SCB_CFSR 0
 
-#else 
+#else
 
+/* ARMv7M, ARMv7EM, ARMv8M-Mainline: full fault status registers */
 #   define SCB_CFSR (SCB->CFSR)
 
 

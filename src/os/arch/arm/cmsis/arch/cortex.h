@@ -61,8 +61,9 @@ _Static_assert(sizeof(ExceptionFrameFP) % 8 == 0, "The size of ExceptionFrameFP 
  * The ISR frame stored in thread stack is loaded back into registers.
  * Perform the same steps.
  */
-#ifdef __ARM_ARCH_6M__
+#if defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__)
 
+/* ARMv6M and ARMv8M-Baseline: limited register access */
 ALWAYS_INLINE void __ISR_return()
 {
 		asm volatile(
@@ -77,6 +78,7 @@ ALWAYS_INLINE void __ISR_return()
 
 #else
 
+/* ARMv7M, ARMv7EM, ARMv8M-Mainline: full register access */
 // TODO: Test this
 ALWAYS_INLINE void __ISR_return()
 {
@@ -257,8 +259,9 @@ ALWAYS_INLINE void __set_LR(void * lr)
  * code pointed to by @ref continue_here in privileged thread mode.
  */
 
-#ifdef __ARM_ARCH_6M__
+#if defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__)
 
+/* ARMv6M and ARMv8M-Baseline: limited immediate support, use LDR */
 ALWAYS_INLINE  void __forge_shutdown_exception_frame(void (*continue_here)(void))
 {
 	asm volatile(
@@ -284,6 +287,7 @@ ALWAYS_INLINE  void __forge_shutdown_exception_frame(void (*continue_here)(void)
 
 #else
 
+/* ARMv7M, ARMv7EM, ARMv8M-Mainline: modified immediate support */
 ALWAYS_INLINE  __attribute__((noreturn)) void __forge_shutdown_exception_frame(void (*continue_here)(void))
 {
 	asm volatile(
@@ -307,5 +311,23 @@ ALWAYS_INLINE  __attribute__((noreturn)) void __forge_shutdown_exception_frame(v
 }
 
 #endif
+
+static inline bool cortex_is_fpu_used(uint32_t return_addr)
+{
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	return (return_addr & EXC_RETURN_FTYPE) == 0;
+#else
+	return return_addr == EXC_RETURN_THREAD_PSP_FPU;
+#endif
+}
+
+static inline bool cortex_is_thread_psp_used(uint32_t return_addr)
+{
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	return (return_addr & (EXC_RETURN_MODE | EXC_RETURN_SPSEL)) == (EXC_RETURN_MODE | EXC_RETURN_SPSEL);
+#else
+	return return_addr == EXC_RETURN_THREAD_PSP || return_addr == EXC_RETURN_THREAD_PSP_FPU;
+#endif
+}
 
 /// @}

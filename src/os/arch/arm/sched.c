@@ -39,7 +39,12 @@ void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size,
 	// By default, thread is restored into
 	// Thread mode, using PSP as a stack and
 	// without FPU
+#	if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+#	define EXC_RETURN_RES1 0xFFFF80UL
+	thread->arch.exc_return = EXC_RETURN_PREFIX | EXC_RETURN_RES1 | EXC_RETURN_DCRS | EXC_RETURN_FTYPE | EXC_RETURN_MODE | EXC_RETURN_SPSEL;
+#	else
 	thread->arch.exc_return = EXC_RETURN_THREAD_PSP;
+#	endif
 #endif
 }
 
@@ -59,7 +64,7 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 	for (int q = 0; q < OS_TASK_MPU_REGIONS; ++q)
 	{
 		unsigned reg_size = (uint8_t *) definition->mpu_regions[q].end - (uint8_t *) definition->mpu_regions[q].start;
-		int rv = mpu_configure_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]._MPU_RBAR, &os_processes[process_id].mpu[q]._MPU_RASR);
+		int rv = mpu_configure_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]);
 		if (rv != E_OK)
 		{
 			os_processes[process_id].definition = NULL;
