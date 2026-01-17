@@ -106,20 +106,31 @@ $(document).ready(function(){initNavTree('arch_2arm_2cmsis_2arch_2mpu_8h_source.
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;conf/kernel.h&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="structMPU__Registers.html">   16</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structMPU__Registers.html">MPU_Registers</a> {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structMPU__Registers.html#af192544722f6e65244f494cdbf934a49">   17</a></span>    uint32_t <a class="code hl_variable" href="structMPU__Registers.html#af192544722f6e65244f494cdbf934a49">_MPU_RBAR</a>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343">   18</a></span>    uint32_t <a class="code hl_variable" href="structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343">_MPU_RASR</a>;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">struct </span><a class="code hl_struct" href="structMPU__Registers.html">MPU_Registers</a> {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    uint32_t <a class="code hl_variable" href="structMPU__Registers.html#af192544722f6e65244f494cdbf934a49">_MPU_RBAR</a>;  <span class="comment">/* Region Base Address Register */</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    uint32_t _MPU_RLAR;  <span class="comment">/* Region Limit Address Register */</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>};</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="structMPU__Registers.html">   26</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structMPU__Registers.html">MPU_Registers</a> {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structMPU__Registers.html#af192544722f6e65244f494cdbf934a49">   27</a></span>    uint32_t <a class="code hl_variable" href="structMPU__Registers.html#af192544722f6e65244f494cdbf934a49">_MPU_RBAR</a>;  <span class="comment">/* Region Base Address Register */</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343">   28</a></span>    uint32_t <a class="code hl_variable" href="structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343">_MPU_RASR</a>;  <span class="comment">/* Region Attribute and Size Register */</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>};</div>
 </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">   23</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structMPU__Registers.html">MPU_Registers</a> <a class="code hl_struct" href="structMPU__Configuration.html">MPU_State</a>[<a class="code hl_define" href="group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e">MPU_STATE_SIZE</a>];</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">   35</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structMPU__Registers.html">MPU_Registers</a> <a class="code hl_struct" href="structMPU__Configuration.html">MPU_State</a>[<a class="code hl_define" href="group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e">MPU_STATE_SIZE</a>];</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="ttc" id="agroup__os__config_html_ga65416dcf67532764d2adb4fe3f4e994e"><div class="ttname"><a href="group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e">MPU_STATE_SIZE</a></div><div class="ttdeci">#define MPU_STATE_SIZE</div><div class="ttdoc">How many MPU regions are saved per thread.</div><div class="ttdef"><b>Definition</b> kernel.h:17</div></div>
 <div class="ttc" id="astructMPU__Configuration_html"><div class="ttname"><a href="structMPU__Configuration.html">MPU_Configuration</a></div><div class="ttdef"><b>Definition</b> mpu.h:3</div></div>
-<div class="ttc" id="astructMPU__Registers_html"><div class="ttname"><a href="structMPU__Registers.html">MPU_Registers</a></div><div class="ttdoc">Convenience structure which groups RBAR and RASR register for one MPU region together.</div><div class="ttdef"><b>Definition</b> mpu.h:16</div></div>
-<div class="ttc" id="astructMPU__Registers_html_a824d742b9c1c57e63a46743ebfc26343"><div class="ttname"><a href="structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343">MPU_Registers::_MPU_RASR</a></div><div class="ttdeci">uint32_t _MPU_RASR</div><div class="ttdef"><b>Definition</b> mpu.h:18</div></div>
-<div class="ttc" id="astructMPU__Registers_html_af192544722f6e65244f494cdbf934a49"><div class="ttname"><a href="structMPU__Registers.html#af192544722f6e65244f494cdbf934a49">MPU_Registers::_MPU_RBAR</a></div><div class="ttdeci">uint32_t _MPU_RBAR</div><div class="ttdef"><b>Definition</b> mpu.h:17</div></div>
+<div class="ttc" id="astructMPU__Registers_html"><div class="ttname"><a href="structMPU__Registers.html">MPU_Registers</a></div><div class="ttdoc">ARMv6M/ARMv7M MPU registers for one region (base + size model)</div><div class="ttdef"><b>Definition</b> mpu.h:26</div></div>
+<div class="ttc" id="astructMPU__Registers_html_a824d742b9c1c57e63a46743ebfc26343"><div class="ttname"><a href="structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343">MPU_Registers::_MPU_RASR</a></div><div class="ttdeci">uint32_t _MPU_RASR</div><div class="ttdef"><b>Definition</b> mpu.h:28</div></div>
+<div class="ttc" id="astructMPU__Registers_html_af192544722f6e65244f494cdbf934a49"><div class="ttname"><a href="structMPU__Registers.html#af192544722f6e65244f494cdbf934a49">MPU_Registers::_MPU_RBAR</a></div><div class="ttdeci">uint32_t _MPU_RBAR</div><div class="ttdef"><b>Definition</b> mpu.h:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->

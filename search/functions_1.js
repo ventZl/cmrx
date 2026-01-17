@@ -8,5 +8,7 @@ var searchData=
   ['cmrx_5fshutdown_5fhandler_5',['cmrx_shutdown_handler',['../group__arch__arm__sched.html#gaa1fe4414a243f61c85e0a1d2fbd01440',1,'sched.c']]],
   ['cmrx_5fvtable_5fsection_5fstart_6',['CMRX_VTABLE_SECTION_START',['../group__arch__linux.html#gaf375651c42ce52d1ee1b98fe5ffcb6cb',1,'application.h']]],
   ['cmrx_5fvtable_5fsection_5fstop_7',['CMRX_VTABLE_SECTION_STOP',['../group__arch__linux.html#ga0167031f092f5a20b275d44fa71bf9f5',1,'application.h']]],
-  ['coreid_8',['coreid',['../group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345',1,'corelocal.h']]]
+  ['coreid_8',['coreid',['../group__arch__arch.html#ga08c83fbec4a92bba591402c53805f345',1,'corelocal.h']]],
+  ['cortex_5fis_5ffpu_5fused_9',['cortex_is_fpu_used',['../group__arch__arm__cortex.html#gaad8539f628855baf5df2659420ac580e',1,'cortex.h']]],
+  ['cortex_5fis_5fthread_5fpsp_5fused_10',['cortex_is_thread_psp_used',['../group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616',1,'cortex.h']]]
 ];

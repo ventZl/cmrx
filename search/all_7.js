@@ -1,9 +1,9 @@
 var searchData=
 [
   ['data_0',['data',['../mem_model.html#autotoc_md32',1,'Code and read-only data'],['../structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22',1,'OS_thread_create_t::data'],['../group__os__tracing.html#os_tracing_retrieving',1,'Retrieving trace data']]],
-  ['declare_20interfaces_1',['Declare interfaces',['../rpc_intro.html#autotoc_md41',1,'']]],
-  ['declare_20services_2',['Declare services',['../rpc_intro.html#autotoc_md42',1,'']]],
-  ['define_20service_20implementation_3',['Define service implementation',['../rpc_intro.html#autotoc_md43',1,'']]],
+  ['declare_20interfaces_1',['Declare interfaces',['../rpc_intro.html#autotoc_md42',1,'']]],
+  ['declare_20services_2',['Declare services',['../rpc_intro.html#autotoc_md43',1,'']]],
+  ['define_20service_20implementation_3',['Define service implementation',['../rpc_intro.html#autotoc_md44',1,'']]],
   ['definition_4',['definition',['../structOS__process__t.html#a0159c1ff60b0227b8f3a66674c92006d',1,'OS_process_t']]],
   ['delay_5fus_5',['delay_us',['../group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b',1,'timer.c']]],
   ['delays_6',['Precise synchronous delays',['../group__api__timing.html#sync_delay',1,'']]],
@@ -16,7 +16,7 @@ var searchData=
   ['device_13',['device',['../structEmuDummyPeripheral__t.html#a90ad79b58b95e238446c2683086be8fc',1,'EmuDummyPeripheral_t::device'],['../findcmsis.html#autotoc_md23',1,'DEVICE']]],
   ['device_5finclude_5ffilename_14',['DEVICE_INCLUDE_FILENAME',['../findcmsis.html#autotoc_md25',1,'']]],
   ['diff_5fmicrotime_15',['diff_microtime',['../group__api__standard.html#ga821cccfa3f3ac511dd361a3544715944',1,'std.c']]],
-  ['directories_16',['Source and header directories',['../dev_env.html#autotoc_md55',1,'']]],
+  ['directories_16',['Source and header directories',['../dev_env.html#autotoc_md63',1,'']]],
   ['dispatch_5fargs_17',['dispatch_args',['../structsyscall__dispatch__t.html#a38c4c9617d66066d5386da2ce3a513a9',1,'syscall_dispatch_t']]],
   ['dispatch_5ftarget_18',['dispatch_target',['../structsyscall__dispatch__t.html#ab5684536818cdbc428d1689b3195a52c',1,'syscall_dispatch_t']]],
   ['do_5fset_5ftimed_5fevent_19',['do_set_timed_event',['../group__os__timer.html#gaef90c3e49cedd75a22cf512bad8c149f',1,'timer.c']]],

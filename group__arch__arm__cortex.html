@@ -170,6 +170,10 @@ Functions</h2></td></tr>
 <tr class="memitem:gae2ca2a580649d905b09dbd62ebb3c01c" id="r_gae2ca2a580649d905b09dbd62ebb3c01c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gae2ca2a580649d905b09dbd62ebb3c01c">__forge_shutdown_exception_frame</a> (void(*continue_here)(void))</td></tr>
 <tr class="memdesc:gae2ca2a580649d905b09dbd62ebb3c01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forges shutdown exception frame.  <br /></td></tr>
 <tr class="separator:gae2ca2a580649d905b09dbd62ebb3c01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad8539f628855baf5df2659420ac580e" id="r_gaad8539f628855baf5df2659420ac580e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#gaad8539f628855baf5df2659420ac580e">cortex_is_fpu_used</a> (uint32_t return_addr)</td></tr>
+<tr class="separator:gaad8539f628855baf5df2659420ac580e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4058ac21103b552e8471d50b68bbb616" id="r_ga4058ac21103b552e8471d50b68bbb616"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616">cortex_is_thread_psp_used</a> (uint32_t return_addr)</td></tr>
+<tr class="separator:ga4058ac21103b552e8471d50b68bbb616"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Routines supporting access to Cortex-M core facilities. </p>
@@ -380,6 +384,58 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="gaad8539f628855baf5df2659420ac580e" name="gaad8539f628855baf5df2659420ac580e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad8539f628855baf5df2659420ac580e">&#9670;&#160;</a></span>cortex_is_fpu_used()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool cortex_is_fpu_used </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga4058ac21103b552e8471d50b68bbb616" name="ga4058ac21103b552e8471d50b68bbb616"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4058ac21103b552e8471d50b68bbb616">&#9670;&#160;</a></span>cortex_is_thread_psp_used()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool cortex_is_thread_psp_used </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

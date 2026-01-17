@@ -26,6 +26,8 @@ var group__arch__arm__cortex =
     [ "__get_LR", "group__arch__arm__cortex.html#gad2e17ebf5c6096d178a9816f7339703d", null ],
     [ "__ISR_return", "group__arch__arm__cortex.html#gabe1c8e0b0ce8425aa5eaadc6c7715a86", null ],
     [ "__set_LR", "group__arch__arm__cortex.html#ga3b996e99f9bcb08dc8219e0e21806769", null ],
+    [ "cortex_is_fpu_used", "group__arch__arm__cortex.html#gaad8539f628855baf5df2659420ac580e", null ],
+    [ "cortex_is_thread_psp_used", "group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616", null ],
     [ "get_exception_arg_addr", "group__arch__arm__cortex.html#ga2ae6451ce266ac64b1839748e597ae87", null ],
     [ "get_exception_argument", "group__arch__arm__cortex.html#ga33c3e222f575df5864ca025a3b73f165", null ],
     [ "pop_exception_frame", "group__arch__arm__cortex.html#gad4a222a4d28fa7a5cfff3a7660353361", null ],

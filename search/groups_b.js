@@ -7,9 +7,9 @@ var searchData=
   ['memory_4',['Shared memory',['../group__api__shared.html',1,'']]],
   ['memory_20protection_5',['memory protection',['../group__os__mpu.html',1,'Memory protection'],['../group__arch__arm__nvic.html',1,'Memory protection'],['../group__arch__arm__mpu.html',1,'Memory protection']]],
   ['mpu_20ctrl_20fields_6',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
-  ['mpu_20rasr_20fields_7',['ARM MPU RASR fields',['../group__arm__mpu__rars.html',1,'']]],
+  ['mpu_20rasr_20fields_20armv6m_20armv7m_7',['ARM MPU RASR fields (ARMv6M/ARMv7M)',['../group__arm__mpu__rars.html',1,'']]],
   ['mpu_20rbar_20fields_8',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],
   ['mpu_20region_20names_9',['MPU region names',['../group__mpu__region__names.html',1,'']]],
-  ['mpu_20register_20aliases_10',['ARM MPU register aliases',['../group__arm__mpu__registers.html',1,'']]],
+  ['mpu_20rlar_20fields_20armv8m_10',['ARM MPU RLAR fields (ARMv8M)',['../group__arm__mpu__rlar.html',1,'']]],
   ['mutexes_20futexes_11',['Mutexes / Futexes',['../group__api__mutex.html',1,'']]]
 ];

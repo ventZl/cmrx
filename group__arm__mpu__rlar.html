@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: Static code analysis</title>
+<title>C Microkernel Realtime eXecutive: ARM MPU RLAR fields (ARMv8M)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('md_CLANG__TIDY.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__arm__mpu__rlar.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -97,32 +97,11 @@ $(document).ready(function(){initNavTree('md_CLANG__TIDY.html',''); initResizabl
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Static code analysis</div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">ARM MPU RLAR fields (ARMv8M)</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>CMRX integrates support for Clang-tidy static code analyzer. Unlike unit tests, which only test the portable part of the code clang-tidy checks all the code for given platform. For this purpose there is a special project inside [testing/clang-tidy] subdirectory. This project is a standalone empty project that integrates CMRX kernel and abstract machine implementation for given target platform which is then subject of code analysis.</p>
-<p>If you want to run static clang-tidy analysis of CMRX codebase, then do the following:</p>
-<div class="fragment"><div class="line">cmake -DCMRX_TARGET_PLATFORM=&lt;platform&gt; -B clang-tidy-build $CMRX_ROOT/testing/clang-tidy</div>
-<div class="line">cmake --build clang-tidy-build -- clang-tidy</div>
-</div><!-- fragment --><p>This requires clang compiler to be present on your machine. The <code>CMRX_TARGET_PLATFORM</code> argument may have one of the following values:</p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">CMRX_TARGET_PLATFORM   </th><th class="markdownTableHeadNone">Target platform    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">ARMv6M   </td><td class="markdownTableBodyNone">ARM Cortex-M0+ MCUs    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">ARMv7M   </td><td class="markdownTableBodyNone">ARM Cortex-M3, M4, M7 MCUs without FPU active    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">ARMv7MF   </td><td class="markdownTableBodyNone">ARM Cortex-M4 and M7 MCUs with FPU activated    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">ARMv8M-Baseline   </td><td class="markdownTableBodyNone">ARM Cortex-M23 MCUs (ARMv8M-Baseline architecture)    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">ARMv8M-Mainline   </td><td class="markdownTableBodyNone">ARM Cortex-M33, M35P, M55, M85 MCUs (ARMv8M-Mainline architecture)   </td></tr>
-</table>
-<p>As each of these platforms is using different code path, you have to select which platform you want to activate before running static code analysis. The project for running analyses is not depending on any external SDK or CMSIS pack. It provides very minimal mock of CMSIS headers which is required to perform the analysis. This project does not even define any firmware to be built so <code>make all</code> does nothing. </p>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.7-->
 <!-- start footer part -->

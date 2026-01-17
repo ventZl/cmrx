@@ -101,9 +101,7 @@ $(document).ready(function(){initNavTree('group__arch__arm__mpu.html',''); initR
   <div class="summary">
 <a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">Memory protection<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__arm.html">ARM port</a></div></div></div>
 </div><!--header-->
 <div class="contents">
@@ -113,14 +111,6 @@ $(document).ready(function(){initNavTree('group__arch__arm__mpu.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:group__arm__mpu__ctrl" id="r_group__arm__mpu__ctrl"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arm__mpu__ctrl.html">ARM MPU CTRL fields</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__arm__mpu__rars" id="r_group__arm__mpu__rars"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arm__mpu__rars.html">ARM MPU RASR fields</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__arm__mpu__rbar" id="r_group__arm__mpu__rbar"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arm__mpu__rbar.html">ARM MPU RBAR fields</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__arm__mpu__registers" id="r_group__arm__mpu__registers"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arm__mpu__registers.html">ARM MPU register aliases</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__mpu__region__names" id="r_group__mpu__region__names"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mpu__region__names.html">MPU region names</a></td></tr>
 <tr class="memdesc:group__mpu__region__names"><td class="mdescLeft">&#160;</td><td class="mdescRight">Names of ARM MPU regions as being used by CMRX. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,96 +118,17 @@ Modules</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPU__Registers.html">MPU_Registers</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience structure which groups RBAR and RASR register for one MPU region together.  <a href="structMPU__Registers.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ARMv6M/ARMv7M MPU registers for one region (base + size model)  <a href="structMPU__Registers.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga2f22ba6a7bec09dc599be801b1e5f9d5" id="r_ga2f22ba6a7bec09dc599be801b1e5f9d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga2f22ba6a7bec09dc599be801b1e5f9d5">MPU_RNR_REGION</a>&#160;&#160;&#160;(MPU_RNR_REGION_Msk)</td></tr>
-<tr class="separator:ga2f22ba6a7bec09dc599be801b1e5f9d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98123943c5d9a71e1d06ae7eff10807a" id="r_ga98123943c5d9a71e1d06ae7eff10807a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga98123943c5d9a71e1d06ae7eff10807a">MPU_RNR_REGION_LSB</a>&#160;&#160;&#160;(MPU_RNR_REGION_Pos)</td></tr>
-<tr class="separator:ga98123943c5d9a71e1d06ae7eff10807a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad165405d8b7780b3dc9f0bc945925cbc" id="r_gad165405d8b7780b3dc9f0bc945925cbc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#gad165405d8b7780b3dc9f0bc945925cbc">MPU_AP_MASK</a>&#160;&#160;&#160;0b0111</td></tr>
-<tr class="separator:gad165405d8b7780b3dc9f0bc945925cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab726d0bcd26965e81af2fcbcae650469" id="r_gab726d0bcd26965e81af2fcbcae650469"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#gab726d0bcd26965e81af2fcbcae650469">MPU_EXECUTE_SHIFT</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:gab726d0bcd26965e81af2fcbcae650469"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga8fdd1416c938c54f8e1e9fca4b9f139a" id="r_ga8fdd1416c938c54f8e1e9fca4b9f139a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structMPU__Registers.html">MPU_Registers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a">MPU_State</a>[<a class="el" href="group__os__config.html#ga65416dcf67532764d2adb4fe3f4e994e">MPU_STATE_SIZE</a>]</td></tr>
 <tr class="memdesc:ga8fdd1416c938c54f8e1e9fca4b9f139a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type handling MPU state as remembered by CMRX thread switcher.  <br /></td></tr>
 <tr class="separator:ga8fdd1416c938c54f8e1e9fca4b9f139a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga2fcb7c5300d860acbb4c42673bc68e19" id="r_ga2fcb7c5300d860acbb4c42673bc68e19"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga2fcb7c5300d860acbb4c42673bc68e19">mpu_set_region</a> (uint8_t region, const void *base, uint32_t size, uint8_t cls)</td></tr>
-<tr class="memdesc:ga2fcb7c5300d860acbb4c42673bc68e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure and activate MPU region.  <br /></td></tr>
-<tr class="separator:ga2fcb7c5300d860acbb4c42673bc68e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2df3bcd565155fa841a09863ab02fca3" id="r_ga2df3bcd565155fa841a09863ab02fca3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga2df3bcd565155fa841a09863ab02fca3">mpu_clear_region</a> (uint8_t region)</td></tr>
-<tr class="memdesc:ga2df3bcd565155fa841a09863ab02fca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable MPU region.  <br /></td></tr>
-<tr class="separator:ga2df3bcd565155fa841a09863ab02fca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga057d8b71680702b99ab7e66764bde9c4" id="r_ga057d8b71680702b99ab7e66764bde9c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arm__mpu.html#ga057d8b71680702b99ab7e66764bde9c4">mpu_load</a> (const <a class="el" href="structMPU__Configuration.html">MPU_State</a> *state, uint8_t base, uint8_t count)</td></tr>
-<tr class="separator:ga057d8b71680702b99ab7e66764bde9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Memory protection support internals for ARM architecture. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="gad165405d8b7780b3dc9f0bc945925cbc" name="gad165405d8b7780b3dc9f0bc945925cbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad165405d8b7780b3dc9f0bc945925cbc">&#9670;&#160;</a></span>MPU_AP_MASK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MPU_AP_MASK&#160;&#160;&#160;0b0111</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gab726d0bcd26965e81af2fcbcae650469" name="gab726d0bcd26965e81af2fcbcae650469"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab726d0bcd26965e81af2fcbcae650469">&#9670;&#160;</a></span>MPU_EXECUTE_SHIFT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MPU_EXECUTE_SHIFT&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga2f22ba6a7bec09dc599be801b1e5f9d5" name="ga2f22ba6a7bec09dc599be801b1e5f9d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2f22ba6a7bec09dc599be801b1e5f9d5">&#9670;&#160;</a></span>MPU_RNR_REGION</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MPU_RNR_REGION&#160;&#160;&#160;(MPU_RNR_REGION_Msk)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga98123943c5d9a71e1d06ae7eff10807a" name="ga98123943c5d9a71e1d06ae7eff10807a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga98123943c5d9a71e1d06ae7eff10807a">&#9670;&#160;</a></span>MPU_RNR_REGION_LSB</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MPU_RNR_REGION_LSB&#160;&#160;&#160;(MPU_RNR_REGION_Pos)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga8fdd1416c938c54f8e1e9fca4b9f139a" name="ga8fdd1416c938c54f8e1e9fca4b9f139a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8fdd1416c938c54f8e1e9fca4b9f139a">&#9670;&#160;</a></span>MPU_State</h2>
@@ -301,8 +212,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga0b9475c0820f93b5eaffcc99d04fe765" name="ga0b9475c0820f93b5eaffcc99d04fe765"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0b9475c0820f93b5eaffcc99d04fe765">&#9670;&#160;</a></span>mpu_configure_region()</h2>
+<a id="gab2dae5a185074135ad26fb2d7caa3413" name="gab2dae5a185074135ad26fb2d7caa3413"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab2dae5a185074135ad26fb2d7caa3413">&#9670;&#160;</a></span>mpu_configure_region()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -329,19 +240,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>flags</em>, </td>
+          <td class="paramname"><em>cls</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>RBAR</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>RASR</em>&#160;</td>
+          <td class="paramtype">struct <a class="el" href="structMPU__Registers.html">MPU_Registers</a> *&#160;</td>
+          <td class="paramname"><em>region_def</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -599,12 +504,12 @@ Functions</h2></td></tr>
 <div class="line">    <a class="code hl_define" href="group__arm__mpu__rars.html#ga8494f9fabba8af1e8f397fde1a5a76a8">MPU_RASR_ATTR_XN</a> | <a class="code hl_define" href="group__arm__mpu__rars.html#ga4541710ecbda3c1bff720e0086976ff0">MPU_RASR_ATTR_AP_PRW_URO</a>,</div>
 <div class="line">    <a class="code hl_define" href="group__arm__mpu__rars.html#ga8494f9fabba8af1e8f397fde1a5a76a8">MPU_RASR_ATTR_XN</a> | <a class="code hl_define" href="group__arm__mpu__rars.html#ga18c70558bd861f5b1a3352cb7748e4e0">MPU_RASR_ATTR_AP_PRW_URW</a>,</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__arm__mpu__rars_html_ga18c70558bd861f5b1a3352cb7748e4e0"><div class="ttname"><a href="group__arm__mpu__rars.html#ga18c70558bd861f5b1a3352cb7748e4e0">MPU_RASR_ATTR_AP_PRW_URW</a></div><div class="ttdeci">#define MPU_RASR_ATTR_AP_PRW_URW</div><div class="ttdef"><b>Definition</b> mpu_priv.h:53</div></div>
-<div class="ttc" id="agroup__arm__mpu__rars_html_ga4541710ecbda3c1bff720e0086976ff0"><div class="ttname"><a href="group__arm__mpu__rars.html#ga4541710ecbda3c1bff720e0086976ff0">MPU_RASR_ATTR_AP_PRW_URO</a></div><div class="ttdeci">#define MPU_RASR_ATTR_AP_PRW_URO</div><div class="ttdef"><b>Definition</b> mpu_priv.h:52</div></div>
-<div class="ttc" id="agroup__arm__mpu__rars_html_ga8494f9fabba8af1e8f397fde1a5a76a8"><div class="ttname"><a href="group__arm__mpu__rars.html#ga8494f9fabba8af1e8f397fde1a5a76a8">MPU_RASR_ATTR_XN</a></div><div class="ttdeci">#define MPU_RASR_ATTR_XN</div><div class="ttdef"><b>Definition</b> mpu_priv.h:50</div></div>
+<div class="ttc" id="agroup__arm__mpu__rars_html_ga18c70558bd861f5b1a3352cb7748e4e0"><div class="ttname"><a href="group__arm__mpu__rars.html#ga18c70558bd861f5b1a3352cb7748e4e0">MPU_RASR_ATTR_AP_PRW_URW</a></div><div class="ttdeci">#define MPU_RASR_ATTR_AP_PRW_URW</div><div class="ttdef"><b>Definition</b> mpu_priv.h:46</div></div>
+<div class="ttc" id="agroup__arm__mpu__rars_html_ga4541710ecbda3c1bff720e0086976ff0"><div class="ttname"><a href="group__arm__mpu__rars.html#ga4541710ecbda3c1bff720e0086976ff0">MPU_RASR_ATTR_AP_PRW_URO</a></div><div class="ttdeci">#define MPU_RASR_ATTR_AP_PRW_URO</div><div class="ttdef"><b>Definition</b> mpu_priv.h:45</div></div>
+<div class="ttc" id="agroup__arm__mpu__rars_html_ga8494f9fabba8af1e8f397fde1a5a76a8"><div class="ttname"><a href="group__arm__mpu__rars.html#ga8494f9fabba8af1e8f397fde1a5a76a8">MPU_RASR_ATTR_XN</a></div><div class="ttdeci">#define MPU_RASR_ATTR_XN</div><div class="ttdef"><b>Definition</b> mpu_priv.h:43</div></div>
 </div><!-- fragment -->
-<p>MPU region access rights. </p>
-<p>This array maps CMRX access modes to ARM access modes See <a class="el" href="group__os__mpu.html#gae35ef2b40da61cecee6e76bbac5fb3e2">MPU_Flags</a> for meaning of individual indices. </p>
+<p>MPU region access rights for ARMv6M/ARMv7M. </p>
+<p>This array maps CMRX access modes to ARM RASR attributes See <a class="el" href="group__os__mpu.html#gae35ef2b40da61cecee6e76bbac5fb3e2">MPU_Flags</a> for meaning of individual indices. </p>
 
 </div>
 </div>
