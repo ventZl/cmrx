@@ -112,35 +112,28 @@ int mpu_store(MPU_State * hosted_state, MPU_State * parent_state)
 	if (hosted_state == NULL || parent_state == NULL)
 		return E_INVALID_ADDRESS;
 
+	for (int q = 0; q < MPU_HOSTED_STATE_SIZE; ++q)
+	{
+		MPU->RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+		(*hosted_state)[q]._MPU_RBAR = MPU->RBAR;
+/* ARMv8M: save RBAR and RLAR */
 #if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
-	/* ARMv8M: save RBAR and RLAR */
-	for (int q = 0; q < MPU_HOSTED_STATE_SIZE; ++q)
-	{
-		MPU->RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		(*hosted_state)[q]._MPU_RBAR = MPU->RBAR;
 		(*hosted_state)[q]._MPU_RLAR = MPU->RLAR;
-	}
-	for (int q = MPU_HOSTED_STATE_SIZE; q < MPU_STATE_SIZE; ++q)
-	{
-		MPU->RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		(*parent_state)[q]._MPU_RBAR = MPU->RBAR;
-		(*parent_state)[q]._MPU_RLAR = MPU->RLAR;
-	}
 #else
-	/* ARMv6M/ARMv7M: save RBAR and RASR */
-	for (int q = 0; q < MPU_HOSTED_STATE_SIZE; ++q)
-	{
-		MPU->RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		(*hosted_state)[q]._MPU_RBAR = MPU->RBAR;
 		(*hosted_state)[q]._MPU_RASR = MPU->RASR;
+#endif
 	}
 	for (int q = MPU_HOSTED_STATE_SIZE; q < MPU_STATE_SIZE; ++q)
 	{
 		MPU->RNR = ((q << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
 		(*parent_state)[q]._MPU_RBAR = MPU->RBAR;
+/* ARMv8M: save RBAR and RLAR */
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+		(*parent_state)[q]._MPU_RLAR = MPU->RLAR;
+#else
 		(*parent_state)[q]._MPU_RASR = MPU->RASR;
-	}
 #endif
+	}
 
 	return E_OK;
 }
@@ -160,7 +153,6 @@ int mpu_load(const MPU_State * state, uint8_t base, uint8_t count)
 	if (state == NULL)
 		return E_INVALID_ADDRESS;
 
-#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
 	/* ARMv8M: restore RBAR and RLAR */
 	for (int q = 0; q < count; ++q)
 	{
@@ -171,17 +163,12 @@ int mpu_load(const MPU_State * state, uint8_t base, uint8_t count)
 #endif
 
 		MPU->RBAR = (*state)[base + q]._MPU_RBAR;
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
 		MPU->RLAR = (*state)[base + q]._MPU_RLAR;
-	}
 #else
-	/* ARMv6M/ARMv7M: restore RBAR and RASR */
-	for (int q = 0; q < count; ++q)
-	{
-		MPU->RNR = (((base + q) << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-		MPU->RBAR = (*state)[base + q]._MPU_RBAR;
 		MPU->RASR = (*state)[base + q]._MPU_RASR;
-	}
 #endif
+	}
 
 	return E_OK;
 }
