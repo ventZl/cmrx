@@ -25,23 +25,6 @@
 
 #endif
 
-/** @defgroup arm_mpu_registers ARM MPU register aliases
- * @{
- */
-#define MPU_CTRL (MPU->CTRL)
-#define MPU_RNR (MPU->RNR)
-#define MPU_RBAR (MPU->RBAR)
-
-#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
-/* ARMv8M MPU uses RLAR instead of RASR */
-#define MPU_RLAR (MPU->RLAR)
-#define MPU_MAIR0 (MPU->MAIR0)
-#define MPU_MAIR1 (MPU->MAIR1)
-#else
-/* ARMv6M/ARMv7M MPU uses RASR */
-#define MPU_RASR (MPU->RASR)
-#endif
-
 /** @} */
 
 #define MPU_RNR_REGION (MPU_RNR_REGION_Msk)
