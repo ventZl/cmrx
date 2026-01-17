@@ -334,28 +334,32 @@ $(document).ready(function(){initNavTree('cortex_8h_source.html',''); initResiza
 <div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>{</div>
 <div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span><span class="preprocessor">#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)</span></div>
 <div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <span class="keywordflow">return</span> (return_addr &amp; EXC_RETURN_FTYPE) == 0;</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="keywordflow">return</span> return_addr == EXC_RETURN_THREAD_PSP_FPU;</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>}</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span><span class="preprocessor">#elif defined(__ARM_ARCH_6M__)</span></div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>    <span class="keywordflow">return</span> return_addr == EXC_RETURN_THREAD_PSP_FPU;</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>}</div>
 </div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
-<div class="foldopen" id="foldopen00324" data-start="{" data-end="}">
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno"><a class="line" href="group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616">  324</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616">cortex_is_thread_psp_used</a>(uint32_t return_addr)</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>{</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="preprocessor">#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)</span></div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keywordflow">return</span> (return_addr &amp; (EXC_RETURN_MODE | EXC_RETURN_SPSEL)) == (EXC_RETURN_MODE | EXC_RETURN_SPSEL);</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    <span class="keywordflow">return</span> return_addr == EXC_RETURN_THREAD_PSP || return_addr == EXC_RETURN_THREAD_PSP_FPU;</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>}</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
+<div class="foldopen" id="foldopen00326" data-start="{" data-end="}">
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno"><a class="line" href="group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616">  326</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616">cortex_is_thread_psp_used</a>(uint32_t return_addr)</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>{</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="preprocessor">#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)</span></div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    <span class="keywordflow">return</span> (return_addr &amp; (EXC_RETURN_MODE | EXC_RETURN_SPSEL)) == (EXC_RETURN_MODE | EXC_RETURN_SPSEL);</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="preprocessor">#elif defined(__ARM_ARCH_6M__)</span></div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="keywordflow">return</span> return_addr == EXC_RETURN_THREAD_PSP;</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    <span class="keywordflow">return</span> return_addr == EXC_RETURN_THREAD_PSP || return_addr == EXC_RETURN_THREAD_PSP_FPU;</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>}</div>
 </div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> </div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span> </div>
 <div class="ttc" id="agroup__arch__arm__cortex_html_ga2ae6451ce266ac64b1839748e597ae87"><div class="ttname"><a href="group__arch__arm__cortex.html#ga2ae6451ce266ac64b1839748e597ae87">get_exception_arg_addr</a></div><div class="ttdeci">uint32_t * get_exception_arg_addr(ExceptionFrame *frame, unsigned argno, bool fp_active)</div><div class="ttdoc">Retrieve address of n-th argument from exception frame.</div><div class="ttdef"><b>Definition</b> cortex.c:47</div></div>
 <div class="ttc" id="agroup__arch__arm__cortex_html_ga2bd0234ec5d398042702d9526d9d75e1"><div class="ttname"><a href="group__arch__arm__cortex.html#ga2bd0234ec5d398042702d9526d9d75e1">set_exception_pc_lr</a></div><div class="ttdeci">static void set_exception_pc_lr(ExceptionFrame *frame, void *pc, void(*lr)(void))</div><div class="ttdoc">Configure PC and LR register values in exception frame.</div><div class="ttdef"><b>Definition</b> cortex.h:188</div></div>
 <div class="ttc" id="agroup__arch__arm__cortex_html_ga33c3e222f575df5864ca025a3b73f165"><div class="ttname"><a href="group__arch__arm__cortex.html#ga33c3e222f575df5864ca025a3b73f165">get_exception_argument</a></div><div class="ttdeci">static unsigned get_exception_argument(ExceptionFrame *frame, unsigned argno, bool fp_active)</div><div class="ttdoc">Retrieve value of exception frame function call argument.</div><div class="ttdef"><b>Definition</b> cortex.h:162</div></div>
 <div class="ttc" id="agroup__arch__arm__cortex_html_ga3b996e99f9bcb08dc8219e0e21806769"><div class="ttname"><a href="group__arch__arm__cortex.html#ga3b996e99f9bcb08dc8219e0e21806769">__set_LR</a></div><div class="ttdeci">ALWAYS_INLINE void __set_LR(void *lr)</div><div class="ttdoc">Set value of process LR.</div><div class="ttdef"><b>Definition</b> cortex.h:243</div></div>
-<div class="ttc" id="agroup__arch__arm__cortex_html_ga4058ac21103b552e8471d50b68bbb616"><div class="ttname"><a href="group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616">cortex_is_thread_psp_used</a></div><div class="ttdeci">static bool cortex_is_thread_psp_used(uint32_t return_addr)</div><div class="ttdef"><b>Definition</b> cortex.h:324</div></div>
+<div class="ttc" id="agroup__arch__arm__cortex_html_ga4058ac21103b552e8471d50b68bbb616"><div class="ttname"><a href="group__arch__arm__cortex.html#ga4058ac21103b552e8471d50b68bbb616">cortex_is_thread_psp_used</a></div><div class="ttdeci">static bool cortex_is_thread_psp_used(uint32_t return_addr)</div><div class="ttdef"><b>Definition</b> cortex.h:326</div></div>
 <div class="ttc" id="agroup__arch__arm__cortex_html_ga7753106298a2f7639e0ee3c2a8804b40"><div class="ttname"><a href="group__arch__arm__cortex.html#ga7753106298a2f7639e0ee3c2a8804b40">set_exception_argument</a></div><div class="ttdeci">static void set_exception_argument(ExceptionFrame *frame, unsigned argno, unsigned value, bool fp_active)</div><div class="ttdoc">Set value of exception frame function call argument.</div><div class="ttdef"><b>Definition</b> cortex.h:175</div></div>
 <div class="ttc" id="agroup__arch__arm__cortex_html_gaa1dec568e79152c892dcf63f445cbd7a"><div class="ttname"><a href="group__arch__arm__cortex.html#gaa1dec568e79152c892dcf63f445cbd7a">ALWAYS_INLINE</a></div><div class="ttdeci">#define ALWAYS_INLINE</div><div class="ttdef"><b>Definition</b> cortex.h:56</div></div>
 <div class="ttc" id="agroup__arch__arm__cortex_html_gaad8539f628855baf5df2659420ac580e"><div class="ttname"><a href="group__arch__arm__cortex.html#gaad8539f628855baf5df2659420ac580e">cortex_is_fpu_used</a></div><div class="ttdeci">static bool cortex_is_fpu_used(uint32_t return_addr)</div><div class="ttdef"><b>Definition</b> cortex.h:315</div></div>
