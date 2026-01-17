@@ -7,7 +7,7 @@ If you want to run static clang-tidy analysis of CMRX codebase, then do the foll
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 cmake -DCMRX_TARGET_PLATFORM=<platform> -B clang-tidy-build $CMRX_ROOT/testing/clang-tidy
-cmake -B clang-tidy-build -- clang-tidy
+cmake --build clang-tidy-build -- clang-tidy
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This requires clang compiler to be present on your machine. The `CMRX_TARGET_PLATFORM` argument may have one of the following values:
