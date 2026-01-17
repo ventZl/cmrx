@@ -66,9 +66,9 @@
 /* Access permission encoding for RBAR */
 #define MPU_RBAR_AP (MPU_RBAR_AP_Msk)
 #define MPU_RBAR_AP_LSB (MPU_RBAR_AP_Pos)
-#define MPU_RBAR_AP_RW_RW (0x0 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged RW */
-#define MPU_RBAR_AP_RW_RO (0x2 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged RO */
-#define MPU_RBAR_AP_RW_NONE (0x1 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged None */
+#define MPU_RBAR_AP_RW_RW (0x1 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged RW */
+#define MPU_RBAR_AP_RW_RO (0x3 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged RO */
+#define MPU_RBAR_AP_RW_NONE (0x2 << MPU_RBAR_AP_LSB)  /* Privileged RW, Unprivileged None */
 
 #define MPU_RBAR_XN (MPU_RBAR_XN_Msk)  /* Execute Never */
 #define MPU_RBAR_SH (MPU_RBAR_SH_Msk)  /* Shareability */
