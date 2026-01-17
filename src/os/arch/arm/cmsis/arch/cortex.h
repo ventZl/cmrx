@@ -315,7 +315,7 @@ ALWAYS_INLINE  __attribute__((noreturn)) void __forge_shutdown_exception_frame(v
 static inline bool cortex_is_fpu_used(uint32_t return_addr)
 {
 #if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
-	return (return_addr & EXC_RETURN_FTYPE) == EXC_RETURN_FTYPE;
+	return (return_addr & EXC_RETURN_FTYPE) == 0;
 #else
 	return return_addr == EXC_RETURN_THREAD_PSP_FPU;
 #endif
