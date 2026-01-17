@@ -30,7 +30,7 @@ void __WFI()
 
 typedef struct {
     volatile uint32_t AIRCR;
-#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M__
+#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M_MAIN__ || defined __ARM_ARCH_8M_BASE__
     volatile uint32_t CFSR;
 #endif
     volatile uint32_t ICSR;
@@ -59,7 +59,7 @@ extern SCB_Type * SCB;
 #define SCB_ICSR_PENDSVCLR_Pos             27U
 #define SCB_ICSR_PENDSVCLR_Msk             (1UL << SCB_ICSR_PENDSVCLR_Pos)
 
-#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M__
+#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M_MAIN__ || defined __ARM_ARCH_8M_BASE__
 
 #define SCB_CFSR_IACCVIOL_Pos              (SCB_CFSR_MEMFAULTSR_Pos + 0U)
 #define SCB_CFSR_IACCVIOL_Msk              (1UL)
@@ -72,6 +72,13 @@ extern SCB_Type * SCB;
 
 #define SCB_CFSR_MEMFAULTSR_Pos             0U
 #define SCB_CFSR_MEMFAULTSR_Msk            (0xFFUL)
+
+#endif
+
+#if defined __ARM_ARCH_8M_MAIN__ || defined __ARM_ARCH_8M_BASE__
+
+#define MPU_RBAR_BASE_Pos                   5U
+#define MPU_RBAR_BASE_Msk                  (0x7FFFFFFUL << MPU_RBAR_BASE_Pos)
 
 #endif
 
