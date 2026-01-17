@@ -165,6 +165,11 @@ int mpu_load(const MPU_State * state, uint8_t base, uint8_t count)
 	for (int q = 0; q < count; ++q)
 	{
 		MPU->RNR = (((base + q) << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+		// Disable this region before modifying it
+		MPU->RLAR = 0;
+#endif
+
 		MPU->RBAR = (*state)[base + q]._MPU_RBAR;
 		MPU->RLAR = (*state)[base + q]._MPU_RLAR;
 	}
