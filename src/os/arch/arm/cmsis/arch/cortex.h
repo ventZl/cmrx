@@ -316,6 +316,8 @@ static inline bool cortex_is_fpu_used(uint32_t return_addr)
 {
 #if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
 	return (return_addr & EXC_RETURN_FTYPE) == 0;
+#elif defined(__ARM_ARCH_6M__)
+	return false;
 #else
 	return return_addr == EXC_RETURN_THREAD_PSP_FPU;
 #endif
@@ -325,6 +327,8 @@ static inline bool cortex_is_thread_psp_used(uint32_t return_addr)
 {
 #if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
 	return (return_addr & (EXC_RETURN_MODE | EXC_RETURN_SPSEL)) == (EXC_RETURN_MODE | EXC_RETURN_SPSEL);
+#elif defined(__ARM_ARCH_6M__)
+	return return_addr == EXC_RETURN_THREAD_PSP;
 #else
 	return return_addr == EXC_RETURN_THREAD_PSP || return_addr == EXC_RETURN_THREAD_PSP_FPU;
 #endif
