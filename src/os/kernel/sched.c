@@ -573,7 +573,8 @@ void _os_start(uint8_t start_core)
 
 	for (unsigned q = 0; q < applications; ++q)
 	{
-		ASSERT(os_process_create(q, &app_definition[q]) == E_OK);
+        int ret_val = os_process_create(q, &app_definition[q]);
+		ASSERT(ret_val == E_OK);
 	}
 
 	for (unsigned q = 0; q < threads; ++q)
