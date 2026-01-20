@@ -34,6 +34,9 @@ void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size,
     stack[stack_size - 2] = (unsigned long) entrypoint; // PC
     stack[stack_size - 1] = 0x01000000; // xPSR
 
+    int rv = mpu_configure_region(OS_MPU_REGION_STACK, stack, sizeof(os_stacks.stacks[0]), MPU_RW, &thread->arch.mpu_stack);
+	ASSERT(rv == E_OK);
+
     thread->sp = &stack[stack_size - 16];
 #if __FPU_USED
 	// By default, thread is restored into
