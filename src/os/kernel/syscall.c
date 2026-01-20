@@ -54,7 +54,7 @@ REGISTER_SYSCALLS(
 
 #pragma GCC diagnostic pop
 
-struct Syscall_Entry_t syscalls[_SYSCALL_COUNT];
+static struct Syscall_Entry_t os_syscall_cache[_SYSCALL_COUNT];
 unsigned syscalls_count = 0;
 
 int os_system_call_init(void)
@@ -64,18 +64,18 @@ int os_system_call_init(void)
 		unsigned q;
 		for (q = 0; q < syscalls_count; ++q)
 		{
-			if (syscalls[q].id >= syscall->id)
+			if (os_syscall_cache[q].id >= syscall->id)
 			{
 				for (unsigned w = syscalls_count; w > q; --w)
 				{
-					syscalls[w] = syscalls[w-1];
+					os_syscall_cache[w] = os_syscall_cache[w-1];
 				}
 
 				break;
 			}
 		}
 
-		syscalls[q] = *syscall;
+		os_syscall_cache[q] = *syscall;
 		syscalls_count++;
 	}
 
@@ -86,20 +86,20 @@ int os_system_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, u
 {
 	unsigned lower = 0, upper = syscalls_count, current = upper / 2;
 
-	while (syscalls[current].id != syscall_id) {
-		if (syscalls[current].id < syscall_id) {
+	while (os_syscall_cache[current].id != syscall_id) {
+		if (os_syscall_cache[current].id < syscall_id) {
 			lower = current;
 			current = lower + (upper - lower) / 2;
 		} else {
-			if (syscalls[current].id > syscall_id) {
+			if (os_syscall_cache[current].id > syscall_id) {
 				upper = current;
 				current = lower + (upper - lower) / 2;
 			}
 		}
 	}
 
-	if (syscalls[current].id == syscall_id) {
-		uint32_t rv = syscalls[current].handler(arg0, arg1, arg2, arg3);
+	if (os_syscall_cache[current].id == syscall_id) {
+		uint32_t rv = os_syscall_cache[current].handler(arg0, arg1, arg2, arg3);
 		return rv; /*asm volatile("BX lr");*/
 	}
     return E_NOTAVAIL;
