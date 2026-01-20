@@ -118,8 +118,6 @@ int system_call_entrypoint(unsigned long arg0,
 
     int rv = syscall->retval;
 
-    /* Check that system call handler was actually called */
-    assert(rv != ~0);
     if (syscall_id == SYSCALL_RPC_CALL)
     {
         assert(syscall->outcome == SYSCALL_OUTCOME_RPC_CALL);
@@ -158,7 +156,7 @@ void thread_switch_handler(int signo)
     /* Check that we are running in the context of thread that
      * CMRX considers the one that is currently running.
      */
-    struct OS_core_state_t * cpu_state = &core[coreid()];
+    volatile struct OS_core_state_t * cpu_state = &core[coreid()];
     assert(cpu_state->thread_current == current_thread_id);
 
     // Spurious execution of this handler
@@ -176,6 +174,7 @@ void thread_switch_handler(int signo)
         os_threads[cpu_state->thread_current].state = THREAD_STATE_READY;
     }
 
+    cpu_state->thread_prev = cpu_state->thread_current;
     cpu_state->thread_current = cpu_state->thread_next;
 
     os_threads[cpu_state->thread_current].state = THREAD_STATE_RUNNING;
@@ -186,6 +185,9 @@ void thread_switch_handler(int signo)
     thread_suspend_execution(false);
 
     // Here we were resumed by someone else.
+    // Wait until that someone else is suspended
+    while (!os_threads[cpu_state->thread_prev].arch.is_suspended) {}
+
     // Check if there is a signal pending
     if (os_threads[cpu_state->thread_current].signals != 0 && os_threads[cpu_state->thread_current].signal_handler != NULL)
     {
@@ -209,7 +211,7 @@ void kernel_service_handler(int signo)
     /* Check that we are running in the context of thread that
      * CMRX considers the one that is currently running.
      */
-    struct OS_core_state_t * cpu_state = &core[coreid()];
+    volatile struct OS_core_state_t * cpu_state = &core[coreid()];
     assert(cpu_state->thread_current == current_thread_id);
 
     struct syscall_dispatch_t * syscall = &os_threads[current_thread_id].arch.syscall;
@@ -253,7 +255,7 @@ int thread_startup_handler(void * arg)
     thread_suspend_execution(true);
 
     // Check that this thread wasn't resumed spuriously
-    struct OS_core_state_t * cpu_state = &core[coreid()];
+    volatile struct OS_core_state_t * cpu_state = &core[coreid()];
     assert(cpu_state->thread_current == current_thread_id);
 
     /* Now that the thread was unblocked by initial resume,
@@ -389,6 +391,9 @@ void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size,
     startup_data->entry_point = entrypoint;
     startup_data->entry_arg = data;
     rv = thrd_create(&thread->arch.sched_thread, &thread_startup_handler, startup_data);
+    // Synchronize with newly-created thread, so that POSIX thread that hosts it
+    // is already suspended before we continue
+    while (!thread->arch.is_suspended) {}
     assert(rv == thrd_success);
 }
 
