@@ -72,6 +72,7 @@ endif()
 
 configure_file(conf/kernel.h ${CMAKE_BINARY_DIR}/conf/kernel.h)
 add_subdirectory(src)
+add_subdirectory(ld)
 if (NOT UNIT_TESTING_BUILD)
     # Testsuite contains HIL tests. This is only relevant
     # in native build.
