@@ -6,6 +6,7 @@ set(cmrx_testing_SRCS
     timing_provider.c
     pendsv.c
     rpc.c
+    riscv_hal_testing.c
     )
 target_sources(os PRIVATE ${cmrx_testing_SRCS})
 target_link_libraries(os PRIVATE ctest)
