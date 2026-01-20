@@ -13,6 +13,7 @@ var group__arch__arm__mpu =
     [ "mpu_disable", "group__arch__arm__mpu.html#gadd23e0b89a691bc82db8504ce7b9df0d", null ],
     [ "mpu_enable", "group__arch__arm__mpu.html#ga7e1638a1a4c000ab09853fd97d4ddda7", null ],
     [ "mpu_load", "group__arch__arm__mpu.html#ga057d8b71680702b99ab7e66764bde9c4", null ],
+    [ "mpu_load_register", "group__arch__arm__mpu.html#gab890878bd89b57bdee0c7b49604a3e43", null ],
     [ "mpu_restore", "group__arch__arm__mpu.html#gaccaca933ccccec5a6f6808252b4a5fbc", null ],
     [ "mpu_set_region", "group__arch__arm__mpu.html#ga2fcb7c5300d860acbb4c42673bc68e19", null ],
     [ "mpu_store", "group__arch__arm__mpu.html#ga1ab0c2d1c21ad4cfa85d6cddd79bc8eb", null ],

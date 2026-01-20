@@ -1,9 +1,11 @@
 var NAVTREEINDEX2 =
 {
+"group__os__signal.html#ggae334395fdd2ddcad969d5988c071c289af8654d423c49ba98ec66b45453d2ed60":[7,5,7,0,0],
 "group__os__syscall.html":[7,5,8],
 "group__os__syscall.html#ga01e5db115c1c1c75381ffbfd55c811d6":[7,5,8,6],
 "group__os__syscall.html#ga31e8f196f246216d32eec552c2640f8c":[7,5,8,5],
 "group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340":[7,5,8,2],
+"group__os__syscall.html#ga81d356cef53009d861431bd184a49e1f":[7,5,8,7],
 "group__os__syscall.html#ga8c3ef3b8ba8d29b49370620dc656c3b7":[7,5,8,3],
 "group__os__syscall.html#gaadcfedb9171c68018e352c776895fc1b":[7,5,8,4],
 "group__os__syscall.html#gae074ff178f562a3742a23bdd56e08122":[7,5,8,0],
@@ -95,8 +97,8 @@ var NAVTREEINDEX2 =
 "group__util.html#gafedd38df23e9c9f801b82b8cdf210dae":[7,8,2],
 "group__util__assert.html":[7,8,0],
 "hal_integration.html":[3,7],
-"index.html":[0],
 "index.html":[],
+"index.html":[0],
 "md_CLANG__TIDY.html":[1],
 "md_HIL__TESTING.html":[2],
 "md_HIL__TESTING.html#autotoc_md0":[2,0],
@@ -117,9 +119,10 @@ var NAVTREEINDEX2 =
 "rpc_intro.html":[3,3],
 "smp_support.html":[3,8],
 "structArch__State__t.html":[7,5,0,1,0],
-"structArch__State__t.html#a18857e0041e85531b72310430a7c3e4f":[7,5,0,1,0,4],
-"structArch__State__t.html#a2bf7d26220c2bde068cf67f469a3082e":[7,5,0,1,0,3],
-"structArch__State__t.html#ab8b71a1cc792a6c50c15fc5f9b0857e3":[7,5,0,1,0,2],
+"structArch__State__t.html#a18857e0041e85531b72310430a7c3e4f":[7,5,0,1,0,5],
+"structArch__State__t.html#a2bf7d26220c2bde068cf67f469a3082e":[7,5,0,1,0,4],
+"structArch__State__t.html#a403ec9fcfd5a852264ef52b7ad43a224":[7,5,0,1,0,2],
+"structArch__State__t.html#ab8b71a1cc792a6c50c15fc5f9b0857e3":[7,5,0,1,0,3],
 "structArch__State__t.html#acae038fb3118503f8892f30f98662804":[7,5,0,1,0,1],
 "structArch__State__t.html#ad935c55237c6bbd29aaeace9615fafda":[7,5,0,1,0,0],
 "structBasicQueue.html":[7,7,3,1],
@@ -246,8 +249,5 @@ var NAVTREEINDEX2 =
 "structQueueServiceInterface.html":[7,7,2,2],
 "structQueueServiceInterface.html#ab2ff0a185bef735e1546727006fce031":[7,7,2,2,0],
 "structRPC__Service__t__.html":[7,5,6,0],
-"structRPC__Service__t__.html#a202dd170ff2c2359e82d7a23f0a2f7ca":[7,5,6,0,0],
-"structSyscall__Entry__t.html":[8,0,34],
-"structSyscall__Entry__t.html#ac3473bf96a2024c57cf6fdafd216ac6b":[8,0,34,1],
-"structSyscall__Entry__t.html#ace65d18a0d600d65292f949c52b1937a":[8,0,34,0]
+"structRPC__Service__t__.html#a202dd170ff2c2359e82d7a23f0a2f7ca":[7,5,6,0,0]
 };

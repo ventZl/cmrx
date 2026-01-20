@@ -35,5 +35,6 @@ var group__os__syscall =
       [ "SYSCALL_WAIT_FOR_OBJECT_VALUE", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca8b4711342be2c394f2d0887d5030aeab", null ],
       [ "_SYSCALL_COUNT", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca4ca0c68f905e31ed3c06d15fde068f7e", null ]
     ] ],
-    [ "os_system_call", "group__os__syscall.html#ga01e5db115c1c1c75381ffbfd55c811d6", null ]
+    [ "os_system_call", "group__os__syscall.html#ga01e5db115c1c1c75381ffbfd55c811d6", null ],
+    [ "os_system_call_init", "group__os__syscall.html#ga81d356cef53009d861431bd184a49e1f", null ]
 ];

@@ -1,5 +1,8 @@
 var NAVTREEINDEX3 =
 {
+"structSyscall__Entry__t.html":[8,0,34],
+"structSyscall__Entry__t.html#ac3473bf96a2024c57cf6fdafd216ac6b":[8,0,34,1],
+"structSyscall__Entry__t.html#ace65d18a0d600d65292f949c52b1937a":[8,0,34,0],
 "structTimerEntry__t.html":[7,5,10,0],
 "structTimerEntry__t.html#a2f45a4b2fcffd30370f2159d80311b00":[7,5,10,0,0],
 "structTimerEntry__t.html#a95a419fabe89c0d94edd540788e48e96":[7,5,10,0,1],
