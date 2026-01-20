@@ -149,17 +149,18 @@ uint32_t os_perform_thread_switch(uint32_t LR)
 #endif
 	cpu_context.old_task->sp = (uint32_t *) __get_PSP();
 
+	struct OS_thread_t * old_task = cpu_context.old_task;
     // This assert checks that we are not preempting some other interrupt
     // handler. If you assert here, then your interrupt handler priority
     // is messed up. You need to configure PendSV to be the handler with
     // absolutely the lowest priority.
 	ASSERT(cortex_is_thread_psp_used(LR));
 
-	sanitize_psp(cpu_context.old_task->sp);
+	sanitize_psp(old_task->sp);
 
 	struct OS_core_state_t * cpu_state = &core[coreid()];
 
-	os_save_fpu_context(cpu_context.old_task);
+	os_save_fpu_context(old_task);
 
 	if (cpu_context.old_parent_process != cpu_context.new_parent_process
         || cpu_context.old_host_process != cpu_context.new_host_process)
@@ -167,17 +168,19 @@ uint32_t os_perform_thread_switch(uint32_t LR)
 		mpu_restore((const MPU_State *) &cpu_context.new_host_process->mpu, (const MPU_State *) &cpu_context.new_parent_process->mpu);
 	}
 
+	struct OS_thread_t * new_task = cpu_context.new_task;
+
 	// Configure stack for incoming process
     // This assumes that all stacks are of same size
 	mpu_init_stack(cpu_state->thread_next);
-	sanitize_psp_for_thread(cpu_context.new_task->sp, cpu_state->thread_next);
+	sanitize_psp_for_thread(new_task->sp, cpu_state->thread_next);
 
-	os_load_fpu_context(cpu_context.new_task);
+	os_load_fpu_context(new_task);
 
-	if (cpu_context.new_task->signals != 0 && cpu_context.new_task->signal_handler != NULL)
+	if (new_task->signals != 0 && new_task->signal_handler != NULL)
 	{
-		os_deliver_signal(cpu_context.new_task, cpu_context.new_task->signals);
-		cpu_context.new_task->signals = 0;
+		os_deliver_signal(new_task, new_task->signals);
+		new_task->signals = 0;
 	}
 	if (os_threads[cpu_state->thread_current].state == THREAD_STATE_RUNNING)
 	{
@@ -196,10 +199,10 @@ uint32_t os_perform_thread_switch(uint32_t LR)
 	os_request_context_switch(false);
 
 #if __FPU_USED
-	LR = cpu_context.new_task->arch.exc_return;
+	LR = new_task->arch.exc_return;
 #endif
 
-	__set_PSP((uint32_t) cpu_context.new_task->sp);
+	__set_PSP((uint32_t) new_task->sp);
 	__ISB();
 	__DSB();
 	sanitize_psp((uint32_t *) __get_PSP());
