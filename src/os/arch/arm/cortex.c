@@ -169,7 +169,7 @@ uint32_t os_perform_thread_switch(uint32_t LR)
 
 	// Configure stack for incoming process
     // This assumes that all stacks are of same size
-	mpu_set_region(OS_MPU_REGION_STACK, cpu_context.new_stack, sizeof(os_stacks.stacks[0]), MPU_RW);
+	mpu_init_stack(cpu_state->thread_next);
 	sanitize_psp_for_thread(cpu_context.new_task->sp, cpu_state->thread_next);
 
 	os_load_fpu_context(cpu_context.new_task);

@@ -148,6 +148,22 @@ int mpu_restore(const MPU_State * hosted_state, const MPU_State * parent_state)
 	return mpu_load(parent_state, MPU_HOSTED_STATE_SIZE, MPU_STATE_SIZE - MPU_HOSTED_STATE_SIZE);
 }
 
+static void mpu_load_register(const struct MPU_Registers * mpu, uint8_t region)
+{
+	MPU->RNR = (((region) << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	// Disable this region before modifying it
+	MPU->RLAR = 0;
+#endif
+
+	MPU->RBAR = mpu->_MPU_RBAR;
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+	MPU->RLAR = mpu->_MPU_RLAR;
+#else
+	MPU->RASR = mpu->_MPU_RASR;
+#endif
+}
+
 int mpu_load(const MPU_State * state, uint8_t base, uint8_t count)
 {
 	if (state == NULL)
@@ -156,18 +172,7 @@ int mpu_load(const MPU_State * state, uint8_t base, uint8_t count)
 	/* ARMv8M: restore RBAR and RLAR */
 	for (int q = 0; q < count; ++q)
 	{
-		MPU->RNR = (((base + q) << MPU_RNR_REGION_LSB) & MPU_RNR_REGION);
-#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
-		// Disable this region before modifying it
-		MPU->RLAR = 0;
-#endif
-
-		MPU->RBAR = (*state)[base + q]._MPU_RBAR;
-#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
-		MPU->RLAR = (*state)[base + q]._MPU_RLAR;
-#else
-		MPU->RASR = (*state)[base + q]._MPU_RASR;
-#endif
+		mpu_load_register(&(*state)[base + q], base + q);
 	}
 
 	return E_OK;
@@ -429,9 +434,8 @@ void os_memory_protection_stop()
 
 int mpu_init_stack(int thread_id)
 {
-	const uint8_t thread_stack = os_threads[thread_id].stack_id;
-    return mpu_set_region(OS_MPU_REGION_STACK, &os_stacks.stacks[thread_stack], sizeof(os_stacks.stacks[thread_stack]), MPU_RW);
-
+	mpu_load_register(&os_threads[thread_id].arch.mpu_stack, OS_MPU_REGION_STACK);
+	return E_OK;
 }
 
 bool mpu_check_bounds(const MPU_State * state, uint8_t region, uint32_t * address)
