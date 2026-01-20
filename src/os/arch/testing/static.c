@@ -39,3 +39,12 @@ const struct OS_process_definition_t * static_init_process_table()
 	return process_table;
 }
 
+struct Syscall_Entry_t * os_syscalls_start(void)
+{
+	return NULL;
+}
+
+struct Syscall_Entry_t * os_syscalls_end(void)
+{
+	return NULL;
+}

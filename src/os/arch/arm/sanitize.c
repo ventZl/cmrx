@@ -4,6 +4,8 @@
 
 extern struct OS_stack_t os_stacks;
 
+#ifndef NDEBUG
+
 void sanitize_psp(uint32_t * psp)
 {
     (void) psp;
@@ -24,3 +26,5 @@ void sanitize_psp_for_thread(uint32_t * psp, Thread_t thread_id)
         ASSERT(&os_stacks.stacks[thread_stack][0] <= psp && psp <= &os_stacks.stacks[thread_stack][OS_STACK_DWORD]);
     }
 }
+
+#endif
