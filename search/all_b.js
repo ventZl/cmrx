@@ -9,7 +9,7 @@ var searchData=
   ['harness_6',['Test harness',['../md_HIL__TESTING.html#autotoc_md1',1,'']]],
   ['header_20directories_7',['Source and header directories',['../dev_env.html#autotoc_md66',1,'']]],
   ['headers_8',['C headers',['../group__arch__arch.html#headers',1,'']]],
-  ['helper_9',['CMSIS helper',['../hal_integration.html#autotoc_md68',1,'']]],
+  ['helper_9',['CMSIS helper',['../hal_integration.html#autotoc_md69',1,'']]],
   ['high_20level_20design_20of_20rpc_20mechanism_10',['High level design of RPC mechanism',['../rpc_intro.html#autotoc_md39',1,'']]],
   ['howto_3a_20integrating_20cmrx_20into_20cubemx_20project_11',['HOWTO: Integrating CMRX into CubeMX project',['../getting_started_cubemx.html',1,'getting_started']]],
   ['howto_3a_20integrating_20cmrx_20into_20pico_20sdk_20project_12',['HOWTO: Integrating CMRX into Pico-SDK project',['../getting_started_picosdk.html',1,'getting_started']]]

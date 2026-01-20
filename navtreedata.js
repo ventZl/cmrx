@@ -47,7 +47,7 @@ var NAVTREE =
     ] ],
     [ "Getting started", "getting_started.html", [
       [ "HOWTO: Integrating CMRX into CubeMX project", "getting_started_cubemx.html", [
-        [ "Prerequisites", "getting_started_cubemx.html#autotoc_md33", null ],
+        [ "Prerequisites", "getting_started_cubemx.html#autotoc_md34", null ],
         [ "Creating project skeleton with CubeMX", "getting_started_cubemx.html#autotoc_md38", null ],
         [ "Basic CubeMX project settings", "getting_started_cubemx.html#autotoc_md40", null ],
         [ "Configuring the core", "getting_started_cubemx.html#autotoc_md41", null ],
@@ -58,11 +58,11 @@ var NAVTREE =
           [ "2. Configure CubeMX integration", "getting_started_cubemx.html#autotoc_md52", null ],
           [ "3. Configure the CMRX kernel to use CubeMX", "getting_started_cubemx.html#autotoc_md55", null ]
         ] ],
-        [ "Linking CMRX to the project", "getting_started_cubemx.html#autotoc_md56", null ],
+        [ "Linking CMRX to the project", "getting_started_cubemx.html#autotoc_md57", null ],
         [ "Creating the blinky application", "getting_started_cubemx.html#autotoc_md59", null ],
         [ "CubeMX HAL tweaks", "getting_started_cubemx.html#autotoc_md62", null ],
         [ "Adding blinky application to the build", "getting_started_cubemx.html#autotoc_md64", null ],
-        [ "Flashing the application", "getting_started_cubemx.html#autotoc_md69", null ]
+        [ "Flashing the application", "getting_started_cubemx.html#autotoc_md67", null ]
       ] ],
       [ "HOWTO: Integrating CMRX into Pico-SDK project", "getting_started_picosdk.html", [
         [ "Prerequisites", "getting_started_picosdk.html#autotoc_md70", null ],

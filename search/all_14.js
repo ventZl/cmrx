@@ -11,7 +11,7 @@ var searchData=
   ['ready_8',['ready',['../structComSourceVMT.html#ae225575afd2d840418a51c1d93d497a0',1,'ComSourceVMT::ready'],['../structComChannelVMT.html#a38ab70634468ed478c2827397d2ac816',1,'ComChannelVMT::ready']]],
   ['receive_9',['receive',['../structQueueInterface.html#a381a76c9615f0a71569daea71af31f49',1,'QueueInterface']]],
   ['reg_10',['reg',['../structDummyPeripheral__t.html#aa2dcf66eb4f8f436add00b408d92c4c7',1,'DummyPeripheral_t']]],
-  ['region_11',['region',['../mem_model.html#autotoc_md35',1,'Shared variables region'],['../mem_model.html#autotoc_md34',1,'Static variables region']]],
+  ['region_11',['region',['../mem_model.html#autotoc_md35',1,'Shared variables region'],['../mem_model.html#autotoc_md33',1,'Static variables region']]],
   ['region_20names_12',['MPU region names',['../group__mpu__region__names.html',1,'']]],
   ['remote_20procedure_20calls_13',['remote procedure calls',['../rpc_intro.html',1,'Remote Procedure Calls'],['../group__api__rpc.html',1,'Remote Procedure Calls'],['../group__os__rpc.html',1,'Remote Procedure Calls']]],
   ['retrieving_20trace_20data_14',['Retrieving trace data',['../group__os__tracing.html#os_tracing_retrieving',1,'']]],
