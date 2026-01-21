@@ -10,6 +10,7 @@
 #include "runtime.h"
 #include "sched.h"
 #include "txn.h"
+#include "syscall.h"
 #include <stdbool.h>
 #include <cmrx/assert.h>
 #include "arch/static.h"
@@ -547,6 +548,7 @@ int os_thread_create(entrypoint_t * entrypoint, void * data, uint8_t priority)
 
 void _os_start(uint8_t start_core)
 {
+    os_system_call_init();
     volatile Thread_t created_threads[8];
     volatile unsigned cursor = 0;
     for (int q = 0; q < 8; ++q) {
@@ -573,7 +575,8 @@ void _os_start(uint8_t start_core)
 
 	for (unsigned q = 0; q < applications; ++q)
 	{
-		ASSERT(os_process_create(q, &app_definition[q]) == E_OK);
+        int ret_val = os_process_create(q, &app_definition[q]);
+		ASSERT(ret_val == E_OK);
 	}
 
 	for (unsigned q = 0; q < threads; ++q)

@@ -38,6 +38,7 @@ struct Syscall_Entry_t {
 	Syscall_Handler_t handler;
 };
 
+int os_system_call_init(void);
 
 /** Find and execute a system call.
  * 

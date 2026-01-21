@@ -60,6 +60,7 @@ struct Arch_State_t {
     /** Exception return saved at the point PendSV switches tasks. Used to figure out how to restore the thread. */
     uint32_t exc_return;
 #endif
+    struct MPU_Registers mpu_stack;
 };
 
 

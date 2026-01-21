@@ -30,7 +30,7 @@ CMRX RTOS supports fully static operation with compile-time configuration of all
 
 The footprint of the CMRX RTOS is small. Fully featured kernel occupies roughly 13 kB of FLASH and needs around 2kB of RAM. RAM consumption depends on compile-time configuration, especially amount of threads and processes configured.
 
-CMRX RTOS supports Cortex-M microcontrollers with Cortex-M MPU peripheral present. Microcontrollers based on Cortex-M0+, Cortex-M3, Cortex-M4 and Cortex-M7 cores are supported.
+CMRX RTOS supports Cortex-M microcontrollers with Cortex-M MPU peripheral present. Microcontrollers based on Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23 and Cortex-M33 cores are supported.
 
 # Quickstart
 
@@ -40,7 +40,7 @@ See [step-by-step guide](https://ventzl.github.io/cmrx/getting_started.html) on 
 
  * microkernel design to minimize code running in privileged mode
  * lightweight
- * Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7 MCUs supported
+ * Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23 and Cortex-M33 MCUs supported
  * support for floating-point hardware
  * compile-time configurable
  * kernel fully isolated from the userspace
