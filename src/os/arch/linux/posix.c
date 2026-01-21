@@ -7,7 +7,6 @@
 #include <cmrx/sys/syscalls.h>
 #include <kernel/sched.h>
 #include <conf/kernel.h>
-#include <sys/signalfd.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -240,10 +239,11 @@ int thread_startup_handler(void * arg)
 
     os_threads[current_thread_id].arch.sched_thread_id = pthread_self();
 
+#ifndef __APPLE__
     char thread_name[17];
     snprintf(thread_name, 16, "CMRX thread: %d", startup_data->thread_id);
     pthread_setname_np(os_threads[current_thread_id].arch.sched_thread_id, thread_name);
-
+#endif
     /** Allow reception of SIGALRM, SIGUSR1 (PendSV) and SIGURG (SVCHandler)
      * signals in CMRX thread hosting threads */
     sigset_t set;
@@ -489,7 +489,13 @@ int os_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsi
 
     RPC_Service_t * service = (RPC_Service_t *) syscall->args[4];
     VTable_t vtable = service->vtable;
+#ifdef __APPLE__
+    /* TODO: Vtable regions are not yet implemented on MacOS */
+    Process_t process_id = 0; //get_vtable_process(vtable);
+#else
     Process_t process_id = get_vtable_process(vtable);
+#endif
+
     if (process_id == E_VTABLE_UNKNOWN)
     {
         return E_INVALID_ADDRESS;

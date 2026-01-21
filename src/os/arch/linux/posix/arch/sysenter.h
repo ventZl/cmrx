@@ -5,8 +5,11 @@
 #define __SYSCALL
 
 #define CMRX_SYSCALL_GET_ARG_COUNT_HELPER(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, N, ...)	N
-#define CMRX_SYSCALL_GET_ARG_COUNT(...)			CMRX_SYSCALL_GET_ARG_COUNT_HELPER(__VA_ARGS__ __VA_OPT__(,) 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
-
+#ifdef __clang__
+#   define CMRX_SYSCALL_GET_ARG_COUNT(...)			CMRX_SYSCALL_GET_ARG_COUNT_HELPER(10, ## __VA_ARGS__ , 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#else
+#   define CMRX_SYSCALL_GET_ARG_COUNT(...)			CMRX_SYSCALL_GET_ARG_COUNT_HELPER(## __VA_ARGS__ __VA_OPT__(,) 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#endif
 
 int system_call_entrypoint(unsigned long arg0,
                             unsigned long arg1,
