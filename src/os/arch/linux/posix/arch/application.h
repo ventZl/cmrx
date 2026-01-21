@@ -61,10 +61,21 @@ extern void cmrx_posix_register_thread(const struct OS_thread_create_t * thread)
 #define CMRX_VTABLE_SECTION_STOP(application_name) CMRX_VTABLE_SECTION_STOP2(application_name)
 
 #define CMRX_VTABLE_SECTION  CMRX_VTABLE_SECTION_STR(APPLICATION_NAME)
-#define CMRX_VTABLE_SPECIFIER __attribute__((section(CMRX_VTABLE_SECTION))) const
+#ifdef __APPLE__
+#   define CMRX_VTABLE_SPECIFIER const
+#else
+#   define CMRX_VTABLE_SPECIFIER __attribute__((section(CMRX_VTABLE_SECTION))) const
+#endif
 
+#ifdef __APPLE__
+/* TODO: Just to make the code build. Apple doesn't support section start/stop symbols
+   emission. */
+long CMRX_VTABLE_SECTION_START(APPLICATION_NAME) __attribute__((weak));
+long CMRX_VTABLE_SECTION_STOP(APPLICATION_NAME) __attribute__((weak));
+#else
 extern long CMRX_VTABLE_SECTION_START(APPLICATION_NAME) __attribute__((weak));
 extern long CMRX_VTABLE_SECTION_STOP(APPLICATION_NAME) __attribute__((weak));
+#endif
 
 /** Linux port implementation of application creation macro.
  *

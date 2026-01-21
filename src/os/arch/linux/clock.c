@@ -3,7 +3,11 @@
 #include <cmrx/clock.h>
 
 #include <signal.h>
+#ifdef __APPLE__
+#include <sys/time.h>
+#else
 #include <time.h>
+#endif
 #include <stdint.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -21,8 +25,10 @@ static long int systick_ns = 0;
 /** Systick interval stored as value in us */
 static int systick_us = 0;
 
+#ifndef __APPLE__
 /** POSIX timer used to implement the systick */
 static timer_t systick_timer;
+#endif
 
 void sigalrm_handler(int signo)
 {
@@ -59,12 +65,17 @@ void timing_provider_schedule(long delay_us)
     if (!timer_started)
     {
         // expire in interval_ms and then every interval_ms
+#ifdef __APPLE__
+        struct itimerval systick = {{ systick_us, 0}, { 0, 0}};
+        setitimer(ITIMER_REAL, &systick, NULL);
+#else
         struct itimerspec systick = { { 0, systick_ns }, { 0, systick_ns } };
         struct sigevent timer_ev;
         timer_ev.sigev_signo = SIGALRM;
         timer_ev.sigev_notify = SIGEV_SIGNAL;
         timer_create(CLOCK_MONOTONIC, &timer_ev, &systick_timer);
         timer_settime(systick_timer, 0, &systick, NULL);
+#endif
         timer_started = true;
     }
 }

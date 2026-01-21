@@ -24,7 +24,11 @@
  */
 
 #define CMRX_RPC_GET_ARG_COUNT_HELPER(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, N, ...)	N
-#define CMRX_RPC_GET_ARG_COUNT(...)			CMRX_RPC_GET_ARG_COUNT_HELPER(__VA_ARGS__ __VA_OPT__(,) 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#ifdef __clang__
+#	define CMRX_RPC_GET_ARG_COUNT(...)			CMRX_RPC_GET_ARG_COUNT_HELPER(10, ## __VA_ARGS__ , 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#else
+#	define CMRX_RPC_GET_ARG_COUNT(...)			CMRX_RPC_GET_ARG_COUNT_HELPER(__VA_ARGS__ __VA_OPT__(,) 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#endif
 
 #define CMRX_RPC_PASTER(argcount)	            CMRX_RPC_CALL_ ## argcount
 #define CMRX_RPC_EVALUATOR(argcount)	        CMRX_RPC_PASTER(argcount)
@@ -41,7 +45,11 @@
  * emit a fairly readable error if types of arguments to the RPC call don't match.
  */ 
 
-#define CMRX_RPC_TYPE_CHECKER(argcount, object, ...)      if (0) { object((void *) 0 __VA_OPT__(,) __VA_ARGS__); }
+#if defined __clang__
+#	define CMRX_RPC_TYPE_CHECKER(argcount, object, ...)      if (0) { object((void *) 0 , ##__VA_ARGS__); }
+#else
+#	define CMRX_RPC_TYPE_CHECKER(argcount, object, ...)      if (0) { object((void *) 0 __VA_OPT__(,) __VA_ARGS__); }
+#endif
 
 #define CMRX_RPC_CHECK_TYPE_4(object, _0, _1, _2, _3)	CMRX_RPC_CHECK_TYPE(object, (_0, _1, _2, _3))
 #define CMRX_RPC_CHECK_TYPE_3(object, _0, _1, _2)		CMRX_RPC_CHECK_TYPE(object, (_0, _1, _2))
@@ -86,7 +94,7 @@
 		offsetof(typeof(*((service_instance)->vtable)), method_name) / sizeof(void *), \
 		##__VA_ARGS__); \
 	CMRX_RPC_SERVICE_FORM_CHECKER(service_instance); \
-	CMRX_RPC_TYPE_CHECKER(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__), (service_instance)->vtable->method_name, __VA_ARGS__) \
+	CMRX_RPC_TYPE_CHECKER(CMRX_RPC_GET_ARG_COUNT(__VA_ARGS__), (service_instance)->vtable->method_name, ##__VA_ARGS__) \
     CMRX_RPC_INTERFACE_CHECKER(service_instance); \
 
 /**
@@ -119,8 +127,11 @@
  * @param method_name name of method within service, which has to be called
  * @returns whatever value service returned
  */
+#ifdef __clang__
+#define rpc_call(service_instance, method_name, ...) CMRX_RPC_CALL(service_instance, method_name, ##__VA_ARGS__)
+#else
 #define rpc_call(service_instance, method_name, ...) CMRX_RPC_CALL(service_instance, method_name __VA_OPT__(,) __VA_ARGS__)
-
+#endif
 /** Internal implementation of remote procedure call in userspace.
  *
  * This function is actually called when user calles @ref rpc_call(). The only difference is,
