@@ -113,7 +113,7 @@ int os_sched_yield(void)
 	uint8_t candidate_thread;
 
 //	os_sched_timed_event();
-    uint8_t txn_id = os_txn_start();
+    Txn_t txn_id = os_txn_start();
 
     struct OS_core_state_t * core_state = &core[coreid()];
 
@@ -243,7 +243,7 @@ int os_stack_create()
 	uint32_t stack_mask = 1;
     int rv = STACK_INVALID;
 
-    uint8_t txn_id = os_txn_start();
+    Txn_t txn_id = os_txn_start();
 
 	for(int q = 0; q < OS_STACKS; ++q)
 	{
