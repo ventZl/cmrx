@@ -18,7 +18,6 @@ set(test_kernel_SRCS
     os_notify_wait_object.c
     os_notify_futex.c
     os_shutdown.c
-    riscv_hal.c
     stubs.c
     test_traits.c
     )
