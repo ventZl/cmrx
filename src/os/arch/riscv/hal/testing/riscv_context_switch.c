@@ -12,6 +12,10 @@
 static uint32_t riscv_stack_a[64] __attribute__((aligned(16)));
 static uint32_t riscv_stack_b[64] __attribute__((aligned(16)));
 
+extern bool riscv_context_switch_called;
+extern bool riscv_context_switch_perform_switch;
+extern uint32_t *riscv_context_switch_fake_sp;
+
 static intmax_t riscv_ptr_value(const void *ptr)
 {
 	return (intmax_t)(uintptr_t) ptr;
