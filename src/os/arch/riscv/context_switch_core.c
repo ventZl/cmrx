@@ -110,5 +110,3 @@ __attribute__((naked)) void os_riscv_context_switch_safe_point(void)
 		:
 		: "t0", "a0", "memory");
 }
-
-#endif
