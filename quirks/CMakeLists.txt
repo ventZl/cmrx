@@ -4,7 +4,11 @@ if (TARGET pico_stdlib)
     if (NOT TARGET cmrx)
         message(FATAL_ERROR "CMRX target does not exist yet! Include this quirk after CMRX directory has been added!")
     endif()
-    
-    add_subdirectory(pico-sdk)
-   
+
+    if (DEFINED PICO_PLATFORM AND PICO_PLATFORM STREQUAL "rp2350-riscv")
+        add_subdirectory(pico-sdk-riscv)
+    else()
+        add_subdirectory(pico-sdk)
+    endif()
+
 endif()
