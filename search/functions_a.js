@@ -81,9 +81,9 @@ var searchData=
   ['os_5fthread_5fstop_78',['os_thread_stop',['../group__os__sched.html#ga0f6f80faa1ed7029bfb94e7f32f3a994',1,'sched.c']]],
   ['os_5ftimer_5finit_79',['os_timer_init',['../group__os__timer.html#ga7b581bf8c03d871934b4d2fd1845a343',1,'timer.c']]],
   ['os_5ftxn_5fcommit_80',['os_txn_commit',['../group__os__txn.html#gacbfa20536e7c7fc317d57022ee00d471',1,'os_txn_commit(Txn_t transaction, enum TxnType type):&#160;txn.c'],['../group__os__txn.html#gacbfa20536e7c7fc317d57022ee00d471',1,'os_txn_commit(Txn_t transaction, enum TxnType type):&#160;txn.c']]],
-  ['os_5ftxn_5fdone_81',['os_txn_done',['../group__os__txn.html#ga1d718af22b206b311f22c214bda9387a',1,'os_txn_done():&#160;txn.c'],['../group__os__txn.html#ga1d718af22b206b311f22c214bda9387a',1,'os_txn_done():&#160;txn.c']]],
-  ['os_5ftxn_5fstart_82',['os_txn_start',['../group__os__txn.html#ga6835c2c092a489fb9a24dce9e2b4c3ac',1,'os_txn_start():&#160;txn.c'],['../group__os__txn.html#ga6835c2c092a489fb9a24dce9e2b4c3ac',1,'os_txn_start():&#160;txn.c']]],
-  ['os_5ftxn_5fstart_5fcommit_83',['os_txn_start_commit',['../group__os__txn.html#gaf10efb77e984671b520a403ede9ce8c2',1,'os_txn_start_commit():&#160;txn.c'],['../group__os__txn.html#gaf10efb77e984671b520a403ede9ce8c2',1,'os_txn_start_commit():&#160;txn.c']]],
+  ['os_5ftxn_5fdone_81',['os_txn_done',['../group__os__txn.html#gaa354e7db359322579bfccad91f3c2e69',1,'os_txn_done():&#160;txn.c'],['../group__os__txn.html#gaa354e7db359322579bfccad91f3c2e69',1,'os_txn_done(void):&#160;txn.c']]],
+  ['os_5ftxn_5fstart_82',['os_txn_start',['../group__os__txn.html#ga8416fe8f7bf2e1c73fb3a3c6aabbcf3a',1,'os_txn_start():&#160;txn.c'],['../group__os__txn.html#ga8416fe8f7bf2e1c73fb3a3c6aabbcf3a',1,'os_txn_start(void):&#160;txn.c']]],
+  ['os_5ftxn_5fstart_5fcommit_83',['os_txn_start_commit',['../group__os__txn.html#ga5cb7bbbf62304874468aa30d15bb8f1e',1,'os_txn_start_commit():&#160;txn.c'],['../group__os__txn.html#ga5cb7bbbf62304874468aa30d15bb8f1e',1,'os_txn_start_commit(void):&#160;txn.c']]],
   ['os_5fusleep_84',['os_usleep',['../group__os__timer.html#ga579228f0ea6911563f3c09d50b0f441d',1,'timer.c']]],
   ['os_5fwait_5ffor_5fobject_85',['os_wait_for_object',['../group__os__notify.html#ga7e092abec7150668ed085bd881997100',1,'os_wait_for_object(const void *object, WaitHandler_t callback, uint32_t flags):&#160;notify.c'],['../group__os__notify.html#ga7e092abec7150668ed085bd881997100',1,'os_wait_for_object(const void *object, WaitHandler_t callback, uint32_t flags):&#160;notify.c']]]
 ];

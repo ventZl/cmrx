@@ -8,7 +8,7 @@ var group__os__txn =
     [ "os_sys_txn_commit", "group__os__txn.html#ga5a00a4ac7ffcc3e344961b597c5b5fe9", null ],
     [ "os_sys_txn_start", "group__os__txn.html#ga850d4412f59410f1e27fe0f1541e807e", null ],
     [ "os_txn_commit", "group__os__txn.html#gacbfa20536e7c7fc317d57022ee00d471", null ],
-    [ "os_txn_done", "group__os__txn.html#ga1d718af22b206b311f22c214bda9387a", null ],
-    [ "os_txn_start", "group__os__txn.html#ga6835c2c092a489fb9a24dce9e2b4c3ac", null ],
-    [ "os_txn_start_commit", "group__os__txn.html#gaf10efb77e984671b520a403ede9ce8c2", null ]
+    [ "os_txn_done", "group__os__txn.html#gaa354e7db359322579bfccad91f3c2e69", null ],
+    [ "os_txn_start", "group__os__txn.html#ga8416fe8f7bf2e1c73fb3a3c6aabbcf3a", null ],
+    [ "os_txn_start_commit", "group__os__txn.html#ga5cb7bbbf62304874468aa30d15bb8f1e", null ]
 ];
