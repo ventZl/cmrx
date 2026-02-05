@@ -7,6 +7,7 @@ if (UNIT_TESTING_BUILD)
 endif()
 
 set(os_SRCS 
+    algo.c
     access.c
     context.c
     isr.c

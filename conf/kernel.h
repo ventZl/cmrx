@@ -73,4 +73,13 @@
  */
 #cmakedefine CMRX_RPC_CANARY
 
+/** Enable / disable use of faster hashing function.
+ * Normally a Prospector mixer is used to hash keys in hash tables. For MCUs
+ * with really poor multiplication performance a simpler minimalistich mixer
+ * can be used to hash keys to avoid one multiplication and speed up
+ * hash-based lookups.
+ */
+
+#cmakedefine CMRX_USE_FAST_HASH
+
 /** @} */
