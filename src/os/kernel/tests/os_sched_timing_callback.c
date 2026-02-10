@@ -9,6 +9,7 @@
 // Kernel private functions and variables, not part of any header
 extern struct OS_core_state_t core[OS_NUM_CORES];
 extern struct TimerEntry_t sleepers[SLEEPERS_MAX];
+extern uint32_t sched_microtime;
 
 CTEST_DATA(os_sched_timing_callback) {
 };
@@ -16,7 +17,8 @@ CTEST_DATA(os_sched_timing_callback) {
 CTEST_SETUP(os_sched_timing_callback) {
     memset(&os_threads, 0, sizeof(os_threads));
     core[0].thread_current = 0;
-    memset(&sleepers, 0xFF, sizeof(sleepers));
+    os_timer_init();
+    sched_microtime = 0;
 }
 
 CTEST2(os_sched_timing_callback, round_robin_same_prio) {
@@ -50,6 +52,7 @@ CTEST2(os_sched_timing_callback, one_thread) {
     ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
 }
 
+/* Check that threads suspended by interval timers can be repeatedly resumed at correct time */
 CTEST2(os_sched_timing_callback, set_itimer) {
     os_threads[0].state = THREAD_STATE_RUNNING;
     os_threads[1].state = THREAD_STATE_READY;
@@ -65,12 +68,18 @@ CTEST2(os_sched_timing_callback, set_itimer) {
 
     int tim_ret = os_setitimer(2500);
 
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_RUNNING);
+    ASSERT_EQUAL(core[0].thread_current, 0);
+
     ASSERT_EQUAL(tim_ret, 0);
 
     int thr_ret = os_kill(0, SIGSTOP);
     ASSERT_EQUAL(thr_ret, 0);
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_STOPPED);
+    ASSERT_EQUAL(core[0].thread_current, 1);
 
     os_sched_timing_callback(2400);
+    ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_STOPPED);
     ASSERT_EQUAL(core[0].thread_current, 1);
     ASSERT_EQUAL(os_threads[1].state, THREAD_STATE_RUNNING);
 

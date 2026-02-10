@@ -6,6 +6,7 @@
 #include "signal.h"
 #include "notify.h"
 #include "txn.h"
+#include "algo.h"
 #include <conf/kernel.h>
 
 #include <stdint.h>
@@ -21,6 +22,9 @@
  * delay.
  */
 struct TimerEntry_t sleepers[SLEEPERS_MAX];
+struct TimerQueueEntry_t sleeper_queue[SLEEPERS_MAX];
+unsigned sleeper_queue_size;
+unsigned sleeper_queue_cursor;
 
 /** Determine if interval in sleep entry is periodic or not.
  * @returns 1 if interval is periodic, 0 if interval is one-shot.
@@ -29,12 +33,61 @@ static bool is_periodic(struct TimerEntry_t * entry) {
     return entry->timer_type >= TIMER_PERIODIC;
 }
 
-/** Get how long the sleep should take.
- * Will clean the periodicity flag from interval.
- * @returns sleep time in microseconds.
- */
-static unsigned get_sleeptime(const unsigned interval) {
-    return interval;
+int os_find_timer_slot(Thread_t owner, enum eSleepType type)
+{
+	const uint32_t sought_key = SLEEPER_KEY(type, owner);
+	uint32_t offs = HASH_SEARCH(sleepers, key, sought_key, SLEEPERS_MAX);
+
+	return offs;
+}
+
+int os_find_timer_queue(int timer_slot_id)
+{
+	if (timer_slot_id >= SLEEPERS_MAX)
+	{
+		return TIMER_INVALID_ID;
+	}
+
+	struct TimerEntry_t * sleeper = &sleepers[timer_slot_id];
+
+	// Find timer will find a free slot if there is no match
+	if (sleeper->key == HASH_EMPTY)
+	{
+		return TIMER_INVALID_ID;
+	}
+	unsigned next_resume = sleeper->sleep_from + sleeper->interval;
+	unsigned queue_offs = BINARY_SEARCH(sleeper_queue, resume_time, next_resume, sleeper_queue_size);
+	do {
+		if (sleeper_queue[queue_offs].entry_id == timer_slot_id)
+		{
+			return queue_offs;
+		}
+	} while (sleeper_queue[queue_offs].resume_time == next_resume);
+
+	return TIMER_INVALID_ID;
+}
+
+void os_dequeue_timed_event(unsigned queue_offs)
+{
+	// Here we delete the old queue entry as it points to wrong point in time
+	ARRAY_DELETE(sleeper_queue, queue_offs, sleeper_queue_size);
+	if (sleeper_queue_cursor > queue_offs)
+	{
+		sleeper_queue_cursor--;
+	}
+}
+
+void os_enqueue_timed_event(unsigned sleeper_id, uint32_t next_resume)
+{
+	unsigned queue_offs = BINARY_SEARCH(sleeper_queue, resume_time, next_resume, sleeper_queue_size);
+	ARRAY_INSERT(sleeper_queue, queue_offs, sleeper_queue_size);
+	struct TimerQueueEntry_t * queue = &sleeper_queue[queue_offs];
+	queue->resume_time = next_resume;
+	queue->entry_id = sleeper_id;
+	if (sleeper_queue_cursor > queue_offs)
+	{
+		sleeper_queue_cursor--;
+	}
 }
 
 /** Perform heavy lifting of setting timers
@@ -47,17 +100,34 @@ static unsigned get_sleeptime(const unsigned interval) {
  * @param type type of timer to set up
  * @return 0 if timer was set up properly
  */
-static int do_set_timed_event(Txn_t txn, unsigned slot, unsigned interval, enum eSleepType type)
+static int do_set_timed_event(Txn_t txn, const unsigned slot, const unsigned interval, const enum eSleepType type)
 {
+	unsigned old_queue_offs = os_find_timer_queue(slot);
+
     if (os_txn_commit(txn, TXN_READWRITE) == E_OK) {
-        Thread_t thread_id = os_get_current_thread();
-        uint32_t microtime = os_get_micro_time();
+		uint32_t microtime = os_get_micro_time();
+		Thread_t thread_id = os_get_current_thread();
+		// it is OK to overflow here
+		uint32_t next_resume = microtime + interval;
+
         struct TimerEntry_t * sleeper = &sleepers[slot];
+		sleeper->key = SLEEPER_KEY(type, thread_id);
         sleeper->thread_id = thread_id;
         ASSERT(sleeper->thread_id < OS_THREADS);
         sleeper->sleep_from = microtime;
         sleeper->interval = interval;
 		sleeper->timer_type = type;
+
+		if (sleeper_queue[old_queue_offs].resume_time != next_resume || old_queue_offs == TIMER_INVALID_ID)
+		{
+			if (old_queue_offs != TIMER_INVALID_ID)
+			{
+				os_dequeue_timed_event(old_queue_offs);
+			}
+
+			os_enqueue_timed_event(slot, next_resume);
+		}
+
         os_txn_done();
 
 		switch (type) {
@@ -74,97 +144,74 @@ static int do_set_timed_event(Txn_t txn, unsigned slot, unsigned interval, enum 
     }
 }
 
-
 int os_set_timed_event(unsigned microseconds, enum eSleepType type)
 {
     Txn_t txn = os_txn_start();
 	Thread_t thread_id = os_get_current_thread();
 
-	for (int q = 0; q < SLEEPERS_MAX; ++q)
-	{
-        struct TimerEntry_t * sleeper = &sleepers[q];
-		if (sleeper->thread_id == 0xFF)
+	do {
+		uint32_t slot_id = os_find_timer_slot(thread_id, type);
+
+		if (do_set_timed_event(txn, slot_id, microseconds, type) == 0)
 		{
-			if (do_set_timed_event(txn, q, microseconds, type) == 0) {
-                return 0;
-            } else {
-                // Transaction has been aborted, restart search
-                txn = os_txn_start();
-                q = -1;
-                continue;
-            }
+			return E_OK;
 		}
 		else
 		{
-			if (sleepers->thread_id == thread_id)
-			{
-				/* We are searching for interval timer / delay for this thread
-				 * we found some entry belonging to this thread, but it is of
-				 * different kind than we are searching for. It is delay and
-				 * we are searching for interval timer or vice versa.
-				 */
-				if (type == sleeper->timer_type)
-				{
-					if (do_set_timed_event(txn, q, microseconds, type) == 0) {
-                        return 0;
-                    } else {
-                        txn = os_txn_start();
-                        q = -1;
-                        continue;
-                    }
-				}
-			}
+			txn = os_txn_start();
+			continue;
 		}
-	}
+	} while (true);
+
 	return E_NOTAVAIL;
 }
 
 int os_find_timer(Thread_t owner, enum eSleepType type)
 {
-	for (int q = 0; q < SLEEPERS_MAX; ++q)
-	{
-		struct TimerEntry_t * sleeper = &sleepers[q];
-		if (sleeper->thread_id == owner)
-		{
-			if (type == sleeper->timer_type)
-			{
-				return q;
-			}
-		}
-	}
-	return TIMER_INVALID_ID;
+	int timer_id = os_find_timer_slot(owner, type);
+	return os_find_timer_queue(timer_id);
 }
-
 
 int os_cancel_timed_event(Thread_t owner, enum eSleepType type)
 {
 	Txn_t txn;
-	int timer_id = 0xFF;
+	int timer_id = TIMER_INVALID_ID;
 	int rv;
 	do {
 		txn = os_txn_start();
 		timer_id = os_find_timer(owner, type);
-		if (timer_id == TIMER_INVALID_ID)
-		{
-			return E_NOTAVAIL;
-		}
+
 	} while (os_txn_commit(txn, TXN_READWRITE) != E_OK);
 
-	rv = os_cancel_sleeper(timer_id);
+	if (timer_id == TIMER_INVALID_ID)
+	{
+		rv = E_NOTAVAIL;
+	}
+	else
+	{
+		rv = os_cancel_sleeper(timer_id);
+	}
 	os_txn_done();
 
 	return rv;
 }
 
-int os_cancel_sleeper(int sleeper_id)
+int os_cancel_sleeper(unsigned queue_id)
 {
-	if (sleeper_id >= SLEEPERS_MAX)
+	if (queue_id >= sleeper_queue_size)
 	{
 		return E_INVALID;
 	}
 
+	struct TimerQueueEntry_t * queue_entry = &sleeper_queue[queue_id];
+	ASSERT(queue_entry->entry_id < SLEEPERS_MAX);
+	int sleeper_id = queue_entry->entry_id;
+
+	os_dequeue_timed_event(queue_id);
+
 	struct TimerEntry_t * sleeper = &sleepers[sleeper_id];
-	sleeper->thread_id = 0xFF;
+	ASSERT(sleeper->key != HASH_EMPTY);
+	sleeper->key = HASH_EMPTY;
 
 	return 0;
 }
@@ -202,134 +249,124 @@ int os_setitimer(unsigned microseconds)
 	}
 }
 
-void os_timer_init()
+void os_timer_init(void)
 {
 	for (int q = 0; q < SLEEPERS_MAX; ++q)
 	{
-		sleepers[q].thread_id = 0xFF;
+		sleepers[q].key = HASH_EMPTY;
 	}
+
+	sleeper_queue_size = 0;
+	sleeper_queue_cursor = 0;
 }
 
-/** Helper function to calculate time considering type wraparound.
- * This function will calculate the final time considering timer wraparound.
- * @param sleep_from time at which the sleep starts (microseconds)
- * @param microtime duration of sleep (microseconds)
- * @returns new value of kernel timer at the end of sleep
- */
-static uint32_t get_sleep_time(uint32_t sleep_from, uint32_t microtime)
+__attribute__((deprecated)) bool os_schedule_timer(unsigned * delay)
 {
-	if (sleep_from < microtime)
-	{
-		return microtime - sleep_from;
-	}
-	else
-	{
-		return ~0 - (sleep_from - microtime);
-	}
-}
-
-bool os_schedule_timer(unsigned * delay)
-{
-	uint32_t microtime = os_get_micro_time();
+	unsigned microtime = os_get_micro_time();
 	uint32_t min_delay = ~0;
 	bool rv = false;
 
-	for (int q = 0; q < SLEEPERS_MAX; ++q)
+	if (sleeper_queue_size == 0)
 	{
-        struct TimerEntry_t * sleeper = &sleepers[q];
-		if (sleeper->thread_id != 0xFF)
-		{
-			/* Figure how long this particular sleeper is already sleeing */
-			uint32_t sleeping = get_sleep_time(sleeper->sleep_from, microtime);
-			/* Figure out how long should this particular sleeper continue
-			 * to sleep
-			 */
-			uint32_t tosleep = get_sleeptime(sleeper->interval);
-
-			uint32_t delay;
-			if (sleeping < tosleep)
-			{
-				delay = tosleep - sleeping;
-			}
-			else
-			{
-				/* This timer is overdue, fire immediately */
-				delay = 0;
-			}
-
-			if (delay < min_delay)
-			{
-				min_delay = delay;
-				rv = true;
-			}
-		}
+		return false;
 	}
-	if (rv)
+
+	unsigned slot_id = sleeper_queue_cursor;
+	if (sleeper_queue_size > 1)
 	{
-		*delay = min_delay;
+		slot_id = (slot_id + 1) % sleeper_queue_size;
 	}
-	
-	return rv;
+
+	return sleeper_queue[slot_id].resume_time - microtime;
 }
 
-
-
-void os_run_timer(uint32_t microtime)
+void os_sleeper_reschedule(unsigned sleeper_queue_id)
 {
-	bool yield_needed = false;
-	for (int q = 0; q < SLEEPERS_MAX; ++q)
+	struct TimerQueueEntry_t * queue_entry = &sleeper_queue[sleeper_queue_id];
+
+	const uint32_t sleeper_id = queue_entry->entry_id;
+
+	struct TimerEntry_t * sleeper_entry = &sleepers[sleeper_id];
+	// Overflow is OK here
+	uint32_t next_resume = queue_entry->resume_time + sleeper_entry->interval;
+
+	os_dequeue_timed_event(sleeper_queue_id);
+	os_enqueue_timed_event(sleeper_id, next_resume);
+}
+
+void os_run_timer(uint32_t start_microtime, uint32_t interval)
+{
+	bool run_timers = true;
+	const uint32_t end_microtime = start_microtime + interval;
+	bool wrapped = end_microtime < start_microtime;
+	if (sleeper_queue_size == 0)
 	{
-		Txn_t txn = os_txn_start();
+		return;
+	}
 
-        struct TimerEntry_t * sleeper = &sleepers[q];
-		if (sleeper->thread_id != 0xFF)
+	Txn_t txn = os_txn_start();
+
+	do {
+		const struct TimerQueueEntry_t * queue_entry = &sleeper_queue[sleeper_queue_cursor];
+		const uint32_t entry_resume = queue_entry->resume_time;
+		bool timer_due = false;
+
+		if (entry_resume <= end_microtime || (wrapped && entry_resume > start_microtime))
 		{
-            const unsigned sleeper_sleeptime = get_sleeptime(sleeper->interval);
-			if (get_sleep_time(sleeper->sleep_from, microtime) >= sleeper_sleeptime)
+			timer_due = true;
+		}
+		if (os_txn_commit(txn, TXN_READWRITE) == E_OK)
+		{
+			if (timer_due)
 			{
-				if (os_txn_commit(txn, TXN_READWRITE) == E_OK)
+				struct TimerEntry_t * sleeper = &sleepers[queue_entry->entry_id];
+				ASSERT(sleeper_queue_cursor < sleeper_queue_size );
+				ASSERT(queue_entry->entry_id < SLEEPERS_MAX);
+				ASSERT(sleeper->key != HASH_EMPTY);
+				switch (sleeper->timer_type) {
+					case TIMER_SLEEP:
+					case TIMER_INTERVAL:
+					{
+						struct OS_thread_t * thread = os_thread_by_id(sleeper->thread_id);
+						os_thread_set_ready(thread);
+						break;
+					}
+
+					case TIMER_TIMEOUT:
+						os_notify_thread(sleeper->thread_id, sleeper_queue_cursor, EVT_TIMEOUT);
+						break;
+
+					default:
+						break;
+				}
+
+				if (is_periodic(sleeper))
 				{
-					switch (sleeper->timer_type) {
-						case TIMER_SLEEP:
-						case TIMER_INTERVAL:
-							{
-								struct OS_thread_t * thread = os_thread_by_id(sleeper->thread_id);
-								os_thread_set_ready(thread);
-								yield_needed = true;
-								break;
-							}
-
-						case TIMER_TIMEOUT:
-							os_notify_thread(sleeper->thread_id, q, EVT_TIMEOUT);
-							break;
-
-						default:
-							break;
-					}
-
-					if (is_periodic(sleeper))
-					{
-						sleeper->sleep_from = sleeper->sleep_from + sleeper_sleeptime;
-					}
-					else
-					{
-						sleeper->thread_id = 0xFF;
-					}
-					os_txn_done();
+					os_sleeper_reschedule(sleeper_queue_cursor);
 				}
 				else
 				{
-					// Restart the current iteration
-					q = q - 1;
-					continue;
+					os_cancel_sleeper(sleeper_queue_cursor);
+				}
+
+				if (sleeper_queue_size > 0)
+				{
+					sleeper_queue_cursor = (sleeper_queue_cursor + 1) % sleeper_queue_size;
+				}
+				else
+				{
+					run_timers = false;
 				}
 			}
+			else
+			{
+				run_timers = false;
+			}
+
+			os_txn_done();
 		}
-	}
-	if (yield_needed)
-	{
-		os_sched_yield();
-	}
+		txn = os_txn_start();
+	} while (run_timers);
 }
 
 uint32_t os_cpu_freq_get(void)

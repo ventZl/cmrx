@@ -24,18 +24,33 @@ enum eSleepType {
     TIMER_INTERVAL = TIMER_PERIODIC,
 };
 
+#define SLEEPER_KEY_TYPE_SHIFT 24
+
+#define SLEEPER_KEY(_type, _thread)     (((_type) << SLEEPER_KEY_TYPE_SHIFT) | (_thread))
+
 /** Description of one sleep request.
  * Contains details required to calculate when the next sleep interrupt shall happen
  * and to determine which request shall be the next.
  */
 struct TimerEntry_t {
+    uint32_t key;             ///< key created from timer_type and thread_id using @ref SLEEPER_KEY
     uint32_t sleep_from;      ///< time at which sleep has been requested
     uint32_t interval;        ///< amount of time sleep shall take
     uint8_t thread_id;        ///< thread ID which requested the sleep
     uint8_t timer_type;       ///< type of sleep performed
 };
 
+/** Entry for sorting sleep requests.
+ * This structure is used to sort sleep requests so the search is fast.
+ */
+struct TimerQueueEntry_t {
+    uint32_t resume_time;
+    uint8_t entry_id;
+};
+
 #define TIMER_INVALID_ID 0xFF
+
+_Static_assert(TIMER_INVALID_ID > SLEEPERS_MAX, "Timer invalid value must lie outside of timer ID range!");
 
 
 /** Kernel implementation of usleep() syscall.
@@ -53,7 +68,7 @@ int os_setitimer(unsigned microseconds);
  * either timer syscalls, or \ref os_run_timer otherwise
  * things will go wrong.
  */
-void os_timer_init();
+void os_timer_init(void);
 
 /** Find a slot for timed event and store it.
  *
@@ -66,11 +81,12 @@ void os_timer_init();
  */
 int os_set_timed_event(unsigned microseconds, enum eSleepType type);
 
-/** Find a timer slot matchin owner thread and timer type.
+/** Find a timer slot matching owner thread and timer type.
  *
  * This will find a slot which bears the timer of given type for given thread.
  * @param [in] owner thread ID which should own the timer
  * @param [in] type type of the timer.
+ * @returns offset of entry in timer queue or TIMER_INVALID_ID if no such timer was found.
  */
 int os_find_timer(Thread_t owner, enum eSleepType type);
 
@@ -89,10 +105,10 @@ int os_cancel_timed_event(Thread_t owner, enum eSleepType type);
  * This function will cancel existing sleeper. It is useful
  * for cases where you already know the identity of the sleeper
  * in advance.
- * @param sleeper ID of the sleeper being cancelled
+ * @param sleeper_queue_id ID of the item in sorted key array
  * @return 0 is operation performed successfully
  */
-int os_cancel_sleeper(int sleeper);
+int os_cancel_sleeper(unsigned sleeper_queue_id);
 
 /** Provide information on next scheduled event.
  *
@@ -106,12 +122,13 @@ int os_cancel_sleeper(int sleeper);
  */
 bool os_schedule_timer(unsigned * delay);
 
-/** Fire scheduled event.
+/** Fire scheduled events.
  *
- * Will find and run scheduled event.
- * @param microtime current processor time in microseconds
+ * Will find and run all scheduled events in given time interval.
+ * @param microtime starting processor time in microseconds of interval to run
+ * @param interval lenght of the interval events should be fired
  */
-void os_run_timer(uint32_t microtime);
+void os_run_timer(uint32_t start_microtime, uint32_t interval);
 
 /** Get current CPU frequency.
  *
