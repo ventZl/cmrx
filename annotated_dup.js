@@ -37,6 +37,7 @@ var annotated_dup =
     [ "Syscall_Entry_t", "structSyscall__Entry__t.html", "structSyscall__Entry__t" ],
     [ "thread_startup_t", "structthread__startup__t.html", "structthread__startup__t" ],
     [ "TimerEntry_t", "structTimerEntry__t.html", "structTimerEntry__t" ],
+    [ "TimerQueueEntry_t", "structTimerQueueEntry__t.html", "structTimerQueueEntry__t" ],
     [ "timeval", "structtimeval.html", "structtimeval" ],
     [ "TraceBuffer", "structTraceBuffer.html", "structTraceBuffer" ],
     [ "TraceEvent", "structTraceEvent.html", "structTraceEvent" ]

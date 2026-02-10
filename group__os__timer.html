@@ -116,9 +116,16 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimerEntry__t.html">TimerEntry_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Description of one sleep request.  <a href="structTimerEntry__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimerQueueEntry__t.html">TimerQueueEntry_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entry for sorting sleep requests.  <a href="structTimerQueueEntry__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:gab3a776c667fbfe8d3dd736debd5554c7" id="r_gab3a776c667fbfe8d3dd736debd5554c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gab3a776c667fbfe8d3dd736debd5554c7">SLEEPER_KEY_TYPE_SHIFT</a>&#160;&#160;&#160;24</td></tr>
+<tr class="separator:gab3a776c667fbfe8d3dd736debd5554c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad891a50f0ba62597ad9f3049f7f9d8a5" id="r_gad891a50f0ba62597ad9f3049f7f9d8a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gad891a50f0ba62597ad9f3049f7f9d8a5">SLEEPER_KEY</a>(_type,  _thread)&#160;&#160;&#160;(((_type) &lt;&lt; <a class="el" href="group__os__timer.html#gab3a776c667fbfe8d3dd736debd5554c7">SLEEPER_KEY_TYPE_SHIFT</a>) | (_thread))</td></tr>
+<tr class="separator:gad891a50f0ba62597ad9f3049f7f9d8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4d069cdc857a5c07fb77aa308c72a904" id="r_ga4d069cdc857a5c07fb77aa308c72a904"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga4d069cdc857a5c07fb77aa308c72a904">TIMER_INVALID_ID</a>&#160;&#160;&#160;0xFF</td></tr>
 <tr class="separator:ga4d069cdc857a5c07fb77aa308c72a904"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -136,24 +143,29 @@ Functions</h2></td></tr>
 <tr class="memitem:gabc0c9f6d25c5678e6c4c9d88d1edb9bd" id="r_gabc0c9f6d25c5678e6c4c9d88d1edb9bd"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gabc0c9f6d25c5678e6c4c9d88d1edb9bd">is_periodic</a> (struct <a class="el" href="structTimerEntry__t.html">TimerEntry_t</a> *entry)</td></tr>
 <tr class="memdesc:gabc0c9f6d25c5678e6c4c9d88d1edb9bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if interval in sleep entry is periodic or not.  <br /></td></tr>
 <tr class="separator:gabc0c9f6d25c5678e6c4c9d88d1edb9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacee9648cc90be455d550756ca473a56f" id="r_gacee9648cc90be455d550756ca473a56f"><td class="memItemLeft" align="right" valign="top">static unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gacee9648cc90be455d550756ca473a56f">get_sleeptime</a> (const unsigned interval)</td></tr>
-<tr class="memdesc:gacee9648cc90be455d550756ca473a56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get how long the sleep should take.  <br /></td></tr>
-<tr class="separator:gacee9648cc90be455d550756ca473a56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef90c3e49cedd75a22cf512bad8c149f" id="r_gaef90c3e49cedd75a22cf512bad8c149f"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gaef90c3e49cedd75a22cf512bad8c149f">do_set_timed_event</a> (<a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> txn, unsigned slot, unsigned interval, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
-<tr class="memdesc:gaef90c3e49cedd75a22cf512bad8c149f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform heavy lifting of setting timers This routine will store timed event into list of timed events.  <br /></td></tr>
-<tr class="separator:gaef90c3e49cedd75a22cf512bad8c149f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae56705c2338c1a53f6834b65c81783c8" id="r_gae56705c2338c1a53f6834b65c81783c8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gae56705c2338c1a53f6834b65c81783c8">os_find_timer_slot</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> owner, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
+<tr class="separator:gae56705c2338c1a53f6834b65c81783c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00d53d868bd9138ae72b6f17d375c7f1" id="r_ga00d53d868bd9138ae72b6f17d375c7f1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga00d53d868bd9138ae72b6f17d375c7f1">os_find_timer_queue</a> (int timer_slot_id)</td></tr>
+<tr class="separator:ga00d53d868bd9138ae72b6f17d375c7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8cddde2470f77a59c184697a921802f" id="r_gab8cddde2470f77a59c184697a921802f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gab8cddde2470f77a59c184697a921802f">os_dequeue_timed_event</a> (unsigned queue_offs)</td></tr>
+<tr class="separator:gab8cddde2470f77a59c184697a921802f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf7104f0d74d0702aa421cc69d39b5d8d" id="r_gaf7104f0d74d0702aa421cc69d39b5d8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gaf7104f0d74d0702aa421cc69d39b5d8d">os_enqueue_timed_event</a> (unsigned sleeper_id, uint32_t next_resume)</td></tr>
+<tr class="separator:gaf7104f0d74d0702aa421cc69d39b5d8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06ac70249990d2091bfe913282e0ede5" id="r_ga06ac70249990d2091bfe913282e0ede5"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga06ac70249990d2091bfe913282e0ede5">do_set_timed_event</a> (<a class="el" href="group__os__txn.html#gac01e3878510de719773a39e4333a84f4">Txn_t</a> txn, const unsigned slot, const unsigned interval, const enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
+<tr class="memdesc:ga06ac70249990d2091bfe913282e0ede5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform heavy lifting of setting timers This routine will store timed event into list of timed events.  <br /></td></tr>
+<tr class="separator:ga06ac70249990d2091bfe913282e0ede5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7fba7ebc76c20159e6d1337d659fcb34" id="r_ga7fba7ebc76c20159e6d1337d659fcb34"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga7fba7ebc76c20159e6d1337d659fcb34">os_set_timed_event</a> (unsigned microseconds, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
 <tr class="memdesc:ga7fba7ebc76c20159e6d1337d659fcb34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a slot for timed event and store it.  <br /></td></tr>
 <tr class="separator:ga7fba7ebc76c20159e6d1337d659fcb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga15d707dc009ae2f4232e53ce97149dda" id="r_ga15d707dc009ae2f4232e53ce97149dda"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga15d707dc009ae2f4232e53ce97149dda">os_find_timer</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> owner, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
-<tr class="memdesc:ga15d707dc009ae2f4232e53ce97149dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a timer slot matchin owner thread and timer type.  <br /></td></tr>
+<tr class="memdesc:ga15d707dc009ae2f4232e53ce97149dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a timer slot matching owner thread and timer type.  <br /></td></tr>
 <tr class="separator:ga15d707dc009ae2f4232e53ce97149dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc1843d72b011bfcd0eb0cc93b92f091" id="r_gabc1843d72b011bfcd0eb0cc93b92f091"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gabc1843d72b011bfcd0eb0cc93b92f091">os_cancel_timed_event</a> (<a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a> owner, enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a> type)</td></tr>
 <tr class="memdesc:gabc1843d72b011bfcd0eb0cc93b92f091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels existing timed event.  <br /></td></tr>
 <tr class="separator:gabc1843d72b011bfcd0eb0cc93b92f091"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga335e80741d1439574aabd5bfc5d8a890" id="r_ga335e80741d1439574aabd5bfc5d8a890"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga335e80741d1439574aabd5bfc5d8a890">os_cancel_sleeper</a> (int sleeper)</td></tr>
-<tr class="memdesc:ga335e80741d1439574aabd5bfc5d8a890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel existing sleeper.  <br /></td></tr>
-<tr class="separator:ga335e80741d1439574aabd5bfc5d8a890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f6ca7b90d07fdeb4850d2c1a2cccbd8" id="r_ga8f6ca7b90d07fdeb4850d2c1a2cccbd8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga8f6ca7b90d07fdeb4850d2c1a2cccbd8">os_cancel_sleeper</a> (unsigned sleeper_queue_id)</td></tr>
+<tr class="memdesc:ga8f6ca7b90d07fdeb4850d2c1a2cccbd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel existing sleeper.  <br /></td></tr>
+<tr class="separator:ga8f6ca7b90d07fdeb4850d2c1a2cccbd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a54481fa8804be03b96cbc5d85ec03b" id="r_ga5a54481fa8804be03b96cbc5d85ec03b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a> (uint32_t period_us)</td></tr>
 <tr class="memdesc:ga5a54481fa8804be03b96cbc5d85ec03b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform short busy wait.  <br /></td></tr>
 <tr class="separator:ga5a54481fa8804be03b96cbc5d85ec03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,18 +175,17 @@ Functions</h2></td></tr>
 <tr class="memitem:gad144032be21d6335801e51f3668d62d7" id="r_gad144032be21d6335801e51f3668d62d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gad144032be21d6335801e51f3668d62d7">os_setitimer</a> (unsigned microseconds)</td></tr>
 <tr class="memdesc:gad144032be21d6335801e51f3668d62d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of <a class="el" href="group__api__timer.html#ga9f408bf7753a44225214c63f3285e440" title="Set interval timer to be called periodically.">setitimer()</a> syscall.  <br /></td></tr>
 <tr class="separator:gad144032be21d6335801e51f3668d62d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b581bf8c03d871934b4d2fd1845a343" id="r_ga7b581bf8c03d871934b4d2fd1845a343"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga7b581bf8c03d871934b4d2fd1845a343">os_timer_init</a> ()</td></tr>
-<tr class="memdesc:ga7b581bf8c03d871934b4d2fd1845a343"><td class="mdescLeft">&#160;</td><td class="mdescRight">This routine initializes kernel scheduling subsystem.  <br /></td></tr>
-<tr class="separator:ga7b581bf8c03d871934b4d2fd1845a343"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga298a4922fb4180235c76c8cc8fecb6f5" id="r_ga298a4922fb4180235c76c8cc8fecb6f5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga298a4922fb4180235c76c8cc8fecb6f5">get_sleep_time</a> (uint32_t sleep_from, uint32_t microtime)</td></tr>
-<tr class="memdesc:ga298a4922fb4180235c76c8cc8fecb6f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to calculate time considering type wraparound.  <br /></td></tr>
-<tr class="separator:ga298a4922fb4180235c76c8cc8fecb6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e2cfdddcc7ffd2da0f4267144e07671" id="r_ga4e2cfdddcc7ffd2da0f4267144e07671"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga4e2cfdddcc7ffd2da0f4267144e07671">os_timer_init</a> (void)</td></tr>
+<tr class="memdesc:ga4e2cfdddcc7ffd2da0f4267144e07671"><td class="mdescLeft">&#160;</td><td class="mdescRight">This routine initializes kernel scheduling subsystem.  <br /></td></tr>
+<tr class="separator:ga4e2cfdddcc7ffd2da0f4267144e07671"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6a7c0053f7960e97d395651f4d08fad" id="r_gac6a7c0053f7960e97d395651f4d08fad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gac6a7c0053f7960e97d395651f4d08fad">os_schedule_timer</a> (unsigned *delay)</td></tr>
 <tr class="memdesc:gac6a7c0053f7960e97d395651f4d08fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide information on next scheduled event.  <br /></td></tr>
 <tr class="separator:gac6a7c0053f7960e97d395651f4d08fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga807091ac93d2fe8f891d40f39b49b7da" id="r_ga807091ac93d2fe8f891d40f39b49b7da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga807091ac93d2fe8f891d40f39b49b7da">os_run_timer</a> (uint32_t microtime)</td></tr>
-<tr class="memdesc:ga807091ac93d2fe8f891d40f39b49b7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire scheduled event.  <br /></td></tr>
-<tr class="separator:ga807091ac93d2fe8f891d40f39b49b7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd8a17b7edcfc41b0ec736efcc23f01d" id="r_gabd8a17b7edcfc41b0ec736efcc23f01d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gabd8a17b7edcfc41b0ec736efcc23f01d">os_sleeper_reschedule</a> (unsigned sleeper_queue_id)</td></tr>
+<tr class="separator:gabd8a17b7edcfc41b0ec736efcc23f01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21a43d6461c348ec0e68a12b509cc0a0" id="r_ga21a43d6461c348ec0e68a12b509cc0a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga21a43d6461c348ec0e68a12b509cc0a0">os_run_timer</a> (uint32_t start_microtime, uint32_t interval)</td></tr>
+<tr class="memdesc:ga21a43d6461c348ec0e68a12b509cc0a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire scheduled events.  <br /></td></tr>
+<tr class="separator:ga21a43d6461c348ec0e68a12b509cc0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7790e1b47e7589223de470f32523408d" id="r_ga7790e1b47e7589223de470f32523408d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga7790e1b47e7589223de470f32523408d">os_cpu_freq_get</a> (void)</td></tr>
 <tr class="memdesc:ga7790e1b47e7589223de470f32523408d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current CPU frequency.  <br /></td></tr>
 <tr class="separator:ga7790e1b47e7589223de470f32523408d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,10 +195,58 @@ Variables</h2></td></tr>
 <tr class="memitem:gaa0e811d6349480297cbad82c700077de" id="r_gaa0e811d6349480297cbad82c700077de"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structTimerEntry__t.html">TimerEntry_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#gaa0e811d6349480297cbad82c700077de">sleepers</a> [<a class="el" href="group__os__config.html#gac1843ed039050da6d9253cfba6ed8caa">SLEEPERS_MAX</a>]</td></tr>
 <tr class="memdesc:gaa0e811d6349480297cbad82c700077de"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all delays requested from kernel.  <br /></td></tr>
 <tr class="separator:gaa0e811d6349480297cbad82c700077de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46576c19adc858f942c07c4b4f8004b7" id="r_ga46576c19adc858f942c07c4b4f8004b7"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structTimerQueueEntry__t.html">TimerQueueEntry_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga46576c19adc858f942c07c4b4f8004b7">sleeper_queue</a> [<a class="el" href="group__os__config.html#gac1843ed039050da6d9253cfba6ed8caa">SLEEPERS_MAX</a>]</td></tr>
+<tr class="separator:ga46576c19adc858f942c07c4b4f8004b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d1758f45f4237fbe84e6ca0f03a1bc6" id="r_ga5d1758f45f4237fbe84e6ca0f03a1bc6"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga5d1758f45f4237fbe84e6ca0f03a1bc6">sleeper_queue_size</a></td></tr>
+<tr class="separator:ga5d1758f45f4237fbe84e6ca0f03a1bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c9576e70f59056bdc5a93d733718641" id="r_ga7c9576e70f59056bdc5a93d733718641"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__timer.html#ga7c9576e70f59056bdc5a93d733718641">sleeper_queue_cursor</a></td></tr>
+<tr class="separator:ga7c9576e70f59056bdc5a93d733718641"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Kernel internals providing services of delayed and periodic execution. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gad891a50f0ba62597ad9f3049f7f9d8a5" name="gad891a50f0ba62597ad9f3049f7f9d8a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad891a50f0ba62597ad9f3049f7f9d8a5">&#9670;&#160;</a></span>SLEEPER_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SLEEPER_KEY</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_type, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_thread&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((_type) &lt;&lt; <a class="el" href="group__os__timer.html#gab3a776c667fbfe8d3dd736debd5554c7">SLEEPER_KEY_TYPE_SHIFT</a>) | (_thread))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gab3a776c667fbfe8d3dd736debd5554c7" name="gab3a776c667fbfe8d3dd736debd5554c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab3a776c667fbfe8d3dd736debd5554c7">&#9670;&#160;</a></span>SLEEPER_KEY_TYPE_SHIFT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SLEEPER_KEY_TYPE_SHIFT&#160;&#160;&#160;24</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ga4d069cdc857a5c07fb77aa308c72a904" name="ga4d069cdc857a5c07fb77aa308c72a904"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga4d069cdc857a5c07fb77aa308c72a904">&#9670;&#160;</a></span>TIMER_INVALID_ID</h2>
 
@@ -258,8 +317,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gaef90c3e49cedd75a22cf512bad8c149f" name="gaef90c3e49cedd75a22cf512bad8c149f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaef90c3e49cedd75a22cf512bad8c149f">&#9670;&#160;</a></span>do_set_timed_event()</h2>
+<a id="ga06ac70249990d2091bfe913282e0ede5" name="ga06ac70249990d2091bfe913282e0ede5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga06ac70249990d2091bfe913282e0ede5">&#9670;&#160;</a></span>do_set_timed_event()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -276,19 +335,19 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramtype">const unsigned&#160;</td>
           <td class="paramname"><em>slot</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramtype">const unsigned&#160;</td>
           <td class="paramname"><em>interval</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a>&#160;</td>
+          <td class="paramtype">const enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a>&#160;</td>
           <td class="paramname"><em>type</em>&#160;</td>
         </tr>
         <tr>
@@ -316,81 +375,6 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if timer was set up properly </dd></dl>
-
-</div>
-</div>
-<a id="ga298a4922fb4180235c76c8cc8fecb6f5" name="ga298a4922fb4180235c76c8cc8fecb6f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga298a4922fb4180235c76c8cc8fecb6f5">&#9670;&#160;</a></span>get_sleep_time()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t get_sleep_time </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sleep_from</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>microtime</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Helper function to calculate time considering type wraparound. </p>
-<p>This function will calculate the final time considering timer wraparound. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sleep_from</td><td>time at which the sleep starts (microseconds) </td></tr>
-    <tr><td class="paramname">microtime</td><td>duration of sleep (microseconds) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new value of kernel timer at the end of sleep </dd></dl>
-
-</div>
-</div>
-<a id="gacee9648cc90be455d550756ca473a56f" name="gacee9648cc90be455d550756ca473a56f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacee9648cc90be455d550756ca473a56f">&#9670;&#160;</a></span>get_sleeptime()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static unsigned get_sleeptime </td>
-          <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
-          <td class="paramname"><em>interval</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get how long the sleep should take. </p>
-<p>Will clean the periodicity flag from interval. </p><dl class="section return"><dt>Returns</dt><dd>sleep time in microseconds. </dd></dl>
 
 </div>
 </div>
@@ -423,8 +407,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga335e80741d1439574aabd5bfc5d8a890" name="ga335e80741d1439574aabd5bfc5d8a890"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga335e80741d1439574aabd5bfc5d8a890">&#9670;&#160;</a></span>os_cancel_sleeper()</h2>
+<a id="ga8f6ca7b90d07fdeb4850d2c1a2cccbd8" name="ga8f6ca7b90d07fdeb4850d2c1a2cccbd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8f6ca7b90d07fdeb4850d2c1a2cccbd8">&#9670;&#160;</a></span>os_cancel_sleeper()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -432,8 +416,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int os_cancel_sleeper </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>sleeper</em></td><td>)</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>sleeper_queue_id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -442,7 +426,7 @@ Variables</h2></td></tr>
 <p>Cancel existing sleeper. </p>
 <p>This function will cancel existing sleeper. It is useful for cases where you already know the identity of the sleeper in advance. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sleeper</td><td>ID of the sleeper being cancelled </td></tr>
+    <tr><td class="paramname">sleeper_queue_id</td><td>ID of the item in sorted key array </td></tr>
   </table>
   </dd>
 </dl>
@@ -509,6 +493,52 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="gab8cddde2470f77a59c184697a921802f" name="gab8cddde2470f77a59c184697a921802f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab8cddde2470f77a59c184697a921802f">&#9670;&#160;</a></span>os_dequeue_timed_event()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_dequeue_timed_event </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>queue_offs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gaf7104f0d74d0702aa421cc69d39b5d8d" name="gaf7104f0d74d0702aa421cc69d39b5d8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf7104f0d74d0702aa421cc69d39b5d8d">&#9670;&#160;</a></span>os_enqueue_timed_event()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_enqueue_timed_event </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>sleeper_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>next_resume</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ga15d707dc009ae2f4232e53ce97149dda" name="ga15d707dc009ae2f4232e53ce97149dda"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga15d707dc009ae2f4232e53ce97149dda">&#9670;&#160;</a></span>os_find_timer()</h2>
 
@@ -535,7 +565,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Find a timer slot matchin owner thread and timer type. </p>
+<p>Find a timer slot matching owner thread and timer type. </p>
 <p>This will find a slot which bears the timer of given type for given thread. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">owner</td><td>thread ID which should own the timer </td></tr>
@@ -543,11 +573,58 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>offset of entry in timer queue or TIMER_INVALID_ID if no such timer was found. </dd></dl>
 
 </div>
 </div>
-<a id="ga807091ac93d2fe8f891d40f39b49b7da" name="ga807091ac93d2fe8f891d40f39b49b7da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga807091ac93d2fe8f891d40f39b49b7da">&#9670;&#160;</a></span>os_run_timer()</h2>
+<a id="ga00d53d868bd9138ae72b6f17d375c7f1" name="ga00d53d868bd9138ae72b6f17d375c7f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00d53d868bd9138ae72b6f17d375c7f1">&#9670;&#160;</a></span>os_find_timer_queue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_find_timer_queue </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timer_slot_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gae56705c2338c1a53f6834b65c81783c8" name="gae56705c2338c1a53f6834b65c81783c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae56705c2338c1a53f6834b65c81783c8">&#9670;&#160;</a></span>os_find_timer_slot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_find_timer_slot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__api.html#gaae12e635a9412afabedb95620d3e2ffe">Thread_t</a>&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">enum <a class="el" href="group__os__timer.html#gafd9f6f3e031b55953acdb227a28431c6">eSleepType</a>&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga21a43d6461c348ec0e68a12b509cc0a0" name="ga21a43d6461c348ec0e68a12b509cc0a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga21a43d6461c348ec0e68a12b509cc0a0">&#9670;&#160;</a></span>os_run_timer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -556,16 +633,27 @@ Variables</h2></td></tr>
           <td class="memname">void os_run_timer </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>microtime</em></td><td>)</td>
+          <td class="paramname"><em>start_microtime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Fire scheduled event. </p>
-<p>Will find and run scheduled event. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Fire scheduled events. </p>
+<p>Will find and run all scheduled events in given time interval. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">microtime</td><td>current processor time in microseconds </td></tr>
+    <tr><td class="paramname">microtime</td><td>starting processor time in microseconds of interval to run </td></tr>
+    <tr><td class="paramname">interval</td><td>lenght of the interval events should be fired </td></tr>
   </table>
   </dd>
 </dl>
@@ -658,8 +746,26 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga7b581bf8c03d871934b4d2fd1845a343" name="ga7b581bf8c03d871934b4d2fd1845a343"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7b581bf8c03d871934b4d2fd1845a343">&#9670;&#160;</a></span>os_timer_init()</h2>
+<a id="gabd8a17b7edcfc41b0ec736efcc23f01d" name="gabd8a17b7edcfc41b0ec736efcc23f01d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabd8a17b7edcfc41b0ec736efcc23f01d">&#9670;&#160;</a></span>os_sleeper_reschedule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void os_sleeper_reschedule </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>sleeper_queue_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga4e2cfdddcc7ffd2da0f4267144e07671" name="ga4e2cfdddcc7ffd2da0f4267144e07671"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4e2cfdddcc7ffd2da0f4267144e07671">&#9670;&#160;</a></span>os_timer_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -667,6 +773,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void os_timer_init </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -674,7 +781,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This routine initializes kernel scheduling subsystem. </p>
-<p>It is necessary to call this routine before first call to either timer syscalls, or <a class="el" href="group__os__timer.html#ga807091ac93d2fe8f891d40f39b49b7da">os_run_timer</a> otherwise things will go wrong. </p>
+<p>It is necessary to call this routine before first call to either timer syscalls, or <a class="el" href="group__os__timer.html#ga21a43d6461c348ec0e68a12b509cc0a0">os_run_timer</a> otherwise things will go wrong. </p>
 
 </div>
 </div>
@@ -700,6 +807,48 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="ga46576c19adc858f942c07c4b4f8004b7" name="ga46576c19adc858f942c07c4b4f8004b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga46576c19adc858f942c07c4b4f8004b7">&#9670;&#160;</a></span>sleeper_queue</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structTimerQueueEntry__t.html">TimerQueueEntry_t</a> sleeper_queue[<a class="el" href="group__os__config.html#gac1843ed039050da6d9253cfba6ed8caa">SLEEPERS_MAX</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga7c9576e70f59056bdc5a93d733718641" name="ga7c9576e70f59056bdc5a93d733718641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7c9576e70f59056bdc5a93d733718641">&#9670;&#160;</a></span>sleeper_queue_cursor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned sleeper_queue_cursor</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga5d1758f45f4237fbe84e6ca0f03a1bc6" name="ga5d1758f45f4237fbe84e6ca0f03a1bc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5d1758f45f4237fbe84e6ca0f03a1bc6">&#9670;&#160;</a></span>sleeper_queue_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned sleeper_queue_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="gaa0e811d6349480297cbad82c700077de" name="gaa0e811d6349480297cbad82c700077de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa0e811d6349480297cbad82c700077de">&#9670;&#160;</a></span>sleepers</h2>
 
