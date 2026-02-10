@@ -328,13 +328,17 @@ CTEST2(os_notify_wait_object, sys_wait_timeout_timed_out) {
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
 
     uint32_t current_time = os_get_micro_time();
+    uint32_t time_increment = 3990;
 
-    os_run_timer(current_time + 3990);
+    os_run_timer(current_time, time_increment);
     os_sched_yield();
+
+    current_time += time_increment;
+    time_increment = 10;
 
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
 
-    os_run_timer(current_time + 4000);
+    os_run_timer(current_time, time_increment);
     os_sched_yield();
 
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_RUNNING);
@@ -352,8 +356,9 @@ CTEST2(os_notify_wait_object, sys_wait_timeout_notification) {
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
 
     uint32_t current_time = os_get_micro_time();
+    uint32_t time_increment = 3990;
 
-    os_run_timer(current_time + 3990);
+    os_run_timer(current_time, time_increment);
     os_sched_yield();
 
     ASSERT_EQUAL(thread_state(0), THREAD_STATE_WAITING);
