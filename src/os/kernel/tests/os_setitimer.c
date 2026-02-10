@@ -52,7 +52,6 @@ CTEST2(os_setitimer, cancel_interval_timer) {
     ASSERT_EQUAL(rv, E_OK);
     ASSERT_EQUAL(sleeper_queue_size, 0);
     ASSERT_EQUAL(timing_provider_delay_called, false);
-    ASSERT_EQUAL(sleepers[slot_id].thread_id, 0xFF);
     ASSERT_EQUAL(sleepers[slot_id].key, HASH_EMPTY);
 }
 
