@@ -11,7 +11,7 @@
 
 struct NotificationObject os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
 
-void os_notify_init()
+void os_notify_init(void)
 {
     for (unsigned q = 0; q < OS_NOTIFICATION_BUFFER_SIZE; ++q)
     {
