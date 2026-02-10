@@ -158,25 +158,16 @@ void os_sched_timed_event(void)
  */
 long os_sched_timing_callback(long delay_us)
 {
-//	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
 	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
-/*	unsigned long * psp;
-	psp = (uint32_t *) __get_PSP();
-	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);*/
 
-//	was: sched_microtime += sched_tick_increment;
+	os_run_timer(sched_microtime, delay_us);
+
     sched_microtime += delay_us;
 
-/*	if (sched_timer_event_enabled &&
-			sched_timer_event == sched_microtime)
-	{*/
-	os_run_timer(sched_microtime);
-
-//}
 	os_sched_yield();
 
-//	os_sched_timed_event();
-	unsigned rt = 0;
+#ifndef NDEBUG
+    unsigned rt = 0;
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
 		if (os_threads[q].state == THREAD_STATE_RUNNING && os_threads[q].core_id == coreid())
@@ -184,11 +175,8 @@ long os_sched_timing_callback(long delay_us)
 	}
 
 	ASSERT(rt == 1);
+#endif
 	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
-/*	psp = (uint32_t *) __get_PSP();
-	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
-	__DSB();
-	__ISB();*/
     return 1;
 }
 
