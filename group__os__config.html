@@ -154,6 +154,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gab7da05f2a002e2d9ec8811a1a4112c08" id="r_gab7da05f2a002e2d9ec8811a1a4112c08"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#gab7da05f2a002e2d9ec8811a1a4112c08">CMRX_RPC_CANARY</a></td></tr>
 <tr class="memdesc:gab7da05f2a002e2d9ec8811a1a4112c08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable RPC canaries.  <br /></td></tr>
 <tr class="separator:gab7da05f2a002e2d9ec8811a1a4112c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81d6dadc6741be80b87c1da5e13c5f1d" id="r_ga81d6dadc6741be80b87c1da5e13c5f1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga81d6dadc6741be80b87c1da5e13c5f1d">CMRX_USE_FAST_HASH</a></td></tr>
+<tr class="memdesc:ga81d6dadc6741be80b87c1da5e13c5f1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable use of faster hashing function.  <br /></td></tr>
+<tr class="separator:ga81d6dadc6741be80b87c1da5e13c5f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Compile-time configuration of kernel runtime parameters. </p>
@@ -237,6 +240,23 @@ Macros</h2></td></tr>
 
 <p>Enable / disable RPC canaries. </p>
 <p>RPC canaries are values put on stack to ensure consistent state is retained across RPC calls and returns. These values can detect stack corruption caused by accident / bug but are trivial to bypass by an attacker. </p>
+
+</div>
+</div>
+<a id="ga81d6dadc6741be80b87c1da5e13c5f1d" name="ga81d6dadc6741be80b87c1da5e13c5f1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga81d6dadc6741be80b87c1da5e13c5f1d">&#9670;&#160;</a></span>CMRX_USE_FAST_HASH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMRX_USE_FAST_HASH</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable / disable use of faster hashing function. </p>
+<p>Normally a Prospector mixer is used to hash keys in hash tables. For MCUs with really poor multiplication performance a simpler minimalistich mixer can be used to hash keys to avoid one multiplication and speed up hash-based lookups. </p>
 
 </div>
 </div>

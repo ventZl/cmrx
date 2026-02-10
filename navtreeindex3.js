@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"structRPC__Service__t__.html#a202dd170ff2c2359e82d7a23f0a2f7ca":[7,5,6,0,0],
 "structSyscall__Entry__t.html":[8,0,34],
 "structSyscall__Entry__t.html#ac3473bf96a2024c57cf6fdafd216ac6b":[8,0,34,1],
 "structSyscall__Entry__t.html#ace65d18a0d600d65292f949c52b1937a":[8,0,34,0],

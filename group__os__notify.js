@@ -12,7 +12,7 @@ var group__os__notify =
     ] ],
     [ "cb_syscall_notify_object", "group__os__notify.html#ga72d1e355ba0df21a4c82be67c7c7b373", null ],
     [ "os_initialize_waitable_object", "group__os__notify.html#ga64fe2129fb7405446b74a9821bb85ee1", null ],
-    [ "os_notify_init", "group__os__notify.html#ga00e41bc3040822177a33c884e6d636f3", null ],
+    [ "os_notify_init", "group__os__notify.html#gafe448d9f9110b1634865878608167a22", null ],
     [ "os_notify_object", "group__os__notify.html#ga7501716bc3698c60cf331a72052a4098", null ],
     [ "os_notify_thread", "group__os__notify.html#ga94b2912bc09239d4eaab26b590e0da66", null ],
     [ "os_sys_notify_object", "group__os__notify.html#gacaf7a04c1911b5a8637485aaa5189b52", null ],
