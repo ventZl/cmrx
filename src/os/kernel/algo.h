@@ -50,6 +50,37 @@
     lower;\
 })\
 
+/** Insert into array algorithm.
+ * This template will create free space in array, move all entries after the
+ * place of insertion one entry higher and increase array size.
+ * @param _ARRAY array being inserted into
+ * @param _POS position at which insertion happens
+ * @param _SIZE lvalue holding current array size (e.g. count of actual stored
+ * items rather than allocation size)
+ * @note This template does not check for array overflowing
+ */
+#define ARRAY_INSERT(_ARRAY, _POS, _SIZE) \
+    for (unsigned q = _SIZE; q > _POS; --q)\
+    {\
+        _ARRAY[q] = _ARRAY[q - 1];\
+    }\
+    _SIZE++;
+
+/** Delete from array algorithm.
+ * This template will delete item from array, move all entries after the
+ * place of insertion one entry lower and decrease array size.
+ * @param _ARRAY array being inserted into
+ * @param _POS position at which deletion happens
+ * @param _SIZE lvalue holding current array size (e.g. count of actual stored
+ * items rather than allocation size)
+ */
+#define ARRAY_DELETE(_ARRAY, _POS, _SIZE) \
+    for (unsigned q = _POS + 1; q < _SIZE; ++q)\
+    {\
+        _ARRAY[q - 1] = _ARRAY[q];\
+    }\
+    _SIZE--;
+
 /** Allocate space for inserting item into sorted array.
  * This template will allocate space for inserting new item into sorted
  * array so that it stays sorted. It will do so that the array remains
