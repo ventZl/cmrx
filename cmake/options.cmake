@@ -11,6 +11,7 @@ option(CMRX_CLANG_TIDY_LIBC_PATH "Path to standard C library used while linting"
 option(CMRX_HIL_TESTING "Enable build of HIL tests and sanity check of HIL infrastructure configuration." OFF)
 option(CMRX_INTEGRATION_TESTS "Enable build of integration tests. Implies CMRX_HIL_TESTING=ON!" OFF)
 option(CMRX_HIL_TESTING_SKIP_OPENOCD "Skip OpenOCD initialization during integration tests." OFF)
+option(CMRX_USE_FAST_HASH "Use fast hashing function at expense of hash quality" OFF)
 set(OS_STACK_SIZE 1024 CACHE STRING "Stack allocated per thread in bytes")
 set(OS_THREADS 8 CACHE STRING "Amount of entries in the thread table")
 set(OS_PROCESSES 8 CACHE STRING "Amount of entries in the process table")
