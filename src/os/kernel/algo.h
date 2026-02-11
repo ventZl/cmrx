@@ -211,11 +211,13 @@ inline uint32_t os_hash_key(uint32_t key)
  */
 #define HASH_SEARCH(_HASHTABLE, _KEY, _VALUE, _MAX) \
 ({\
-    const uint32_t hash = os_hash_key(_VALUE);\
-    uint32_t pos = hash % _MAX;\
+    _Static_assert(((_MAX) & ((_MAX) - 1)) == 0 && (_MAX) != 0, "HASH_SEARCH: _MAX must be a power of 2");\
+    const uint32_t hash = os_hash_key((uint32_t)_VALUE);\
+    const uint32_t mask = (_MAX) - 1;\
+    uint32_t pos = hash & mask;\
     uint32_t stride = 1;\
     while (_HASHTABLE[pos]._KEY != _VALUE && _HASHTABLE[pos]._KEY != HASH_EMPTY) {\
-        pos = (pos + stride) % _MAX;\
+        pos = (pos + stride) & mask;\
         stride++;\
     }\
     pos;\
