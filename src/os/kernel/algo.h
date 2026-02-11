@@ -227,3 +227,22 @@ inline uint32_t os_hash_key(uint32_t key)
     }\
     pos;\
 })
+
+#define BITMAP_SET(_BITMAP, _POS, _SIZE) _BITMAP[(_POS) >> 5] |= (1U << ((_POS) & 31));
+#define BITMAP_CLEAR(_BITMAP, _POS, _SIZE) _BITMAP[(_POS) >> 5] &= ~(1U << ((_POS) & 31));
+#define BITMAP_TEST(_BITMAP, _POS, _SIZE) return (_BITMAP[(_POS) >> 5] & (1U << ((_POS) & 31))) != 0;
+#define BITMAP_FIRST(_BITMAP, _SIZE) \
+({\
+    uint32_t first = ~0;\
+    for (int word = 0; word < _SIZE; ++word) {\
+        uint32_t ready = _BITMAP[word];\
+        if (ready) {\
+            uint8_t bit = __builtin_ctz(ready);\
+            first = (word << 5) + bit;\
+            break;\
+        }\
+    }\
+    first;\
+})
+#define BITMAP_COPY(_TARGET, _SOURCE, _SIZE) \
+    for (unsigned q = 0; q < _SIZE; ++q) _TARGET[q] = _SOURCE[q];
