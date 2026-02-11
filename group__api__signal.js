@@ -6,5 +6,7 @@ var group__api__signal =
     [ "SIGSEGV", "group__api__signal.html#gae20b4f7171a09516ea73c9d2745bd596", null ],
     [ "SIGSTOP", "group__api__signal.html#ga069e358bc9a864b7dc4fed2440eda14c", null ],
     [ "kill", "group__api__signal.html#ga0394525b701b25f379ac9869201323d1", null ],
-    [ "signal", "group__api__signal.html#ga5233cb076826bc9fadbd4ee4f682798f", null ]
+    [ "send_signal", "group__api__signal.html#gae041c6464c438ca916b88eade9e437b3", null ],
+    [ "signal", "group__api__signal.html#ga5233cb076826bc9fadbd4ee4f682798f", null ],
+    [ "signal_handler", "group__api__signal.html#ga07c68a00faf32220055cbd2bed2c0754", null ]
 ];

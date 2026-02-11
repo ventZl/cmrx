@@ -106,6 +106,8 @@ $(document).ready(function(){initNavTree('group__api__signal.html',''); initResi
 <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API for sending signals and handling incoming signals. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Not intended for new applications.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This mechanism is deprecated for delivery of user-generated custom signals. As signal delivery is possible inside RPC call, doing so breaches client-server separation. Users needing synchronization mechanism should migrate to <a class="el" href="group__api__notify.html#ga41864194fe48bd76519bcb27efcfb697">notify_object</a> / <a class="el" href="group__api__notify.html#ga8325d2dc00e1c2322bfa684221191452">wait_for_object</a> API instead. This provides synchronous notification delivery. In the future, signals will only be usable for processing of system-defined signals and, such as signals to manage thread execution (stop, continue) and to signal exceptional behavior.</dd></dl>
 <p>Threads can send signals asynchronously to each other. Kernel provides mechanism to register signal handler, which gets executed whenever thread receives a signal. There are two kinds of signals:</p>
 <ul>
 <li>catchable - kernel supports sending of 32 distinct catchable signals. Kernel doesn't interpret any of them in any way. If such signal is sent to the thread then thread is simply notified of its arrival.</li>
@@ -210,6 +212,36 @@ $(document).ready(function(){initNavTree('group__api__signal.html',''); initResi
       </table>
 </div><div class="memdoc">
 
+<p>Alias for <a class="el" href="group__api__signal.html#gae041c6464c438ca916b88eade9e437b3">send_signal</a>. </p>
+
+</div>
+</div>
+<a id="gae041c6464c438ca916b88eade9e437b3" name="gae041c6464c438ca916b88eade9e437b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae041c6464c438ca916b88eade9e437b3">&#9670;&#160;</a></span>send_signal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() send_signal </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>thread</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>signal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Send thread a signal. </p>
 <p>Send a signal to the thread. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -230,6 +262,36 @@ $(document).ready(function(){initNavTree('group__api__signal.html',''); initResi
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() signal </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>signo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(uint32_t)&#160;</td>
+          <td class="paramname"><em>sighandler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Alias for <a class="el" href="group__api__signal.html#ga07c68a00faf32220055cbd2bed2c0754">signal_handler</a>. </p>
+
+</div>
+</div>
+<a id="ga07c68a00faf32220055cbd2bed2c0754" name="ga07c68a00faf32220055cbd2bed2c0754"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga07c68a00faf32220055cbd2bed2c0754">&#9670;&#160;</a></span>signal_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__os__syscall.html#ga6c52288e9645b2cd2c4ada0577669340">__SYSCALL</a> int CMRX_API() signal_handler </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>signo</em>, </td>

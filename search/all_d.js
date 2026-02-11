@@ -14,5 +14,5 @@ var searchData=
   ['kernel_5fservice_5fhandler_11',['kernel_service_handler',['../group__arch__linux__impl.html#ga0b8366627990f55eac34dfb7fe36a099',1,'posix.c']]],
   ['kernel_5fstructs_5finitialized_5fsignature_12',['KERNEL_STRUCTS_INITIALIZED_SIGNATURE',['../group__os__sched.html#ga26ea9f0ec722697387ee9deca8230844',1,'sched.c']]],
   ['key_13',['key',['../structTimerEntry__t.html#a3c158892dd05a23fe1e3b6143bf151f7',1,'TimerEntry_t']]],
-  ['kill_14',['kill',['../group__api__signal.html#ga0394525b701b25f379ac9869201323d1',1,'signal.c']]]
+  ['kill_14',['kill',['../group__api__signal.html#ga0394525b701b25f379ac9869201323d1',1,'signal.h']]]
 ];

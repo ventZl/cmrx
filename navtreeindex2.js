@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"group__os__signal.html#gaa2d22243a5b2278963a3b6c4fa9c0f40":[7,5,7,1],
+"group__os__signal.html#gaaf812da2deb5e7a342042df5f7768d3c":[7,5,7,2],
 "group__os__signal.html#gae334395fdd2ddcad969d5988c071c289":[7,5,7,0],
 "group__os__signal.html#ggae334395fdd2ddcad969d5988c071c289af8654d423c49ba98ec66b45453d2ed60":[7,5,7,0,0],
 "group__os__syscall.html":[7,5,8],
@@ -106,8 +108,8 @@ var NAVTREEINDEX2 =
 "group__util.html#gafedd38df23e9c9f801b82b8cdf210dae":[7,8,2],
 "group__util__assert.html":[7,8,0],
 "hal_integration.html":[3,7],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "md_CLANG__TIDY.html":[1],
 "md_HIL__TESTING.html":[2],
 "md_HIL__TESTING.html#autotoc_md0":[2,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "structQueueInterface.html#a381a76c9615f0a71569daea71af31f49":[7,7,2,0,2],
 "structQueueInterface.html#a47320e4f2833075d64adc339db2f0e54":[7,7,2,0,1],
 "structQueueInterface.html#a4ff121beeea33992a2e1eebab4a65a72":[7,7,2,0,3],
-"structQueueInterface.html#ad826f2ff621e2220098e591056b4a42c":[7,7,2,0,0],
-"structQueueObject.html":[7,7,2,1],
-"structQueueObject.html#abbfe25c2f320b5911a1782c38ad8dc23":[7,7,2,1,0]
+"structQueueInterface.html#ad826f2ff621e2220098e591056b4a42c":[7,7,2,0,0]
 };

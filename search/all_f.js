@@ -7,7 +7,7 @@ var searchData=
   ['main_20c_20file_4',['Creating main.c file',['../getting_started_picosdk.html#autotoc_md77',1,'']]],
   ['management_5',['management',['../group__api__timing.html#async_delay',1,'Asynchronous delays involving power management'],['../group__api__irq.html',1,'IRQ management']]],
   ['mapped_20io_6',['Memory-mapped IO',['../mem_model.html#autotoc_md36',1,'']]],
-  ['mechanism_7',['mechanism',['../rpc_intro.html#autotoc_md51',1,'Advantages of RPC mechanism'],['../rpc_intro.html#autotoc_md37',1,'High level design of RPC mechanism']]],
+  ['mechanism_7',['mechanism',['../rpc_intro.html#autotoc_md52',1,'Advantages of RPC mechanism'],['../rpc_intro.html#autotoc_md38',1,'High level design of RPC mechanism']]],
   ['mechanism_20overview_8',['RPC mechanism overview',['../group__api__rpc.html#api_rpc_overview',1,'']]],
   ['memory_9',['Shared memory',['../group__api__shared.html',1,'']]],
   ['memory_20mapped_20io_10',['Memory-mapped IO',['../mem_model.html#autotoc_md36',1,'']]],
