@@ -56,8 +56,6 @@ int __futex_fast_unlock(futex_t * futex)
 	int success = FUTEX_FAILURE;
 	if (state > 0)
 	{
-		ASSERT(futex->owner == thread_id);
-
 		state--;
 		success = __STREXB(state, &futex->state);
 	}
@@ -86,7 +84,6 @@ int __futex_fast_unlock(futex_t * futex)
 	int success = FUTEX_FAILURE;
 	if (state > 0)
 	{
-		ASSERT(futex->owner == thread_id);
 		state--;
 		futex->state = state;
 		success = FUTEX_SUCCESS;
