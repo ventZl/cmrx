@@ -35,7 +35,6 @@
 typedef struct {
 	uint8_t state;
 	uint8_t owner;
-	uint8_t flags;
 } futex_t;
 
 /* Mutex structure.

@@ -17,21 +17,18 @@
 	|| (defined __ARM_ARCH_8_1M_BASE__) || (defined __ARM_ARCH_8M_MAIN__)
 
 /** Lock futex.
- * Perform atomic futex lock. It is possible to lock futex which is either completely unlocked,
- * or a recursive futex, which has still some space left for locking. During locking, it is
- * checked if futex owner matches. If futex lock level is too deep or futex is owned by someone
- * else, then futex lock fails.
- * @note Recursive mutexes are not allowed by outer layers and are generally not supported as of now.
+ * Perform atomic futex lock. It is only possible to lock an unlocked mutex. Locking may fail
+ * spuriously due to the hardware specifics (such as load/store conditional). Recursive mutexes
+ * are not supported as of now.
  * @param futex futex to be locked
  * @param thread_id identification of calling thread
- * @param max_depth maximum depth futex can already be locked in order to be still able to lock it
  * @returns 0 if futex lock was successful, 1 if locking failed for whatever reason
  */
-int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
+int __futex_fast_lock(futex_t * futex, uint8_t thread_id)
 {
 	unsigned state = __LDREXB(&futex->state);
 	int success = FUTEX_FAILURE;
-	if (state == 0 || (futex->owner == thread_id && state < max_depth))
+	if (state == 0)
 	{
 		state++;
 		if ((success = __STREXB(state, &futex->state)) == FUTEX_SUCCESS)
@@ -46,26 +43,23 @@ int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
 
 /** Unlock futex.
  * This function performs fast unlock of futex if that is possible.
- * It first checks, if futex is locked by current thread and if
- * it is actually locked. If these conditions are met, then
- * futex unlock is performed.
+ * If mutex is not locked, this action will fail. It is an undefined
+ * behavior to unlock mutex locked by another thread.
  * @param futex Futex to be unlocked
  * @param thread_id Numeric identification of futex owner
  * @returns 0 if futex unlock was successful, 1 if unlocking failed for
  * whatever reason.
  */
-int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
+int __futex_fast_unlock(futex_t * futex)
 {
 	unsigned state = __LDREXB(&futex->state);
 	int success = FUTEX_FAILURE;
 	if (state > 0)
 	{
 		ASSERT(futex->owner == thread_id);
-		if (futex->owner == thread_id)
-		{
-			state--;
-			success = __STREXB(state, &futex->state);
-		}
+
+		state--;
+		success = __STREXB(state, &futex->state);
 	}
 	__CLREX();
 	return success;
@@ -75,14 +69,8 @@ int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
 
 #ifdef __ARM_ARCH_6M__
 
-int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
+int __futex_fast_lock(futex_t * futex, uint8_t thread_id)
 {
-	// Here we don't support nested mutex at all
-    if (max_depth > 0)
-	{
-		return FUTEX_FAILURE;
-	}
-
 	int rv = wait_for_object_value(&futex->state, 0, 0, NOTIFY_VALUE_INCREMENT);
 	if (rv == E_OK_NO_WAIT)
 	{
@@ -92,19 +80,16 @@ int __futex_fast_lock(futex_t * futex, uint8_t thread_id, unsigned max_depth)
 	return FUTEX_FAILURE;
 }
 
-int __futex_fast_unlock(futex_t * futex, uint8_t thread_id)
+int __futex_fast_unlock(futex_t * futex)
 {
 	unsigned state = futex->state;
 	int success = FUTEX_FAILURE;
 	if (state > 0)
 	{
 		ASSERT(futex->owner == thread_id);
-		if (futex->owner == thread_id)
-		{
-			state--;
-			futex->state = state;
-			success = FUTEX_SUCCESS;
-		}
+		state--;
+		futex->state = state;
+		success = FUTEX_SUCCESS;
 	}
 	return success;
 }
@@ -116,7 +101,6 @@ int futex_init(futex_t * restrict futex)
 	ASSERT(futex != NULL);
 	futex->owner = 0xFF;
 	futex->state = 0;
-	futex->flags = 0;
 	return 0;
 }
 
@@ -126,7 +110,7 @@ int futex_lock(futex_t * futex)
 	uint8_t thread_id = get_tid();
 	int success;
 	do {
-		success = __futex_fast_lock(futex, thread_id, 0);
+		success = __futex_fast_lock(futex, thread_id);
 		if (success != FUTEX_SUCCESS)
 		{
 			wait_for_object_value(&futex->state, 0, 0, NOTIFY_PRIORITY_INHERIT(futex->owner));
@@ -139,17 +123,16 @@ int futex_trylock(futex_t * futex)
 {
 	ASSERT(futex != NULL);
 	uint8_t thread_id = get_tid();
-	int success = __futex_fast_lock(futex, thread_id, 0);
+	int success = __futex_fast_lock(futex, thread_id);
 	return success;
 }
 
 int futex_unlock(futex_t * futex)
 {
 	ASSERT(futex != NULL);
-	uint8_t thread_id = get_tid();
 	int success;
 	do {
-		success = __futex_fast_unlock(futex, thread_id);
+		success = __futex_fast_unlock(futex);
 		if (success == FUTEX_SUCCESS)
 		{
 			notify_object2(&futex->state, NOTIFY_PRIORITY_DROP);
@@ -163,7 +146,6 @@ int futex_destroy(futex_t* futex)
 	ASSERT(futex != NULL);
 	futex->state = 0;
 	futex->owner = 0xFF;
-	futex->flags = 0;
 	return 0;
 }
 
