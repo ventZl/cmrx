@@ -27,7 +27,7 @@ var searchData=
   ['enabling_20tracing_24',['Enabling tracing',['../group__os__tracing.html#os_tracing_enable',1,'']]],
   ['enabling_20unit_20test_20suite_25',['Enabling unit test suite',['../md_UNIT__TESTING.html#autotoc_md82',1,'']]],
   ['end_26',['end',['../structOS__MPU__region.html#ad764a379d4013b7559bd3286db398425',1,'OS_MPU_region']]],
-  ['engine_20properties_27',['Transaction engine properties',['../txn_intro.html#autotoc_md62',1,'']]],
+  ['engine_20properties_27',['Transaction engine properties',['../txn_intro.html#autotoc_md71',1,'']]],
   ['entry_5farg_28',['entry_arg',['../structthread__startup__t.html#acb49e240395d272cf764f713f10041f7',1,'thread_startup_t']]],
   ['entry_5fid_29',['entry_id',['../structTimerQueueEntry__t.html#a33e219936fce98bb778bfda94f2372b7',1,'TimerQueueEntry_t']]],
   ['entry_5fpoint_30',['entry_point',['../structthread__startup__t.html#af408ca9ec762445637e4d587b74642f0',1,'thread_startup_t']]],

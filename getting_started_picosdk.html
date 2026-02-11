@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('getting_started_picosdk.html',''); ini
 <div class="textblock"><p>Following is a step-by-step how to guide on creating a blinky project using CMRX RTOS. It will cover all steps and lists all tools needed to complete the integration. This guide assumes previous hands-on experience with creating embedded firmware, including the process of flashing and debugging. Basic understanding of CMake is assumed.</p>
 <p>As an example, this howto will demonstrate the process of integrating CMRX into project using Raspberry Pi Pico-SDK on RP2040 microcontroller. CMRX is flexible and supports virtually all microcontrollers with CMSIS headers available in their SDK/HAL. Thus this howto will avoid using vendor-specific build tools / IDEs to make the guide as portable as possible.</p>
 <p>This example will demonstrate creation of basic blinky example using SysTick timer as the kernel timing provider.</p>
-<h1><a class="anchor" id="autotoc_md70"></a>
+<h1><a class="anchor" id="autotoc_md62"></a>
 Prerequisites</h1>
 <p>In order to generate and build the project, following tools are required: </p><table class="markdownTable">
 <tr class="markdownTableHead">
@@ -134,7 +134,7 @@ Prerequisites</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">GDB   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">must be a multiarch build supporting AArch32   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md71"></a>
+<h1><a class="anchor" id="autotoc_md64"></a>
 Creating Project Skeleton</h1>
 <p>Pico-SDK is CMake-based SDK for the range of microcontrollers designed by the Raspberry Pi Foundation. So for the skeleton, we have to create the CMakeLists.txt file. Yet, before we do so, lets first clone the CMRX source tree so we know some of paths we'll need in the folling process. This how-to will assume that the path where project is stored is <code>$HOME/projects/pico-sdk-example</code>.</p>
 <div class="fragment"><div class="line">mkdir -p ~/projects/pico-sdk-example</div>
@@ -160,10 +160,10 @@ Creating Project Skeleton</h1>
 <div class="line">)</div>
 <div class="line">pico_add_extra_outputs(pico-sdk-example)</div>
 <div class="line">target_link_libraries(pico-sdk-example pico_stdlib)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md72"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md65"></a>
 Integrating CMRX into Pico-SDK project</h1>
 <p>Following steps will integrate CMRX RTOS into project we just created, make sure that CMRX will use the Pico-SDK and we will add a simply blinky application.</p>
-<h2><a class="anchor" id="autotoc_md73"></a>
+<h2><a class="anchor" id="autotoc_md66"></a>
 1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path</h2>
 <p>First, we'll set some paths to make things more convenient. While we know that we submoduled both CMRX and Pico-SDK, we can add following lines to put both Pico-SDK and CMRX cmake subdirectories into CMake module search path:</p>
 <div class="fragment"><div class="line">set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)</div>
@@ -172,7 +172,7 @@ Integrating CMRX into Pico-SDK project</h1>
 </div><!-- fragment --><p>Now you can update the line which imports pico_sdk to be:</p>
 <div class="fragment"><div class="line">include(pico_sdk_import)</div>
 </div><!-- fragment --><p>This way we don't need to copy it over into our source tree.</p>
-<h2><a class="anchor" id="autotoc_md74"></a>
+<h2><a class="anchor" id="autotoc_md68"></a>
 2. Configuring Pico-SDK integration</h2>
 <p>Instead of providing microcontroller-specific ports, CMRX relies on generic architecture support. For ARM Cortex-M this is possible due to the CMSIS device headers available for virtually all microcontrollers. CMRX can run on any microcontroller whose SDK/HAL provides these headers. Pico-SDK does provide them.</p>
 <p>To make the job easier, the ARM architecture support package provides <code>FindCMSIS</code> CMake module. This module will find necessary CMSIS components and configure the kernel to use them. To be able to do so efficiently, you need to provide it with some basic configuration details.</p>
@@ -189,7 +189,7 @@ Integrating CMRX into Pico-SDK project</h1>
 <li><code>SYSTEM_INCLUDE_FILENAME</code> - this variable is optional. It may be needed in case that the CMSIS system include file does not match your DEVICE name. Normally, the system include filename should be system_&lt;$DEVICE&gt;.h but that's often not the case. If your HAL uses different naming pattern (CubeMX often does) then you have to provide the name of this header.</li>
 </ul>
 <p>Once all the variables are set, we can include FindCMSIS that will configure the ARM architecture support to use the CubeMX HAL.</p>
-<h2><a class="anchor" id="autotoc_md75"></a>
+<h2><a class="anchor" id="autotoc_md70"></a>
 3. Configuring CMRX kernel to use Pico-SDK</h2>
 <p>The last step needed is to configure the kernel to actually use the configuration determined by the <code>FindCMSIS</code> module. This is actually rather simple. Again modify the <code>CMakeLists.txt</code> file. This time, add the following block just below the line that calls <code>pico_sdk_init</code>:</p>
 <div class="fragment"><div class="line">set(CMRX_ARCH arm)</div>
@@ -199,7 +199,7 @@ Integrating CMRX into Pico-SDK project</h1>
 <p>The next step is to add the CMRX source tree so the kernel will actually be built using the given configuration. To achieve this, add one line, just below the block just inserted:</p>
 <div class="fragment"><div class="line">add_subdirectory(cmrx)</div>
 </div><!-- fragment --><p>This will tell CMake, that in subdirectory <code>cmrx</code> there is another part of the current project. This directory comes from CMRX git repository and contains its own CMakeLists.txt suitable for embedding into other projects.</p>
-<h1><a class="anchor" id="autotoc_md76"></a>
+<h1><a class="anchor" id="autotoc_md72"></a>
 Linking CMRX to the project</h1>
 <p>Now your project contains a buildable instance of the CMRX kernel, but the kernel is not used by your project yet. In order to achieve this a few more modifications are needed.</p>
 <p>CMRX itself is built as a static library called <code>cmrx</code>. In order to use CMRX, you have to link this library to your project. Additionally, CMRX performs linker script management. This is necessary to make memory protection work seamlessly. To achieve this a special, CMRX-specific command exists: <code>add_firmware</code>.</p>
@@ -245,7 +245,7 @@ Linking CMRX to the project</h1>
 <div class="line"> </div>
 <div class="line">pico_add_extra_outputs(pico-sdk-example)</div>
 <div class="line">target_link_libraries(pico-sdk-example cmrx aux_systick pico_stdlib cmsis_core)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md77"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md74"></a>
 Creating main.c file</h1>
 <p>Next we need a main file that will actually start out RTOS. This file is in fact very short:</p>
 <div class="fragment"><div class="line">#include &lt;extra/systick.h&gt;</div>
@@ -268,7 +268,7 @@ Creating main.c file</h1>
 <p>The last function call - <code><a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start()</a></code> starts the operating system kernel. When this is done, it will execute some of our threads. Yet, before this may happen, we need to initialize the timing provider library, we included into project earlier. This is done by calling <code><a class="el" href="group__aux__systick.html#gac72eb3fe338346006ca3089ca0898867" title="Setup the timing provider.">timing_provider_setup()</a></code>, giving it argument 1, which means that threads will be switched once every millisecond.</p>
 <p>Now, while the timing provider is not chip-specific, it needs some way to determine the CPU speed. There isn't any default way of doing so, instead, there is a callback you have to provide, that returns this frequency. While we are using CMSIS headers, we can rely on the <code>SystemCoreClock</code> variable which holds this information. So our implementation of the callback will simply return this value.</p>
 <p>Provide a way how timing provider can learn CPU frequency, initialize it and then start the kernel. Three easy steps to start the kernel.</p>
-<h1><a class="anchor" id="autotoc_md78"></a>
+<h1><a class="anchor" id="autotoc_md75"></a>
 Creating the blinky application</h1>
 <p>Blinky application does a simple thing: it periodically turns a LED diode on and off. We will implement blinky as a CMRX userspace application. The advantage of this design is that blinky will be isolated from the rest of the system by the MPU. This means that a memory access error can't damage kernel nor any other task in the system.</p>
 <p>Lets start by creating a skeleton of the application. First, create a directory <code>src/blinky</code>. The exact path does not matter but lets keep things nice and tidy and create blinky its own directory. In this directory, create two files: <code>src/blinky/CMakeLists.txt</code>:</p>
@@ -326,7 +326,7 @@ Creating the blinky application</h1>
 <li>Block size (end address - start address) must be a power of two value larger than 256</li>
 <li>Start address must be aligned to size of the block. This means that if block size is e.g. 256, then the start address must have alignment of 256 bytes.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md79"></a>
+<h1><a class="anchor" id="autotoc_md78"></a>
 Adding blinky application to the build</h1>
 <p>Very last step is to add this application to the build. To do so, two lines have to be added into master <code>CMakeLists.txt</code>.</p>
 <p>Just after the line </p><div class="fragment"><div class="line">add_subdirectory(cmrx)</div>
@@ -337,7 +337,7 @@ Adding blinky application to the build</h1>
 <div class="line">    blinky</div>
 <div class="line">)</div>
 </div><!-- fragment --><p>This is it! You have created your first fully memory protected application running on top of CMRX operating system. You can build the project now. You should get file <code>build/pico-sdk-example.elf</code> which contains the application firmware.</p>
-<h1><a class="anchor" id="autotoc_md80"></a>
+<h1><a class="anchor" id="autotoc_md79"></a>
 Flashing the application</h1>
 <p>There are multiple ways of flashing the firmware available. This guide will use one of IDE-agnostic ways: direct use of openocd and gdb.</p>
 <p>OpenOCD is a gateway between your debugger probe and the debugger used on your PC.</p>
