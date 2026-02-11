@@ -6,6 +6,9 @@
 
 #include "test_traits.h"
 
+extern Thread_t os_notification_waiters[OS_THREADS];
+extern unsigned os_notification_waiters_size;
+
 CTEST_DATA(os_notify_futex) {
 };
 
@@ -38,20 +41,6 @@ CTEST_SETUP(os_notify_futex) {
 
     os_notify_init();
     os_timer_init();
-
-/*
-    notify_called = false;
-    notify_object = NULL;
-    notify_thread = 0;
-    notify_event = 0;*/
-
-/*    schedule_context_switch_perform_switch = true;
-    schedule_context_switch_called = false;
-
-    updated_syscall_return_thread = 0xFF;
-    updated_syscall_return_value = 0;
-    updated_syscall_return_called = false;
-    */
 }
 
 uint8_t futex = 0;
@@ -170,6 +159,8 @@ CTEST2(os_notify_futex, os_notify_regular_vs_immediate_queuing) {
 }
 
 CTEST2(os_notify_futex, os_notify_immediate_with_waiter) {
+    os_notification_waiters[0] = 1;
+    os_notification_waiters_size = 1;
     // Set up a waiting thread (thread 1)
     os_threads[1].state = THREAD_STATE_WAITING;
     os_threads[1].wait_object = &futex;
@@ -184,6 +175,10 @@ CTEST2(os_notify_futex, os_notify_immediate_with_waiter) {
 }
 
 CTEST2(os_notify_futex, os_notify_immediate_priority_selection) {
+    os_notification_waiters[0] = 1;
+    os_notification_waiters[1] = 2;
+    os_notification_waiters[2] = 4;
+    os_notification_waiters_size = 3;
     // Set up multiple waiting threads with different priorities
     os_threads[1].state = THREAD_STATE_WAITING;
     os_threads[1].priority = 50;  // Lower priority (higher number)
@@ -213,6 +208,9 @@ CTEST2(os_notify_futex, os_notify_immediate_priority_selection) {
 }
 
 CTEST2(os_notify_futex, os_wait_object_value_multiple_waiters_same_object) {
+    os_notification_waiters[0] = 1;
+    os_notification_waiters[1] = 2;
+    os_notification_waiters_size = 2;
     // Set up multiple threads waiting on same object with different priorities
     futex = 1;
     

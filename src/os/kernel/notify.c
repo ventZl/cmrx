@@ -8,16 +8,71 @@
 #include <cmrx/assert.h>
 #include <conf/kernel.h>
 #include <cmrx/sys/notify.h>
+#include "algo.h"
 
-struct NotificationObject os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
+static struct NotificationObject os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
+unsigned os_notification_buffer_size;
+
+static Thread_t os_notification_waiters[OS_THREADS];
+unsigned os_notification_waiters_size;
+
+static unsigned os_notify_find_queue_entry(const void * object)
+{
+    return HASH_SEARCH(os_notification_buffer, address, object, OS_NOTIFICATION_BUFFER_SIZE);
+}
+
+static int os_notify_queue_event(const void * object)
+{
+    unsigned offs = os_notify_find_queue_entry(object);
+
+    if (os_notification_buffer_size == OS_NOTIFICATION_BUFFER_SIZE)
+    {
+        return E_OUT_OF_NOTIFICATIONS;
+    }
+
+    struct NotificationObject * notification_entry = &os_notification_buffer[offs];
+    if (notification_entry->address == (const void *) HASH_EMPTY)
+    {
+        ASSERT(notification_entry->pending_notifications == 0);
+        notification_entry->address = object;
+        os_notification_buffer_size++;
+    }
+
+    notification_entry->pending_notifications += 1;
+
+    return E_OK;
+}
+
+static bool os_notify_dequeue_event(const void * object)
+{
+    unsigned offs = os_notify_find_queue_entry(object);
+    struct NotificationObject * current_entry = &os_notification_buffer[offs];
+
+    if (current_entry->address != object)
+    {
+        return false;
+    }
+    ASSERT(current_entry->pending_notifications > 0);
+    const uint32_t remaining_notifications = --current_entry->pending_notifications;
+    if (remaining_notifications == 0)
+    {
+        current_entry->address = (void *) HASH_EMPTY;
+        os_notification_buffer_size--;
+    }
+
+    return true;
+}
 
 void os_notify_init(void)
 {
     for (unsigned q = 0; q < OS_NOTIFICATION_BUFFER_SIZE; ++q)
     {
-        os_notification_buffer[q].address = (const void *) OS_NOTIFY_INVALID;
+        os_notification_buffer[q].address = (const void *) HASH_EMPTY;
         os_notification_buffer[q].pending_notifications = 0;
     }
+
+    os_notification_buffer_size = 0;
+    os_notification_waiters_size = 0;
 }
 
 int os_initialize_waitable_object(const void* object)
@@ -47,29 +102,29 @@ int os_initialize_waitable_object(const void* object)
         thread_id++;
     } while (thread_id < OS_THREADS);
 
-    uint8_t entry_id = 0;
     txn_id = os_txn_start();
     do {
-        struct NotificationObject * current_entry = &os_notification_buffer[entry_id];
-        if (current_entry->address == object)
+        unsigned offs = os_notify_find_queue_entry(object);
+        if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK)
         {
-            if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK)
+            struct NotificationObject * current_entry = &os_notification_buffer[offs];
+
+            if (current_entry->address == object)
             {
                 ASSERT(current_entry->pending_notifications > 0);
+                current_entry->address = (void *) HASH_EMPTY;
                 current_entry->pending_notifications = 0;
-                current_entry->address = (void *) OS_NOTIFY_INVALID;
-                os_txn_done();
-            }
-            else
-            {
-                txn_id = os_txn_start();
-                continue;
+                os_notification_buffer_size--;
             }
 
+            os_txn_done();
+            break;
+        }
+        else
+        {
             txn_id = os_txn_start();
         }
-        entry_id++;
-    } while (entry_id < OS_NOTIFICATION_BUFFER_SIZE);
+    } while (true);
 
     if (awaken)
     {
@@ -89,7 +144,6 @@ int os_notify_thread(Thread_t thread_id, int candidate_timer, Event_t event)
         return E_NOTAVAIL;
     }
 
-
     if (notified_thread->wait_callback != NULL)
     {
         notified_thread->wait_callback(notified_thread->wait_object, thread_id, candidate_timer, event);
@@ -101,69 +155,30 @@ int os_notify_thread(Thread_t thread_id, int candidate_timer, Event_t event)
     return retval;
 }
 
-static int os_notify_queue_event(const void * object)
+unsigned os_find_notified_thread_waiter(const void * object)
 {
-    struct NotificationObject * first_free_entry = NULL;
-    struct NotificationObject * current_object_entry = NULL;
-
-    for (uint8_t entry_id = 0; entry_id < OS_NOTIFICATION_BUFFER_SIZE; ++entry_id)
-    {
-        struct NotificationObject * current_entry = &os_notification_buffer[entry_id];
-        if (current_entry->address == (void *) OS_NOTIFY_INVALID)
-        {
-            if (first_free_entry == NULL)
-            {
-                first_free_entry = current_entry;
-            }
-        }
-        if (current_entry->address == object)
-        {
-            current_object_entry = current_entry;
-            break;
-        }
-    }
-    if (current_object_entry == NULL && first_free_entry != NULL)
-    {
-        first_free_entry->address = object;
-        ASSERT(first_free_entry->pending_notifications == 0);
-        current_object_entry = first_free_entry;
-    }
-
-    if (current_object_entry != NULL)
-    {
-        current_object_entry->pending_notifications += 1;
-    }
-    else
-    {
-        return E_OUT_OF_NOTIFICATIONS;
-    }
-
-    return E_OK;
-}
-
-Thread_t os_find_notified_thread(const void * object)
-{
-    Thread_t candidate_thread = 0xFF;
+    unsigned candidate_waiter = 0xFF;
     uint8_t candidate_priority = 0xFF;
-    for (int q = 0; q < OS_THREADS; ++q)
+    for (unsigned int waiter = 0; waiter < os_notification_waiters_size; ++waiter)
     {
-        if (os_threads[q].state == THREAD_STATE_WAITING
-            &&  os_threads[q].wait_object == object)
+        Thread_t waiting_thread = os_notification_waiters[waiter];
+        ASSERT(os_threads[waiting_thread].state == THREAD_STATE_WAITING);
+        if (os_threads[waiting_thread].wait_object == object)
         {
-            if (os_threads[q].priority < candidate_priority)
+            if (os_threads[waiting_thread].priority < candidate_priority)
             {
-                candidate_thread = q;
-                candidate_priority = os_threads[q].priority;
+                candidate_waiter = waiter;
+                candidate_priority = os_threads[waiting_thread].priority;
             }
         }
     }
 
-    return candidate_thread;
+    return candidate_waiter;
 }
 
 int os_notify_object(const void * object, Event_t event, uint32_t flags)
 {
-    Thread_t candidate_thread = 0;
+    unsigned candidate_waiter = 0;
     int candidate_timer = 0;
     bool perform_thread_switch = false;
 
@@ -173,25 +188,27 @@ int os_notify_object(const void * object, Event_t event, uint32_t flags)
     do {
         txn_id = os_txn_start();
 
-        candidate_thread = os_find_notified_thread(object);
-        candidate_timer = os_find_timer(candidate_thread, TIMER_TIMEOUT);
+        candidate_waiter = os_find_notified_thread_waiter(object);
+        candidate_timer = os_find_timer(os_notification_waiters[candidate_waiter], TIMER_TIMEOUT);
     } while (os_txn_commit(txn_id, TXN_READWRITE) != E_OK);
 
-    if (candidate_thread < OS_THREADS)
+    if (candidate_waiter < OS_THREADS)
     {
-        if (os_notify_thread(candidate_thread, candidate_timer, event) == E_OK)
+        if (os_notify_thread(os_notification_waiters[candidate_waiter], candidate_timer, event) == E_OK)
         {
+            struct OS_thread_t * current_thread = &os_threads[os_get_current_thread()];
             if (flags & NOTIFY_PRIORITY_DROP)
             {
-                os_threads[os_get_current_thread()].priority = os_threads[os_get_current_thread()].base_priority;
+                current_thread->priority = current_thread->base_priority;
                 perform_thread_switch = true;
             }
 
-            if (os_threads[candidate_thread].priority < os_threads[os_get_current_thread()].priority)
+            if (os_threads[os_notification_waiters[candidate_waiter]].priority < current_thread->priority)
             {
                 perform_thread_switch = true;
             }
 
+            ARRAY_DELETE(os_notification_waiters, candidate_waiter, os_notification_waiters_size);
         }
     }
     else
@@ -329,22 +346,7 @@ int os_wait_for_object(const void * object, WaitHandler_t callback, uint32_t fla
     while (thread_state == THREAD_STATE_READY || thread_state == THREAD_STATE_RUNNING)
     {
         if (os_txn_commit(txn_id, TXN_READWRITE) == E_OK) {
-            bool pending = false;
-            for (uint8_t entry_id = 0; entry_id < OS_NOTIFICATION_BUFFER_SIZE; ++entry_id)
-            {
-                struct NotificationObject * current_entry = &os_notification_buffer[entry_id];
-                if (current_entry->address == object)
-                {
-                    ASSERT(current_entry->pending_notifications > 0);
-                    const uint32_t remaining_notifications = --current_entry->pending_notifications;
-                    if (remaining_notifications == 0)
-                    {
-                        current_entry->address = (void *) OS_NOTIFY_INVALID;
-                    }
-                    pending = true;
-                    break;
-                }
-            }
+            bool pending = os_notify_dequeue_event(object);
             if (!pending)
             {
                 struct OS_thread_t * curr_thread = &os_threads[current_thread];
@@ -368,6 +370,8 @@ int os_wait_for_object(const void * object, WaitHandler_t callback, uint32_t fla
                         return E_INVALID;
                     }
                 }
+
+                os_notification_waiters[os_notification_waiters_size++] = current_thread;
                 curr_thread->state = THREAD_STATE_WAITING;
                 curr_thread->wait_object = object;
                 curr_thread->wait_callback = callback;
