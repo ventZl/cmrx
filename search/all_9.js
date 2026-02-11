@@ -14,7 +14,7 @@ var searchData=
   ['fpu_5fregs_11',['fpu_regs',['../structExceptionFrameFP.html#af05f6f71b88564966f61930407fb7bcc',1,'ExceptionFrameFP']]],
   ['free_12',['free',['../structComSinkVMT.html#ab37dc0a3573e2a74897718512058bc3c',1,'ComSinkVMT::free'],['../structComChannelVMT.html#afc32bb16e1ea8bac8cd76d1757e94a47',1,'ComChannelVMT::free']]],
   ['from_20critical_20section_20to_20transaction_13',['From critical section to transaction',['../txn_intro.html#autotoc_md63',1,'']]],
-  ['functions_14',['functions',['../dev_env.html#autotoc_md68',1,'CMake functions'],['../group__api__thread.html',1,'Threading functions']]],
+  ['functions_14',['functions',['../dev_env.html#autotoc_md69',1,'CMake functions'],['../group__api__thread.html',1,'Threading functions']]],
   ['futex_5fdestroy_15',['futex_destroy',['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c']]],
   ['futex_5ffailure_16',['FUTEX_FAILURE',['../group__api__mutex.html#ga552e957a1d1f9f8a51841c139433d121',1,'mutex.h']]],
   ['futex_5finit_17',['futex_init',['../group__api__mutex.html#ga29d155f0ec6824a9bbf99d301a91fa43',1,'mutex.c']]],

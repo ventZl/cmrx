@@ -160,10 +160,10 @@ Creating Project Skeleton</h1>
 <div class="line">)</div>
 <div class="line">pico_add_extra_outputs(pico-sdk-example)</div>
 <div class="line">target_link_libraries(pico-sdk-example pico_stdlib)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md69"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md68"></a>
 Integrating CMRX into Pico-SDK project</h1>
 <p>Following steps will integrate CMRX RTOS into project we just created, make sure that CMRX will use the Pico-SDK and we will add a simply blinky application.</p>
-<h2><a class="anchor" id="autotoc_md71"></a>
+<h2><a class="anchor" id="autotoc_md70"></a>
 1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path</h2>
 <p>First, we'll set some paths to make things more convenient. While we know that we submoduled both CMRX and Pico-SDK, we can add following lines to put both Pico-SDK and CMRX cmake subdirectories into CMake module search path:</p>
 <div class="fragment"><div class="line">set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)</div>
@@ -172,7 +172,7 @@ Integrating CMRX into Pico-SDK project</h1>
 </div><!-- fragment --><p>Now you can update the line which imports pico_sdk to be:</p>
 <div class="fragment"><div class="line">include(pico_sdk_import)</div>
 </div><!-- fragment --><p>This way we don't need to copy it over into our source tree.</p>
-<h2><a class="anchor" id="autotoc_md73"></a>
+<h2><a class="anchor" id="autotoc_md72"></a>
 2. Configuring Pico-SDK integration</h2>
 <p>Instead of providing microcontroller-specific ports, CMRX relies on generic architecture support. For ARM Cortex-M this is possible due to the CMSIS device headers available for virtually all microcontrollers. CMRX can run on any microcontroller whose SDK/HAL provides these headers. Pico-SDK does provide them.</p>
 <p>To make the job easier, the ARM architecture support package provides <code>FindCMSIS</code> CMake module. This module will find necessary CMSIS components and configure the kernel to use them. To be able to do so efficiently, you need to provide it with some basic configuration details.</p>
