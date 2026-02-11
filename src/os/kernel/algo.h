@@ -36,19 +36,24 @@
  * @returns array offset of entry with matching ID or with ID which is nearest
  * smaller than ID sought for, if sought-for ID is not present.
  */
+
 #define BINARY_SEARCH(_ARRAY, _KEY, _VALUE, _SIZE) \
 ({\
-    unsigned lower = 0, upper = (_SIZE), pos = 0;\
-    while (lower < upper) {\
-        pos = lower + (upper - lower) / 2;\
-        if (_ARRAY[pos]._KEY < _VALUE) {\
-            lower = pos + 1;\
-        } else {\
-            upper = pos;\
-        }\
+    unsigned lower = 0, upper = (_SIZE);\
+    /* Binary search until range is small */\
+    while (upper - lower > 8) {\
+        unsigned mid = lower + ((upper - lower) >> 1);\
+        if (_ARRAY[mid]._KEY < _VALUE)\
+            lower = mid + 1;\
+            else\
+                upper = mid;\
+    }\
+    /* Linear scan for final elements */\
+    while (lower < upper && _ARRAY[lower]._KEY < _VALUE) {\
+        lower++;\
     }\
     lower;\
-})\
+})
 
 /** Insert into array algorithm.
  * This template will create free space in array, move all entries after the
