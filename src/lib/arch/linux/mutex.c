@@ -23,7 +23,6 @@ int futex_init(futex_t * restrict futex)
 {
     futex->owner = 0xFF;
     futex->state = 0;
-    futex->flags = 0;
     return 0;
 }
 
@@ -64,6 +63,4 @@ int futex_destroy(futex_t* futex)
 {
     futex->state = 0;
     futex->owner = 0xFF;
-    futex->flags = 0;
-    return 0;
 }
