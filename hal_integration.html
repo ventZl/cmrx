@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('hal_integration.html',''); initResizab
 <p>Second part usually present in the vendor SDK is the linker script for your target device which declares base addresses of RAM and FLASH and defines regions for code, data, bss and others. This script is needed to link the binary correctly. CMRX needs this scriupt to be manipulated in order to enable memory protection.</p>
 <p>Third part of vendor SDK are the startup and system source files. They might or might not be present, or may be present in slightly different organization. Here vendors are creative and mostly ignore CMSIS standard.</p>
 <p>As long as the CMRX kernel itself is concerned, this is all that is needed from the vendor SDK. Your application's need will usually be bigger as you might want to use peripheral drivers and utility libraries provided by the SDK. While the range and way of using these vary from project to project, CMRX does not deal with these at all. It is up to integrator to include them into project.</p>
-<h2><a class="anchor" id="autotoc_md67"></a>
+<h2><a class="anchor" id="autotoc_md72"></a>
 CMSIS helper</h2>
 <p>To make integration of CMSIS HAL for needs of the CMRX easier, there is small CMake module which helps to find various CMSIS components and set up defines. This module is called <code>FindCMSIS.cmake</code>. This module will determine include paths for core CMSIS headers and try to find startup and system components of CMSIS, if available. It will copy the linker file to location CMRX expects to find one.</p>
 <p>The basic use of <code>FindCMSIS</code> is like:</p>
