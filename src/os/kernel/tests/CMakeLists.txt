@@ -48,3 +48,16 @@ add_executable(test_algo ${test_algo_SRCS})
 target_link_libraries(test_algo ctest)
 
 add_test(NAME test_algo COMMAND test_algo)
+
+get_property(CMRX_ROOT_DIR GLOBAL PROPERTY CMRX_ROOT_DIR)
+set(riscv_hal_backend_test_SRCS
+    riscv_hal_backend.c
+    riscv_hal_backend_fake_csr.c
+    ${CMRX_ROOT_DIR}/src/os/arch/riscv/hal/riscv_hal_backend.c
+    )
+
+add_executable(test_riscv_hal_backend ${riscv_hal_backend_test_SRCS})
+target_include_directories(test_riscv_hal_backend PRIVATE ${CMRX_ROOT_DIR}/include)
+target_link_libraries(test_riscv_hal_backend ctest)
+add_test(NAME test_riscv_hal_backend COMMAND test_riscv_hal_backend)
+

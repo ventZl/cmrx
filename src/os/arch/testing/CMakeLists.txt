@@ -9,3 +9,5 @@ set(cmrx_testing_SRCS
     )
 target_sources(os PRIVATE ${cmrx_testing_SRCS})
 target_link_libraries(os PRIVATE ctest)
+
+add_subdirectory(../riscv/hal/testing ${CMAKE_CURRENT_BINARY_DIR}/riscv_hal_testing)
