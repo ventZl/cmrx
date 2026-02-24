@@ -42,6 +42,7 @@ set(test_algo_SRCS
     algo_binary_search.c
     algo_insert_sort.c
     algo_hash_search.c
+    algo_bitmap.c
     )
 
 add_executable(test_algo ${test_algo_SRCS})

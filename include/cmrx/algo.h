@@ -234,7 +234,7 @@ inline uint32_t os_hash_key(uint32_t key)
 #define BITMAP_FIRST(_BITMAP, _SIZE) \
 ({\
     uint32_t first = ~0;\
-    for (int word = 0; word < _SIZE; ++word) {\
+    for (unsigned word = 0; word < _SIZE; ++word) {\
         uint32_t ready = _BITMAP[word];\
         if (ready) {\
             uint8_t bit = __builtin_ctz(ready);\
