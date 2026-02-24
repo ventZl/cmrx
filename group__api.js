@@ -1,5 +1,6 @@
 var group__api =
 [
+    [ "Algorithm templates", "group__api__algo.html", "group__api__algo" ],
     [ "IRQ management", "group__api__irq.html", "group__api__irq" ],
     [ "Interrupt Service Routines", "group__api__isr.html", "group__api__isr" ],
     [ "Mutexes / Futexes", "group__api__mutex.html", "group__api__mutex" ],
