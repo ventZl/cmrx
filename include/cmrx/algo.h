@@ -230,7 +230,7 @@ inline uint32_t os_hash_key(uint32_t key)
 
 #define BITMAP_SET(_BITMAP, _POS, _SIZE) _BITMAP[(_POS) >> 5] |= (1U << ((_POS) & 31));
 #define BITMAP_CLEAR(_BITMAP, _POS, _SIZE) _BITMAP[(_POS) >> 5] &= ~(1U << ((_POS) & 31));
-#define BITMAP_TEST(_BITMAP, _POS, _SIZE) return (_BITMAP[(_POS) >> 5] & (1U << ((_POS) & 31))) != 0;
+#define BITMAP_TEST(_BITMAP, _POS, _SIZE) ((_BITMAP[(_POS) >> 5] & (1U << ((_POS) & 31))) != 0)
 #define BITMAP_FIRST(_BITMAP, _SIZE) \
 ({\
     uint32_t first = ~0;\

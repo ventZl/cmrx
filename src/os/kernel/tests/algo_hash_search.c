@@ -1,5 +1,5 @@
 #include <ctest.h>
-#include <kernel/algo.h>
+#include <cmrx/algo.h>
 #include "algo_data.h"
 
 void hash_insert(uint32_t key)

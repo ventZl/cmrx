@@ -6,7 +6,7 @@
 #include "signal.h"
 #include "notify.h"
 #include "txn.h"
-#include "algo.h"
+#include <cmrx/algo.h>
 #include <conf/kernel.h>
 
 #include <stdint.h>
