@@ -1,6 +1,21 @@
 #pragma once
 
 #include <stdint.h>
+/** @defgroup api_algo Algorithm templates
+ * @ingroup api
+ * Templates for algorithms to work with some common data types. Algorithms
+ * implemented here are "templates". They are provided as macros which adapt
+ * to underlying types. This means these algorithms can run faster as they
+ * are not generic, but it also means that each use will generate its own
+ * copy.
+ *
+ * Currently algorithms to work with arrays (insert, delete, binary search),
+ * hash tables (searching) and bitmaps (set, clear, test, find first) are
+ * implemented. Main user of these algorithms is kernel itself yet as they
+ * are optimized for embedded they are accessible to userspace programs
+ * as well.
+ * @{
+ */
 
 /** Binary search algorithm.
  * This is a template for binary searching over a sorted compacted array.
@@ -174,6 +189,7 @@ inline uint32_t os_hash_key(uint32_t key)
 }
 #endif
 
+/** Reserved value denoting that tash table key is empty */
 #define HASH_EMPTY 0xFFFFFFFFU
 
 /** Find entry in hash table.
@@ -227,3 +243,56 @@ inline uint32_t os_hash_key(uint32_t key)
     }\
     pos;\
 })
+
+/** Template for setting bit in bitmap.
+ * Sets bit in bitmap of arbitrary size as if it was one continuous array of bits.
+ *
+ * @param _BITMAP bitmap identity
+ * @param _POS bit to be set
+ * @param _SIZE bitmap size
+ */
+#define BITMAP_SET(_BITMAP, _POS, _SIZE) _BITMAP[(_POS) >> 5] |= (1U << ((_POS) & 31));
+
+/** Template for clearing bit in bitmap.
+ * Clears bit in bitmap of arbitrary size as if it was one continuous array of bits.
+ *
+ * @param _BITMAP bitmap identity
+ * @param _POS bit to be set
+ * @param _SIZE bitmap size
+ */
+#define BITMAP_CLEAR(_BITMAP, _POS, _SIZE) _BITMAP[(_POS) >> 5] &= ~(1U << ((_POS) & 31));
+
+/** Template for testing if bit is set in bitmap.
+ * Tests if bit in bitmap of arbitrary size is set.
+ *
+ * @param _BITMAP bitmap identity
+ * @param _POS bit to be set
+ * @param _SIZE bitmap size
+ */
+#define BITMAP_TEST(_BITMAP, _POS, _SIZE) ((_BITMAP[(_POS) >> 5] & (1U << ((_POS) & 31))) != 0)
+
+/** Return first set bit in the bitmap.
+ * Returns first bit set in bitmap of arbitrary size as if it was one continuous array of bits.
+ *
+ * @param _BITMAP bitmap identity
+ * @param _SIZE bitmap size
+ * @returns position of first bit counted from the beginning of bitmap, or ~0U if no bit is set.
+ */
+#define BITMAP_FIRST(_BITMAP, _SIZE) \
+({\
+    uint32_t first = ~0;\
+    for (unsigned word = 0; word < _SIZE; ++word) {\
+        uint32_t ready = _BITMAP[word];\
+        if (ready) {\
+            uint8_t bit = __builtin_ctz(ready);\
+            first = (word << 5) + bit;\
+            break;\
+        }\
+    }\
+    first;\
+})
+#define BITMAP_COPY(_TARGET, _SOURCE, _SIZE) \
+    for (unsigned q = 0; q < _SIZE; ++q) _TARGET[q] = _SOURCE[q];
+
+
+/* }@ */

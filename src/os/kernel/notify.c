@@ -8,7 +8,7 @@
 #include <cmrx/assert.h>
 #include <conf/kernel.h>
 #include <cmrx/sys/notify.h>
-#include "algo.h"
+#include <cmrx/algo.h>
 
 static struct NotificationObject os_notification_buffer[OS_NOTIFICATION_BUFFER_SIZE];
 unsigned os_notification_buffer_size;

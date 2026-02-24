@@ -1,5 +1,5 @@
 #include "algo_data.h"
-#include <kernel/algo.h>
+#include <cmrx/algo.h>
 
 // To force hashing function emission
 uint32_t os_hash_key(uint32_t key);

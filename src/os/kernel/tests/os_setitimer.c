@@ -1,6 +1,6 @@
 #include <kernel/timer.h>
 #include <kernel/runtime.h>
-#include <kernel/algo.h>
+#include <cmrx/algo.h>
 #include <ctest.h>
 #include <arch/corelocal.h>
 
