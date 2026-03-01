@@ -2,12 +2,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-
-/* Context frame size keeps stack 16-byte aligned (riscv-abi documentation, 2.2 Hardware
- * Floating-point Calling Convention section).
- */
-#define CMRX_RISCV_CONTEXT_FRAME_WORDS 16u
-#define CMRX_RISCV_CONTEXT_FRAME_BYTES (CMRX_RISCV_CONTEXT_FRAME_WORDS * sizeof(uint32_t))
+#include <cmrx/arch/riscv/exception_frame.h>
 
 void os_riscv_context_switch_request(bool activate);
 bool os_riscv_context_switch_is_pending(void);
