@@ -67,6 +67,98 @@
 /** Total frame size in bytes. */
 #define EXCEPTION_FRAME_SIZE  128
 
+/* Stringification helpers for use inside inline asm macros. */
+#define _RISCV_EFS(x) #x
+#define RISCV_EFS(x)  _RISCV_EFS(x)
+
+/** Save application context.
+ * Pushes a full ExceptionFrame onto the current stack: all GP registers
+ * (ra, t0-t6, a0-a7, s0-s11) plus mepc and mstatus.
+ * Uses t0/t1 as scratch for CSR reads (they are saved beforehand).
+ * @note This is defined as a macro so it can live inside naked functions.
+ */
+#define SAVE_CONTEXT() \
+asm volatile( \
+	"addi sp, sp, -" RISCV_EFS(EXCEPTION_FRAME_SIZE) "\n\t" \
+	"sw ra,  " RISCV_EFS(EF_RA) "(sp)\n\t" \
+	"sw t0,  " RISCV_EFS(EF_T0) "(sp)\n\t" \
+	"sw t1,  " RISCV_EFS(EF_T1) "(sp)\n\t" \
+	"sw t2,  " RISCV_EFS(EF_T2) "(sp)\n\t" \
+	"sw a0,  " RISCV_EFS(EF_A0) "(sp)\n\t" \
+	"sw a1,  " RISCV_EFS(EF_A1) "(sp)\n\t" \
+	"sw a2,  " RISCV_EFS(EF_A2) "(sp)\n\t" \
+	"sw a3,  " RISCV_EFS(EF_A3) "(sp)\n\t" \
+	"sw a4,  " RISCV_EFS(EF_A4) "(sp)\n\t" \
+	"sw a5,  " RISCV_EFS(EF_A5) "(sp)\n\t" \
+	"sw a6,  " RISCV_EFS(EF_A6) "(sp)\n\t" \
+	"sw a7,  " RISCV_EFS(EF_A7) "(sp)\n\t" \
+	"sw t3,  " RISCV_EFS(EF_T3) "(sp)\n\t" \
+	"sw t4,  " RISCV_EFS(EF_T4) "(sp)\n\t" \
+	"sw t5,  " RISCV_EFS(EF_T5) "(sp)\n\t" \
+	"sw t6,  " RISCV_EFS(EF_T6) "(sp)\n\t" \
+	"sw s0,  " RISCV_EFS(EF_S0) "(sp)\n\t" \
+	"sw s1,  " RISCV_EFS(EF_S1) "(sp)\n\t" \
+	"sw s2,  " RISCV_EFS(EF_S2) "(sp)\n\t" \
+	"sw s3,  " RISCV_EFS(EF_S3) "(sp)\n\t" \
+	"sw s4,  " RISCV_EFS(EF_S4) "(sp)\n\t" \
+	"sw s5,  " RISCV_EFS(EF_S5) "(sp)\n\t" \
+	"sw s6,  " RISCV_EFS(EF_S6) "(sp)\n\t" \
+	"sw s7,  " RISCV_EFS(EF_S7) "(sp)\n\t" \
+	"sw s8,  " RISCV_EFS(EF_S8) "(sp)\n\t" \
+	"sw s9,  " RISCV_EFS(EF_S9) "(sp)\n\t" \
+	"sw s10, " RISCV_EFS(EF_S10) "(sp)\n\t" \
+	"sw s11, " RISCV_EFS(EF_S11) "(sp)\n\t" \
+	"csrr t0, mepc\n\t" \
+	"csrr t1, mstatus\n\t" \
+	"sw t0,  " RISCV_EFS(EF_MEPC) "(sp)\n\t" \
+	"sw t1,  " RISCV_EFS(EF_MSTATUS) "(sp)\n\t" \
+	: : : "memory" \
+)
+
+/** Load application context.
+ * Restores all GP registers and CSRs (mepc, mstatus) from the
+ * ExceptionFrame on the current stack and pops the frame.
+ * Does NOT execute mret — the caller handles that.
+ * @note This is defined as a macro so it can live inside naked functions.
+ */
+#define LOAD_CONTEXT() \
+asm volatile( \
+	"lw t0,  " RISCV_EFS(EF_MEPC) "(sp)\n\t" \
+	"lw t1,  " RISCV_EFS(EF_MSTATUS) "(sp)\n\t" \
+	"csrw mepc, t0\n\t" \
+	"csrw mstatus, t1\n\t" \
+	"lw s0,  " RISCV_EFS(EF_S0) "(sp)\n\t" \
+	"lw s1,  " RISCV_EFS(EF_S1) "(sp)\n\t" \
+	"lw s2,  " RISCV_EFS(EF_S2) "(sp)\n\t" \
+	"lw s3,  " RISCV_EFS(EF_S3) "(sp)\n\t" \
+	"lw s4,  " RISCV_EFS(EF_S4) "(sp)\n\t" \
+	"lw s5,  " RISCV_EFS(EF_S5) "(sp)\n\t" \
+	"lw s6,  " RISCV_EFS(EF_S6) "(sp)\n\t" \
+	"lw s7,  " RISCV_EFS(EF_S7) "(sp)\n\t" \
+	"lw s8,  " RISCV_EFS(EF_S8) "(sp)\n\t" \
+	"lw s9,  " RISCV_EFS(EF_S9) "(sp)\n\t" \
+	"lw s10, " RISCV_EFS(EF_S10) "(sp)\n\t" \
+	"lw s11, " RISCV_EFS(EF_S11) "(sp)\n\t" \
+	"lw ra,  " RISCV_EFS(EF_RA) "(sp)\n\t" \
+	"lw t0,  " RISCV_EFS(EF_T0) "(sp)\n\t" \
+	"lw t1,  " RISCV_EFS(EF_T1) "(sp)\n\t" \
+	"lw t2,  " RISCV_EFS(EF_T2) "(sp)\n\t" \
+	"lw a0,  " RISCV_EFS(EF_A0) "(sp)\n\t" \
+	"lw a1,  " RISCV_EFS(EF_A1) "(sp)\n\t" \
+	"lw a2,  " RISCV_EFS(EF_A2) "(sp)\n\t" \
+	"lw a3,  " RISCV_EFS(EF_A3) "(sp)\n\t" \
+	"lw a4,  " RISCV_EFS(EF_A4) "(sp)\n\t" \
+	"lw a5,  " RISCV_EFS(EF_A5) "(sp)\n\t" \
+	"lw a6,  " RISCV_EFS(EF_A6) "(sp)\n\t" \
+	"lw a7,  " RISCV_EFS(EF_A7) "(sp)\n\t" \
+	"lw t3,  " RISCV_EFS(EF_T3) "(sp)\n\t" \
+	"lw t4,  " RISCV_EFS(EF_T4) "(sp)\n\t" \
+	"lw t5,  " RISCV_EFS(EF_T5) "(sp)\n\t" \
+	"lw t6,  " RISCV_EFS(EF_T6) "(sp)\n\t" \
+	"addi sp, sp, " RISCV_EFS(EXCEPTION_FRAME_SIZE) "\n\t" \
+	: : : "memory" \
+)
+
 #ifndef __ASSEMBLER__
 
 #include <stdint.h>
