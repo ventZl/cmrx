@@ -13,72 +13,35 @@
 #include <kernel/sched.h>
 #include <kernel/arch/sched.h>
 #include <arch/corelocal.h>
+#include <cmrx/arch/riscv/exception_frame.h>
 #include <cmrx/defines.h>
 #include <stdint.h>
+#include <string.h>
 
 /*
  * Populate stack of new thread so it can be executed.
  *
- * Sets up the stack frame so that when the thread is first scheduled,
- * it will start executing at the entrypoint with 'data' as argument.
+ * Places an ExceptionFrame at the top of the thread stack.  When the
+ * trap handler restores from this frame after a context switch, the
+ * thread starts executing at 'entrypoint' with 'data' in a0 and
+ * os_thread_dispose in ra.
  *
- * RISC-V calling convention (psABI):
- * - a0: first argument (data pointer)
- * - ra: return address (thread dispose handler)
- * - Stack must be 16-byte aligned
- *
- * Stack layout for first context switch (os_riscv_context_switch_perform):
- * The context switch saves/restores s0-s11 (12 words = 48 bytes).
- * For initial boot, we also need the exception-like frame that
- * os_boot_thread will use.
- *
+ * This follows the same pattern as ARM's os_thread_populate_stack
+ * which builds an ExceptionFrame for PendSV to restore.
  */
 uint32_t *os_thread_populate_stack(int stack_id, unsigned stack_size,
                                    entrypoint_t *entrypoint, void *data)
 {
     uint32_t *stack = os_stack_get(stack_id);
+    ExceptionFrame *frame = (ExceptionFrame *)&stack[stack_size - EXCEPTION_FRAME_WORDS];
 
-    /*
-     * Initial stack layout (from top, stack_size words):
-     *
-     * stack[stack_size - 1]  : (padding for 16-byte alignment if needed)
-     * stack[stack_size - 2]  : Initial PC (entrypoint)
-     * stack[stack_size - 3]  : Initial ra (os_thread_dispose)
-     * stack[stack_size - 4]  : Initial a0 (data)
-     * stack[stack_size - 5]  : Reserved
-     * stack[stack_size - 6]  : Reserved
-     * stack[stack_size - 7]  : Reserved
-     * stack[stack_size - 8]  : Reserved
-     * stack[stack_size - 9]  : s11
-     * stack[stack_size - 10] : s10
-     * stack[stack_size - 11] : s9
-     * stack[stack_size - 12] : s8
-     * stack[stack_size - 13] : s7
-     * stack[stack_size - 14] : s6
-     * stack[stack_size - 15] : s5
-     * stack[stack_size - 16] : s4
-     * stack[stack_size - 17] : s3
-     * stack[stack_size - 18] : s2
-     * stack[stack_size - 19] : s1
-     * stack[stack_size - 20] : s0
-     *
-     * SP will point to stack[stack_size - 20]
-     */
+    memset(frame, 0, sizeof(*frame));
+    frame->ra      = (uint32_t)os_thread_dispose;
+    frame->a0      = (uint32_t)data;
+    frame->mepc    = (uint32_t)entrypoint;
+    frame->mstatus = CMRX_RISCV_INITIAL_MSTATUS;
 
-    /* Clear the stack area we'll use */
-    for (unsigned i = 0; i < 20; i++) {
-        stack[stack_size - 1 - i] = 0;
-    }
-
-    /* Set up initial register values */
-    stack[stack_size - 2] = (uint32_t)entrypoint;       /* Initial PC */
-    stack[stack_size - 3] = (uint32_t)os_thread_dispose; /* ra - return to dispose */
-    stack[stack_size - 4] = (uint32_t)data;              /* a0 - argument */
-
-    /* s0-s11 are all zero (callee-saved, will be restored by context switch) */
-
-    /* Return SP pointing to where context switch expects it */
-    return &stack[stack_size - 20];
+    return (uint32_t *)frame;
 }
 
 /** Platform-specific way of initializing threads.
@@ -120,70 +83,33 @@ int os_process_create(Process_t process_id,
 /*
  * Boot the first thread.
  *
- * This function never returns. It sets up the CPU state and jumps
- * to the thread's entry point.
- *
- * For RISC-V, we:
- * 1. Load the thread's stack pointer
- * 2. Pop the initial register values
- * 3. Jump to the entry point
+ * Reads the ExceptionFrame from the thread stack and uses mret to
+ * enter user code.  This mirrors the normal trap-return path: mepc
+ * and mstatus are restored via CSR writes, then mret jumps to mepc
+ * while promoting MPIE → MIE (enabling interrupts).
  */
 __attribute__((noreturn))
 void os_boot_thread(Thread_t boot_thread)
 {
     struct OS_thread_t *thread = os_thread_get(boot_thread);
-    uint32_t *thread_sp = thread->sp;
-
-    /*
-     * The stack was set up by os_thread_populate_stack.
-     * Layout at thread_sp:
-     *   +0:  s0
-     *   +4:  s1
-     *   ...
-     *   +44: s11
-     *   +48: reserved
-     *   +52: reserved
-     *   +56: reserved
-     *   +60: a0 (argument)
-     *   +64: ra (return address = os_thread_dispose)
-     *   +68: PC (entry point)
-     *
-     * We need to:
-     * 1. Skip past s0-s11 (they're just placeholders for first boot)
-     * 2. Load a0, ra
-     * 3. Jump to PC
-     */
+    ExceptionFrame *frame = (ExceptionFrame *)thread->sp;
 
     __asm__ volatile(
-        /* Set stack pointer to thread stack */
-        "mv sp, %[sp]\n\t"
-
-        /* Skip past callee-saved registers (s0-s11 = 12*4 = 48 bytes) */
-        "addi sp, sp, 48\n\t"
-
-        /* Skip reserved area (4 words = 16 bytes) */
-        "addi sp, sp, 16\n\t"
-
-        /* Load a0 (first argument) */
-        "lw a0, 0(sp)\n\t"
-
-        /* Load ra (return address) */
-        "lw ra, 4(sp)\n\t"
-
-        /* Load entry point into t0 */
-        "lw t0, 8(sp)\n\t"
-
-        /* Adjust sp past our boot frame */
-        "addi sp, sp, 16\n\t"
-
-        /* Jump to entry point */
-        "jr t0\n\t"
+        "csrw mepc, %[mepc]\n\t"
+        "csrw mstatus, %[mstatus]\n\t"
+        "mv sp, %[sp_after]\n\t"
+        "mv ra, %[ra]\n\t"
+        "mv a0, %[a0]\n\t"
+        "mret\n\t"
         :
-        : [sp] "r"(thread_sp)
+        : [mepc] "r"(frame->mepc),
+          [mstatus] "r"(frame->mstatus),
+          [sp_after] "r"((uint32_t *)frame + EXCEPTION_FRAME_WORDS),
+          [ra] "r"(frame->ra),
+          [a0] "r"(frame->a0)
         : "memory"
     );
 
-    /* Never reached */
     __builtin_unreachable();
 }
 
@@ -229,21 +155,8 @@ int os_set_syscall_return_value(Thread_t thread_id, int32_t retval)
         return E_INVALID;
     }
 
-    /*
-     * The thread's SP points to its saved context.
-     * For RISC-V, the ecall handler saves the exception frame on stack.
-     * The return value goes in a0.
-     *
-     * However, the exact stack layout depends on whether the thread
-     * was blocked during ecall (exception frame) or IRQ (different frame).
-     *
-     * For now, this is a stub - proper implementation needs to understand
-     * the exact stack layout for each case.
-     */
-
-    /* TODO: Proper implementation based on stack frame layout */
-    (void)thread;
-    (void)retval;
+    ExceptionFrame *frame = (ExceptionFrame *)thread->sp;
+    riscv_exception_set_retval(frame, retval);
 
     return E_OK;
 }

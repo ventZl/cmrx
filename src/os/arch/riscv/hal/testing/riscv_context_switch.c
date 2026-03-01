@@ -32,7 +32,7 @@ static void riscv_reset_state(void)
 	riscv_context_switch_fake_sp = NULL;
 }
 
-static void riscv_setup_switch(uint32_t **old_sp, uint32_t **new_saved_sp, uint32_t **new_sp_after)
+static void riscv_setup_switch(uint32_t **old_sp, uint32_t **new_saved_sp)
 {
 	riscv_reset_state();
 
@@ -46,8 +46,7 @@ static void riscv_setup_switch(uint32_t **old_sp, uint32_t **new_saved_sp, uint3
 	cpu_context.new_task = &os_threads[1];
 
 	*old_sp = &riscv_stack_a[64];
-	*new_sp_after = &riscv_stack_b[64];
-	*new_saved_sp = *new_sp_after - CMRX_RISCV_CONTEXT_FRAME_WORDS;
+	*new_saved_sp = &riscv_stack_b[32];
 
 	cpu_context.new_task->sp = *new_saved_sp;
 	riscv_context_switch_fake_sp = *old_sp;
@@ -75,19 +74,16 @@ CTEST2(riscv_context_switch_reset, request_set_clear)
 CTEST_DATA(riscv_context_switch_safe_point) {
 	uint32_t *old_sp;
 	uint32_t *new_saved_sp;
-	uint32_t *new_sp_after;
 };
 
 CTEST_SETUP(riscv_context_switch_safe_point) {
 	uint32_t *old_sp = NULL;
 	uint32_t *new_saved_sp = NULL;
-	uint32_t *new_sp_after = NULL;
 
 	memset(data, 0, sizeof(*data));
-	riscv_setup_switch(&old_sp, &new_saved_sp, &new_sp_after);
+	riscv_setup_switch(&old_sp, &new_saved_sp);
 	data->old_sp = old_sp;
 	data->new_saved_sp = new_saved_sp;
-	data->new_sp_after = new_sp_after;
 }
 
 CTEST2(riscv_context_switch_safe_point, safe_point_consumes_once)
@@ -108,9 +104,9 @@ CTEST2(riscv_context_switch_safe_point, sp_bookkeeping_and_state_transition)
 	os_riscv_context_switch_safe_point();
 
 	ASSERT_EQUAL(riscv_ptr_value(cpu_context.old_task->sp),
-				 riscv_ptr_value(data->old_sp - CMRX_RISCV_CONTEXT_FRAME_WORDS));
+				 riscv_ptr_value(data->old_sp));
 	ASSERT_EQUAL(riscv_ptr_value(riscv_context_switch_fake_sp),
-				 riscv_ptr_value(data->new_sp_after));
+				 riscv_ptr_value(data->new_saved_sp));
 
 	ASSERT_EQUAL(core[0].thread_current, 1);
 	ASSERT_EQUAL(os_threads[0].state, THREAD_STATE_READY);

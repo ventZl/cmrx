@@ -39,19 +39,8 @@ static void os_riscv_context_switch_update_state(void)
 
 static void os_riscv_context_switch_perform(void)
 {
-	uint32_t *sp = riscv_context_switch_fake_sp;
-	if (sp != NULL)
-	{
-		sp -= CMRX_RISCV_CONTEXT_FRAME_WORDS;
-	}
-	cpu_context.old_task->sp = sp;
-
-	sp = cpu_context.new_task->sp;
-	if (sp != NULL)
-	{
-		sp += CMRX_RISCV_CONTEXT_FRAME_WORDS;
-	}
-	riscv_context_switch_fake_sp = sp;
+	cpu_context.old_task->sp = riscv_context_switch_fake_sp;
+	riscv_context_switch_fake_sp = cpu_context.new_task->sp;
 	riscv_context_switch_called = true;
 }
 
