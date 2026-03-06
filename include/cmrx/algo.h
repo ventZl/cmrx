@@ -95,9 +95,9 @@
  * items rather than allocation size)
  */
 #define ARRAY_DELETE(_ARRAY, _POS, _SIZE) \
-    for (unsigned q = _POS + 1; q < _SIZE; ++q)\
+    for (unsigned _q = _POS + 1; _q < _SIZE; ++_q)\
     {\
-        _ARRAY[q - 1] = _ARRAY[q];\
+        _ARRAY[_q - 1] = _ARRAY[_q];\
     }\
     _SIZE--;
 
