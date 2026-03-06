@@ -237,7 +237,7 @@ inline uint32_t os_hash_key(uint32_t key)
     const uint32_t mask = (_MAX) - 1;\
     uint32_t pos = hash & mask;\
     uint32_t stride = 1;\
-    while (_HASHTABLE[pos]._KEY != _VALUE && _HASHTABLE[pos]._KEY != HASH_EMPTY) {\
+    while (_HASHTABLE[pos]._KEY != _VALUE && _HASHTABLE[pos]._KEY != (typeof(_HASHTABLE[0]._KEY)) HASH_EMPTY) {\
         pos = (pos + stride) & mask;\
         stride++;\
     }\
