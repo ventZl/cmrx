@@ -189,7 +189,10 @@ int os_notify_object(const void * object, Event_t event, uint32_t flags)
         txn_id = os_txn_start();
 
         candidate_waiter = os_find_notified_thread_waiter(object);
-        candidate_timer = os_find_timer(os_notification_waiters[candidate_waiter], TIMER_TIMEOUT);
+        if (candidate_waiter < OS_THREADS)
+        {
+            candidate_timer = os_find_timer(os_notification_waiters[candidate_waiter], TIMER_TIMEOUT);
+        }
     } while (os_txn_commit(txn_id, TXN_READWRITE) != E_OK);
 
     if (candidate_waiter < OS_THREADS)

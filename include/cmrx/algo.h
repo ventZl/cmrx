@@ -95,9 +95,9 @@
  * items rather than allocation size)
  */
 #define ARRAY_DELETE(_ARRAY, _POS, _SIZE) \
-    for (unsigned q = _POS + 1; q < _SIZE; ++q)\
+    for (unsigned _q = _POS + 1; _q < _SIZE; ++_q)\
     {\
-        _ARRAY[q - 1] = _ARRAY[q];\
+        _ARRAY[_q - 1] = _ARRAY[_q];\
     }\
     _SIZE--;
 
@@ -237,7 +237,7 @@ inline uint32_t os_hash_key(uint32_t key)
     const uint32_t mask = (_MAX) - 1;\
     uint32_t pos = hash & mask;\
     uint32_t stride = 1;\
-    while (_HASHTABLE[pos]._KEY != _VALUE && _HASHTABLE[pos]._KEY != HASH_EMPTY) {\
+    while (_HASHTABLE[pos]._KEY != _VALUE && _HASHTABLE[pos]._KEY != (typeof(_HASHTABLE[0]._KEY)) HASH_EMPTY) {\
         pos = (pos + stride) & mask;\
         stride++;\
     }\

@@ -118,7 +118,7 @@ static int do_set_timed_event(Txn_t txn, const unsigned slot, const unsigned int
         sleeper->interval = interval;
 		sleeper->timer_type = type;
 
-		if (sleeper_queue[old_queue_offs].resume_time != next_resume || old_queue_offs == TIMER_INVALID_ID)
+		if (old_queue_offs == TIMER_INVALID_ID || sleeper_queue[old_queue_offs].resume_time != next_resume)
 		{
 			if (old_queue_offs != TIMER_INVALID_ID)
 			{

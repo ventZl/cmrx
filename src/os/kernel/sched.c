@@ -624,6 +624,8 @@ uint32_t os_shutdown(void)
     os_memory_protection_stop();
 
     os_kernel_shutdown();
+
+    __builtin_unreachable();
 }
 
 struct OS_thread_t * os_thread_get(Thread_t thread_id)
