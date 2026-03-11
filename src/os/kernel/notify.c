@@ -282,6 +282,17 @@ void cb_syscall_notify_object(const void * object, Thread_t thread, int sleeper,
 
         case EVT_TIMEOUT:
             os_set_syscall_return_value(thread, E_TIMEOUT);
+            for (unsigned q = 0; q < os_notification_waiters_size; ++q)
+            {
+                if (os_notification_waiters[q] == thread)
+                {
+                    ARRAY_DELETE(os_notification_waiters, q, os_notification_waiters_size);
+                    break;
+                }
+            }
+            notified_thread->wait_object = NULL;
+            notified_thread->wait_callback = NULL;
+
             break;
     }
 }
