@@ -189,7 +189,10 @@ int os_notify_object(const void * object, Event_t event, uint32_t flags)
         txn_id = os_txn_start();
 
         candidate_waiter = os_find_notified_thread_waiter(object);
-        candidate_timer = os_find_timer(os_notification_waiters[candidate_waiter], TIMER_TIMEOUT);
+        if (candidate_waiter < OS_THREADS)
+        {
+            candidate_timer = os_find_timer(os_notification_waiters[candidate_waiter], TIMER_TIMEOUT);
+        }
     } while (os_txn_commit(txn_id, TXN_READWRITE) != E_OK);
 
     if (candidate_waiter < OS_THREADS)
@@ -282,6 +285,17 @@ void cb_syscall_notify_object(const void * object, Thread_t thread, int sleeper,
 
         case EVT_TIMEOUT:
             os_set_syscall_return_value(thread, E_TIMEOUT);
+            for (unsigned q = 0; q < os_notification_waiters_size; ++q)
+            {
+                if (os_notification_waiters[q] == thread)
+                {
+                    ARRAY_DELETE(os_notification_waiters, q, os_notification_waiters_size);
+                    break;
+                }
+            }
+            notified_thread->wait_object = NULL;
+            notified_thread->wait_callback = NULL;
+
             break;
     }
 }
