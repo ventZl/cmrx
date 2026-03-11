@@ -184,9 +184,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> q = _POS + 1; q &lt; _SIZE; ++q)\</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> _q = _POS + 1; _q &lt; _SIZE; ++_q)\</div>
 <div class="line">    {\</div>
-<div class="line">        _ARRAY[q - 1] = _ARRAY[q];\</div>
+<div class="line">        _ARRAY[_q - 1] = _ARRAY[_q];\</div>
 <div class="line">    }\</div>
 <div class="line">    _SIZE--;</div>
 </div><!-- fragment -->
@@ -614,7 +614,7 @@ Functions</h2></td></tr>
 <div class="line">    <span class="keyword">const</span> uint32_t mask = (_MAX) - 1;\</div>
 <div class="line">    uint32_t pos = hash &amp; mask;\</div>
 <div class="line">    uint32_t stride = 1;\</div>
-<div class="line">    while (_HASHTABLE[pos]._KEY != _VALUE &amp;&amp; _HASHTABLE[pos]._KEY != <a class="code hl_define" href="group__api__algo.html#ga739ecc114f939e85fadc0a02cb42a93e">HASH_EMPTY</a>) {\</div>
+<div class="line">    while (_HASHTABLE[pos]._KEY != _VALUE &amp;&amp; _HASHTABLE[pos]._KEY != (typeof(_HASHTABLE[0]._KEY)) <a class="code hl_define" href="group__api__algo.html#ga739ecc114f939e85fadc0a02cb42a93e">HASH_EMPTY</a>) {\</div>
 <div class="line">        pos = (pos + stride) &amp; mask;\</div>
 <div class="line">        stride++;\</div>
 <div class="line">    }\</div>
