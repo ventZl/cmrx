@@ -1,1 +1,1 @@
-Checks: linuxkernel-*
+Checks: -*, clang-diagnostic-*, linuxkernel-*, clang-analyzer-security*, clang-analyzer-core*, clang-analyzer-optin.core.EnumCastOutOfRange, clang-analyzer-optin.performance.Padding, performance-*, misc-const-correctness, misc-no-recursion, -performance-no-int-to-ptr, misc-*, -misc-include-cleaner
