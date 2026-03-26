@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__os__sched.html#gaae12e635a9412afabedb95620d3e2ffe":[7,5,9,5],
 "group__os__sched.html#gab30027c97dc034137c00192f28c6e178":[7,5,9,7],
 "group__os__sched.html#gab74a182c67f78a02ad1bc34362910958":[7,5,9,25],
 "group__os__sched.html#gad17dc6e8305ce5070b4d64f6ebc2ff6c":[7,5,9,21],
@@ -121,8 +122,8 @@ var NAVTREEINDEX2 =
 "group__util.html#gafedd38df23e9c9f801b82b8cdf210dae":[7,8,2],
 "group__util__assert.html":[7,8,0],
 "hal_integration.html":[3,7],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "md_CLANG__TIDY.html":[1],
 "md_HIL__TESTING.html":[2],
 "md_HIL__TESTING.html#autotoc_md0":[2,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structOS__thread__t.html#a7ea5132f358b5e6003cf6c480b1f9177":[7,5,3,0,10],
 "structOS__thread__t.html#a92a48d3f33bbb1d5bac8fa215bfb2b92":[7,5,3,0,2],
 "structOS__thread__t.html#aa3ea786a749ff514c3362f8dbbed81d9":[7,5,3,0,5],
-"structOS__thread__t.html#aba0c89a1f04ad1917ac3280af46e1ffc":[7,5,3,0,13],
-"structOS__thread__t.html#abde22ec841a589ba96cc6bc54f9eabb5":[7,5,3,0,4]
+"structOS__thread__t.html#aba0c89a1f04ad1917ac3280af46e1ffc":[7,5,3,0,13]
 };
