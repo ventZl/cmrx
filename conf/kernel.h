@@ -82,4 +82,11 @@
 
 #cmakedefine CMRX_USE_FAST_HASH
 
+/** Enable / disable prefixing system call API with `cmrx_`.
+ * If enabled, all system call entrypoints are renamed to begin with cmrx_, so
+ * notify_object becomes cmrx_notify_object. This is to support environments
+ * where functions with colliding names exist. If disabled, prefix is not applied.
+ * There is no functional change.
+ */
+#cmakedefine CMRX_VERBOSE_API_NAMES
 /** @} */

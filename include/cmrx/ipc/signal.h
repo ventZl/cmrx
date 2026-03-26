@@ -68,7 +68,7 @@ __SYSCALL int CMRX_API(send_signal)(int thread, uint32_t signal);
 
 /** Alias for @ref send_signal
  */
-__SYSCALL int CMRX_API(kill)(int thread, uint32_t signal);
+__SYSCALL int __attribute__((weak)) CMRX_API(kill)(int thread, uint32_t signal);
 
 #ifdef CMRX_VERBOSE_API_NAMES
 #define kill CMRX_API(kill)
