@@ -6,7 +6,7 @@
 
 int thread_main(void *)
 {
-    kill(get_tid(), SIGSTOP);
+    send_signal(get_tid(), SIGSTOP);
     TEST_FAIL();
     return 0;
 }
