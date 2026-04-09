@@ -14,7 +14,7 @@
 #define KERNEL_HAS_MEMORY_PROTECTION
 
 /** How many MPU regions are saved per thread */
-#define MPU_STATE_SIZE			7
+#define MPU_STATE_SIZE			6
 
 /** How many MPU regions are always used based on in which process thread is hosted */
 #define MPU_HOSTED_STATE_SIZE	4
@@ -89,4 +89,16 @@
  * There is no functional change.
  */
 #cmakedefine CMRX_VERBOSE_API_NAMES
+
+/** Enable / disable customized flash ranges.
+ * If this option is enabled then "flash" stard and end address can be supplied
+ * externally and it is not inferred from linker script.
+ */
+#cmakedefine CMRX_CUSTOM_FLASH_RANGE
+
+#ifdef CMRX_CUSTOM_FLASH_RANGE
+#   define CMRX_CUSTOM_FLASH_START @CMRX_CUSTOM_FLASH_START@
+#   define CMRX_CUSTOM_FLASH_SIZE @CMRX_CUSTOM_FLASH_SIZE@
+#endif
+
 /** @} */

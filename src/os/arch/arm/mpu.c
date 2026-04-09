@@ -31,6 +31,8 @@ static const uint32_t __MPU_flags[] = {
 	MPU_RASR_ATTR_XN | MPU_RASR_ATTR_AP_PRW_URW,
 };
 
+_Static_assert(sizeof(__MPU_flags)/sizeof(__MPU_flags[0]) == MPU_FLAGS_COUNT, "Missing or extra entries in MPU flag mapping table");
+
 #else
 
 /** MPU region access rights for ARMv8M.

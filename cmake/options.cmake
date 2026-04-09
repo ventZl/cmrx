@@ -1,13 +1,28 @@
 option(CMRX_ARCH_SMP_SUPPORTED "Architecture supports SMP and project is using it" OFF)
-option(CMRX_OS_NUM_CORES "Amount of cores present in CPU package" INT:1)
-option(CMRX_UNIT_TESTS "Enable build of kernel unit tests" OFF)
+set(CMRX_OS_NUM_CORES 1 CACHE STRING "Amount of cores present in CPU package")
+if (CMAKE_HOST_WIN32)
+    set(UNIT_TESTS_DEFAULT OFF)
+else()
+    set(UNIT_TESTS_DEFAULT ON)
+endif()
+
+if (NOT CMRX_PLATFORM)
+    set(CMRX_PLATFORM "generic" CACHE STRING "Specific platform within architecture to build for")
+endif()
+
+option(CMRX_UNIT_TESTS "Enable build of kernel unit tests" ${UNIT_TESTS_DEFAULT})
 option(CMRX_KERNEL_TRACING "Enable tracing of kernel events" OFF)
 option(CMRX_CLANG_TIDY "Enable linting using Clang-tidy" ON)
 option(CMRX_KERNEL_TRANSACTION_VERIFICATION "Enable checking for nested transaction commits" OFF)
 option(CMRX_IDLE_THREAD_SHUTDOWN_CPU "Idle thread stops CPU" OFF)
+
+option(CMRX_CUSTOM_FLASH_RANGE "If set to ON then developer SHALL provide custom range that covers all readable and executable area. If set to OFF then kernel will determine this automatically based on linker file, if possible" OFF)
+set(CMRX_CUSTOM_FLASH_START 0 CACHE STRING "Custom start address of FLASH region. FLASH region includes this address")
+set(CMRX_CUSTOM_FLASH_SIZE 0 CACHE STRING "Custom size of FLASH region")
+
 option(CMRX_RPC_CANARY "Enable RPC canaries" OFF)
 option(CMRX_MAP_FILE_WITH_EXTENSION "MAP file contains full name of binary with ELF extension (.elf.map)" OFF)
-option(CMRX_CLANG_TIDY_LIBC_PATH "Path to standard C library used while linting" /usr/include)
+set(CMRX_CLANG_TIDY_LIBC_PATH /usr/include CACHE STRING "Path to standard C library used while linting")
 option(CMRX_HIL_TESTING "Enable build of HIL tests and sanity check of HIL infrastructure configuration." OFF)
 option(CMRX_INTEGRATION_TESTS "Enable build of integration tests. Implies CMRX_HIL_TESTING=ON!" OFF)
 option(CMRX_HIL_TESTING_SKIP_OPENOCD "Skip OpenOCD initialization during integration tests." OFF)
@@ -23,6 +38,9 @@ set(CMRX_ALL_OPTIONS
     CMRX_ARCH_SMP_SUPPORTED
     CMRX_OS_NUM_CORES
     CMRX_KERNEL_TRACING
+    CMRX_CUSTOM_FLASH_RANGE
+    CMRX_CUSTOM_FLASH_START
+    CMRX_CUSTOM_FLASH_SIZE
     OS_STACK_SIZE
     OS_THREADS
     OS_PROCESSES
