@@ -73,6 +73,27 @@
  */
 #cmakedefine CMRX_RPC_CANARY
 
+/** Enable / disable use of faster hashing function.
+ * Normally a Prospector mixer is used to hash keys in hash tables. For MCUs
+ * with really poor multiplication performance a simpler minimalistich mixer
+ * can be used to hash keys to avoid one multiplication and speed up
+ * hash-based lookups.
+ */
+
+#cmakedefine CMRX_USE_FAST_HASH
+
+/** Enable / disable prefixing system call API with `cmrx_`.
+ * If enabled, all system call entrypoints are renamed to begin with cmrx_, so
+ * notify_object becomes cmrx_notify_object. This is to support environments
+ * where functions with colliding names exist. If disabled, prefix is not applied.
+ * There is no functional change.
+ */
+#cmakedefine CMRX_VERBOSE_API_NAMES
+
+/** Enable / disable customized flash ranges.
+ * If this option is enabled then "flash" stard and end address can be supplied
+ * externally and it is not inferred from linker script.
+ */
 #cmakedefine CMRX_CUSTOM_FLASH_RANGE
 
 #ifdef CMRX_CUSTOM_FLASH_RANGE

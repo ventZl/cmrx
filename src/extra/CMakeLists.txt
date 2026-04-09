@@ -13,6 +13,10 @@ if (NOT UNIT_TESTING_BUILD)
     if (CMRX_STDLIB_USE_CMSIS_CORE)
         target_link_libraries(aux_ipi cmsis_core)
     endif()
+
+    set(phy_emu_SRCS emulator.c)
+    add_library(phy_emu STATIC EXCLUDE_FROM_ALL ${phy_emu_SRCS})
+    target_link_libraries(phy_emu PUBLIC stdlib)
 endif()
 
 add_subdirectory(queue_server)

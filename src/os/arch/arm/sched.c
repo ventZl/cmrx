@@ -26,25 +26,29 @@
 
 #include <cmrx/assert.h>
 
-/** Populate stack of new thread so it can be executed.
- * Populates stack of new thread so that it can be executed with no
- * other actions required. Returns the address where SP shall point to.
- * @param stack_id ID of stack to be populated
- * @param stack_size size of stack in 32-bit quantities
- * @param entrypoint address of thread entrypoint function
- * @param data address of data passed to the thread as its 1st argument
- * @returns Address to which the SP shall be set.
- */
-uint32_t * os_thread_populate_stack(int stack_id, unsigned stack_size, entrypoint_t * entrypoint, void * data)
+void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size, entrypoint_t * entrypoint, void * data)
 {
-    uint32_t * stack = os_stack_get(stack_id);
+    uint32_t * stack = os_stack_get(thread->stack_id);
     stack[stack_size - 8] = (unsigned long) data; // R0
     stack[stack_size - 3] = (unsigned long) os_thread_dispose; // LR
     stack[stack_size - 2] = (unsigned long) entrypoint; // PC
     stack[stack_size - 1] = 0x01000000; // xPSR
 
-    return &stack[stack_size - 16];
+    int rv = mpu_configure_region(OS_MPU_REGION_STACK, stack, sizeof(os_stacks.stacks[0]), MPU_RW, &thread->arch.mpu_stack);
+	ASSERT(rv == E_OK);
 
+    thread->sp = &stack[stack_size - 16];
+#if __FPU_USED
+	// By default, thread is restored into
+	// Thread mode, using PSP as a stack and
+	// without FPU
+#	if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+#	define EXC_RETURN_RES1 0xFFFF80UL
+	thread->arch.exc_return = EXC_RETURN_PREFIX | EXC_RETURN_RES1 | EXC_RETURN_DCRS | EXC_RETURN_FTYPE | EXC_RETURN_MODE | EXC_RETURN_SPSEL;
+#	else
+	thread->arch.exc_return = EXC_RETURN_THREAD_PSP;
+#	endif
+#endif
 }
 
 int os_process_create(Process_t process_id, const struct OS_process_definition_t * definition)
@@ -63,7 +67,7 @@ int os_process_create(Process_t process_id, const struct OS_process_definition_t
 	for (int q = 0; q < OS_TASK_MPU_REGIONS; ++q)
 	{
 		unsigned reg_size = (uint8_t *) definition->mpu_regions[q].end - (uint8_t *) definition->mpu_regions[q].start;
-		int rv = mpu_configure_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]._MPU_RBAR, &os_processes[process_id].mpu[q]._MPU_RASR);
+		int rv = mpu_configure_region(q, definition->mpu_regions[q].start, reg_size, MPU_RW, &os_processes[process_id].mpu[q]);
 		if (rv != E_OK)
 		{
 			os_processes[process_id].definition = NULL;
@@ -121,9 +125,6 @@ __attribute__((weak)) void cmrx_shutdown_handler(void)
  * this function will be that the processor leaves the handler mode, enters
  * privileged thread mode and will be using MSP.
  */
-/// @cond IGNORE
-__attribute__((noreturn))
-/// @endcond
 void os_kernel_shutdown()
 {
 	__set_CONTROL(0); // SPSEL = 0 | nPRIV = 0; use MSP and privileged thread mode

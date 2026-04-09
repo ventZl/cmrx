@@ -14,6 +14,7 @@ include(cmake/CPM.cmake)
 include(cmake/options.cmake)
 include(cmake/unit_test_build.cmake)
 include(cmake/clang-tidy.cmake)
+include(cmake/testing.cmake)
 
 CPMAddPackage(
     NAME ctest
@@ -27,7 +28,8 @@ include_directories(${CMAKE_BINARY_DIR})
 add_definitions(-Wall -Wextra)
 set(CMAKE_C_STANDARD 11)
 
-if (NOT UNIT_TESTING_BUILD AND NOT BUILD_TESTING)
+if (NOT UNIT_TESTING_BUILD)
+    # This is a normal target build
     if (NOT CMRX_ARCH)
         message(FATAL_ERROR "Target architecture not defined!")
     endif()

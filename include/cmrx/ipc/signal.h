@@ -2,10 +2,22 @@
 
 #include <stdint.h>
 #include <arch/sysenter.h>
+#include <cmrx/api.h>
 
 /** @defgroup api_signal Signals
  * @ingroup api
  * API for sending signals and handling incoming signals.
+ *
+ * @warning Not intended for new applications.
+ *
+ * @note This mechanism is deprecated for delivery of user-generated custom signals.
+ * As signal delivery is possible inside RPC call, doing so breaches client-server
+ * separation. Users needing synchronization mechanism should migrate to
+ * @ref notify_object / @ref wait_for_object API instead. This provides synchronous
+ * notification delivery.
+ * In the future, signals will only be usable for processing of system-defined
+ * signals and, such as signals to manage thread execution (stop, continue) and to
+ * signal exceptional behavior.
  *
  * Threads can send signals asynchronously to each other. Kernel provides
  * mechanism to register signal handler, which gets executed whenever thread
@@ -39,7 +51,11 @@
  * @param sighandler address of function which handles the signal
  * @returns 0. Mostly.
  */
-__SYSCALL int signal(int signo, void (*sighandler)(uint32_t));
+__SYSCALL int CMRX_API(signal_handler)(int signo, void (*sighandler)(uint32_t));
+
+/** Alias for @ref signal_handler
+ */
+__SYSCALL int CMRX_API(signal)(int signo, void (*sighandler)(uint32_t));
 
 /** Send thread a signal.
  *
@@ -48,6 +64,15 @@ __SYSCALL int signal(int signo, void (*sighandler)(uint32_t));
  * @param signal signal number
  * @returns 0. Mostly.
  */
-__SYSCALL int kill(int thread, uint32_t signal);
+__SYSCALL int CMRX_API(send_signal)(int thread, uint32_t signal);
+
+/** Alias for @ref send_signal
+ */
+__SYSCALL int __attribute__((weak)) CMRX_API(kill)(int thread, uint32_t signal);
+
+#ifdef CMRX_VERBOSE_API_NAMES
+#define kill CMRX_API(kill)
+#define signal CMRX_API(signal)
+#endif
 
 /** @} */

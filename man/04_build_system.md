@@ -22,9 +22,23 @@ CMRX kernel can be configured during the compile time. To do so, define any of t
 CMRX_UNIT_TESTS
 ---------------
 
-Default: ON (Windows: OFF)
+Default: OFF
 
 If enabled, CMRX kernel will automatically build unit test suite for the kernel. This requires the presence of GCC toolchain for the host machine.
+
+CMRX_HIL_TESTS
+--------------
+
+Default: OFF
+
+If enabled, calls of `add_hil_test` function from your CMakeLists.txt will add automatic tests using HIL tester infrastructure. With this option disabled, calls to `add_hil_tests` do nothing.
+
+CMRX_INTEGRATION_TESTS
+----------------------
+
+Default: OFF
+
+If enabled, will activate HIL tests (setting `CMRX_HIL_TESTS` to `ON`) and add set of kernel HW-SW integration tests.
 
 CMRX_KERNEL_TRACING
 -------------------

@@ -27,7 +27,12 @@
 
 void rpc_return(void);
 
-int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
+/* To verify that we are using the right type and compiler won't cull
+ * our data.
+ */
+_Static_assert(sizeof(unsigned long) == sizeof(void *), "Unsigned long type size differs from architecture pointer size.");
+
+int os_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3)
 {
     (void) arg0;
     (void) arg1;
@@ -42,7 +47,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	ExceptionFrame * local_frame = (ExceptionFrame *) __get_PSP();
 	sanitize_psp((uint32_t *) local_frame);
 	RPC_Service_t * service = (RPC_Service_t *) get_exception_argument(local_frame, 4, fpu_used);
-	VTable_t * vtable = service->vtable;
+	VTable_t vtable = service->vtable;
 
 	Process_t process_id = get_vtable_process(vtable);
 	if (process_id == E_VTABLE_UNKNOWN)
@@ -58,7 +63,7 @@ int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	mpu_load((const MPU_State *) &os_processes[process_id].mpu, 0, MPU_HOSTED_STATE_SIZE);
 
 	unsigned method_id = get_exception_argument(local_frame, 5, fpu_used);
-	RPC_Method_t * method = vtable[method_id];
+	RPC_Method_t method = vtable[method_id];
 
 #ifdef CMRX_RPC_CANARY
 	unsigned canary = get_exception_argument(local_frame, 6, fpu_used);
@@ -130,7 +135,7 @@ int os_rpc_return(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
 	// from the RPC call
 	const uint32_t saved_exc_return = get_exception_argument(local_frame, 0, fpu_used);
 	os_threads[current_thread].arch.exc_return = saved_exc_return;
-	ASSERT(saved_exc_return == EXC_RETURN_THREAD_PSP || saved_exc_return == EXC_RETURN_THREAD_PSP_FPU);
+	ASSERT(cortex_is_thread_psp_used(saved_exc_return));
 	bool orig_fpu_used = os_is_thread_using_fpu(current_thread);
 	if (fpu_used & !orig_fpu_used)
 	{

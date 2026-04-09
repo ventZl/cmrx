@@ -37,3 +37,15 @@ endif()
 
 add_test(NAME test_kernel COMMAND test_kernel)
 
+set(test_algo_SRCS
+    algo_data.c
+    algo_binary_search.c
+    algo_insert_sort.c
+    algo_hash_search.c
+    algo_bitmap.c
+    )
+
+add_executable(test_algo ${test_algo_SRCS})
+target_link_libraries(test_algo ctest)
+
+add_test(NAME test_algo COMMAND test_algo)

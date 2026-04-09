@@ -48,7 +48,7 @@ typedef uint8_t Txn_t;
  * overhead nor stall / corruption risk.
  * @return transaction ID
  */
-Txn_t os_txn_start();
+Txn_t os_txn_start(void);
 
 /** Try to commit the transaction.
  * This function will try to enter the critical section so that the code running 
@@ -81,14 +81,14 @@ int os_txn_commit(Txn_t transaction, enum TxnType type);
  * changes are written.
  * @returns E_OK as this action never fails.
  */
-int os_txn_start_commit();
+int os_txn_start_commit(void);
 
 /** Finish the transaction commit.
  * This function will leave the critical section related to the transaction.
  * This function has to be called for read-write transaction after all the data changes
  * in the transaction were commited.
  */
-void os_txn_done();
+void os_txn_done(void);
 
 /** Implementation of txn_start syscall.
  * This function performs some additional argument checking.

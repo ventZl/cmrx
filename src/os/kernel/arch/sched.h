@@ -6,16 +6,19 @@
 #include <kernel/runtime.h>
 #include <stdint.h>
 
-/** Populate stack of new thread so it can be executed.
- * Populates stack of new thread so that it can be executed with no
- * other actions required. Returns the address where SP shall point to.
- * @param stack_id ID of stack to be populated
+/** Perform architecture-specific thread initialization
+ * This function should perform the following actions:
+ * - Configure thread state so it can be executed immediately after this function is done
+ * - Set valid value into SP member, so the stack pointer can be set to valid value
+ * - Perform any architecture-specific steps needed to make thread executable
+ * - Set any architecture-specific settings
+ * @param thread pointer to structure describing the thread just being created
  * @param stack_size size of stack in 32-bit quantities
  * @param entrypoint address of thread entrypoint function
  * @param data address of data passed to the thread as its 1st argument
  * @returns Address to which the SP shall be set.
  */
-uint32_t * os_thread_populate_stack(int stack_id, unsigned stack_size, entrypoint_t * entrypoint, void * data);
+void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size, entrypoint_t * entrypoint, void * data);
 
 /** Create process using process definition.
  * Takes process definition and initializes MPU regions for process out of it.
@@ -47,7 +50,7 @@ __attribute__((noreturn)) void os_boot_thread(Thread_t boot_thread);
  * This is a point of no return. Code here is free to destroy any previous
  * context.
  */
-__attribute__((noreturn)) void os_kernel_shutdown();
+void os_kernel_shutdown();
 
 /** Reset the CPU.
  * This is architecture- (and possibly HAL-) specific way to reset the CPU.

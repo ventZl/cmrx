@@ -31,7 +31,7 @@ typedef struct RPC_Service_t_ RPC_Service_t;
  * @param arg2 optional argument to RPC call. Can only be of integral 32-bit large type
  * @param arg3 optional argument to RPC call. Can only be of integral 32-bit large type
  */
-typedef int (*RPC_Method_t)(RPC_Service_t * service, unsigned arg0, unsigned arg1, unsigned arg2, unsigned arg3);
+typedef int (*RPC_Method_t)(RPC_Service_t * service, unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long zarg3);
 
 /** Type definition of VTable.
  * VTable is technically just an array of pointers to functions.
@@ -39,7 +39,7 @@ typedef int (*RPC_Method_t)(RPC_Service_t * service, unsigned arg0, unsigned arg
  * usually a structures whose members are pointers to functions. The memory
  * layout of both cases is the same but structures allows for named members.
  */
-typedef RPC_Method_t * VTable_t ;
+typedef RPC_Method_t * VTable_t;
 
 /** Basic structure of any RPC object.
  * The RPC API requires, that the first member of any RPC callable service
@@ -52,7 +52,7 @@ struct RPC_Service_t_ {
     /** Address of the VTable which contains pointers to functions that
      * implement this service.
      */
-	VTable_t * vtable;
+	VTable_t vtable;
 };
 
 /** Identify process which owns the VTable.
@@ -61,7 +61,7 @@ struct RPC_Service_t_ {
  * @returns process ID of the owning process or @ref E_VTABLE_UNKNOWN 
  * if vtable address does not belong to any known process.
  */
-Process_t get_vtable_process(VTable_t * vtable);
+Process_t get_vtable_process(VTable_t vtable);
 
 /** Add new process ID to the stack of RPC calls.
  * Registers new process ID in thread's stack of RPC call owning processes.
@@ -97,7 +97,7 @@ Process_t rpc_stack_top();
  * jumping into this method. Arguments used to call _rpc_call() are passed to
  * callee.
  */
-int os_rpc_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3);
+int os_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3);
 
 /** Kernel implementation of rpc_return syscall.
  *

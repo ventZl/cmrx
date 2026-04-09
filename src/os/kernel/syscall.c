@@ -6,6 +6,7 @@
 #include "syscall.h"
 #include <cmrx/assert.h>
 #include <arch/sysenter.h>
+#include <arch/syscall.h>
 
 #include "rpc.h"
 #include "sched.h"
@@ -28,10 +29,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-function-type"
 
-extern struct Syscall_Entry_t __syscall_start;
-extern struct Syscall_Entry_t __syscall_end;
-
-static SYSCALL_DEFINITION struct Syscall_Entry_t syscalls[] = {
+REGISTER_SYSCALLS(
 	{ SYSCALL_GET_TID, (Syscall_Handler_t) &os_get_current_thread },
 	{ SYSCALL_SCHED_YIELD, (Syscall_Handler_t) &os_sched_yield },
 	{ SYSCALL_RPC_CALL, (Syscall_Handler_t) &os_rpc_call },
@@ -51,17 +49,33 @@ static SYSCALL_DEFINITION struct Syscall_Entry_t syscalls[] = {
 	{ SYSCALL_GET_MICROTIME, (Syscall_Handler_t) &os_get_micro_time },
 	{ SYSCALL_SHUTDOWN, (Syscall_Handler_t) &os_shutdown },
 	{ SYSCALL_NOTIFY_OBJECT2, (Syscall_Handler_t) &os_sys_notify_object2 },
-	{ SYSCALL_WAIT_FOR_OBJECT_VALUE, (Syscall_Handler_t) &os_sys_wait_for_object_value },
-};
+	{ SYSCALL_WAIT_FOR_OBJECT_VALUE, (Syscall_Handler_t) &os_sys_wait_for_object_value }
+);
 
 #pragma GCC diagnostic pop
 
-int os_system_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3, uint8_t syscall_id)
+static struct Syscall_Entry_t os_syscall_cache[_SYSCALL_COUNT];
+
+int os_system_call_init(void)
 {
-	for (struct Syscall_Entry_t * syscall = &__syscall_start; syscall < &__syscall_end; ++syscall)
+	for (unsigned q = 0; q < _SYSCALL_COUNT; ++q)
 	{
-		if (syscall->id == syscall_id)
-		{
+		os_syscall_cache[q].id = 0xFF;
+	}
+	for (struct Syscall_Entry_t * syscall = os_syscalls_start(); syscall < os_syscalls_end(); ++syscall)
+	{
+		os_syscall_cache[syscall->id] = *syscall;
+	}
+
+	return E_OK;
+}
+
+int os_system_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsigned long arg3, uint8_t syscall_id)
+{
+	if (syscall_id < _SYSCALL_COUNT)
+	{
+		struct Syscall_Entry_t * syscall = &os_syscall_cache[syscall_id];
+		if (syscall->id == syscall_id) {
 			uint32_t rv = syscall->handler(arg0, arg1, arg2, arg3);
 			return rv; /*asm volatile("BX lr");*/
 		}

@@ -10,6 +10,7 @@
 #include "runtime.h"
 #include "sched.h"
 #include "txn.h"
+#include "syscall.h"
 #include <stdbool.h>
 #include <cmrx/assert.h>
 #include "arch/static.h"
@@ -113,7 +114,7 @@ int os_sched_yield(void)
 	uint8_t candidate_thread;
 
 //	os_sched_timed_event();
-    uint8_t txn_id = os_txn_start();
+    Txn_t txn_id = os_txn_start();
 
     struct OS_core_state_t * core_state = &core[coreid()];
 
@@ -158,25 +159,16 @@ void os_sched_timed_event(void)
  */
 long os_sched_timing_callback(long delay_us)
 {
-//	ASSERT(__get_LR() == (void *) 0xFFFFFFFD);
 	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
-/*	unsigned long * psp;
-	psp = (uint32_t *) __get_PSP();
-	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);*/
 
-//	was: sched_microtime += sched_tick_increment;
+	os_run_timer(sched_microtime, delay_us);
+
     sched_microtime += delay_us;
 
-/*	if (sched_timer_event_enabled &&
-			sched_timer_event == sched_microtime)
-	{*/
-	os_run_timer(sched_microtime);
-
-//}
 	os_sched_yield();
 
-//	os_sched_timed_event();
-	unsigned rt = 0;
+#ifndef NDEBUG
+    unsigned rt = 0;
 	for (int q = 0; q < OS_THREADS; ++q)
 	{
 		if (os_threads[q].state == THREAD_STATE_RUNNING && os_threads[q].core_id == coreid())
@@ -184,11 +176,8 @@ long os_sched_timing_callback(long delay_us)
 	}
 
 	ASSERT(rt == 1);
+#endif
 	ASSERT(os_threads[core[coreid()].thread_current].state == THREAD_STATE_RUNNING);
-/*	psp = (uint32_t *) __get_PSP();
-	ASSERT(&os_stacks.stacks[0][0] <= psp && psp <= &os_stacks.stacks[OS_STACKS][OS_STACK_DWORD]);
-	__DSB();
-	__ISB();*/
     return 1;
 }
 
@@ -243,7 +232,7 @@ int os_stack_create()
 	uint32_t stack_mask = 1;
     int rv = STACK_INVALID;
 
-    uint8_t txn_id = os_txn_start();
+    Txn_t txn_id = os_txn_start();
 
 	for(int q = 0; q < OS_STACKS; ++q)
 	{
@@ -460,8 +449,6 @@ int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data
 	uint8_t thread_id = os_thread_alloc(process, priority);
     if (thread_id < OS_THREADS)
     {
-        os_thread_initialize_arch(&os_threads[thread_id]);
-        os_thread_initialize_platform(&os_threads[thread_id]);
     	os_thread_construct(thread_id, entrypoint, data, core);
     }
     ASSERT(thread_id < OS_THREADS);
@@ -479,7 +466,8 @@ int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, ui
 			if (stack_id != 0xFFFFFFFF)
 			{
 				new_thread->stack_id = stack_id;
-                new_thread->sp = os_thread_populate_stack(stack_id, OS_STACK_DWORD, entrypoint, data);
+                os_thread_initialize_arch(new_thread, OS_STACK_DWORD, entrypoint, data);
+                os_thread_initialize_platform(&os_threads[thread_id]);
                 new_thread->core_id = core_id;
 
 				new_thread->state = THREAD_STATE_READY;
@@ -550,6 +538,7 @@ int os_thread_create(entrypoint_t * entrypoint, void * data, uint8_t priority)
 
 void _os_start(uint8_t start_core)
 {
+    os_system_call_init();
     volatile Thread_t created_threads[8];
     volatile unsigned cursor = 0;
     for (int q = 0; q < 8; ++q) {
@@ -577,7 +566,8 @@ void _os_start(uint8_t start_core)
 
 	for (unsigned q = 0; q < applications; ++q)
 	{
-		ASSERT(os_process_create(q, &app_definition[q]) == E_OK);
+        int ret_val = os_process_create(q, &app_definition[q]);
+		ASSERT(ret_val == E_OK);
 	}
 
 	for (unsigned q = 0; q < threads; ++q)
@@ -637,6 +627,8 @@ uint32_t os_shutdown(void)
     os_memory_protection_stop();
 
     os_kernel_shutdown();
+
+    __builtin_unreachable();
 }
 
 struct OS_thread_t * os_thread_get(Thread_t thread_id)

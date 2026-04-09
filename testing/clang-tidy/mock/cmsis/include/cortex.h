@@ -30,7 +30,7 @@ void __WFI()
 
 typedef struct {
     volatile uint32_t AIRCR;
-#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M__
+#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M_MAIN__ || defined __ARM_ARCH_8M_BASE__
     volatile uint32_t CFSR;
 #endif
     volatile uint32_t ICSR;
@@ -59,7 +59,7 @@ extern SCB_Type * SCB;
 #define SCB_ICSR_PENDSVCLR_Pos             27U
 #define SCB_ICSR_PENDSVCLR_Msk             (1UL << SCB_ICSR_PENDSVCLR_Pos)
 
-#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M__
+#if defined __ARM_ARCH_7M__ || defined __ARM_ARCH_8M_MAIN__ || defined __ARM_ARCH_8M_BASE__
 
 #define SCB_CFSR_IACCVIOL_Pos              (SCB_CFSR_MEMFAULTSR_Pos + 0U)
 #define SCB_CFSR_IACCVIOL_Msk              (1UL)
@@ -75,11 +75,25 @@ extern SCB_Type * SCB;
 
 #endif
 
+#if defined __ARM_ARCH_8M_MAIN__ || defined __ARM_ARCH_8M_BASE__
+
+#define MPU_RBAR_BASE_Pos                   5U
+#define MPU_RBAR_BASE_Msk                  (0x7FFFFFFUL << MPU_RBAR_BASE_Pos)
+
+#endif
+
 typedef struct {
     volatile uint32_t CTRL;
-    volatile uint32_t RASR;
-    volatile uint32_t RBAR;
+    volatile uint32_t TYPE;
     volatile uint32_t RNR;
+    volatile uint32_t RBAR;
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+    volatile uint32_t RLAR;   /* ARMv8M: Region Limit Address Register */
+    volatile uint32_t MAIR0;  /* ARMv8M: Memory Attribute Indirection Register 0 */
+    volatile uint32_t MAIR1;  /* ARMv8M: Memory Attribute Indirection Register 1 */
+#else
+    volatile uint32_t RASR;   /* ARMv6M/ARMv7M: Region Attribute and Size Register */
+#endif
 } MPU_Type;
 
 extern MPU_Type * MPU;
@@ -156,5 +170,50 @@ extern MPU_Type * MPU;
 #define ARM_MPU_AP_PRO  5U
 #define ARM_MPU_AP_RO   6U
 
-#define EXC_RETURN_THREAD_PSP 0xFFFFFFFE
+/* ARMv8M MPU RLAR register fields */
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+
+#define MPU_RLAR_LIMIT_Pos                  5U
+#define MPU_RLAR_LIMIT_Msk                 (0x7FFFFFFUL << MPU_RLAR_LIMIT_Pos)
+
+#define MPU_RLAR_AttrIndx_Pos               1U
+#define MPU_RLAR_AttrIndx_Msk              (0x7UL << MPU_RLAR_AttrIndx_Pos)
+
+#define MPU_RLAR_EN_Pos                     0U
+#define MPU_RLAR_EN_Msk                    (1UL)
+
+/* ARMv8M MPU RBAR additional fields (beyond base address) */
+#define MPU_RBAR_XN_Pos                     0U
+#define MPU_RBAR_XN_Msk                    (1UL)
+
+#define MPU_RBAR_AP_Pos                     1U
+#define MPU_RBAR_AP_Msk                    (0x3UL << MPU_RBAR_AP_Pos)
+
+#define MPU_RBAR_SH_Pos                     3U
+#define MPU_RBAR_SH_Msk                    (0x3UL << MPU_RBAR_SH_Pos)
+
+#undef MPU_RBAR_ADDR_Msk
+#define MPU_RBAR_ADDR_Pos                   5U
+#define MPU_RBAR_ADDR_Msk                  (0x7FFFFFFUL << MPU_RBAR_ADDR_Pos)
+
+#endif
+
+/* ARMv8M: EXC_RETURN bit masks for evaluating LR (from CMSIS core_cm33.h) */
+#if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+
+#define EXC_RETURN_PREFIX          (0xFF000000UL)     /* bits [31:24] set to indicate an EXC_RETURN value                     */
+#define EXC_RETURN_S               (0x00000040UL)     /* bit [6] stack used to push registers: 0=Non-secure 1=Secure          */
+#define EXC_RETURN_DCRS            (0x00000020UL)     /* bit [5] stacking rules for called registers: 0=skipped 1=saved       */
+#define EXC_RETURN_FTYPE           (0x00000010UL)     /* bit [4] allocate stack for floating-point context: 0=done 1=skipped  */
+#define EXC_RETURN_MODE            (0x00000008UL)     /* bit [3] processor mode for return: 0=Handler mode 1=Thread mode      */
+#define EXC_RETURN_SPSEL           (0x00000004UL)     /* bit [2] stack pointer used to restore context: 0=MSP 1=PSP           */
+#define EXC_RETURN_ES              (0x00000001UL)     /* bit [0] security state exception was taken to: 0=Non-secure 1=Secure */
+
+#else
+
+/* ARMv6M/ARMv7M: Specific EXC_RETURN constants (from CMSIS core_cm4.h) */
+#define EXC_RETURN_THREAD_PSP      (0xFFFFFFFDUL)
+#define EXC_RETURN_THREAD_PSP_FPU  (0xFFFFFFEDUL)
+
+#endif
 

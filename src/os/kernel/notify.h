@@ -52,7 +52,7 @@ enum EventTypes {
  * This will initialize internal notification buffers to the default
  * unused state.
  */
-void os_notify_init();
+void os_notify_init(void);
 
 /** Notify specific thread waiting for object
  * Delivers notification to a specific thread.

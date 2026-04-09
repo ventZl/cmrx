@@ -92,3 +92,61 @@ jobs:
 
      - name: Run Static Analysis
        run: cmake --build static_analysis -- clang-tidy
+
+  clang-tidy-v8m-baseline:
+    name: Clang-Tidy ARMv8M-Baseline
+    runs-on: ubuntu-latest
+    steps:
+     - name: Install development packages
+       run: |
+          sudo apt-get update
+          sudo apt-get install -y libnewlib-dev
+
+     - name: Checkout
+       uses: actions/checkout@v4.1.6
+       with:
+        submodules: 'true'
+
+     - name: Configure the Build
+       uses: threeal/cmake-action@main
+       with:
+        c-compiler: clang
+        run-build: false
+        build-dir: static_analysis
+        source-dir: testing/clang-tidy
+        options: |
+          CMRX_TARGET_PLATFORM=ARMv8M-Baseline
+          CMRX_UNIT_TESTS=OFF
+          CMRX_CLANG_TIDY_LIBC_PATH=/usr/include/newlib
+
+     - name: Run Static Analysis
+       run: cmake --build static_analysis -- clang-tidy
+
+  clang-tidy-v8m-mainline:
+    name: Clang-Tidy ARMv8M-Mainline
+    runs-on: ubuntu-latest
+    steps:
+     - name: Install development packages
+       run: |
+          sudo apt-get update
+          sudo apt-get install -y libnewlib-dev
+
+     - name: Checkout
+       uses: actions/checkout@v4.1.6
+       with:
+        submodules: 'true'
+
+     - name: Configure the Build
+       uses: threeal/cmake-action@main
+       with:
+        c-compiler: clang
+        run-build: false
+        build-dir: static_analysis
+        source-dir: testing/clang-tidy
+        options: |
+          CMRX_TARGET_PLATFORM=ARMv8M-Mainline
+          CMRX_UNIT_TESTS=OFF
+          CMRX_CLANG_TIDY_LIBC_PATH=/usr/include/newlib
+
+     - name: Run Static Analysis
+       run: cmake --build static_analysis -- clang-tidy
