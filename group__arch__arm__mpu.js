@@ -3,7 +3,9 @@ var group__arch__arm__mpu =
     [ "MPU region names", "group__mpu__region__names.html", "group__mpu__region__names" ],
     [ "MPU_Registers", "structMPU__Registers.html", [
       [ "_MPU_RASR", "structMPU__Registers.html#a824d742b9c1c57e63a46743ebfc26343", null ],
-      [ "_MPU_RBAR", "structMPU__Registers.html#af192544722f6e65244f494cdbf934a49", null ]
+      [ "_MPU_RBAR", "structMPU__Registers.html#af192544722f6e65244f494cdbf934a49", null ],
+      [ "REG1", "structMPU__Registers.html#a1743318dffbc94c876f6726ae2c8b46c", null ],
+      [ "REG2", "structMPU__Registers.html#a0668dd1313f2045221b5e32512cd21c2", null ]
     ] ],
     [ "MPU_State", "group__arch__arm__mpu.html#ga8fdd1416c938c54f8e1e9fca4b9f139a", null ],
     [ "__mpu_expand_class", "group__arch__arm__mpu.html#ga4e796735b3c15d3a8bb3e8f7c72bf746", null ],

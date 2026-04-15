@@ -558,6 +558,7 @@ Port implementation sources</h1>
         <tr>
           <td class="memname">void os_kernel_shutdown </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -936,7 +937,18 @@ Port implementation sources</h1>
 <dl class="section return"><dt>Returns</dt><dd>Address to which the SP shall be set.</dd></dl>
 Perform architecture-specific thread initialization This function should perform the following actions:</li>
 </ul>
-<p>This will initialize facilities for thread synchronization. Here we will create pipe pair used to block the thread on external request and the Linux thread is created for the CMRX thread. </p>
+<p>This will initialize facilities for thread synchronization. Here we will create pipe pair used to block the thread on external request and the Linux thread is created for the CMRX thread.</p>
+<p>Perform architecture-specific thread initialization This function should perform the following actions:</p>
+<p>Perform platform-specific initialization of thread.</p>
+<p>Populates the stack of the thread with the initial values. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">thread</td><td>pointer to the thread to initialize </td></tr>
+    <tr><td class="paramname">stack_size</td><td>size of the stack </td></tr>
+    <tr><td class="paramname">entrypoint</td><td>address of the entrypoint </td></tr>
+    <tr><td class="paramname">data</td><td>pointer to the data </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

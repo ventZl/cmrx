@@ -5,7 +5,7 @@ var searchData=
   ['machine_2',['Abstract machine',['../group__arch__arch.html',1,'']]],
   ['management_3',['IRQ management',['../group__api__irq.html',1,'']]],
   ['memory_4',['Shared memory',['../group__api__shared.html',1,'']]],
-  ['memory_20protection_5',['memory protection',['../group__os__mpu.html',1,'Memory protection'],['../group__arch__arm__mpu.html',1,'Memory protection'],['../group__arch__arm__nvic.html',1,'Memory protection']]],
+  ['memory_20protection_5',['memory protection',['../group__arch__arm__nvic.html',1,'Memory protection'],['../group__os__mpu.html',1,'Memory protection'],['../group__arch__arm__mpu.html',1,'Memory protection']]],
   ['mpu_20ctrl_20fields_6',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
   ['mpu_20rasr_20fields_20armv6m_20armv7m_7',['ARM MPU RASR fields (ARMv6M/ARMv7M)',['../group__arm__mpu__rars.html',1,'']]],
   ['mpu_20rbar_20fields_8',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],

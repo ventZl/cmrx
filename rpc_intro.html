@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('rpc_intro.html',''); initResizable(); 
 <div class="contents">
 <div class="textblock"><p>Remote procedure calls are one of few existing ways of communicating between processes. While threads can use mutexes (as all threads of same process have access to same memory and therefore to same mutexes), threads of different processes can't all access the same memory regions all the time.</p>
 <p>Remote procedure calling has, as pretty much any IPC mechanism two ends. The callee end and the caller end. Callee end is the end which ends up being called as a result of RPC and we will call it "server" in further text. Caller is the one, who will perform the call, once it decides it is right time to do so. We will call it "client" for short.</p>
-<h2><a class="anchor" id="autotoc_md39"></a>
+<h2><a class="anchor" id="autotoc_md40"></a>
 High level design of RPC mechanism</h2>
 <p>From high level perspective, RPC interface works in a way similar to C++ objects. Server process can declare one or more services, which are composed of methods. Methods are callable via the instance of the service.</p>
 <div class="dotgraph">
@@ -184,7 +184,7 @@ Define service implementation</h2>
 <li>Only RPC services, which were intentionally provided as such, can be used to perform legitimate RPC call. No random data put together which resemble pointer-to-function array can be used as a RPC service.</li>
 <li>Presence of VTABLE address in some particular process' VTABLE region established relationship between RPC service and owning process. This is also important from memory protection perspective, as it allows kernel to determine, how to set up memory protection during the RPC call.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md53"></a>
+<h2><a class="anchor" id="autotoc_md54"></a>
 Calling RPC service</h2>
 <p>Once RPC service has been established having its own implementation it is possible to perform calls of this service. Service instance lives in the address space of the process, which instantiated it. It is not possible to place the service instance into some globally-accessible place as no such space exists. It is not even needed. All that any potential caller needs is the address of the service. Call of this service can then be performed using the following code:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> retval = <a class="code hl_define" href="group__api__rpc.html#ga896b17abf6ce670f5000ac4a0852393f">rpc_call</a>(service_ptr, method_2, 0x42, 0xF00F);</div>

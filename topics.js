@@ -8,5 +8,6 @@ var topics =
     [ "Kernel documentation", "group__os.html", "group__os" ],
     [ "Kernel runtime configuration", "group__os__config.html", "group__os__config" ],
     [ "Libraries", "group__libs.html", "group__libs" ],
+    [ "RISC-V Exception Frame", "group__arch__riscv__exception__frame.html", "group__arch__riscv__exception__frame" ],
     [ "Utilities", "group__util.html", "group__util" ]
 ];

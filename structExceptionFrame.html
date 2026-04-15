@@ -100,15 +100,77 @@ $(document).ready(function(){initNavTree('structExceptionFrame.html',''); initRe
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">ExceptionFrame Struct Reference<div class="ingroups"><a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__arm.html">ARM port</a> &raquo; <a class="el" href="group__arch__arm__cortex.html">Cortex-M support routines</a></div></div></div>
+  <div class="headertitle"><div class="title">ExceptionFrame Struct Reference<div class="ingroups"><a class="el" href="group__arch__riscv__exception__frame.html">RISC-V Exception Frame</a> &#124; <a class="el" href="group__os.html">Kernel documentation</a> &raquo; <a class="el" href="group__arch.html">Architecture support</a> &raquo; <a class="el" href="group__arch__arm.html">ARM port</a> &raquo; <a class="el" href="group__arch__arm__cortex.html">Cortex-M support routines</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Exception frame <em>without</em> FPU context saved.  
+<p>Full RISC-V trap context frame.  
  <a href="structExceptionFrame.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
+<tr class="memitem:ae14a84e3467338f959a2921e5f26c21a" id="r_ae14a84e3467338f959a2921e5f26c21a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#ae14a84e3467338f959a2921e5f26c21a">ra</a></td></tr>
+<tr class="separator:ae14a84e3467338f959a2921e5f26c21a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab082be153705a13eda018c963e447263" id="r_ab082be153705a13eda018c963e447263"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#ab082be153705a13eda018c963e447263">t0</a></td></tr>
+<tr class="separator:ab082be153705a13eda018c963e447263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b7e10284976f029d37468bb69ac37c9" id="r_a8b7e10284976f029d37468bb69ac37c9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a8b7e10284976f029d37468bb69ac37c9">t1</a></td></tr>
+<tr class="separator:a8b7e10284976f029d37468bb69ac37c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00e9543a40f24b859cfba29a59a0d130" id="r_a00e9543a40f24b859cfba29a59a0d130"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a00e9543a40f24b859cfba29a59a0d130">t2</a></td></tr>
+<tr class="separator:a00e9543a40f24b859cfba29a59a0d130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa01f76feec8447af4446d8719b6af0fa" id="r_aa01f76feec8447af4446d8719b6af0fa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#aa01f76feec8447af4446d8719b6af0fa">a0</a></td></tr>
+<tr class="separator:aa01f76feec8447af4446d8719b6af0fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a022b14e153c588c60064ee7cab5b4bda" id="r_a022b14e153c588c60064ee7cab5b4bda"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a022b14e153c588c60064ee7cab5b4bda">a1</a></td></tr>
+<tr class="separator:a022b14e153c588c60064ee7cab5b4bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a995797f81a769ee6dbc922e3d2649185" id="r_a995797f81a769ee6dbc922e3d2649185"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a995797f81a769ee6dbc922e3d2649185">a2</a></td></tr>
+<tr class="separator:a995797f81a769ee6dbc922e3d2649185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd9c6478d69deda68a90426102747def" id="r_abd9c6478d69deda68a90426102747def"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#abd9c6478d69deda68a90426102747def">a3</a></td></tr>
+<tr class="separator:abd9c6478d69deda68a90426102747def"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6adfe0fc56a6e8cd434805bdbf2962ad" id="r_a6adfe0fc56a6e8cd434805bdbf2962ad"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a6adfe0fc56a6e8cd434805bdbf2962ad">a4</a></td></tr>
+<tr class="separator:a6adfe0fc56a6e8cd434805bdbf2962ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af401b067782c2c1130cddbdca255c5e9" id="r_af401b067782c2c1130cddbdca255c5e9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#af401b067782c2c1130cddbdca255c5e9">a5</a></td></tr>
+<tr class="separator:af401b067782c2c1130cddbdca255c5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e47d77324ab67fdbbf6774af73e981" id="r_a62e47d77324ab67fdbbf6774af73e981"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a62e47d77324ab67fdbbf6774af73e981">a6</a></td></tr>
+<tr class="separator:a62e47d77324ab67fdbbf6774af73e981"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaea0ed11b69ec233bafebe0cbf41ac1e" id="r_aaea0ed11b69ec233bafebe0cbf41ac1e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#aaea0ed11b69ec233bafebe0cbf41ac1e">a7</a></td></tr>
+<tr class="separator:aaea0ed11b69ec233bafebe0cbf41ac1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ae1466cd34bca9afcbafa6545df0147" id="r_a9ae1466cd34bca9afcbafa6545df0147"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a9ae1466cd34bca9afcbafa6545df0147">t3</a></td></tr>
+<tr class="separator:a9ae1466cd34bca9afcbafa6545df0147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a579f0dd893ab958dd168059903c4897c" id="r_a579f0dd893ab958dd168059903c4897c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a579f0dd893ab958dd168059903c4897c">t4</a></td></tr>
+<tr class="separator:a579f0dd893ab958dd168059903c4897c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefda25a95c6415c467b423a35bf2e6fe" id="r_aefda25a95c6415c467b423a35bf2e6fe"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#aefda25a95c6415c467b423a35bf2e6fe">t5</a></td></tr>
+<tr class="separator:aefda25a95c6415c467b423a35bf2e6fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8980476bb6a9d08d5779c2d53af38889" id="r_a8980476bb6a9d08d5779c2d53af38889"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a8980476bb6a9d08d5779c2d53af38889">t6</a></td></tr>
+<tr class="separator:a8980476bb6a9d08d5779c2d53af38889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ed701b36d7613b5854cc208d3d083a" id="r_a35ed701b36d7613b5854cc208d3d083a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a35ed701b36d7613b5854cc208d3d083a">s0</a></td></tr>
+<tr class="separator:a35ed701b36d7613b5854cc208d3d083a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a2419c79fae1fa0e699db84c36e9ecb" id="r_a8a2419c79fae1fa0e699db84c36e9ecb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a8a2419c79fae1fa0e699db84c36e9ecb">s1</a></td></tr>
+<tr class="separator:a8a2419c79fae1fa0e699db84c36e9ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c5a8be5d5fce1acab1be9ca45536396" id="r_a0c5a8be5d5fce1acab1be9ca45536396"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a0c5a8be5d5fce1acab1be9ca45536396">s2</a></td></tr>
+<tr class="separator:a0c5a8be5d5fce1acab1be9ca45536396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afab5ea6103b3c1cf7a180559919bbf82" id="r_afab5ea6103b3c1cf7a180559919bbf82"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#afab5ea6103b3c1cf7a180559919bbf82">s3</a></td></tr>
+<tr class="separator:afab5ea6103b3c1cf7a180559919bbf82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2e5aec3b3406de886a07910bbf4f851" id="r_ac2e5aec3b3406de886a07910bbf4f851"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#ac2e5aec3b3406de886a07910bbf4f851">s4</a></td></tr>
+<tr class="separator:ac2e5aec3b3406de886a07910bbf4f851"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2149bfc3d837a421a9822f77cce95957" id="r_a2149bfc3d837a421a9822f77cce95957"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a2149bfc3d837a421a9822f77cce95957">s5</a></td></tr>
+<tr class="separator:a2149bfc3d837a421a9822f77cce95957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d29d2d725d6513f9ebdaa85711ca507" id="r_a3d29d2d725d6513f9ebdaa85711ca507"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a3d29d2d725d6513f9ebdaa85711ca507">s6</a></td></tr>
+<tr class="separator:a3d29d2d725d6513f9ebdaa85711ca507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca8dd4883d6e79ad4f81ad228d02415" id="r_afca8dd4883d6e79ad4f81ad228d02415"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#afca8dd4883d6e79ad4f81ad228d02415">s7</a></td></tr>
+<tr class="separator:afca8dd4883d6e79ad4f81ad228d02415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9578e928a6d65f613f0c6dc14848cf4" id="r_ac9578e928a6d65f613f0c6dc14848cf4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#ac9578e928a6d65f613f0c6dc14848cf4">s8</a></td></tr>
+<tr class="separator:ac9578e928a6d65f613f0c6dc14848cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0972c9c4ebbb1a00073f5bc73637ef3e" id="r_a0972c9c4ebbb1a00073f5bc73637ef3e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a0972c9c4ebbb1a00073f5bc73637ef3e">s9</a></td></tr>
+<tr class="separator:a0972c9c4ebbb1a00073f5bc73637ef3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb0dc88a7e83b3a4d6dad4a93020c17a" id="r_acb0dc88a7e83b3a4d6dad4a93020c17a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#acb0dc88a7e83b3a4d6dad4a93020c17a">s10</a></td></tr>
+<tr class="separator:acb0dc88a7e83b3a4d6dad4a93020c17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b712e62078b0fbb470138400d40a5a0" id="r_a4b712e62078b0fbb470138400d40a5a0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a4b712e62078b0fbb470138400d40a5a0">s11</a></td></tr>
+<tr class="separator:a4b712e62078b0fbb470138400d40a5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b4bfc4e49d816a9a2e3fef42a5881fa" id="r_a4b4bfc4e49d816a9a2e3fef42a5881fa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a4b4bfc4e49d816a9a2e3fef42a5881fa">mepc</a></td></tr>
+<tr class="separator:a4b4bfc4e49d816a9a2e3fef42a5881fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae35c1bf5f2d67c533090d722dd2b9d83" id="r_ae35c1bf5f2d67c533090d722dd2b9d83"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#ae35c1bf5f2d67c533090d722dd2b9d83">mstatus</a></td></tr>
+<tr class="separator:ae35c1bf5f2d67c533090d722dd2b9d83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab21073492e67a0a8d3c116f6840572df" id="r_ab21073492e67a0a8d3c116f6840572df"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#ab21073492e67a0a8d3c116f6840572df">_pad</a> [2]</td></tr>
+<tr class="separator:ab21073492e67a0a8d3c116f6840572df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f8e2361eacf1838e304497c12883da1" id="r_a3f8e2361eacf1838e304497c12883da1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#a3f8e2361eacf1838e304497c12883da1">r0123</a> [4]</td></tr>
 <tr class="separator:a3f8e2361eacf1838e304497c12883da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af04a8ef4941698926515527bf3ce1c40" id="r_af04a8ef4941698926515527bf3ce1c40"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structExceptionFrame.html#af04a8ef4941698926515527bf3ce1c40">r12</a></td></tr>
@@ -121,8 +183,137 @@ Data Fields</h2></td></tr>
 <tr class="separator:a7ccd7e7e903b847334e99cb876618eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Exception frame <em>without</em> FPU context saved. </p>
+<div class="textblock"><p>Full RISC-V trap context frame. </p>
+<p>Exception frame <em>without</em> FPU context saved.</p>
+<p>Saved on the thread stack by every trap entry (timer ISR, exception handler) and restored on trap exit. When a context switch swaps SP between save and restore, the restore operates on the new thread's frame, launching it transparently.</p>
+<p>Initial thread stacks are populated with this same layout by os_thread_populate_stack(). </p>
 </div><h2 class="groupheader">Field Documentation</h2>
+<a id="ab21073492e67a0a8d3c116f6840572df" name="ab21073492e67a0a8d3c116f6840572df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab21073492e67a0a8d3c116f6840572df">&#9670;&#160;</a></span>_pad</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::_pad[2]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa01f76feec8447af4446d8719b6af0fa" name="aa01f76feec8447af4446d8719b6af0fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa01f76feec8447af4446d8719b6af0fa">&#9670;&#160;</a></span>a0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::a0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a022b14e153c588c60064ee7cab5b4bda" name="a022b14e153c588c60064ee7cab5b4bda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a022b14e153c588c60064ee7cab5b4bda">&#9670;&#160;</a></span>a1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::a1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a995797f81a769ee6dbc922e3d2649185" name="a995797f81a769ee6dbc922e3d2649185"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a995797f81a769ee6dbc922e3d2649185">&#9670;&#160;</a></span>a2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::a2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abd9c6478d69deda68a90426102747def" name="abd9c6478d69deda68a90426102747def"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd9c6478d69deda68a90426102747def">&#9670;&#160;</a></span>a3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::a3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6adfe0fc56a6e8cd434805bdbf2962ad" name="a6adfe0fc56a6e8cd434805bdbf2962ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6adfe0fc56a6e8cd434805bdbf2962ad">&#9670;&#160;</a></span>a4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::a4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af401b067782c2c1130cddbdca255c5e9" name="af401b067782c2c1130cddbdca255c5e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af401b067782c2c1130cddbdca255c5e9">&#9670;&#160;</a></span>a5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::a5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a62e47d77324ab67fdbbf6774af73e981" name="a62e47d77324ab67fdbbf6774af73e981"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62e47d77324ab67fdbbf6774af73e981">&#9670;&#160;</a></span>a6</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::a6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaea0ed11b69ec233bafebe0cbf41ac1e" name="aaea0ed11b69ec233bafebe0cbf41ac1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaea0ed11b69ec233bafebe0cbf41ac1e">&#9670;&#160;</a></span>a7</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::a7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a00f9fffab2003c92039309a634072c93" name="a00f9fffab2003c92039309a634072c93"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a00f9fffab2003c92039309a634072c93">&#9670;&#160;</a></span>lr</h2>
 
@@ -131,6 +322,34 @@ Data Fields</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void(* ExceptionFrame::lr) (void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4b4bfc4e49d816a9a2e3fef42a5881fa" name="a4b4bfc4e49d816a9a2e3fef42a5881fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b4bfc4e49d816a9a2e3fef42a5881fa">&#9670;&#160;</a></span>mepc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::mepc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae35c1bf5f2d67c533090d722dd2b9d83" name="ae35c1bf5f2d67c533090d722dd2b9d83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae35c1bf5f2d67c533090d722dd2b9d83">&#9670;&#160;</a></span>mstatus</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::mstatus</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -173,6 +392,286 @@ Data Fields</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">uint32_t ExceptionFrame::r12</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae14a84e3467338f959a2921e5f26c21a" name="ae14a84e3467338f959a2921e5f26c21a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae14a84e3467338f959a2921e5f26c21a">&#9670;&#160;</a></span>ra</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::ra</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a35ed701b36d7613b5854cc208d3d083a" name="a35ed701b36d7613b5854cc208d3d083a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35ed701b36d7613b5854cc208d3d083a">&#9670;&#160;</a></span>s0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8a2419c79fae1fa0e699db84c36e9ecb" name="a8a2419c79fae1fa0e699db84c36e9ecb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a2419c79fae1fa0e699db84c36e9ecb">&#9670;&#160;</a></span>s1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acb0dc88a7e83b3a4d6dad4a93020c17a" name="acb0dc88a7e83b3a4d6dad4a93020c17a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb0dc88a7e83b3a4d6dad4a93020c17a">&#9670;&#160;</a></span>s10</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4b712e62078b0fbb470138400d40a5a0" name="a4b712e62078b0fbb470138400d40a5a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b712e62078b0fbb470138400d40a5a0">&#9670;&#160;</a></span>s11</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s11</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0c5a8be5d5fce1acab1be9ca45536396" name="a0c5a8be5d5fce1acab1be9ca45536396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c5a8be5d5fce1acab1be9ca45536396">&#9670;&#160;</a></span>s2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afab5ea6103b3c1cf7a180559919bbf82" name="afab5ea6103b3c1cf7a180559919bbf82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afab5ea6103b3c1cf7a180559919bbf82">&#9670;&#160;</a></span>s3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac2e5aec3b3406de886a07910bbf4f851" name="ac2e5aec3b3406de886a07910bbf4f851"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2e5aec3b3406de886a07910bbf4f851">&#9670;&#160;</a></span>s4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2149bfc3d837a421a9822f77cce95957" name="a2149bfc3d837a421a9822f77cce95957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2149bfc3d837a421a9822f77cce95957">&#9670;&#160;</a></span>s5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3d29d2d725d6513f9ebdaa85711ca507" name="a3d29d2d725d6513f9ebdaa85711ca507"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d29d2d725d6513f9ebdaa85711ca507">&#9670;&#160;</a></span>s6</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afca8dd4883d6e79ad4f81ad228d02415" name="afca8dd4883d6e79ad4f81ad228d02415"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afca8dd4883d6e79ad4f81ad228d02415">&#9670;&#160;</a></span>s7</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac9578e928a6d65f613f0c6dc14848cf4" name="ac9578e928a6d65f613f0c6dc14848cf4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9578e928a6d65f613f0c6dc14848cf4">&#9670;&#160;</a></span>s8</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0972c9c4ebbb1a00073f5bc73637ef3e" name="a0972c9c4ebbb1a00073f5bc73637ef3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0972c9c4ebbb1a00073f5bc73637ef3e">&#9670;&#160;</a></span>s9</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::s9</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab082be153705a13eda018c963e447263" name="ab082be153705a13eda018c963e447263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab082be153705a13eda018c963e447263">&#9670;&#160;</a></span>t0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::t0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8b7e10284976f029d37468bb69ac37c9" name="a8b7e10284976f029d37468bb69ac37c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b7e10284976f029d37468bb69ac37c9">&#9670;&#160;</a></span>t1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::t1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a00e9543a40f24b859cfba29a59a0d130" name="a00e9543a40f24b859cfba29a59a0d130"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00e9543a40f24b859cfba29a59a0d130">&#9670;&#160;</a></span>t2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::t2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9ae1466cd34bca9afcbafa6545df0147" name="a9ae1466cd34bca9afcbafa6545df0147"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ae1466cd34bca9afcbafa6545df0147">&#9670;&#160;</a></span>t3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::t3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a579f0dd893ab958dd168059903c4897c" name="a579f0dd893ab958dd168059903c4897c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a579f0dd893ab958dd168059903c4897c">&#9670;&#160;</a></span>t4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::t4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aefda25a95c6415c467b423a35bf2e6fe" name="aefda25a95c6415c467b423a35bf2e6fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefda25a95c6415c467b423a35bf2e6fe">&#9670;&#160;</a></span>t5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::t5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8980476bb6a9d08d5779c2d53af38889" name="a8980476bb6a9d08d5779c2d53af38889"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8980476bb6a9d08d5779c2d53af38889">&#9670;&#160;</a></span>t6</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExceptionFrame::t6</td>
         </tr>
       </table>
 </div><div class="memdoc">
