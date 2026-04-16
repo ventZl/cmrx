@@ -1,30 +1,38 @@
 name: 'Build: Linux'
+
 on:
+  pull_request:
   push:
-    branches: [ master ]
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'push' && github.sha || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build-project:
     runs-on: ubuntu-latest
     steps:
-     - name: Checkout Test Sources
+     - name: Checkout repository
+       uses: actions/checkout@v4.1.6
+       with:
+         fetch-depth: 0
+
+     - name: Checkout Integration Tests
        uses: actions/checkout@v4.1.6
        with:
          repository: ventZl/cmrx-integration-tests
-         submodules: 'false'
+         path: _integ
 
-     - name: Checkout Latest CMRX Kernel
-       uses: actions/checkout@v4.1.6
-       with:
-         repository: ventZl/cmrx
-         path: linux-posix/cmrx
-         submodules: 'false'
+     - name: Link CMRX source
+       run: rm -rf _integ/linux-posix/cmrx && ln -s $GITHUB_WORKSPACE _integ/linux-posix/cmrx
 
      - name: Configure Integration Test Build
        uses: threeal/cmake-action@main
        with:
         run-build: false
-        source-dir: linux-posix
+        source-dir: _integ/linux-posix
         build-dir: build
         args: -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug
 
@@ -34,3 +42,14 @@ jobs:
 
      - name: Build Integration Test
        run: make -C build
+
+     - name: Run MemBrowse analysis
+       uses: membrowse/membrowse-action@v1
+       with:
+         target_name: linux
+         elf: build/cmrx-on-linux
+         ld: ''
+         map_file: build/cmrx-on-linux.map
+         api_key: ${{ secrets.MEMBROWSE_API_KEY }}
+         api_url: ${{ vars.MEMBROWSE_API_URL }}
+         verbose: INFO
