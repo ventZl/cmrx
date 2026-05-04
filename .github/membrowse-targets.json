@@ -1,0 +1,38 @@
+[
+  {
+    "target_name": "stm32g4",
+    "source_dir": "stm32g4-cubemx",
+    "build_cmd": "cmake -S _integ/stm32g4-cubemx -B build -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug && (cmake --build build || true) && cmake --build build",
+    "elf": "build/stm32g4-cubemx.elf",
+    "ld": "_integ/stm32g4-cubemx/stm32g491cctx_flash.ld",
+    "map_file": "build/stm32g4-cubemx.map",
+    "linker_vars": ""
+  },
+  {
+    "target_name": "stm32h7",
+    "source_dir": "stm32h7-cubemx",
+    "build_cmd": "cmake -S _integ/stm32h7-cubemx -B build -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug && (cmake --build build || true) && cmake --build build",
+    "elf": "build/tmp-cmrx-integration-build.elf",
+    "ld": "_integ/stm32h7-cubemx/stm32h753vihx_flash.ld",
+    "map_file": "build/tmp-cmrx-integration-build.map",
+    "linker_vars": ""
+  },
+  {
+    "target_name": "rp2040",
+    "source_dir": "rp2040-pico-sdk",
+    "build_cmd": "cmake -S _integ/rp2040-pico-sdk -B build -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug -DPICO_SDK_PATH=$GITHUB_WORKSPACE/_integ/rp2040-pico-sdk/pico-sdk && (cmake --build build || true) && cmake --build build && printf 'MEMORY {\\n    FLASH(rx) : ORIGIN = 0x10000000, LENGTH = 2048K\\n    RAM(rwx) : ORIGIN = 0x20000000, LENGTH = 256k\\n    SCRATCH_X(rwx) : ORIGIN = 0x20040000, LENGTH = 4k\\n    SCRATCH_Y(rwx) : ORIGIN = 0x20041000, LENGTH = 4k\\n}\\n' > build/rp2040_memory.ld",
+    "elf": "build/helloworld.elf",
+    "ld": "build/rp2040_memory.ld",
+    "map_file": "build/helloworld.map",
+    "linker_vars": ""
+  },
+  {
+    "target_name": "linux",
+    "source_dir": "linux-posix",
+    "build_cmd": "cmake -S _integ/linux-posix -B build -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug && cmake --build build",
+    "elf": "build/cmrx-on-linux",
+    "ld": "",
+    "map_file": "build/cmrx-on-linux.map",
+    "linker_vars": ""
+  }
+]
