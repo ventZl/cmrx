@@ -1,7 +1,14 @@
 name: 'Build: stm32h7'
+
 on:
+  pull_request:
   push:
-    branches: [ master ]
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'push' && github.sha || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build-project:
@@ -11,24 +18,26 @@ jobs:
        uses: carlosperate/arm-none-eabi-gcc-action@v1
        with:
          release: '12.2.Rel1'
-     - name: Checkout Test Sources
+
+     - name: Checkout repository
+       uses: actions/checkout@v4.1.6
+       with:
+         fetch-depth: 0
+
+     - name: Checkout Integration Tests
        uses: actions/checkout@v4.1.6
        with:
          repository: ventZl/cmrx-integration-tests
-         submodules: 'false'
+         path: _integ
 
-     - name: Checkout Latest CMRX Kernel
-       uses: actions/checkout@v4.1.6
-       with:
-         repository: ventZl/cmrx
-         path: stm32h7-cubemx/cmrx
-         submodules: 'false'
+     - name: Link CMRX source
+       run: rm -rf _integ/stm32h7-cubemx/cmrx && ln -s $GITHUB_WORKSPACE _integ/stm32h7-cubemx/cmrx
 
      - name: Configure Integration Test Build
        uses: threeal/cmake-action@main
        with:
         run-build: false
-        source-dir: stm32h7-cubemx
+        source-dir: _integ/stm32h7-cubemx
         build-dir: build
         args: -DCMRX_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug
 
@@ -38,3 +47,14 @@ jobs:
 
      - name: Build Integration Test
        run: make -C build
+
+     - name: Run MemBrowse analysis
+       uses: membrowse/membrowse-action@v1
+       with:
+         target_name: stm32h7
+         elf: build/tmp-cmrx-integration-build.elf
+         ld: _integ/stm32h7-cubemx/stm32h753vihx_flash.ld
+         map_file: build/tmp-cmrx-integration-build.map
+         api_key: ${{ secrets.MEMBROWSE_API_KEY }}
+         api_url: ${{ vars.MEMBROWSE_API_URL }}
+         verbose: INFO
