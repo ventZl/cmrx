@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('dev_env.html',''); initResizable(); })
 <li>CMRX source and header directories - here, the code and headers of CMRX are stored. CMRX is distributed as a source and is compiled during the build of the firmware. Build of CMRX results in creation of library named <code>os</code> which you have to link to the final executable. Include paths to headers are automatically propagated to each target which links to the <code>os</code> library.</li>
 <li>Linker script adjustment tool - for seamless operation of memory protection, it is necessary to calculate alignment values for private data of each process. This mechanism takes the original linker script and injects per-process include blocks into it. These blocks are then adjusted based on map file analysis. This altered linker script is then used to link the binary.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md70"></a>
+<h2><a class="anchor" id="autotoc_md71"></a>
 CMake functions</h2>
 <p>While firmware built using CMRX is pretty much standard binary, there are certain tasks done after the binary is built. Similarly, every CMRX process is wrapped into fairly standard static library, yet there are some tasks done after the library is built. In order for things to work correctly, CMRX is also maintaining a set of properties bound to either firmware images or process libraries. There are three main CMake functions available for use:</p>
 <div class="fragment"><div class="line">add_firmware(&lt;firmware name&gt; &lt;source file(s)&gt;)</div>
