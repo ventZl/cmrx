@@ -59,6 +59,7 @@ See [step-by-step guide](https://ventzl.github.io/cmrx/getting_started.html) on 
  * C11 clean
  * compatible with all vendor SDKs providing CMSIS headers
  * runs hosted on Linux machine
+ * SBOM provisioning
  
 # Documentation
 
@@ -92,9 +93,13 @@ Static code analysis can be performed using Clang-tidy on fully configured sourc
 
 Integration tests are always executed on target hardware. It is using [HIL testing harness](HIL_TESTING.md) to execute these tests. Integration tests check that the functionality provided by CMRX kernel is implemented correctly and behaves as expected using particular porting layer of your choice. These tests take much longer to execute and require physical hardware to be attached to the machine which executes these tests so it is less suitable for frequent execution in CI/CD pipeline.
 
-HIL testing harness can be used by your own tests to automate test execution. This can be combined with or without kernel's own integration tests. For more information see the [HIL_TESTING.md] file.
+HIL testing harness can be used by your own tests to automate test execution. This can be combined with or without kernel's own integration tests. For more information see the HIL testing harness documentation file.
 
+# SBOM generation
 
+CMRX is designed to participate on SBOM generation for projects that are using it. This feature is optional and it is turned on automatically if [CMAKE-SBOM-Builder](https://github.com/sodgeit/CMake-SBOM-Builder) or [cmake-sbom](https://github.com/DEMCON/cmake-sbom) are included in your project. CMRX will generate package entry for itself in your SBOM automatically.
+
+To use this feature, no special steps are needed aside from properly integrating one of supported SBOM generators. Note that for this feature to work you have to include CMRX source directory after the point of call to `sbom_generate` function.
 
 # Contributing
 
