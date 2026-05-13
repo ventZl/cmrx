@@ -3,10 +3,18 @@
 # We also add dependencies to targets defined elsewhere.
 # If any of options defined herein already exists as a variable, then do nothing;
 # This allows users to configure the kernel in their CMakeLists.txt
+cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0079 NEW)
 cmake_policy(SET CMP0076 NEW)
 cmake_policy(SET CMP0077 NEW)
+set(CMRX_VERSION 0.1.3)
+set(CMRX_DOWNLOAD_REPOSITORY git+https://github.com/ventZl/cmrx)
+set(CMRX_ORGANIZATION "CMRX Microkernel RTOS Project")
+set(CMRX_CONTACT_EMAIL "info@cmrxrtos.org")
+set(CMRX_LICENSE_NAME "MIT")
+set(CMRX_SPDXID SPDXRef-CMRX-RTOS)
 
+project(cmrx-rtos VERSION ${CMRX_VERSION} LANGUAGES C ASM)
 message(DEBUG "CMRX root dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 set_property(GLOBAL PROPERTY CMRX_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
@@ -15,13 +23,6 @@ include(cmake/options.cmake)
 include(cmake/unit_test_build.cmake)
 include(cmake/clang-tidy.cmake)
 include(cmake/testing.cmake)
-
-CPMAddPackage(
-    NAME ctest
-    GIT_REPOSITORY "https://github.com/bvdberg/ctest"
-    GIT_TAG master
-    DOWNLOAD_ONLY YES
-    )
 
 include_directories(include)
 include_directories(${CMAKE_BINARY_DIR})
@@ -46,7 +47,34 @@ if (NOT UNIT_TESTING_BUILD)
     endif()
 
     include_directories(${HAL_PATH})
+    if (COMMAND sbom_add_package)
+        sbom_add_package(CMRX
+            VERSION ${CMRX_VERSION}
+            SUPPLIER ORGANIZATION "${CMRX_ORGANIZATION}" EMAIL "${CMRX_CONTACT_EMAIL}"
+            SPDXID ${CMRX_SPDXID}
+            LICENSE "${CMRX_LICENSE_NAME}"
+            DECLARED "${CMRX_LICENSE_NAME}"
+            PURPOSE "OPERATING-SYSTEM"
+            DOWNLOAD ${CMRX_DOWNLOAD_REPOSITORY}
+            )
+    endif()
+    if (COMMAND sbom_add)
+        sbom_add(
+            PACKAGE CMRX
+            DOWNLOAD_LOCATION ${CMRX_DOWNLOAD_REPOSITORY}
+            LICENSE "${CMRX_LICENSE_NAME}"
+            SPDXID ${CMRX_SPDXID}
+            SUPPLIER "Organization: ${CMRX_ORGANIZATION} (${CMRX_CONTACT_EMAIL})"
+            VERSION ${CMRX_VERSION}
+            )
+    endif()
 else()
+    CPMAddPackage(
+        NAME ctest
+        GIT_REPOSITORY "https://github.com/bvdberg/ctest"
+        GIT_TAG master
+        DOWNLOAD_ONLY YES
+        )
     # Parent CMake will set these, get rid of them
     unset(ENV{CC})
     unset(ENV{CXX})
