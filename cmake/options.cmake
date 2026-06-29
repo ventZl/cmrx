@@ -13,6 +13,7 @@ option(CMRX_INTEGRATION_TESTS "Enable build of integration tests. Implies CMRX_H
 option(CMRX_HIL_TESTING_SKIP_OPENOCD "Skip OpenOCD initialization during integration tests." OFF)
 option(CMRX_USE_FAST_HASH "Use fast hashing function at expense of hash quality" OFF)
 option(CMRX_VERBOSE_API_NAMES "Prefix all CMRX standard library function names with `cmrx_` to avoid conflicts" OFF)
+option(CMRX_ARCH_ARMV8M_SECURE_MODE "Run in secure mode on ARMv8M CPUs" OFF)
 set(OS_STACK_SIZE 1024 CACHE STRING "Stack allocated per thread in bytes")
 set(OS_THREADS 8 CACHE STRING "Amount of entries in the thread table")
 set(OS_PROCESSES 8 CACHE STRING "Amount of entries in the process table")
