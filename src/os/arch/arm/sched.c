@@ -44,8 +44,12 @@ void os_thread_initialize_arch(struct OS_thread_t * thread, unsigned stack_size,
 	// without FPU
 #	if defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
 #	define EXC_RETURN_RES1 0xFFFF80UL
+#		if defined(CMRX_ARCH_ARMV8M_SECURE_MODE)
+	thread->arch.exc_return = EXC_RETURN_PREFIX | EXC_RETURN_RES1 | EXC_RETURN_S | EXC_RETURN_DCRS | EXC_RETURN_FTYPE | EXC_RETURN_MODE | EXC_RETURN_SPSEL | EXC_RETURN_ES;
+#		else
 	thread->arch.exc_return = EXC_RETURN_PREFIX | EXC_RETURN_RES1 | EXC_RETURN_DCRS | EXC_RETURN_FTYPE | EXC_RETURN_MODE | EXC_RETURN_SPSEL;
-#	else
+#		endif
+	#	else
 	thread->arch.exc_return = EXC_RETURN_THREAD_PSP;
 #	endif
 #endif

@@ -89,4 +89,12 @@
  * There is no functional change.
  */
 #cmakedefine CMRX_VERBOSE_API_NAMES
+
+/** Select secure/non-secure execution mode on ARMv8M.
+ * If enabled, CMRX will execute in secure mode both CMRX kernel and all threads.
+ * As of now, CMRX can't mix secure + non-secure execution and user has to select
+ * mode depending on presence / absence of secure firmware that switches CPU into
+ * non-secure mode.
+ */
+#cmakedefine CMRX_ARCH_ARMV8M_SECURE_MODE
 /** @} */
