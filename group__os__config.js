@@ -1,5 +1,6 @@
 var group__os__config =
 [
+    [ "CMRX_ARCH_ARMV8M_SECURE_MODE", "group__os__config.html#ga363f5b029d6ceb52e729b173c25961bb", null ],
     [ "CMRX_ARCH_SMP_SUPPORTED", "group__os__config.html#ga54ec6c4dfec8397771e101eb023fd91a", null ],
     [ "CMRX_IDLE_THREAD_SHUTDOWN_CPU", "group__os__config.html#ga2722f702ab9637ad9e7f7e8be042f693", null ],
     [ "CMRX_KERNEL_TRACING", "group__os__config.html#ga46a3ec2ee0c0ead945b1185c467024c5", null ],

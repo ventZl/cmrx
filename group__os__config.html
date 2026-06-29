@@ -160,11 +160,31 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa62716baa6aa1e233a1ad705f7a79ee3" id="r_gaa62716baa6aa1e233a1ad705f7a79ee3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#gaa62716baa6aa1e233a1ad705f7a79ee3">CMRX_VERBOSE_API_NAMES</a></td></tr>
 <tr class="memdesc:gaa62716baa6aa1e233a1ad705f7a79ee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable / disable prefixing system call API with <code>cmrx_</code>.  <br /></td></tr>
 <tr class="separator:gaa62716baa6aa1e233a1ad705f7a79ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga363f5b029d6ceb52e729b173c25961bb" id="r_ga363f5b029d6ceb52e729b173c25961bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__os__config.html#ga363f5b029d6ceb52e729b173c25961bb">CMRX_ARCH_ARMV8M_SECURE_MODE</a></td></tr>
+<tr class="memdesc:ga363f5b029d6ceb52e729b173c25961bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select secure/non-secure execution mode on ARMv8M.  <br /></td></tr>
+<tr class="separator:ga363f5b029d6ceb52e729b173c25961bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Compile-time configuration of kernel runtime parameters. </p>
 <p>Do not modify this file directly. Use CMake options in your top-level CMakeLists.txt to alter generation of this file. Any changes done to this file may be overwritten by the build system! </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga363f5b029d6ceb52e729b173c25961bb" name="ga363f5b029d6ceb52e729b173c25961bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga363f5b029d6ceb52e729b173c25961bb">&#9670;&#160;</a></span>CMRX_ARCH_ARMV8M_SECURE_MODE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMRX_ARCH_ARMV8M_SECURE_MODE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Select secure/non-secure execution mode on ARMv8M. </p>
+<p>If enabled, CMRX will execute in secure mode both CMRX kernel and all threads. As of now, CMRX can't mix secure + non-secure execution and user has to select mode depending on presence / absence of secure firmware that switches CPU into non-secure mode. </p>
+
+</div>
+</div>
 <a id="ga54ec6c4dfec8397771e101eb023fd91a" name="ga54ec6c4dfec8397771e101eb023fd91a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga54ec6c4dfec8397771e101eb023fd91a">&#9670;&#160;</a></span>CMRX_ARCH_SMP_SUPPORTED</h2>
 
