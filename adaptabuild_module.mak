@@ -21,7 +21,7 @@ $(call log_debug,$(MODULE)_PATH is $($(MODULE)_PATH))
 CMRX_GENLINK_CMSIS := $(PYTHON) $(SRC_PATH)/$(MODULE_PATH)/ld/genlink-cmsis.py
 
 CUSTOM_LINKER_SCRIPT := gen.$(PRODUCT).ld
-CUSTOM_LINKER_SCRIPT_PATH := $(SRC_PATH)/$(PRODUCT)/config/$(MCU)
+CUSTOM_LINKER_SCRIPT_PATH := $(SRC_PATH)/$(PRODUCT)/config/$(MCU_VARIANT)
 
 pre_executable::
 	$(call log_warning,cmrx pre_executable)
@@ -84,7 +84,7 @@ SRC_C += src/extra/systick.c
 # early in the list of include paths.
 
 $(MODULE)_INCPATH :=
-$(MODULE)_INCPATH += $(PRODUCT)/config/$(MCU)
+$(MODULE)_INCPATH += $(PRODUCT)/config/$(MCU_VARIANT)
 $(MODULE)_INCPATH += $(MODULE_PATH)/src/os/arch/arm/cmsis
 $(MODULE)_INCPATH += $(MODULE_PATH)/src/os
 $(MODULE)_INCPATH += $(MODULE_PATH)/include
