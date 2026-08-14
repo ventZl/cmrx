@@ -34,6 +34,7 @@ jobs:
        uses: actions/checkout@v4.1.6
        with:
          repository: raspberrypi/pico-sdk
+         ref: 2.2.0
          path: _integ/rp2040-pico-sdk/pico-sdk
 
      - name: Link CMRX source
