@@ -1,3 +1,7 @@
+/** @defgroup arch_riscv RISC-V port
+ * @ingroup arch
+ */
+
 /*
  * Thin internal RISC-V HAL (CMSIS-like) for CMRX.
  *

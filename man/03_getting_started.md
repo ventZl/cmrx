@@ -14,8 +14,14 @@ STM32H7 as the target CPU, the guide should be valid for all supported STM32 mic
 @subpage getting_started_picosdk 
 
 This is a detailed guide on how to integrate CMRX RTOS into 
-project running on top of the Pico-SDK. RP2040 is used as target microcontroller, but the
-steps neede should be very similar for RP2350.
+project running on top of the Pico-SDK. RP2040 is used as target microcontroller. For the
+RP2350's RISC-V (Hazard3) core, see @subpage getting_started_picosdk_riscv instead — it uses a
+different CMake architecture path.
+
+@subpage getting_started_picosdk_riscv
+
+This is a detailed guide on how to integrate CMRX RTOS into project running on top of the
+Pico-SDK, targeting the RP2350's RISC-V (Hazard3) core.
 
 @page getting_started_cubemx HOWTO: Integrating CMRX into CubeMX project 
 
@@ -1109,3 +1115,518 @@ board will blink roughly in 0.5 second interval.
 
 Congratulations! You have just successfully created, built and flashed your 
 first CMRX-based project!
+
+@page getting_started_picosdk_riscv HOWTO: Integrating CMRX into Pico-SDK project (RP2350 RISC-V)
+
+Following is a step-by-step how to guide on creating a blinky project using CMRX
+RTOS on the RP2350's RISC-V (Hazard3) core. It will cover all steps and lists all tools needed
+to complete the integration. This guide assumes previous hands-on experience with creating
+embedded firmware, including the process of flashing and debugging. Basic understanding of
+CMake is assumed.
+
+As an example, this howto will demonstrate the process of integrating CMRX into
+project using Raspberry Pi Pico-SDK, targeting the RP2350's RISC-V core rather than its
+Cortex-M33 core. Unlike the ARM-based ports covered in the other guides on this page, CMRX's
+RISC-V support does not use CMSIS or the `FindCMSIS` module - it uses a dedicated RISC-V
+architecture/HAL pairing instead. RISC-V support is initial: memory protection (PMP) is not
+yet implemented, so unlike the ARM guides, the blinky application built in this guide is
+**not** isolated from the kernel by hardware - it still runs as a separate CMRX application
+and thread, but nothing enforces the isolation between them yet.
+
+Prerequisites
+=============
+
+In order to generate and build the project, following tools are required:
+| Name                 | Min. Supported Version       | Note                                  |
+| -------------------- | ----------------------------- | ------------------------------------- |
+| CMake                | 3.13                          |                                        |
+| Python               | 3.0                            |                                        |
+| RISC-V GCC toolchain | GCC 14.1.0, `riscv32-corev-elf` target triple (verified); see note below | see note below |
+| Native GCC toolchain |                                | needed for unit test build, optional  |
+| GNU Make / Ninja     |                                |                                        |
+| Git                  |                                |                                        |
+
+All the above tools need to be installed and available in execution path otherwise
+various parts of the configure and/or build process may fail.
+
+Following is the list of additional tools required only by this guide. They are
+project / MCU specific or can be replaced by tools of your choice (e.g. IDE of your
+choice).
+
+| Name      | Min. Supported Version | Note                                                       |
+| ------    | ----------------------- | ----------------------------------------------------------- |
+| Pico-SDK  | 2.0.0                   | must include RP2350 RISC-V support                          |
+| OpenOCD   | built from source at commit `cd4873400c881ce3019c74620afb19e964a1f235` (2025-09-09) or newer | stock/distro OpenOCD 0.12.0 packages (e.g. the Ubuntu `apt` package) do not include RP2350 support at all and fail with `Can't find target/rp2350-riscv.cfg`. A build from OpenOCD git source is required. |
+| GDB       |                          | must be a RISC-V-capable build                              |
+
+The toolchain actually verified against a successful build in this project is the
+OpenHW Group CORE-V GCC toolchain release `corev-openhw-gcc-ubuntu2204-20240530`
+(providing `riscv32-corev-elf-gcc`, GCC 14.1.0). The Pico SDK's RISC-V build accepts either
+the `riscv32-unknown-elf` or `riscv32-corev-elf` target triple (see `PICO_GCC_TRIPLE` in the
+Pico SDK's RISC-V toolchain CMake files), so any equivalent RISC-V GCC providing one of those
+triples should also work, but only the toolchain named above has actually been confirmed to
+build CMRX successfully end to end.
+
+Once you have extracted the toolchain somewhere, point the Pico SDK at its installation
+directory (the one containing `bin/`) via the standard Pico SDK variable:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+export PICO_TOOLCHAIN_PATH=/path/to/corev-openhw-gcc-ubuntu2204-20240530
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`PICO_TOOLCHAIN_PATH` needs to be set (as an environment variable, or passed as a `-D` CMake
+cache variable) every time you configure the project.
+
+Creating Project Skeleton
+=========================
+
+Pico-SDK is CMake-based SDK for the range of microcontrollers designed by the Raspberry Pi
+Foundation. So for the skeleton, we have to create the CMakeLists.txt file. Yet, before we
+do so, lets first clone the CMRX source tree so we know some of paths we'll need in the
+following process. This how-to will assume that the path where project is stored is
+`$HOME/projects/pico-sdk-riscv-example`.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+mkdir -p ~/projects/pico-sdk-riscv-example
+cd ~/projects/pico-sdk-riscv-example
+git init
+git submodule add https://github.com/ventZl/cmrx.git
+git submodule add https://github.com/raspberrypi/pico-sdk.git
+git submodule update --init --recursive
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This will initialize empty Git repository and create `cmrx` subdirectory containing the
+up-to-date source tree of CMRX RTOS.
+
+Lets start with a minimal CMakeLists skeleton:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+cmake_minimum_required(VERSION 3.13)
+
+include(pico_sdk_import.cmake)
+project(blinky C CXX ASM)
+
+pico_sdk_init()
+
+add_executable(pico-sdk-riscv-example
+  src/main.c
+)
+pico_add_extra_outputs(pico-sdk-riscv-example)
+target_link_libraries(pico-sdk-riscv-example pico_stdlib)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Integrating CMRX into Pico-SDK project
+======================================
+
+Following steps will integrate CMRX RTOS into the project we just created, make sure that
+CMRX will use the Pico-SDK's RISC-V core, and add a simple blinky application.
+
+1. Selecting the RP2350 RISC-V core
+------------------------------------
+
+Unlike the ARM-based guides on this page, RP2350 RISC-V integration does not go through
+`FindCMSIS`. Instead, tell Pico-SDK which platform to build for. **This has to happen before
+`include(pico_sdk_import)` even runs** - the Pico SDK reads `PICO_BOARD`/`PICO_PLATFORM`
+immediately as part of that `include()`, to select the toolchain and board headers, well
+before `project()` or `pico_sdk_init()` are called. Setting these afterwards (even if it's
+still textually "before `pico_sdk_init()`" further down the file) is too late and silently
+falls back to the RP2040/ARM defaults. So this has to be the very first thing in the file,
+right after `cmake_minimum_required`:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+cmake_minimum_required(VERSION 3.13)
+
+set(PICO_BOARD pico2)
+set(PICO_PLATFORM rp2350-riscv)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+2. Add CMake modules provided by CMRX and Pico-SDK into CMake module path
+-------------------------------------------------------------------------
+
+Next, we'll set some paths to make things more convenient:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)
+list(APPEND CMAKE_MODULE_PATH "${PICO_SDK_PATH}/external")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmrx/cmake")
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now you can update the line which imports pico_sdk to be:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+include(pico_sdk_import)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+3. Configuring CMRX kernel to use the RISC-V architecture
+-----------------------------------------------------------
+
+Modify the `CMakeLists.txt` file to tell CMRX which architecture and HAL to build for.
+Add the following block just below the line that calls `pico_sdk_init`:
+
+~~~~~~~~~~~~~~~~~~
+set(CMRX_ARCH riscv)
+set(CMRX_HAL hal)
+include(CMRX)
+~~~~~~~~~~~~~~~~~~
+
+This tells CMRX to build its RISC-V architecture support instead of the CMSIS-based ARM
+support used on RP2040/STM32. Note that this configuration is set directly here rather than
+through the `CMRX_DEVICE`-based platform automation available for some other targets; RP2350
+RISC-V support for that automation may or may not be available depending on which CMRX
+version you use - setting `CMRX_ARCH`/`CMRX_HAL` directly as shown above always works.
+
+The next step is to add the CMRX source tree so the kernel will actually be built using the
+given configuration. Add one line, just below the block just inserted:
+
+~~~~~~~~~~~~~~~~~~
+add_subdirectory(cmrx)
+~~~~~~~~~~~~~~~~~~
+
+4. Adding the Pico-SDK RISC-V quirk
+-------------------------------------
+
+CMRX's RISC-V port relies on a small set of Pico-SDK integration files (machine timer ISR,
+exception dispatcher and ecall handler wiring) that live under `cmrx/quirks/pico-sdk-riscv/`.
+This quirk must be added *after* the CMRX target is defined, so it can attach its sources to
+the `os` target:
+
+~~~~~~~~~~~~~~~~~~
+add_subdirectory(cmrx/quirks/pico-sdk-riscv)
+~~~~~~~~~~~~~~~~~~
+
+The quirk activates automatically when `PICO_PLATFORM` is `rp2350-riscv` (as set in step 2
+above) and does nothing otherwise, so it is safe to always include it in a project that only
+ever targets RP2350 RISC-V.
+
+Linking CMRX to the project
+===========================
+
+CMRX itself is built as a static library called `cmrx`. Update the `target_link_libraries`
+call at the bottom of `CMakeLists.txt`:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive pico_stdlib hardware_exception)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+**`-Wl,--whole-archive`/`-Wl,--no-whole-archive` around `cmrx` are required here, not
+optional** - without them, the firmware links successfully but the board will hang the first
+time the machine timer interrupt fires, because the ISR override never actually takes effect.
+The `pico-sdk-riscv` quirk (added above) overrides several weak ISR symbols
+(`isr_riscv_machine_timer`, `isr_riscv_machine_exception`) by compiling into the `os` static
+library. A linker only pulls an object file out of a static archive if something else in the
+link has an unresolved reference into it; since nothing calls these ISR-override functions by
+name anywhere else, the linker never has a reason to extract those specific object files, and
+the crt0's own weak default ISRs (which just execute `ebreak`) win instead - the build
+succeeds, but the firmware traps into the debugger (or hangs, with no debugger attached) on
+the first timer tick. `--whole-archive` forces every object file in `cmrx` into the link
+regardless of whether anything already references it, which is what actually makes the
+override take effect. `hardware_exception` is required for the same reason: once
+`--whole-archive` pulls in the quirk's exception-dispatcher override, that file needs symbols
+(`__riscv_exception_table`, `__halt_on_unhandled_exception`) that only come from linking that
+Pico-SDK library.
+
+Next, find the line:
+
+~~~~~~~~~~~~~~~~~~~~~
+add_executable(pico-sdk-riscv-example
+~~~~~~~~~~~~~~~~~~~~~
+
+And change it to:
+
+~~~~~~~~~~~~~~~~~~~~~
+add_firmware(pico-sdk-riscv-example
+~~~~~~~~~~~~~~~~~~~~~
+
+Note that, unlike the ARM ports, RISC-V's `add_firmware` does not yet perform full linker
+script management for memory-protected applications - it only wires up the CMRX kernel
+sections. This reflects the current state of the RISC-V port: PMP-based memory protection is
+not yet implemented, so there is no isolated userspace to manage a linker script for yet.
+
+Your `CMakeLists.txt` should now look like this:
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+cmake_minimum_required(VERSION 3.13)
+
+set(PICO_BOARD pico2)
+set(PICO_PLATFORM rp2350-riscv)
+
+set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)
+list(APPEND CMAKE_MODULE_PATH "${PICO_SDK_PATH}/external")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmrx/cmake")
+
+include(pico_sdk_import)
+
+project(blinky C CXX ASM)
+
+pico_sdk_init()
+
+set(CMRX_ARCH riscv)
+set(CMRX_HAL hal)
+include(CMRX)
+
+add_subdirectory(cmrx)
+add_subdirectory(cmrx/quirks/pico-sdk-riscv)
+
+# Here we changed the call add_executable to add_firmware
+add_firmware(
+    pico-sdk-riscv-example src/main.c src/timing_provider.c
+)
+
+pico_add_extra_outputs(pico-sdk-riscv-example)
+target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive pico_stdlib hardware_riscv_platform_timer hardware_exception)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creating a timing provider
+==========================
+
+Unlike the ARM ports, RISC-V does not yet have a ready-made timing provider library
+(equivalent to `extra/systick.h`) to link against - you provide one yourself, built on top of
+the RISC-V machine timer. The `cmrx/quirks/pico-sdk-riscv` quirk added earlier calls a function
+named `cmrx_machine_timer_handler()` from its machine-timer interrupt handler (see
+`cmrx_timer_isr.c` in that quirk) once per timer tick; your application must define it.
+
+Create `src/timing_provider.h`:
+
+~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+#pragma once
+
+void timing_provider_setup(int interval_ms);
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+And `src/timing_provider.c`:
+
+~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+#include "timing_provider.h"
+#include <cmrx/clock.h>
+#include <hardware/riscv_platform_timer.h>
+#include <hardware/regs/rvcsr.h>
+#include <pico/time.h>
+#include <stdint.h>
+
+static uint32_t timing_interval_us;
+
+void cmrx_machine_timer_handler(void)
+{
+    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + timing_interval_us);
+    os_sched_timing_callback((long) timing_interval_us);
+}
+
+void timing_provider_setup(int interval_ms)
+{
+    timing_interval_us = (uint32_t) interval_ms * 1000u;
+    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + timing_interval_us);
+    uint32_t bit = RVCSR_MIE_MTIE_BITS;
+    __asm__ volatile("csrs mie, %0" :: "r"(bit));
+}
+
+void timing_provider_schedule(long delay_us)
+{
+    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + (uint32_t) delay_us);
+}
+
+void timing_provider_delay(long delay_us)
+{
+    busy_wait_us((uint64_t) delay_us);
+}
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+`cmrx_machine_timer_handler()` is the hook the quirk's interrupt handler calls on every timer
+tick; it re-arms the next tick and feeds the kernel scheduler via `os_sched_timing_callback()`.
+`timing_provider_setup()`, `timing_provider_schedule()` and `timing_provider_delay()` are the
+portable timing provider interface CMRX's kernel and standard library call into (the same
+roles the ARM `extra/systick.h` library fills for Cortex-M targets).
+
+Creating main.c file
+====================
+
+Next we need a main file that will actually start our RTOS:
+
+~~~~~~~~~~~~~~~~~~~~~~~~{.c}
+#include <cmrx/cmrx.h>
+#include "pico/stdlib.h"
+#include "hardware/clocks.h"
+#include "timing_provider.h"
+
+long timing_get_current_cpu_freq(void)
+{
+    return (long) clock_get_hz(clk_sys);
+}
+
+int main(void)
+{
+    stdio_init_all();
+    timing_provider_setup(1);
+    os_start();
+    return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+`timing_get_current_cpu_freq()` is a callback the kernel's generic `os_cpu_freq_get()` calls
+into (`src/os/kernel/timer.c`) regardless of which timing provider is active - it is required
+here even though the RISC-V machine-timer-based timing provider above doesn't use it itself for
+its own tick generation. `timing_provider_setup()` initializes the kernel's timing source and
+`os_start()` boots the kernel, same as on the ARM ports. `stdio_init_all()` is only needed here
+so the blinky
+application below can `printf()` over UART - drop it if you don't need serial output.
+
+Creating the blinky application
+================================
+
+As with the ARM ports, blinky is implemented as a separate CMRX application and thread rather
+than being called directly from `main()`. Unlike the ARM guides, this application is **not**
+memory-isolated from the kernel (PMP support isn't implemented yet - see the note at the top
+of this page), but the `OS_APPLICATION`/`OS_THREAD_CREATE` mechanism itself works the same way.
+
+Create `src/blinky/CMakeLists.txt`:
+
+~~~~~~~~~~~~~~~~~~~~~~~
+set(blinky_SRCS blinky.c)
+add_application(blinky ${blinky_SRCS})
+target_link_libraries(blinky pico_stdlib_headers hardware_gpio_headers hardware_riscv_headers)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Two details differ from the ARM guides' equivalent `target_link_libraries` call:
+
+* No `PRIVATE` keyword: the RISC-V HAL's `add_application()` already links `stdlib` into the
+  application target internally, using CMake's plain (non-keyword) `target_link_libraries`
+  signature. CMake requires all calls against the same target to consistently use either the
+  plain or the keyword form - mixing them is an error - so this call has to stay plain too,
+  and `stdlib` doesn't need to be listed again here since it's already linked.
+* `hardware_riscv_headers` is required (in addition to `hardware_gpio_headers`): on the RISC-V
+  core, `pico/stdlib.h` pulls in `hardware/hazard3.h`, which in turn needs `hardware/riscv.h`
+  from that headers-only target. The ARM guides don't need this, since that include chain is
+  RISC-V-specific.
+
+And `src/blinky/blinky.c`:
+
+~~~~~~~~~~~~~~~~~~~~~~~{.c}
+#include <cmrx/application.h>
+#include <pico/stdlib.h>
+#include <cmrx/ipc/timer.h>
+#include <stdio.h>
+
+/* Main function for the blinky application */
+static int blinky_main(void * data)
+{
+    (void) data;
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+    while (1) {
+        gpio_put(PICO_DEFAULT_LED_PIN, 1);
+        printf("blink\n");
+        usleep(500000);
+        gpio_put(PICO_DEFAULT_LED_PIN, 0);
+        usleep(500000);
+    }
+    return 0;
+}
+
+/* Grant the blinky application access to the GPIO and SIO peripherals */
+OS_APPLICATION_MMIO_RANGES(blinky, 0x40000000, 0x50000000, 0xd0000000, 0xe0000000);
+
+/* Declare the blinky application */
+OS_APPLICATION(blinky);
+
+/* Tell CMRX to automatically start a thread using `blinky_main` as an
+ * entrypoint and having thread priority of 32 */
+OS_THREAD_CREATE(blinky, blinky_main, NULL, 32);
+~~~~~~~~~~~~~~~~~~~~~~~
+
+`OS_APPLICATION_MMIO_RANGES()` is mandatory here, not optional: `OS_APPLICATION()` expands to
+a constructor that populates the application's process definition table, and part of that
+table is filled in directly from the symbols `OS_APPLICATION_MMIO_RANGES()` defines - without
+calling it (or the single-range `OS_APPLICATION_MMIO_RANGE()`), the build fails to link. Since
+PMP isn't implemented yet, nothing currently enforces the ranges given here, but the call
+itself is still required to populate the table CMRX's process bookkeeping expects.
+
+Adding blinky application to the build
+=======================================
+
+Add the blinky application's directory and link it into the firmware. First, just after the
+line that adds the `pico-sdk-riscv` quirk:
+
+~~~~~~~~~~~~~~~~~~~
+add_subdirectory(src/blinky)
+~~~~~~~~~~~~~~~~~~~
+
+Then, update the `target_link_libraries` call added earlier to also whole-archive `blinky`:
+
+~~~~~~~~~~~~~~~~~~~
+target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx blinky -Wl,--no-whole-archive pico_stdlib hardware_riscv_platform_timer hardware_exception)
+~~~~~~~~~~~~~~~~~~~
+
+**This is not optional either, for the same reason as `cmrx` above.** `target_add_applications()`
+(added next) does a plain, non-whole-archive link, and an application's `OS_thread_create_t`/
+`OS_APPLICATION` bookkeeping structures are only ever referenced by *address range* (via the
+linker-generated `.applications`/`.thread_create` section boundary symbols the kernel walks at
+boot), never by name. With a plain link, nothing forces the linker to pull `blinky`'s object
+file out of its static archive at all - the firmware still builds and links successfully, the
+kernel boots and runs its idle thread forever, but the `blinky` thread was never actually
+included in the binary, so it can never be scheduled and the LED never blinks. This applies to
+any application added this way, not just `blinky`.
+
+Finally, at the very end of `CMakeLists.txt`, add the application to the firmware as normal -
+this is still required so CMRX's own build tooling knows about the application (it does not
+replace the `target_link_libraries` update above, both are needed):
+
+~~~~~~~~~~~~~~~~~~~
+target_add_applications(pico-sdk-riscv-example
+    blinky
+)
+~~~~~~~~~~~~~~~~~~~
+
+With `PICO_TOOLCHAIN_PATH` set (see Prerequisites above), you can build the project now:
+
+~~~~~~~~~~~~~~~~~~~
+cmake -B build
+cmake --build build
+~~~~~~~~~~~~~~~~~~~
+
+You should get file `build/pico-sdk-riscv-example.elf`.
+
+Flashing the application
+========================
+
+There are multiple ways of flashing the firmware available. This guide will
+use one of IDE-agnostic ways: direct use of openocd and gdb.
+
+OpenOCD is a gateway between your debugger probe and the debugger used on your PC.
+
+Proceed by connecting your Pico 2 board (Debug Probe / Picoprobe side) to the computer via
+USB. Make sure the probe is visible by the operating system.
+
+Now execute the following command in terminal:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openocd -f interface/cmsis-dap.cfg -f target/rp2350-riscv.cfg
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This will start openocd and connect it to your probe, detect the connected RISC-V (Hazard3)
+core and wait for connection by debugger. As noted in the prerequisites above, this requires
+an OpenOCD build that includes `target/rp2350-riscv.cfg` - stock/distro OpenOCD 0.12.0
+packages do not include it.
+
+Next, once your firmware is built, run GDB in another terminal:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gdb ~/projects/pico-sdk-riscv-example/build/pico-sdk-riscv-example.elf
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this GDB instance, the following sequence of commands will perform following actions:
+1) GDB will connect to the OpenOCD which will serve as GDB server and provide connection
+   to the RISC-V core on your Pico 2 board
+2) Load the CPU with the firmware just built
+3) Start executing the firmware
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+target extended-remote localhost:3333
+load
+run
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you did everything correctly, you should see the on-board LED blinking roughly in 0.5
+second intervals - that's the `blinky` application's thread, scheduled by the CMRX kernel
+running on the RP2350's RISC-V core.
+
+Congratulations! You have just successfully created, built and flashed your
+first CMRX-based project targeting the RP2350's RISC-V core!
