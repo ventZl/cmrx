@@ -525,7 +525,7 @@ class LinkerFile(TokenList):
                 if (self.match_pattern(q, sections_block_pattern) and self[q + 1].value == "SECTIONS"):
                     begin = q + 3
                     end = self.find_pair(begin)
-                    block = self.sub_range(begin, end + 1)
+                    block = self.sub_range(begin, end)
                     # We finished processing this block, fast-forward at its end
                     self._process_sections_block(block, binary_name)
                     q = end
