@@ -102,29 +102,29 @@ $(document).ready(function(){initNavTree('md_UNIT__TESTING.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>CMRX kernel comes with its own unit test suite. This unit test suite tests soundness of kernel and some of library logic and can be run on developer's host machine. Unit test suite requires working GCC compiler for the host machine.</p>
-<h1><a class="anchor" id="autotoc_md81"></a>
+<h1><a class="anchor" id="autotoc_md94"></a>
 Philosophy</h1>
 <p>CMRX is a naturally portable piece of code. Unit tests do perform white-box testing of the kernel code. Only portable code is tested as the goal of this level of tests is to test soundness of algorithms and data structures used in the kernel and selected libraries. These algorithms do the same thing regardless of the target architecture and if they are not correct while running unit tests they won't be correct when running on target hardware.</p>
 <p>Unit tests aim ait testing 100% of functionality (specs of API docs) rather than 100% of code. Unit, for the purposes of unit tests is anything that bears an unit of functionality. It it not necessary to test each and every function individually. As the software under test is an embedded operating system, our unit tests do cheat a bit by inspecting internal state of the system here and there. Much of the information we need to observe in order to evaluate these tests is not visible from outside.</p>
-<h1><a class="anchor" id="autotoc_md82"></a>
+<h1><a class="anchor" id="autotoc_md95"></a>
 Enabling unit test suite</h1>
 <p>Unit test suite is disabled by default. You can enable it in two ways:</p>
 <ul>
 <li>Your normal build - pass <code>CMRX_UNIT_TESTS=ON</code> argument to CMake. This will create nested binary directory inside your current binary directory, where the unit test build will be built. Once this is done, unit tests are built as a part of your normal build process. You can run unit tests using <code>unit_tests</code> target (e.g. <code>make unit_tests</code>).</li>
 <li>Dedicated binary directory - call CMake with argument <code>CMRX_UNIT_TESTS=ON</code> and use CMRX source directory as source directory for your project. This will create project that <em>only</em> builds and executes unit tests and nothing else. This will skip detection of your cross compiler, SDK and related stuff. Here you can run unit tests simply by using CMake standard <code>test</code> target (e.g. <code>make test</code>).</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md83"></a>
+<h1><a class="anchor" id="autotoc_md96"></a>
 Test suite</h1>
 <p>To speed things up the test suite is composed of just very small amount of test drivers. Currently there are only two drivers: one for kernel core and one for queue libraries. This saves time by not spinning tens of runners.</p>
 <p>Each of these runners covers dozens of test cases.</p>
-<h1><a class="anchor" id="autotoc_md84"></a>
+<h1><a class="anchor" id="autotoc_md97"></a>
 Tests</h1>
 <p>Tests for components are located in subdirectory called <code>tests</code> in directory where that component (e.g. kernel) is located. Thus, for example, kernel tests reside in src/os/kernel/tests subdirectory. All kernel tests are collected into one test driver. Failure of any test inside this driver will be reported as a failure of <code>test_kernel</code> test by CMake and CTest.</p>
-<h1><a class="anchor" id="autotoc_md85"></a>
+<h1><a class="anchor" id="autotoc_md98"></a>
 Writing tests</h1>
 <p>Kernel unit tests are using <a href="https://github.com/bvdberg/ctest">ctest</a> framework. Follow the documentation of this framework to find out more on how it is used.</p>
 <p>In general, tests are split into one file per API basis. So e.g. notification framework inside kernel is covered by <code>os_notify_wait_object.c</code> and this mostly covers all user-visible use-cases of this API. Tests are grouped into groups by subsystem they test. This is almost mapped 1:1 to source files for tests.</p>
-<h1><a class="anchor" id="autotoc_md86"></a>
+<h1><a class="anchor" id="autotoc_md99"></a>
 Code coverage</h1>
 <p>It is possible to generate code coverage report for unit test execution. GCC code coverage infrastructure is used for this purpose. If <code>gcov</code> is found in your system, then all unit tests are automatically instrumented to collect code coverage information. You can use target <code>coverage</code> (e.g. <code>make coverage</code>) to generate HTML code coverage report in the binary directory dedicated for unit test builds (see above where it lives depending on how you enabled unit testing).</p>
 <p>Note that code coverage report is accumulative and if tests are executed multiple times without removing GCOV data files, results will contain sum of line execution of all test runs. This won't distort the information if line was executed or not but will definitely distort information on how many times line was actually executed. </p>

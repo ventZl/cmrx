@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['v_20exception_20frame_0',['RISC-V Exception Frame',['../group__arch__riscv__exception__frame.html',1,'']]],
-  ['variables_20region_1',['variables region',['../mem_model.html#autotoc_md42',1,'Shared variables region'],['../mem_model.html#autotoc_md40',1,'Static variables region']]],
-  ['vendor_20sdks_2',['Integrating vendor SDKs',['../hal_integration.html',1,'overview']]],
-  ['vtable_3',['vtable',['../structComNotification.html#af7d8d1112414c89f81c99f9b8e658b59',1,'ComNotification::vtable'],['../structComSource.html#aa266e32a57cc1d745dfffb2cc21c8a78',1,'ComSource::vtable'],['../structComSink.html#aeb36255fb89dcd8afe53a3c0fe490c42',1,'ComSink::vtable'],['../structComChannel.html#a39754a6862ae6d0d4450ca575b02df05',1,'ComChannel::vtable'],['../structQueueObject.html#ac2a9e8d8d0ebe718ef3b4e06ca87b68b',1,'QueueObject::vtable'],['../structQueueService.html#ad6be36efc2848a190070a62bdb27b560',1,'QueueService::vtable'],['../structRPC__Service__t__.html#a202dd170ff2c2359e82d7a23f0a2f7ca',1,'RPC_Service_t_::vtable'],['../group__api__init.html#gaa4a137442c139400b647ac62b40ea51a',1,'VTABLE:&#160;application.h']]],
-  ['vtable_5ft_4',['VTable_t',['../group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239',1,'rpc.h']]],
-  ['vtables_5',['RPC interfaces (vtables)',['../group__api__rpc.html#api_rpc_interface',1,'']]]
+  ['unit_20test_20suite_0',['Enabling unit test suite',['../md_UNIT__TESTING.html#autotoc_md95',1,'']]],
+  ['unit_20testing_1',['Kernel unit testing',['../md_UNIT__TESTING.html',1,'']]],
+  ['use_20cubemx_2',['3. Configure the CMRX kernel to use CubeMX',['../getting_started_cubemx.html#autotoc_md60',1,'']]],
+  ['use_20pico_20sdk_3',['3. Configuring CMRX kernel to use Pico-SDK',['../getting_started_picosdk.html#autotoc_md75',1,'']]],
+  ['use_20the_20risc_20v_20architecture_4',['3. Configuring CMRX kernel to use the RISC-V architecture',['../getting_started_picosdk_riscv.html#autotoc_md86',1,'']]],
+  ['using_20openocd_5',['Not using OpenOCD',['../md_HIL__TESTING.html#autotoc_md2',1,'']]],
+  ['usleep_6',['usleep',['../group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a',1,'usleep(unsigned microseconds):&#160;timer.c'],['../group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a',1,'usleep(unsigned microseconds):&#160;timer.c']]],
+  ['utilities_7',['Utilities',['../group__util.html',1,'']]]
 ];

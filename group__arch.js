@@ -2,5 +2,6 @@ var group__arch =
 [
     [ "ARM port", "group__arch__arm.html", "group__arch__arm" ],
     [ "Abstract machine", "group__arch__arch.html", "group__arch__arch" ],
-    [ "Linux port", "group__arch__linux.html", "group__arch__linux" ]
+    [ "Linux port", "group__arch__linux.html", "group__arch__linux" ],
+    [ "RISC-V port", "group__arch__riscv.html", "group__arch__riscv" ]
 ];
