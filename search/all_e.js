@@ -6,7 +6,7 @@ var searchData=
   ['kernel_20events_3',['Tracing Kernel Events',['../group__os__tracing.html',1,'']]],
   ['kernel_20integration_20tests_4',['Kernel integration tests',['../md_HIL__TESTING.html#autotoc_md4',1,'']]],
   ['kernel_20runtime_20configuration_5',['Kernel runtime configuration',['../group__os__config.html',1,'']]],
-  ['kernel_20to_20use_20cubemx_6',['3. Configure the CMRX kernel to use CubeMX',['../getting_started_cubemx.html#autotoc_md60',1,'']]],
+  ['kernel_20to_20use_20cubemx_6',['3. Configure the CMRX kernel to use CubeMX',['../getting_started_cubemx.html#autotoc_md64',1,'']]],
   ['kernel_20to_20use_20pico_20sdk_7',['3. Configuring CMRX kernel to use Pico-SDK',['../getting_started_picosdk.html#autotoc_md75',1,'']]],
   ['kernel_20to_20use_20the_20risc_20v_20architecture_8',['3. Configuring CMRX kernel to use the RISC-V architecture',['../getting_started_picosdk_riscv.html#autotoc_md86',1,'']]],
   ['kernel_20unit_20testing_9',['Kernel unit testing',['../md_UNIT__TESTING.html',1,'']]],

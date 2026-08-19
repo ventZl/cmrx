@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['3_20configure_20the_20cmrx_20kernel_20to_20use_20cubemx_0',['3. Configure the CMRX kernel to use CubeMX',['../getting_started_cubemx.html#autotoc_md60',1,'']]],
+  ['3_20configure_20the_20cmrx_20kernel_20to_20use_20cubemx_0',['3. Configure the CMRX kernel to use CubeMX',['../getting_started_cubemx.html#autotoc_md64',1,'']]],
   ['3_20configuring_20cmrx_20kernel_20to_20use_20pico_20sdk_1',['3. Configuring CMRX kernel to use Pico-SDK',['../getting_started_picosdk.html#autotoc_md75',1,'']]],
   ['3_20configuring_20cmrx_20kernel_20to_20use_20the_20risc_20v_20architecture_2',['3. Configuring CMRX kernel to use the RISC-V architecture',['../getting_started_picosdk_riscv.html#autotoc_md86',1,'']]]
 ];

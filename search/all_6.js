@@ -3,7 +3,7 @@ var searchData=
   ['base_5fpriority_0',['base_priority',['../structOS__thread__t.html#a28ea50f899d058388a7f03c67caaebd8',1,'OS_thread_t']]],
   ['based_20timing_20provider_1',['SysTick-Based Timing Provider',['../group__aux__systick.html',1,'']]],
   ['basic_20concepts_2',['Basic concepts',['../concepts.html',1,'overview']]],
-  ['basic_20cubemx_20project_20settings_3',['Basic CubeMX project settings',['../getting_started_cubemx.html#autotoc_md46',1,'']]],
+  ['basic_20cubemx_20project_20settings_3',['Basic CubeMX project settings',['../getting_started_cubemx.html#autotoc_md57',1,'']]],
   ['basicqueue_4',['BasicQueue',['../structBasicQueue.html',1,'']]],
   ['becoming_20a_20rpc_20server_5',['Becoming a RPC server',['../rpc_intro.html#autotoc_md40',1,'']]],
   ['binary_5fsearch_6',['BINARY_SEARCH',['../group__api__algo.html#ga71f10dca3dadfa959287b8a52a6d38cb',1,'algo.h']]],
@@ -20,5 +20,5 @@ var searchData=
   ['build_20system_17',['Build system',['../build_system.html',1,'']]],
   ['build_20time_20options_18',['Build-time options',['../build_system.html#autotoc_md6',1,'']]],
   ['by_20cmrx_20and_20pico_20sdk_20into_20cmake_20module_20path_19',['by cmrx and pico sdk into cmake module path',['../getting_started_picosdk.html#autotoc_md73',1,'1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path'],['../getting_started_picosdk_riscv.html#autotoc_md85',1,'2. Add CMake modules provided by CMRX and Pico-SDK into CMake module path']]],
-  ['by_20cmrx_20into_20cmake_20module_20path_20',['1. Add CMake modules provided by CMRX into CMake module path',['../getting_started_cubemx.html#autotoc_md55',1,'']]]
+  ['by_20cmrx_20into_20cmake_20module_20path_20',['1. Add CMake modules provided by CMRX into CMake module path',['../getting_started_cubemx.html#autotoc_md62',1,'']]]
 ];
