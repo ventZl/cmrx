@@ -1,0 +1,5 @@
+add_test(
+    NAME genlink-cmsis 
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/genlink-cmsis.sh ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} 
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
