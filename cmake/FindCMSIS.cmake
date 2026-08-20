@@ -19,7 +19,16 @@ endif()
 
 # Find CMSIS components one by one
 file(GLOB_RECURSE DEVICE_INCLUDE ${CMSIS_ROOT}/*/${DEVICE_INCLUDE_FILENAME})
+list(LENGTH DEVICE_INCLUDE DEVICE_INCLUDE_LEN)
+if (NOT "${DEVICE_INCLUDE_LEN}" EQUAL "1")
+    message(SEND_ERROR "Unable to find CMSIS device header ${DEVICE_INCLUDE_FILENAME}! Check if the device name passed in `DEVICE` variable is correct. If device header filename differs from device name (e.g. stm32f4xx.h vs. stm32f411xx) then explicitly specify device include filename in `DEVICE_INCLUDE_FILENAME` variable before including FindCMSIS.")
+endif()
+
 file(GLOB_RECURSE SYSTEM_INCLUDE ${CMSIS_ROOT}/*/${SYSTEM_INCLUDE_FILENAME})
+list(LENGTH SYSTEM_INCLUDE SYSTEM_INCLUDE_LEN)
+if (NOT "${SYSTEM_INCLUDE_LEN}" EQUAL "1")
+    message(SEND_ERROR "Unable to find CMSIS system header ${SYSTEM_INCLUDE_FILENAME}! Check if the device name passed in `DEVICE` variable is correct. If system header filename differs from device name (e.g. system_stm32f4xx.h vs. stm32f411xx) then explicitly specify system include filename in `SYSTEM_INCLUDE_FILENAME` variable before including FindCMSIS.")
+endif()
 file(GLOB_RECURSE CORES_INCLUDE ${CMSIS_ROOT}/*/core_cm*.h)
 file(GLOB_RECURSE SYSTEM_SOURCE RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMSIS_ROOT}/*/system_${DEVICE}.c)
 file(GLOB_RECURSE STARTUP_SOURCE RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMSIS_ROOT}/*/startup_${DEVICE}.c)
@@ -52,7 +61,7 @@ file(COPY_FILE ${CMSIS_LINKER_FILE} ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld)
 file(WRITE ${CMAKE_BINARY_DIR}/cmsis_conf.h 
     "#pragma once
 "
-    "#define CMSIS_device_header \"${DEVICE}.h\"
+    "#define CMSIS_device_header \"${DEVICE_INCLUDE_FILENAME}\"
 "
     )
 
@@ -62,6 +71,6 @@ set(CMSIS_SRCS ${SYSTEM_SOURCE} ${STARTUP_SOURCE})
 add_library(cmsis_headers INTERFACE)
 set_property(TARGET cmsis_headers
     PROPERTY
-    INTERFACE_INCLUDE_DIRECTORIES ${INCLUDE_DIRS})
+    INTERFACE_INCLUDE_DIRECTORIES ${INCLUDE_DIRS} ${CMAKE_BINARY_DIR})
 
 
