@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 
 
-find_program(PYTHON_EXE NAMES python3 python REQUIRED DOC "Python 3 executable")
+find_program(PYTHON_EXE NAMES python3 python python3.exe python.exe py REQUIRED DOC "Python 3 executable")
 
 if (DEFINED CMRX_DEVICE)
     set(DEVICE "${CMRX_DEVICE}")

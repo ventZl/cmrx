@@ -1181,7 +1181,7 @@ if (todo.create is not None):
     external files. These files then contain process-specific directives for explicit
     deployment. This makes use of ARM MPU possible.
     '''
-    ifile = open(todo.create[0], "r")
+    ifile = open(todo.create[0], mode = "r", encoding = "utf-8")
 
     parser = LinkerScriptParser()
     linker_file = parser.parse(Stream(ifile))
@@ -1191,7 +1191,7 @@ if (todo.create is not None):
     linker_file.add_subscript_includes(todo.create[2])
 #    linker_file.dump()
 
-    ofile = open(todo.create[1], "w")
+    ofile = open(todo.create[1], mode = "w", encoding = "utf-8")
     ofile.write(linker_file.join())
     ofile.close()
 
@@ -1202,7 +1202,7 @@ if (todo.create is not None):
 
     for section in sections:
 
-        ofile = open(output_path+"/gen."+todo.create[2]+"."+section+".ld", "w")
+        ofile = open(output_path+"/gen."+todo.create[2]+"."+section+".ld", mode = "w", encoding = "utf-8")
         ofile.write("")
         ofile.close()
 elif (todo.add_application is not None):
@@ -1218,7 +1218,7 @@ elif (todo.add_application is not None):
     sections = [ "bss", "data", "shared", "text", "vtable", "inst" ]
     for section in sections:
         file_name = todo.add_application[2] + "/gen."+todo.add_application[1]+"."+section+".ld"
-        ifile = open(file_name, "r")
+        ifile = open(file_name, mode = "r", encoding = "utf-8")
         parser = LinkerScriptParser()
         linker_file = parser.parse(Stream(ifile))
         ifile.close()
@@ -1228,7 +1228,7 @@ elif (todo.add_application is not None):
         else:
             linker_file.add_library_sections_aligned(todo.add_application[0], section, 4)
 
-        ofile = open(file_name, "w")
+        ofile = open(file_name, mode = "w", encoding = "utf-8")
         ofile.write(linker_file.join())
         ofile.close()
 elif (todo.realign is not None):
@@ -1242,7 +1242,7 @@ elif (todo.realign is not None):
     the binary is deleted as it won't be bootable due to MPU regions misalignment.
 
     '''
-    ifile = open(todo.realign[0], "r")
+    ifile = open(todo.realign[0], mode = "r", encoding = "utf-8")
     parser = MapFileParser()
     map_file = parser.parse(Stream(ifile))
     map_file.process()
@@ -1254,7 +1254,7 @@ elif (todo.realign is not None):
     sections = [ "bss", "data", "shared", "text" ]
     for section in sections:
         linker_file_name = todo.realign[2] + "/gen." + todo.realign[1] + "." + section + ".ld"
-        ifile = open(linker_file_name, "r")
+        ifile = open(linker_file_name, mode = "r", encoding = "utf-8")
         parser = LinkerScriptParser()
         old_linker_file = parser.parse(Stream(ifile))
 
@@ -1269,7 +1269,7 @@ elif (todo.realign is not None):
             mpu_block = content[application]
             linker_file.add_library_sections_aligned(mpu_block.owner(), section, mpu_block.get_alignment())
 
-        ofile = open(linker_file_name, "w")
+        ofile = open(linker_file_name, mode = "w", encoding = "utf-8")
         ofile.write(linker_file.join())
         ofile.close()
 
