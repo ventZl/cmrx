@@ -128,12 +128,12 @@ $(document).ready(function(){initNavTree('arch_2riscv_2hal_2arch_2corelocal_8h_s
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * Core lock/unlock via interrupt disable/enable.</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * Uses RISC-V HAL primitives.</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">os_core_lock</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> os_core_lock(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    cmrx_riscv_irq_disable();</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea">os_core_unlock</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> os_core_unlock(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>{</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    cmrx_riscv_irq_enable();</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
@@ -142,8 +142,8 @@ $(document).ready(function(){initNavTree('arch_2riscv_2hal_2arch_2corelocal_8h_s
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">/* SMP mode - not implemented yet */</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">extern</span> <span class="keywordtype">unsigned</span> coreid(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">os_core_lock</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code hl_function" href="group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea">os_core_unlock</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">extern</span> <span class="keywordtype">void</span> os_core_lock(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">extern</span> <span class="keywordtype">void</span> os_core_unlock(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">extern</span> <span class="keywordtype">void</span> os_smp_lock(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">extern</span> <span class="keywordtype">void</span> os_smp_unlock(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
@@ -153,8 +153,6 @@ $(document).ready(function(){initNavTree('arch_2riscv_2hal_2arch_2corelocal_8h_s
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#endif </span><span class="comment">/* CMRX_ARCH_SMP_SUPPORTED */</span><span class="preprocessor"></span></div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="ttc" id="agroup__arch__arch_html_ga4c0d351c7f2f49293fe5907c2ac5d289"><div class="ttname"><a href="group__arch__arch.html#ga4c0d351c7f2f49293fe5907c2ac5d289">os_core_lock</a></div><div class="ttdeci">void os_core_lock()</div><div class="ttdoc">Lock the current core This function ensures that no other code will interrupt the currently running c...</div></div>
-<div class="ttc" id="agroup__arch__arch_html_ga7b7c981ccf3a59d00d3424fa768c71ea"><div class="ttname"><a href="group__arch__arch.html#ga7b7c981ccf3a59d00d3424fa768c71ea">os_core_unlock</a></div><div class="ttdeci">void os_core_unlock()</div><div class="ttdoc">Unlock the current core Unlocks exclusive access to the current core.</div></div>
 <div class="ttc" id="agroup__arch__arm__syscall_html_ga64a7c03c4ca89b1a8dd86496495707f5"><div class="ttname"><a href="group__arch__arm__syscall.html#ga64a7c03c4ca89b1a8dd86496495707f5">os_core_sleep</a></div><div class="ttdeci">void os_core_sleep()</div><div class="ttdef"><b>Definition</b> cortex.c:276</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
