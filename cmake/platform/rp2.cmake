@@ -1,4 +1,15 @@
 # Module automating support for PicoSDK-based projects for RP2xxx family of microcontrollers
+
+# RP2350 RISC-V (Hazard3) core: bypass the CMSIS/ARM detection below entirely. PICO_PLATFORM
+# is the signal the pico-sdk-riscv quirk itself already keys on, and is guaranteed to be set
+# well before this file is ever reached (Pico SDK reads it during pico_sdk_import, which runs
+# before include(CMRX)).
+if (PICO_PLATFORM STREQUAL "rp2350-riscv")
+    set_property(GLOBAL PROPERTY CMRX_ARCH riscv)
+    set_property(GLOBAL PROPERTY CMRX_HAL hal)
+    return()
+endif()
+
 string(TOLOWER "${CMRX_DEVICE}" PICO_DEVICE)
 string(TOUPPER "${CMRX_DEVICE}" DEVICE)
 
