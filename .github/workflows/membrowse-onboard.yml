@@ -37,10 +37,19 @@ jobs:
           fetch-depth: 0
 
       - name: Prepare Cross-Toolchain Environment
-        if: matrix.target_name != 'linux'
+        if: matrix.target_name != 'linux' && matrix.target_name != 'rp2350-riscv'
         uses: carlosperate/arm-none-eabi-gcc-action@v1
         with:
           release: '12.2.Rel1'
+
+      - name: Prepare RISC-V Cross-Toolchain
+        if: matrix.target_name == 'rp2350-riscv'
+        run: |
+          curl -L -o /tmp/riscv-toolchain.tar.gz \
+            https://github.com/raspberrypi/pico-sdk-tools/releases/download/v2.3.0-1/riscv-toolchain-16-x86_64-lin.tar.gz
+          mkdir -p "$HOME/riscv-toolchain"
+          tar -xzf /tmp/riscv-toolchain.tar.gz -C "$HOME/riscv-toolchain"
+          echo "$HOME/riscv-toolchain/bin" >> "$GITHUB_PATH"
 
       - name: Checkout Integration Tests
         uses: actions/checkout@v4.1.6
@@ -49,11 +58,11 @@ jobs:
           path: _integ
 
       - name: Checkout Raspberry Pi Pico SDK
-        if: matrix.target_name == 'rp2040'
+        if: matrix.target_name == 'rp2040' || matrix.target_name == 'rp2350-riscv'
         uses: actions/checkout@v4.1.6
         with:
           repository: raspberrypi/pico-sdk
-          path: _integ/rp2040-pico-sdk/pico-sdk
+          path: _integ/${{ matrix.source_dir }}/pico-sdk
 
       - name: Link CMRX source
         run: rm -rf _integ/${{ matrix.source_dir }}/cmrx && ln -s $GITHUB_WORKSPACE _integ/${{ matrix.source_dir }}/cmrx
