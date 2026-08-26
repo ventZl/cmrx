@@ -47,8 +47,8 @@ var NAVTREE =
     ] ],
     [ "Getting started", "getting_started.html", [
       [ "HOWTO: Integrating CMRX into CubeMX project", "getting_started_cubemx.html", [
-        [ "Prerequisites", "getting_started_cubemx.html#autotoc_md55", null ],
-        [ "Creating project skeleton with CubeMX", "getting_started_cubemx.html#autotoc_md56", null ],
+        [ "Prerequisites", "getting_started_cubemx.html#autotoc_md48", null ],
+        [ "Creating project skeleton with CubeMX", "getting_started_cubemx.html#autotoc_md53", null ],
         [ "Basic CubeMX project settings", "getting_started_cubemx.html#autotoc_md57", null ],
         [ "Configuring the core", "getting_started_cubemx.html#autotoc_md58", null ],
         [ "Configuring GPIOs", "getting_started_cubemx.html#autotoc_md59", null ],

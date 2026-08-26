@@ -16,7 +16,7 @@ var searchData=
   ['device_13',['device',['../structEmuDummyPeripheral__t.html#a90ad79b58b95e238446c2683086be8fc',1,'EmuDummyPeripheral_t::device'],['../findcmsis.html#autotoc_md23',1,'DEVICE']]],
   ['device_5finclude_5ffilename_14',['DEVICE_INCLUDE_FILENAME',['../findcmsis.html#autotoc_md25',1,'']]],
   ['diff_5fmicrotime_15',['diff_microtime',['../group__api__standard.html#ga821cccfa3f3ac511dd361a3544715944',1,'std.c']]],
-  ['directories_16',['Source and header directories',['../dev_env.html#autotoc_md52',1,'']]],
+  ['directories_16',['Source and header directories',['../dev_env.html#autotoc_md54',1,'']]],
   ['dispatch_5fargs_17',['dispatch_args',['../structsyscall__dispatch__t.html#a38c4c9617d66066d5386da2ce3a513a9',1,'syscall_dispatch_t']]],
   ['dispatch_5ftarget_18',['dispatch_target',['../structsyscall__dispatch__t.html#ab5684536818cdbc428d1689b3195a52c',1,'syscall_dispatch_t']]],
   ['do_5fset_5ftimed_5fevent_19',['do_set_timed_event',['../group__os__timer.html#ga06ac70249990d2091bfe913282e0ede5',1,'timer.c']]],
