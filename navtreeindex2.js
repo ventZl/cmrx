@@ -179,8 +179,8 @@ var NAVTREEINDEX2 =
 "group__util.html#gafedd38df23e9c9f801b82b8cdf210dae":[7,8,2],
 "group__util__assert.html":[7,8,0],
 "hal_integration.html":[3,7],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "md_CLANG__TIDY.html":[1],
 "md_HIL__TESTING.html":[2],
 "md_HIL__TESTING.html#autotoc_md0":[2,0],
@@ -242,12 +242,12 @@ var NAVTREEINDEX2 =
 "structEmuDummyPeripheral__t.html":[8,0,12],
 "structEmuDummyPeripheral__t.html#a22152bb347246529b7fa59abdbf2de29":[8,0,12,1],
 "structEmuDummyPeripheral__t.html#a90ad79b58b95e238446c2683086be8fc":[8,0,12,0],
-"structExceptionFrame.html":[7,5,0,0,0,0],
 "structExceptionFrame.html":[7,5,0,3,0,0],
+"structExceptionFrame.html":[7,5,0,0,0,0],
 "structExceptionFrame.html#a00e9543a40f24b859cfba29a59a0d130":[7,5,0,0,0,0,30],
 "structExceptionFrame.html#a00e9543a40f24b859cfba29a59a0d130":[7,5,0,3,0,0,30],
-"structExceptionFrame.html#a00f9fffab2003c92039309a634072c93":[7,5,0,3,0,0,9],
 "structExceptionFrame.html#a00f9fffab2003c92039309a634072c93":[7,5,0,0,0,0,9],
-"structExceptionFrame.html#a022b14e153c588c60064ee7cab5b4bda":[7,5,0,3,0,0,2],
-"structExceptionFrame.html#a022b14e153c588c60064ee7cab5b4bda":[7,5,0,0,0,0,2]
+"structExceptionFrame.html#a00f9fffab2003c92039309a634072c93":[7,5,0,3,0,0,9],
+"structExceptionFrame.html#a022b14e153c588c60064ee7cab5b4bda":[7,5,0,0,0,0,2],
+"structExceptionFrame.html#a022b14e153c588c60064ee7cab5b4bda":[7,5,0,3,0,0,2]
 };
