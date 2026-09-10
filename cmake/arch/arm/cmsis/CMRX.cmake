@@ -5,7 +5,7 @@ function(__cmrx_get_linker_script_for_device DEVICE OUTPUT)
 endfunction()
 
 function(__cmrx_get_linker_script_for_binary DEVICE FW_NAME OUTPUT)
-    set(${OUTPUT} "${CMAKE_CURRENT_BINARY_DIR}/gen.${DEVICE}.${FW_NAME}.ld" PARENT_SCOPE)
+    set(${OUTPUT} "${CMAKE_BINARY_DIR}/gen.${DEVICE}.${FW_NAME}.ld" PARENT_SCOPE)
 endfunction()
 
 function(__cmrx_get_map_file_for_binary FW_NAME OUTPUT)
@@ -40,7 +40,7 @@ function(add_firmware FW_NAME)
         COMMAND ${PYTHON_EXE} ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --realign
             ${CMAKE_CURRENT_BINARY_DIR}/${BINARY_MAP_FILE}
             ${FW_NAME}
-            ${CMAKE_CURRENT_BINARY_DIR}
+            ${CMAKE_BINARY_DIR}
 
     	COMMENT "Updating linker script for correct MPU operation"
     	)
@@ -54,6 +54,7 @@ function(add_firmware FW_NAME)
         ${DEVICE_LINKER_SCRIPT}
         ${BINARY_LINKER_SCRIPT}
         ${FW_NAME}
+        COMMAND_ERROR_IS_FATAL ANY
         )
     target_link_options(${FW_NAME} PUBLIC -Wl,-Map=${BINARY_MAP_FILE})
     # TODO: CMake will de-duplicate any incoming interface
@@ -85,7 +86,8 @@ function(target_add_applications TGT_NAME)
                     COMMAND ${PYTHON_EXE} ${CMRX_ROOT_DIR}/ld/genlink-cmsis.py --add-application
                         ${OUT_DIR}lib${LIBRARY}.a
                         ${TGT_NAME}
-                        ${CMAKE_CURRENT_BINARY_DIR} 
+                        ${CMAKE_BINARY_DIR}
+                    COMMAND_ERROR_IS_FATAL ANY
                     )
             endif()
         endforeach()

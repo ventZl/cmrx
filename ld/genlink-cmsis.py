@@ -759,8 +759,6 @@ class MapFile(TokenList):
 
         sect = self._get_file_section(file, section)
         sect.add_alloc(int(size, 16))
-        
-        print("%s(%s) %s:%s" % (file, section, base, size))
 
     def add_filler(self, file, section, base, size):
         if (file is None):
@@ -768,8 +766,6 @@ class MapFile(TokenList):
 
         sect = self._get_file_section(file, section)
         sect.add_fill(int(size, 16))
-
-        print("%s(%s) %s:%s ***" % (file, section, base, size))
         pass
 
     def mpu_blocks(self, section):
