@@ -1553,10 +1553,10 @@ core and wait for connection by debugger. As noted in the prerequisites above, t
 an OpenOCD build that includes `target/rp2350-riscv.cfg` - stock/distro OpenOCD 0.12.0
 packages do not include it.
 
-Next, once your firmware is built, run GDB in another terminal:
+Next, once your firmware is built, run a RISC-V-capable GDB in another terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-gdb ~/projects/pico-sdk-riscv-example/build/pico-sdk-riscv-example.elf
+gdb-multiarch ~/projects/pico-sdk-riscv-example/build/pico-sdk-riscv-example.elf
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this GDB instance, the following sequence of commands will perform following actions:
