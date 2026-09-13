@@ -1229,7 +1229,7 @@ Unlike the ARM-based guides on this page, RP2350 RISC-V integration does not go 
 `include(pico_sdk_import)` even runs** - the Pico SDK reads `PICO_BOARD`/`PICO_PLATFORM`
 immediately as part of that `include()`, to select the toolchain and board headers, well
 before `project()` or `pico_sdk_init()` are called. Setting these afterwards (even if it's
-still textually "before `pico_sdk_init()`" further down the file) is too late and silently
+still textually before `pico_sdk_init()` further down the file) is too late and silently
 falls back to the RP2040/ARM defaults. So this has to be the very first thing in the file,
 right after `cmake_minimum_required`:
 
@@ -1308,7 +1308,7 @@ call at the bottom of `CMakeLists.txt`:
 target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_exception)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-**`-Wl,--whole-archive`/`-Wl,--no-whole-archive` around `cmrx` are required here, not
+**The `-Wl,--whole-archive`/`-Wl,--no-whole-archive` flags around `cmrx` are required here, not
 optional** - without them, the firmware links successfully but the board will hang the first
 time the machine timer interrupt fires, because the ISR override never actually takes effect.
 The `pico-sdk-riscv` quirk (added above) overrides several weak ISR symbols
