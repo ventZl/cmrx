@@ -16,6 +16,16 @@ if (NOT UNIT_TESTING_BUILD)
         endif()
     endif()
 
+    if ("${CMRX_ARCH}" STREQUAL "riscv")
+        if ("${PICO_PLATFORM}" STREQUAL "rp2350-riscv")
+            set(aux_riscv_pico_timer_SRCS riscv_pico_timer.c)
+            add_library(aux_riscv_pico_timer STATIC EXCLUDE_FROM_ALL ${aux_riscv_pico_timer_SRCS})
+            target_link_libraries(aux_riscv_pico_timer PRIVATE
+                hardware_riscv_platform_timer
+            )
+        endif()
+    endif()
+
     set(phy_emu_SRCS emulator.c)
     add_library(phy_emu STATIC EXCLUDE_FROM_ALL ${phy_emu_SRCS})
     target_link_libraries(phy_emu PUBLIC stdlib)

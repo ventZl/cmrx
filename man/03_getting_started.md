@@ -1305,7 +1305,7 @@ CMRX itself is built as a static library called `cmrx`. Update the `target_link_
 call at the bottom of `CMakeLists.txt`:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~
-target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive pico_stdlib hardware_exception)
+target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_exception)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 **`-Wl,--whole-archive`/`-Wl,--no-whole-archive` around `cmrx` are required here, not
@@ -1369,72 +1369,19 @@ add_subdirectory(cmrx/quirks/pico-sdk-riscv)
 
 # Here we changed the call add_executable to add_firmware
 add_firmware(
-    pico-sdk-riscv-example src/main.c src/timing_provider.c
+    pico-sdk-riscv-example src/main.c
 )
 
 pico_add_extra_outputs(pico-sdk-riscv-example)
-target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive pico_stdlib hardware_riscv_platform_timer hardware_exception)
+target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_riscv_platform_timer hardware_exception)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Creating a timing provider
-==========================
+Timing provider
+===============
 
-Unlike the ARM ports, RISC-V does not yet have a ready-made timing provider library
-(equivalent to `extra/systick.h`) to link against - you provide one yourself, built on top of
-the RISC-V machine timer. The `cmrx/quirks/pico-sdk-riscv` quirk added earlier calls a function
-named `cmrx_machine_timer_handler()` from its machine-timer interrupt handler (see
-`cmrx_timer_isr.c` in that quirk) once per timer tick; your application must define it.
-
-Create `src/timing_provider.h`:
-
-~~~~~~~~~~~~~~~~~~~~~~~~{.c}
-#pragma once
-
-void timing_provider_setup(int interval_ms);
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-And `src/timing_provider.c`:
-
-~~~~~~~~~~~~~~~~~~~~~~~~{.c}
-#include "timing_provider.h"
-#include <cmrx/clock.h>
-#include <hardware/riscv_platform_timer.h>
-#include <hardware/regs/rvcsr.h>
-#include <pico/time.h>
-#include <stdint.h>
-
-static uint32_t timing_interval_us;
-
-void cmrx_machine_timer_handler(void)
-{
-    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + timing_interval_us);
-    os_sched_timing_callback((long) timing_interval_us);
-}
-
-void timing_provider_setup(int interval_ms)
-{
-    timing_interval_us = (uint32_t) interval_ms * 1000u;
-    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + timing_interval_us);
-    uint32_t bit = RVCSR_MIE_MTIE_BITS;
-    __asm__ volatile("csrs mie, %0" :: "r"(bit));
-}
-
-void timing_provider_schedule(long delay_us)
-{
-    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + (uint32_t) delay_us);
-}
-
-void timing_provider_delay(long delay_us)
-{
-    busy_wait_us((uint64_t) delay_us);
-}
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-`cmrx_machine_timer_handler()` is the hook the quirk's interrupt handler calls on every timer
-tick; it re-arms the next tick and feeds the kernel scheduler via `os_sched_timing_callback()`.
-`timing_provider_setup()`, `timing_provider_schedule()` and `timing_provider_delay()` are the
-portable timing provider interface CMRX's kernel and standard library call into (the same
-roles the ARM `extra/systick.h` library fills for Cortex-M targets).
+The `CMakeLists.txt` above links `aux_riscv_pico_timer`, a ready-to-use timing provider for
+RP2350 RISC-V, so you do not have to write one yourself. Your application only calls
+`timing_provider_setup()`, declared in `extra/riscv_pico_timer.h`, before `os_start()`.
 
 Creating main.c file
 ====================
@@ -1445,7 +1392,7 @@ Next we need a main file that will actually start our RTOS:
 #include <cmrx/cmrx.h>
 #include "pico/stdlib.h"
 #include "hardware/clocks.h"
-#include "timing_provider.h"
+#include <extra/riscv_pico_timer.h>
 
 long timing_get_current_cpu_freq(void)
 {
@@ -1552,7 +1499,7 @@ add_subdirectory(src/blinky)
 Then, update the `target_link_libraries` call added earlier to also whole-archive `blinky`:
 
 ~~~~~~~~~~~~~~~~~~~
-target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx blinky -Wl,--no-whole-archive pico_stdlib hardware_riscv_platform_timer hardware_exception)
+target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx blinky -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_riscv_platform_timer hardware_exception)
 ~~~~~~~~~~~~~~~~~~~
 
 **This is not optional either, for the same reason as `cmrx` above.** `target_add_applications()`
