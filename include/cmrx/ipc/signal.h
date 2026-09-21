@@ -51,7 +51,7 @@
  * @param sighandler address of function which handles the signal
  * @returns 0. Mostly.
  */
-__SYSCALL int CMRX_API(signal_handler)(int signo, void (*sighandler)(uint32_t));
+__SYSCALL int signal_handler(int signo, void (*sighandler)(uint32_t));
 
 /** Alias for @ref signal_handler
  */
@@ -64,7 +64,7 @@ __SYSCALL int CMRX_API(signal)(int signo, void (*sighandler)(uint32_t));
  * @param signal signal number
  * @returns 0. Mostly.
  */
-__SYSCALL int CMRX_API(send_signal)(int thread, uint32_t signal);
+__SYSCALL int send_signal(int thread, uint32_t signal);
 
 /** Alias for @ref send_signal
  */
