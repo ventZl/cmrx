@@ -1,7 +1,7 @@
 var searchData=
 [
   ['sched_5fyield_0',['sched_yield',['../group__api__thread.html#ga3f9aa3e3b18af17647ea2545e8a7cc87',1,'thread.c']]],
-  ['send_5fsignal_1',['send_signal',['../group__api__signal.html#gae041c6464c438ca916b88eade9e437b3',1,'signal.c']]],
+  ['send_5fsignal_1',['send_signal',['../group__api__signal.html#gaaee7d7ac61484a9a17d7201ad367518a',1,'signal.c']]],
   ['set_5fexception_5fargument_2',['set_exception_argument',['../group__arch__arm__cortex.html#ga7753106298a2f7639e0ee3c2a8804b40',1,'cortex.h']]],
   ['set_5fexception_5fpc_5flr_3',['set_exception_pc_lr',['../group__arch__arm__cortex.html#ga2bd0234ec5d398042702d9526d9d75e1',1,'cortex.h']]],
   ['setitimer_4',['setitimer',['../group__api__timer.html#ga9f408bf7753a44225214c63f3285e440',1,'timer.c']]],
@@ -10,7 +10,7 @@ var searchData=
   ['shutdown_7',['shutdown',['../group__api__standard.html#gae1715e8318d2fce3df9a39f863d9493f',1,'std.c']]],
   ['sigalrm_5fhandler_8',['sigalrm_handler',['../group__arch__linux__timing.html#ga74573251c13c5718ef5ecce89db72430',1,'sigalrm_handler(int signo):&#160;clock.c'],['../group__arch__linux__timing.html#ga74573251c13c5718ef5ecce89db72430',1,'sigalrm_handler(int signo):&#160;clock.c']]],
   ['signal_9',['signal',['../group__api__signal.html#ga5233cb076826bc9fadbd4ee4f682798f',1,'signal.h']]],
-  ['signal_5fhandler_10',['signal_handler',['../group__api__signal.html#ga07c68a00faf32220055cbd2bed2c0754',1,'signal.c']]],
+  ['signal_5fhandler_10',['signal_handler',['../group__api__signal.html#ga4c22aec4321370191f001cc519c4d6e0',1,'signal.c']]],
   ['static_5finit_5fprocess_5fcount_11',['static_init_process_count',['../group__arch__arm__static.html#gad4128fe30c4eef560ae2dc025e89abf2',1,'static_init_process_count():&#160;static.c'],['../group__arch__linux.html#gad4128fe30c4eef560ae2dc025e89abf2',1,'static_init_process_count():&#160;static.c'],['../group__arch__arm__static.html#gad4128fe30c4eef560ae2dc025e89abf2',1,'static_init_process_count():&#160;static.c'],['../group__arch__arm__static.html#gad4128fe30c4eef560ae2dc025e89abf2',1,'static_init_process_count(void):&#160;static.c'],['../group__arch__arch.html#gad4128fe30c4eef560ae2dc025e89abf2',1,'static_init_process_count():&#160;static.c']]],
   ['static_5finit_5fprocess_5ftable_12',['static_init_process_table',['../group__arch__arm__static.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table():&#160;static.c'],['../group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table():&#160;static.c'],['../group__arch__arm__static.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table(void):&#160;static.c'],['../group__arch__arm__static.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table():&#160;static.c'],['../group__arch__linux.html#ga40ff64621b791a06874bb7ca27a9164e',1,'static_init_process_table():&#160;static.c']]],
   ['static_5finit_5fthread_5fcount_13',['static_init_thread_count',['../group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count():&#160;static.c'],['../group__arch__linux.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count():&#160;static.c'],['../group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count():&#160;static.c'],['../group__arch__arm__static.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count(void):&#160;static.c'],['../group__arch__arch.html#gaa1e4c4f6735a5acd050873acdb00cdbf',1,'static_init_thread_count():&#160;static.c']]],
