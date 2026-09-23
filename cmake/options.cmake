@@ -18,6 +18,7 @@ set(OS_STACK_SIZE 1024 CACHE STRING "Stack allocated per thread in bytes")
 set(OS_THREADS 8 CACHE STRING "Amount of entries in the thread table")
 set(OS_PROCESSES 8 CACHE STRING "Amount of entries in the process table")
 set(OS_STACKS 8 CACHE STRING "Amount of stacks allocated")
+option(CMRX_ENABLE_LTO "Enable single translation unit compilation (semi-LTO)" OFF)
 
 # List of CMake options that are transferred into nested build
 set(CMRX_ALL_OPTIONS

@@ -25,7 +25,7 @@
 #include <conf/kernel.h>
 #include <cmrx/assert.h>
 
-void rpc_return(void);
+int rpc_return(void);
 
 /* To verify that we are using the right type and compiler won't cull
  * our data.
@@ -87,7 +87,7 @@ int os_rpc_call(unsigned long arg0, unsigned long arg1, unsigned long arg2, unsi
 #ifdef CMRX_RPC_CANARY
 	methods->set_exception_argument(remote_frame, 5, 0xAA55AA55, fpu_used);
 #endif
-	set_exception_pc_lr(remote_frame, method, rpc_return);
+	set_exception_pc_lr(remote_frame, method, (void (*)(void)) rpc_return);
 	
 	__set_PSP((uint32_t) remote_frame);
 
