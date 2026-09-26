@@ -27,15 +27,32 @@
 #include "signal.h"
 #include <stddef.h>
 
+/* One ISER / ICER register can store 32 interrupt flags
+ */
+#define INTS_PER_REGISTER 32U
+
+#if defined(__ARM_ARCH_6M__)
+// ARMv6M NVIC supports 32 interrupts
+#	define OS_NVIC_INT_MAX 0x1FU
+#elif defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7EM__)
+// ARMv7M NVIC supports up to 240 interrupts but registers have physically 256 slots
+#	define OS_NVIC_INT_MAX 0xFFU
+#elif defined(__ARM_ARCH_8M_BASE__) || defined(__ARM_ARCH_8M_MAIN__)
+// ARMv7M NVIC supports up to
+#	define OS_NVIC_INT_MAX 0x1FFU
+#else
+#	error "Unsupported ARM sub-architecture or your HAL doesn't define __ARM_ARCH_xx__ macros!"
+#endif
+
 int os_nvic_enable(uint32_t irq)
 {
-    NVIC_EnableIRQ(irq);
+    NVIC_EnableIRQ(irq & OS_NVIC_INT_MAX);
     return E_OK;
 }
 
 int os_nvic_disable(uint32_t irq)
 {
-    NVIC_DisableIRQ(irq);
+    NVIC_DisableIRQ(irq & OS_NVIC_INT_MAX);
     return E_OK;
 }
 
