@@ -4,7 +4,7 @@ var NAVTREEINDEX1 =
 "group__arch__arm__os.html#gaf9cfd40d6d666aac139df5763d7f5252":[7,5,0,0,3,1],
 "group__arch__arm__rpc.html":[7,5,0,0,4],
 "group__arch__arm__rpc.html#ga2b0268c1c8ecd0d6e3194f0f52be350c":[7,5,0,0,4,2],
-"group__arch__arm__rpc.html#ga691fc796895989b3612d53c524d18535":[7,5,0,0,4,3],
+"group__arch__arm__rpc.html#ga5046cb776494c71b0c012790908e7a9f":[7,5,0,0,4,3],
 "group__arch__arm__rpc.html#gad8854252fa6004476c67eb3f2e29bcf5":[7,5,0,0,4,1],
 "group__arch__arm__rpc.html#gadddafb544211d9ec664b57660a5a26eb":[7,5,0,0,4,0],
 "group__arch__arm__sched.html":[7,5,0,0,5],
