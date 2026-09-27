@@ -864,6 +864,10 @@ defined:
   timing provider. This optional library can be used to quickly bootstrap the kernel
   before more comprehensive hardware- and task-specific timing provider is developed.
 
+* library `aux_riscv_pico_timer` - this is an auxiliary library which implements a timing
+  provider for RP2350 RISC-V cores, driven by the RISC-V machine timer. It requires Pico SDK
+  and can be used to quickly bootstrap the kernel on these targets.
+
 Linker script adjustment tool
 -----------------------------
 

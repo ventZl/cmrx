@@ -7,7 +7,7 @@
  *
  * Purpose:
  * - Provide a minimal, swappable API for CSR and interrupt primitives needed by
- *   the RISC-V thread switcher and its safe-point logic.
+ *   the RISC-V thread switcher, its safe-point logic and timing providers.
  *
  * Notes:
  * - This header intentionally does not define CSR bit layouts or trap semantics.
@@ -18,7 +18,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/* ---- Minimal CSR accessors (subset justified by switcher needs) ---- */
+/* ---- Minimal CSR accessors (subset justified by switcher and timer needs) ---- */
 
 uint32_t cmrx_riscv_csr_read_mstatus(void);
 void cmrx_riscv_csr_write_mstatus(uint32_t value);
