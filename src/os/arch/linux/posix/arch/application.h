@@ -116,17 +116,17 @@ __attribute__((constructor)) void __APPL_SYMBOL(application, inst_construct)(voi
  *
  * See @ref OS_THREAD_CREATE for more details in arguments.
  */
-#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core) \
-const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\
+#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core, unique_id) \
+const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint ## _ ## unique_id) = {\
     &__APPL_SYMBOL(application, instance),\
     entrypoint,\
     data,\
     priority,\
     core\
 }; \
-__attribute__((constructor)) void __APPL_SYMBOL(application, thread_create_ ## entrypoint ## _construct)(void)\
+__attribute__((constructor)) void __APPL_SYMBOL(application, thread_create_ ## entrypoint ## _ ## unique_id ## _construct)(void)\
 {\
-    cmrx_posix_register_thread(&__APPL_SYMBOL(application, thread_create_ ## entrypoint));\
+    cmrx_posix_register_thread(&__APPL_SYMBOL(application, thread_create_ ## entrypoint ## _ ## unique_id));\
 }
 
 /**

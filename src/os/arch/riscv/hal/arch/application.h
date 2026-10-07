@@ -31,8 +31,8 @@ CMRX_APPLICATION_INSTANCE_ATTRIBUTES const struct OS_process_definition_t __APPL
     { &__APPL_SYMBOL(application, vtable_start), &__APPL_SYMBOL(application, vtable_end) } \
 }
 
-#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core) \
-CMRX_THREAD_AUTOCREATE_ATTRIBUTES const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = { \
+#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core, unique_id) \
+CMRX_THREAD_AUTOCREATE_ATTRIBUTES const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint ## _ ## unique_id) = { \
     &__APPL_SYMBOL(application, instance), \
     entrypoint, \
     data, \

@@ -7,8 +7,11 @@
 
 #define __APPL_SYMBOL(application, symbol)	application ## _ ## symbol
 
+#define __OS_THREAD_CREATE(application, entrypoint, data, priority, core, unique_id) \
+CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core, unique_id)
+
 #define _OS_THREAD_CREATE(application, entrypoint, data, priority, core) \
-CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core)
+__OS_THREAD_CREATE(application, entrypoint, data, priority, core, __COUNTER__)
 
 /** @defgroup api_init Static initialization
  * @ingroup api
