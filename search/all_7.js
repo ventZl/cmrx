@@ -47,7 +47,7 @@ var searchData=
   ['cmrx_5friscv_5finitial_5fmstatus_44',['CMRX_RISCV_INITIAL_MSTATUS',['../group__arch__riscv__exception__frame.html#ga96932351618290a33900b966cd2beaf7',1,'exception_frame.h']]],
   ['cmrx_5frpc_5fcanary_45',['cmrx_rpc_canary',['../group__os__config.html#gab7da05f2a002e2d9ec8811a1a4112c08',1,'CMRX_RPC_CANARY:&#160;kernel.h'],['../build_system.html#autotoc_md14',1,'CMRX_RPC_CANARY']]],
   ['cmrx_5fshutdown_5fhandler_46',['cmrx_shutdown_handler',['../group__arch__arm__sched.html#gaa1fe4414a243f61c85e0a1d2fbd01440',1,'sched.c']]],
-  ['cmrx_5fthread_5fautocreate_5fconstructor_47',['CMRX_THREAD_AUTOCREATE_CONSTRUCTOR',['../group__arch__linux.html#ga750bda6ec872a28db4ac92c1d1516a5a',1,'application.h']]],
+  ['cmrx_5fthread_5fautocreate_5fconstructor_47',['CMRX_THREAD_AUTOCREATE_CONSTRUCTOR',['../group__arch__linux.html#gaaba9f47ac8a929a79e527785a0b85c21',1,'application.h']]],
   ['cmrx_5funit_5ftests_48',['CMRX_UNIT_TESTS',['../build_system.html#autotoc_md7',1,'']]],
   ['cmrx_5fuse_5ffast_5fhash_49',['CMRX_USE_FAST_HASH',['../group__os__config.html#ga81d6dadc6741be80b87c1da5e13c5f1d',1,'kernel.h']]],
   ['cmrx_5fverbose_5fapi_5fnames_50',['CMRX_VERBOSE_API_NAMES',['../group__os__config.html#gaa62716baa6aa1e233a1ad705f7a79ee3',1,'kernel.h']]],

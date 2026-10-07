@@ -3,7 +3,7 @@ var group__arch__linux =
     [ "Implementation details", "group__arch__linux__impl.html", "group__arch__linux__impl" ],
     [ "Linux timing provider", "group__arch__linux__timing.html", "group__arch__linux__timing" ],
     [ "CMRX_APPLICATION_INSTANCE_CONSTRUCTOR", "group__arch__linux.html#gae33886ca29f6dc847f8103f69a8e424d", null ],
-    [ "CMRX_THREAD_AUTOCREATE_CONSTRUCTOR", "group__arch__linux.html#ga750bda6ec872a28db4ac92c1d1516a5a", null ],
+    [ "CMRX_THREAD_AUTOCREATE_CONSTRUCTOR", "group__arch__linux.html#gaaba9f47ac8a929a79e527785a0b85c21", null ],
     [ "CMRX_VTABLE_SECTION", "group__arch__linux.html#gab5b658d3f2aca7d77cd088e6da262a45", null ],
     [ "CMRX_VTABLE_SECTION_START", "group__arch__linux.html#ga1490c17440e169a12ffb4e6680772ce0", null ],
     [ "CMRX_VTABLE_SECTION_START2", "group__arch__linux.html#ga905ec62d67f3775e9967967aca51d547", null ],

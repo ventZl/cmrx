@@ -166,17 +166,17 @@ $(document).ready(function(){initNavTree('src_2os_2arch_2linux_2posix_2arch_2app
 </div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
 <div class="foldopen" id="foldopen00119" data-start="" data-end="">
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="group__arch__linux.html#ga750bda6ec872a28db4ac92c1d1516a5a">  119</a></span><span class="preprocessor">#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core) \</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="preprocessor">const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = {\</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="group__arch__linux.html#gaaba9f47ac8a929a79e527785a0b85c21">  119</a></span><span class="preprocessor">#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core, unique_id) \</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="preprocessor">const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint ## _ ## unique_id) = {\</span></div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">    &amp;__APPL_SYMBOL(application, instance),\</span></div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="preprocessor">    entrypoint,\</span></div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">    data,\</span></div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="preprocessor">    priority,\</span></div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">    core\</span></div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="preprocessor">}; \</span></div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">__attribute__((constructor)) void __APPL_SYMBOL(application, thread_create_ ## entrypoint ## _construct)(void)\</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">__attribute__((constructor)) void __APPL_SYMBOL(application, thread_create_ ## entrypoint ## _ ## unique_id ## _construct)(void)\</span></div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="preprocessor">{\</span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">    cmrx_posix_register_thread(&amp;__APPL_SYMBOL(application, thread_create_ ## entrypoint));\</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">    cmrx_posix_register_thread(&amp;__APPL_SYMBOL(application, thread_create_ ## entrypoint ## _ ## unique_id));\</span></div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="preprocessor">}</span></div>
 </div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>

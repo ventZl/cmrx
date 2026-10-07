@@ -142,9 +142,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gae33886ca29f6dc847f8103f69a8e424d" id="r_gae33886ca29f6dc847f8103f69a8e424d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux.html#gae33886ca29f6dc847f8103f69a8e424d">CMRX_APPLICATION_INSTANCE_CONSTRUCTOR</a>(application)</td></tr>
 <tr class="memdesc:gae33886ca29f6dc847f8103f69a8e424d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linux port implementation of application creation macro.  <br /></td></tr>
 <tr class="separator:gae33886ca29f6dc847f8103f69a8e424d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga750bda6ec872a28db4ac92c1d1516a5a" id="r_ga750bda6ec872a28db4ac92c1d1516a5a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux.html#ga750bda6ec872a28db4ac92c1d1516a5a">CMRX_THREAD_AUTOCREATE_CONSTRUCTOR</a>(application,  entrypoint,  data,  priority,  <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>)</td></tr>
-<tr class="memdesc:ga750bda6ec872a28db4ac92c1d1516a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linux port implementation of thread autostart.  <br /></td></tr>
-<tr class="separator:ga750bda6ec872a28db4ac92c1d1516a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaba9f47ac8a929a79e527785a0b85c21" id="r_gaaba9f47ac8a929a79e527785a0b85c21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__linux.html#gaaba9f47ac8a929a79e527785a0b85c21">CMRX_THREAD_AUTOCREATE_CONSTRUCTOR</a>(application,  entrypoint,  data,  priority,  <a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>,  unique_id)</td></tr>
+<tr class="memdesc:gaaba9f47ac8a929a79e527785a0b85c21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linux port implementation of thread autostart.  <br /></td></tr>
+<tr class="separator:gaaba9f47ac8a929a79e527785a0b85c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -205,8 +205,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga750bda6ec872a28db4ac92c1d1516a5a" name="ga750bda6ec872a28db4ac92c1d1516a5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga750bda6ec872a28db4ac92c1d1516a5a">&#9670;&#160;</a></span>CMRX_THREAD_AUTOCREATE_CONSTRUCTOR</h2>
+<a id="gaaba9f47ac8a929a79e527785a0b85c21" name="gaaba9f47ac8a929a79e527785a0b85c21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaba9f47ac8a929a79e527785a0b85c21">&#9670;&#160;</a></span>CMRX_THREAD_AUTOCREATE_CONSTRUCTOR</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,7 +239,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>&#160;</td>
+          <td class="paramname"><a class="el" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">unique_id&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -248,16 +254,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structOS__thread__create__t.html">OS_thread_create_t</a> __APPL_SYMBOL(application, thread_create_ ## <a class="code hl_variable" href="structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c">entrypoint</a>) = {\</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structOS__thread__create__t.html">OS_thread_create_t</a> __APPL_SYMBOL(application, thread_create_ ## <a class="code hl_variable" href="structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c">entrypoint</a> ## _ ## unique_id) = {\</div>
 <div class="line">    &amp;__APPL_SYMBOL(application, instance),\</div>
 <div class="line">    <a class="code hl_variable" href="structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c">entrypoint</a>,\</div>
 <div class="line">    <a class="code hl_variable" href="structOS__thread__create__t.html#a0ce5624721f9e81bade70aea96d6ac22">data</a>,\</div>
 <div class="line">    <a class="code hl_variable" href="structOS__thread__create__t.html#a101f5f58e48c5b90a973d0f63c2a5b0b">priority</a>,\</div>
 <div class="line">    <a class="code hl_variable" href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a>\</div>
 <div class="line">}; \</div>
-<div class="line">__attribute__((constructor)) <span class="keywordtype">void</span> __APPL_SYMBOL(application, thread_create_ ## <a class="code hl_variable" href="structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c">entrypoint</a> ## _construct)(void)\</div>
+<div class="line">__attribute__((constructor)) <span class="keywordtype">void</span> __APPL_SYMBOL(application, thread_create_ ## <a class="code hl_variable" href="structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c">entrypoint</a> ## _ ## unique_id ## _construct)(void)\</div>
 <div class="line">{\</div>
-<div class="line">    cmrx_posix_register_thread(&amp;__APPL_SYMBOL(application, thread_create_ ## <a class="code hl_variable" href="structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c">entrypoint</a>));\</div>
+<div class="line">    cmrx_posix_register_thread(&amp;__APPL_SYMBOL(application, thread_create_ ## <a class="code hl_variable" href="structOS__thread__create__t.html#a4de96046ea6ce73139f3e68c59f6aa4c">entrypoint</a> ## _ ## unique_id));\</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__os__sched_html_ga2057e79833f71e7a4793d51bc2dca106"><div class="ttname"><a href="group__os__sched.html#ga2057e79833f71e7a4793d51bc2dca106">core</a></div><div class="ttdeci">struct OS_core_state_t core[OS_NUM_CORES]</div><div class="ttdoc">CPU scheduling thread IDs.</div><div class="ttdef"><b>Definition</b> sched.c:38</div></div>
 <div class="ttc" id="astructOS__thread__create__t_html"><div class="ttname"><a href="structOS__thread__create__t.html">OS_thread_create_t</a></div><div class="ttdoc">Structure describing auto-spawned thread.</div><div class="ttdef"><b>Definition</b> runtime.h:46</div></div>

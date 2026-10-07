@@ -134,8 +134,8 @@ $(document).ready(function(){initNavTree('src_2os_2arch_2riscv_2hal_2arch_2appli
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">    { &amp;__APPL_SYMBOL(application, vtable_start), &amp;__APPL_SYMBOL(application, vtable_end) } \</span></div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">}</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core) \</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">CMRX_THREAD_AUTOCREATE_ATTRIBUTES const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint) = { \</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#define CMRX_THREAD_AUTOCREATE_CONSTRUCTOR(application, entrypoint, data, priority, core, unique_id) \</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">CMRX_THREAD_AUTOCREATE_ATTRIBUTES const struct OS_thread_create_t __APPL_SYMBOL(application, thread_create_ ## entrypoint ## _ ## unique_id) = { \</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">    &amp;__APPL_SYMBOL(application, instance), \</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">    entrypoint, \</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">    data, \</span></div>
