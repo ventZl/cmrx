@@ -62,3 +62,31 @@ target_include_directories(test_riscv_hal_backend PRIVATE ${CMRX_ROOT_DIR}/inclu
 target_link_libraries(test_riscv_hal_backend ctest)
 add_test(NAME test_riscv_hal_backend COMMAND test_riscv_hal_backend)
 
+set(test_thread_autocreate_shared_entrypoint_SRCS
+    thread_autocreate_shared_entrypoint.c
+    )
+
+add_library(test_thread_autocreate_shared_entrypoint_arm OBJECT ${test_thread_autocreate_shared_entrypoint_SRCS})
+target_include_directories(test_thread_autocreate_shared_entrypoint_arm BEFORE PRIVATE
+    ${CMRX_ROOT_DIR}/src/os/arch/arm/cmsis
+    ${CMRX_ROOT_DIR}/include
+    ${CMAKE_BINARY_DIR}
+    )
+target_compile_definitions(test_thread_autocreate_shared_entrypoint_arm PRIVATE APPLICATION_NAME=thread_autocreate_shared_entrypoint)
+
+add_library(test_thread_autocreate_shared_entrypoint_linux OBJECT ${test_thread_autocreate_shared_entrypoint_SRCS})
+target_include_directories(test_thread_autocreate_shared_entrypoint_linux BEFORE PRIVATE
+    ${CMRX_ROOT_DIR}/src/os/arch/linux/posix
+    ${CMRX_ROOT_DIR}/include
+    ${CMAKE_BINARY_DIR}
+    )
+target_compile_definitions(test_thread_autocreate_shared_entrypoint_linux PRIVATE APPLICATION_NAME=thread_autocreate_shared_entrypoint)
+
+add_library(test_thread_autocreate_shared_entrypoint_riscv OBJECT ${test_thread_autocreate_shared_entrypoint_SRCS})
+target_include_directories(test_thread_autocreate_shared_entrypoint_riscv BEFORE PRIVATE
+    ${CMRX_ROOT_DIR}/src/os/arch/riscv/hal
+    ${CMRX_ROOT_DIR}/include
+    ${CMAKE_BINARY_DIR}
+    )
+target_compile_definitions(test_thread_autocreate_shared_entrypoint_riscv PRIVATE APPLICATION_NAME=thread_autocreate_shared_entrypoint)
+
