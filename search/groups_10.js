@@ -3,12 +3,13 @@ var searchData=
   ['rasr_20fields_20armv6m_20armv7m_0',['ARM MPU RASR fields (ARMv6M/ARMv7M)',['../group__arm__mpu__rars.html',1,'']]],
   ['rbar_20fields_1',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],
   ['region_20names_2',['MPU region names',['../group__mpu__region__names.html',1,'']]],
-  ['remote_20procedure_20calls_3',['remote procedure calls',['../group__api__rpc.html',1,'Remote Procedure Calls'],['../group__os__rpc.html',1,'Remote Procedure Calls']]],
+  ['remote_20procedure_20calls_3',['remote procedure calls',['../group__os__rpc.html',1,'Remote Procedure Calls'],['../group__api__rpc.html',1,'Remote Procedure Calls']]],
   ['risc_20v_20exception_20frame_4',['RISC-V Exception Frame',['../group__arch__riscv__exception__frame.html',1,'']]],
-  ['risc_20v_20port_5',['RISC-V port',['../group__arch__riscv.html',1,'']]],
-  ['rlar_20fields_20armv8m_6',['ARM MPU RLAR fields (ARMv8M)',['../group__arm__mpu__rlar.html',1,'']]],
-  ['routines_7',['routines',['../group__arch__arm__cortex.html',1,'Cortex-M support routines'],['../group__api__isr.html',1,'Interrupt Service Routines'],['../group__os__isr.html',1,'Interrupt service routines']]],
-  ['rpc_20implementation_8',['RPC implementation',['../group__arch__arm__rpc.html',1,'']]],
-  ['rpc_20queue_5fserver_9',['Queue RPC queue_server',['../group__queue__server.html',1,'']]],
-  ['runtime_20configuration_10',['Kernel runtime configuration',['../group__os__config.html',1,'']]]
+  ['risc_20v_20pico_20sdk_20machine_20timer_20based_20timing_20provider_5',['RISC-V Pico SDK Machine-Timer-Based Timing Provider',['../group__aux__riscv__pico__timer.html',1,'']]],
+  ['risc_20v_20port_6',['RISC-V port',['../group__arch__riscv.html',1,'']]],
+  ['rlar_20fields_20armv8m_7',['ARM MPU RLAR fields (ARMv8M)',['../group__arm__mpu__rlar.html',1,'']]],
+  ['routines_8',['routines',['../group__arch__arm__cortex.html',1,'Cortex-M support routines'],['../group__api__isr.html',1,'Interrupt Service Routines'],['../group__os__isr.html',1,'Interrupt service routines']]],
+  ['rpc_20implementation_9',['RPC implementation',['../group__arch__arm__rpc.html',1,'']]],
+  ['rpc_20queue_5fserver_10',['Queue RPC queue_server',['../group__queue__server.html',1,'']]],
+  ['runtime_20configuration_11',['Kernel runtime configuration',['../group__os__config.html',1,'']]]
 ];

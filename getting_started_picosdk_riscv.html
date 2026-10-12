@@ -165,7 +165,7 @@ Integrating CMRX into Pico-SDK project</h1>
 <p>Following steps will integrate CMRX RTOS into the project we just created, make sure that CMRX will use the Pico-SDK's RISC-V core, and add a simple blinky application.</p>
 <h2><a class="anchor" id="autotoc_md84"></a>
 1. Selecting the RP2350 RISC-V core</h2>
-<p>Unlike the ARM-based guides on this page, RP2350 RISC-V integration does not go through <code>FindCMSIS</code>. Instead, tell Pico-SDK which platform to build for. <b>This has to happen before <code>include(pico_sdk_import)</code> even runs</b> - the Pico SDK reads <code>PICO_BOARD</code>/<code>PICO_PLATFORM</code> immediately as part of that <code>include()</code>, to select the toolchain and board headers, well before <code>project()</code> or <code>pico_sdk_init()</code> are called. Setting these afterwards (even if it's still textually "before `pico_sdk_init()`" further down the file) is too late and silently falls back to the RP2040/ARM defaults. So this has to be the very first thing in the file, right after <code>cmake_minimum_required</code>:</p>
+<p>Unlike the ARM-based guides on this page, RP2350 RISC-V integration does not go through <code>FindCMSIS</code>. Instead, tell Pico-SDK which platform to build for. <b>This has to happen before <code>include(pico_sdk_import)</code> even runs</b> - the Pico SDK reads <code>PICO_BOARD</code>/<code>PICO_PLATFORM</code> immediately as part of that <code>include()</code>, to select the toolchain and board headers, well before <code>project()</code> or <code>pico_sdk_init()</code> are called. Setting these afterwards (even if it's still textually before <code>pico_sdk_init()</code> further down the file) is too late and silently falls back to the RP2040/ARM defaults. So this has to be the very first thing in the file, right after <code>cmake_minimum_required</code>:</p>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.13)</div>
 <div class="line"> </div>
 <div class="line">set(PICO_BOARD pico2)</div>
@@ -195,8 +195,8 @@ Integrating CMRX into Pico-SDK project</h1>
 <h1><a class="anchor" id="autotoc_md88"></a>
 Linking CMRX to the project</h1>
 <p>CMRX itself is built as a static library called <code>cmrx</code>. Update the <code>target_link_libraries</code> call at the bottom of <code>CMakeLists.txt</code>:</p>
-<div class="fragment"><div class="line">target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive pico_stdlib hardware_exception)</div>
-</div><!-- fragment --><p>**<code>-Wl,--whole-archive</code>/<code>-Wl,--no-whole-archive</code> around <code>cmrx</code> are required here, not optional** - without them, the firmware links successfully but the board will hang the first time the machine timer interrupt fires, because the ISR override never actually takes effect. The <code>pico-sdk-riscv</code> quirk (added above) overrides several weak ISR symbols (<code>isr_riscv_machine_timer</code>, <code>isr_riscv_machine_exception</code>) by compiling into the <code>os</code> static library. A linker only pulls an object file out of a static archive if something else in the link has an unresolved reference into it; since nothing calls these ISR-override functions by name anywhere else, the linker never has a reason to extract those specific object files, and the crt0's own weak default ISRs (which just execute <code>ebreak</code>) win instead - the build succeeds, but the firmware traps into the debugger (or hangs, with no debugger attached) on the first timer tick. <code>--whole-archive</code> forces every object file in <code>cmrx</code> into the link regardless of whether anything already references it, which is what actually makes the override take effect. <code>hardware_exception</code> is required for the same reason: once <code>--whole-archive</code> pulls in the quirk's exception-dispatcher override, that file needs symbols (<code>__riscv_exception_table</code>, <code>__halt_on_unhandled_exception</code>) that only come from linking that Pico-SDK library.</p>
+<div class="fragment"><div class="line">target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_exception)</div>
+</div><!-- fragment --><p><b>The <code>-Wl,--whole-archive</code>/<code>-Wl,--no-whole-archive</code> flags around <code>cmrx</code> are required here, not optional</b> - without them, the firmware links successfully but the board will hang the first time the machine timer interrupt fires, because the ISR override never actually takes effect. The <code>pico-sdk-riscv</code> quirk (added above) overrides several weak ISR symbols (<code>isr_riscv_machine_timer</code>, <code>isr_riscv_machine_exception</code>) by compiling into the <code>os</code> static library. A linker only pulls an object file out of a static archive if something else in the link has an unresolved reference into it; since nothing calls these ISR-override functions by name anywhere else, the linker never has a reason to extract those specific object files, and the crt0's own weak default ISRs (which just execute <code>ebreak</code>) win instead - the build succeeds, but the firmware traps into the debugger (or hangs, with no debugger attached) on the first timer tick. <code>--whole-archive</code> forces every object file in <code>cmrx</code> into the link regardless of whether anything already references it, which is what actually makes the override take effect. <code>hardware_exception</code> is required for the same reason: once <code>--whole-archive</code> pulls in the quirk's exception-dispatcher override, that file needs symbols (<code>__riscv_exception_table</code>, <code>__halt_on_unhandled_exception</code>) that only come from linking that Pico-SDK library.</p>
 <p>Next, find the line:</p>
 <div class="fragment"><div class="line">add_executable(pico-sdk-riscv-example</div>
 </div><!-- fragment --><p>And change it to:</p>
@@ -227,64 +227,21 @@ Linking CMRX to the project</h1>
 <div class="line"> </div>
 <div class="line"># Here we changed the call add_executable to add_firmware</div>
 <div class="line">add_firmware(</div>
-<div class="line">    pico-sdk-riscv-example src/main.c src/timing_provider.c</div>
+<div class="line">    pico-sdk-riscv-example src/main.c</div>
 <div class="line">)</div>
 <div class="line"> </div>
 <div class="line">pico_add_extra_outputs(pico-sdk-riscv-example)</div>
-<div class="line">target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive pico_stdlib hardware_riscv_platform_timer hardware_exception)</div>
+<div class="line">target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_riscv_platform_timer hardware_exception)</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md89"></a>
-Creating a timing provider</h1>
-<p>Unlike the ARM ports, RISC-V does not yet have a ready-made timing provider library (equivalent to <code><a class="el" href="systick_8h_source.html">extra/systick.h</a></code>) to link against - you provide one yourself, built on top of the RISC-V machine timer. The <code>cmrx/quirks/pico-sdk-riscv</code> quirk added earlier calls a function named <code>cmrx_machine_timer_handler()</code> from its machine-timer interrupt handler (see <code>cmrx_timer_isr.c</code> in that quirk) once per timer tick; your application must define it.</p>
-<p>Create <code>src/timing_provider.h</code>:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__aux__systick.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup</a>(<span class="keywordtype">int</span> interval_ms);</div>
-<div class="ttc" id="agroup__aux__systick_html_gac72eb3fe338346006ca3089ca0898867"><div class="ttname"><a href="group__aux__systick.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup</a></div><div class="ttdeci">void timing_provider_setup(int interval_ms)</div><div class="ttdoc">Setup the timing provider.</div><div class="ttdef"><b>Definition</b> systick.c:34</div></div>
-</div><!-- fragment --><p>And <code>src/timing_provider.c</code>:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;timing_provider.h&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;cmrx/clock.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;hardware/riscv_platform_timer.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;hardware/regs/rvcsr.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;pico/time.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">static</span> uint32_t timing_interval_us;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> cmrx_machine_timer_handler(<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
-<div class="line">    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + timing_interval_us);</div>
-<div class="line">    <a class="code hl_function" href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback</a>((<span class="keywordtype">long</span>) timing_interval_us);</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__aux__systick.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup</a>(<span class="keywordtype">int</span> interval_ms)</div>
-<div class="line">{</div>
-<div class="line">    timing_interval_us = (uint32_t) interval_ms * 1000u;</div>
-<div class="line">    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + timing_interval_us);</div>
-<div class="line">    uint32_t bit = RVCSR_MIE_MTIE_BITS;</div>
-<div class="line">    __asm__ <span class="keyword">volatile</span>(<span class="stringliteral">&quot;csrs mie, %0&quot;</span> :: <span class="stringliteral">&quot;r&quot;</span>(bit));</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__api__timing.html#gaa382f230650e9c08f3d5dec13da6fbd4">timing_provider_schedule</a>(<span class="keywordtype">long</span> <a class="code hl_function" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</div>
-<div class="line">{</div>
-<div class="line">    riscv_timer_set_mtimecmp(riscv_timer_get_mtime() + (uint32_t) <a class="code hl_function" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>);</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__api__timing.html#ga32ca98f569fe077cd53c29a5417f80de">timing_provider_delay</a>(<span class="keywordtype">long</span> <a class="code hl_function" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>)</div>
-<div class="line">{</div>
-<div class="line">    busy_wait_us((uint64_t) <a class="code hl_function" href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a>);</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__api__timing_html_ga32ca98f569fe077cd53c29a5417f80de"><div class="ttname"><a href="group__api__timing.html#ga32ca98f569fe077cd53c29a5417f80de">timing_provider_delay</a></div><div class="ttdeci">void timing_provider_delay(long delay_us)</div><div class="ttdoc">Perform tight busy-wait delay.</div><div class="ttdef"><b>Definition</b> systick.c:63</div></div>
-<div class="ttc" id="agroup__api__timing_html_gaa382f230650e9c08f3d5dec13da6fbd4"><div class="ttname"><a href="group__api__timing.html#gaa382f230650e9c08f3d5dec13da6fbd4">timing_provider_schedule</a></div><div class="ttdeci">void timing_provider_schedule(long delay_us)</div><div class="ttdoc">Schedule next timer callback to kernel.</div><div class="ttdef"><b>Definition</b> systick.c:52</div></div>
-<div class="ttc" id="agroup__api__timing_html_gad2eee99d75e6b65c227f65a6880f2e9f"><div class="ttname"><a href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f">os_sched_timing_callback</a></div><div class="ttdeci">long os_sched_timing_callback(long delay_us)</div><div class="ttdoc">Kernel callback for timing provider.</div><div class="ttdef"><b>Definition</b> sched.c:159</div></div>
-<div class="ttc" id="agroup__os__timer_html_ga5a54481fa8804be03b96cbc5d85ec03b"><div class="ttname"><a href="group__os__timer.html#ga5a54481fa8804be03b96cbc5d85ec03b">delay_us</a></div><div class="ttdeci">static void delay_us(uint32_t period_us)</div><div class="ttdoc">Perform short busy wait.</div><div class="ttdef"><b>Definition</b> timer.c:225</div></div>
-</div><!-- fragment --><p><code>cmrx_machine_timer_handler()</code> is the hook the quirk's interrupt handler calls on every timer tick; it re-arms the next tick and feeds the kernel scheduler via <code><a class="el" href="group__api__timing.html#gad2eee99d75e6b65c227f65a6880f2e9f" title="Kernel callback for timing provider.">os_sched_timing_callback()</a></code>. <code><a class="el" href="group__aux__systick.html#gac72eb3fe338346006ca3089ca0898867" title="Setup the timing provider.">timing_provider_setup()</a></code>, <code><a class="el" href="group__api__timing.html#gaa382f230650e9c08f3d5dec13da6fbd4" title="Schedule next timer callback to kernel.">timing_provider_schedule()</a></code> and <code><a class="el" href="group__api__timing.html#ga32ca98f569fe077cd53c29a5417f80de" title="Perform tight busy-wait delay.">timing_provider_delay()</a></code> are the portable timing provider interface CMRX's kernel and standard library call into (the same roles the ARM <code><a class="el" href="systick_8h_source.html">extra/systick.h</a></code> library fills for Cortex-M targets).</p>
+Timing provider</h1>
+<p>The <code>CMakeLists.txt</code> above links <code>aux_riscv_pico_timer</code>, a ready-to-use timing provider for RP2350 RISC-V, so you do not have to write one yourself. Your application only calls <code><a class="el" href="group__aux__riscv__pico__timer.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup()</a></code>, declared in <code><a class="el" href="riscv__pico__timer_8h_source.html">extra/riscv_pico_timer.h</a></code>, before <code><a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start()</a></code>.</p>
 <h1><a class="anchor" id="autotoc_md90"></a>
 Creating main.c file</h1>
 <p>Next we need a main file that will actually start our RTOS:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmrx/cmrx.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;pico/stdlib.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;hardware/clocks.h&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;timing_provider.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;extra/riscv_pico_timer.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">long</span> <a class="code hl_function" href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769">timing_get_current_cpu_freq</a>(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
@@ -294,13 +251,14 @@ Creating main.c file</h1>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">    stdio_init_all();</div>
-<div class="line">    <a class="code hl_function" href="group__aux__systick.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup</a>(1);</div>
+<div class="line">    <a class="code hl_function" href="group__aux__riscv__pico__timer.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup</a>(1);</div>
 <div class="line">    <a class="code hl_define" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start</a>();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__api__timing_html_gaa7613a35fc20c795f3fcfe3042100769"><div class="ttname"><a href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769">timing_get_current_cpu_freq</a></div><div class="ttdeci">long timing_get_current_cpu_freq(void)</div><div class="ttdoc">Provide information on the current CPU speed.</div><div class="ttdef"><b>Definition</b> clock.c:89</div></div>
+<div class="ttc" id="agroup__aux__riscv__pico__timer_html_gac72eb3fe338346006ca3089ca0898867"><div class="ttname"><a href="group__aux__riscv__pico__timer.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup</a></div><div class="ttdeci">void timing_provider_setup(int interval_ms)</div><div class="ttdef"><b>Definition</b> riscv_pico_timer.c:35</div></div>
 <div class="ttc" id="agroup__os_html_gac0d275303ced3f7617b7d71fd1464687"><div class="ttname"><a href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start</a></div><div class="ttdeci">#define os_start(core)</div><div class="ttdef"><b>Definition</b> cmrx.h:22</div></div>
-</div><!-- fragment --><p><code><a class="el" href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769" title="Provide information on the current CPU speed.">timing_get_current_cpu_freq()</a></code> is a callback the kernel's generic <code><a class="el" href="group__os__timer.html#ga7790e1b47e7589223de470f32523408d" title="Get current CPU frequency.">os_cpu_freq_get()</a></code> calls into (<code>src/os/kernel/timer.c</code>) regardless of which timing provider is active - it is required here even though the RISC-V machine-timer-based timing provider above doesn't use it itself for its own tick generation. <code><a class="el" href="group__aux__systick.html#gac72eb3fe338346006ca3089ca0898867" title="Setup the timing provider.">timing_provider_setup()</a></code> initializes the kernel's timing source and <code><a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start()</a></code> boots the kernel, same as on the ARM ports. <code>stdio_init_all()</code> is only needed here so the blinky application below can <code>printf()</code> over UART - drop it if you don't need serial output.</p>
+</div><!-- fragment --><p><code><a class="el" href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769" title="Provide information on the current CPU speed.">timing_get_current_cpu_freq()</a></code> is a callback the kernel's generic <code><a class="el" href="group__os__timer.html#ga7790e1b47e7589223de470f32523408d" title="Get current CPU frequency.">os_cpu_freq_get()</a></code> calls into (<code>src/os/kernel/timer.c</code>) regardless of which timing provider is active - it is required here even though the RISC-V machine-timer-based timing provider above doesn't use it itself for its own tick generation. <code><a class="el" href="group__aux__riscv__pico__timer.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup()</a></code> initializes the kernel's timing source and <code><a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start()</a></code> boots the kernel, same as on the ARM ports. <code>stdio_init_all()</code> is only needed here so the blinky application below can <code>printf()</code> over UART - drop it if you don't need serial output.</p>
 <h1><a class="anchor" id="autotoc_md91"></a>
 Creating the blinky application</h1>
 <p>As with the ARM ports, blinky is implemented as a separate CMRX application and thread rather than being called directly from <code>main()</code>. Unlike the ARM guides, this application is <b>not</b> memory-isolated from the kernel (PMP support isn't implemented yet - see the note at the top of this page), but the <code>OS_APPLICATION</code>/<code>OS_THREAD_CREATE</code> mechanism itself works the same way.</p>
@@ -355,7 +313,7 @@ Adding blinky application to the build</h1>
 <p>Add the blinky application's directory and link it into the firmware. First, just after the line that adds the <code>pico-sdk-riscv</code> quirk:</p>
 <div class="fragment"><div class="line">add_subdirectory(src/blinky)</div>
 </div><!-- fragment --><p>Then, update the <code>target_link_libraries</code> call added earlier to also whole-archive <code>blinky</code>:</p>
-<div class="fragment"><div class="line">target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx blinky -Wl,--no-whole-archive pico_stdlib hardware_riscv_platform_timer hardware_exception)</div>
+<div class="fragment"><div class="line">target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx blinky -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_riscv_platform_timer hardware_exception)</div>
 </div><!-- fragment --><p><b>This is not optional either, for the same reason as <code>cmrx</code> above.</b> <code>target_add_applications()</code> (added next) does a plain, non-whole-archive link, and an application's <code><a class="el" href="structOS__thread__create__t.html" title="Structure describing auto-spawned thread.">OS_thread_create_t</a></code>/ <code>OS_APPLICATION</code> bookkeeping structures are only ever referenced by <em>address range</em> (via the linker-generated <code>.applications</code>/<code>.thread_create</code> section boundary symbols the kernel walks at boot), never by name. With a plain link, nothing forces the linker to pull <code>blinky</code>'s object file out of its static archive at all - the firmware still builds and links successfully, the kernel boots and runs its idle thread forever, but the <code>blinky</code> thread was never actually included in the binary, so it can never be scheduled and the LED never blinks. This applies to any application added this way, not just <code>blinky</code>.</p>
 <p>Finally, at the very end of <code>CMakeLists.txt</code>, add the application to the firmware as normal - this is still required so CMRX's own build tooling knows about the application (it does not replace the <code>target_link_libraries</code> update above, both are needed):</p>
 <div class="fragment"><div class="line">target_add_applications(pico-sdk-riscv-example</div>
@@ -373,8 +331,8 @@ Flashing the application</h1>
 <p>Now execute the following command in terminal:</p>
 <div class="fragment"><div class="line">openocd -f interface/cmsis-dap.cfg -f target/rp2350-riscv.cfg</div>
 </div><!-- fragment --><p>This will start openocd and connect it to your probe, detect the connected RISC-V (Hazard3) core and wait for connection by debugger. As noted in the prerequisites above, this requires an OpenOCD build that includes <code>target/rp2350-riscv.cfg</code> - stock/distro OpenOCD 0.12.0 packages do not include it.</p>
-<p>Next, once your firmware is built, run GDB in another terminal:</p>
-<div class="fragment"><div class="line">gdb ~/projects/pico-sdk-riscv-example/build/pico-sdk-riscv-example.elf</div>
+<p>Next, once your firmware is built, run a RISC-V-capable GDB in another terminal:</p>
+<div class="fragment"><div class="line">gdb-multiarch ~/projects/pico-sdk-riscv-example/build/pico-sdk-riscv-example.elf</div>
 </div><!-- fragment --><p>In this GDB instance, the following sequence of commands will perform following actions: 1) GDB will connect to the OpenOCD which will serve as GDB server and provide connection to the RISC-V core on your Pico 2 board 2) Load the CPU with the firmware just built 3) Start executing the firmware</p>
 <div class="fragment"><div class="line">target extended-remote localhost:3333</div>
 <div class="line">load</div>

@@ -4,11 +4,12 @@ var searchData=
   ['v_20architecture_1',['3. Configuring CMRX kernel to use the RISC-V architecture',['../getting_started_picosdk_riscv.html#autotoc_md86',1,'']]],
   ['v_20core_2',['1. Selecting the RP2350 RISC-V core',['../getting_started_picosdk_riscv.html#autotoc_md84',1,'']]],
   ['v_20exception_20frame_3',['RISC-V Exception Frame',['../group__arch__riscv__exception__frame.html',1,'']]],
-  ['v_20port_4',['RISC-V port',['../group__arch__riscv.html',1,'']]],
-  ['v_20quirk_5',['4. Adding the Pico-SDK RISC-V quirk',['../getting_started_picosdk_riscv.html#autotoc_md87',1,'']]],
-  ['variables_20region_6',['variables region',['../mem_model.html#autotoc_md34',1,'Shared variables region'],['../mem_model.html#autotoc_md33',1,'Static variables region']]],
-  ['vendor_20sdks_7',['Integrating vendor SDKs',['../hal_integration.html',1,'overview']]],
-  ['vtable_8',['vtable',['../structRPC__Service__t__.html#a202dd170ff2c2359e82d7a23f0a2f7ca',1,'RPC_Service_t_::vtable'],['../group__api__init.html#gaa4a137442c139400b647ac62b40ea51a',1,'VTABLE:&#160;application.h'],['../structQueueService.html#ad6be36efc2848a190070a62bdb27b560',1,'QueueService::vtable'],['../structQueueObject.html#ac2a9e8d8d0ebe718ef3b4e06ca87b68b',1,'QueueObject::vtable'],['../structComChannel.html#a39754a6862ae6d0d4450ca575b02df05',1,'ComChannel::vtable'],['../structComSink.html#aeb36255fb89dcd8afe53a3c0fe490c42',1,'ComSink::vtable'],['../structComSource.html#aa266e32a57cc1d745dfffb2cc21c8a78',1,'ComSource::vtable'],['../structComNotification.html#af7d8d1112414c89f81c99f9b8e658b59',1,'ComNotification::vtable']]],
-  ['vtable_5ft_9',['VTable_t',['../group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239',1,'rpc.h']]],
-  ['vtables_10',['RPC interfaces (vtables)',['../group__api__rpc.html#api_rpc_interface',1,'']]]
+  ['v_20pico_20sdk_20machine_20timer_20based_20timing_20provider_4',['RISC-V Pico SDK Machine-Timer-Based Timing Provider',['../group__aux__riscv__pico__timer.html',1,'']]],
+  ['v_20port_5',['RISC-V port',['../group__arch__riscv.html',1,'']]],
+  ['v_20quirk_6',['4. Adding the Pico-SDK RISC-V quirk',['../getting_started_picosdk_riscv.html#autotoc_md87',1,'']]],
+  ['variables_20region_7',['variables region',['../mem_model.html#autotoc_md34',1,'Shared variables region'],['../mem_model.html#autotoc_md33',1,'Static variables region']]],
+  ['vendor_20sdks_8',['Integrating vendor SDKs',['../hal_integration.html',1,'overview']]],
+  ['vtable_9',['vtable',['../group__api__init.html#gaa4a137442c139400b647ac62b40ea51a',1,'VTABLE:&#160;application.h'],['../structRPC__Service__t__.html#a202dd170ff2c2359e82d7a23f0a2f7ca',1,'RPC_Service_t_::vtable'],['../structQueueService.html#ad6be36efc2848a190070a62bdb27b560',1,'QueueService::vtable'],['../structQueueObject.html#ac2a9e8d8d0ebe718ef3b4e06ca87b68b',1,'QueueObject::vtable'],['../structComChannel.html#a39754a6862ae6d0d4450ca575b02df05',1,'ComChannel::vtable'],['../structComSink.html#aeb36255fb89dcd8afe53a3c0fe490c42',1,'ComSink::vtable'],['../structComSource.html#aa266e32a57cc1d745dfffb2cc21c8a78',1,'ComSource::vtable'],['../structComNotification.html#af7d8d1112414c89f81c99f9b8e658b59',1,'ComNotification::vtable']]],
+  ['vtable_5ft_10',['VTable_t',['../group__os__rpc.html#gadcd71cb246a9a05989ca78eb79175239',1,'rpc.h']]],
+  ['vtables_11',['RPC interfaces (vtables)',['../group__api__rpc.html#api_rpc_interface',1,'']]]
 ];

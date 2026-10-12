@@ -3,13 +3,14 @@ var searchData=
   ['m_20generic_20ipi_20provider_0',['Cortex-M generic IPI provider',['../group__aux__cm__ipi.html',1,'']]],
   ['m_20support_20routines_1',['Cortex-M support routines',['../group__arch__arm__cortex.html',1,'']]],
   ['machine_2',['Abstract machine',['../group__arch__arch.html',1,'']]],
-  ['management_3',['IRQ management',['../group__api__irq.html',1,'']]],
-  ['memory_4',['Shared memory',['../group__api__shared.html',1,'']]],
-  ['memory_20protection_5',['memory protection',['../group__arch__arm__nvic.html',1,'Memory protection'],['../group__os__mpu.html',1,'Memory protection'],['../group__arch__arm__mpu.html',1,'Memory protection']]],
-  ['mpu_20ctrl_20fields_6',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
-  ['mpu_20rasr_20fields_20armv6m_20armv7m_7',['ARM MPU RASR fields (ARMv6M/ARMv7M)',['../group__arm__mpu__rars.html',1,'']]],
-  ['mpu_20rbar_20fields_8',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],
-  ['mpu_20region_20names_9',['MPU region names',['../group__mpu__region__names.html',1,'']]],
-  ['mpu_20rlar_20fields_20armv8m_10',['ARM MPU RLAR fields (ARMv8M)',['../group__arm__mpu__rlar.html',1,'']]],
-  ['mutexes_20futexes_11',['Mutexes / Futexes',['../group__api__mutex.html',1,'']]]
+  ['machine_20timer_20based_20timing_20provider_3',['RISC-V Pico SDK Machine-Timer-Based Timing Provider',['../group__aux__riscv__pico__timer.html',1,'']]],
+  ['management_4',['IRQ management',['../group__api__irq.html',1,'']]],
+  ['memory_5',['Shared memory',['../group__api__shared.html',1,'']]],
+  ['memory_20protection_6',['memory protection',['../group__os__mpu.html',1,'Memory protection'],['../group__arch__arm__nvic.html',1,'Memory protection'],['../group__arch__arm__mpu.html',1,'Memory protection']]],
+  ['mpu_20ctrl_20fields_7',['ARM MPU CTRL fields',['../group__arm__mpu__ctrl.html',1,'']]],
+  ['mpu_20rasr_20fields_20armv6m_20armv7m_8',['ARM MPU RASR fields (ARMv6M/ARMv7M)',['../group__arm__mpu__rars.html',1,'']]],
+  ['mpu_20rbar_20fields_9',['ARM MPU RBAR fields',['../group__arm__mpu__rbar.html',1,'']]],
+  ['mpu_20region_20names_10',['MPU region names',['../group__mpu__region__names.html',1,'']]],
+  ['mpu_20rlar_20fields_20armv8m_11',['ARM MPU RLAR fields (ARMv8M)',['../group__arm__mpu__rlar.html',1,'']]],
+  ['mutexes_20futexes_12',['Mutexes / Futexes',['../group__api__mutex.html',1,'']]]
 ];

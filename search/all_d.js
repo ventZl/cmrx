@@ -7,7 +7,7 @@ var searchData=
   ['implementation_20sources_4',['Port implementation sources',['../group__arch__arch.html#sources',1,'']]],
   ['implementation_5fof_5',['IMPLEMENTATION_OF',['../group__api__rpc.html#ga3467c0dc3f1f95bb00289609f2ce35f8',1,'implementation.h']]],
   ['in_20the_20loop_20testing_6',['Hardware-in-the-loop testing',['../md_HIL__TESTING.html',1,'']]],
-  ['initialization_7',['initialization',['../group__api__init.html',1,'Static initialization'],['../group__arch__arm__static.html',1,'Static initialization']]],
+  ['initialization_7',['initialization',['../group__arch__arm__static.html',1,'Static initialization'],['../group__api__init.html',1,'Static initialization']]],
   ['insert_5fsort_8',['INSERT_SORT',['../group__api__algo.html#ga287aedfab5f0624b50123964a0495747',1,'algo.h']]],
   ['instance_9',['INSTANCE',['../group__api__rpc.html#gac79f9e6f9c7223d603a5ac7365617ea7',1,'implementation.h']]],
   ['instances_10',['RPC service instances',['../group__api__rpc.html#api_rpc_instances',1,'']]],

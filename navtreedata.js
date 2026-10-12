@@ -88,7 +88,7 @@ var NAVTREE =
           [ "4. Adding the Pico-SDK RISC-V quirk", "getting_started_picosdk_riscv.html#autotoc_md87", null ]
         ] ],
         [ "Linking CMRX to the project", "getting_started_picosdk_riscv.html#autotoc_md88", null ],
-        [ "Creating a timing provider", "getting_started_picosdk_riscv.html#autotoc_md89", null ],
+        [ "Timing provider", "getting_started_picosdk_riscv.html#autotoc_md89", null ],
         [ "Creating main.c file", "getting_started_picosdk_riscv.html#autotoc_md90", null ],
         [ "Creating the blinky application", "getting_started_picosdk_riscv.html#autotoc_md91", null ],
         [ "Adding blinky application to the build", "getting_started_picosdk_riscv.html#autotoc_md92", null ],
@@ -145,8 +145,8 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "group__arch__arm__os.html#ga8b1827c66da610023e93a6ad404bd38f",
-"group__os__notify.html#ga72d1e355ba0df21a4c82be67c7c7b373",
-"structExceptionFrame.html#a0972c9c4ebbb1a00073f5bc73637ef3e"
+"group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a15f945e26ec55719949e5a9b2715e6a9",
+"structExceptionFrame.html#a00e9543a40f24b859cfba29a59a0d130"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

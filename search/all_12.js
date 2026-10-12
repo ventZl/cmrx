@@ -117,7 +117,7 @@ var searchData=
   ['os_5fthread_5fby_5fid_114',['os_thread_by_id',['../group__os__sched.html#ga5efdbd76f2a850c65604237912a30e2b',1,'sched.c']]],
   ['os_5fthread_5fconstruct_115',['os_thread_construct',['../group__os__sched.html#gab74a182c67f78a02ad1bc34362910958',1,'sched.c']]],
   ['os_5fthread_5fcontinue_116',['os_thread_continue',['../group__os__sched.html#ga7d13fca0696f3ab0fcf19b8d5503f31a',1,'sched.c']]],
-  ['os_5fthread_5fcreate_117',['os_thread_create',['../group__api__init.html#gab0cfed2a7b7800c9b487db972328ef5d',1,'OS_THREAD_CREATE:&#160;application.h'],['../group__os__sched.html#gaebb2e4fd35891b58767666454d4b78ea',1,'os_thread_create(entrypoint_t *entrypoint, void *data, uint8_t priority):&#160;sched.c']]],
+  ['os_5fthread_5fcreate_117',['os_thread_create',['../group__os__sched.html#gaebb2e4fd35891b58767666454d4b78ea',1,'os_thread_create(entrypoint_t *entrypoint, void *data, uint8_t priority):&#160;sched.c'],['../group__api__init.html#gab0cfed2a7b7800c9b487db972328ef5d',1,'OS_THREAD_CREATE:&#160;application.h']]],
   ['os_5fthread_5fcreate_5ft_118',['OS_thread_create_t',['../structOS__thread__create__t.html',1,'']]],
   ['os_5fthread_5fdefinitions_119',['os_thread_definitions',['../group__arch__linux__impl.html#ga72adc2af4b9efc69ab8b0439d311bc1e',1,'static.c']]],
   ['os_5fthread_5fdispose_120',['os_thread_dispose',['../group__api__thread.html#ga02d0f4e38363d1b07e522e608ec3f007',1,'os_thread_dispose(int arg0):&#160;thread.c'],['../group__os__sched.html#ga5725c397d24dc7de634648a43675bc74',1,'os_thread_dispose(void):&#160;sched.h']]],

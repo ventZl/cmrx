@@ -123,6 +123,7 @@ Source and header directories</h2>
 <li>library <code>os</code> - this library wraps all the compiled code of the CMRX kernel. It is internally composed of two parts: the portable part and the architecture port. The architecture port is handled automatically. Library propagates include paths into every target you link against it. Therefore you don't have to set up include paths to be able to include CMRX headers explicitly.</li>
 <li>library <code>stdlib</code> - this library contains functions that call system calls. These functions are callable from processes. See <a class="el" href="group__api.html">Kernel API</a> to learn on what functions are available.</li>
 <li>library <code>aux_systick</code> - this is an auxiliary library which implements SysTick-based timing provider. This optional library can be used to quickly bootstrap the kernel before more comprehensive hardware- and task-specific timing provider is developed.</li>
+<li>library <code>aux_riscv_pico_timer</code> - this is an auxiliary library which implements a timing provider for RP2350 RISC-V cores, driven by the RISC-V machine timer. It requires Pico SDK and can be used to quickly bootstrap the kernel on these targets.</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md53"></a>
 Linker script adjustment tool</h2>
