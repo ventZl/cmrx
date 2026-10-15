@@ -1,3 +1,4 @@
+
 set(cmrx_linux_SRCS
     posix.c
     clock.c
@@ -15,4 +16,6 @@ if (APPLE)
     target_link_libraries(os PUBLIC c11)
 endif()
 
-target_sources(os PRIVATE ${cmrx_linux_SRCS})
+if (NOT CMRX_FRAMA)
+    target_sources(os PRIVATE ${cmrx_linux_SRCS})
+endif()

@@ -24,6 +24,7 @@ include(cmake/options.cmake)
 include(cmake/unit_test_build.cmake)
 include(cmake/clang-tidy.cmake)
 include(cmake/testing.cmake)
+include(cmake/frama-c.cmake)
 
 include_directories(include)
 include_directories(${CMAKE_BINARY_DIR})

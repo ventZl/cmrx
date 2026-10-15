@@ -95,6 +95,8 @@ Integration tests are always executed on target hardware. It is using [HIL testi
 
 HIL testing harness can be used by your own tests to automate test execution. This can be combined with or without kernel's own integration tests. For more information see the HIL testing harness documentation file.
 
+Source code provides integration for Frama-C software verification suite. It allows execution of WP analysis on CMRX kernel source code using generated RTE asserts. As of now, kernel sources are missing ACSL annotactions for analysis to be really useful. More info on how to use Frama-C with CMRX in [FRAMA_C.md](FRAMA_C.md).
+
 # SBOM generation
 
 CMRX is designed to participate on SBOM generation for projects that are using it. This feature is optional and it is turned on automatically if [CMAKE-SBOM-Builder](https://github.com/sodgeit/CMake-SBOM-Builder) or [cmake-sbom](https://github.com/DEMCON/cmake-sbom) are included in your project. CMRX will generate package entry for itself in your SBOM automatically.

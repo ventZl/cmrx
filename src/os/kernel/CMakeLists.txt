@@ -60,3 +60,5 @@ if (UNIT_TESTING_BUILD)
     apply_gcov(os)
     add_subdirectory(tests)
 endif()
+
+apply_framac(os)
