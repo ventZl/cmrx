@@ -2,6 +2,7 @@ var group__arch__arch =
 [
     [ "Arch_State_t", "structArch__State__t.html", [
       [ "block_pipe", "structArch__State__t.html#ad935c55237c6bbd29aaeace9615fafda", null ],
+      [ "foo", "structArch__State__t.html#a260e7a26ece067932dbe703bb6fe5fbf", null ],
       [ "is_suspended", "structArch__State__t.html#acae038fb3118503f8892f30f98662804", null ],
       [ "mpu_stack", "structArch__State__t.html#a403ec9fcfd5a852264ef52b7ad43a224", null ],
       [ "sched_thread", "structArch__State__t.html#ab8b71a1cc792a6c50c15fc5f9b0857e3", null ],

@@ -393,6 +393,9 @@ Port implementation sources</h1>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void os_core_sleep </td>
@@ -401,6 +404,11 @@ Port implementation sources</h1>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Park current core This function is free to park current core in whatever way that will still allow the core to be woken up by external interrupts. </p>
@@ -446,7 +454,7 @@ Port implementation sources</h1>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+<span class="mlabels"><span class="mlabel">extern</span><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -887,6 +895,9 @@ Port implementation sources</h1>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void os_thread_initialize_arch </td>
@@ -918,6 +929,11 @@ Port implementation sources</h1>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Perform architecture-specific thread initialization This function should perform the following actions: </p>

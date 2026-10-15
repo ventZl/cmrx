@@ -111,6 +111,8 @@ $(document).ready(function(){initNavTree('structArch__State__t.html',''); initRe
 Data Fields</h2></td></tr>
 <tr class="memitem:a403ec9fcfd5a852264ef52b7ad43a224" id="r_a403ec9fcfd5a852264ef52b7ad43a224"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structMPU__Registers.html">MPU_Registers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#a403ec9fcfd5a852264ef52b7ad43a224">mpu_stack</a></td></tr>
 <tr class="separator:a403ec9fcfd5a852264ef52b7ad43a224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a260e7a26ece067932dbe703bb6fe5fbf" id="r_a260e7a26ece067932dbe703bb6fe5fbf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#a260e7a26ece067932dbe703bb6fe5fbf">foo</a></td></tr>
+<tr class="separator:a260e7a26ece067932dbe703bb6fe5fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad935c55237c6bbd29aaeace9615fafda" id="r_ad935c55237c6bbd29aaeace9615fafda"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structArch__State__t.html#ad935c55237c6bbd29aaeace9615fafda">block_pipe</a> [2]</td></tr>
 <tr class="memdesc:ad935c55237c6bbd29aaeace9615fafda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipe used to force thread to stop.  <br /></td></tr>
 <tr class="separator:ad935c55237c6bbd29aaeace9615fafda"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +154,20 @@ Data Fields</h2></td></tr>
 <p>Underlying mechanism is using POSIX threads to host CMRX threads. These can't be stopped from outside, so we use this mechanism to inject synchronization points into threads.</p>
 <p>Use thread_suspend_execution() in whatever place you need to suspend thread execution for whatever reason other hardware would do so - e.g. switch into kernel context or interrupt.</p>
 <p>@Note Offset [1] is the write (unblock) end, offset [0] is the read (block) end. </p>
+
+</div>
+</div>
+<a id="a260e7a26ece067932dbe703bb6fe5fbf" name="a260e7a26ece067932dbe703bb6fe5fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a260e7a26ece067932dbe703bb6fe5fbf">&#9670;&#160;</a></span>foo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Arch_State_t::foo</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -12,5 +12,5 @@ var searchData=
   ['allocated_9',['allocated',['../structQueueObject.html#abbfe25c2f320b5911a1782c38ad8dc23',1,'QueueObject']]],
   ['allocations_10',['allocations',['../structOS__stack__t.html#acdd99296ece572e929831ab286622c45',1,'OS_stack_t']]],
   ['arch_11',['arch',['../structOS__thread__t.html#a333d54de491449262dd86a09227dc7f9',1,'OS_thread_t']]],
-  ['args_12',['args',['../structsyscall__dispatch__t.html#abde633c029a41448069a4abb9fe40851',1,'syscall_dispatch_t']]]
+  ['args_12',['args',['../structsyscall__dispatch__t.html#aa7910c4dddc329e52a1674761809d74f',1,'syscall_dispatch_t']]]
 ];

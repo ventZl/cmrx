@@ -3,7 +3,7 @@ var searchData=
   ['base_5fpriority_0',['base_priority',['../structOS__thread__t.html#a28ea50f899d058388a7f03c67caaebd8',1,'OS_thread_t']]],
   ['based_20timing_20provider_1',['based timing provider',['../group__aux__riscv__pico__timer.html',1,'RISC-V Pico SDK Machine-Timer-Based Timing Provider'],['../group__aux__systick.html',1,'SysTick-Based Timing Provider']]],
   ['basic_20concepts_2',['Basic concepts',['../concepts.html',1,'overview']]],
-  ['basic_20cubemx_20project_20settings_3',['Basic CubeMX project settings',['../getting_started_cubemx.html#autotoc_md57',1,'']]],
+  ['basic_20cubemx_20project_20settings_3',['Basic CubeMX project settings',['../getting_started_cubemx.html#autotoc_md51',1,'']]],
   ['basicqueue_4',['BasicQueue',['../structBasicQueue.html',1,'']]],
   ['becoming_20a_20rpc_20server_5',['Becoming a RPC server',['../rpc_intro.html#autotoc_md40',1,'']]],
   ['binary_5fsearch_6',['BINARY_SEARCH',['../group__api__algo.html#ga71f10dca3dadfa959287b8a52a6d38cb',1,'algo.h']]],
