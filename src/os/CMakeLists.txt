@@ -10,6 +10,8 @@
 add_subdirectory(kernel)
 if (UNIT_TESTING_BUILD)
     add_subdirectory(arch/testing)
+    # Testing pseudo-architecture is considered generic
+    target_compile_definitions(os PRIVATE -DCMRX_PLATFORM_GENERIC)
 else()
     add_subdirectory(arch/${CMRX_ARCH})
     if (CMRX_PLATFORM)
