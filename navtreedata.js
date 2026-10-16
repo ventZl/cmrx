@@ -48,15 +48,15 @@ var NAVTREE =
     ] ],
     [ "Getting started", "getting_started.html", [
       [ "HOWTO: Integrating CMRX into CubeMX project", "getting_started_cubemx.html", [
-        [ "Prerequisites", "getting_started_cubemx.html#autotoc_md55", null ],
-        [ "Creating project skeleton with CubeMX", "getting_started_cubemx.html#autotoc_md56", null ],
-        [ "Basic CubeMX project settings", "getting_started_cubemx.html#autotoc_md57", null ],
-        [ "Configuring the core", "getting_started_cubemx.html#autotoc_md58", null ],
-        [ "Configuring GPIOs", "getting_started_cubemx.html#autotoc_md59", null ],
-        [ "Generating project and getting CMRX source", "getting_started_cubemx.html#autotoc_md60", null ],
-        [ "Integrating CMRX into CubeMX project", "getting_started_cubemx.html#autotoc_md61", [
-          [ "1. Add CMake modules provided by CMRX into CMake module path", "getting_started_cubemx.html#autotoc_md62", null ],
-          [ "2. Configure CubeMX integration", "getting_started_cubemx.html#autotoc_md63", null ],
+        [ "Prerequisites", "getting_started_cubemx.html#autotoc_md46", null ],
+        [ "Creating project skeleton with CubeMX", "getting_started_cubemx.html#autotoc_md47", null ],
+        [ "Basic CubeMX project settings", "getting_started_cubemx.html#autotoc_md50", null ],
+        [ "Configuring the core", "getting_started_cubemx.html#autotoc_md51", null ],
+        [ "Configuring GPIOs", "getting_started_cubemx.html#autotoc_md52", null ],
+        [ "Generating project and getting CMRX source", "getting_started_cubemx.html#autotoc_md54", null ],
+        [ "Integrating CMRX into CubeMX project", "getting_started_cubemx.html#autotoc_md57", [
+          [ "1. Add CMake modules provided by CMRX into CMake module path", "getting_started_cubemx.html#autotoc_md59", null ],
+          [ "2. Configure CubeMX integration", "getting_started_cubemx.html#autotoc_md62", null ],
           [ "3. Configure the CMRX kernel to use CubeMX", "getting_started_cubemx.html#autotoc_md64", null ]
         ] ],
         [ "Linking CMRX to the project", "getting_started_cubemx.html#autotoc_md65", null ],
@@ -147,7 +147,7 @@ var NAVTREEINDEX =
 "annotated.html",
 "group__arch__arm__os.html#ga8b1827c66da610023e93a6ad404bd38f",
 "group__os__mpu.html#gae35ef2b40da61cecee6e76bbac5fb3e2",
-"structEmuDummyPeripheral__t.html#a22152bb347246529b7fa59abdbf2de29"
+"structEmuDummyPeripheral__t.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

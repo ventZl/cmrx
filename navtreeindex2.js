@@ -2,10 +2,11 @@ var NAVTREEINDEX2 =
 {
 "group__os__mpu.html#gae35ef2b40da61cecee6e76bbac5fb3e2":[8,5,4,0],
 "group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a12a2c5f9794322278e58bc3c6b1ddedd":[8,5,4,0,0],
-"group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a13db624d78fe3ea69c924eaaa63601d6":[8,5,4,0,3],
 "group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a15f945e26ec55719949e5a9b2715e6a9":[8,5,4,0,2],
 "group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a1b27b1215cd9cbf1edc350fe1fdd1db0":[8,5,4,0,1],
 "group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a7d9fb598571457547838dd8604d8fe23":[8,5,4,0,4],
+"group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2ab8c4dd30446c1b9f2011bc115c3268ed":[8,5,4,0,5],
+"group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2ade57b6033d109b9f59f6be8fb94b5d09":[8,5,4,0,3],
 "group__os__notify.html":[8,5,5],
 "group__os__notify.html#ga64fe2129fb7405446b74a9821bb85ee1":[8,5,5,4],
 "group__os__notify.html#ga72d1e355ba0df21a4c82be67c7c7b373":[8,5,5,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structComSourceVMT.html#ae225575afd2d840418a51c1d93d497a0":[8,7,0,2,1],
 "structComSourceVMT.html#afa8d81d3914e95471ab4d927a5296970":[8,7,0,2,0],
 "structDummyPeripheral__t.html":[9,0,11],
-"structDummyPeripheral__t.html#aa2dcf66eb4f8f436add00b408d92c4c7":[9,0,11,0],
-"structEmuDummyPeripheral__t.html":[9,0,12]
+"structDummyPeripheral__t.html#aa2dcf66eb4f8f436add00b408d92c4c7":[9,0,11,0]
 };
