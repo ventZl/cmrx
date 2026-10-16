@@ -1,5 +1,8 @@
 var NAVTREEINDEX2 =
 {
+"group__os__mpu.html#gae35ef2b40da61cecee6e76bbac5fb3e2":[8,5,4,0],
+"group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a12a2c5f9794322278e58bc3c6b1ddedd":[8,5,4,0,0],
+"group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a13db624d78fe3ea69c924eaaa63601d6":[8,5,4,0,3],
 "group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a15f945e26ec55719949e5a9b2715e6a9":[8,5,4,0,2],
 "group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a1b27b1215cd9cbf1edc350fe1fdd1db0":[8,5,4,0,1],
 "group__os__mpu.html#ggae35ef2b40da61cecee6e76bbac5fb3e2a7d9fb598571457547838dd8604d8fe23":[8,5,4,0,4],
@@ -246,8 +249,5 @@ var NAVTREEINDEX2 =
 "structComSourceVMT.html#afa8d81d3914e95471ab4d927a5296970":[8,7,0,2,0],
 "structDummyPeripheral__t.html":[9,0,11],
 "structDummyPeripheral__t.html#aa2dcf66eb4f8f436add00b408d92c4c7":[9,0,11,0],
-"structEmuDummyPeripheral__t.html":[9,0,12],
-"structEmuDummyPeripheral__t.html#a22152bb347246529b7fa59abdbf2de29":[9,0,12,1],
-"structEmuDummyPeripheral__t.html#a90ad79b58b95e238446c2683086be8fc":[9,0,12,0],
-"structExceptionFrame.html":[8,5,0,3,0,0]
+"structEmuDummyPeripheral__t.html":[9,0,12]
 };

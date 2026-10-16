@@ -2,6 +2,9 @@ var group__os__config =
 [
     [ "CMRX_ARCH_ARMV8M_SECURE_MODE", "group__os__config.html#ga363f5b029d6ceb52e729b173c25961bb", null ],
     [ "CMRX_ARCH_SMP_SUPPORTED", "group__os__config.html#ga54ec6c4dfec8397771e101eb023fd91a", null ],
+    [ "CMRX_CUSTOM_FLASH_RANGE", "group__os__config.html#ga28879663e1a29da972f43831a3f36992", null ],
+    [ "CMRX_CUSTOM_FLASH_SIZE", "group__os__config.html#ga29bfafd6819de78e279e516210e705f4", null ],
+    [ "CMRX_CUSTOM_FLASH_START", "group__os__config.html#ga8b840cbe8f96012f294a899321d17f63", null ],
     [ "CMRX_IDLE_THREAD_SHUTDOWN_CPU", "group__os__config.html#ga2722f702ab9637ad9e7f7e8be042f693", null ],
     [ "CMRX_KERNEL_TRACING", "group__os__config.html#ga46a3ec2ee0c0ead945b1185c467024c5", null ],
     [ "CMRX_KERNEL_TRANSACTION_VERIFICATION", "group__os__config.html#ga4c5bc87a9ca14dd3e95ed7525a60089e", null ],
