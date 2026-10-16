@@ -14,7 +14,7 @@
 #define KERNEL_HAS_MEMORY_PROTECTION
 
 /** How many MPU regions are saved per thread */
-#define MPU_STATE_SIZE			7
+#define MPU_STATE_SIZE			6
 
 /** How many MPU regions are always used based on in which process thread is hosted */
 #define MPU_HOSTED_STATE_SIZE	4

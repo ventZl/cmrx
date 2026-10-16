@@ -19,15 +19,17 @@
  */
 enum MPU_Flags {
 	/// Region cannot be accesses. Any attempt to access addresses from this region will result in hard fault
-	MPU_NONE,
+	MPU_NONE = 0,
 	/// Region can be read and executed. Attempt to write will result in hard fault
 	MPU_RX,
 	/// Region can be read, written and executed. No attempt to access region can result in hard fault
 	MPU_RWX,
 	/// Region can be read. Attempt to write into region, or execute out of it will result in hard fault
-	MPU_R,
+	MPU_RO,
 	/// Region can be read and written but cannot be executed. Attempt to execute code will result in hard fault
-	MPU_RW
+	MPU_RW,
+	/// Region can be read. Attempt to either write into region or execute it will result in hard fault
+	MPU_FLAGS_COUNT
 };
 
 /** @} */

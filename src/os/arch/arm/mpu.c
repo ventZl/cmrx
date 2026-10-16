@@ -40,15 +40,16 @@ static const uint32_t __MPU_flags[] = {
 static const struct {
 	uint32_t rbar_flags;  /* AP, XN, SH bits for RBAR */
 	uint8_t attr_idx;     /* MAIR attribute index */
-} __MPU_v8m_flags[] = {
+} __MPU_flags[] = {
 	/* MPU_NONE */  { 0, 0 },
 	/* MPU_RX */    { MPU_RBAR_AP_RW_RO, MPU_ATTR_NORMAL_WB },                    /* Priv RW, User RO, executable */
 	/* MPU_RWX */   { MPU_RBAR_AP_RW_RW, MPU_ATTR_NORMAL_WB },                    /* Priv RW, User RW, executable */
-	/* MPU_R */     { MPU_RBAR_XN | MPU_RBAR_AP_RW_RO, MPU_ATTR_NORMAL_WB },     /* Priv RW, User RO, no-execute */
+	/* MPU_RO */     { MPU_RBAR_XN | MPU_RBAR_AP_RW_RO, MPU_ATTR_NORMAL_WB },     /* Priv RW, User RO, no-execute */
 	/* MPU_RW */    { MPU_RBAR_XN | MPU_RBAR_AP_RW_RW, MPU_ATTR_NORMAL_WB },     /* Priv RW, User RW, no-execute */
 };
 
 #endif
+_Static_assert(sizeof(__MPU_flags)/sizeof(__MPU_flags[0]) == MPU_FLAGS_COUNT, "Missing or extra entries in MPU flag mapping table");
 
 /** Handler for hard fault.
  */
@@ -361,7 +362,7 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8_t cls, struct MPU_Registers * region_def)
 {
 	/* Validate class */
-	if (cls >= sizeof(__MPU_v8m_flags)/sizeof(__MPU_v8m_flags[0]))
+	if (cls >= sizeof(__MPU_flags)/sizeof(__MPU_flags[0]))
 	{
 		return E_INVALID;
 	}
@@ -393,11 +394,11 @@ int mpu_configure_region(uint8_t region, const void * base, uint32_t size, uint8
 
 	/* Build RBAR: base address + access permissions + XN + shareability */
 	region_def->_MPU_RBAR = (((uint32_t) base) & MPU_RBAR_BASE_Msk)
-		| __MPU_v8m_flags[cls].rbar_flags;
+		| __MPU_flags[cls].rbar_flags;
 
 	/* Build RLAR: limit address + attribute index + enable */
 	region_def->_MPU_RLAR = (limit & MPU_RLAR_LIMIT)
-		| ((__MPU_v8m_flags[cls].attr_idx << MPU_RLAR_ATTRINDX_LSB) & MPU_RLAR_ATTRINDX)
+		| ((__MPU_flags[cls].attr_idx << MPU_RLAR_ATTRINDX_LSB) & MPU_RLAR_ATTRINDX)
 		| MPU_RLAR_ENABLE;
 
 	return E_OK;
