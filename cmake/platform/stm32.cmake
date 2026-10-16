@@ -55,5 +55,3 @@ else()
     cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL _create_stm32cube_headers)
 endif()
 
-string(REGEX REPLACE "-T \"[^\"]\+\"" "" CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
-message("Linker flags: ${CMAKE_EXE_LINKER_FLAGS}")

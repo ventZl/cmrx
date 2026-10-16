@@ -13,6 +13,9 @@
 #include "syscall.h"
 #include <stdbool.h>
 #include <cmrx/assert.h>
+#ifndef CMRX_PLATFORM_GENERIC
+#	include <platform.h>
+#endif
 #include "arch/static.h"
 #include "arch/sched.h"
 #include "arch/context.h"
@@ -466,6 +469,9 @@ int os_thread_construct(Thread_t tid, entrypoint_t * entrypoint, void * data, ui
 			{
 				new_thread->stack_id = stack_id;
                 os_thread_initialize_arch(new_thread, OS_STACK_DWORD, entrypoint, data);
+#ifndef CMRX_PLATFORM_GENERIC
+                os_thread_initialize_platform(new_thread);
+#endif
                 new_thread->core_id = core_id;
 
 				new_thread->state = THREAD_STATE_READY;
@@ -554,6 +560,9 @@ void _os_start(uint8_t start_core)
         kernel_structs_initialized = KERNEL_STRUCTS_INITIALIZED_SIGNATURE;
         memset(&os_threads, 0, sizeof(os_threads));  // NOLINT - count is a compile-time constant
         os_init_arch();
+#ifndef CMRX_PLATFORM_GENERIC
+        os_init_platform();
+#endif
         os_timer_init();
         os_notify_init();
     }
