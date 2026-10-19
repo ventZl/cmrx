@@ -73,39 +73,42 @@ int __os_thread_create(Process_t process, entrypoint_t * entrypoint, void * data
 __attribute__((noinline)) bool os_get_next_thread(uint8_t current_thread, uint8_t * next_thread)
 {
 	uint16_t best_prio = PRIORITY_INVALID;
-    uint8_t candidate_thread = 0xFF;
-    uint8_t thread = (current_thread + 1) % OS_THREADS;
+    uint8_t candidate_thread = current_thread;
+    uint8_t thread_id = (current_thread + 1) % OS_THREADS;
     uint8_t core_id = coreid();
 
 	uint8_t loops = OS_THREADS;
 
 	do {
-		if ((os_threads[thread].state == THREAD_STATE_READY 
-				|| os_threads[thread].state == THREAD_STATE_RUNNING)
-                && os_threads[thread].core_id == core_id)
+        struct OS_thread_t * thread = &os_threads[thread_id];
+		if ((thread->state == THREAD_STATE_READY
+				|| thread->state == THREAD_STATE_RUNNING)
+#ifdef CMRX_ARCH_SMP_SUPPORTED
+                && thread->core_id == core_id
+#endif
+            )
 		{
 			/* Schedule different thread only if it has lower numerical value of priority
 			 * than one we've already found. This should enforce prioritized round robin
 			 * scheduling
 			 */
-			if (os_threads[thread].priority < best_prio)
+			if (thread->priority < best_prio)
 			{
-				candidate_thread = thread;
-				best_prio = os_threads[thread].priority;
+				candidate_thread = thread_id;
+				best_prio = thread->priority;
 			}
 		}
 
-		thread = (thread + 1) % OS_THREADS;
+		thread_id = (thread_id + 1) % OS_THREADS;
 	} while (loops--);
 
 	ASSERT(loops > 0);
     ASSERT(candidate_thread < OS_THREADS);
 
-    *next_thread = candidate_thread;
-
 	if (best_prio <= PRIORITY_MAX && candidate_thread != current_thread)
 	{
-		return true;
+        *next_thread = candidate_thread;
+        return true;
 	}
 
 	return false;
