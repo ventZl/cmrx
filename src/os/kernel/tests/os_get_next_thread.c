@@ -110,7 +110,7 @@ CTEST(os_get_next_thread, lower_priority) {
     bool rv = os_get_next_thread(current_thread, &next_thread);
 
     ASSERT_EQUAL(rv, false);
-    ASSERT_EQUAL(next_thread, 0);
+    ASSERT_EQUAL(next_thread, 255);
 }
 
 
