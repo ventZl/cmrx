@@ -72,7 +72,7 @@ var searchData=
   ['to_20use_20cubemx_69',['3. Configure the CMRX kernel to use CubeMX',['../getting_started_cubemx.html#autotoc_md64',1,'']]],
   ['to_20use_20pico_20sdk_70',['3. Configuring CMRX kernel to use Pico-SDK',['../getting_started_picosdk.html#autotoc_md75',1,'']]],
   ['to_20use_20the_20risc_20v_20architecture_71',['3. Configuring CMRX kernel to use the RISC-V architecture',['../getting_started_picosdk_riscv.html#autotoc_md86',1,'']]],
-  ['tool_72',['Linker script adjustment tool',['../dev_env.html#autotoc_md53',1,'']]],
+  ['tool_72',['Linker script adjustment tool',['../dev_env.html#autotoc_md54',1,'']]],
   ['trace_20data_73',['Retrieving trace data',['../group__os__tracing.html#os_tracing_retrieving',1,'']]],
   ['trace_5fevent_74',['trace_event',['../group__os__tracing.html#gac035534b8e50ba8942b8e6956268180c',1,'trace_event(enum TraceEventID event, uint32_t arg):&#160;trace.c'],['../group__os__tracing.html#gac035534b8e50ba8942b8e6956268180c',1,'trace_event(enum TraceEventID event, uint32_t arg):&#160;trace.c']]],
   ['trace_5finit_75',['trace_init',['../group__os__tracing.html#ga098cdc49cfa2cfcfc59815e6978fddb8',1,'trace_init(void *start_addr, void *end_addr):&#160;trace.c'],['../group__os__tracing.html#ga098cdc49cfa2cfcfc59815e6978fddb8',1,'trace_init(void *start_addr, void *end_addr):&#160;trace.c']]],

@@ -17,7 +17,7 @@ var searchData=
   ['port_20implementation_20sources_14',['Port implementation sources',['../group__arch__arch.html#sources',1,'']]],
   ['power_20management_15',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
   ['precise_20synchronous_20delays_16',['Precise synchronous delays',['../group__api__timing.html#sync_delay',1,'']]],
-  ['prerequisites_17',['prerequisites',['../getting_started_picosdk_riscv.html#autotoc_md81',1,'Prerequisites'],['../getting_started_picosdk.html#autotoc_md70',1,'Prerequisites'],['../getting_started_cubemx.html#autotoc_md55',1,'Prerequisites']]],
+  ['prerequisites_17',['prerequisites',['../getting_started_picosdk_riscv.html#autotoc_md81',1,'Prerequisites'],['../getting_started_picosdk.html#autotoc_md70',1,'Prerequisites'],['../getting_started_cubemx.html#autotoc_md51',1,'Prerequisites']]],
   ['priority_18',['priority',['../structOS__thread__t.html#abde22ec841a589ba96cc6bc54f9eabb5',1,'OS_thread_t::priority'],['../structOS__thread__create__t.html#a101f5f58e48c5b90a973d0f63c2a5b0b',1,'OS_thread_create_t::priority']]],
   ['priority_5finvalid_19',['PRIORITY_INVALID',['../group__os__sched.html#ga1c0157588be40efb99fc590662e237ae',1,'sched.c']]],
   ['priority_5fmax_20',['PRIORITY_MAX',['../group__os__sched.html#gaa95d03c8fe4c7467a8e475748cbf67e1',1,'sched.c']]],

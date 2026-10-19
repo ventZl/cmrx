@@ -16,7 +16,7 @@ var searchData=
   ['frame_13',['RISC-V Exception Frame',['../group__arch__riscv__exception__frame.html',1,'']]],
   ['free_14',['free',['../structComChannelVMT.html#afc32bb16e1ea8bac8cd76d1757e94a47',1,'ComChannelVMT::free'],['../structComSinkVMT.html#ab37dc0a3573e2a74897718512058bc3c',1,'ComSinkVMT::free']]],
   ['from_20critical_20section_20to_20transaction_15',['From critical section to transaction',['../txn_intro.html#autotoc_md48',1,'']]],
-  ['functions_16',['functions',['../dev_env.html#autotoc_md51',1,'CMake functions'],['../group__api__thread.html',1,'Threading functions']]],
+  ['functions_16',['functions',['../dev_env.html#autotoc_md52',1,'CMake functions'],['../group__api__thread.html',1,'Threading functions']]],
   ['futex_5fdestroy_17',['futex_destroy',['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c'],['../group__api__mutex.html#gaf2557b8852c5fded9a610663c7fb4805',1,'futex_destroy(futex_t *futex):&#160;mutex.c']]],
   ['futex_5ffailure_18',['FUTEX_FAILURE',['../group__api__mutex.html#ga552e957a1d1f9f8a51841c139433d121',1,'mutex.h']]],
   ['futex_5finit_19',['futex_init',['../group__api__mutex.html#ga29d155f0ec6824a9bbf99d301a91fa43',1,'mutex.c']]],
