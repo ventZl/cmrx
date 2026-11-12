@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('getting_started_picosdk_riscv.html',''
 <div class="contents">
 <div class="textblock"><p>Following is a step-by-step how to guide on creating a blinky project using CMRX RTOS on the RP2350's RISC-V (Hazard3) core. It will cover all steps and lists all tools needed to complete the integration. This guide assumes previous hands-on experience with creating embedded firmware, including the process of flashing and debugging. Basic understanding of CMake is assumed.</p>
 <p>As an example, this howto will demonstrate the process of integrating CMRX into project using Raspberry Pi Pico-SDK, targeting the RP2350's RISC-V core rather than its Cortex-M33 core. Unlike the ARM-based ports covered in the other guides on this page, CMRX's RISC-V support does not use CMSIS or the <code>FindCMSIS</code> module - it uses a dedicated RISC-V architecture/HAL pairing instead. RISC-V support is initial: memory protection (PMP) is not yet implemented, so unlike the ARM guides, the blinky application built in this guide is <b>not</b> isolated from the kernel by hardware - it still runs as a separate CMRX application and thread, but nothing enforces the isolation between them yet.</p>
-<h1><a class="anchor" id="autotoc_md81"></a>
+<h1><a class="anchor" id="autotoc_md92"></a>
 Prerequisites</h1>
 <p>In order to generate and build the project, following tools are required: </p><table class="markdownTable">
 <tr class="markdownTableHead">
@@ -137,7 +137,7 @@ Prerequisites</h1>
 <p>Once you have extracted the toolchain somewhere, point the Pico SDK at its installation directory (the one containing <code>bin/</code>) via the standard Pico SDK variable:</p>
 <div class="fragment"><div class="line">export PICO_TOOLCHAIN_PATH=/path/to/corev-openhw-gcc-ubuntu2204-20240530</div>
 </div><!-- fragment --><p><code>PICO_TOOLCHAIN_PATH</code> needs to be set (as an environment variable, or passed as a <code>-D</code> CMake cache variable) every time you configure the project.</p>
-<h1><a class="anchor" id="autotoc_md82"></a>
+<h1><a class="anchor" id="autotoc_md93"></a>
 Creating Project Skeleton</h1>
 <p>Pico-SDK is CMake-based SDK for the range of microcontrollers designed by the Raspberry Pi Foundation. So for the skeleton, we have to create the CMakeLists.txt file. Yet, before we do so, lets first clone the CMRX source tree so we know some of paths we'll need in the following process. This how-to will assume that the path where project is stored is <code>$HOME/projects/pico-sdk-riscv-example</code>.</p>
 <div class="fragment"><div class="line">mkdir -p ~/projects/pico-sdk-riscv-example</div>
@@ -160,17 +160,17 @@ Creating Project Skeleton</h1>
 <div class="line">)</div>
 <div class="line">pico_add_extra_outputs(pico-sdk-riscv-example)</div>
 <div class="line">target_link_libraries(pico-sdk-riscv-example pico_stdlib)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md83"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md94"></a>
 Integrating CMRX into Pico-SDK project</h1>
 <p>Following steps will integrate CMRX RTOS into the project we just created, make sure that CMRX will use the Pico-SDK's RISC-V core, and add a simple blinky application.</p>
-<h2><a class="anchor" id="autotoc_md84"></a>
+<h2><a class="anchor" id="autotoc_md95"></a>
 1. Selecting the RP2350 RISC-V core</h2>
 <p>Unlike the ARM-based guides on this page, RP2350 RISC-V integration does not go through <code>FindCMSIS</code>. Instead, tell Pico-SDK which platform to build for. <b>This has to happen before <code>include(pico_sdk_import)</code> even runs</b> - the Pico SDK reads <code>PICO_BOARD</code>/<code>PICO_PLATFORM</code> immediately as part of that <code>include()</code>, to select the toolchain and board headers, well before <code>project()</code> or <code>pico_sdk_init()</code> are called. Setting these afterwards (even if it's still textually before <code>pico_sdk_init()</code> further down the file) is too late and silently falls back to the RP2040/ARM defaults. So this has to be the very first thing in the file, right after <code>cmake_minimum_required</code>:</p>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.13)</div>
 <div class="line"> </div>
 <div class="line">set(PICO_BOARD pico2)</div>
 <div class="line">set(PICO_PLATFORM rp2350-riscv)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md85"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md96"></a>
 2. Add CMake modules provided by CMRX and Pico-SDK into CMake module path</h2>
 <p>Next, we'll set some paths to make things more convenient:</p>
 <div class="fragment"><div class="line">set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)</div>
@@ -178,7 +178,7 @@ Integrating CMRX into Pico-SDK project</h1>
 <div class="line">list(APPEND CMAKE_MODULE_PATH &quot;${CMAKE_SOURCE_DIR}/cmrx/cmake&quot;)</div>
 </div><!-- fragment --><p>Now you can update the line which imports pico_sdk to be:</p>
 <div class="fragment"><div class="line">include(pico_sdk_import)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md86"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md97"></a>
 3. Configuring CMRX kernel to use the RISC-V architecture</h2>
 <p>Modify the <code>CMakeLists.txt</code> file to tell CMRX which architecture and HAL to build for. Add the following block just below the line that calls <code>pico_sdk_init</code>:</p>
 <div class="fragment"><div class="line">set(CMRX_ARCH riscv)</div>
@@ -187,12 +187,12 @@ Integrating CMRX into Pico-SDK project</h1>
 </div><!-- fragment --><p>This tells CMRX to build its RISC-V architecture support instead of the CMSIS-based ARM support used on RP2040/STM32. Note that this configuration is set directly here rather than through the <code>CMRX_DEVICE</code>-based platform automation available for some other targets; RP2350 RISC-V support for that automation may or may not be available depending on which CMRX version you use - setting <code>CMRX_ARCH</code>/<code>CMRX_HAL</code> directly as shown above always works.</p>
 <p>The next step is to add the CMRX source tree so the kernel will actually be built using the given configuration. Add one line, just below the block just inserted:</p>
 <div class="fragment"><div class="line">add_subdirectory(cmrx)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md87"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md98"></a>
 4. Adding the Pico-SDK RISC-V quirk</h2>
 <p>CMRX's RISC-V port relies on a small set of Pico-SDK integration files (machine timer ISR, exception dispatcher and ecall handler wiring) that live under <code>cmrx/quirks/pico-sdk-riscv/</code>. This quirk must be added <em>after</em> the CMRX target is defined, so it can attach its sources to the <code>os</code> target:</p>
 <div class="fragment"><div class="line">add_subdirectory(cmrx/quirks/pico-sdk-riscv)</div>
 </div><!-- fragment --><p>The quirk activates automatically when <code>PICO_PLATFORM</code> is <code>rp2350-riscv</code> (as set in step 2 above) and does nothing otherwise, so it is safe to always include it in a project that only ever targets RP2350 RISC-V.</p>
-<h1><a class="anchor" id="autotoc_md88"></a>
+<h1><a class="anchor" id="autotoc_md99"></a>
 Linking CMRX to the project</h1>
 <p>CMRX itself is built as a static library called <code>cmrx</code>. Update the <code>target_link_libraries</code> call at the bottom of <code>CMakeLists.txt</code>:</p>
 <div class="fragment"><div class="line">target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_exception)</div>
@@ -232,10 +232,10 @@ Linking CMRX to the project</h1>
 <div class="line"> </div>
 <div class="line">pico_add_extra_outputs(pico-sdk-riscv-example)</div>
 <div class="line">target_link_libraries(pico-sdk-riscv-example -Wl,--whole-archive cmrx -Wl,--no-whole-archive aux_riscv_pico_timer pico_stdlib hardware_riscv_platform_timer hardware_exception)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md89"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md100"></a>
 Timing provider</h1>
 <p>The <code>CMakeLists.txt</code> above links <code>aux_riscv_pico_timer</code>, a ready-to-use timing provider for RP2350 RISC-V, so you do not have to write one yourself. Your application only calls <code><a class="el" href="group__aux__riscv__pico__timer.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup()</a></code>, declared in <code><a class="el" href="riscv__pico__timer_8h_source.html">extra/riscv_pico_timer.h</a></code>, before <code><a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start()</a></code>.</p>
-<h1><a class="anchor" id="autotoc_md90"></a>
+<h1><a class="anchor" id="autotoc_md101"></a>
 Creating main.c file</h1>
 <p>Next we need a main file that will actually start our RTOS:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmrx/cmrx.h&gt;</span></div>
@@ -259,7 +259,7 @@ Creating main.c file</h1>
 <div class="ttc" id="agroup__aux__riscv__pico__timer_html_gac72eb3fe338346006ca3089ca0898867"><div class="ttname"><a href="group__aux__riscv__pico__timer.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup</a></div><div class="ttdeci">void timing_provider_setup(int interval_ms)</div><div class="ttdef"><b>Definition</b> riscv_pico_timer.c:35</div></div>
 <div class="ttc" id="agroup__os_html_gac0d275303ced3f7617b7d71fd1464687"><div class="ttname"><a href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start</a></div><div class="ttdeci">#define os_start(core)</div><div class="ttdef"><b>Definition</b> cmrx.h:22</div></div>
 </div><!-- fragment --><p><code><a class="el" href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769" title="Provide information on the current CPU speed.">timing_get_current_cpu_freq()</a></code> is a callback the kernel's generic <code><a class="el" href="group__os__timer.html#ga7790e1b47e7589223de470f32523408d" title="Get current CPU frequency.">os_cpu_freq_get()</a></code> calls into (<code>src/os/kernel/timer.c</code>) regardless of which timing provider is active - it is required here even though the RISC-V machine-timer-based timing provider above doesn't use it itself for its own tick generation. <code><a class="el" href="group__aux__riscv__pico__timer.html#gac72eb3fe338346006ca3089ca0898867">timing_provider_setup()</a></code> initializes the kernel's timing source and <code><a class="el" href="group__os.html#gac0d275303ced3f7617b7d71fd1464687">os_start()</a></code> boots the kernel, same as on the ARM ports. <code>stdio_init_all()</code> is only needed here so the blinky application below can <code>printf()</code> over UART - drop it if you don't need serial output.</p>
-<h1><a class="anchor" id="autotoc_md91"></a>
+<h1><a class="anchor" id="autotoc_md102"></a>
 Creating the blinky application</h1>
 <p>As with the ARM ports, blinky is implemented as a separate CMRX application and thread rather than being called directly from <code>main()</code>. Unlike the ARM guides, this application is <b>not</b> memory-isolated from the kernel (PMP support isn't implemented yet - see the note at the top of this page), but the <code>OS_APPLICATION</code>/<code>OS_THREAD_CREATE</code> mechanism itself works the same way.</p>
 <p>Create <code>src/blinky/CMakeLists.txt</code>:</p>
@@ -308,7 +308,7 @@ Creating the blinky application</h1>
 <div class="ttc" id="agroup__api__timer_html_ga6987ccb3233088dddefcf26bb39f249a"><div class="ttname"><a href="group__api__timer.html#ga6987ccb3233088dddefcf26bb39f249a">usleep</a></div><div class="ttdeci">__SYSCALL int usleep(unsigned microseconds)</div><div class="ttdoc">Suspend thread execution for short time.</div><div class="ttdef"><b>Definition</b> timer.c:4</div></div>
 <div class="ttc" id="agroup__api_html_ga070d2ce7b6bb7e5c05602aa8c308d0c4"><div class="ttname"><a href="group__api.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></div><div class="ttdeci">#define NULL</div><div class="ttdoc">Name the null pointer.</div><div class="ttdef"><b>Definition</b> defines.h:68</div></div>
 </div><!-- fragment --><p><code><a class="el" href="group__api__init.html#gaef7fd4ff3de50fb8b7bb9d5b51363278" title="Define two MMIO range accessible by the said application.">OS_APPLICATION_MMIO_RANGES()</a></code> is mandatory here, not optional: <code><a class="el" href="group__api__init.html#gab5f63b29702312bedfe955e8465891cd" title="Declare userspace process.">OS_APPLICATION()</a></code> expands to a constructor that populates the application's process definition table, and part of that table is filled in directly from the symbols <code><a class="el" href="group__api__init.html#gaef7fd4ff3de50fb8b7bb9d5b51363278" title="Define two MMIO range accessible by the said application.">OS_APPLICATION_MMIO_RANGES()</a></code> defines - without calling it (or the single-range <code><a class="el" href="group__api__init.html#gaac9006478e1f1b60bc348f45b4eb0575" title="Define the MMIO range accessible by the said application.">OS_APPLICATION_MMIO_RANGE()</a></code>), the build fails to link. Since PMP isn't implemented yet, nothing currently enforces the ranges given here, but the call itself is still required to populate the table CMRX's process bookkeeping expects.</p>
-<h1><a class="anchor" id="autotoc_md92"></a>
+<h1><a class="anchor" id="autotoc_md103"></a>
 Adding blinky application to the build</h1>
 <p>Add the blinky application's directory and link it into the firmware. First, just after the line that adds the <code>pico-sdk-riscv</code> quirk:</p>
 <div class="fragment"><div class="line">add_subdirectory(src/blinky)</div>
@@ -323,7 +323,7 @@ Adding blinky application to the build</h1>
 <div class="fragment"><div class="line">cmake -B build</div>
 <div class="line">cmake --build build</div>
 </div><!-- fragment --><p>You should get file <code>build/pico-sdk-riscv-example.elf</code>.</p>
-<h1><a class="anchor" id="autotoc_md93"></a>
+<h1><a class="anchor" id="autotoc_md104"></a>
 Flashing the application</h1>
 <p>There are multiple ways of flashing the firmware available. This guide will use one of IDE-agnostic ways: direct use of openocd and gdb.</p>
 <p>OpenOCD is a gateway between your debugger probe and the debugger used on your PC.</p>

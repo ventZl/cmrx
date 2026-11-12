@@ -19,5 +19,5 @@ var searchData=
   ['queues_5fallocated_16',['QUEUES_ALLOCATED',['../group__queue__server.html#ga9b5f9ede422d927d87e796a898bc55a7',1,'queue_server.h']]],
   ['queueservice_17',['QueueService',['../structQueueService.html',1,'']]],
   ['queueserviceinterface_18',['QueueServiceInterface',['../structQueueServiceInterface.html',1,'']]],
-  ['quirk_19',['4. Adding the Pico-SDK RISC-V quirk',['../getting_started_picosdk_riscv.html#autotoc_md87',1,'']]]
+  ['quirk_19',['4. Adding the Pico-SDK RISC-V quirk',['../getting_started_picosdk_riscv.html#autotoc_md98',1,'']]]
 ];
