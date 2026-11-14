@@ -21,10 +21,21 @@ if (DEFINED CMRX_LINKER_FILE)
     if (NOT EXISTS "${CMRX_LINKER_FILE}")
         message(FATAL_ERROR "Specified linker file doesn't exist: ${CMRX_LINKER_FILE}")
     endif()
-else()
     set(CMSIS_LINKER_FILE "${CMRX_LINKER_FILE}")
-    set(CMSIS_LINKER_FILE ${PICO_SDK_PATH}/rp2_common/pico_crt0/${PICO_DEVICE}/memmap_default.ld)
-    if (NOT EXISTS "{CMSIS_LINKER_FILE}")
+else()
+    if ("${PICO_SDK_VERSION_STRING}" VERSION_GREATER_EQUAL "2.3.0")
+        message(STATUS "Generating default linker script")
+        execute_process(
+            COMMAND ${PYTHON_EXE} ${PICO_SDK_PATH}/tools/memmap_include_tree.py
+                -o ${CMAKE_BINARY_DIR}/memmap_default.ld ${PICO_SDK_PATH}/src/${PICO_DEVICE}/pico_platform/memmap_default.ld
+            WORKING_DIRECTORY ${PICO_SDK_PATH})
+        set(CMSIS_LINKER_FILE ${CMAKE_BINARY_DIR}/memmap_default.ld)
+    else()
+        set(CMSIS_LINKER_FILE ${PICO_SDK_PATH}/src/rp2_common/pico_crt0/${PICO_DEVICE}/memmap_default.ld)
+        message(STATUS "Using existing linker script: ${CMSIS_LINKER_FILE}")
+    endif()
+
+    if (NOT EXISTS "${CMSIS_LINKER_FILE}")
         # In the past, PicoSDK changed the location of linker files at least once
         message(FATAL_ERROR "Unable to find Pico SDK linker file for ${DEVICE}! Check Pico SDK installation and compatibility!")
     endif()
@@ -35,8 +46,12 @@ if (NOT EXISTS "${CMSIS_ROOT}")
     message(FATAL_ERROR "Unable to find Pico SDK CMSIS headers! Check Pico SDK installation and compatibility!")
 endif()
 
-include(../FindCMSIS.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../FindCMSIS.cmake)
 
 set_property(GLOBAL PROPERTY CMRX_ARCH arm)
 set_property(GLOBAL PROPERTY CMRX_HAL cmsis)
+
+if ("${PICO_DEVICE}" STREQUAL "rp2040")
+    set(CMRX_PLATFORM "rp20xx")
+endif()
 
