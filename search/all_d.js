@@ -18,9 +18,9 @@ var searchData=
   ['integration_15',['integration',['../getting_started_cubemx.html#autotoc_md78',1,'2. Configure CubeMX integration'],['../getting_started_picosdk.html#autotoc_md89',1,'2. Configuring Pico-SDK integration']]],
   ['integration_20into_20cmrx_16',['Readme for Frama-C integration into CMRX',['../md_FRAMA__C.html',1,'']]],
   ['integration_20tests_17',['Kernel integration tests',['../md_HIL__TESTING.html#autotoc_md4',1,'']]],
-  ['interface_18',['RPC interface',['../rpc_intro.html#autotoc_md43',1,'']]],
+  ['interface_18',['RPC interface',['../rpc_intro.html#autotoc_md53',1,'']]],
   ['interface_5fcast_19',['interface_cast',['../group__api__rpc.html#ga81ba1a4a057e20afe2dff72090f8193d',1,'rpc.h']]],
-  ['interfaces_20',['interfaces',['../rpc_intro.html#autotoc_md50',1,'Declare interfaces'],['../group__api__rpc.html#api_rpc_implementation',1,'Implementation of RPC interfaces']]],
+  ['interfaces_20',['interfaces',['../rpc_intro.html#autotoc_md56',1,'Declare interfaces'],['../group__api__rpc.html#api_rpc_implementation',1,'Implementation of RPC interfaces']]],
   ['interfaces_20vtables_21',['RPC interfaces (vtables)',['../group__api__rpc.html#api_rpc_interface',1,'']]],
   ['interrupt_20service_20routines_22',['interrupt service routines',['../group__api__isr.html',1,'Interrupt Service Routines'],['../group__os__isr.html',1,'Interrupt service routines']]],
   ['interrupts_23',['Interrupts',['../exec_model.html#autotoc_md62',1,'']]],
@@ -32,7 +32,7 @@ var searchData=
   ['into_20pico_20sdk_20project_20rp2350_20risc_20v_29',['HOWTO: Integrating CMRX into Pico-SDK project (RP2350 RISC-V)',['../getting_started_picosdk_riscv.html',1,'getting_started']]],
   ['introduction_30',['Introduction',['../index.html',1,'']]],
   ['involving_20power_20management_31',['Asynchronous delays involving power management',['../group__api__timing.html#async_delay',1,'']]],
-  ['io_32',['Memory-mapped IO',['../mem_model.html#autotoc_md41',1,'']]],
+  ['io_32',['Memory-mapped IO',['../mem_model.html#autotoc_md51',1,'']]],
   ['ipi_20provider_33',['Cortex-M generic IPI provider',['../group__aux__cm__ipi.html',1,'']]],
   ['irq_20management_34',['IRQ management',['../group__api__irq.html',1,'']]],
   ['irq_5fdisable_35',['irq_disable',['../group__api__irq.html#ga46328777c39260415d888507d2671c98',1,'irq_disable(uint32_t irq):&#160;irq.c'],['../group__api__irq.html#ga46328777c39260415d888507d2671c98',1,'irq_disable(uint32_t irq):&#160;irq.c']]],
@@ -41,6 +41,6 @@ var searchData=
   ['is_5fsuspended_38',['is_suspended',['../structArch__State__t.html#acae038fb3118503f8892f30f98662804',1,'Arch_State_t']]],
   ['isr_5fkill_39',['isr_kill',['../group__api__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c'],['../group__os__isr.html#gabbc12f9850a82cd7f598e577efbee4bc',1,'isr_kill(Thread_t thread_id, uint32_t signal):&#160;isr.c']]],
   ['isr_5fnotify_5fobject_40',['isr_notify_object',['../group__os__isr.html#ga05d9f276f0bfd526208afa466e89d4b1',1,'isr_notify_object(const void *object):&#160;isr.c'],['../group__api__isr.html#ga05d9f276f0bfd526208afa466e89d4b1',1,'isr_notify_object(const void *object):&#160;isr.c']]],
-  ['issues_41',['issues',['../md_SECURITY.html#autotoc_md52',1,'Handling Security Issues'],['../md_SECURITY.html#autotoc_md48',1,'Reporting Security Issues']]],
+  ['issues_41',['issues',['../md_SECURITY.html#autotoc_md42',1,'Handling Security Issues'],['../md_SECURITY.html#autotoc_md39',1,'Reporting Security Issues']]],
   ['item_5fsize_42',['item_size',['../structQueue.html#af7ce592d2117e17be583562a544e0f6e',1,'Queue']]]
 ];

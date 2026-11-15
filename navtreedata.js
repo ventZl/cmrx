@@ -127,17 +127,17 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Security Policy", "md_SECURITY.html", [
-      [ "Supported Versions", "md_SECURITY.html#autotoc_md46", null ],
-      [ "Bug Bounty Program", "md_SECURITY.html#autotoc_md47", null ],
-      [ "Reporting Security Issues", "md_SECURITY.html#autotoc_md48", [
-        [ "case1: Report via Email", "md_SECURITY.html#autotoc_md49", null ],
-        [ "case2: Report via GitHub Private vulnerability reporting", "md_SECURITY.html#autotoc_md51", null ]
+      [ "Supported Versions", "md_SECURITY.html#autotoc_md37", null ],
+      [ "Bug Bounty Program", "md_SECURITY.html#autotoc_md38", null ],
+      [ "Reporting Security Issues", "md_SECURITY.html#autotoc_md39", [
+        [ "case1: Report via Email", "md_SECURITY.html#autotoc_md40", null ],
+        [ "case2: Report via GitHub Private vulnerability reporting", "md_SECURITY.html#autotoc_md41", null ]
       ] ],
-      [ "Handling Security Issues", "md_SECURITY.html#autotoc_md52", null ],
-      [ "Security Best Practices", "md_SECURITY.html#autotoc_md53", null ],
-      [ "Out of Scope", "md_SECURITY.html#autotoc_md54", null ],
-      [ "Responsible Disclosure Guidelines", "md_SECURITY.html#autotoc_md55", null ],
-      [ "Contact", "md_SECURITY.html#autotoc_md56", null ]
+      [ "Handling Security Issues", "md_SECURITY.html#autotoc_md42", null ],
+      [ "Security Best Practices", "md_SECURITY.html#autotoc_md43", null ],
+      [ "Out of Scope", "md_SECURITY.html#autotoc_md44", null ],
+      [ "Responsible Disclosure Guidelines", "md_SECURITY.html#autotoc_md45", null ],
+      [ "Contact", "md_SECURITY.html#autotoc_md46", null ]
     ] ],
     [ "Kernel unit testing", "md_UNIT__TESTING.html", [
       [ "Philosophy", "md_UNIT__TESTING.html#autotoc_md109", null ],

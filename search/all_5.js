@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['a_20rpc_20server_0',['Becoming a RPC server',['../rpc_intro.html#autotoc_md45',1,'']]],
+  ['a_20rpc_20server_0',['Becoming a RPC server',['../rpc_intro.html#autotoc_md55',1,'']]],
   ['a0_1',['a0',['../structExceptionFrame.html#aa01f76feec8447af4446d8719b6af0fa',1,'ExceptionFrame']]],
   ['a1_2',['a1',['../structExceptionFrame.html#a022b14e153c588c60064ee7cab5b4bda',1,'ExceptionFrame']]],
   ['a2_3',['a2',['../structExceptionFrame.html#a995797f81a769ee6dbc922e3d2649185',1,'ExceptionFrame']]],
@@ -29,7 +29,7 @@ var searchData=
   ['and_20getting_20cmrx_20source_26',['Generating project and getting CMRX source',['../getting_started_cubemx.html#autotoc_md75',1,'']]],
   ['and_20header_20directories_27',['Source and header directories',['../dev_env.html#autotoc_md67',1,'']]],
   ['and_20pico_20sdk_20into_20cmake_20module_20path_28',['and pico sdk into cmake module path',['../getting_started_picosdk.html#autotoc_md88',1,'1. Add CMake modules provided by CMRX and Pico-SDK into CMake module path'],['../getting_started_picosdk_riscv.html#autotoc_md100',1,'2. Add CMake modules provided by CMRX and Pico-SDK into CMake module path']]],
-  ['and_20read_20only_20data_29',['Code and read-only data',['../mem_model.html#autotoc_md36',1,'']]],
+  ['and_20read_20only_20data_29',['Code and read-only data',['../mem_model.html#autotoc_md47',1,'']]],
   ['api_30',['api',['../group__api.html',1,'Kernel API'],['../group__api__standard.html',1,'Standard API'],['../group__api__timing.html',1,'Timing provider API']]],
   ['application_31',['application',['../getting_started_picosdk_riscv.html#autotoc_md106',1,'Creating the blinky application'],['../getting_started_picosdk.html#autotoc_md93',1,'Creating the blinky application'],['../getting_started_cubemx.html#autotoc_md81',1,'Creating the blinky application'],['../getting_started_picosdk.html#autotoc_md95',1,'Flashing the application'],['../getting_started_picosdk_riscv.html#autotoc_md108',1,'Flashing the application'],['../getting_started_cubemx.html#autotoc_md84',1,'Flashing the application']]],
   ['application_20to_20the_20build_32',['application to the build',['../getting_started_picosdk_riscv.html#autotoc_md107',1,'Adding blinky application to the build'],['../getting_started_picosdk.html#autotoc_md94',1,'Adding blinky application to the build'],['../getting_started_cubemx.html#autotoc_md83',1,'Adding blinky application to the build']]],
