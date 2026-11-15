@@ -7,6 +7,7 @@
 #include <cmrx/assert.h>
 #include <arch/sysenter.h>
 #include <arch/syscall.h>
+#include <kernel/arch/platform.h>
 
 #include "rpc.h"
 #include "sched.h"
@@ -49,10 +50,20 @@ REGISTER_SYSCALLS(
 	{ SYSCALL_GET_MICROTIME, (Syscall_Handler_t) &os_get_micro_time },
 	{ SYSCALL_SHUTDOWN, (Syscall_Handler_t) &os_shutdown },
 	{ SYSCALL_NOTIFY_OBJECT2, (Syscall_Handler_t) &os_sys_notify_object2 },
-	{ SYSCALL_WAIT_FOR_OBJECT_VALUE, (Syscall_Handler_t) &os_sys_wait_for_object_value }
+	{ SYSCALL_WAIT_FOR_OBJECT_VALUE, (Syscall_Handler_t) &os_sys_wait_for_object_value },
+	{ SYSCALL_PLATFORM, (Syscall_Handler_t) &os_sys_platform_call }
 );
 
 #pragma GCC diagnostic pop
+
+/* No-op platform-specific system call implementation.
+ * This function behaves as if it didn't exist. It can be overriden by defining
+ * platform-specific version in platform support code.
+ */
+__attribute__((weak)) int os_sys_platform_call(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)
+{
+	return E_NOTAVAIL;
+}
 
 static struct Syscall_Entry_t os_syscall_cache[_SYSCALL_COUNT];
 
