@@ -13,32 +13,53 @@ endif()
 string(TOLOWER "${CMRX_DEVICE}" PICO_DEVICE)
 string(TOUPPER "${CMRX_DEVICE}" DEVICE)
 
+# Pico-SDK maintains current CPU frequency in SystemCoreClock
+set(CMRX_SYSTICK_USE_SYSTEMCORECLOCK ON)
+
+# Patch linker script file to include properly aligned symbols
+# which denote start and end of RAM-deployed code. Pico-SDK does
+# that so some routines are in fast RAM instead of slow QSPI FLASH.
+function(__cmrx_patch_linker_script FILE OUTFILE)
+    execute_process(
+        COMMAND git apply -p1 ${CMAKE_CURRENT_LIST_DIR}/rp2/linker-${PICO_SDK_VERSION_MAJOR}.${PICO_SDK_VERSION_MINOR}.patch
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMAND_ERROR_IS_FATAL ANY)
+    set(CMSIS_LINKER_FILE "${FILE}" PARENT_SCOPE)
+endfunction()
+
 if (NOT DEFINED PICO_SDK_PATH)
     message(FATAL_ERROR "Pico SDK path not defined! Set variable `PICO_SDK_PATH` to point to Pico SDK location.")
 endif()
+
+set(PICO_LINKER_FILE ${CMAKE_BINARY_DIR}/memmap_default.ld)
 
 if (DEFINED CMRX_LINKER_FILE)
     if (NOT EXISTS "${CMRX_LINKER_FILE}")
         message(FATAL_ERROR "Specified linker file doesn't exist: ${CMRX_LINKER_FILE}")
     endif()
-    set(CMSIS_LINKER_FILE "${CMRX_LINKER_FILE}")
+    file(COPY_FILE "${CMRX_LINKER_FILE}" "${PICO_LINKER_FILE}")
 else()
     if ("${PICO_SDK_VERSION_STRING}" VERSION_GREATER_EQUAL "2.3.0")
         message(STATUS "Generating default linker script")
         execute_process(
             COMMAND ${PYTHON_EXE} ${PICO_SDK_PATH}/tools/memmap_include_tree.py
-                -o ${CMAKE_BINARY_DIR}/memmap_default.ld ${PICO_SDK_PATH}/src/${PICO_DEVICE}/pico_platform/memmap_default.ld
+                -o ${PICO_LINKER_FILE} ${PICO_SDK_PATH}/src/${PICO_DEVICE}/pico_platform/memmap_default.ld
             WORKING_DIRECTORY ${PICO_SDK_PATH})
-        set(CMSIS_LINKER_FILE ${CMAKE_BINARY_DIR}/memmap_default.ld)
     else()
-        set(CMSIS_LINKER_FILE ${PICO_SDK_PATH}/src/rp2_common/pico_crt0/${PICO_DEVICE}/memmap_default.ld)
-        message(STATUS "Using existing linker script: ${CMSIS_LINKER_FILE}")
+        set(RAW_LINKER_FILE ${PICO_SDK_PATH}/src/rp2_common/pico_crt0/${PICO_DEVICE}/memmap_default.ld)
+        message(STATUS "Using existing linker script: ${RAW_LINKER_FILE}")
+        file(COPY_FILE "${RAW_LINKER_FILE}" "${PICO_LINKER_FILE}")
     endif()
 
-    if (NOT EXISTS "${CMSIS_LINKER_FILE}")
+    if (NOT EXISTS "${PICO_LINKER_FILE}")
         # In the past, PicoSDK changed the location of linker files at least once
         message(FATAL_ERROR "Unable to find Pico SDK linker file for ${DEVICE}! Check Pico SDK installation and compatibility!")
     endif()
+endif()
+
+file(STRINGS "${PICO_LINKER_FILE}" __CMRX_LINKERFILE_PATCHES REGEX "__rp2xxx_platform_custom")
+if ("${__CMRX_LINKERFILE_PATCHES}" STREQUAL "")
+    __cmrx_patch_linker_script(${PICO_LINKER_FILE} ${CMAKE_BINARY_DIR}/memmap_default.ld)
 endif()
 
 set(CMSIS_ROOT ${PICO_SDK_PATH}/src/rp2_common/cmsis/stub/CMSIS)
