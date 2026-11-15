@@ -172,7 +172,26 @@ CMRX_ARCH_SMP_SUPPORTED</h2>
 <h2><a class="anchor" id="autotoc_md21"></a>
 CMRX_OS_NUM_CORES</h2>
 <p>Default: 1</p>
-<p>Used to specify how many physical cores are there in package in case multi-core support has been enabled. This configures various in-kernel structures to have space for all required data. Note that it is possible to pass number lower than the actual core count if CMRX should not take care of all the cores in the system. For example, if the system contains four cores, this option may be configured to contain value 3. Then CMRX will manage only three cores, while the fourth core can be managed completely independently to CMRX kernel as long as it won't interfere with it. </p>
+<p>Used to specify how many physical cores are there in package in case multi-core support has been enabled. This configures various in-kernel structures to have space for all required data. Note that it is possible to pass number lower than the actual core count if CMRX should not take care of all the cores in the system. For example, if the system contains four cores, this option may be configured to contain value 3. Then CMRX will manage only three cores, while the fourth core can be managed completely independently to CMRX kernel as long as it won't interfere with it.</p>
+<h2><a class="anchor" id="autotoc_md22"></a>
+CMRX_CUSTOM_FLASH_RANGE</h2>
+<p>Default: OFF</p>
+<p>If enabled, FLASH ROM range isn't inferred from the linker script, rather it must be provided using <code>CMRX_CUSTOM_FLASH_START</code> and <code>CMRX_CUSTOM_FLASH_END</code> options. This option can be used to include boot ROMs into executable and readable area so boom ROM routines can be used from userland. It can only be used if such boot ROM and flash can form one continuous are with nothing mapped in between them.</p>
+<h2><a class="anchor" id="autotoc_md23"></a>
+CMRX_CUSTOM_FLASH_START</h2>
+<p>Default: 0</p>
+<p>Manually configured start of FLASH (read and executable) area. <b>Must</b> be set if <code>CMRX_CUSTOM_FLASH_RANGE</code> is set to true. Otherwise it has no effect.</p>
+<h2><a class="anchor" id="autotoc_md24"></a>
+CMRX_CUSTOM_FLASH_END</h2>
+<p>Default: 0</p>
+<p>Manually configured end of FLASH (read and executable) area. <b>Must</b> be set if <code>CMRX_CUSTOM_FLASH_RANGE</code> is set to true. Otherwise it has no effect.</p>
+<h2><a class="anchor" id="autotoc_md25"></a>
+CMRX_SYSTICK_USE_SYSTEMCORECLOCK</h2>
+<p>Default: OFF</p>
+<p>If set to <em>ON</em>, ARM Cortex-M SysTick-based timing provider will assume that HAL maintains current CPU frequency information in <code>SystemCoreClock</code> variable and this value can be trusted at all times. It will provide kernel with CPU frequency information based on this value. If set to <em>OFF</em> then integrator must provide implementation of</p>
+<div class="fragment"><div class="line"><span class="keywordtype">long</span> <a class="code hl_function" href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769">timing_get_current_cpu_freq</a>(<span class="keywordtype">void</span>);</div>
+<div class="ttc" id="agroup__api__timing_html_gaa7613a35fc20c795f3fcfe3042100769"><div class="ttname"><a href="group__api__timing.html#gaa7613a35fc20c795f3fcfe3042100769">timing_get_current_cpu_freq</a></div><div class="ttdeci">long timing_get_current_cpu_freq(void)</div><div class="ttdoc">Provide information on the current CPU speed.</div><div class="ttdef"><b>Definition</b> clock.c:89</div></div>
+</div><!-- fragment --><p>Function which will return current CPU frequency in Hz. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
