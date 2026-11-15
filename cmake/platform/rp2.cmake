@@ -16,6 +16,9 @@ string(TOUPPER "${CMRX_DEVICE}" DEVICE)
 # Pico-SDK maintains current CPU frequency in SystemCoreClock
 set(CMRX_SYSTICK_USE_SYSTEMCORECLOCK ON)
 
+# Pico-SDK generates map files in format <binary>.elf.map
+set(CMRX_MAP_FILE_WITH_EXTENSION ON)
+
 function(__cmrx_rp2xxx_get_patch PICO_SDK_VERSION OUTPUT)
     # versions 1.0.0 and 1.0.1
     if ("${PICO_SDK_VERSION}" VERSION_LESS "1.1.0")
