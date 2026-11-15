@@ -16,12 +16,46 @@ string(TOUPPER "${CMRX_DEVICE}" DEVICE)
 # Pico-SDK maintains current CPU frequency in SystemCoreClock
 set(CMRX_SYSTICK_USE_SYSTEMCORECLOCK ON)
 
+function(__cmrx_rp2xxx_get_patch PICO_SDK_VERSION OUTPUT)
+    # versions 1.0.0 and 1.0.1
+    if ("${PICO_SDK_VERSION}" VERSION_LESS "1.1.0")
+        set(${OUTPUT} "${CMAKE_CURRENT_LIST_DIR}/rp2/linker-1.0.patch" PARENT_SCOPE)
+        return()
+    endif()
+
+    # versions 1.1.0 - 1.5.0
+    if ("${PICO_SDK_VERSION}" VERSION_LESS "1.5.1")
+        set(${OUTPUT} "${CMAKE_CURRENT_LIST_DIR}/rp2/linker-1.1.patch" PARENT_SCOPE)
+        return()
+    endif()
+
+    # versions 1.5.1 only
+    if ("${PICO_SDK_VERSION}" VERSION_LESS "2.0.0")
+        set(${OUTPUT} "${CMAKE_CURRENT_LIST_DIR}/rp2/linker-1.5.1.patch" PARENT_SCOPE)
+        return()
+    endif()
+
+    # versions 2.0.0 - 2.2.0 only
+    if ("${PICO_SDK_VERSION}" VERSION_LESS "2.3.0")
+        set(${OUTPUT} "${CMAKE_CURRENT_LIST_DIR}/rp2/linker-2.0.patch" PARENT_SCOPE)
+        return()
+    endif()
+
+    # versions 2.3.0 and newer
+    set(${OUTPUT} "${CMAKE_CURRENT_LIST_DIR}/rp2/linker-2.3.patch" PARENT_SCOPE)
+endfunction()
+
+
 # Patch linker script file to include properly aligned symbols
 # which denote start and end of RAM-deployed code. Pico-SDK does
 # that so some routines are in fast RAM instead of slow QSPI FLASH.
 function(__cmrx_patch_linker_script FILE OUTFILE)
+    __cmrx_rp2xxx_get_patch(${PICO_SDK_VERSION_STRING} __PICO_LINKER_PATCH_FILE)
+    if (NOT EXISTS ${__PICO_LINKER_PATCH_FILE})
+        message(FATAL_ERROR "Unable to determine linker script patch file. Unsupported Pico-SDK version")
+    endif()
     execute_process(
-        COMMAND git apply -p1 ${CMAKE_CURRENT_LIST_DIR}/rp2/linker-${PICO_SDK_VERSION_MAJOR}.${PICO_SDK_VERSION_MINOR}.patch
+        COMMAND git apply -p1 ${__PICO_LINKER_PATCH_FILE}
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         COMMAND_ERROR_IS_FATAL ANY)
     set(CMSIS_LINKER_FILE "${FILE}" PARENT_SCOPE)
@@ -46,7 +80,11 @@ else()
                 -o ${PICO_LINKER_FILE} ${PICO_SDK_PATH}/src/${PICO_DEVICE}/pico_platform/memmap_default.ld
             WORKING_DIRECTORY ${PICO_SDK_PATH})
     else()
-        set(RAW_LINKER_FILE ${PICO_SDK_PATH}/src/rp2_common/pico_crt0/${PICO_DEVICE}/memmap_default.ld)
+        if ("${PICO_SDK_VERSION_STRING}" VERSION_GREATER_EQUAL "2.0.0")
+            set(RAW_LINKER_FILE ${PICO_SDK_PATH}/src/rp2_common/pico_crt0/${PICO_DEVICE}/memmap_default.ld)
+        else()
+            set(RAW_LINKER_FILE ${PICO_SDK_PATH}/src/rp2_common/pico_standard_link/memmap_default.ld)
+        endif()
         message(STATUS "Using existing linker script: ${RAW_LINKER_FILE}")
         file(COPY_FILE "${RAW_LINKER_FILE}" "${PICO_LINKER_FILE}")
     endif()
