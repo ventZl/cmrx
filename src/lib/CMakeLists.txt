@@ -8,3 +8,7 @@ target_include_directories(stdlib INTERFACE ${CMRX_ROOT_DIR}/include ${CMAKE_BIN
 # Let arch to alter the stdlib target if it wants to do so
 # It is not an error if architecture does not provide this file.
 include(${CMAKE_CURRENT_SOURCE_DIR}/arch/${CMRX_ARCH}/arch.cmake OPTIONAL)
+
+if (NOT "CMRX_PLATFORM" STREQUAL "")
+    include(${CMAKE_CURRENT_SOURCE_DIR}/arch/${CMRX_ARCH}/${CMRX_PLATFORM}/platform.cmake OPTIONAL)
+endif()
