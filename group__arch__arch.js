@@ -32,6 +32,7 @@ var group__arch__arch =
     [ "os_set_syscall_return_value", "group__arch__arch.html#gabb3070fe93f5997763b5685b81288f5c", null ],
     [ "os_smp_lock", "group__arch__arch.html#gac579ea1044d56f3f04887b8b21118826", null ],
     [ "os_smp_unlock", "group__arch__arch.html#gad026c280d52436bedf3e3643900d735f", null ],
+    [ "os_sys_platform_call", "group__arch__arch.html#ga1e0e1eea0af11027661289902deba1c2", null ],
     [ "os_thread_initialize_arch", "group__arch__arch.html#ga22edc1a4b8311885fceefba6b73f77af", null ],
     [ "static_init_process_count", "group__arch__arch.html#gad4128fe30c4eef560ae2dc025e89abf2", null ],
     [ "static_init_process_table", "group__arch__arch.html#ga40ff64621b791a06874bb7ca27a9164e", null ],

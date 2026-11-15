@@ -10,7 +10,7 @@ var searchData=
   ['getmicrotime_7',['getmicrotime',['../group__api__standard.html#gab9090f01493a7759cdd3dd5bf4d917d2',1,'std.c']]],
   ['getting_20cmrx_20source_8',['Generating project and getting CMRX source',['../getting_started_cubemx.html#autotoc_md75',1,'']]],
   ['getting_20started_9',['Getting started',['../getting_started.html',1,'']]],
-  ['github_20private_20vulnerability_20reporting_10',['case2: Report via GitHub Private vulnerability reporting',['../md_SECURITY.html#autotoc_md41',1,'']]],
+  ['github_20private_20vulnerability_20reporting_10',['case2: Report via GitHub Private vulnerability reporting',['../md_SECURITY.html#autotoc_md51',1,'']]],
   ['gpios_11',['Configuring GPIOs',['../getting_started_cubemx.html#autotoc_md74',1,'']]],
-  ['guidelines_12',['Responsible Disclosure Guidelines',['../md_SECURITY.html#autotoc_md45',1,'']]]
+  ['guidelines_12',['Responsible Disclosure Guidelines',['../md_SECURITY.html#autotoc_md55',1,'']]]
 ];

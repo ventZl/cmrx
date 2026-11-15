@@ -33,6 +33,7 @@ var group__os__syscall =
       [ "SYSCALL_SHUTDOWN", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca1fda1698edfd0b21350e23d4652c9dc2", null ],
       [ "SYSCALL_NOTIFY_OBJECT2", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8caec7bd4e76302166edc0e2196093f5389", null ],
       [ "SYSCALL_WAIT_FOR_OBJECT_VALUE", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca8b4711342be2c394f2d0887d5030aeab", null ],
+      [ "SYSCALL_PLATFORM", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca0272fec92455f6111c72ded3cd45b851", null ],
       [ "_SYSCALL_COUNT", "group__os__syscall.html#gga31e8f196f246216d32eec552c2640f8ca4ca0c68f905e31ed3c06d15fde068f7e", null ]
     ] ],
     [ "os_system_call", "group__os__syscall.html#ga01e5db115c1c1c75381ffbfd55c811d6", null ],

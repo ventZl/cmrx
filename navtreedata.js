@@ -127,17 +127,17 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Security Policy", "md_SECURITY.html", [
-      [ "Supported Versions", "md_SECURITY.html#autotoc_md37", null ],
-      [ "Bug Bounty Program", "md_SECURITY.html#autotoc_md38", null ],
-      [ "Reporting Security Issues", "md_SECURITY.html#autotoc_md39", [
-        [ "case1: Report via Email", "md_SECURITY.html#autotoc_md40", null ],
-        [ "case2: Report via GitHub Private vulnerability reporting", "md_SECURITY.html#autotoc_md41", null ]
+      [ "Supported Versions", "md_SECURITY.html#autotoc_md46", null ],
+      [ "Bug Bounty Program", "md_SECURITY.html#autotoc_md47", null ],
+      [ "Reporting Security Issues", "md_SECURITY.html#autotoc_md48", [
+        [ "case1: Report via Email", "md_SECURITY.html#autotoc_md49", null ],
+        [ "case2: Report via GitHub Private vulnerability reporting", "md_SECURITY.html#autotoc_md51", null ]
       ] ],
-      [ "Handling Security Issues", "md_SECURITY.html#autotoc_md42", null ],
-      [ "Security Best Practices", "md_SECURITY.html#autotoc_md43", null ],
-      [ "Out of Scope", "md_SECURITY.html#autotoc_md44", null ],
-      [ "Responsible Disclosure Guidelines", "md_SECURITY.html#autotoc_md45", null ],
-      [ "Contact", "md_SECURITY.html#autotoc_md46", null ]
+      [ "Handling Security Issues", "md_SECURITY.html#autotoc_md52", null ],
+      [ "Security Best Practices", "md_SECURITY.html#autotoc_md53", null ],
+      [ "Out of Scope", "md_SECURITY.html#autotoc_md54", null ],
+      [ "Responsible Disclosure Guidelines", "md_SECURITY.html#autotoc_md55", null ],
+      [ "Contact", "md_SECURITY.html#autotoc_md56", null ]
     ] ],
     [ "Kernel unit testing", "md_UNIT__TESTING.html", [
       [ "Philosophy", "md_UNIT__TESTING.html#autotoc_md109", null ],
@@ -162,9 +162,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__arch__arm__nvic.html#ga99e85036a50727934b3d09e988a9846d",
-"group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6aa5dd4d3db3f6d15f233196115c6e6a96",
-"structComNotificationVMT.html"
+"group__arch__arm__nvic.html#ga1f2b7cd42c4cda96dae3a6bf3a08a53d",
+"group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7fa9cec9c302fe0bfbf03b37a6abc480",
+"structComNotification.html#a40cef8ec9f7dfd48bab2151cec815ffd"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

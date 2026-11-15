@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Microkernel Realtime eXecutive: src/os/kernel/platform/platform.h Source File</title>
+<title>C Microkernel Realtime eXecutive: src/os/arch/arm/rp20xx/platform.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('platform_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('arch_2arm_2rp20xx_2platform_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,27 +103,10 @@ $(document).ready(function(){initNavTree('platform_8h_source.html',''); initResi
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">/* Prototype for platform-specific system call (optional)</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * Your platform is free to define function having this name and prototype. If it does,</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * then this version will override kernel-default version that does nothing. You can</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * place platform-specific hooks which need kernel privileges to execute here.</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> * If your platform doesn&#39;t need any such feature, then don&#39;t include this function in</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * your platform code, the default version will be used which provides no functionality.</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * @param arg1 system call argument 1</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * @param arg2 system call argument 2</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * @param arg3 system call argument 3</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * @param arg4 system call argument 4</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * @returns outcome of the system call, it will be made available to the calling thread</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * when system call returns.</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> **/</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">int</span> os_sys_platform_call(uint32_t arg1, uint32_t arg2, uint32_t arg3, uint32_t arg4);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> os_init_platform(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#define os_init_platform()</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keywordtype">void</span> os_thread_initialize_platform(<span class="keyword">struct</span> <a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a> * thread);</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">struct </span><a class="code hl_struct" href="structOS__thread__t.html">OS_thread_t</a>;</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#define  os_thread_initialize_platform(x)</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keywordtype">void</span> os_init_platform(<span class="keywordtype">void</span>);</div>
 <div class="ttc" id="astructOS__thread__t_html"><div class="ttname"><a href="structOS__thread__t.html">OS_thread_t</a></div><div class="ttdoc">Thread control block.</div><div class="ttdef"><b>Definition</b> runtime.h:72</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -131,7 +114,7 @@ $(document).ready(function(){initNavTree('platform_8h_source.html',''); initResi
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_1f21893b2775d121794a4ac0e8e8f646.html">kernel</a></li><li class="navelem"><a class="el" href="dir_df31020352fbc6300836f1fbd67068a7.html">platform</a></li><li class="navelem"><b>platform.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a71443761d886d6152d96ebd3fda63af.html">os</a></li><li class="navelem"><a class="el" href="dir_f4f836dbb47c7c2a6355e2b51fb79a34.html">arch</a></li><li class="navelem"><a class="el" href="dir_0bc241ef12895fab207e0a67b6bfe3d2.html">arm</a></li><li class="navelem"><a class="el" href="dir_1a462f56422b4e1b9f8ccc9b2c2d479e.html">rp20xx</a></li><li class="navelem"><b>platform.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

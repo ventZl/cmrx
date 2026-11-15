@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__arch__arm__nvic.html#ga1f2b7cd42c4cda96dae3a6bf3a08a53d":[9,5,0,0,2,1],
 "group__arch__arm__nvic.html#ga99e85036a50727934b3d09e988a9846d":[9,5,0,0,2,0],
 "group__arch__arm__os.html":[9,5,0,0,3],
 "group__arch__arm__os.html#ga2ae6451ce266ac64b1839748e597ae87":[9,5,0,0,3,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a327b504fcea41a280d9c9d25a530321d":[9,5,3,9,1],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a3ed23db49766dcb93d5887f8dc613c4b":[9,5,3,9,7],
 "group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a6dff8b555ffb582bb3d30a240c9b83e3":[9,5,3,9,2],
-"group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf":[9,5,3,9,4],
-"group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7fa9cec9c302fe0bfbf03b37a6abc480":[9,5,3,9,0]
+"group__os__kernel.html#ggab3804a8a4369184ad46dadf8e54957b6a7ea6bd2fc98784fd8806ec9202bf7bdf":[9,5,3,9,4]
 };

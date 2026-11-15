@@ -158,6 +158,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad478154133b190e328ee2cd65a4a8b20" id="r_gad478154133b190e328ee2cd65a4a8b20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#gad478154133b190e328ee2cd65a4a8b20">os_memory_protection_stop</a> ()</td></tr>
 <tr class="memdesc:gad478154133b190e328ee2cd65a4a8b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable memory protection.  <br /></td></tr>
 <tr class="separator:gad478154133b190e328ee2cd65a4a8b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e0e1eea0af11027661289902deba1c2" id="r_ga1e0e1eea0af11027661289902deba1c2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga1e0e1eea0af11027661289902deba1c2">os_sys_platform_call</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
+<tr class="memdesc:ga1e0e1eea0af11027661289902deba1c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-specific system call entrypoint (optional) Use as very last resort measure! This allows running platform-specific code in kernel context.  <br /></td></tr>
+<tr class="separator:ga1e0e1eea0af11027661289902deba1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9ee8f29f3009ad125af02a612603504f" id="r_ga9ee8f29f3009ad125af02a612603504f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch__arch.html#ga9ee8f29f3009ad125af02a612603504f">os_rpc_call</a> (uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3)</td></tr>
 <tr class="memdesc:ga9ee8f29f3009ad125af02a612603504f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel implementation of rpc_call syscall.  <br /></td></tr>
 <tr class="separator:ga9ee8f29f3009ad125af02a612603504f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -887,6 +890,48 @@ Port implementation sources</h1>
 <p>Unlock the "big kernel lock". </p>
 <p>This function ends the critical setion within kernel.</p>
 <p>This function is part of the porting layer but depends heavily on target CPU. It may be left the be implemented by the user. Once this function is called the code must make sure that any other core potentially being blocked by parallel call to os_smp_lock() will be unlocked and continue execution. </p>
+
+</div>
+</div>
+<a id="ga1e0e1eea0af11027661289902deba1c2" name="ga1e0e1eea0af11027661289902deba1c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1e0e1eea0af11027661289902deba1c2">&#9670;&#160;</a></span>os_sys_platform_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int os_sys_platform_call </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>arg0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>arg1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>arg2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>arg3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Platform-specific system call entrypoint (optional) Use as very last resort measure! This allows running platform-specific code in kernel context. </p>
 
 </div>
 </div>
