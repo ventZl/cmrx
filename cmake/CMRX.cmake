@@ -47,7 +47,7 @@ if (SW_TESTING_BUILD)
 else()
     include(${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/${CMRX_HAL}/CMRX.cmake OPTIONAL)
     if (NOT "${CMRX_PLATFORM}" STREQUAL "")
-        include(${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/${CMRX_PLATFORM}/CMRX.cmake OPTIONAL)
+        include(${CMAKE_CURRENT_LIST_DIR}/arch/${CMRX_ARCH}/platform/${CMRX_PLATFORM}/CMRX.cmake OPTIONAL)
     endif()
 endif()
 

@@ -62,6 +62,10 @@ function(add_firmware FW_NAME)
         target_link_options(${FW_NAME} PUBLIC LINKER:--script=${BINARY_LINKER_SCRIPT})
     endif()
     set_property(TARGET ${FW_NAME} PROPERTY PICO_TARGET_LINKER_SCRIPT ${BINARY_LINKER_SCRIPT})
+
+    if (COMMAND add_firmware_platform_cb)
+        add_firmware_platform_cb(${FW_NAME})
+    endif()
 endfunction()
 
 function(target_add_applications TGT_NAME)

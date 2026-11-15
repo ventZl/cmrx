@@ -1,0 +1,19 @@
+diff -Naur a/memmap_default.ld b/memmap_default.ld
+--- a/memmap_default.ld	2026-11-15 22:34:43.486516596 +0100
++++ b/memmap_default.ld	2026-11-15 22:37:44.741834224 +0100
+@@ -156,11 +156,13 @@
+ 
+         *(.time_critical*)
+ 
+-        
++        . = ALIGN(0x800);
++        __rp2xxx_platform_custom_start = .;
+         *(.text*)
+         . = ALIGN(4);
+         *(.rodata*)
+-        . = ALIGN(4);
++        . = ALIGN(0x800);
++        __rp2xxx_platform_custom_end = .;
+ 
+         PROVIDE_HIDDEN (__emutls_array_start = .);
+         *(.*.__emutls_v.*)

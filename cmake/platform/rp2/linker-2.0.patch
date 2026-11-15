@@ -1,0 +1,24 @@
+diff -Naur a/memmap_default.ld b/memmap_default.ld
+--- a/memmap_default.ld	2026-10-16 16:56:52.798618197 +0200
++++ b/memmap_default.ld	2026-11-15 16:03:13.900940818 +0100
+@@ -155,15 +155,18 @@
+ 
+         *(.time_critical*)
+ 
++        . = ALIGN(0x800);
++        __rp2xxx_platform_custom_start = .;
+         /* remaining .text and .rodata; i.e. stuff we exclude above because we want it in RAM */
+         *(.text*)
+         . = ALIGN(4);
+         *(.rodata*)
+-        . = ALIGN(4);
++        . = ALIGN(0x800);
++        __rp2xxx_platform_custom_end = .;
+ 
+         *(.data*)
+-
+         . = ALIGN(4);
++
+         *(.after_data.*)
+         . = ALIGN(4);
+         /* preinit data */
