@@ -124,6 +124,40 @@ Default: 1
 
 Used to specify how many physical cores are there in package in case multi-core support has been enabled. This configures various in-kernel structures to have space for all required data. Note that it is possible to pass number lower than the actual core count if CMRX should not take care of all the cores in the system. For example, if the system contains four cores, this option may be configured to contain value 3. Then CMRX will manage only three cores, while the fourth core can be managed completely independently to CMRX kernel as long as it won't interfere with it.
 
+CMRX_CUSTOM_FLASH_RANGE
+-----------------------
+
+Default: OFF
+
+If enabled, FLASH ROM range isn't inferred from the linker script, rather it must be provided using `CMRX_CUSTOM_FLASH_START` and `CMRX_CUSTOM_FLASH_END` options. This option can be used to include boot ROMs into executable and readable area so boom ROM routines can be used from userland. It can only be used if such boot ROM and flash can form one continuous are with nothing mapped in between them.
+
+
+CMRX_CUSTOM_FLASH_START
+-----------------------
+
+Default: 0
+
+Manually configured start of FLASH (read and executable) area. **Must** be set if `CMRX_CUSTOM_FLASH_RANGE` is set to true. Otherwise it has no effect.
+
+CMRX_CUSTOM_FLASH_END
+-----------------------
+
+Default: 0
+
+Manually configured end of FLASH (read and executable) area. **Must** be set if `CMRX_CUSTOM_FLASH_RANGE` is set to true. Otherwise it has no effect.
+
+CMRX_SYSTICK_USE_SYSTEMCORECLOCK
+--------------------------------
+
+Default: OFF
+
+If set to *ON*, ARM Cortex-M SysTick-based timing provider will assume that HAL maintains current CPU frequency information in `SystemCoreClock` variable and this value can be trusted at all times. It will provide kernel with CPU frequency information based on this value. If set to *OFF* then integrator must provide implementation of
+
+~~~c
+long timing_get_current_cpu_freq(void);
+~~~
+
+Function which will return current CPU frequency in Hz.
 
 @page findcmsis FindCMSIS CMake module
 

@@ -4,13 +4,20 @@ set_property(GLOBAL PROPERTY CMRX_ARCH arm)
 set_property(GLOBAL PROPERTY CMRX_HAL cmsis)
 set(DEVICE ${CMRX_DEVICE})
 string(TOUPPER "${CMRX_DEVICE}" _CMRX_DEVICE_UPCASE)
-add_definitions(-D${_CMRX_DEVICE_UPCASE})
+string(REPLACE "X" "x" _CMRX_DEVICE_MIXED_CASE "${_CMRX_DEVICE_UPCASE}")
+
+add_definitions(-D${_CMRX_DEVICE_MIXED_CASE})
+add_definitions(-D${CMRX_DEVICE})
+
 string(SUBSTRING "${CMRX_DEVICE}" 0 7 _STM_FAMILY)
 string(TOLOWER "${_STM_FAMILY}" _STM_FAMILY)
 string(TOUPPER "${_STM_FAMILY}" _STM_FAMILY_UC)
 
 set(SYSTEM_INCLUDE_FILENAME system_${_STM_FAMILY}xx.h)
 set(DEVICE_INCLUDE_FILENAME ${_STM_FAMILY}xx.h)
+
+# CubeMX HAL maintains current CPU frequency in SystemCoreClock
+set(CMRX_SYSTICK_USE_SYSTEMCORECLOCK ON)
 
 # Assume default CubeMX CMake project layout
 if (NOT EXISTS ${CMAKE_SOURCE_DIR}/Drivers/CMSIS)
@@ -31,7 +38,6 @@ else()
         message(FATAL_ERROR "Unable to identify project linker file automatically! Either set variable `CMRX_LINKER_FILE` to contain path to linker file used or place exactly one linker file having pattern ${_STM_FAMILY}*.ld into ${CMAKE_SOURCE_DIR}")
     endif()
 endif()
-add_definitions(-D${CMRX_DEVICE})
 
 include(${CMAKE_CURRENT_LIST_DIR}/../FindCMSIS.cmake)
 
