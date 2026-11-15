@@ -6,6 +6,16 @@
 
 static uint32_t systick_us = 0;
 
+/* If HAL maintains correct CPU freq in SystemCoreClock variable
+ * SysTick timing provider can use it to deduce SysTick settings.
+ */
+#ifdef USE_SYSTEMCORECLOCK
+long timing_get_current_cpu_freq(void)
+{
+  return SystemCoreClock;
+}
+#endif
+
 static inline void SysTick_Enable(void)
 {
     SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;

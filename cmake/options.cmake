@@ -24,6 +24,7 @@ set(OS_THREADS 8 CACHE STRING "Amount of entries in the thread table")
 set(OS_PROCESSES 8 CACHE STRING "Amount of entries in the process table")
 set(OS_STACKS 8 CACHE STRING "Amount of stacks allocated")
 option(CMRX_ENABLE_LTO "Enable single translation unit compilation (semi-LTO)" OFF)
+option(CMRX_SYSTICK_USE_SYSTEMCORECLOCK "Use SystemCoreClock from CMSIS headers to figure out CPU frequency" OFF)
 
 # List of CMake options that are transferred into nested build
 set(CMRX_ALL_OPTIONS
