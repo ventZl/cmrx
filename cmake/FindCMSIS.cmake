@@ -17,6 +17,23 @@ else()
     message(STATUS "Using system include filename: ${SYSTEM_INCLUDE_FILENAME}")
 endif()
 
+if (NOT DEFINED SYSTEM_SOURCE_FILENAME)
+    set(SYSTEM_SOURCE_FILENAME "system_${DEVICE}.c")
+else()
+    message(STATUS "Using system source filename: ${SYSTEM_SOURCE_FILENAME}")
+endif()
+
+if (NOT DEFINED STARTUP_SOURCE_FILENAME)
+    set(STARTUP_SOURCE_FILENAME "startup_${DEVICE}.c")
+else()
+    message(STATUS "Using startup source filename: ${STARTUP_SOURCE_FILENAME}")
+endif()
+
+if (NOT DEFINED CMSIS_CORE_ROOT)
+    # Some HALs don't include CMSIS, so it has to be downloaded and placed separately
+    set(CMSIS_CORE_ROOT ${CMSIS_ROOT})
+endif()
+
 # Find CMSIS components one by one
 file(GLOB_RECURSE DEVICE_INCLUDE ${CMSIS_ROOT}/*/${DEVICE_INCLUDE_FILENAME})
 list(LENGTH DEVICE_INCLUDE DEVICE_INCLUDE_LEN)
@@ -29,9 +46,9 @@ list(LENGTH SYSTEM_INCLUDE SYSTEM_INCLUDE_LEN)
 if (NOT "${SYSTEM_INCLUDE_LEN}" EQUAL "1")
     message(SEND_ERROR "Unable to find CMSIS system header ${SYSTEM_INCLUDE_FILENAME}! Check if the device name passed in `DEVICE` variable is correct. If system header filename differs from device name (e.g. system_stm32f4xx.h vs. stm32f411xx) then explicitly specify system include filename in `SYSTEM_INCLUDE_FILENAME` variable before including FindCMSIS.")
 endif()
-file(GLOB_RECURSE CORES_INCLUDE ${CMSIS_ROOT}/*/core_cm*.h)
-file(GLOB_RECURSE SYSTEM_SOURCE RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMSIS_ROOT}/*/system_${DEVICE}.c)
-file(GLOB_RECURSE STARTUP_SOURCE RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMSIS_ROOT}/*/startup_${DEVICE}.c)
+file(GLOB_RECURSE CORES_INCLUDE ${CMSIS_CORE_ROOT}/*/core_cm*.h)
+file(GLOB_RECURSE SYSTEM_SOURCE RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMSIS_ROOT}/*/${SYSTEM_SOURCE_FILENAME})
+file(GLOB_RECURSE STARTUP_SOURCE RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMSIS_ROOT}/*/${STARTUP_SOURCE_FILENAME})
 
 message(STATUS "Device include: ${DEVICE_INCLUDE}")
 message(STATUS "System include: ${SYSTEM_INCLUDE}")
